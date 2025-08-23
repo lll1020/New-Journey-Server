@@ -12,12 +12,13 @@ require("Envir/Lua/LuaLib/Buff.lua")
 require("Envir/Lua/LuaLib/shaguai.lua")
 --------------------任务模块--------------------
 require("Envir/Lua/LuaLib/rwcf.lua")
+-------------------物品使用模块--------------------
+require("Envir/Lua/LuaLib/useitme.lua")
+
 --扩展
 require("Envir/Extension/Utilserver/Bag.lua")
 require("Envir/Extension/Utilserver/Player.lua")
 require("Envir/Extension/Utilserver/Item.lua")
-
-require("Envir/Lua/LuaLib/useitme.lua")
 
 
 

@@ -25,62 +25,30 @@ function Login.main(play)
         setflagstatus(play,constant.BS_huishou[3],1)
         setflagstatus(play,constant.BS_huishou[4],1)
         setflagstatus(play,constant.BS_huishou[5],1)
-        setplaydef(play,constant.T_dljq,"{}")--各剧情
-        setplaydef(play,constant.T_xybl,"{}")  --幸运爆率
-        setplaydef(play,constant.T_grss,"{}")  --个人首爆
-        setplaydef(play,constant.T_czlb,"{}") --充值礼包
-        setplaydef(play,constant.T_jls,"{}")  --记录石
-        setplaydef(play,constant.T_wjzz,"{}")  --神器数据
-        setplaydef(play,constant.T_zxrw,"{}")  --支线任务序号
-        setplaydef(play,constant.T_qrbq,"{}")
-        setplaydef(play,constant.T_lbg,"{}")   --灵宝阁
-        setplaydef(play,constant.T_rwjl,"{}")   --灵宝阁
-        setplaydef(play,constant.T_xxtf,"{}")   --邪修讨伐
-        setplaydef(play,constant.T_mrrw,"{}")   --每日活动
-        setplaydef(play,constant.T_txhj,"{}")   --太虚幻境
-        setplaydef(play,constant.T_szjl,"{}")   --时装记录
-        local sj = json2tbl(getplaydef(play,constant.T_szjl))
-        sj["sz"] = sj["sz"] or {}
-        sj["gh"] = sj["gh"] or {}
-        sj["zj"] = sj["zj"] or {}
-        setplaydef(play,constant.T_szjl,tbl2json(sj))
-        setplaydef(play,constant.T_bbsq,"{}")   --背包神器
-        setplaydef(play,constant.T_xldtsg,"{}")    --系列地图杀怪
-        setplaydef(play,constant.T_xldtsgjl,"{}")    --系列地图杀怪奖励
-        setplaydef(play,constant.T_szdl,"{}")    --副装吞噬
-        setplaydef(play,constant.T_fb,"{}")    --禁器--原灵宝
-        setplaydef(play,constant.T_tf,"{}")     --天赋
-        setplaydef(play,constant.T_tj,"{}")     --图鉴
-        setplaydef(play,constant.T_aigj,"{}")     --ai挂机
-        setplaydef(play,constant.T_rwwp,"{}")     --任务物品
-        setplaydef(play,constant.T_ywl,"{}")     --异闻录
-        setplaydef(play,constant.T_tsg,"{}")     --天赏阁
-        setplaydef(play,constant.T_hdjl,"{}")     --活动奖励
-        setplaydef(play,constant.T_zscl,'{"zscl":[0,0,0,0,0,0,0,0,0,0,0,0]}')  --转生材料
-        setplaydef(play,constant.T_ldl,'{"lb":1,"fire":1}')  --炼丹炉
-        setplaydef(play,constant.T_npcsd,"{}")     --npc商店
-        setplaydef(play,constant.T_hdcjjl,"{}")     --活动参加记录
-        setplaydef(play,constant.T_hk,"{}")     --魂卡
-        setplaydef(play,constant.T_swhs,"{}")     --身外化身
-        setplaydef(play,constant.T_dksx,"{}")     --雕刻属性
-        setplaydef(play,constant.T_zzsj,"{}")     --转职信息
-        setplaydef(play,constant.T_sq_jd,"{}")     --必爆神器计数
-        setplaydef(play,constant.T_qmbz,"{}")      --奇门八阵
-        setplaydef(play,constant.T_zbdl,"{}")      --装备点亮
-        setplaydef(play,constant.T_tshs,"{}")      --特殊回收
-        setplaydef(play,constant.T_zbdj,"{}")      --装备等级
-        setplaydef(play,constant.T_rwsg,"{}")      --特殊任务杀怪
-        setplaydef(play,constant.T_jnqh,"{}")      --技能强化
-        setplaydef(play,constant.T_ddh,"{}")      --技能强化
-        setplaydef(play,constant.T_dlsgjl,"{}")
+        setplaydef(play,constant.T_dljq,"{}")--各剧情JSON
+        setplaydef(play,constant.T_czlb,"{}")--各种礼包
+        setplaydef(play,constant.T_jls,"{}")--记录石
+        setplaydef(play,constant.T_zxrw,"{}")--支线任务序号
+        setplaydef(play,constant.T_rwjl,"{}")--任务领取记录
+        setplaydef(play,constant.T_xybl,"{}")--幸运爆率
+        setplaydef(play,constant.T_grss,"{}")--个人首爆
+        setplaydef(play,constant.T_qrbq,"{}")--福利大厅
+        setplaydef(play,constant.T_szjl,"{}")--时装记录
+        setplaydef(play,constant.T_xldtsg,"{}")--系列地图杀怪
+        setplaydef(play,constant.T_xldtsgjl,"{}")--系列地图杀怪奖励
+        setplaydef(play,constant.T_aigj,"{}")--ai挂机
+        setplaydef(play,constant.T_rwwp,"{}")--任务物品
+        setplaydef(play,constant.T_ywl,"{}")--异闻录
+        setplaydef(play,constant.T_hdjl,"{}")--活动奖励
+        setplaydef(play,constant.T_zscl,"{}")--转生材料掉落
+        setplaydef(play,constant.T_txzr,"{}")--天选之人点数
+        setplaydef(play,constant.T_sq_jd,"{}")--必爆神器计数
+        setplaydef(play,constant.T_tshs,"{}")--特殊回收
+        setplaydef(play,constant.T_rwsg,"{}")--特殊任务杀怪
+        setplaydef(play,constant.T_dlsgjl,"{}")--大陆杀怪数量
 
-        local T_txzr = {}
-        for i = 1 ,4 do
-            table.insert(T_txzr,math.random(100000))
-        end
-        setplaydef(play,constant.T_txzr,tbl2json(T_txzr))  --转生材料
-        shaguai.jia(play,42)     --转生材料
-        shaguai.jia(play,101)   --系列地图杀怪
+
+
         if getsysvar(constant.G_kqyz) == 0 then
             setsysvar(constant.G_kqyz,1)
             setsysvar(constant.G_kqts,1)
@@ -88,7 +56,6 @@ function Login.main(play)
             setsysvar(constant.A_bossss,"{}")  --boss首杀
         end
         Login_msg(play,0)
-        --内测奖励
 
         --TODO  初始化任务
         setplaydef(play,constant.U_zxrw[1],1)
@@ -241,29 +208,21 @@ function Login.main(play)
         sendmsg(play,1,'{"Msg":"[自动回收已关闭]","FColor":56,"BColor":255,"Type":1}')
     end
     ---------------------------------------------------时装记录
-    local szjl = json2tbl(getplaydef(play,constant.T_szjl))
-    if szjl["dqsz"] and szjl["dqsz"] > 0 then
-        changeitemshape(play,linkbodyitem(play,17),sz["sz"][szjl["dqsz"]]["wx"])
-    end
-    if szjl["dqgh"] and szjl["dqgh"] > 0 then
-        playeffect(play,sz["gh"][szjl["dqgh"]]["wx"],0,0,0,1,0)
-    end
-    if szjl["dqzj"] and szjl["dqzj"] > 0 then
-        setmoveeff(play,sz["zj"][szjl["dqzj"]]["wx"],0)
-    end
+    --local szjl = json2tbl(getplaydef(play,constant.T_szjl))
+    --if szjl["dqsz"] and szjl["dqsz"] > 0 then
+    --    changeitemshape(play,linkbodyitem(play,17),sz["sz"][szjl["dqsz"]]["wx"])
+    --end
+    --if szjl["dqgh"] and szjl["dqgh"] > 0 then
+    --    playeffect(play,sz["gh"][szjl["dqgh"]]["wx"],0,0,0,1,0)
+    --end
+    --if szjl["dqzj"] and szjl["dqzj"] > 0 then
+    --    setmoveeff(play,sz["zj"][szjl["dqzj"]]["wx"],0)
+    --end
 
     ---------------------------------------------------顶戴
     if checktitle(play,"狂暴之力") then
         seticon(play,0,1,10294,0,0,0,0,0)
     end
-
-    delskill(play,82)
-    delskill(play,71)
-    local T_zzsj = json2tbl(getplaydef(play,constant.T_zzsj))
-    if T_zzsj.dqzy then
-        addskill(play,constant.zzxg.zy[T_zzsj.dqzy].start_skill)
-    end
-
 
     ---------------------------------------------------复活次数
     if querymoney(play,15) < querymoney(play,14) and not hasbuff(play,20078) then

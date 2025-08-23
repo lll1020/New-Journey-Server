@@ -79,9 +79,6 @@ function resetday(play)
 	for _, v in pairs(constant.pz_ldql) do
 		Player.title_del(play, v)
 	end
-
-
-
 end
 -----------------全局1号60秒定时器----------------
 function ontimerex1()
@@ -168,9 +165,6 @@ function ontimer6(play)
     --release_print("红点系统")
     --天上阁
     local ists = false
-
-
-
 end
 
 -----------------定时器----------------清空除魔  每天五点
@@ -268,7 +262,6 @@ end
 
 --------------------进背包触发-------------------
 function addbag(play, item)
-
 end
 
 --------------------捡物品触发-------------------
@@ -335,9 +328,6 @@ function pickupitemex(play, item)
             end
         end
     end
-
-
-
 	if idx > 10010 and idx < 10019 then    --经验丹
         local sl = getiteminfo(play, item, 5)
         changeexp(play, '+', getstditeminfo(idx, 8) * sl, false)
@@ -371,11 +361,9 @@ function takeonbeforeex(play,item,where,makeIndex)
 end
 --------------------穿套装触发-------------------idx为套装ID
 function groupitemonex(play,idx)
-
 end
 --------------------脱套装触发-------------------
 function groupitemoffex(play,idx)
-
 end
 --------------------穿戴后触发-------------------
 function takeonex(play, item, where, Name, makeindex)
@@ -425,17 +413,12 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
                 Damage = Damage + dfdj_damage
             end
         end
-        if hasbuff(play, 20152) then
-            return Damage + Damage
-        end
 		return Damage
 	else
         local js = getbaseinfo(Target, 18)
         if js > 0 then
             Damage = Damage - (Damage * js/10000)
         end
-
-
         ---------------------------------------------对怪切割计算
 		local zd = getbaseinfo(Target, 12)
 		local sy = -1
@@ -467,20 +450,16 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
 						if sy > zeng then
 							sy = sy - zeng
 							humanhp(Target, '-', zeng, 102, 0, play, 1)
-                            --sendmsg(play,1,'{"Msg":"打怪伤害'..Damage..',切割'..qie..',增伤'..zeng..'","FColor":56,"BColor":255,"Type":1}')
 						else
 							humanhp(Target, '-', sy, 102, 0, play, 1)
-                            --sendmsg(play,1,'{"Msg":"打怪伤害'..Damage..',切割'..qie..',增伤'..sy..'限伤","FColor":56,"BColor":255,"Type":1}')
 							return Damage
 						end
 					end
 				else
 					humanhp(Target, '-', sy, math.random(100) > 10 and 101 or 112, 0, play, 1)
-                    --sendmsg(play,1,'{"Msg":"打怪伤害'..Damage..',切割'..sy..',达限伤","FColor":56,"BColor":255,"Type":1}')
 					return Damage
 				end
 			else
-                --sendmsg(play,1,'{"Msg":"打怪伤害'..Damage..'限制'..zd..',达限伤","FColor":56,"BColor":255,"Type":1}')
 				return zd
 			end
 		end
@@ -527,9 +506,6 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
 		if buffsh > 0 then
 			humanhp(Target, '-', buffsh, 107, 0, play, 1)
 		end
-        if hasbuff(play, 20152) then
-            return Damage + Damage
-        end
 		return Damage
 	end
 end
@@ -577,7 +553,6 @@ function attack(play, Target, Hiter, MagicId)
                 Buff[sy](play, 3, 0, Target, MagicId)
             end
         end
-        --setplaydef(play,"N$战斗状态",os.time() + 1)
         local xi = getbaseinfo(play, 51, 248)
         if xi > 0 then
             humanhp(play,"+",xi)
@@ -646,14 +621,7 @@ function struckdamage(play, Hiter, Target, MagicId, Damage)
 		sendattackeff(play, 108, xi, "*")
 		xi = -xi
 	end
-    if hasbuff(play,20111) and (Damage + ew + xi) > 10000 then
-        return 10000
-    end
-    if Damage + ew + xi > 0 then
-        return Damage + ew + xi
-    else
-        return 1
-    end
+    return (Damage + ew + xi) > 0 and (Damage + ew + xi) or 1
 end
 --------------------被攻击后触发-------------------
 function struck(play, Hiter, Target, MagicId)
@@ -663,31 +631,24 @@ function struck(play, Hiter, Target, MagicId)
 end
 --------------------对目标使用技能触发-------------------野蛮
 function magtagfunc27(play, Target)
-
 end
 --------------------对目标使用技能触发-------------------开天
 function magtagfunc66(play, Target)
 end
 --------------------对目标使用技能触发-------------------十步一杀
 function magselffunc82(play)
-
 end
 --------------------对目标使用技能触发-------------------施毒术
 function magtagfunc6(play, Target)
-
 end
 --------------------对目标使用技能触发-------------------隐身术
 function magselffunc18(play, Target)
 end
-
 function magselffunc26(play) ---烈火
-
 end
 function magselffunc66(play) ---开天
-
 end
 function magselffunc56(play) ---逐日
-
 end
 
 --------------------杀怪触发-------------------
@@ -714,8 +675,6 @@ function killmon(play, mob)
     else
         setplaydef(play,constant.J_jsgw[2],getplaydef(play,constant.J_jsgw[2])+1)
     end
-
-
     local dt = getbaseinfo(play, 3)
     if dt ~= "xtc" then
         local mz = getbaseinfo(mob, 1, 1)
@@ -827,14 +786,7 @@ function playdie(play, hiter)
         local cs = getplaydef(hiter,constant.U_jskb) + 1
         setplaydef(hiter,constant.U_jskb,cs)
     end
-    say(play,[[<Img|id=ui_1|x=0|y=0|width=500|height=300|img=wy\public\fuhuo_bj.png|bg=1|move=1|reset=1|show=4|loadDelay=1>
-                            <Text|id=ui_6|a=4|x=264|y=84|color=255|size=18|text=你被【]]..getconst(play,"<$CURRRTARGETNAME>")..[[】杀死了，是否要复活？>
-                            <Button|id=ui_8|x=69|y=226|width=145|height=40|nimg=wy\public\fuhuo_1.png|color=251|size=16|link=@yc_fuhuo_hc>
-                            <Button|id=ui_9|x=298|y=226|width=145|height=40|nimg=wy\public\fuhuo_2.png|color=251|size=16|link=@yc_fuhuo_yd>
-                            <Text|id=ui_12|x=384|y=175|color=250|size=16|text=(剩余]]..(getbagitemcount(play,"复活丹"))..[[枚)>
-                            <COUNTDOWN|id=ui_14|a=0|x=168|y=176|time=30|color=249|size=18|count=1|link=@yc_fuhuo_hc>
-                            ]])
-
+    showprogressbardlg(play,5,"@yc_fuhuo_hc","复活中..", 0,"@yc_fuhuo_hc")
 end
 --------------------跳转回城复活-------------------
 function yc_fuhuo_hc(play)
@@ -893,10 +845,6 @@ function sendability(play)
     end
     Player.updata_zdl(play)
 end
---------------------爆率监听触发-------------------经验丹
-function bl_zyjhl1(play)
-    return true
-end
 --------------------爆率监听触发-------------------幸运爆率
 function bl_zyjhl2(play,mingzi)
     local sj = json2tbl(getplaydef(play,constant.T_xybl))
@@ -906,15 +854,6 @@ function bl_zyjhl2(play,mingzi)
         return true
     end
     return false
-end
-
-
---------------------爆率监听触发-------------------实物回收掉落
-function bl_zyjhl5(play,mingzi)
-    if globalinfo(3) > 1 and daluditu[getbaseinfo(play,3)] and (daluditu[getbaseinfo(play,3)] < 3 and math.random(100) < 25) then
-        return false
-    end
-    return true
 end
 
 local czlb_je = {18,38,68,128,288,588,888,1188,1588,1888}
@@ -944,112 +883,6 @@ function czlb_pz(play,sy)
     local lb_json = json2tbl(getplaydef(play, constant.T_czlb))
     if getplaydef(play,constant.N_lbyz) == 1 then
         setplaydef(play,constant.N_lbyz,0)
-        if sy == 1 then
-            setflagstatus(play,constant.BS_18cz,1)
-            sendmail(getbaseinfo(play, 2), 0, "在线充值", "恭喜你成功获得18元充值奖励，请及时提取奖励",Player.jl_mail(teshudata[502].jl[sy].jl))
-            if teshudata[502].jl[sy].ch then Player.title_give(play, teshudata[502].jl[sy].ch) end
-        elseif sy == 2 then
-            sendmail(getbaseinfo(play, 2), 0, "在线充值", "恭喜你成功获得38元充值奖励，请及时提取奖励",Player.jl_mail(teshudata[502].jl[sy].jl))
-            if teshudata[502].jl[sy].ch then Player.title_give(play, teshudata[502].jl[sy].ch) end
-        elseif sy == 3 then
-            sendmail(getbaseinfo(play, 2), 0, "在线充值", "恭喜你成功获得68元充值奖励，请及时提取奖励",Player.jl_mail(teshudata[502].jl[sy].jl))
-            setflagstatus(play,constant.BS_mztq,1)
-            local T_bbsq = json2tbl(getplaydef(play,constant.T_bbsq))
-            T_bbsq[teshudata[502].jl[sy].bbsq] = 1
-            setplaydef(play,constant.T_bbsq,tbl2json(T_bbsq))
-
-            if bbsq[teshudata[502].jl[sy].bbsq].attr then
-                Player.updateSomeAddr(play,nil,bbsq[teshudata[502].jl[sy].bbsq].attr)
-            end
-            if bbsq[teshudata[502].jl[sy].bbsq].buff then
-                Buff[bbsq[teshudata[502].jl[sy].bbsq].buff](play,1)
-            end
-            sendmsg(play, 1, '{"Msg":"<font color=\'#00FF00\'>获得背包神器：'..teshudata[502].jl[sy].bbsq..'，可在【背包-背包神器】界面查看</font>","Type":9}')
-        elseif sy == 4 then
-            sendmail(getbaseinfo(play, 2), 0, "在线充值", "恭喜你成功获得128元充值奖励，请及时提取奖励",Player.jl_mail(teshudata[502].jl[sy].jl))
-            Buff[94](play,1)
-            lb_json.jskg = true
-            setplaydef(play, constant.T_czlb, tbl2json(lb_json))
-            local T_bbsq = json2tbl(getplaydef(play,constant.T_bbsq))
-            T_bbsq[teshudata[502].jl[sy].bbsq] = 1
-            setplaydef(play,constant.T_bbsq,tbl2json(T_bbsq))
-
-            if bbsq[teshudata[502].jl[sy].bbsq].attr then
-                Player.updateSomeAddr(play,nil,bbsq[teshudata[502].jl[sy].bbsq].attr)
-            end
-            if bbsq[teshudata[502].jl[sy].bbsq].buff then
-                Buff[bbsq[teshudata[502].jl[sy].bbsq].buff](play,1)
-            end
-            setflagstatus(play,constant.BS_bossjd,1)
-
-            sendmsg(play, 1, '{"Msg":"<font color=\'#00FF00\'>获得背包神器：'..teshudata[502].jl[sy].bbsq..'，可在【背包-背包神器】界面查看</font>","Type":9}')
-        elseif sy == 5 then
-            sendmail(getbaseinfo(play, 2), 0, "在线充值", "恭喜你成功获得288元充值奖励，请及时提取奖励",Player.jl_mail(teshudata[502].jl[sy].jl))
-            local T_fb = json2tbl(getplaydef(play,constant.T_fb))
-            T_fb[teshudata[502].jl[sy].fb] = 1
-            setplaydef(play,constant.T_fb,tbl2json(T_fb))
-
-            Player.updateSomeAddr(play, nil, fb[teshudata[502].jl[sy].fb].attr, 1)
-            if fb[teshudata[502].jl[sy].fb].buff then
-                Buff[fb[teshudata[502].jl[sy].fb].buff](play,1)
-            end
-            sendmsg(play, 1, '{"Msg":"<font color=\'#00FF00\'>获得禁器：'..teshudata[502].jl[sy].fb..'，可在【人物-禁器】界面查看</font>","Type":9}')
-        elseif sy == 6 then
-            sendmail(getbaseinfo(play, 2), 0, "在线充值", "恭喜你成功获得588元充值奖励，请及时提取奖励",Player.jl_mail(teshudata[502].jl[sy].jl))
-            local sj = json2tbl(getplaydef(play,constant.T_szjl))
-            sj["zj"] = sj["zj"] or {}
-            sj["zj"][""..4] = 1
-            setplaydef(play,constant.T_szjl,tbl2json(sj))
-            Player.updateSomeAddr(play, nil, sz.zj[4].attr, 1)
-            Buff[20195](play,1)
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[在线充值]</font><font color=\'#28ef01\'>获得足迹，可在仙姿【仙姿】界面切换</font>","Type":9}')
-        elseif sy == 7 then
-            sendmail(getbaseinfo(play, 2), 0, "在线充值", "恭喜你成功获得888元充值奖励，请及时提取奖励",Player.jl_mail(teshudata[502].jl[sy].jl))
-            if teshudata[502].jl[sy].ch then Player.title_give(play, teshudata[502].jl[sy].ch) end
-        elseif sy == 8 then
-            sendmail(getbaseinfo(play, 2), 0, "在线充值", "恭喜你成功获得1188元充值奖励，请及时提取奖励",Player.jl_mail(teshudata[502].jl[sy].jl))
-            local T_fb = json2tbl(getplaydef(play,constant.T_fb))
-            T_fb[teshudata[502].jl[sy].fb] = 1
-            setplaydef(play,constant.T_fb,tbl2json(T_fb))
-
-            Player.updateSomeAddr(play, nil, fb[teshudata[502].jl[sy].fb].attr, 1)
-            if fb[teshudata[502].jl[sy].fb].buff then
-                Buff[fb[teshudata[502].jl[sy].fb].buff](play,1)
-            end
-        elseif sy == 9 then
-            sendmail(getbaseinfo(play, 2), 0, "在线充值", "恭喜你成功获得1588元充值奖励，请及时提取奖励",Player.jl_mail(teshudata[502].jl[sy].jl))
-            local T_bbsq = json2tbl(getplaydef(play,constant.T_bbsq))
-            T_bbsq[teshudata[502].jl[sy].bbsq] = 1
-            setplaydef(play,constant.T_bbsq,tbl2json(T_bbsq))
-
-            if bbsq[teshudata[502].jl[sy].bbsq].attr then
-                Player.updateSomeAddr(play,nil,bbsq[teshudata[502].jl[sy].bbsq].attr)
-            end
-            if bbsq[teshudata[502].jl[sy].bbsq].buff then
-                Buff[bbsq[teshudata[502].jl[sy].bbsq].buff](play,1)
-            end
-            sendmsg(play, 1, '{"Msg":"<font color=\'#00FF00\'>获得背包神器：'..teshudata[502].jl[sy].bbsq..'，可在【背包-背包神器】界面查看</font>","Type":9}')
-        elseif sy == 10 then
-            sendmail(getbaseinfo(play, 2), 0, "在线充值", "恭喜你成功获得1888元充值奖励，请及时提取奖励",Player.jl_mail(teshudata[502].jl[sy].jl))
-            if teshudata[502].jl[sy].ch then Player.title_give(play, teshudata[502].jl[sy].ch) end
-        end
-        if lb_json["cz1"] and lb_json["cz2"] and lb_json["cz3"] and lb_json["cz4"] and lb_json["cz5"] and lb_json["cz6"] then
-            local sj = json2tbl(getplaydef(play,constant.T_szjl))
-            sj["sz"] = sj["sz"] or {}
-            if not lb_json.yijd then
-                sj["sz"][""..7] = 1
-                lb_json.yijd = true
-                setplaydef(play, constant.T_czlb, tbl2json(lb_json))
-                sendmail(getbaseinfo(play, 2), 0, "在线充值", "恭喜你成功获得充值奖励，请及时提取奖励",Player.jl_mail({wp = {{"灵之宝箱",100}}}))
-                setplaydef(play,constant.T_szjl,tbl2json(sj))
-                sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[在线充值]</font><font color=\'#28ef01\'>获得时装，可在仙姿【仙姿】界面切换</font>","Type":9}')
-            end
-            if lb_json["cz7"] and lb_json["cz8"] and lb_json["cz9"] and lb_json["cz10"] and not lb_json.erjd then
-                sendmail(getbaseinfo(play, 2), 0, "在线充值", "全部礼包激活奖励","皇图霸业一笑中#1#850&不胜人生一场醉#1#850")
-                lb_json.erjd = true
-                setplaydef(play, constant.T_czlb, tbl2json(lb_json))
-            end
-        end
     end
 end
 
@@ -1065,10 +898,7 @@ end
 --------------------充值触发-------------------
 function recharge(play, Gold, ProductId, MoneyId, isReal)
     release_print("充值触发","玩家："..getbaseinfo(play,1), "金额："..Gold, "订单:"..ProductId, "货币id:"..MoneyId, "是否真充:"..(isReal and "是" or "否"))
-
-    local T_tsg = json2tbl(getplaydef(play,constant.T_tsg))
-    T_tsg["j_cz"] = (T_tsg["j_cz"] or 0) + Gold
-    setplaydef(play,constant.T_tsg,tbl2json(T_tsg))
+    setplaydef(play,constant.J_zscz,(getplaydef(play,constant.J_zscz) or 0) + Gold)
 
     if MoneyId == 7 then   ---仙玉充值
         local lb_json, sy = getplaydef(play, constant.T_czlb), constant.cz_jeyz[Gold]
@@ -1087,65 +917,15 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
         changemoney(play,20,"+",Gold,"平台累计充值",true)
         changemoney(play,8,"+",Gold*100,"充值送一倍",true)
         changemoney(play,23,"+",Gold,"累计充值",true)
-        setplaydef(play,constant.J_zscz,(getplaydef(play,constant.J_zscz) or 0) + Gold)
-
         Login_msg(play,18,Gold,Gold*200)
-
-        if getflagstatus(play,constant.BS_sckg) == 0 and querymoney(play,20) >= 10 then
-            sendluamsg(play, 101, 501, 0, 0,getflagstatus(play,constant.BS_sckg))
-        end
+        ----首冲弹界面
+        --if getflagstatus(play,constant.BS_sckg) == 0 and querymoney(play,20) >= 10 then
+        --    sendluamsg(play, 101, 501, 0, 0,getflagstatus(play,constant.BS_sckg))
+        --end
 
 
     elseif MoneyId == 21 then  --直拉礼包
-        setplaydef(play,constant.J_zscz,(getplaydef(play,constant.J_zscz) or 0) + Gold)
         changemoney(play,23,"+",Gold,"平台累计充值",true)
-        if Gold == 98 then -- 每日礼包
-            local J_mrlb = getplaydef(play,constant.J_mrlb)
-            if J_mrlb < 1 then
-                J_mrlb = J_mrlb + 1
-                setplaydef(play,constant.J_mrlb,J_mrlb)
-
-                local T_bbsq = json2tbl(getplaydef(play,constant.T_bbsq))
-                if T_bbsq["一念·神魔"] then
-                    if T_bbsq["一念·神魔"] < 30 then
-                        T_bbsq["一念·神魔"] = T_bbsq["一念·神魔"] + 1
-                        Player.updateSomeAddr(play,nil, {bbsq["一念·神魔"].other_attr[T_bbsq["一念·神魔"]]})
-
-                        local attr = {}
-                        for vv,kk in ipairs(bbsq["一念·神魔"].attr) do
-                            if kk[1] < 20 then
-                                table.insert(attr,{kk[1],kk[2]*0.1})
-                            end
-                        end
-                        Player.updateSomeAddr(play,nil, attr)
-                        if T_bbsq["一念·神魔"] == 4 then
-                            local wpdx = linkbodyitem(play,73)
-                            changecustomitemvalue(play,wpdx,1,"+",20,0) --攻上
-                        elseif T_bbsq["一念·神魔"] == 5 then
-                            local wpdx = linkbodyitem(play,73)
-                            changecustomitemvalue(play,wpdx,0,"+",20,1) --生命
-                        elseif T_bbsq["一念·神魔"] == 16 then
-                            Player.qsx_give(play, 20, "", nil)
-                        elseif T_bbsq["一念·神魔"] == 27 then
-                            callscriptex(play, "CHANGELEVEL", "+", 5)
-                        end
-                    else
-                        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>[天赏阁]</font><font color=\'#ff0500\'>一念·神魔已满级...</font>","Type":9}')
-                        return
-                    end
-                else
-                    T_bbsq["一念·神魔"] = 1
-                    Player.updateSomeAddr(play,nil, bbsq["一念·神魔"].attr)
-                end
-                setplaydef(play,constant.T_bbsq,tbl2json(T_bbsq))
-
-                Player.rwjl(play, teshudata[526].jl, "每日礼包",nil,1000)
-                Player.title_give(play,teshudata[526].ch)
-                addbuff(play, 19992)
-
-                sendluamsg(play,101,526,0,getplaydef(play,constant.J_mrlb),"")
-            end
-        end
     elseif MoneyId == 24 then  -- 超级馈赠
 
     end
@@ -1198,7 +978,7 @@ function jqr_shabake()
     end
 end
 
---------------------机器人触发脚本-------------------沙巴克
+--------------------机器人触发脚本-------------------跨服沙巴克
 function jqr_kfshabake()
     if checkkuafuserver() or checkkuafuconnect() then
         repaircastle()
@@ -1276,23 +1056,10 @@ function usercmd4(play,mingz)
     end
 end
 
-function usercmd5(play)
-    if getconst(play, '<$SERVERNAME>') == "" or getconst(play, '<$SERVERNAME>') == "审核区1区" or getconst(play, '<$SERVERNAME>') == "测试区" or getconst(play, '<$SERVERNAME>') == "直播区" then
-        say(play,[[<Img|id=ui_1|x=0.0|y=-1.0|width=800|height=600|img=public/bg_npc_01.png|bg=1|esc=1|move=0|reset=1|show=0|scale9l=15|scale9r=15|scale9t=15|scale9b=15|loadDelay=1>
-<Layout|id=ui_2|x=801.0|y=0.0|width=80|height=80|link=@exit>
-<Button|id=ui_3|x=794|y=0.0|width=26|height=42|nimg=public/1900000510.png|pimg=public/1900000511.png|color=255|size=18|link=@exit>
-	]])
-    end
-end
-function zbzbei(play,id)
-end
-
 --------------------加入行会后触发-------------------
 function guildaddmemberafter(play,guild,name)
-
 end
 function guilddelmember(play)
-
 end
 function updateguildnotice(play)
     stop(play)
@@ -1367,7 +1134,6 @@ function picktask(play,rwid)
     end
 end
 --------------------模拟点击任务触发-------------------
-
 function moni_dj_rw(actor, rwid) --模拟点击任务
     rwid = tonumber(rwid)
     if rwid < 500 and getplaydef(actor,constant.U_zxrw[1]) ~= rwid then
@@ -1577,7 +1343,6 @@ function deletetask(play,rwid)
         setplaydef(play,constant.U_zxrw[1],rwid+1)
         setplaydef(play,constant.U_zxrw[2],0)
     end
-
     if constant.rw_syb[rwid+1] and rwid < 1000 then
         local lx = constant.rw_syb[rwid+1][1]
         if rwid < 1000 then
@@ -1712,8 +1477,6 @@ end
 function playoffline(play)--人物大退触发
     if getconst(play,"<$SERVERNAME>") ~= "" and getbaseinfo(play,6) > 31 and getplaycountinmap(play,"xtc",0) < 200 then
         setofftimer(play,1)
-        setofftimer(play,2)
-        setofftimer(play,3)
         setofftimer(play,4)
         setofftimer(play,5)
         setofftimer(play,6)
@@ -1724,8 +1487,6 @@ end
 function playreconnection(play)--	人物小退触发
     if getconst(play,"<$SERVERNAME>") ~= "" and getbaseinfo(play,6) > 31 and getplaycountinmap(play,"xtc",0) < 200 then
         setofftimer(play,1)
-        setofftimer(play,2)
-        setofftimer(play,3)
         setofftimer(play,4)
         setofftimer(play,5)
         setofftimer(play,6)
@@ -1743,7 +1504,6 @@ end
 
 function kuafuend(play)--	退出跨服
     local szjl = json2tbl(getplaydef(play,constant.T_szjl))
-    setofftimer(play,7)
 end
 
 --------------------宠物攻击伤害前触发-------------------
@@ -1827,7 +1587,7 @@ end
 
 --------------------拿沙结束触发--------------------
 function castlewarend()
-    release_print("kfshabakejs")
+    release_print("shabakejl")
     local player_list = getplayerlst()
     if checkkuafuserver() then
         kfbackcall(50,getbaseinfo(getplayerbyname(castleinfo(3)), 2),"恭喜你获得沙巴克战争中胜利方会长奖励，奖励已发放，请及时提取!",teshudata["sbk"][1][1])--玩家对象发送

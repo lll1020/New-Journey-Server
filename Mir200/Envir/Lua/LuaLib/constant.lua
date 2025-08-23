@@ -55,11 +55,11 @@ constant.zs_zhuangbeiwei = {
 constant.pz_jzbs          = {
 
 }
-constant.pz_tyrcjl          = {10,8,5,3}                                          --比武大会的奖励
+constant.pz_tyrcjl          = {}                                          --比武大会的奖励
 constant.pz_bossys          = {[70] = true, [141] = true, [58] = true, [251] = true}                            --boss名字颜色
 constant.cz_jeyz = {[18] = 1,[38] = 2,[68] = 3,[128] = 4,[288] = 5,[588] = 6,[888] = 7,[1188] = 8,[1588] = 9,[1888] = 10}
 
-constant.pz_tgdssg          = {{"吾良老板",1,141,{37,41}},{"猪技术",1,141,{201,199}},{"猪技术",1,141,{198,84}},{"猪技术",1,141,{206,316}},{"猪技术",6,251,{{317,184},{337,205},{318,223},{298,203},{196,193},{208,205}}},{"狗策划",25,242},{"狗策划",70,255},{"猪技术",15,141}}                            --活动暴打够侧滑刷怪
+constant.pz_tgdssg          = {}                            --活动暴打够侧滑刷怪
 
 constant.pz_htqx = {[1313760734] = "lll"}           --后台权限
 constant.pz_zbqd = {}              --主播账号启动礼包上线直接给
@@ -109,31 +109,30 @@ constant.T_rwjl        = "T7"                                                   
 constant.T_xybl           = "T8"                                                                         --幸运爆率
 constant.T_grss           = "T9"                                                                         --个人首爆
 constant.T_qrbq           = "T10"                                                                        --福利大厅
-constant.T_szjl           = "T16"                                                                        --时装记录
-constant.T_xldtsg           = "T17"                                                                        --系列地图杀怪
-constant.T_xldtsgjl           = "T18"                                                                     --系列地图杀怪奖励
-constant.T_aigj           = "T23"                                                                        --ai挂机
-constant.T_rwwp           = "T24"                                                                        --任务物品
-constant.T_ywl           = "T25"                                                                        --异闻录
-constant.T_hdjl           = "T28"                                                                        --活动奖励
-constant.T_zscl          =  "T29"                                                                      --转生材料掉落
-constant.T_txzr          =  "T30"                                                                      --天选之人点数
-
-constant.T_sq_jd     =  "T38"                                                                      --必爆神器计数
-constant.T_tshs     =  "T41"                                                                      --特殊回收
-constant.T_rwsg     =  "T42"                                                                      --特殊任务杀怪
-constant.T_dlsgjl     =  "T45"                                                                      --大陆杀怪数量
+constant.T_szjl           = "T11"                                                                        --时装记录
+constant.T_xldtsg           = "T12"                                                                        --系列地图杀怪
+constant.T_xldtsgjl           = "T13"                                                                     --系列地图杀怪奖励
+constant.T_aigj           = "T14"                                                                        --ai挂机
+constant.T_rwwp           = "T15"                                                                        --任务物品
+constant.T_ywl           = "T16"                                                                        --异闻录
+constant.T_hdjl           = "T17"                                                                        --活动奖励
+constant.T_zscl          =  "T18"                                                                      --转生材料掉落
+constant.T_txzr          =  "T19"                                                                      --天选之人点数
+constant.T_sq_jd     =  "T20"                                                                      --必爆神器计数
+constant.T_tshs     =  "T21"                                                                      --特殊回收
+constant.T_rwsg     =  "T22"                                                                      --特殊任务杀怪
+constant.T_dlsgjl     =  "T23"                                                                      --大陆杀怪数量
 
 
 
 --个人J变量
 constant.J_mrfhw          = "J1"                                                                          --每日使用复活丹次数
-constant.J_jsgw         =   {"J4","J5"}                                                                    --每日大小怪--数量
-constant.J_zxsj         =   "J9"                                                                         --今日在线时间
-constant.J_qrqd         =   "J11"                                                                         --七日签到记录
-constant.J_hbdh         =   {"J13","J14"}                                                                 --每日货币兑换
-constant.J_zscz         =  "J17"                                                                     --每日真实充值记录
-constant.J_isgs         =    "J32"                                                                     --是否进入过攻沙
+constant.J_jsgw         =   {"J2","J3"}                                                                    --每日大小怪--数量
+constant.J_zxsj         =   "J4"                                                                         --今日在线时间
+constant.J_qrqd         =   "J5"                                                                         --七日签到记录
+constant.J_hbdh         =   {"J6","J7"}                                                                 --每日货币兑换
+constant.J_zscz         =  "J8"                                                                     --每日真实充值记录
+constant.J_isgs         =    "J9"                                                                     --是否进入过攻沙
 
 
 --个人U变量
@@ -147,8 +146,7 @@ constant.U_zhixrwjd       = {"U8","U9","U10"}                                   
 constant.U_srsl           = "U11"                                                                        --杀人数量
 constant.U_fldt           = {"U12","U13"}                                                                --福利大厅在线,杀怪
 constant.U_hqtb           = "U14"                                                                        --玩家合区次数是否一致
-
-constant.U_dkb           = "U30"                                                                        --大狂暴--次数
+constant.U_dkb           = "U15"                                                                        --大狂暴--次数
 
 
 --个人标识
