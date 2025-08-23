@@ -10,20 +10,8 @@ function npc.main(play,npcid)
 <EquipShow|id=ui_30|x=150|y=500|index=17|showtips=1|link=@脚本命令>
 <EquipShow|id=ui_300|x=200|y=500|index=87|showtips=1|link=@脚本命令>
 <EquipShow|id=ui_301|x=250|y=500|index=104|showtips=1|link=@脚本命令>
-<Button|id=ui_31|x=18|y=386|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=神龙真气|link=@ggna,12>
-<Button|id=ui_32|x=138|y=382|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=10转|link=@ggna,13>
-<Button|id=ui_33|x=256|y=382|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=200级|link=@ggna,14>
-<Button|id=ui_35|x=400|y=382|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=给战令|link=@ggna,16>
-<Button|id=ui_36|x=480|y=382|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=给战令等級1|link=@ggna,17>
-<Button|id=ui_37|x=480|y=450|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=完成当前任务|link=@ggna,18>
 
-<Button|id=ui_7|x=480|y=250|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=冠绝一界积分|link=@ggna,12>
-<Button|id=ui_8|x=50|y=250|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=冠绝一界积分|link=@ggna,11>
-
-
-<Button|id=ui_38|x=18|y=450|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=秘境测试|link=@ggna,19>
 <Button|id=ui_100|x=150|y=450|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=llxf测试|link=@ggna,23>
-<Button|id=ui_101|x=300|y=450|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=直播地图切换|link=@ggna,22>
 
 <Button|id=ui_39|x=18|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=武林盟主开始|link=@jqr_ddzbks,20>
 <Button|id=ui_40|x=100|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=武林盟主结束|link=@jqr_ddzbjs,21>
