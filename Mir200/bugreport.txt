@@ -1,0 +1,1055 @@
+date/time          : 2024-11-14, 20:20:53, 357ms
+computer name      : LLL
+user name          : 24187
+registered owner   : 2418759512@qq.com
+operating system   : Windows 10 x64 build 22631
+system language    : Chinese (Simplified)
+system up time     : 2 hours 57 minutes
+program up time    : 1 hour 18 minutes
+processors         : 16x AMD Ryzen 7 7735H with Radeon Graphics
+physical memory    : 9709/28357 MB (free/total)
+free disk space    : (C:) 32.17 GB (E:) 82.19 GB
+display mode       : 1920x1080, 32 bit
+process id         : $4ba0
+allocated memory   : 1.02 GB
+largest free block : 128914.06 GB
+command line       : E:\BaiduNetdiskDownload\修改版\ss\Mir200\M2Server.exe 397026 560 0 0 0
+executable         : M2Server.exe
+exec. date/time    : 2024-07-18 17:24
+version            : 2023.2.10.0
+compiled with      : Delphi 11
+madExcept version  : 5.1.1
+callstack crc      : $ba92a047, $22c7711c, $c8e70d80
+exception number   : 1
+exception class    : EAccessViolation
+exception message  : Access violation at address 00007FFB33A23F8A in module 'ntdll.dll'. Write of address 0000000000000024.
+
+main thread ($d2c):
+7ffb33a2 +00aa ntdll.dll
+7ffb33a1 +003d ntdll.dll                                    RtlEnterCriticalSection
+011e1159 +0089 M2Server.exe M2Share               4939   +8 MainOutMessage
+010b5e00 +0070 M2Server.exe uKuafu                 942   +2 TKuaFu.OnDisconnected
+009a4b26 +00a6 M2Server.exe Net.CrossSocket.Base  1063  +11 TAbstractCrossSocket.TriggerDisconnected
+009a56b7 +0057 M2Server.exe Net.CrossSocket.Base  1290   +5 TAbstractCrossConnection.Close
+009a3eb1 +00a1 M2Server.exe Net.CrossSocket.Base   867   +8 TAbstractCrossSocket.CloseAllConnections
+009a3df9 +0029 M2Server.exe Net.CrossSocket.Base   853   +2 TAbstractCrossSocket.CloseAll
+009adeb6 +0036 M2Server.exe Net.CrossSocket.Iocp   398   +3 TIocpCrossSocket.StopLoop
+009a44c8 +0018 M2Server.exe Net.CrossSocket.Base   920   +1 TAbstractCrossSocket.BeforeDestruction
+002c1702 +0012 M2Server.exe System               19699   +2 @BeforeDestruction
+009a4228 +0018 M2Server.exe Net.CrossSocket.Base   892   +0 TAbstractCrossSocket.Destroy
+002cdba2 +0052 M2Server.exe System               40175   +7 TInterfacedObject._Release
+002cbdcb +002b M2Server.exe System               39015   +6 @IntfClear
+002c731f +023f M2Server.exe System               33223  +81 @FinalizeRecord
+002c0e5c +002c M2Server.exe System               18584   +8 TObject.CleanupInstance
+002c0a8b +000b M2Server.exe System               18314   +1 TObject.FreeInstance
+003c3d31 +0021 M2Server.exe madExcept                       InterceptClassDestroy
+010b49cf +006f M2Server.exe uKuafu                 776   +8 TKuaFu.Destroy
+002c0cc5 +0015 M2Server.exe System               18378   +5 TObject.Free
+01a2563c +1a0c M2Server.exe svMain                1492 +345 TFrmMain.StopService
+01a26c94 +0154 M2Server.exe svMain                1762   +7 TFrmMain.CloseTimerTimer
+00634e80 +0020 M2Server.exe Vcl.ExtCtrls          3244   +1 TTimer.Timer
+00634ca7 +0037 M2Server.exe Vcl.ExtCtrls          3202   +4 TTimer.WndProc
+00496743 +0023 M2Server.exe System.Classes       18534   +8 StdWndProc
+7ffb32c0 +01fc USER32.dll                                   DispatchMessageW
+006ce31e +012e M2Server.exe Vcl.Forms            11488  +23 TApplication.ProcessMessage
+006ce393 +0013 M2Server.exe Vcl.Forms            11518   +1 TApplication.HandleMessage
+006ce7ea +00ea M2Server.exe Vcl.Forms            11657  +27 TApplication.Run
+01a2cd57 +0177 M2Server.exe M2Server               129  +15 initialization
+7ffb329f +0018 KERNEL32.DLL                                 BaseThreadInitThunk
+7ffb33a4 +0022 ntdll.dll                                    RtlUserThreadStart
+
+thread $655c:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $1660: <priority:1>
+7ffb329f +18 KERNEL32.DLL  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll     RtlUserThreadStart
+
+thread $1728:
+7ffb329f +18 KERNEL32.DLL  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll     RtlUserThreadStart
+
+thread $170c:
+7ffb3112 +e2 KERNELBASE.dll  WaitForMultipleObjectsEx
+7ffb329f +18 KERNEL32.DLL    BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll       RtlUserThreadStart
+
+thread $c34:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $1e38:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $46f0:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $c90:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $4110:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $62d0:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $4684:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $9dc:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $4194:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $309c:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $21d0:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $23d0:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $73e4:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $ddc:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $910:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $32e4:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $6edc:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $4a00:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $663c:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $4c84:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $6c4c:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $6b80:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $1ee8:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $e80:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $609c:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $4988:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $2904:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $4a78:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $2918:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $10fc:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $4420:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $527c:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $3990:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $3fa4:
+7ffb310f +4c KERNELBASE.dll  GetQueuedCompletionStatus
+7ffb329f +18 KERNEL32.DLL    BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll       RtlUserThreadStart
+
+thread $3d18:
+7ffb329f +18 KERNEL32.DLL  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll     RtlUserThreadStart
+
+thread $7838:
+7ffb329f +18 KERNEL32.DLL  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll     RtlUserThreadStart
+
+thread $7ce8:
+7ffb329f +18 KERNEL32.DLL  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll     RtlUserThreadStart
+
+thread $5474:
+7ffb329f +18 KERNEL32.DLL  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll     RtlUserThreadStart
+
+cpu registers:
+rax = 0000000000000000
+rbx = 0000000000000000
+rcx = 0000000001cecb20
+rdx = 00000000fffffffa
+rsi = 00000000009acd00
+rdi = 0000000001cecb20
+rip = 00007ffb33a23f8a
+rsp = 000000c4bb5feb00
+rbp = 000000c4bb5feba9
+r8  = 0000000000000000
+r9  = 0000020feb03f3fe
+r10 = 0000000000000000
+r11 = 00001effcdfaae00
+r12 = 0000000001cecb28
+r13 = 0000000000000000
+r14 = 0000000000000000
+r15 = 00000000fffffffa
+
+stack dump:
+c4bb5feb00  00 00 00 00 01 00 00 00 - 22 00 00 80 00 00 00 00  ........".......
+c4bb5feb10  00 00 00 00 c4 00 00 00 - 00 00 00 00 00 00 00 00  ................
+c4bb5feb20  00 00 00 00 00 00 00 00 - 10 33 a4 88 0f 02 00 00  .........3......
+c4bb5feb30  20 ec 5f bb c4 00 00 00 - 00 00 00 00 00 00 00 00   ._.............
+c4bb5feb40  13 01 00 00 00 00 00 00 - 00 00 00 00 00 00 00 00  ................
+c4bb5feb50  00 00 00 00 00 00 00 00 - 01 00 00 00 00 00 00 00  ................
+c4bb5feb60  22 00 00 80 00 00 00 00 - 00 00 00 00 00 00 00 00  "...............
+c4bb5feb70  c0 ed 5f bb c4 00 00 00 - 49 69 38 cc fa 7f 00 00  .._.....Ii8.....
+c4bb5feb80  00 00 00 00 00 00 00 00 - 68 ec 5f bb c4 00 00 00  ........h._.....
+c4bb5feb90  48 00 00 00 00 00 00 00 - 01 00 00 00 00 00 00 00  H...............
+c4bb5feba0  00 00 00 00 00 00 00 00 - 00 00 00 00 00 00 00 00  ................
+c4bb5febb0  70 00 00 00 00 00 00 00 - ff ff ff ff ff ff ff ff  p...............
+c4bb5febc0  ff ff ff ff ff ff ff ff - 47 82 c0 32 fb 7f 00 00  ........G..2....
+c4bb5febd0  96 86 c0 32 fb 7f 00 00 - 96 86 c0 32 fb 7f 00 00  ...2.......2....
+c4bb5febe0  00 00 00 00 00 00 00 00 - 00 00 00 00 00 00 00 00  ................
+c4bb5febf0  00 00 00 00 00 00 00 00 - 00 00 00 00 00 00 00 00  ................
+c4bb5fec00  00 00 00 00 00 00 00 00 - ac 80 c0 32 fb 7f 00 00  ...........2....
+c4bb5fec10  88 03 00 00 00 00 00 00 - 99 0f b4 8c 0f 02 00 00  ................
+c4bb5fec20  00 10 02 00 00 00 00 00 - 00 00 00 80 00 00 00 00  ................
+c4bb5fec30  01 00 00 00 00 00 00 00 - c0 00 00 00 00 00 00 00  ................
+
+disassembling:
+[...]
+011e113b        cmp     word ptr [rax], $41
+011e113f        jz      loc_11e11dd
+011e1145 4937   cmp     byte ptr [$1cecbc1], 0
+011e114c        jnz     loc_11e11d3
+011e1152 4939   lea     rcx, [$1cecb20]
+011e1159      > call    -$f086be ($2d8aa0)     ; Winapi.Windows.EnterCriticalSection
+011e115e 4940   nop
+011e115f 4941   call    -$e9dce4 ($343480)     ; System.SysUtils.Now
+011e1164        movsd   [rbp+$50], xmm0
+011e1169        lea     rcx, [rbp+$48]
+011e116d        movsd   xmm1, [rbp+$50]
+[...]
+
+date/time          : 2024-11-14, 20:20:54, 922ms
+computer name      : LLL
+user name          : 24187
+registered owner   : 2418759512@qq.com
+operating system   : Windows 10 x64 build 22631
+system language    : Chinese (Simplified)
+system up time     : 2 hours 57 minutes
+program up time    : 1 hour 18 minutes
+processors         : 16x AMD Ryzen 7 7735H with Radeon Graphics
+physical memory    : 9739/28357 MB (free/total)
+free disk space    : (C:) 32.17 GB (E:) 82.19 GB
+display mode       : 1920x1080, 32 bit
+process id         : $4ba0
+allocated memory   : 1.05 GB
+largest free block : 128914.06 GB
+command line       : E:\BaiduNetdiskDownload\修改版\ss\Mir200\M2Server.exe 397026 560 0 0 0
+executable         : M2Server.exe
+exec. date/time    : 2024-07-18 17:24
+version            : 2023.2.10.0
+compiled with      : Delphi 11
+madExcept version  : 5.1.1
+callstack crc      : $ba92a047, $1d59bfd0, $0465b8dd
+exception number   : 2
+exception class    : EAccessViolation
+exception message  : Access violation at address 00007FFB33A23F8A in module 'ntdll.dll'. Write of address 0000000000000024.
+
+main thread ($d2c):
+7ffb33a2 +0aa ntdll.dll
+7ffb33a1 +03d ntdll.dll                             RtlEnterCriticalSection
+01a25b03 +0a3 M2Server.exe svMain          1508  +7 TFrmMain.Timer1Timer
+00634e80 +020 M2Server.exe Vcl.ExtCtrls    3244  +1 TTimer.Timer
+00634ca7 +037 M2Server.exe Vcl.ExtCtrls    3202  +4 TTimer.WndProc
+00496743 +023 M2Server.exe System.Classes 18534  +8 StdWndProc
+7ffb32c0 +1fc USER32.dll                            DispatchMessageW
+003b7149 +4f9 M2Server.exe madExcept                HandleException
+003c3651 +071 M2Server.exe madExcept                InterceptAHandleExcept
+00634cc0 +050 M2Server.exe Vcl.ExtCtrls    3204  +6 TTimer.WndProc
+00496743 +023 M2Server.exe System.Classes 18534  +8 StdWndProc
+7ffb32c0 +1fc USER32.dll                            DispatchMessageW
+006ce31e +12e M2Server.exe Vcl.Forms      11488 +23 TApplication.ProcessMessage
+006ce393 +013 M2Server.exe Vcl.Forms      11518  +1 TApplication.HandleMessage
+006ce7ea +0ea M2Server.exe Vcl.Forms      11657 +27 TApplication.Run
+01a2cd57 +177 M2Server.exe M2Server         129 +15 initialization
+7ffb329f +018 KERNEL32.DLL                          BaseThreadInitThunk
+7ffb33a4 +022 ntdll.dll                             RtlUserThreadStart
+
+main thread ($d2c), inner exception level 1:
+>> EAccessViolation, Access violation at address 00007FFB33A23F8A in module 'ntdll.dll'. Write of address 0000000000000024
+7ffb33a2 +0aa ntdll.dll
+7ffb32c1 +023 USER32.dll                            GetMessageW
+003b70cc +47c M2Server.exe madExcept                HandleException
+003c3651 +071 M2Server.exe madExcept                InterceptAHandleExcept
+00634cc0 +050 M2Server.exe Vcl.ExtCtrls    3204  +6 TTimer.WndProc
+00496743 +023 M2Server.exe System.Classes 18534  +8 StdWndProc
+7ffb32c0 +1fc USER32.dll                            DispatchMessageW
+003b7149 +4f9 M2Server.exe madExcept                HandleException
+003c3651 +071 M2Server.exe madExcept                InterceptAHandleExcept
+00634cc0 +050 M2Server.exe Vcl.ExtCtrls    3204  +6 TTimer.WndProc
+00496743 +023 M2Server.exe System.Classes 18534  +8 StdWndProc
+7ffb32c0 +1fc USER32.dll                            DispatchMessageW
+006ce31e +12e M2Server.exe Vcl.Forms      11488 +23 TApplication.ProcessMessage
+006ce393 +013 M2Server.exe Vcl.Forms      11518  +1 TApplication.HandleMessage
+006ce7ea +0ea M2Server.exe Vcl.Forms      11657 +27 TApplication.Run
+01a2cd57 +177 M2Server.exe M2Server         129 +15 initialization
+7ffb329f +018 KERNEL32.DLL                          BaseThreadInitThunk
+7ffb33a4 +022 ntdll.dll                             RtlUserThreadStart
+
+thread $655c:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $1660: <priority:1>
+7ffb329f +18 KERNEL32.DLL  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll     RtlUserThreadStart
+
+thread $1728:
+7ffb329f +18 KERNEL32.DLL  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll     RtlUserThreadStart
+
+thread $170c:
+7ffb3112 +e2 KERNELBASE.dll  WaitForMultipleObjectsEx
+7ffb329f +18 KERNEL32.DLL    BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll       RtlUserThreadStart
+
+thread $c34:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $1e38:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $46f0:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $c90:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $4110:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $62d0:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $4684:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $9dc:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $4194:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $309c:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $21d0:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $23d0:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $73e4:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $ddc:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $910:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $32e4:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $6edc:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $4a00:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $663c:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $4c84:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $6c4c:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $6b80:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $1ee8:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $e80:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $609c:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $4988:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $2904:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $4a78:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $2918:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $10fc:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $4420:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $527c:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $3990:
+7ffb310f +4c KERNELBASE.dll                                GetQueuedCompletionStatus
+009aedfa +4a M2Server.exe   Net.CrossSocket.Iocp   684  +1 TIocpCrossSocket.ProcessIoEvent
+009a3c24 +84 M2Server.exe   Net.CrossSocket.Base   831 +10 TIoEventThread.Execute
+003c4184 +24 M2Server.exe   madExcept                      HookedTThreadExecute
+00490630 +40 M2Server.exe   System.Classes       15845 +18 ThreadProc
+002c3cea +3a M2Server.exe   System               25726  +9 ThreadWrapper
+003c4059 +49 M2Server.exe   madExcept                      ThreadExceptFrame
+7ffb329f +18 KERNEL32.DLL                                  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll                                     RtlUserThreadStart
+
+thread $3fa4:
+7ffb310f +4c KERNELBASE.dll  GetQueuedCompletionStatus
+7ffb329f +18 KERNEL32.DLL    BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll       RtlUserThreadStart
+
+thread $3d18:
+7ffb329f +18 KERNEL32.DLL  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll     RtlUserThreadStart
+
+thread $7838:
+7ffb329f +18 KERNEL32.DLL  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll     RtlUserThreadStart
+
+thread $7ce8:
+7ffb329f +18 KERNEL32.DLL  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll     RtlUserThreadStart
+
+thread $5474:
+7ffb329f +18 KERNEL32.DLL  BaseThreadInitThunk
+7ffb33a4 +22 ntdll.dll     RtlUserThreadStart
+
+cpu registers:
+rax = 0000021028ccf1a0
+rbx = 0000000000634e60
+rcx = 00000000002b0230
+rdx = 00000000003710cc
+rsi = 0000000080000022
+rdi = 0000000000000001
+rip = 0000000000634ca9
+rsp = 000000c4bb5ff4c0
+rbp = 000000c4bb5ff4c0
+r8  = 0000000001a57000
+r9  = 0000020f88a23b52
+r10 = 00000000002c3f59
+r11 = 00000000002b0100
+r12 = 0000000000000000
+r13 = 0000000000000000
+r14 = 0000000000000113
+r15 = 0000000000000000
+
+stack dump:
+c4bb5ff4c0  88 13 00 00 00 00 00 00 - 99 0f b4 8c 0f 02 00 00  ................
+c4bb5ff4d0  00 10 02 00 00 00 00 00 - 00 00 00 80 00 00 00 00  ................
+c4bb5ff4e0  00 00 65 7d 00 00 00 00 - c0 f4 5f bb c4 00 00 00  ..e}......_.....
+c4bb5ff4f0  00 00 00 00 00 00 00 00 - 00 00 00 00 00 00 00 00  ................
+c4bb5ff500  10 f5 5f bb c4 00 00 00 - 46 67 49 00 00 00 00 00  .._.....FgI.....
+c4bb5ff510  10 9b 77 8a 0f 02 00 00 - 30 f5 5f bb c4 00 00 00  ..w.....0._.....
+c4bb5ff520  00 00 00 00 00 00 00 00 - 00 00 00 00 00 00 00 00  ................
+c4bb5ff530  13 01 00 00 00 00 00 00 - 01 00 00 00 00 00 00 00  ................
+c4bb5ff540  00 00 00 00 00 00 00 00 - 00 00 00 00 00 00 00 00  ................
+c4bb5ff550  40 f7 5f bb c4 00 00 00 - f1 83 c0 32 fb 7f 00 00  @._........2....
+c4bb5ff560  00 00 00 00 00 00 00 00 - 00 60 c8 32 fb 7f 00 00  .........`.2....
+c4bb5ff570  00 00 00 00 00 00 00 00 - 22 00 00 80 00 00 00 00  ........".......
+c4bb5ff580  00 00 00 00 00 00 00 00 - 00 00 00 80 00 00 00 00  ................
+c4bb5ff590  99 0f b4 8c 0f 02 00 00 - 00 00 00 00 00 00 00 00  ................
+c4bb5ff5a0  00 00 00 00 c4 00 00 00 - 00 00 00 00 00 00 00 00  ................
+c4bb5ff5b0  00 00 00 00 01 00 00 00 - 22 00 00 80 fb 7f 00 00  ........".......
+c4bb5ff5c0  00 00 00 00 00 00 00 00 - 00 00 00 00 00 00 00 00  ................
+c4bb5ff5d0  00 00 00 00 00 00 00 00 - 80 00 00 00 08 00 00 00  ................
+c4bb5ff5e0  01 00 00 00 00 00 00 00 - 00 00 00 00 00 00 00 00  ................
+c4bb5ff5f0  00 00 00 00 00 00 00 00 - 29 44 57 00 00 00 00 00  ........)DW.....
+
+disassembling:
+[...]
+00634c9b        call    -$373990 ($2c1310)     ; System.@FindDynaInst
+00634ca0        mov     rbx, rax
+00634ca3        mov     rcx, [rbp+$50]
+00634ca7        call    rbx
+00634ca9        jmp     loc_634cf2
+00634cc8 3207   mov     rcx, [rbp+$50]
+00634ccc        mov     rcx, [rcx+$80]
+00634cd3        mov     edx, eax
+00634cd5        mov     rax, [rbp+$58]
+00634cd9        mov     r8, [rax+8]
+00634cdd        mov     rax, [rbp+$58]
+[...]
+
