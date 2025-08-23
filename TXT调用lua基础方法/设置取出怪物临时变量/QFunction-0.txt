@@ -1,0 +1,19 @@
+[@Attack]
+#ACT
+; getmonintvar <$TEMPMONUSERID> 1
+getmonstrvar <$TEMPMONUSERID> 1
+sendmsg 9 <$LUARESULT>
+
+[@triggerchat]
+#Say
+<设置怪物临时int变量/@设置怪物临时int变量>\
+<设置怪物临时str变量/@设置怪物临时str变量>
+
+
+[@设置怪物临时int变量]
+#ACT
+setmonintvar <$MAP> <$X> <$Y> 10 1 996
+
+[@设置怪物临时str变量]
+#ACT
+setmonstrvar <$MAP> <$X> <$Y> 10 1 996ABC

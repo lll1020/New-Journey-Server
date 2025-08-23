@@ -1,0 +1,23 @@
+相关表格都可以在ctrl+f6中进行配置，部分game_data配置需要在M2中进行设置
+
+如果选择进行可视化配置，可以将版本目录中的相关表格删除掉，避免配置重置
+
+其他客户端可视化配置表格还在制作中，后续将会把所有的客户端配置表全部可视化
+
+目前支持到的可视化配置表格：
+
+可视化表格可以在
+ctrl+f6 第一行：更新内容----右下角点击一键同步官方配置 
+ctrl+f6 第一行：更新内容----右下角点击一键同步官方配置 
+ctrl+f6 第一行：更新内容----右下角点击一键同步官方配置 
+* ctrl+f6红点显示的为新增内容
+
+
+cfg_auction_type.xls
+cfg_damage_number.xls
+cfg_game_data.xls
+cfg_magicinfo.xls
+cfg_mapdesc.xls
+cfg_setup.xls
+cfg_skill_present.xls
+cfg_sound.xls

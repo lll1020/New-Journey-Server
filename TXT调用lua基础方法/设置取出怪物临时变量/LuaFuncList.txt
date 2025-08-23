@@ -1,0 +1,4 @@
+setmonintvar
+getmonintvar
+setmonstrvar
+getmonstrvar

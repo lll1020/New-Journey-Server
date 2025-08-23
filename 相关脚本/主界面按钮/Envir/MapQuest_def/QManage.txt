@@ -1,0 +1,4 @@
+[@Login]
+#IF
+#ACT
+#CALL [\主界面基础按钮\主界面基础按钮QM.txt] @基础按钮QM
