@@ -1,9 +1,4 @@
 npc = {}
-function npc.main(play,npcid)
-    gmexecute(play,"DenyCharNameLogon",getbaseinfo(play,1),1)
-    callscriptex(play, "CHANGELEVEL", "=", 1)
-end
-return npc
 
 function npc.main(play,npcid)
 	say(play,[[<Img|x=0.0|y=-1.0|width=800|height=800|bg=1|scale9l=15|scale9r=15|scale9t=15|scale9b=15|move=1|loadDelay=1|reset=1|esc=1|img=public/bg_npc_01.png|show=0>

@@ -251,6 +251,88 @@ function Player.rwjl(actor, t, desc, multiple,gm)
         end
     end
 end
+
+--发送消息个人
+function Player.sendmsg(actor, msg)
+    if type(msg) == "string" then
+        sendmsg(actor, ConstCfg.notice.own, '{"Msg":"' .. msg .. '","Type":9}')
+    elseif type(msg) == "table" then
+        local MsgStr = ""
+        for _, v in ipairs(msg) do
+            MsgStr = MsgStr .. "<font color='" .. v[1] .. "'>" .. v[2] .. "</font>"
+        end
+        sendmsg(actor, ConstCfg.notice.own, '{"Msg":"' .. MsgStr .. '","Type":9}')
+    end
+end
+
+--发送个人消息9
+--* actor：个人对象
+--* str：消息内容 格式 文本#颜色|文本#颜色 (颜色值0-255)
+--* defaultColor：默认颜色 默认为白色
+function Player.sendmsgEx(actor, str, defaultColor)
+    if str == nil or str == "" then
+        return
+    end
+    defaultColor = defaultColor or 250
+    local content = ""
+    local part = string.split(str, "|")
+    for _, v in ipairs(part) do
+        local text = string.split(v, "#")
+        local colorNum = tonumber(text[2])
+        colorNum = colorNum or defaultColor
+        local hexColor = ColorCfg[colorNum] ~= nil and ColorCfg[colorNum].hexColor or ColorCfg[defaultColor].hexColor
+        content = content .. "<font color='" .. hexColor .. "'>" .. text[1] .. "</font>"
+    end
+    if content ~= "" then
+        sendmsg(actor, ConstCfg.notice.own, '{"Msg":"' .. content .. '","Type":9}')
+    else
+        return
+    end
+end
+--在屏幕中间给自己播放特效
+function Player.screffects(actor, effectId, offsetX, offsetY)
+    offsetX = offsetX or 0
+    offsetY = offsetY or 0
+    local x = getconst(actor, "<$SCREENWIDTH>") / 2 + offsetX
+    local y = getconst(actor, "<$SCREENHEIGHT>") / 2 + offsetY
+    screffects(actor, 1, effectId, x, y, 1, 1, 0)
+end
+
+---@param actor userdata 玩家对象
+function Player.GetName(actor)
+    return getbaseinfo(actor, 1)
+end
+
+--获取人物/怪物当前地图代码
+function Player.MapKey(actor)
+    return getbaseinfo(actor, 3)
+end
+
+--获取目标坐标x
+function Player.GetX(actor)
+    return getbaseinfo(actor, 4)
+end
+--获取目标坐标y
+function Player.GetY(actor)
+    return getbaseinfo(actor, 5)
+end
+--根据属性ID获取属性值
+function Player.GetAttr(actor, attrId)
+    return getbaseinfo(actor, 51, attrId)
+end
+
+--获取人物唯一ID str
+function Player.GetUUID(actor)
+    return getbaseinfo(actor, 2)
+end
+
+----获得角色等级
+---@param actor object  --玩家对象
+function Player.GetLevel(actor)
+    return getbaseinfo(actor, 6)
+end
+
+
 function Player.qsx_give(actor, t, desc, multiple) --全属性给予
     --TODO
 end
