@@ -40,8 +40,8 @@ function jjlggna(play,id)
         callscriptex(play, "CHANGELEVEL", "=", 200)
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>Íê³É</font>","Type":9}')
     elseif id == "3" then
-        if getplaydef(play,constant.U_zxrw[1])then
-            newdeletetask(play,getplaydef(play,constant.U_zxrw[1]))
+        if getplaydef(play,VarCfg.U_zxrw[1])then
+            newdeletetask(play,getplaydef(play,VarCfg.U_zxrw[1]))
             playeffect(play,4011,25,-50,1,0,0)
         end
     elseif id == "4" then
@@ -89,7 +89,7 @@ end
 
 function buff(play)
 
-    setplaydef(play,constant.U_zxrw[1],18)
+    setplaydef(play,VarCfg.U_zxrw[1],18)
     Player.zxrw_wancheng(play, 18, "")
 
     renewlevel(play,5,0,0)
@@ -101,7 +101,7 @@ function buff(play)
     for _,k in ipairs(rwxw.attr) do
         changecustomitemvalue(play,item,k[2],"=",k[3] * 171,k[1])
     end
-    local T_ywl = json2tbl(getplaydef(play,constant.T_ywl))
+    local T_ywl = json2tbl(getplaydef(play,VarCfg.T_ywl))
     T_ywl["jl_2_2_6"] = 1
     T_ywl["jl_2_2_1"] = 1
     T_ywl["jl_2_2_2"] = 1
@@ -114,8 +114,8 @@ function buff(play)
     T_ywl["jl_3_2_3"] = 1
     T_ywl["jl_3_2_4"] = 1
     T_ywl["jl_3_2_5"] = 1
-    setplaydef(play,constant.T_ywl,tbl2json(T_ywl))
-    local T_zzsj = json2tbl(getplaydef(play,constant.T_zzsj))
+    setplaydef(play,VarCfg.T_ywl,tbl2json(T_ywl))
+    local T_zzsj = json2tbl(getplaydef(play,VarCfg.T_zzsj))
     T_zzsj.dqzy = 1
     T_zzsj.zy_dj = {}
     T_zzsj.zy_dj[""..T_zzsj.dqzy] = 100
@@ -125,7 +125,7 @@ function buff(play)
     T_zzsj.three_jue[""..T_zzsj.dqzy] = 1
     T_zzsj.sh = {}
     T_zzsj.sh[""..T_zzsj.dqzy] = 1
-    setplaydef(play,constant.T_zzsj,tbl2json(T_zzsj))
+    setplaydef(play,VarCfg.T_zzsj,tbl2json(T_zzsj))
 end
 
 function sidalu(play)

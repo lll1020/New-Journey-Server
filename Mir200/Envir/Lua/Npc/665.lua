@@ -146,7 +146,7 @@ function ggn(play,id)
             changecustomitemvalue(play,item,0,"+",100,0)
             changecustomitemvalue(play,item,1,"+",100,0)
             changecustomitemvalue(play,item,2,"+",5000,0)
-            local data = json2tbl(getplaydef(play,constant.T_ystz))
+            local data = json2tbl(getplaydef(play,VarCfg.T_ystz))
             data.xt1 = 1
             data.xt2 = 1
             data.xt3 = 1
@@ -155,7 +155,7 @@ function ggn(play,id)
             data.xt6 = 1
             data.xt7 = 1
             data.xt8 = 1
-            setplaydef(play,constant.T_ystz,tbl2json(data))
+            setplaydef(play,VarCfg.T_ystz,tbl2json(data))
             confertitle(play,"天才地宝(地)")
             sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
@@ -167,7 +167,7 @@ function ggn(play,id)
             changecustomitemvalue(play,item,0,"+",250,0)
             changecustomitemvalue(play,item,1,"+",250,0)
             changecustomitemvalue(play,item,2,"+",10000,0)
-            local data = json2tbl(getplaydef(play,constant.T_ystz))
+            local data = json2tbl(getplaydef(play,VarCfg.T_ystz))
             data.yy1 = 1
             data.yy2 = 1
             data.yy3 = 1
@@ -176,7 +176,7 @@ function ggn(play,id)
             data.yy6 = 1
             data.yy7 = 1
             data.yy8 = 1
-            setplaydef(play,constant.T_ystz,tbl2json(data))
+            setplaydef(play,VarCfg.T_ystz,tbl2json(data))
             confertitle(play,"天才地宝(天)")
             sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
@@ -188,7 +188,7 @@ function ggn(play,id)
             changecustomitemvalue(play,item,0,"+",500,0)
             changecustomitemvalue(play,item,1,"+",500,0)
             changecustomitemvalue(play,item,2,"+",20000,0)
-            local data = json2tbl(getplaydef(play,constant.T_ystz))
+            local data = json2tbl(getplaydef(play,VarCfg.T_ystz))
             data.xc1 = 1
             data.xc2 = 1
             data.xc3 = 1
@@ -197,16 +197,16 @@ function ggn(play,id)
             data.xc6 = 1
             data.xc7 = 1
             data.xc8 = 1
-            setplaydef(play,constant.T_ystz,tbl2json(data))
+            setplaydef(play,VarCfg.T_ystz,tbl2json(data))
             confertitle(play,"天才地宝(神)")
             sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
     elseif id == "11" then
-        setplaydef(play,constant.T_gjyj,'{"gjyj":[100000,100000,100000,100000,100000,100000,100000,100000,100000,0,0,0]}')  --冠绝一界
+        setplaydef(play,VarCfg.T_gjyj,'{"gjyj":[100000,100000,100000,100000,100000,100000,100000,100000,100000,0,0,0]}')  --冠绝一界
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
     elseif id == "12" then
-        setplaydef(play,constant.U_qhdj[1],66)
-        setplaydef(play,constant.U_qhdj[2],66)
+        setplaydef(play,VarCfg.U_qhdj[1],66)
+        setplaydef(play,VarCfg.U_qhdj[2],66)
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
     elseif id == "13" then
         reddot(play, 200, 100, 10, 10, 0, "res/public/ists.png")
@@ -334,7 +334,7 @@ function ggna(play,id)
             changecustomitemvalue(play,item,0,"-",100,0)
             changecustomitemvalue(play,item,1,"-",100,0)
             changecustomitemvalue(play,item,2,"-",5000,0)
-            local data = json2tbl(getplaydef(play,constant.T_ystz))
+            local data = json2tbl(getplaydef(play,VarCfg.T_ystz))
             data.xt1 = nil
             data.xt2 = nil
             data.xt3 = nil
@@ -343,7 +343,7 @@ function ggna(play,id)
             data.xt6 = nil
             data.xt7 = nil
             data.xt8 = nil
-            setplaydef(play,constant.T_ystz,tbl2json(data))
+            setplaydef(play,VarCfg.T_ystz,tbl2json(data))
             deprivetitle(play,"天才地宝(地)")
             sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
@@ -355,7 +355,7 @@ function ggna(play,id)
             changecustomitemvalue(play,item,0,"-",250,0)
             changecustomitemvalue(play,item,1,"-",250,0)
             changecustomitemvalue(play,item,2,"-",10000,0)
-            local data = json2tbl(getplaydef(play,constant.T_ystz))
+            local data = json2tbl(getplaydef(play,VarCfg.T_ystz))
             data.yy1 = nil
             data.yy2 = nil
             data.yy3 = nil
@@ -364,7 +364,7 @@ function ggna(play,id)
             data.yy6 = nil
             data.yy7 = nil
             data.yy8 = nil
-            setplaydef(play,constant.T_ystz,tbl2json(data))
+            setplaydef(play,VarCfg.T_ystz,tbl2json(data))
             deprivetitle(play,"天才地宝(天)")
             sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
@@ -376,7 +376,7 @@ function ggna(play,id)
             changecustomitemvalue(play,item,0,"-",500,0)
             changecustomitemvalue(play,item,1,"-",500,0)
             changecustomitemvalue(play,item,2,"-",20000,0)
-            local data = json2tbl(getplaydef(play,constant.T_ystz))
+            local data = json2tbl(getplaydef(play,VarCfg.T_ystz))
             data.xc1 = nil
             data.xc2 = nil
             data.xc3 = nil
@@ -385,15 +385,15 @@ function ggna(play,id)
             data.xc6 = nil
             data.xc7 = nil
             data.xc8 = nil
-            setplaydef(play,constant.T_ystz,tbl2json(data))
+            setplaydef(play,VarCfg.T_ystz,tbl2json(data))
             deprivetitle(play,"天才地宝(神)")
             sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
     elseif id == "11" then
-        setplaydef(play,constant.T_gjyj,'{"gjyj":[100000,100000,100000,100000,100000,100000,100000,100000,100000,0,0,0],"dhjl":[0,0,0,0,0,0,0,0,0]}')  --冠绝一界
+        setplaydef(play,VarCfg.T_gjyj,'{"gjyj":[100000,100000,100000,100000,100000,100000,100000,100000,100000,0,0,0],"dhjl":[0,0,0,0,0,0,0,0,0]}')  --冠绝一界
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
     elseif id == "12" then
-        setplaydef(play,constant.T_gjyj,'{"gjyj":[100000,100000,100000,100000,100000,100000,100000,100000,100000,0,0,0],"dhjl":[1,1,1,1,1,0,0,0,0]}')  --冠绝一界
+        setplaydef(play,VarCfg.T_gjyj,'{"gjyj":[100000,100000,100000,100000,100000,100000,100000,100000,100000,0,0,0],"dhjl":[1,1,1,1,1,0,0,0,0]}')  --冠绝一界
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
     elseif id == "13" then
         setbaseinfo(play,39,36)
@@ -407,20 +407,20 @@ function ggna(play,id)
         setitemcustomabil(play, wpdx,getitemcustomabil(play, item))
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
     elseif id == "16" then
-        setplaydef(play,constant.U_zllv,1)
+        setplaydef(play,VarCfg.U_zllv,1)
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
     elseif id == "17" then
-        local zl = json2tbl(getplaydef(play,constant.T_zlxj))
+        local zl = json2tbl(getplaydef(play,VarCfg.T_zlxj))
         zl["dj"] = 1 + zl["dj"]
-        setplaydef(play,constant.T_zlxj,tbl2json(zl))
+        setplaydef(play,VarCfg.T_zlxj,tbl2json(zl))
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
     elseif id == "18" then
-        if getplaydef(play,constant.U_zxrw[1])then
-            newdeletetask(play,getplaydef(play,constant.U_zxrw[1]))
+        if getplaydef(play,VarCfg.U_zxrw[1])then
+            newdeletetask(play,getplaydef(play,VarCfg.U_zxrw[1]))
             playeffect(play,4011,25,-50,1,0,0)
         end
     elseif id == "19" then
-        setplaydef(play,constant.T_mjsj,'{"mjsj":[0,99,199,0,0,0,0,0,0,0,0,0]}')  --冠绝一界
+        setplaydef(play,VarCfg.T_mjsj,'{"mjsj":[0,99,199,0,0,0,0,0,0,0,0,0]}')  --冠绝一界
     elseif id == "20" then
         setitemintparam(play,71,1,2)
     elseif id == "21" then
@@ -433,10 +433,10 @@ function ggna(play,id)
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>当直播地图已更换为:'..getsysvar(constant.G_zbdtbs)..'</font>","Type":9}')
     elseif id == "23" then
 
-        --local db = json2tbl(getplaydef(play,constant.T_dljq))
+        --local db = json2tbl(getplaydef(play,VarCfg.T_dljq))
         --db["npc"..403][2] = 199
         --
-        --setplaydef(play,constant.T_dljq,tbl2json(db))
+        --setplaydef(play,VarCfg.T_dljq,tbl2json(db))
 
         --local data = {
         --    "寂渊灯",
@@ -452,7 +452,7 @@ function ggna(play,id)
         --Player.zxrw_lingqu(play, 2008, "支线任务：npc_")
 
         --sendmail(getbaseinfo(play, 2), 0, "在线充值", "全部礼包激活奖励","初级追梦专属宝箱#1#850&高级追梦专属宝箱#1#850")
-        --sendluamsg(play,101,28,0,getflagstatus(play,constant.BS_xslb),"")
+        --sendluamsg(play,101,28,0,getflagstatus(play,VarCfg.BS_xslb),"")
 
 
         --

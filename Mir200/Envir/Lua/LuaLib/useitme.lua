@@ -1,3 +1,4 @@
+release_print("useitme.lua")
 --------------------双击物品触发-------------------随机石
 function stdmodefunc9(play, item)
     setplaydef(play,"S$dtm",getbaseinfo(play, 3))
@@ -45,34 +46,34 @@ function stdmodefunc20(play, item)
 end
 --------------------双击物品触发-------------------仙玉通用
 function stdmodefunc21(play, item)
-    changemoney(play, getflagstatus(play,constant.BS_mztq) == 1 and 7 or 8, '+', getstditeminfo(getiteminfo(play, item, 2), 8), '双击获得', true)
+    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 7 or 8, '+', getstditeminfo(getiteminfo(play, item, 2), 8), '双击获得', true)
 end
 
 --------------------双击物品触发-------------------灵符通用
 function stdmodefunc11(play, item)
     local sl = getiteminfo(play, item, 5)
-    changemoney(play, getflagstatus(play,constant.BS_mztq) == 1 and 2 or 4, '+', getstditeminfo(getiteminfo(play, item, 2), 8) * sl, '双击获得', true)
+    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', getstditeminfo(getiteminfo(play, item, 2), 8) * sl, '双击获得', true)
     delitembymakeindex(play, getiteminfo(play, item, 1), sl)
 end
 
 --------------------双击物品触发-------------------灵符通用
 function stdmodefunc19(play, item)
     local sl = getiteminfo(play, item, 5)
-    changemoney(play, getflagstatus(play,constant.BS_mztq) == 1 and 2 or 4, '+', getstditeminfo(getiteminfo(play, item, 2), 8) * sl, '双击获得', true)
+    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', getstditeminfo(getiteminfo(play, item, 2), 8) * sl, '双击获得', true)
     delitembymakeindex(play, getiteminfo(play, item, 1), sl)
 end
 
 --------------------双击物品触发-------------------元宝通用
 function stdmodefunc18(play, item)
     local sl = getiteminfo(play, item, 5)
-    changemoney(play, getflagstatus(play,constant.BS_mztq) == 1 and 1 or 3, '+', getstditeminfo(getiteminfo(play, item, 2), 8) * sl, '双击获得', true)
+    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', getstditeminfo(getiteminfo(play, item, 2), 8) * sl, '双击获得', true)
     delitembymakeindex(play, getiteminfo(play, item, 1), sl)
 end
 
 --------------------双击物品触发-------------------元宝通用
 function stdmodefunc55(play, item)
     local sl = getiteminfo(play, item, 5)
-    changemoney(play, getflagstatus(play,constant.BS_mztq) == 1 and 1 or 3, '+', getstditeminfo(getiteminfo(play, item, 2), 8) * sl, '双击获得', true)
+    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', getstditeminfo(getiteminfo(play, item, 2), 8) * sl, '双击获得', true)
     delitembymakeindex(play, getiteminfo(play, item, 1), sl)
 end
 
@@ -90,25 +91,25 @@ end
 --------------------双击物品触发-------------------元宝(小)
 function stdmodefunc13(play, item)
     local sl = getiteminfo(play, item, 5)
-    changemoney(play, getflagstatus(play,constant.BS_mztq) == 1 and 1 or 3, '+', math.random(500, 2000)*sl, '双击获得', true)
+    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', math.random(500, 2000)*sl, '双击获得', true)
     delitembymakeindex(play, getiteminfo(play, item, 1), sl)
 end
 --------------------双击物品触发-------------------元宝(中)
 function stdmodefunc14(play, item)
     local sl = getiteminfo(play, item, 5)
-    changemoney(play, getflagstatus(play,constant.BS_mztq) == 1 and 1 or 3, '+', math.random(1000, 5000)*sl, '双击获得', true)
+    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', math.random(1000, 5000)*sl, '双击获得', true)
     delitembymakeindex(play, getiteminfo(play, item, 1), sl)
 end
 --------------------双击物品触发-------------------元宝(大)
 function stdmodefunc15(play, item)
     local sl = getiteminfo(play, item, 5)
-    changemoney(play, getflagstatus(play,constant.BS_mztq) == 1 and 1 or 3, '+', math.random(5000, 50000)*sl, '双击获得', true)
+    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', math.random(5000, 50000)*sl, '双击获得', true)
     delitembymakeindex(play, getiteminfo(play, item, 1), sl)
 end
 --------------------双击物品触发-------------------元宝(超级)
 function stdmodefunc16(play, item)
     local sl = getiteminfo(play, item, 5)
-    changemoney(play, getflagstatus(play,constant.BS_mztq) == 1 and 1 or 3, '+', math.random(10000, 1000000)*sl, '双击获得', true)
+    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', math.random(10000, 1000000)*sl, '双击获得', true)
     delitembymakeindex(play, getiteminfo(play, item, 1), sl)
 end
 

@@ -2,31 +2,31 @@ npc = {}
 
 npc[1] = function(play,p2,p3,msgData)  --兑换面板
     if p2 == 0 then
-        sendluamsg(play,101,3,0,0,'{"hbdh1":'..getplaydef(play,constant.J_hbdh[1])..',"hbdh2":'..getplaydef(play,constant.J_hbdh[2])..'}')
+        sendluamsg(play,101,3,0,0,'{"hbdh1":'..getplaydef(play,VarCfg.J_hbdh[1])..',"hbdh2":'..getplaydef(play,VarCfg.J_hbdh[2])..'}')
     elseif p2 == 1 then
-        if getplaydef(play,constant.J_hbdh[1]) >= 10 then
+        if getplaydef(play,VarCfg.J_hbdh[1]) >= 10 then
             sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[货币兑换]</font><font color=\'#ff0000\'>每日兑换次数已达上限...</font>","Type":9}')
             return
         end
         if changemoney(play,3,"-",1000000,"货币兑换",true) then
             changemoney(play,4,"+",200000,"货币兑换",true)
-            setplaydef(play,constant.J_hbdh[1], getplaydef(play,constant.J_hbdh[1]) + 1)
+            setplaydef(play,VarCfg.J_hbdh[1], getplaydef(play,VarCfg.J_hbdh[1]) + 1)
             sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[货币兑换]</font><font color=\'#00ff00\'>兑换成功...</font>","Type":9}')
-            sendluamsg(play,101,3,1,1,'{"hbdh1":'..getplaydef(play,constant.J_hbdh[1])..',"hbdh2":'..getplaydef(play,constant.J_hbdh[2])..'}')
+            sendluamsg(play,101,3,1,1,'{"hbdh1":'..getplaydef(play,VarCfg.J_hbdh[1])..',"hbdh2":'..getplaydef(play,VarCfg.J_hbdh[2])..'}')
 
         else
             sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[货币兑换]</font><font color=\'#ff0000\'>元宝不足...</font>","Type":9}')
         end
     elseif p2 == 2 then
-        if getplaydef(play,constant.J_hbdh[2]) >= 10 then
+        if getplaydef(play,VarCfg.J_hbdh[2]) >= 10 then
             sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[货币兑换]</font><font color=\'#ff0000\'>每日兑换次数已达上限...</font>","Type":9}')
             return
         end
         if changemoney(play,1,"-",1000000,"货币兑换",true) then
             changemoney(play,2,"+",200000,"货币兑换",true)
-            setplaydef(play,constant.J_hbdh[2], getplaydef(play,constant.J_hbdh[2]) + 1)
+            setplaydef(play,VarCfg.J_hbdh[2], getplaydef(play,VarCfg.J_hbdh[2]) + 1)
             sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[货币兑换]</font><font color=\'#00ff00\'>兑换成功...</font>","Type":9}')
-            sendluamsg(play,101,3,1,2,'{"hbdh1":'..getplaydef(play,constant.J_hbdh[1])..',"hbdh2":'..getplaydef(play,constant.J_hbdh[2])..'}')
+            sendluamsg(play,101,3,1,2,'{"hbdh1":'..getplaydef(play,VarCfg.J_hbdh[1])..',"hbdh2":'..getplaydef(play,VarCfg.J_hbdh[2])..'}')
 
         else
             sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[货币兑换]</font><font color=\'#ff0000\'>绑定元宝不足...</font>","Type":9}')
@@ -50,24 +50,24 @@ end
 
 npc[2] = function(play,p2,p3,msgData)  --回收面板
     if p2 == 0 then
-        sendluamsg(play, 101, 2, 2, 0, '{"xz":'..getplaydef(play,constant.T_hsdg)..',"kg":['..getflagstatus(play,constant.BS_huishou[1])..','..getflagstatus(play,constant.BS_huishou[2])..','..getflagstatus(play,constant.BS_huishou[3])..','..getflagstatus(play,constant.BS_huishou[4])..','..getflagstatus(play,constant.BS_huishou[5])..']}')
+        sendluamsg(play, 101, 2, 2, 0, '{"xz":'..getplaydef(play,VarCfg.T_hsdg)..',"kg":['..getflagstatus(play,VarCfg.BS_huishou[1])..','..getflagstatus(play,VarCfg.BS_huishou[2])..','..getflagstatus(play,VarCfg.BS_huishou[3])..','..getflagstatus(play,VarCfg.BS_huishou[4])..','..getflagstatus(play,VarCfg.BS_huishou[5])..']}')
     elseif p2 == 1 then
         if p3 > 0 and p2 < 5 then
             msgData = tonumber(msgData)
             if msgData > 0 and msgData < 50 then
-                local hspz = json2tbl(getplaydef(play,constant.T_hsdg))
+                local hspz = json2tbl(getplaydef(play,VarCfg.T_hsdg))
                 hspz[p3.."_"..msgData] = 1
-                setplaydef(play,constant.T_hsdg,tbl2json(hspz))
+                setplaydef(play,VarCfg.T_hsdg,tbl2json(hspz))
             end
         end
     elseif p2 == 2 then
-        local hspz = json2tbl(getplaydef(play,constant.T_hsdg))
+        local hspz = json2tbl(getplaydef(play,VarCfg.T_hsdg))
         if hspz[msgData] and hspz[msgData] == 1 then
             hspz[msgData] = nil
         else
             hspz[msgData] = 1
         end
-        setplaydef(play,constant.T_hsdg,tbl2json(hspz))
+        setplaydef(play,VarCfg.T_hsdg,tbl2json(hspz))
     elseif p2 == 3 then
     elseif p2 == 4 then
         if p3 == 1 then
@@ -76,35 +76,35 @@ npc[2] = function(play,p2,p3,msgData)  --回收面板
             else
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>自动吃灵符已关闭...</font>","Type":9}')
             end
-            setflagstatus(play,constant.BS_huishou[1],msgData)
+            setflagstatus(play,VarCfg.BS_huishou[1],msgData)
         elseif p3 == 2 then
             if msgData == "1" then
                 sendmsg(play,1,'{"Msg":"<font color=\'#00ff00\'>自动吃元宝已开启...</font>","Type":9}')
             else
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>自动吃元宝已关闭...</font>","Type":9}')
             end
-            setflagstatus(play,constant.BS_huishou[2],msgData)
+            setflagstatus(play,VarCfg.BS_huishou[2],msgData)
         elseif p3 == 3 then
             if msgData == "1" then
                 sendmsg(play,1,'{"Msg":"<font color=\'#00ff00\'>自动吃经验已开启...</font>","Type":9}')
             else
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>自动吃经验已关闭...</font>","Type":9}')
             end
-            setflagstatus(play,constant.BS_huishou[3],msgData)
+            setflagstatus(play,VarCfg.BS_huishou[3],msgData)
         elseif p3 == 4 then
             if msgData == "1" then
                 sendmsg(play,1,'{"Msg":"<font color=\'#00ff00\'>自动回收已开启...</font>","Type":9}')
             else
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>自动回收已关闭...</font>","Type":9}')
             end
-            setflagstatus(play,constant.BS_huishou[4],msgData)
+            setflagstatus(play,VarCfg.BS_huishou[4],msgData)
         elseif p3 == 5 then
             if msgData == "1" then
                 sendmsg(play,1,'{"Msg":"<font color=\'#00ff00\'>可提升不回收已开启...</font>","Type":9}')
             else
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>可提升不回收已关闭...</font>","Type":9}')
             end
-            setflagstatus(play,constant.BS_huishou[5],msgData)
+            setflagstatus(play,VarCfg.BS_huishou[5],msgData)
         end
     elseif p2 == 5 then
         if p3 == 1 then
@@ -128,7 +128,7 @@ end
 
 
 npc[5] = function(play,p2,p3,data) -- 内挂开关
-    setflagstatus(play,constant.BS_ngkg,p2)
+    setflagstatus(play,VarCfg.BS_ngkg,p2)
     Buff[379](play,p2 == 1 and 1 or 2)
     sendluamsg(play, 103, 1, 0, 0, '{"ngkg":'..p2..'}')
 end
@@ -780,10 +780,10 @@ npc[11] = function(play,p2,p3,data)  --异闻录
             return false
         end
         sendluamsg(play, 101, 11, 0, 0,
-                '{"dljq":'..getplaydef(play, constant.T_dljq)
-                        ..',"zxrw":'..getplaydef(play, constant.T_zxrw)
-                        ..',"ywl":'..getplaydef(play, constant.T_ywl)
-                        ..',"T_tj":'..getplaydef(play,constant.T_tj)
+                '{"dljq":'..getplaydef(play, VarCfg.T_dljq)
+                        ..',"zxrw":'..getplaydef(play, VarCfg.T_zxrw)
+                        ..',"ywl":'..getplaydef(play, VarCfg.T_ywl)
+                        ..',"T_tj":'..getplaydef(play,VarCfg.T_tj)
                         ..'}')
     elseif p2 == 1 then --传送
         local sj = json2tbl(data)
@@ -791,7 +791,7 @@ npc[11] = function(play,p2,p3,data)  --异闻录
             if Player.dl_sz_notip(play, sj.i) then
                 local shuju = npc_xyl[sj.i][sj.j][sj.k][sj.z]
                 if shuju[2] == 999 and sj.i > 3 then
-                    local T_ywl = json2tbl(getplaydef(play,constant.T_ywl))
+                    local T_ywl = json2tbl(getplaydef(play,VarCfg.T_ywl))
                     if not (T_ywl["rw_"..shuju[3][2]] and T_ywl["rw_"..shuju[3][2]] == 1) then
                         Player.zxrw_lingqu(play, shuju[3][2], "")
                     end
@@ -824,7 +824,7 @@ npc[11] = function(play,p2,p3,data)  --异闻录
     elseif p2 == 2 then --一页任务奖励
         local sj = json2tbl(data)
         if sj.i and sj.k and sj.j and sj.i > 0 and sj.k > 0 and sj.j > 0 and sj.i <= #npc_xyl and sj.j <= #npc_xyl[sj.i] and sj.k <= #npc_xyl[sj.i][sj.j] then
-            local T_ywl = json2tbl(getplaydef(play,constant.T_ywl))
+            local T_ywl = json2tbl(getplaydef(play,VarCfg.T_ywl))
             if T_ywl["jl_"..sj.i.."_".. sj.j .."_"..sj.k] and T_ywl["jl_"..sj.i.."_".. sj.j .."_"..sj.k] == 1 then
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>已领取过了...</font>","Type":9}')
                 return
@@ -838,13 +838,13 @@ npc[11] = function(play,p2,p3,data)  --异闻录
                 end
             end
             T_ywl["jl_"..sj.i.."_".. sj.j .."_"..sj.k] = 1
-            setplaydef(play, constant.T_ywl, tbl2json(T_ywl))
+            setplaydef(play, VarCfg.T_ywl, tbl2json(T_ywl))
             Player.rwjl(play,npc_xyl[sj.i][sj.j][sj.k].jl,"剧情jl",nil)
             sendluamsg(play, 101, 11, 3, 0,
-                    '{"dljq":'..getplaydef(play, constant.T_dljq)
-                            ..',"zxrw":'..getplaydef(play, constant.T_zxrw)
-                            ..',"ywl":'..getplaydef(play, constant.T_ywl)
-                            ..',"T_tj":'..getplaydef(play,constant.T_tj)
+                    '{"dljq":'..getplaydef(play, VarCfg.T_dljq)
+                            ..',"zxrw":'..getplaydef(play, VarCfg.T_zxrw)
+                            ..',"ywl":'..getplaydef(play, VarCfg.T_ywl)
+                            ..',"T_tj":'..getplaydef(play,VarCfg.T_tj)
                             ..'}')
             if (sj.i == 2 or sj.i == 3) and sj.k < 6 then
                 for i = 1, #npc_xyl[sj.i][sj.j][sj.k + 1] do
@@ -871,8 +871,8 @@ npc[11] = function(play,p2,p3,data)  --异闻录
         local sj = json2tbl(data)
         if sj.i and sj.k and sj.j and sj.z and sj.i > 0 and sj.k > 0 and sj.j > 0 and sj.z > 0 and sj.i <= #npc_xyl and sj.j <= #npc_xyl[sj.i] and sj.k <= #npc_xyl[sj.i][sj.j] and sj.z <= #npc_xyl[sj.i][sj.j][sj.k] then
             local shuju = npc_xyl[sj.i][sj.j][sj.k][sj.z]
-            local T_dljq = json2tbl(getplaydef(play,constant.T_dljq))
-            local T_ywl = json2tbl(getplaydef(play,constant.T_ywl))
+            local T_dljq = json2tbl(getplaydef(play,VarCfg.T_dljq))
+            local T_ywl = json2tbl(getplaydef(play,VarCfg.T_ywl))
             if (T_ywl["jl_"..sj.i.."_".. sj.j .."_"..sj.k] and T_ywl["jl_"..sj.i.."_".. sj.j .."_"..sj.k] == 1) or (T_ywl["jl_"..sj.i.."_".. sj.j .."_"..sj.k .."_" .. sj.z] and T_ywl["jl_"..sj.i.."_".. sj.j .."_"..sj.k .."_" .. sj.z] == 1) then
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>已完成['..shuju[1]..']剧情...</font>","Type":9}')
                 return
@@ -909,7 +909,7 @@ npc[11] = function(play,p2,p3,data)  --异闻录
                     end
                 end
             elseif shuju[2] == 3 then --完成职业一觉
-                local T_zzsj = json2tbl(getplaydef(play,constant.T_zzsj))
+                local T_zzsj = json2tbl(getplaydef(play,VarCfg.T_zzsj))
                 if T_zzsj.dqzy and T_zzsj.one_jue and T_zzsj.one_jue[""..T_zzsj.dqzy] and T_zzsj.one_jue[""..T_zzsj.dqzy] == 1 then
                     --已完成一觉
                 else
@@ -927,7 +927,7 @@ npc[11] = function(play,p2,p3,data)  --异闻录
                     end
                 end
             elseif shuju[2] == 5 then --职业强化至LV100
-                local T_zzsj = json2tbl(getplaydef(play,constant.T_zzsj))
+                local T_zzsj = json2tbl(getplaydef(play,VarCfg.T_zzsj))
                 if T_zzsj.dqzy and T_zzsj.zy_dj and T_zzsj.zy_dj[""..T_zzsj.dqzy] and T_zzsj.zy_dj[""..T_zzsj.dqzy] >= 100 then
                     --已完成一觉
                 else
@@ -935,7 +935,7 @@ npc[11] = function(play,p2,p3,data)  --异闻录
                     return
                 end
             elseif shuju[2] == 6 then --2觉
-                local T_zzsj = json2tbl(getplaydef(play,constant.T_zzsj))
+                local T_zzsj = json2tbl(getplaydef(play,VarCfg.T_zzsj))
                 if T_zzsj.dqzy and T_zzsj.two_jue and T_zzsj.two_jue[""..T_zzsj.dqzy] and T_zzsj.two_jue[""..T_zzsj.dqzy] == 1 then
                     --已完成一觉
                 else
@@ -950,7 +950,7 @@ npc[11] = function(play,p2,p3,data)  --异闻录
                     return
                 end
             elseif shuju[2] == 8 then --三绝
-                local T_zzsj = json2tbl(getplaydef(play,constant.T_zzsj))
+                local T_zzsj = json2tbl(getplaydef(play,VarCfg.T_zzsj))
                 if T_zzsj.dqzy and T_zzsj.three_jue and T_zzsj.three_jue[""..T_zzsj.dqzy] and T_zzsj.three_jue[""..T_zzsj.dqzy] == 1 then
                     --已完成一觉
                 else
@@ -968,7 +968,7 @@ npc[11] = function(play,p2,p3,data)  --异闻录
                     end
                 end
             elseif shuju[2] == 10 then --三绝
-                local T_zzsj = json2tbl(getplaydef(play,constant.T_zzsj))
+                local T_zzsj = json2tbl(getplaydef(play,VarCfg.T_zzsj))
                 if T_zzsj.dqzy and T_zzsj.sh and T_zzsj.sh[""..T_zzsj.dqzy] and T_zzsj.sh[""..T_zzsj.dqzy] == 1 then
                     --已完成一觉
                 else
@@ -990,15 +990,15 @@ npc[11] = function(play,p2,p3,data)  --异闻录
                 end
             end
             T_ywl["jl_"..sj.i.."_".. sj.j .."_"..sj.k .."_" .. sj.z] = 1
-            setplaydef(play, constant.T_ywl, tbl2json(T_ywl))
+            setplaydef(play, VarCfg.T_ywl, tbl2json(T_ywl))
             if shuju.jl then
                 Player.rwjl(play,shuju.jl,"剧情jl",nil)
             end
             sendluamsg(play, 101, 11, 0, 0,
-                    '{"dljq":'..getplaydef(play, constant.T_dljq)
-                            ..',"zxrw":'..getplaydef(play, constant.T_zxrw)
-                            ..',"ywl":'..getplaydef(play, constant.T_ywl)
-                            ..',"T_tj":'..getplaydef(play,constant.T_tj)
+                    '{"dljq":'..getplaydef(play, VarCfg.T_dljq)
+                            ..',"zxrw":'..getplaydef(play, VarCfg.T_zxrw)
+                            ..',"ywl":'..getplaydef(play, VarCfg.T_ywl)
+                            ..',"T_tj":'..getplaydef(play,VarCfg.T_tj)
                             ..'}')
         end
     elseif p2 == 4 then --一整个大陆任务奖励
@@ -1055,11 +1055,11 @@ npc[13] = function(play, p2, p3, data)  -- 记录石
     if p2 == 0 then
         -- 当 p3 为 0 时，进行记录石的初始化操作
         -- 向客户端发送消息，请求获取玩家的默认记录石信息
-        sendluamsg(play, 101, 13, 1, 0, getplaydef(play, constant.T_jls))
+        sendluamsg(play, 101, 13, 1, 0, getplaydef(play, VarCfg.T_jls))
     elseif p2 == 1 then
 
         -- 当 p3 为 1 时，记录
-        local jls = json2tbl(getplaydef(play,constant.T_jls))
+        local jls = json2tbl(getplaydef(play,VarCfg.T_jls))
         --获取当前玩家坐标和地图
         local xx,yy,dt = getbaseinfo(play,4),getbaseinfo(play,5),getbaseinfo(play,3)
         if string.find(dt,"_") then
@@ -1074,12 +1074,12 @@ npc[13] = function(play, p2, p3, data)  -- 记录石
         --将当前玩家的坐标和地图信息存入记录石信息中
         jls["dtm"..p3] = {p3,dt,xx,yy}
         --将记录石信息存入玩家的数据中
-        setplaydef(play,constant.T_jls,tbl2json(jls))
+        setplaydef(play,VarCfg.T_jls,tbl2json(jls))
         --向客户端发送消息，通知记录石记录成功
-        sendluamsg(play, 101, 13, 2, p3, getplaydef(play, constant.T_jls))
+        sendluamsg(play, 101, 13, 2, p3, getplaydef(play, VarCfg.T_jls))
     elseif p2 == 2 then
         -- 当 p2 为 2 时，进行记录石的传送
-        local jls = json2tbl(getplaydef(play,constant.T_jls))
+        local jls = json2tbl(getplaydef(play,VarCfg.T_jls))
         --获取当前玩家的记录石信息
         local jlsinfo = jls["dtm"..p3]
         --判断记录石信息是否存在
@@ -1115,14 +1115,14 @@ end
 ---首充礼包
 npc[501] = function(play,p2,p3,data)  --首充礼包
     if p3 == 0 then
-        sendluamsg(play, 101, 501, 0, 0,getflagstatus(play,constant.BS_sckg))
+        sendluamsg(play, 101, 501, 0, 0,getflagstatus(play,VarCfg.BS_sckg))
     elseif p3 == 1 then
         if querymoney(play,20) >= 10 then
-            if getflagstatus(play,constant.BS_sckg) == 0 then
-                setflagstatus(play,constant.BS_sckg,1)
-                local json = json2tbl(getplaydef(play,constant.T_czlb))
+            if getflagstatus(play,VarCfg.BS_sckg) == 0 then
+                setflagstatus(play,VarCfg.BS_sckg,1)
+                local json = json2tbl(getplaydef(play,VarCfg.T_czlb))
                 json["sclb"] = true
-                setplaydef(play,constant.T_czlb,tbl2json(json))
+                setplaydef(play,VarCfg.T_czlb,tbl2json(json))
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[首充礼包]</font><font color=\'#28ef01\'>领取首充礼包成功!</font>","Type":9}')
                 sendluamsg(play, 101, 501, 0, 1,"")
             else
@@ -1136,23 +1136,23 @@ end
 ---在线充值
 npc[502] = function(play,p2,p3,data)  --在线充值
     if p3 == 0 then
-        sendluamsg(play, 101, 502, 0, 0,getplaydef(play,constant.T_czlb))
+        sendluamsg(play, 101, 502, 0, 0,getplaydef(play,VarCfg.T_czlb))
     elseif p3 == 2 then
         local je = tonumber(data)
         if je and constant.cz_jeyz[je] then
-            setplaydef(play,constant.U_czyz,constant.cz_jeyz[je])
+            setplaydef(play,VarCfg.U_czyz,constant.cz_jeyz[je])
             sendluamsg(play, 101, 999, je, 7,"")
         end
     elseif p3 == 3 then
         local je = tonumber(data)
         if je and je >= 10 then
-            setplaydef(play,constant.U_czyz,0)
+            setplaydef(play,VarCfg.U_czyz,0)
             sendluamsg(play, 101, 999, je, 7,"")
         else
             sendmsg(play,1,'{"Msg":"<font color=\'#ff0500\'>充值金额不得小于10元...</font>","Type":9}')
         end
     elseif p3 == 4 then
-        local json = json2tbl(getplaydef(play,constant.T_czlb))
+        local json = json2tbl(getplaydef(play,VarCfg.T_czlb))
         if json.cz4 then
             if json.jskg then
                 json.jskg = nil
@@ -1163,7 +1163,7 @@ npc[502] = function(play,p2,p3,data)  --在线充值
                 json.jskg = true
                 sendmsg(play,1,'{"Msg":"<font color=\'#28ef01\'>溅射功能已开启...</font>","Type":9}')
             end
-            setplaydef(play,constant.T_czlb,tbl2json(json))
+            setplaydef(play,VarCfg.T_czlb,tbl2json(json))
         end
     end
 end
@@ -1171,18 +1171,18 @@ end
 local zzch,sg,qsx = {"黄金赞助","铂金赞助","钻石赞助"},{0,50,100},{1,2,3}
 npc[503] = function(play,p2,p3,data)  --赞助礼包
     if p2 == 0 then
-        sendluamsg(play, 101, 503, 0, getplaydef(play,constant.U_fldt[2]),getplaydef(play,constant.T_czlb))
+        sendluamsg(play, 101, 503, 0, getplaydef(play,VarCfg.U_fldt[2]),getplaydef(play,VarCfg.T_czlb))
     elseif p2 == 1 then
-        local json = json2tbl(getplaydef(play,constant.T_czlb))
+        local json = json2tbl(getplaydef(play,VarCfg.T_czlb))
         if not json["zzlb"..p3] then
-            if getplaydef(play,constant.U_fldt[2]) >= sg[p3] then
+            if getplaydef(play,VarCfg.U_fldt[2]) >= sg[p3] then
                 json["zzlb"..p3] = 1
-                setplaydef(play,constant.T_czlb,tbl2json(json))
+                setplaydef(play,VarCfg.T_czlb,tbl2json(json))
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[赞助礼包]</font><font color=\'#28ef01\'>领取成功...</font>","Type":9}')
                 Player.title_give(play,zzch[p3])
                 Player.qsx_give(play, qsx[p3], "赞助", nil)
-                if getplaydef(play,constant.U_zxrw[1]) == 2 and p3 == 1 then
-                    newdeletetask(play,getplaydef(play,constant.U_zxrw[1]))
+                if getplaydef(play,VarCfg.U_zxrw[1]) == 2 and p3 == 1 then
+                    newdeletetask(play,getplaydef(play,VarCfg.U_zxrw[1]))
                     playeffect(play,4011,25,-50,1,0,0)
                     sendluamsg(play, 101, 503, 2, p3,"")
                     return
@@ -1204,15 +1204,15 @@ end
 ---快人一步
 npc[504] = function(play,p2,p3,data)  --快人一步
     if p2 == 0 then
-        sendluamsg(play, 101, 504, 0, 0,'{"mztq":'..getflagstatus(play,constant.BS_mztq)..',"zjxz":'..getplaydef(play,constant.U_jdgh)..'}')
+        sendluamsg(play, 101, 504, 0, 0,'{"mztq":'..getflagstatus(play,VarCfg.BS_mztq)..',"zjxz":'..getplaydef(play,VarCfg.U_jdgh)..'}')
     elseif p2 == 1 then
-        if getflagstatus(play,constant.BS_mztq) == 0 then
+        if getflagstatus(play,VarCfg.BS_mztq) == 0 then
             sendluamsg(play, 101, 999, 98, 21,"")
         else
             sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>每人只能购买一次</font>","Type":9}')
         end
     elseif p2 == 2 then
-        sendluamsg(play, 101, 504, 2, 0,'{"mztq":'..getflagstatus(play,constant.BS_mztq)..',"zjxz":'..getplaydef(play,constant.U_jdgh)..'}')
+        sendluamsg(play, 101, 504, 2, 0,'{"mztq":'..getflagstatus(play,VarCfg.BS_mztq)..',"zjxz":'..getplaydef(play,VarCfg.U_jdgh)..'}')
     end
 end
 ---自动巡航
@@ -1220,7 +1220,7 @@ npc[505] = function(play,p2,p3,data)  --自动巡航
     if p2 == 0 then
         sendluamsg(play, 101, 505, 0, 0,"")
     elseif p2 == 1 then
-        sendluamsg(play, 101, 505, 1, 0,getplaydef(play,constant.T_aigj))
+        sendluamsg(play, 101, 505, 1, 0,getplaydef(play,VarCfg.T_aigj))
     elseif p2 == 2 then
         local dtmz = getbaseinfo(play,3)
         if jinzhigj[dtmz] or string.find(dtmz,"_") then
@@ -1228,14 +1228,14 @@ npc[505] = function(play,p2,p3,data)  --自动巡航
         elseif checkkuafu(play) then
             sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[自动巡航]</font><font color=\'#ff0000\'>跨服地图,无法记录...</font>","Type":9}')
         else
-            local json = json2tbl(getplaydef(play,constant.T_aigj))
+            local json = json2tbl(getplaydef(play,VarCfg.T_aigj))
             json["dt"..p3] = getbaseinfo(play,45)
             json["dtid"..p3] = dtmz
             sendluamsg(play, 101, 505, 2, p3,getbaseinfo(play,45))
-            setplaydef(play,constant.T_aigj,tbl2json(json))
+            setplaydef(play,VarCfg.T_aigj,tbl2json(json))
         end
     elseif p2 == 3 then
-        local json = json2tbl(getplaydef(play,constant.T_aigj))
+        local json = json2tbl(getplaydef(play,VarCfg.T_aigj))
         if json["fgx"..p3] then
             json["fgx"..p3] = nil
         elseif json["dtid"..p3] then
@@ -1243,12 +1243,12 @@ npc[505] = function(play,p2,p3,data)  --自动巡航
         else
             sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[自动巡航]</font><font color=\'#ff0500\'>当前未记录地图,无法勾选...</font>","Type":9}')
         end
-        setplaydef(play,constant.T_aigj,tbl2json(json))
-        sendluamsg(play, 101, 505, 3, p3,getplaydef(play,constant.T_aigj))
+        setplaydef(play,VarCfg.T_aigj,tbl2json(json))
+        sendluamsg(play, 101, 505, 3, p3,getplaydef(play,VarCfg.T_aigj))
     elseif p2 == 4 then
-        if getflagstatus(play,constant.BS_18cz) == 1 then
-            local json = json2tbl(getplaydef(play,constant.T_aigj))
-            if getflagstatus(play,constant.BS_AIgj) == 0 then
+        if getflagstatus(play,VarCfg.BS_18cz) == 1 then
+            local json = json2tbl(getplaydef(play,VarCfg.T_aigj))
+            if getflagstatus(play,VarCfg.BS_AIgj) == 0 then
                 local yz = 0
                 for i = 1, 10, 1 do
                     if json["fgx"..i] then
@@ -1258,10 +1258,10 @@ npc[505] = function(play,p2,p3,data)  --自动巡航
                 end
                 if yz == 1 then
                     startautoattack(play)
-                    setflagstatus(play,constant.BS_AIgj,1)
+                    setflagstatus(play,VarCfg.BS_AIgj,1)
                     json.gjkg = true
-                    setplaydef(play,constant.N_Aigj[2],os.time())
-                    setplaydef(play,constant.N_Aigj[5],os.time())
+                    setplaydef(play,VarCfg.N_Aigj[2],os.time())
+                    setplaydef(play,VarCfg.N_Aigj[5],os.time())
                     setontimer(play, 5, 1, 0, 1)
                 else
                     sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[自动巡航]</font><font color=\'#ff0500\'>未勾选任何地图,无法进行AI挂机...</font>","Type":9}')
@@ -1269,17 +1269,17 @@ npc[505] = function(play,p2,p3,data)  --自动巡航
             else
                 json.gjkg = nil
                 stopautoattack(play)
-                setflagstatus(play,constant.BS_AIgj,0)
+                setflagstatus(play,VarCfg.BS_AIgj,0)
                 setofftimer(play,5)
             end
-            setplaydef(play,constant.T_aigj,tbl2json(json))
+            setplaydef(play,VarCfg.T_aigj,tbl2json(json))
             sendluamsg(play, 101, 505, 4,0,tbl2json(json))
         else
             sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[自动巡航]</font><font color=\'#ff0000\'>未激活【自动巡航】,无法使用，可在在线充值激活...</font>","Type":9}')
         end
     elseif p2 == 5 then
-        if getflagstatus(play,constant.BS_18cz) == 1 then
-            local json = json2tbl(getplaydef(play,constant.T_aigj))
+        if getflagstatus(play,VarCfg.BS_18cz) == 1 then
+            local json = json2tbl(getplaydef(play,VarCfg.T_aigj))
             if p3 == 1 then
                 if json.zgx1 then
                     json.zgx1 = nil
@@ -1303,7 +1303,7 @@ npc[505] = function(play,p2,p3,data)  --自动巡航
                     json["zgx"..p3] = true
                 end
             end
-            setplaydef(play,constant.T_aigj,tbl2json(json))
+            setplaydef(play,VarCfg.T_aigj,tbl2json(json))
         end
     else
         sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[自动巡航]</font><font color=\'#ff0000\'>未激活【自动巡航】,无法使用，可在在线充值激活...</font>","Type":9}')
@@ -1313,10 +1313,10 @@ end
 npc[506] = function(play,p2,p3,msgData)  --天选之子
     if p2 == 0 then
         sendluamsg(play, 101, 506, 0, 0,
-                '{"A_txzz":'..(getsysvar(constant.A_txzz) == "" and "{}" or getsysvar(constant.A_txzz))..
-                        ',"T_txzr":'..getplaydef(play,constant.T_txzr)..
-                        ',"kqsj":'..getsysvar(constant.G_kqfz)..
-                        ',"G_txzz_2":'..getsysvar(constant.G_txzz[2])..
+                '{"A_txzz":'..(getsysvar(VarCfg["A_天选之人json"]) == "" and "{}" or getsysvar(VarCfg["A_天选之人json"]))..
+                        ',"T_txzr":'..getplaydef(play,VarCfg.T_txzr)..
+                        ',"kqsj":'..getsysvar(VarCfg["G_开区分钟"])..
+                        ',"G_txzz_2":'..getsysvar(VarCfg["G_天选之人时间"][2])..
                         '}')
     end
 end
@@ -1327,12 +1327,12 @@ local hd_dtmz = {
 npc[507] = function(play,p2,p3,msgData)  --游戏活动
     if p2 == 0 then
         sendluamsg(play, 101, 507, 0, 0,
-                '{"kqfz":'..getsysvar(constant.G_kqfz)..',"hdjl":'..getplaydef(play,constant.T_hdjl)..'}')
+                '{"kqfz":'..getsysvar(VarCfg["G_开区分钟"])..',"hdjl":'..getplaydef(play,VarCfg.T_hdjl)..'}')
     elseif p2 == 1  then
 
     elseif p2 == 2 then
         if  p3 > 0 and p3 < 4 then
-            local kqsj = getsysvar(constant.G_kqfz)
+            local kqsj = getsysvar(VarCfg["G_开区分钟"])
             if getplaydef(play,"N$战斗状态") < os.time() then
                 if kqsj >= hd_dtmz[1][p3][2] and kqsj < hd_dtmz[1][p3][3] then
                     if p3 == 1 then
@@ -1346,11 +1346,11 @@ npc[507] = function(play,p2,p3,msgData)  --游戏活动
                         map(play,hd_dtmz[1][p3][1])
                         sendluamsg(play,101,9999,0,0,"npc_yxhd")
                     end
-                    local T_hdcjjl = json2tbl(getplaydef(play,constant.T_hdcjjl))
+                    local T_hdcjjl = json2tbl(getplaydef(play,VarCfg.T_hdcjjl))
                     if not T_hdcjjl["2_"..p3] then
-                        setplaydef(play,constant.U_hdjf,getplaydef(play,constant.U_hdjf) + 10)
+                        setplaydef(play,VarCfg.U_hdjf,getplaydef(play,VarCfg.U_hdjf) + 10)
                         T_hdcjjl["2_"..p3] = 1
-                        setplaydef(play,constant.T_hdcjjl,tbl2json(T_hdcjjl))
+                        setplaydef(play,VarCfg.T_hdcjjl,tbl2json(T_hdcjjl))
                     end
                     delaymsggoto(play,100,"@Login_msg,1")
                 else
@@ -1373,11 +1373,11 @@ npc[507] = function(play,p2,p3,msgData)  --游戏活动
                     end
                     sendluamsg(play,101,9999,0,0,"npc_yxhd")
                 end
-                local T_hdcjjl = json2tbl(getplaydef(play,constant.T_hdcjjl))
+                local T_hdcjjl = json2tbl(getplaydef(play,VarCfg.T_hdcjjl))
                 if not T_hdcjjl["3_"..p3] then
-                    setplaydef(play,constant.U_hdjf,getplaydef(play,constant.U_hdjf) + 10)
+                    setplaydef(play,VarCfg.U_hdjf,getplaydef(play,VarCfg.U_hdjf) + 10)
                     T_hdcjjl["3_"..p3] = 1
-                    setplaydef(play,constant.T_hdcjjl,tbl2json(T_hdcjjl))
+                    setplaydef(play,VarCfg.T_hdcjjl,tbl2json(T_hdcjjl))
                 end
                 delaymsggoto(play,100,"@Login_msg,1")
             else
@@ -1388,23 +1388,23 @@ npc[507] = function(play,p2,p3,msgData)  --游戏活动
                 sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>已在活动地图了...</font>","Type":9}')
                 return
             end
-            if getplaydef(play,constant.J_zydkbs) == 0 then
+            if getplaydef(play,VarCfg.J_zydkbs) == 0 then
                 if getsysvar(constant.G_zydkbs) == 0 then
-                    setplaydef(play,constant.J_zydkbs,1)
+                    setplaydef(play,VarCfg.J_zydkbs,1)
                     setsysvar(constant.G_zydkbs,1)
                     mapmove(play,"阵营对抗",33,37,8)
                     setcamp(play,1)
                 else
-                    setplaydef(play,constant.J_zydkbs,2)
+                    setplaydef(play,VarCfg.J_zydkbs,2)
                     setsysvar(constant.G_zydkbs,0)
                     mapmove(play,"阵营对抗",33,37,8)
                     setcamp(play,2)
                 end
             else
-                if getplaydef(play,constant.J_zydkbs) == 1 then
+                if getplaydef(play,VarCfg.J_zydkbs) == 1 then
                     mapmove(play,"阵营对抗",33,37,8)
                     setcamp(play,1)
-                elseif getplaydef(play,constant.J_zydkbs) == 2 then
+                elseif getplaydef(play,VarCfg.J_zydkbs) == 2 then
                     mapmove(play,"阵营对抗",33,37,8)
                     setcamp(play,2)
                 end
@@ -1430,9 +1430,9 @@ end
 local xlxl = {{1,2,3,4,7,8,23,22,24,25,26},{18,38,68,128,288,588,888,1188,1588,1888},{98,6,30,198,28,58,88,66,98}}
 npc[998] = function(play,p2,p3,msg)  --后台
     local qfmz = getconst(play, '<$SERVERNAME>')
-    if getplaydef(play,constant.S_houtaibf) ~= "" or (qfmz == "" or qfmz == "测试区" )then
-        if getplaydef(play,constant.S_houtaibf) == "" and (qfmz == "" or qfmz == "测试区" ) then
-            setplaydef(play,constant.S_houtaibf,"本地测试区")
+    if getplaydef(play,VarCfg.S_houtaibf) ~= "" or (qfmz == "" or qfmz == "测试区" )then
+        if getplaydef(play,VarCfg.S_houtaibf) == "" and (qfmz == "" or qfmz == "测试区" ) then
+            setplaydef(play,VarCfg.S_houtaibf,"本地测试区")
         end
         if p2 == 1 then
             if p3 == 0 then
@@ -1473,7 +1473,7 @@ npc[998] = function(play,p2,p3,msg)  --后台
                 if data and data.mz and data.hb and data.hb > 0 and data.hb < 11 then
                     local dx,sy = getplayerbyname(data.mz),data.hb
                     if dx then
-                        setplaydef(dx, constant.U_czyz,data.hb)
+                        setplaydef(dx, VarCfg.U_czyz,data.hb)
                         changemoney(dx,7,"+",xlxl[2][data.hb]*100,"",true)
                         recharge(dx, xlxl[2][data.hb], "gm", 7, false)
                         sendmsg(play, 1, '{"Msg":"<font color=\'#28ef01\'>['..data.mz..']发送礼包成功</font>","Type":9}')

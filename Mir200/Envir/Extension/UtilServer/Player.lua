@@ -1,13 +1,9 @@
+release_print("UtilServer Player.lua")
 Player = {}
-
-
 local bind_money = {
     {3,1},--元宝
     {4,2},--灵符
     {8,7},--仙玉
-    {19},--灵气
-    {27},--仙气
-    {28} --道气
 }
 local bind_m_tab = {}
 for index, value in ipairs(bind_money) do
@@ -25,7 +21,6 @@ function Player.getMoneyNum(actor, moneytype)
     else
         moneynum = querymoney(actor, moneytype)
     end
-    release_print("moneynum",moneynum)
     return moneynum
 end
 --检查货币数量
@@ -39,9 +34,6 @@ function Player.checkMoneyNum(actor, moneytype, num)
     else
         moneynum = querymoney(actor, moneytype)
     end
-    --if moneytype == ConstCfg.money.bdyb then
-        --moneynum = moneynum + querymoney(actor, ConstCfg.money.yb)
-    --end
     return moneynum >= num
 end
 --检查 物品 货币 装备是否满足数量(数量不足返回不足物品的名字)
@@ -327,7 +319,7 @@ function Player.GetUUID(actor)
 end
 
 ----获得角色等级
----@param actor object  --玩家对象
+---@param actor  --玩家对象
 function Player.GetLevel(actor)
     return getbaseinfo(actor, 6)
 end
@@ -337,19 +329,19 @@ function Player.qsx_give(actor, t, desc, multiple) --全属性给予
     --TODO
 end
 function Player.zxrw_lingqu(actor, zxrw_id, desc) --领取支线任务
-    if not json2tbl(getplaydef(actor, constant.T_zxrw))[zxrw_id] then
+    if not json2tbl(getplaydef(actor, VarCfg.T_zxrw))[zxrw_id] then
         newpicktask(actor,zxrw_id)
         rwcf.jia(actor,zxrw_id)
-        sendluamsg(actor,101,1005,0,0,getplaydef(actor, constant.T_zxrw))
+        sendluamsg(actor,101,1005,0,0,getplaydef(actor, VarCfg.T_zxrw))
     end
 end
 function Player.zxrw_wancheng(actor, zxrw_id, desc) --完成任务
     if zxrw_id < 1000 then --主线
-        if getplaydef(actor,constant.U_zxrw[1]) == zxrw_id then
+        if getplaydef(actor,VarCfg.U_zxrw[1]) == zxrw_id then
             newdeletetask(actor, zxrw_id)
         end
     else
-        if json2tbl(getplaydef(actor, constant.T_zxrw))[""..zxrw_id] then
+        if json2tbl(getplaydef(actor, VarCfg.T_zxrw))[""..zxrw_id] then
             if constant.rw_syb[zxrw_id][1] == 0 then --无实体任务
                 rwcf.jian(actor,zxrw_id)
                 newdeletetask(actor, zxrw_id)
@@ -360,18 +352,18 @@ function Player.zxrw_wancheng(actor, zxrw_id, desc) --完成任务
     end
 end
 function Player.zxrw_shuaxin(actor, zxrw_id,jd, desc) --刷新任务 -- 有参
-    if zxrw_id < 500 and getplaydef(actor,constant.U_zxrw[1]) ~= zxrw_id then
+    if zxrw_id < 500 and getplaydef(actor,VarCfg.U_zxrw[1]) ~= zxrw_id then
         return
     end
     newchangetask(actor, zxrw_id,unpack(jd))
 end
 function Player.zxrw_teshushuaxin(actor, zxrw_id, desc) --特殊刷新任务--无参
-    if zxrw_id < 500 and getplaydef(actor,constant.U_zxrw[1]) ~= zxrw_id then
+    if zxrw_id < 500 and getplaydef(actor,VarCfg.U_zxrw[1]) ~= zxrw_id then
         return
     end
     if constant.rw_syb[zxrw_id] and constant.rw_syb[zxrw_id].jd then
-        local chuliwp = json2tbl(getplaydef(actor, constant.T_rwwp))
-        local db = json2tbl(getplaydef(actor,constant.T_dljq))
+        local chuliwp = json2tbl(getplaydef(actor, VarCfg.T_rwwp))
+        local db = json2tbl(getplaydef(actor,VarCfg.T_dljq))
         if db[constant.rw_syb[zxrw_id].jd[1]] and constant.rw_syb[zxrw_id].jd[2] == 1 then
             newchangetask(actor, zxrw_id,db[constant.rw_syb[zxrw_id].jd[1]][2])
         end
@@ -398,7 +390,7 @@ function Player.zxrw_teshushuaxin(actor, zxrw_id, desc) --特殊刷新任务--无参
     end
     if constant.rw_syb[zxrw_id] and constant.rw_syb[zxrw_id].ts then
         if constant.rw_syb[zxrw_id].ts[1] == 1 then
-            local db = json2tbl(getplaydef(actor,constant.T_dljq))
+            local db = json2tbl(getplaydef(actor,VarCfg.T_dljq))
             local sl = {
                 getbagitemcount(actor,constant.rw_syb[zxrw_id].ts.wp),
                 (db[constant.rw_syb[zxrw_id].ts.cs[1]] and db[constant.rw_syb[zxrw_id].ts.cs[1]][constant.rw_syb[zxrw_id].ts.cs[2]])
@@ -406,7 +398,7 @@ function Player.zxrw_teshushuaxin(actor, zxrw_id, desc) --特殊刷新任务--无参
             }
             newchangetask(actor, zxrw_id,unpack(sl))
         elseif constant.rw_syb[zxrw_id].ts[1] == 2 then
-            local db = json2tbl(getplaydef(actor,constant.T_dljq))
+            local db = json2tbl(getplaydef(actor,VarCfg.T_dljq))
             local sl = {}
             for v,k in pairs(constant.rw_syb[zxrw_id].ts.wp) do
                 table.insert(sl,getbagitemcount(actor,k))
@@ -418,7 +410,7 @@ function Player.zxrw_teshushuaxin(actor, zxrw_id, desc) --特殊刷新任务--无参
             end
             newchangetask(actor, zxrw_id,unpack(sl))
         elseif constant.rw_syb[zxrw_id].ts[1] == 3 then
-            local db = json2tbl(getplaydef(actor,constant.T_dljq))
+            local db = json2tbl(getplaydef(actor,VarCfg.T_dljq))
             local sl = {}
             for v,k in pairs(constant.rw_syb[zxrw_id].ts.cs[2]) do
                 table.insert(sl,
@@ -428,7 +420,7 @@ function Player.zxrw_teshushuaxin(actor, zxrw_id, desc) --特殊刷新任务--无参
             end
             newchangetask(actor, zxrw_id,unpack(sl))
         elseif constant.rw_syb[zxrw_id].ts[1] == 4 then
-            local db = json2tbl(getplaydef(actor,constant.T_dljq))
+            local db = json2tbl(getplaydef(actor,VarCfg.T_dljq))
             local sl = {}
             for v,k in pairs(constant.rw_syb[zxrw_id].ts.wp) do
                 table.insert(sl,getbagitemcount(actor,k))
@@ -509,7 +501,7 @@ function Player.jl_mail(table) --奖励转邮件
 end
 function Player.dl_sz_notip(actor, dl) --大陆限制 -- 无提示
     if dl == 1 then
-        if getplaydef(actor,constant.U_zxrw[1]) < 8 then
+        if getplaydef(actor,VarCfg.U_zxrw[1]) < 8 then
             return false
         end
     end
@@ -517,7 +509,7 @@ function Player.dl_sz_notip(actor, dl) --大陆限制 -- 无提示
 end
 function Player.dl_sz(actor, dl) --大陆限制 -- 有提示
     if dl == 1 then
-        if getplaydef(actor,constant.U_zxrw[1]) < 8 then
+        if getplaydef(actor,VarCfg.U_zxrw[1]) < 8 then
             sendmsg(actor, 1, '{"Msg":"<font color=\'#ff0000\'>请完成该大陆主线引导后再来。。。</font>","Type":9}')
             return false
         end
@@ -546,8 +538,8 @@ local fd_sjyb = {[10053] = {500,2000},[10054] = {1000,5000},[10055] = {5000,5000
 
 function Player.huishou(play, hs_constant)
     if hs_constant == nil then
-        local kg1, kg2, kg3, kg4, kg5, pz, cl, sq = getflagstatus(play, constant.BS_huishou[1]), getflagstatus(play, constant.BS_huishou[2]), getflagstatus(play, constant.BS_huishou[3]),getflagstatus(play, constant.BS_huishou[4]),getflagstatus(play, constant.BS_huishou[5]), json2tbl(getplaydef(play, constant.T_hsdg)), {0,0,0,0,0,0,0,0,0}, ''
-        local T_tshs = json2tbl(getplaydef(play, constant.T_tshs))
+        local kg1, kg2, kg3, kg4, kg5, pz, cl, sq = getflagstatus(play, VarCfg.BS_huishou[1]), getflagstatus(play, VarCfg.BS_huishou[2]), getflagstatus(play, VarCfg.BS_huishou[3]),getflagstatus(play, VarCfg.BS_huishou[4]),getflagstatus(play, VarCfg.BS_huishou[5]), json2tbl(getplaydef(play, VarCfg.T_hsdg)), {0,0,0,0,0,0,0,0,0}, ''
+        local T_tshs = json2tbl(getplaydef(play, VarCfg.T_tshs))
         local item = getbagitems(play)
 
         for i, v in pairs(item or {}) do
@@ -555,7 +547,7 @@ function Player.huishou(play, hs_constant)
             if idx > 10022 and idx < 10034 then    --灵符
                 if kg1 == 1 then
                     local sl = getiteminfo(play, v, 5)
-                    changemoney(play, getflagstatus(play,constant.BS_mztq) == 1 and 2 or 4, '+', getstditeminfo(idx, 8) * sl, '机器人吃', true)
+                    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', getstditeminfo(idx, 8) * sl, '机器人吃', true)
                     delitembymakeindex(play, getiteminfo(play, v, 1), sl)
                 end
             elseif idx > 10018 and idx < 10023 then    --元宝
@@ -564,7 +556,7 @@ function Player.huishou(play, hs_constant)
                         local sl = getiteminfo(play, v, 5)
                         delitembymakeindex(play, getiteminfo(play, v, 1), sl)
                         for i = 1, sl, 1 do
-                            changemoney(play, getflagstatus(play,constant.BS_mztq) == 1 and 1 or 3, '+', math.random(fd_sjyb[idx][1], fd_sjyb[idx][2]), '机器人吃', true)
+                            changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', math.random(fd_sjyb[idx][1], fd_sjyb[idx][2]), '机器人吃', true)
                         end
                     end
                 end
@@ -607,15 +599,15 @@ function Player.huishou(play, hs_constant)
         if sq ~= '' then
             delitembymakeindex(play, sq)
             if cl[1] > 0 then
-                changemoney(play, getflagstatus(play,constant.BS_mztq) == 1 and 1 or 3, '+', cl[1] + math.floor(cl[1] * getbaseinfo(play,51,204) / 10000), '回收获得', true)
+                changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', cl[1] + math.floor(cl[1] * getbaseinfo(play,51,204) / 10000), '回收获得', true)
             end
             if cl[2] > 0 then
-                changemoney(play, getflagstatus(play,constant.BS_mztq) == 1 and 2 or 4, '+', cl[2] + math.floor(cl[2] * getbaseinfo(play,51,205) / 10000), '回收获得', true)
+                changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', cl[2] + math.floor(cl[2] * getbaseinfo(play,51,205) / 10000), '回收获得', true)
             end
             if cl[3] > 0 then
-                changemoney(play, getflagstatus(play,constant.BS_mztq) == 1 and 7 or 8, '+', cl[3], '回收获得', true)
+                changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 7 or 8, '+', cl[3], '回收获得', true)
             end
-            local gz = getflagstatus(play,constant.BS_mztq) == 1 and 0 or 850
+            local gz = getflagstatus(play,VarCfg.BS_mztq) == 1 and 0 or 850
             if cl[9] > 0 then
                 giveitem(play,"副装碎片",cl[9],gz)
             end
@@ -626,8 +618,8 @@ function Player.huishou(play, hs_constant)
         local yb,jb = 0,0 --元宝灵符
         local xy = 0  --仙玉
         local jc = 0 --副装
-        local T_tshs = json2tbl(getplaydef(play, constant.T_tshs))
-        local gz = getflagstatus(play,constant.BS_mztq) == 1 and 0 or 850
+        local T_tshs = json2tbl(getplaydef(play, VarCfg.T_tshs))
+        local gz = getflagstatus(play,VarCfg.BS_mztq) == 1 and 0 or 850
         for k, v in pairs(hs) do
             local wp = getitembymakeindex(play,v)
             if wp then
@@ -665,13 +657,13 @@ function Player.huishou(play, hs_constant)
             end
         end
         if yb > 0 then
-            changemoney(play, getflagstatus(play,constant.BS_mztq) == 1 and 1 or 3, '+', yb + math.floor(yb * getbaseinfo(play,51,204) / 10000), '回收获得', true)
+            changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', yb + math.floor(yb * getbaseinfo(play,51,204) / 10000), '回收获得', true)
         end
         if jb > 0 then
-            changemoney(play, getflagstatus(play,constant.BS_mztq) == 1 and 2 or 4, '+', jb + math.floor(jb * getbaseinfo(play,51,205) / 10000), '回收获得', true)
+            changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', jb + math.floor(jb * getbaseinfo(play,51,205) / 10000), '回收获得', true)
         end
         if xy > 0 then
-            changemoney(play, getflagstatus(play,constant.BS_mztq) == 1 and 7 or 8, '+', xy, '回收获得', true)
+            changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 7 or 8, '+', xy, '回收获得', true)
         end
         if jc > 0 then
             giveitem(play,"副装碎片",jc,gz)
@@ -681,8 +673,8 @@ function Player.huishou(play, hs_constant)
 
 end
 function Player.addteshuhuihsou(play, t)
-    local T_tshs = json2tbl(getplaydef(play, constant.T_tshs))
-    local hspz = json2tbl(getplaydef(play,constant.T_hsdg))
+    local T_tshs = json2tbl(getplaydef(play, VarCfg.T_tshs))
+    local hspz = json2tbl(getplaydef(play,VarCfg.T_hsdg))
     for _,item in ipairs(t) do
         local idx = getstditeminfo(item[1], 0)
         if huishou.teshuhuihsou[idx] and not T_tshs[""..idx] then
@@ -690,8 +682,8 @@ function Player.addteshuhuihsou(play, t)
         end
         hspz[""..idx] = 1
     end
-    setplaydef(play, constant.T_tshs, tbl2json(T_tshs))
-    setplaydef(play,constant.T_hsdg,tbl2json(hspz))
+    setplaydef(play, VarCfg.T_tshs, tbl2json(T_tshs))
+    setplaydef(play,VarCfg.T_hsdg,tbl2json(hspz))
 end
 
 

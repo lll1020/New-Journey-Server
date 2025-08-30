@@ -15,16 +15,13 @@ function MainError(errinfo)
 end
 
 local function init()
-	dofile('Envir/Lua/Main.lua')
+    dofile('Envir/Lua/Main.lua')
 end
 
 local result, errinfo = pcall(init)
 if not result then
 	MainError(errinfo)
 end
-local kfttxl = {
-    1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100
-}
 
 
 --------------------引擎初始化--------------------
@@ -37,19 +34,7 @@ function startup()
         end
     end
     setontimerex(1, 60)
-    --setontimerex(2, 1)
-
-    if getmoncount("新手地图",1003,true) < 200 then
-        genmon("新手地图",74,80,"恶狼",25,400,255)
-    end
-    if getmoncount("新手地图",1004,true) < 200 then
-        genmon("新手地图",183,174,"山贼",25,400,255)
-    end
 end
-
---------------------新服活动刷怪表--------------------
-local G_zydk = {0,0}
-local A_kfdzdl = {}
 
 --------------------人物初始化--------------------
 function login(play)
@@ -58,7 +43,7 @@ function login(play)
         Login.main(play)
         setontimer(play, 10, 3)
     else
-        if getsysvar(constant.G_kqfz) >= 1440 and linkbodyitem(play,71) == "0" then
+        if getsysvar(VarCfg["G_开区分钟"]) >= 1440 and linkbodyitem(play,71) == "0" then
             --TODO
             if quming ~= "" and quming ~= "测试区" and quming ~= "直播区" and quming ~= "审核区1区" then
                 if not constant.pz_htqx[tonumber(getconst(play,"<$USERACCOUNT>"))] then
@@ -74,116 +59,16 @@ function login(play)
         setontimer(play,6,60,0,1)
     end
 end
---------------------跨天触发--------------------
+--------------------跨天登录触发--------------------
 function resetday(play)
 	for _, v in pairs(constant.pz_ldql) do
 		Player.title_del(play, v)
 	end
 end
------------------全局1号60秒定时器----------------
-function ontimerex1()
-	if getsysvar(constant.G_kqyz) > 0 and not checkkuafuserver() then
-		local dqfz = getsysvar(constant.G_kqfz) + 1
-		setsysvar(constant.G_kqfz, dqfz)
-
-	end
-
-    if getmoncount("横断山脉",-1,true) < 100 then genmon("横断山脉",0,0,"裂地猿",500,100,250) genmon("横断山脉",0,0,"崩岩鬼",500,100,250) end
-end
-
-
------------------地图定时器----------------
-function hd_tcppk(xx,ditu)
-    if ditu == "xtc" then
-        local wanjia = getobjectinmap("xtc",137,138,20,1)
-        for k, v in pairs(wanjia) do
-            if math.random(2) == 1 then
-                local x, y = getbaseinfo(v, 4), getbaseinfo(v, 5)
-                if getplaydef(v, "N$上次坐标x") ~= x and getplaydef(v, "N$上次坐标y") ~= y then
-                    setplaydef(v, "N$上次坐标x", x)
-                    setplaydef(v, "N$上次坐标y", y)
-                    local wpmz = paokujl[math.random(#paokujl)]
-                    sendmsg(v,1,'{"Msg":"<font color=\'#ff7700\'>[土城跑酷]</font><font color=\'#00ff00\'>恭喜你获得了['..wpmz..']...</font>","Type":9}')
-                    sendmsg(v, 2, '{"BColor":249,"FColor":255,"Msg":"[土城跑酷]<font color=\'#00ff00\'>恭喜'..getbaseinfo(v, 1)..'获得了['..wpmz..']...</font>","Type":1}')
-                    giveitem(v, wpmz,1,getflagstatus(v,constant.BS_mztq) == 0 and 0 or 850)
-                end
-            end
-        end
-    end
-end
-
------------------个人1号3秒定时器----------------一直开启
-function ontimer1(play)
-    --------------------------------------------------回收脚本
-	if getbagblank(play) < 20 then -- 回收脚本
-        Player.huishou(play)
-	end
-end
-
------------------个人4号定时器----------------60秒定时器
-function ontimer4(play)
-    local zxsj = getplaydef(play, constant.U_fldt[1])
-    setplaydef(play, constant.U_fldt[1], zxsj + 1)
-    setplaydef(play, constant.J_zxsj,getplaydef(play, constant.J_zxsj) + 1)
-end
------------------个人5号定时器----------------1秒定时器AI挂机开启
-function ontimer5(play)
-    local json = json2tbl(getplaydef(play, constant.T_aigj))
-    if json.gjkg then
-        if  getbaseinfo(play, 3) ~= "xtc" then
-            local hdtsj,sgsj = getplaydef(play, constant.N_Aigj[3]),getplaydef(play, constant.N_Aigj[2])
-            if json.zgx3 and os.time() - hdtsj >= 120  then
-                ai_qhdt(play)
-                setplaydef(play, constant.N_Aigj[2], os.time())
-                setplaydef(play, constant.N_Aigj[3], os.time())
-            elseif json.zgx2 and  os.time() - sgsj >= 120 then
-                if getplaydef(play,"N$战斗状态") < os.time() and not getbaseinfo(play,0) then
-                    map(play, getbaseinfo(play, 3))
-                    setplaydef(play, constant.N_Aigj[2], os.time())
-                    sendmsg(play, 1, '{"Msg":"<font color=\'#28ef01\'>AI挂机：120秒无怪自动随机</font>","Type":9}')
-                    startautoattack(play)
-                else
-                    setplaydef(play, constant.N_Aigj[2], os.time())
-                end
-            end
-        elseif getbaseinfo(play, 3) == "xtc" and json.zgx4 then
-            local tcsj = getplaydef(play, constant.N_Aigj[4])
-            if tcsj >= 60 then
-                ai_qhdt(play)
-                setplaydef(play, constant.N_Aigj[4], 0)
-            else
-                setplaydef(play, constant.N_Aigj[4], tcsj + 1)
-            end
-        elseif json.zgx5 and os.time() - getplaydef(play, constant.N_Aigj[5]) >= (60*20) then
-            ai_qhdt(play)
-            setplaydef(play, constant.N_Aigj[5], os.time())
-        end
-    end
-end
------------------个人6号定时器---------------红点系统--60s
-function ontimer6(play)
-    --release_print("红点系统")
-    --天上阁
-    local ists = false
-end
-
------------------定时器----------------清空除魔  每天五点
-function ql_smmrrw()
-
-end
-
------------------个人10号定时器----------------假人用-流程
-function ontimer10(play)
-    local dqlc = getplaydef(play,"N$当前流程")
-    if dqlc == 0 then
-        setplaydef(play,"N$当前流程",1)
-        mapmove(play,"xtc",137,138,5)
-    end
-end
 --------------------传送戒指传送前触发触发-------------------
 function beginteleport(play)
     setplaydef(play,"S$dtm",getbaseinfo(play, 3))
-    local lb_json,sj  = json2tbl(getplaydef(play,constant.T_czlb)),os.time()
+    local lb_json,sj  = json2tbl(getplaydef(play,VarCfg.T_czlb)),os.time()
     local bl = sj - getplaydef(play,"N$传送功能CD")
     if bl < 5 then
         sendmsg(play,1,'{"Msg":"请等待'..(5-bl)..'秒后在使用","FColor":56,"BColor":255,"Type":1}')
@@ -200,7 +85,7 @@ end
 
 --------------------AI挂机自动切换地图-------------------
 function ai_qhdt(play)
-	local json, lins = json2tbl(getplaydef(play, constant.T_aigj)), {}
+	local json, lins = json2tbl(getplaydef(play, VarCfg.T_aigj)), {}
     if json.gjkg then
         if json.zgx4 or json.zgx3 or json.zgx5 then
             for i = 1, 10, 1 do
@@ -216,7 +101,6 @@ function ai_qhdt(play)
         end
     end
 end
-
 function ai_ksgj(play)
     startautoattack(play)
 end
@@ -255,7 +139,7 @@ end
 
 --------------------拾取前触发-------------------
 function pickupitemfrontex(play, item)
-    if getflagstatus(play,constant.BS_mztq) == 0 then
+    if getflagstatus(play,VarCfg.BS_mztq) == 0 then
         setitemaddvalue(play,item,2,1,850)
     end
 end
@@ -267,7 +151,7 @@ end
 --------------------捡物品触发-------------------
 function pickupitemex(play, item)
     local idx = getiteminfo(play, item, 2)
-    local chuli = json2tbl(getplaydef(play, constant.T_rwwp)) --任务物品
+    local chuli = json2tbl(getplaydef(play, VarCfg.T_rwwp)) --任务物品
     local name = getiteminfo(play,item,7)
     if chuli[name] then
         local rwid = chuli[name][1] --任务ID\
@@ -334,11 +218,11 @@ function pickupitemex(play, item)
         delitembymakeindex(play, getiteminfo(play, item, 1), sl)
     elseif idx > 10018 and idx < 10023 then    --元宝
         local sl = getiteminfo(play, item, 5)
-        changemoney(play, getflagstatus(play,constant.BS_mztq) == 1 and 1 or 3, '+', getstditeminfo(idx, 8) * sl, '捡物自动吃', true)
+        changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', getstditeminfo(idx, 8) * sl, '捡物自动吃', true)
         delitembymakeindex(play, getiteminfo(play, item, 1), sl)
     elseif idx > 10022 and idx < 10034 then    --灵符
         local sl = getiteminfo(play, item, 5)
-        changemoney(play, getflagstatus(play,constant.BS_mztq) == 1 and 2 or 4, '+', getstditeminfo(idx, 8) * sl, '捡物自动吃', true)
+        changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', getstditeminfo(idx, 8) * sl, '捡物自动吃', true)
         delitembymakeindex(play, getiteminfo(play, item, 1), sl)
     end
     --进背包动画
@@ -384,7 +268,7 @@ end
 --------------------攻击前触发-------------------
 function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
 	if getbaseinfo(Target, -1) then
-		local bl = getplaydef(play, constant.S_buffgjq)
+		local bl = getplaydef(play, VarCfg.S_buffgjq)
 		local data = json2tbl(bl == '' and {} or bl)
 		local ew = 0
 		for k, v in pairs(data) do
@@ -393,7 +277,7 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
 				ew = ew + (Buff[sy](play, 3, Damage, Target, MagicId,Model) or 0)
 			end
 		end
-		bl = getplaydef(play, constant.S_buffrwq)
+		bl = getplaydef(play, VarCfg.S_buffrwq)
 		data = json2tbl(bl == '' and {} or bl)
 		for k, v in pairs(data) do
 			local sy = tonumber(k)
@@ -464,7 +348,7 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
 			end
 		end
         ---------------------------------------------通用攻击前触发模块，怪有效
-		local bl = getplaydef(play, constant.S_buffgjq)
+		local bl = getplaydef(play, VarCfg.S_buffgjq)
 		local data = json2tbl(bl == '' and {} or bl)
 		local buffsh = 0
 		for k, v in pairs(data) do
@@ -484,7 +368,7 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
 				end
 			end
 		end
-		bl = getplaydef(play, constant.S_buffgwq)
+		bl = getplaydef(play, VarCfg.S_buffgwq)
 		data = json2tbl(bl == '' and {} or bl)
 		for k, v in pairs(data) do
 			local isy = tonumber(k)
@@ -517,16 +401,16 @@ function attack(play, Target, Hiter, MagicId)
 	else
 		gs = math.floor(getbaseinfo(play, 51, 200) / 100)
 	end
-	if getplaydef(play, constant.N_dqgs) ~= gs then
+	if getplaydef(play, VarCfg.N_dqgs) ~= gs then
 		local sj = os.time()
-		if sj - getplaydef(play, constant.N_gscd) > 0 then
-			setplaydef(play, constant.N_gscd, sj)
-			setplaydef(play, constant.N_dqgs, gs)
+		if sj - getplaydef(play, VarCfg.N_gscd) > 0 then
+			setplaydef(play, VarCfg.N_gscd, sj)
+			setplaydef(play, VarCfg.N_dqgs, gs)
 			callscriptex(play, 'changespeedex', 2, gs)
 			sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>当前攻击速度+' .. gs .. '%</font>","Type":9}')
 		end
 	end
-	local bl = getplaydef(play, constant.S_buffgjh)
+	local bl = getplaydef(play, VarCfg.S_buffgjh)
 	local data = json2tbl(bl == '' and {} or bl)
 	for k, v in pairs(data) do
 		local sy = tonumber(k)
@@ -535,7 +419,7 @@ function attack(play, Target, Hiter, MagicId)
 		end
 	end
 	if getbaseinfo(Target, -1) then
-		bl = getplaydef(play, constant.S_buffrwh)
+		bl = getplaydef(play, VarCfg.S_buffrwh)
 		data = json2tbl(bl == '' and {} or bl)
 		for k, v in pairs(data) do
 			local sy = tonumber(k)
@@ -545,7 +429,7 @@ function attack(play, Target, Hiter, MagicId)
 		end
         setplaydef(play,"N$战斗状态",os.time()+3)
 	else
-        bl = getplaydef(play, constant.S_buffgwh)
+        bl = getplaydef(play, VarCfg.S_buffgwh)
         data = json2tbl(bl == '' and {} or bl)
         for k, v in pairs(data) do
             local sy = tonumber(k)
@@ -569,7 +453,7 @@ function struckdamage(play, Hiter, Target, MagicId, Damage)
 	if hasbuff(play, 20033) and MagicId > 0 then
 		return 0
 	end
-	local bl = getplaydef(play, constant.S_buffbgjq)
+	local bl = getplaydef(play, VarCfg.S_buffbgjq)
 	local data = json2tbl(bl == '' and {} or bl)
 	local ew = 0
 	for k, v in pairs(data) do
@@ -580,7 +464,7 @@ function struckdamage(play, Hiter, Target, MagicId, Damage)
 	end
 
     if getbaseinfo(Hiter, -1) then
-		bl = getplaydef(play, constant.S_buffbrwq)
+		bl = getplaydef(play, VarCfg.S_buffbrwq)
 		data = json2tbl(bl == '' and {} or bl)
 		for k, v in pairs(data) do
 			local sy = tonumber(k)
@@ -598,7 +482,7 @@ function struckdamage(play, Hiter, Target, MagicId, Damage)
             end
         end
 	else
-		bl = getplaydef(play, constant.S_buffbgwq)
+		bl = getplaydef(play, VarCfg.S_buffbgwq)
 		data = json2tbl(bl == '' and {} or bl)
 		for k, v in pairs(data) do
 			local sy = tonumber(k)
@@ -653,7 +537,7 @@ end
 
 --------------------杀怪触发-------------------
 function killmon(play, mob)
-    local bl = getplaydef(play, constant.S_buffsgcf)
+    local bl = getplaydef(play, VarCfg.S_buffsgcf)
 	local data = json2tbl(bl == "" and {} or bl)
 	for k, v in pairs(data) do
 		local sy = tonumber(k)
@@ -661,7 +545,7 @@ function killmon(play, mob)
 			Buff[sy](play, 3, mob)
 		end
 	end
-	bl = getplaydef(play, constant.T_sgcf)
+	bl = getplaydef(play, VarCfg.T_sgcf)
 	data = json2tbl(bl == "" and {} or bl)
 	for k, v in pairs(data) do
         if shaguai[k] then
@@ -671,9 +555,9 @@ function killmon(play, mob)
     ---每日杀怪数量
     local gw_name = getbaseinfo(mob,1)
     if guaiwutype[gw_name] and guaiwutype[gw_name] >= 1 then
-        setplaydef(play,constant.J_jsgw[1],getplaydef(play,constant.J_jsgw[1])+1)
+        setplaydef(play,VarCfg.J_jsgw[1],getplaydef(play,VarCfg.J_jsgw[1])+1)
     else
-        setplaydef(play,constant.J_jsgw[2],getplaydef(play,constant.J_jsgw[2])+1)
+        setplaydef(play,VarCfg.J_jsgw[2],getplaydef(play,VarCfg.J_jsgw[2])+1)
     end
     local dt = getbaseinfo(play, 3)
     if dt ~= "xtc" then
@@ -730,7 +614,7 @@ function nextdie(play)
 end
 --------------------人物后复活触发-------------------
 function revival(play)
-	local bl = getplaydef(play, constant.S_bufffuhuo)
+	local bl = getplaydef(play, VarCfg.S_bufffuhuo)
 	local data = json2tbl(bl == '' and {} or bl)
 	for k, v in pairs(data) do
 		local sy = tonumber(k)
@@ -749,19 +633,19 @@ function revival(play)
 end
 --------------------杀死玩家触发-------------------
 function killplay(play,hiter)
-    setplaydef(play,constant.U_srsl,getplaydef(play,constant.U_srsl)+1)
+    setplaydef(play,VarCfg.U_srsl,getplaydef(play,VarCfg.U_srsl)+1)
     login_fhsx(play)
 end
 --------------------玩家死亡触发-------------------
 function playdie(play, hiter)
     local dt,x,y = getbaseinfo(play,3),getbaseinfo(play,4),getbaseinfo(play,5)
     sendmail("#" .. getbaseinfo(play, 1), 1, "系统提示", "您被["..getbaseinfo(hiter, 1).."]在"..getbaseinfo(play,45).."("..x.."."..y..")杀害了...")
-    setplaydef(play,constant.U_bssl,getplaydef(play,constant.U_bssl)+1)
+    setplaydef(play,VarCfg.U_bssl,getplaydef(play,VarCfg.U_bssl)+1)
     if not castleinfo(5) and dt ~= "比武大会" and getbaseinfo(hiter,-1) and dt ~= "武林盟主" and dt ~= "阵营对抗" and not checkkuafu(play) then
-        local U_dkb = getplaydef(play,constant.U_dkb)
+        local U_dkb = getplaydef(play,VarCfg.U_dkb)
         if U_dkb > 0 then
             U_dkb = U_dkb - 1
-            setplaydef(play,constant.U_dkb,U_dkb)
+            setplaydef(play,VarCfg.U_dkb,U_dkb)
             if U_dkb < 1 then
                 Player.title_del(play, '究极狂暴')
                 Buff[26](play, 2)
@@ -783,8 +667,8 @@ function playdie(play, hiter)
     end
 
     if getbaseinfo(hiter,-1) then
-        local cs = getplaydef(hiter,constant.U_jskb) + 1
-        setplaydef(hiter,constant.U_jskb,cs)
+        local cs = getplaydef(hiter,VarCfg.U_jskb) + 1
+        setplaydef(hiter,VarCfg.U_jskb,cs)
     end
     showprogressbardlg(play,5,"@yc_fuhuo_hc","复活中..", 0,"@yc_fuhuo_hc")
 end
@@ -798,7 +682,7 @@ function yc_fuhuo_hc(play)
 end
 --------------------点击原地复活-------------------
 function yc_fuhuo_yd(play)
-    local cs = getplaydef(play, constant.J_mrfhw)
+    local cs = getplaydef(play, VarCfg.J_mrfhw)
     if checkkuafu(play) then
         sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>跨服地图不能使用复活丹!</font>","Type":9}')
         return
@@ -847,10 +731,10 @@ function sendability(play)
 end
 --------------------爆率监听触发-------------------幸运爆率
 function bl_zyjhl2(play,mingzi)
-    local sj = json2tbl(getplaydef(play,constant.T_xybl))
+    local sj = json2tbl(getplaydef(play,VarCfg.T_xybl))
     if sj and not sj[mingzi] then
         sj[mingzi] = 1
-        setplaydef(play,constant.T_xybl,tbl2json(sj))
+        setplaydef(play,VarCfg.T_xybl,tbl2json(sj))
         return true
     end
     return false
@@ -859,14 +743,14 @@ end
 local czlb_je = {18,38,68,128,288,588,888,1188,1588,1888}
 --------------------真充积分改变触发-------------------在线充值礼包筛选
 function moneychange22(play)
-    local lb_json,hbsl,jezz = json2tbl(getplaydef(play, constant.T_czlb)),querymoney(play,22),0
+    local lb_json,hbsl,jezz = json2tbl(getplaydef(play, VarCfg.T_czlb)),querymoney(play,22),0
     for i = 1, 10, 1 do
         if not lb_json["cz"..i] then
             if jezz + czlb_je[i] <= hbsl then
                 jezz = jezz + czlb_je[i]
                 lb_json["cz" .. i] = true
-                setplaydef(play, constant.T_czlb, tbl2json(lb_json))
-                setplaydef(play,constant.N_lbyz,1)
+                setplaydef(play, VarCfg.T_czlb, tbl2json(lb_json))
+                setplaydef(play,VarCfg.N_lbyz,1)
                 czlb_pz(play,i)
             else
                 break
@@ -880,9 +764,9 @@ end
 
 function czlb_pz(play,sy)
     sy = tonumber(sy)
-    local lb_json = json2tbl(getplaydef(play, constant.T_czlb))
-    if getplaydef(play,constant.N_lbyz) == 1 then
-        setplaydef(play,constant.N_lbyz,0)
+    local lb_json = json2tbl(getplaydef(play, VarCfg.T_czlb))
+    if getplaydef(play,VarCfg.N_lbyz) == 1 then
+        setplaydef(play,VarCfg.N_lbyz,0)
     end
 end
 
@@ -898,17 +782,17 @@ end
 --------------------充值触发-------------------
 function recharge(play, Gold, ProductId, MoneyId, isReal)
     release_print("充值触发","玩家："..getbaseinfo(play,1), "金额："..Gold, "订单:"..ProductId, "货币id:"..MoneyId, "是否真充:"..(isReal and "是" or "否"))
-    setplaydef(play,constant.J_zscz,(getplaydef(play,constant.J_zscz) or 0) + Gold)
+    setplaydef(play,VarCfg.J_zscz,(getplaydef(play,VarCfg.J_zscz) or 0) + Gold)
 
     if MoneyId == 7 then   ---仙玉充值
-        local lb_json, sy = getplaydef(play, constant.T_czlb), constant.cz_jeyz[Gold]
+        local lb_json, sy = getplaydef(play, VarCfg.T_czlb), constant.cz_jeyz[Gold]
         lb_json = lb_json == "" and {} or json2tbl(lb_json)
-        if constant.cz_jeyz[Gold] and getplaydef(play, constant.U_czyz) == constant.cz_jeyz[Gold] and not lb_json["cz" .. sy] then
-            setplaydef(play, constant.U_czyz, 0)
+        if constant.cz_jeyz[Gold] and getplaydef(play, VarCfg.U_czyz) == constant.cz_jeyz[Gold] and not lb_json["cz" .. sy] then
+            setplaydef(play, VarCfg.U_czyz, 0)
             if not lb_json["cz" .. sy] then
                 lb_json["cz" .. sy] = true
-                setplaydef(play,constant.T_czlb, tbl2json(lb_json))
-                setplaydef(play,constant.N_lbyz,1)
+                setplaydef(play,VarCfg.T_czlb, tbl2json(lb_json))
+                setplaydef(play,VarCfg.N_lbyz,1)
                 czlb_pz(play,sy)
             end
         else
@@ -919,8 +803,8 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
         changemoney(play,23,"+",Gold,"累计充值",true)
         Login_msg(play,18,Gold,Gold*200)
         ----首冲弹界面
-        --if getflagstatus(play,constant.BS_sckg) == 0 and querymoney(play,20) >= 10 then
-        --    sendluamsg(play, 101, 501, 0, 0,getflagstatus(play,constant.BS_sckg))
+        --if getflagstatus(play,VarCfg.BS_sckg) == 0 and querymoney(play,20) >= 10 then
+        --    sendluamsg(play, 101, 501, 0, 0,getflagstatus(play,VarCfg.BS_sckg))
         --end
 
 
@@ -949,11 +833,11 @@ function qf_ssbaobao(play)
     end
 end
 function rw_exit(play)
-    local json = getplaydef(play,constant.S_sdlmjdt)
+    local json = getplaydef(play,VarCfg.S_sdlmjdt)
     if json ~= "" then
         json = json2tbl(json)
         mapmove(play,json.dt,json.xx,json.yy,3)
-        setplaydef(play,constant.S_sdlmjdt,"")
+        setplaydef(play,VarCfg.S_sdlmjdt,"")
     else
         mapmove(play,"xtc",137,138)
     end
@@ -961,17 +845,17 @@ end
 
 --------------------机器人触发脚本-------------------
 function jqr_qingli() -- 每日0点清理
-    if getsysvar(constant.G_kqyz) == 0 then  -------是否有人验证
+    if getsysvar(VarCfg["G_新区验证"]) == 0 then  -------是否有人验证
         return
     end
-	setsysvar(constant.G_kqts,getsysvar(constant.G_kqts)+1)
+	setsysvar(VarCfg["G_开区天数"],getsysvar(VarCfg["G_开区天数"])+1)
 end
 --------------------机器人触发脚本-------------------沙巴克
 function jqr_shabake()
     local hqcs = globalinfo(3)
     if hqcs > 0 then
-        if getsysvar(constant.G_hqcs) ~= hqcs then
-            setsysvar(constant.G_hqcs,hqcs)
+        if getsysvar(VarCfg["G_合区次数对比"]) ~= hqcs then
+            setsysvar(VarCfg["G_合区次数对比"],hqcs)
             repaircastle()
             addattacksabakall()
         end
@@ -992,70 +876,6 @@ function jqr_kfshabakejltz()
     end
 end
 
-
---------------------buff自定义监听触发-------------------
-function buffchufa(play, buffid, zid)
-    if buffid == 19999 then
-        if getbaseinfo(play, 6) < 30 then
-            changelevel(play, '+', 1)
-            humanhp(play,"+",getbaseinfo(play,10)-getbaseinfo(play,9))
-        else
-            delbuff(play, 19999)
-        end
-    end
-end
---------------------buff监听触发-------------------
-function buffchange(play, buffid, zid, lx)
-	if buffid == 20060 then
-        if lx == 4 then
-            moneychange16(play)
-        end
-    elseif buffid == 20078 then
-        if lx == 4 then
-            if querymoney(play,15) < querymoney(play,14) then
-                changemoney(play,15,"+",1,"倒计时结束",true)
-            end
-            if querymoney(play,15) < querymoney(play,14) then
-                addbuff(play,20078,180)
-            end
-        end
-	end
-end
-
-
-
-
-
-
-
-function usercmd1(play,mima)
-    local zhid = tonumber(getconst(play,"<$USERACCOUNT>"))
-    if constant.pz_htqx[zhid] or getconst(play, '<$SERVERNAME>') == "" or getconst(play, '<$SERVERNAME>') == "测试区" then
-        if getconst(play, '<$SERVERNAME>') == "" then
-            setplaydef(play,constant.S_houtaibf,"本地测试区")
-        else
-            setplaydef(play,constant.S_houtaibf,constant.pz_htqx[zhid])
-        end
-        map(play,"gm")
-    end
-end
-
-function usercmd4(play,mingz)
-    local zhid = tonumber(getconst(play,"<$USERACCOUNT>"))
-    if constant.pz_htqx[zhid] or getconst(play, '<$SERVERNAME>') == "" then
-        if mingz then
-            local dx = getplayerbyname(mingz)
-            if dx then
-                map(dx,"gm")
-            else
-                sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>['..mingz..']玩家不在线</font>","Type":9}')
-            end
-        else
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>未输入名字</font>","Type":9}')
-        end
-    end
-end
-
 --------------------加入行会后触发-------------------
 function guildaddmemberafter(play,guild,name)
 end
@@ -1065,398 +885,6 @@ function updateguildnotice(play)
     stop(play)
     sendmsg(play,1,'{"Msg":"<font color=\'#00ff00\'>禁止修改行会通告</font>","Type":9}')
 end
-
-
---------------------领取任务触发-------------------
-
-function picktask(play,rwid)
-    if constant.rw_syb[rwid] then
-        local lx = constant.rw_syb[rwid][1]
-        if lx == 2 then
-            local NPCIndex = constant.rw_syb[rwid][3]
-            local dx = getnpcbyindex(NPCIndex)
-            local x, y = getbaseinfo(dx, 4), getbaseinfo(dx, 5)
-            setnpceffect(play,NPCIndex,"5055",0,130)
-        elseif lx == 5 then
-            local NPCIndex = constant.rw_syb[rwid][3][2]
-            local dx = getnpcbyindex(NPCIndex)
-            local x, y = getbaseinfo(dx, 4), getbaseinfo(dx, 5)
-            setnpceffect(play,NPCIndex,"5055",0,130)
-            NPCIndex = constant.rw_syb[rwid][2][2]
-            dx = getnpcbyindex(NPCIndex)
-            x, y = getbaseinfo(dx, 4), getbaseinfo(dx, 5)
-            setnpceffect(play,NPCIndex,"5055",0,130)
-        elseif lx == 6 or lx == 7 or lx == 8 then
-            local NPCIndex = constant.rw_syb[rwid][2][2]
-            local dx = getnpcbyindex(NPCIndex)
-            local x, y = getbaseinfo(dx, 4), getbaseinfo(dx, 5)
-            setnpceffect(play,NPCIndex,"5055",0,130)
-        end
-        if constant.rw_syb[rwid].sjwp then
-            local sl = {}
-            local keys = {}
-            for k in pairs(constant.rw_syb[rwid].sjwp) do
-                table.insert(keys, k)
-            end
-            table.sort(keys)
-            for i, v in pairs(keys) do
-                if getbagitemcount(play,v) < constant.rw_syb[rwid].sjwp[v] then
-                    rwcf.wpjia(play,v,rwid,constant.rw_syb[rwid].sjwp[v])
-                end
-                table.insert(sl,getbagitemcount(play,v) >= constant.rw_syb[rwid].sjwp[v] and constant.rw_syb[rwid].sjwp[v] or getbagitemcount(play,v))
-            end
-            if not constant.rw_syb[rwid].jd then
-                newchangetask(play,rwid,unpack(sl))
-            end
-        end
-        if constant.rw_syb[rwid].sgrw then
-            shaguai.jia(play,constant.rw_syb[rwid].sgrw)
-        end
-        if constant.rw_syb[rwid].ts and constant.rw_syb[rwid].ts[1] == 1 then
-            rwcf.wpjia(play,constant.rw_syb[rwid].ts.wp,rwid,999)
-            Player.zxrw_teshushuaxin(play, rwid, nil)
-        elseif constant.rw_syb[rwid].ts and constant.rw_syb[rwid].ts[1] == 2 then
-            for v,k in pairs(constant.rw_syb[rwid].ts.wp) do
-                rwcf.wpjia(play,k,rwid,999)
-            end
-            Player.zxrw_teshushuaxin(play, rwid, nil)
-        elseif constant.rw_syb[rwid].ts and constant.rw_syb[rwid].ts[1] == 3 then
-            Player.zxrw_teshushuaxin(play, rwid, nil)
-        elseif constant.rw_syb[rwid].ts and constant.rw_syb[rwid].ts[1] == 4 then
-            for v,k in pairs(constant.rw_syb[rwid].ts.wp) do
-                rwcf.wpjia(play,k,rwid,999)
-            end
-        elseif constant.rw_syb[rwid].ts and constant.rw_syb[rwid].ts[1] == 5 then
-            for v,k in pairs(constant.rw_syb[rwid].ts.wp) do
-                rwcf.wpjia(play,k,rwid,999)
-            end
-        end
-    end
-end
---------------------模拟点击任务触发-------------------
-function moni_dj_rw(actor, rwid) --模拟点击任务
-    rwid = tonumber(rwid)
-    if rwid < 500 and getplaydef(actor,constant.U_zxrw[1]) ~= rwid then
-        return
-    end
-    clicknewtask(actor,rwid)
-end
---------------------点击任务触发-------------------
-function clicknewtask(play,rwid)
-    if rwid < 500 and getplaydef(play,constant.U_zxrw[1]) ~= rwid then
-        return
-    end
-    if constant.rw_syb[rwid] then
-        if not constant.rw_syb[rwid].sg then
-            if constant.rw_syb[rwid].ktg and constant.rw_syb[rwid].ktg == 1 then
-                if getplaydef(play,constant.N_rwlg) >= 1 then
-                    newdeletetask(play,getplaydef(play,constant.U_zxrw[1]))
-                    playeffect(play,4011,25,-50,1,0,0)
-                    setplaydef(play,constant.N_rwlg,0)
-                    return
-                else
-                    setplaydef(play,constant.N_rwlg,getplaydef(play,constant.N_rwlg)+1)
-                end
-            end
-        end
-        if constant.rw_syb[rwid].yz then
-            local db = json2tbl(getplaydef(play,constant.T_dljq))
-            if constant.rw_syb[rwid].yz[1] == 1 then
-                if db["npc"..constant.rw_syb[rwid].yz[2]] and db["npc"..constant.rw_syb[rwid].yz[2]][1]
-                        and db["npc"..constant.rw_syb[rwid].yz[2]][1] >= constant.rw_syb[rwid].yz[3] then
-                    newdeletetask(play,rwid)
-                    playeffect(play,4011,25,-50,1,0,0)
-                    return
-                end
-            elseif constant.rw_syb[rwid].yz[1] == 0 then
-                if db["npc"..constant.rw_syb[rwid].yz[2]] and db["npc"..constant.rw_syb[rwid].yz[2]] >= constant.rw_syb[rwid].yz[3] then
-                    newdeletetask(play,rwid)
-                    playeffect(play,4011,25,-50,1,0,0)
-                    return
-                end
-            end
-        end
-        if constant.rw_syb[rwid].zbyz then --装备验证
-            if constant.rw_syb[rwid].zbyz[1] == 1 then
-                local item = linkbodyitem(play,constant.rw_syb[rwid].zbyz[2])
-                if item == "0" then
-                else
-                    local idx = getiteminfo(play,item,2)
-                    if idx >= constant.rw_syb[rwid].zbyz[3] then
-                        Player.zxrw_wancheng(play, rwid, "")
-                        playeffect(play,4011,25,-50,1,0,0)
-                        return
-                    end
-                end
-            end
-        end
-        local lx = constant.rw_syb[rwid][1]
-        if lx == 0 then
-
-        elseif lx == 1 then
-            if constant.rw_syb[rwid][2] == 6 and getflagstatus(play,constant.BS_sckg) == 1 then
-                newdeletetask(play,getplaydef(play,constant.U_zxrw[1]))
-                playeffect(play,4011,25,-50,1,0,0)
-            elseif constant.rw_syb[rwid][2] == 9 and globalinfo(3) >= 1 then
-                newdeletetask(play,getplaydef(play,constant.U_zxrw[1]))
-                playeffect(play,4011,25,-50,1,0,0)
-            else
-                sendluamsg(play, 101, 0, 1, 1,'{"lx":1,"fx":1,"an":'..constant.rw_syb[rwid][2]..',"ms":"点击按钮"}')
-            end
-        elseif lx == 2 then
-            if constant.rw_syb[rwid][2] ~= getbaseinfo(play,3) then
-                mapmove(play,constant.rw_syb[rwid][2],constant.rw_syb[rwid][4],constant.rw_syb[rwid][5],3)
-            end
-            mapmove(play,constant.rw_syb[rwid][2],constant.rw_syb[rwid][4],constant.rw_syb[rwid][5],3)
-
-            sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'..constant.rw_syb[rwid][2]..'","npcid":'..constant.rw_syb[rwid][3]..',"xx":'..constant.rw_syb[rwid][4]..',"yy":'..constant.rw_syb[rwid][5]..'}')
-        elseif lx == 3 then
-            sendluamsg(play, 101, 0, 1, 1,'{"lx":3,"rwid":'.. rwid ..'}')
-        elseif lx == 4 then
-            newdeletetask(play,getplaydef(play,constant.U_zxrw[1]))
-            playeffect(play,4011,25,-50,1,0,0)
-        elseif lx == 5 then
-            local dqdt = getbaseinfo(play,3)
-            if constant.rw_syb[rwid][2][1] ~= dqdt and dqdt ~= constant.rw_syb[rwid][3][1] then
-                mapmove(play,constant.rw_syb[rwid][2][1],constant.rw_syb[rwid][2][3],constant.rw_syb[rwid][2][4],1)
-                sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'..constant.rw_syb[rwid][2][1]..'","npcid":'..constant.rw_syb[rwid][2][2]..',"xx":'..constant.rw_syb[rwid][2][3]..',"yy":'..constant.rw_syb[rwid][2][4]..'}')
-            elseif dqdt == constant.rw_syb[rwid][2][1] then
-                mapmove(play,constant.rw_syb[rwid][2][1],constant.rw_syb[rwid][2][3],constant.rw_syb[rwid][2][4],1)
-                sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'..constant.rw_syb[rwid][2][1]..'","npcid":'..constant.rw_syb[rwid][2][2]..',"xx":'..constant.rw_syb[rwid][2][3]..',"yy":'..constant.rw_syb[rwid][2][4]..'}')
-            elseif dqdt == constant.rw_syb[rwid][3][1] then
-                mapmove(play,constant.rw_syb[rwid][3][1],constant.rw_syb[rwid][3][3],constant.rw_syb[rwid][3][4],3)
-                sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'..constant.rw_syb[rwid][3][1]..'","npcid":'..constant.rw_syb[rwid][3][2]..',"xx":'..constant.rw_syb[rwid][3][3]..',"yy":'..constant.rw_syb[rwid][3][4]..'}')
-            end
-        elseif lx == 9 then
-            mapmove(play,constant.rw_syb[rwid][2],constant.rw_syb[rwid][3],constant.rw_syb[rwid][4],3)
-        elseif lx == 11 then
-            local dqdt = getbaseinfo(play,3)
-            if constant.rw_syb[rwid][2][1] ~= dqdt and dqdt ~= constant.rw_syb[rwid][4][1] then
-                mapmove(play,constant.rw_syb[rwid][2][1],constant.rw_syb[rwid][2][3],constant.rw_syb[rwid][2][4],1)
-                sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'..constant.rw_syb[rwid][2][1]..'","npcid":'..constant.rw_syb[rwid][2][2]..',"xx":'..constant.rw_syb[rwid][2][3]..',"yy":'..constant.rw_syb[rwid][2][4]..',"xh":'..rwid..'}')
-            elseif dqdt == constant.rw_syb[rwid][2][1] then
-                sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'..constant.rw_syb[rwid][2][1]..'","npcid":'..constant.rw_syb[rwid][2][2]..',"xx":'..constant.rw_syb[rwid][2][3]..',"yy":'..constant.rw_syb[rwid][2][4]..',"xh":'..rwid..'}')
-            elseif dqdt == constant.rw_syb[rwid][4][1] then
-                startautoattack(play)
-            elseif dqdt == constant.rw_syb[rwid][3] then
-                mapmove(play,constant.rw_syb[rwid][4][1],constant.rw_syb[rwid][4][2],constant.rw_syb[rwid][4][3],3)
-                startautoattack(play)
-            end
-        elseif lx == 13 then
-
-        elseif lx == 14 then
-            sendluamsg(play, 101, 0, 1, 1,'{"lx":14}')
-        elseif lx == 15 then
-            local dqdt = getbaseinfo(play,3)
-            local clwc = true
-            local chuli = json2tbl(getplaydef(play, constant.T_rwwp)) --任务物品
-            for k, v in pairs(constant.rw_syb[rwid].sjwp) do
-                if chuli[k] and getbagitemcount(play,k) < chuli[k][2] then
-                    clwc = false
-                    break
-                end
-            end
-            if constant.rw_syb[rwid].jwpjc then
-                if clwc then
-                    newdeletetask(play,rwid)
-                    playeffect(play,4011,25,-50,1,0,0)
-                else
-                    if constant.rw_syb[rwid][2] ~= dqdt and dqdt ~= constant.rw_syb[rwid][3][1] then
-                        mapmove(play,constant.rw_syb[rwid][3][1],constant.rw_syb[rwid][3][3],constant.rw_syb[rwid][3][4],1)
-                        sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'..constant.rw_syb[rwid][3][1]..'","npcid":'..constant.rw_syb[rwid][3][2]..',"xx":'..constant.rw_syb[rwid][3][3]..',"yy":'..constant.rw_syb[rwid][3][4]..'}')
-                    elseif dqdt == constant.rw_syb[rwid][3][1] then
-                        mapmove(play,constant.rw_syb[rwid][3][1],constant.rw_syb[rwid][3][3],constant.rw_syb[rwid][3][4],1)
-                        sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'..constant.rw_syb[rwid][3][1]..'","npcid":'..constant.rw_syb[rwid][3][2]..',"xx":'..constant.rw_syb[rwid][3][3]..',"yy":'..constant.rw_syb[rwid][3][4]..'}')
-                    elseif dqdt == constant.rw_syb[rwid][2] then
-                        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>没有任务道具，请在本地图继续打怪吧...</font>","Type":9}')
-                        startautoattack(play) --自动攻击
-                    end
-                end
-            else
-                if clwc then
-                    mapmove(play,constant.rw_syb[rwid][3][1],constant.rw_syb[rwid][3][3],constant.rw_syb[rwid][3][4],1)
-                    sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'..constant.rw_syb[rwid][3][1]..'","npcid":'..constant.rw_syb[rwid][3][2]..',"xx":'..constant.rw_syb[rwid][3][3]..',"yy":'..constant.rw_syb[rwid][3][4]..'}')
-                else
-                    if rwid == 2006 then
-                        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>没有任务道具，请在打怪吧...</font>","Type":9}')
-                        mapmove(play,constant.rw_syb[rwid][2][1],constant.rw_syb[rwid][2][2],constant.rw_syb[rwid][2][3],1)
-                        startautoattack(play) --自动攻击
-                        return
-                    end
-                    if dqdt == constant.rw_syb[rwid][3][1] then
-                        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>没有任务道具，请在本地图继续打怪吧...</font>","Type":9}')
-                    else
-                        if constant.rw_syb[rwid][2][1] ~= dqdt and dqdt ~= constant.rw_syb[rwid][3][1] then
-                            mapmove(play,constant.rw_syb[rwid][2][1],constant.rw_syb[rwid][2][3],constant.rw_syb[rwid][2][4],1)
-                            sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'..constant.rw_syb[rwid][2][1]..'","npcid":'..constant.rw_syb[rwid][2][2]..',"xx":'..constant.rw_syb[rwid][2][3]..',"yy":'..constant.rw_syb[rwid][2][4]..'}')
-                        elseif dqdt == constant.rw_syb[rwid][2][1] then
-                            mapmove(play,constant.rw_syb[rwid][2][1],constant.rw_syb[rwid][2][3],constant.rw_syb[rwid][2][4],1)
-                            sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'..constant.rw_syb[rwid][2][1]..'","npcid":'..constant.rw_syb[rwid][2][2]..',"xx":'..constant.rw_syb[rwid][2][3]..',"yy":'..constant.rw_syb[rwid][2][4]..'}')
-                        end
-                    end
-                end
-            end
-        elseif lx == 16 then
-            sendluamsg(play, 101, 0, 1, 1,'{"lx":16}')
-        elseif lx == 17 then
-            if constant.rw_syb[rwid][2] == 1 then
-                if constant.rw_syb[rwid][3] <= getbaseinfo(play,6) then
-                    newdeletetask(play,rwid)
-                else
-                    sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>未到达【'..constant.rw_syb[rwid][3]..'级】</font>","Type":9}')
-                end
-            elseif constant.rw_syb[rwid][2] == 2 then
-                if constant.rw_syb[rwid][3] <=  getbaseinfo(play,39) then
-                    newdeletetask(play,rwid)
-                else
-                    if constant.rw_syb[rwid][4][1] ~= getbaseinfo(play,3) then
-                        mapmove(play,constant.rw_syb[rwid][4][1],constant.rw_syb[rwid][4][3],constant.rw_syb[rwid][4][4],3)
-                    end
-                    sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'..constant.rw_syb[rwid][4][1]..'","npcid":'..constant.rw_syb[rwid][4][2]..',"xx":'..constant.rw_syb[rwid][4][3]..',"yy":'..constant.rw_syb[rwid][4][4]..'}')
-                end
-            end
-        elseif lx == 18 then
-            sendluamsg(play, 101, 0, 18, 1,'{"l":'..constant.rw_syb[rwid][2][1]..',"xl":'..constant.rw_syb[rwid][2][2] ..',"jm":'..constant.rw_syb[rwid][2][3] ..'}')
-        elseif lx == 23 then
-            sendluamsg(play, 101, 0, 1, 1,'{"lx":23}')
-        elseif lx == 50 then -- 除魔任务
-            local dl,boss,xg = getplayvar(play,"除魔大陆"),getplayvar(play,"除魔大怪数量"),getplayvar(play,"除魔小怪数量")
-            if boss < 50 or xg < 500 then
-                sendmsg(play,1,'{"Msg":"<font color=\'#00ff00\'>还未完成完成除魔任务...</font>","Type":9}')
-            else
-                if constant.rw_syb[rwid][2] ~= getbaseinfo(play,3) then
-                    mapmove(play,constant.rw_syb[rwid][2],constant.rw_syb[rwid][4],constant.rw_syb[rwid][5],3)
-                end
-                sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'..constant.rw_syb[rwid][2]..'","npcid":'..constant.rw_syb[rwid][3]..',"xx":'..constant.rw_syb[rwid][4]..',"yy":'..constant.rw_syb[rwid][5]..'}')
-            end
-        elseif lx == 99 then -- 新手礼包
-            sendluamsg(play,101,28,0,getflagstatus(play,constant.BS_xslb),"")
-        end
-    end
-end
-
-
---------------------删除任务触发-------------------
-function deletetask(play,rwid)
-    setplaydef(play,constant.N_rwlg,0)
-    if rwid < 18 then
-        setplaydef(play,constant.U_zxrw[1],rwid+1)
-        setplaydef(play,constant.U_zxrw[2],0)
-    end
-    if constant.rw_syb[rwid+1] and rwid < 1000 then
-        local lx = constant.rw_syb[rwid+1][1]
-        if rwid < 1000 then
-            newpicktask(play,rwid+1,getplaydef(play,constant.U_zxrw[2]))
-        end
-        if constant.rw_syb[rwid+1].sg then
-            shaguai.jia(play,24)
-        end
-        if constant.rw_syb[rwid+1].sgrw then
-            shaguai.jia(play,constant.rw_syb[rwid+1].sgrw)
-        end
-        if constant.rw_syb[rwid+1].zx then
-            newpicktask(play,constant.rw_syb[rwid+1].zx,0)
-            rwcf.jia(play,constant.rw_syb[rwid+1].zx)
-        end
-        if constant.rw_syb[rwid+1].cl then
-            local sl = {}
-            for k, v in pairs(constant.rw_syb[rwid+1].cl) do
-                if getbagitemcount(play,k) < v then
-                    rwcf.wpjia(play,k,rwid+1,v)
-                end
-                table.insert(sl,getbagitemcount(play,k) >= v and v or getbagitemcount(play,k))
-            end
-            if #sl > 0 then
-                newchangetask(play,rwid+1,unpack(sl))
-            end
-        end
-        if rwid+1 < 900 then
-            if constant.rw_syb[rwid+1].jx then
-                navigation(play, 110, rwid+1, "点击继续任务")
-            end
-        end
-    end
-    if constant.rw_syb[rwid] then
-        local lx = constant.rw_syb[rwid][1]
-        if lx == 2 then
-            delnpceffect(play,constant.rw_syb[rwid][3])
-        elseif lx == 5 then
-            delnpceffect(play,constant.rw_syb[rwid][3][2])
-            delnpceffect(play,constant.rw_syb[rwid][2][2])
-        elseif lx == 6 or lx == 7 or lx == 8 then
-            delnpceffect(play,constant.rw_syb[rwid][2][2])
-        end
-    end
-    if constant.rw_syb[rwid].sjwp then
-        local chuli = json2tbl(getplaydef(play, constant.T_rwwp)) --任务物品
-        for i, v in pairs(constant.rw_syb[rwid].sjwp) do
-            if chuli[i] and chuli[i][1] == rwid then
-                chuli[i] = nil
-            end
-        end
-        setplaydef(play, constant.T_rwwp, tbl2json(chuli))
-    end
-    local sj = json2tbl(getplaydef(play, constant.T_rwjl))
-    if not sj[""..rwid] then
-        if getplaydef(play,constant.U_zxrw[1]) < 51 then
-            if constant.rw_syb[rwid].jl then
-                local str = ""
-                if constant.rw_syb[rwid].jl.hb then
-                    for i, v in ipairs(constant.rw_syb[rwid].jl.hb) do
-                        if str ~= "" then
-                            str = str..",[\""..v[3].."\","..v[2].."]"
-                        else
-                            str = str.."[\""..v[3].."\","..v[2].."]"
-                        end
-                        changemoney(play,v[1],"+",v[2],"任务奖励",true)
-                    end
-                end
-                if constant.rw_syb[rwid].jl.wp then
-                    for i, v in ipairs(constant.rw_syb[rwid].jl.wp) do
-                        if str ~= "" then
-                            str = str..",[\""..v[1].."\","..v[2].."]"
-                        else
-                            str = str.."[\""..v[1].."\","..v[2].."]"
-                        end
-                        giveitem(play,v[1],v[2],850)
-                    end
-                end
-                if str ~= "" then
-                    sendluamsg(play,101,0,9,rwid,'{"item":['..str..']}')
-                end
-            end
-        end
-        sj[""..rwid] = true
-        setplaydef(play, constant.T_rwjl, tbl2json(sj))
-    end
-    if rwid < 18 then
-        sendluamsg(play,103,1,0,0,'{"rwid":'..(rwid+1)..'}')
-    end
-    if rwid > 2000 then
-        rwcf.jian(play,rwid)
-    end
-    if rwid >= 3005 then
-        local ywl = json2tbl(getplaydef(play, constant.T_ywl))
-        ywl["rw_"..rwid] = 1
-        setplaydef(play, constant.T_ywl, tbl2json(ywl))
-    end
-    if constant.rw_syb[rwid].ts and constant.rw_syb[rwid].ts[1] == 1 then
-        rwcf.wpjian(play,constant.rw_syb[rwid].ts.wp)
-    elseif constant.rw_syb[rwid].ts and constant.rw_syb[rwid].ts[1] == 2 then
-        for v,k in pairs(constant.rw_syb[rwid].ts.wp) do
-            rwcf.wpjian(play,k)
-        end
-    elseif constant.rw_syb[rwid].ts and constant.rw_syb[rwid].ts[1] == 4 then
-        for v,k in pairs(constant.rw_syb[rwid].ts.wp) do
-            rwcf.wpjian(play,k)
-        end
-    elseif constant.rw_syb[rwid].ts and constant.rw_syb[rwid].ts[1] == 5 then
-        for v,k in pairs(constant.rw_syb[rwid].ts.wp) do
-            rwcf.wpjian(play,k)
-        end
-    end
-end
-
 --点击采集
 function collectmonex(play,monIDX,monName,monMakeIndex)
     showprogressbardlg(play,3,"@func_cjcg","采集中..", 1,"@func_cjsb")
@@ -1503,7 +931,7 @@ end
 
 
 function kuafuend(play)--	退出跨服
-    local szjl = json2tbl(getplaydef(play,constant.T_szjl))
+    local szjl = json2tbl(getplaydef(play,VarCfg.T_szjl))
 end
 
 --------------------宠物攻击伤害前触发-------------------
@@ -1546,7 +974,7 @@ end
 function mondropitemex(play,DropItem,mon,x,y)
     local dt = getbaseinfo(play,3)
      --2024-4-1 lxf  开服1400分钟以后  第一大陆不再掉落装备
-     if getsysvar(constant.G_kqfz) > 1440 then
+     if getsysvar(VarCfg["G_开区分钟"]) > 1440 then
          local quming = getconst(play, '<$SERVERNAME>')
          if daluditu[dt] and daluditu[dt] == 1 and quming ~= "" and quming ~= "测试区" and quming ~= "直播区" then
              return false
@@ -1567,7 +995,7 @@ function untitled_30405(play) seticon(play,1,-1) end
 
 --------------------聊天触发前置接口--------------------
 function triggerchat(play,sMsg,chat,msgType)
-    if getflagstatus(play,constant.BS_sckg) == 0 then
+    if getflagstatus(play,VarCfg.BS_sckg) == 0 then
         sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>领取首冲礼包才可以开启发言...</font>","FColor":219,"BColor":255,"Type":1}')
         return false
     end
@@ -1602,7 +1030,7 @@ function castlewarend()
                 kfbackcall(50,getbaseinfo(player, 2),"恭喜你获得沙巴克战争中胜利方奖励，奖励已发放，请及时提取!",teshudata["sbk"][2][1])  --玩家对象发送
             else
                 if not checkkuafuconnect() then
-                    if  getplaydef(player,constant.J_isgs) == 1 then
+                    if  getplaydef(player,VarCfg.J_isgs) == 1 then
                         sendmail(getbaseinfo(player,2),0,"攻城奖励","恭喜你获得沙巴克战争中胜利方奖励，奖励已发放，请及时提取!",teshudata["sbk"][2][1])
                     end
                 end
@@ -1612,7 +1040,7 @@ function castlewarend()
                 kfbackcall(50,getbaseinfo(player, 2),"恭喜你获得沙巴克战争中参与奖励，奖励已发放，请及时提取!",teshudata["sbk"][3][1])  --玩家对象发送
             else
                 if not checkkuafuconnect() then
-                    if  getplaydef(player,constant.J_isgs) == 1 then
+                    if  getplaydef(player,VarCfg.J_isgs) == 1 then
                         sendmail(getbaseinfo(player,2),0,"攻城奖励","恭喜你获得沙巴克战争奖励，奖励已发放，请及时提取!",teshudata["sbk"][3][1])
                     end
                 end
@@ -1632,11 +1060,6 @@ local qf_teshunpc = {
 function clicknpc(play, npcid)
     --打印
     release_print("clicknpc", "玩家："..getbaseinfo(play,1), "npcid："..npcid)
-    if rwsg_gx[npcid] and rwsg_gx[npcid] == getplaydef(play,constant.U_zxrw[1]) then
-        newchangetask(play,getplaydef(play,constant.U_zxrw[1]),getplaydef(play,constant.U_zxrw[2]))
-        shaguai.jia(play,24)
-        setplaydef(play,constant.N_znpc,1)
-    end
 	if qf_teshunpc[npcid] then
 		Npclib[qf_teshunpc[npcid]].main(play, npcid)
 		return true

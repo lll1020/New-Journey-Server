@@ -51,7 +51,7 @@ end
 
 local jnsh_data = {"»ù±¾½£Êõ","´ÌÉ±½£Êõ","°ëÔÂÍäµ¶","ÁÒ»ğ½£·¨","ÖğÈÕ½£·¨","¿ªÌìÕ¶"}
 function Login_jnsh(play)
-    for i, v in ipairs(constant.N_jnsh) do
+    for i, v in ipairs(VarCfg.N_jnsh) do
         local linshi = getplaydef(play,v)
         if linshi > 0 then
             setmagicpower(play,jnsh_data[i],linshi,1)
@@ -60,7 +60,7 @@ function Login_jnsh(play)
 end
 
 function jiazai_jnsh(play,wz)
-    local dysh =  getplaydef(play,constant.N_jnsh[wz])
+    local dysh =  getplaydef(play,VarCfg.N_jnsh[wz])
     if dysh > 0 then
         setmagicpower(play,jnsh_data[wz],dysh,1)
     end
@@ -69,9 +69,9 @@ local jmjnsh_data = {"ÁÒ»ğ½£·¨","ÖğÈÕ½£·¨","¿ªÌìÕ¶"}
 
 function Login_jmjnsh(play)
     for i = 1,3 do
-        setplaydef(play,constant.N_jmjnsh[i], getbaseinfo(play, 51, 256))
+        setplaydef(play,VarCfg.N_jmjnsh[i], getbaseinfo(play, 51, 256))
     end
-    for i, v in ipairs(constant.N_jmjnsh) do
+    for i, v in ipairs(VarCfg.N_jmjnsh) do
         local linshi = getplaydef(play,v)
         if linshi > 0 then
             setmagicdefpower(play,jmjnsh_data[i],linshi,1)
@@ -81,9 +81,9 @@ end
 
 function jiazai_jmjnsh(play)
     for i = 1,3 do
-        setplaydef(play,constant.N_jmjnsh[i], getbaseinfo(play, 51, 256))
+        setplaydef(play,VarCfg.N_jmjnsh[i], getbaseinfo(play, 51, 256))
     end
-    for i, v in ipairs(constant.N_jmjnsh) do
+    for i, v in ipairs(VarCfg.N_jmjnsh) do
         local linshi = getplaydef(play,v)
         if linshi > 0 then
             setmagicdefpower(play,jmjnsh_data[i],linshi,1)
@@ -93,15 +93,15 @@ end
 
 
 function login_fhsx(play)
-    local T_zzsj = json2tbl(getplaydef(play,constant.T_zzsj))
+    local T_zzsj = json2tbl(getplaydef(play,VarCfg.T_zzsj))
     if T_zzsj.dqzy then
         if T_zzsj.sh and T_zzsj.sh[""..T_zzsj.dqzy] == 1 then
-            setranklevelname(play,"%s\\[Ì¤ÔÂ¡©³ÁÄ¬]\\[¼«¡¤".. constant.zzxg.zy[T_zzsj.dqzy].name.."]\\»÷É±¡º"..getplaydef(play,constant.U_srsl).."¡»")
+            setranklevelname(play,"%s\\[Ì¤ÔÂ¡©³ÁÄ¬]\\[¼«¡¤".. constant.zzxg.zy[T_zzsj.dqzy].name.."]\\»÷É±¡º"..getplaydef(play,VarCfg.U_srsl).."¡»")
         else
-            setranklevelname(play,"%s\\[Ì¤ÔÂ¡©³ÁÄ¬]\\["..constant.zzxg.zy[T_zzsj.dqzy].name.."]\\»÷É±¡º"..getplaydef(play,constant.U_srsl).."¡»")
+            setranklevelname(play,"%s\\[Ì¤ÔÂ¡©³ÁÄ¬]\\["..constant.zzxg.zy[T_zzsj.dqzy].name.."]\\»÷É±¡º"..getplaydef(play,VarCfg.U_srsl).."¡»")
         end
     else
-        setranklevelname(play,"%s\\[Ì¤ÔÂ¡©³ÁÄ¬]\\»÷É±¡º"..getplaydef(play,constant.U_srsl).."¡»")
+        setranklevelname(play,"%s\\[Ì¤ÔÂ¡©³ÁÄ¬]\\»÷É±¡º"..getplaydef(play,VarCfg.U_srsl).."¡»")
     end
 
 end
