@@ -58,15 +58,9 @@ function Login_jnsh(play)
         end
     end
 end
+GameEvent.add(EventCfg.onLogin, Login_jnsh, "Login_jnsh")
 
-function jiazai_jnsh(play,wz)
-    local dysh =  getplaydef(play,VarCfg.N_jnsh[wz])
-    if dysh > 0 then
-        setmagicpower(play,jnsh_data[wz],dysh,1)
-    end
-end
 local jmjnsh_data = {"烈火剑法","逐日剑法","开天斩"}
-
 function Login_jmjnsh(play)
     for i = 1,3 do
         setplaydef(play,VarCfg.N_jmjnsh[i], getbaseinfo(play, 51, 256))
@@ -78,18 +72,7 @@ function Login_jmjnsh(play)
         end
     end
 end
-
-function jiazai_jmjnsh(play)
-    for i = 1,3 do
-        setplaydef(play,VarCfg.N_jmjnsh[i], getbaseinfo(play, 51, 256))
-    end
-    for i, v in ipairs(VarCfg.N_jmjnsh) do
-        local linshi = getplaydef(play,v)
-        if linshi > 0 then
-            setmagicdefpower(play,jmjnsh_data[i],linshi,1)
-        end
-    end
-end
+GameEvent.add(EventCfg.onLogin, Login_jmjnsh, "Login_jmjnsh")
 
 
 function login_fhsx(play)
@@ -103,7 +86,8 @@ function login_fhsx(play)
     else
         setranklevelname(play,"%s\\[踏月々沉默]\\击杀『"..getplaydef(play,VarCfg.U_srsl).."』")
     end
-
 end
+GameEvent.add(EventCfg.onLogin, login_fhsx, "login_fhsx")
+
 
 -----------------------------各类定时器-------------------------

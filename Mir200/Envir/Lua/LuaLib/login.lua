@@ -63,8 +63,8 @@ function Login.main(play)
     setbaseinfo(play,33,0)----设置光头
     setflagstatus(play,300,0) --取消挂机配置标识
     pickupitems(play,0,5,800) --自动捡物
-    login_fhsx(play) --封号刷新
-    ---------------------------------------------------在线时间
+
+    ---------------------------------------------------在线时间 --定时器
     setontimer(play, 4, 60, 0, 1)
 
     ---------------------------------------------------客户端同步数据
@@ -94,9 +94,6 @@ function Login.main(play)
     else
         changemode(play,23,999999999,querymoney(play,15))
     end
-    Login_jnsh(play)  --技能伤害加载
-    Login_jmjnsh(play)  --减免技能伤害加载
-
 
     GameEvent.push(EventCfg.onLogin, play)
 

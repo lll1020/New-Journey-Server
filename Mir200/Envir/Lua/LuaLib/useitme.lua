@@ -55,14 +55,6 @@ function stdmodefunc11(play, item)
     changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', getstditeminfo(getiteminfo(play, item, 2), 8) * sl, '双击获得', true)
     delitembymakeindex(play, getiteminfo(play, item, 1), sl)
 end
-
---------------------双击物品触发-------------------灵符通用
-function stdmodefunc19(play, item)
-    local sl = getiteminfo(play, item, 5)
-    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', getstditeminfo(getiteminfo(play, item, 2), 8) * sl, '双击获得', true)
-    delitembymakeindex(play, getiteminfo(play, item, 1), sl)
-end
-
 --------------------双击物品触发-------------------元宝通用
 function stdmodefunc18(play, item)
     local sl = getiteminfo(play, item, 5)
@@ -70,56 +62,7 @@ function stdmodefunc18(play, item)
     delitembymakeindex(play, getiteminfo(play, item, 1), sl)
 end
 
---------------------双击物品触发-------------------元宝通用
-function stdmodefunc55(play, item)
-    local sl = getiteminfo(play, item, 5)
-    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', getstditeminfo(getiteminfo(play, item, 2), 8) * sl, '双击获得', true)
-    delitembymakeindex(play, getiteminfo(play, item, 1), sl)
-end
-
---------------------双击物品触发-------------------元宝通用
-function stdmodefunc56(play, item)
-    local sl = getiteminfo(play, item, 5)
-    changemoney(play,3,'+',200000 * sl,'双击获得', true)
-    delitembymakeindex(play, getiteminfo(play, item, 1), sl)
-end
-
---------------------双击物品触发-------------------经验通用
-function stdmodefunc12(play, item)
-    changeexp(play, '+', getstditeminfo(getiteminfo(play, item, 2), 8), false)
-end
---------------------双击物品触发-------------------元宝(小)
-function stdmodefunc13(play, item)
-    local sl = getiteminfo(play, item, 5)
-    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', math.random(500, 2000)*sl, '双击获得', true)
-    delitembymakeindex(play, getiteminfo(play, item, 1), sl)
-end
---------------------双击物品触发-------------------元宝(中)
-function stdmodefunc14(play, item)
-    local sl = getiteminfo(play, item, 5)
-    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', math.random(1000, 5000)*sl, '双击获得', true)
-    delitembymakeindex(play, getiteminfo(play, item, 1), sl)
-end
---------------------双击物品触发-------------------元宝(大)
-function stdmodefunc15(play, item)
-    local sl = getiteminfo(play, item, 5)
-    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', math.random(5000, 50000)*sl, '双击获得', true)
-    delitembymakeindex(play, getiteminfo(play, item, 1), sl)
-end
---------------------双击物品触发-------------------元宝(超级)
-function stdmodefunc16(play, item)
-    local sl = getiteminfo(play, item, 5)
-    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', math.random(10000, 1000000)*sl, '双击获得', true)
-    delitembymakeindex(play, getiteminfo(play, item, 1), sl)
-end
-
-
-function FsendQfPz(actor,str,count)
-    for i = 1, count, 1 do
-        sendmsg(actor, 2, '{"Msg":"'..str..'","FColor":250,"BColor":0,"Y":'..(90+i*30)..',"Type":5}')
-    end
-end
-
+---千里传音
 function stdmodefunc234(play) ---千里传音 提示：使用50级
     if checkkuafu(play) then
         stop(play)
@@ -133,7 +76,6 @@ function stdmodefunc234(play) ---千里传音 提示：使用50级
     end
     say(play, "<发送/@@InputString23(请输入传音内容：)>\\")
 end
-
 function inputstring23(play) ---
     if getbaseinfo(play,6) < 60 then
         sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>使用千里传音需要达到60级！</font>","Type":9}')
@@ -161,16 +103,9 @@ function inputstring23(play) ---
     takeitem(play, "千里传音", 1)
     FsendQfPz(play, "【千里传音】" .. getbaseinfo(play, 1) .. "：" .. text, 1)
 end
-function stdmodefunc24(play, item) ---初级恢复丹
-    if checkkuafu(play) then
-        stop(play)
-        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>跨服不能使用该物品</font>","Type":9}')
-        return
+function FsendQfPz(actor,str,count)
+    for i = 1, count, 1 do
+        sendmsg(actor, 2, '{"Msg":"'..str..'","FColor":250,"BColor":0,"Y":'..(90+i*30)..',"Type":5}')
     end
-    if hasbuff(play, 20098) then
-        stop(play)
-        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>已经有恢复效果</font>","Type":9}')
-        return false
-    end
-    addbuff(play, 20098)
 end
+---千里传音 --end

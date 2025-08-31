@@ -1,6 +1,4 @@
-rwcf = {
-
-}
+rwcf = {}
 
 rwcf.jia = function(play, id)
 	local chuli = json2tbl(getplaydef(play, VarCfg.T_zxrw))

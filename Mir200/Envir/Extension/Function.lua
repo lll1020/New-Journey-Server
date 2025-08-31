@@ -29,7 +29,19 @@ end
 function SetPlayDefEx(actor, varName, value)
     setplaydef(actor, varName, value)
 end
+--检查一个对象的范围
+function FCheckRange(obj, x, y, range)
+    local cur_x, cur_y = getbaseinfo(obj, ConstCfg.gbase.x), getbaseinfo(obj, ConstCfg.gbase.y)
+    local min_x, max_x = x - range, x + range
+    local min_y, max_y = y - range, y + range
 
+    if (cur_x >= min_x) and (cur_x <= max_x) and
+            (cur_y >= min_y) and (cur_y <= max_y) then
+        return true
+    end
+
+    return false
+end
 --检查自己与npc的距离
 function FCheckNPCRange(actor, npcidx, range)
     range = range or 15

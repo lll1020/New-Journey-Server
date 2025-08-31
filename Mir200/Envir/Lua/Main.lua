@@ -19,6 +19,8 @@ safeRequire("QuestDiary/BuffRun.lua")              --buff触发
 safeRequire("QuestDiary/GMBox.lua")              --后台管理系统
 safeRequire("QuestDiary/OnTimer.lua")              --定时器
 safeRequire("QuestDiary/task.lua")              --任务相关
+safeRequire("QuestDiary/skill.lua")              --技能相关
+safeRequire("QuestDiary/bl_zyjhl.lua")              --爆率触发相关
 
 --------------------登录接口--------------------
 safeRequire("Lua/LuaLib/login.lua")

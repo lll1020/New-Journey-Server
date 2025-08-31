@@ -33,7 +33,7 @@ function startup()
             mapeffect('名字' .. k, v[1], v[2], v[3], v[4], 0, 0)
         end
     end
-    setontimerex(1, 60)
+    setontimerex(1, 60) ---全区定时器
 end
 
 --------------------人物初始化--------------------
@@ -61,6 +61,7 @@ function login(play)
 end
 --------------------跨天登录触发--------------------
 function resetday(play)
+    ---清理每日称号
 	for _, v in pairs(constant.pz_ldql) do
 		Player.title_del(play, v)
 	end
@@ -68,7 +69,7 @@ end
 --------------------传送戒指传送前触发触发-------------------
 function beginteleport(play)
     setplaydef(play,"S$dtm",getbaseinfo(play, 3))
-    local lb_json,sj  = json2tbl(getplaydef(play,VarCfg.T_czlb)),os.time()
+    local sj  = os.time()
     local bl = sj - getplaydef(play,"N$传送功能CD")
     if bl < 5 then
         sendmsg(play,1,'{"Msg":"请等待'..(5-bl)..'秒后在使用","FColor":56,"BColor":255,"Type":1}')
@@ -104,11 +105,6 @@ end
 function ai_ksgj(play)
     startautoattack(play)
 end
-function beforeroute(play)
-    if getflagstatus(play,300) == 1 then
-        return false
-    end
-end
 
 --------------------切换地图触发-------------------
 function entermap(play)
@@ -117,6 +113,7 @@ function entermap(play)
         sendluamsg(play,101,1002,0,0,getmapname(dt))
     end
 end
+
 --------------------死亡物品掉了-------------------
 function checkdropuseitems(play,item_wz,item_id,bool)
     local zb_dx = linkbodyitem(play,item_wz)
@@ -124,7 +121,7 @@ function checkdropuseitems(play,item_wz,item_id,bool)
     if dt == "阵营对抗" or dt == "跨服阵营对抗" or dt == "武林盟主" then
         return false
     end
-    if getitemaddvalue(play,zb_dx,2,1) ~= 0  then
+    if getitemaddvalue(play,zb_dx,2,1) ~= 0 then
         delitembymakeindex(play,getiteminfo(play,zb_dx,1))
     end
 end
@@ -513,27 +510,6 @@ function struck(play, Hiter, Target, MagicId)
         setplaydef(play,"N$战斗状态",os.time()+3)
     end
 end
---------------------对目标使用技能触发-------------------野蛮
-function magtagfunc27(play, Target)
-end
---------------------对目标使用技能触发-------------------开天
-function magtagfunc66(play, Target)
-end
---------------------对目标使用技能触发-------------------十步一杀
-function magselffunc82(play)
-end
---------------------对目标使用技能触发-------------------施毒术
-function magtagfunc6(play, Target)
-end
---------------------对目标使用技能触发-------------------隐身术
-function magselffunc18(play, Target)
-end
-function magselffunc26(play) ---烈火
-end
-function magselffunc66(play) ---开天
-end
-function magselffunc56(play) ---逐日
-end
 
 --------------------杀怪触发-------------------
 function killmon(play, mob)
@@ -565,7 +541,7 @@ function killmon(play, mob)
         if guaiwutype[mz] and daluditu[dt] then
             local bianshi = getbaseinfo(play, 51, 207)
             if bianshi > 0 then
-                if math.random(20000) <= bianshi then
+                if math.random(10000) <= bianshi then
                     sendmsg(play,1,'{"Msg":"<font color=\'#00ff00\'>[鞭尸]</font>触发鞭尸['..mz..']","FColor":253,"BColor":255,"Type":9}')
                     local guaiwu = genmonex(getbaseinfo(play, 3), getbaseinfo(play, 4), getbaseinfo(play, 5), mz, 1, 1, play, 254, mz .. "[鞭尸]", 0)
                     for _, v in pairs(guaiwu) do
@@ -680,44 +656,9 @@ function yc_fuhuo_hc(play)
     addmpper(play, '=', 100)
     delaygoto(play, 2000, "ai_qhdt", 0)
 end
---------------------点击原地复活-------------------
-function yc_fuhuo_yd(play)
-    local cs = getplaydef(play, VarCfg.J_mrfhw)
-    if checkkuafu(play) then
-        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>跨服地图不能使用复活丹!</font>","Type":9}')
-        return
-    end
-    if string.find(getbaseinfo(play,3),"_") then
-        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>副本地图不能使用复活丹!</font>","Type":9}')
-        return
-    end
-    if cs > 100 then
-        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>今日使用复活丹次数已上限!</font>","Type":9}')
-    else
-        if getbagitemcount(play,"复活丹") > 0 then
-            takeitem(play,"复活丹",1)
-            sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>复活丹生效已原地复活!</font>","Type":9}')
-            realive(play)
-            addhpper(play, '=', 100)
-            addmpper(play, '=', 100)
-            close(play)
-        else
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>你背包里没有复活丹!</font>","Type":9}')
-        end
-    end
-end
---------------------跳转原地复活-------------------
-function yc_fuhuo_mx(play)
-	realive(play)
-	addhpper(play, '=', 100)
-	addmpper(play, '=', 100)
-end
-
 --------------------人物升级触发-------------------
 function playlevelup(play)
-    if getbaseinfo(play, 6) == 150 then
-        sendluamsg(play, 101, 0, 17, 1,"")
-    end
+
 end
 
 --------------------属性改变触发-------------------
@@ -728,16 +669,6 @@ function sendability(play)
         callscriptex(play, 'changespeedex', 1, sd)
     end
     Player.updata_zdl(play)
-end
---------------------爆率监听触发-------------------幸运爆率
-function bl_zyjhl2(play,mingzi)
-    local sj = json2tbl(getplaydef(play,VarCfg.T_xybl))
-    if sj and not sj[mingzi] then
-        sj[mingzi] = 1
-        setplaydef(play,VarCfg.T_xybl,tbl2json(sj))
-        return true
-    end
-    return false
 end
 
 local czlb_je = {18,38,68,128,288,588,888,1188,1588,1888}
@@ -802,12 +733,6 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
         changemoney(play,8,"+",Gold*100,"充值送一倍",true)
         changemoney(play,23,"+",Gold,"累计充值",true)
         Login_msg(play,18,Gold,Gold*200)
-        ----首冲弹界面
-        --if getflagstatus(play,VarCfg.BS_sckg) == 0 and querymoney(play,20) >= 10 then
-        --    sendluamsg(play, 101, 501, 0, 0,getflagstatus(play,VarCfg.BS_sckg))
-        --end
-
-
     elseif MoneyId == 21 then  --直拉礼包
         changemoney(play,23,"+",Gold,"平台累计充值",true)
     elseif MoneyId == 24 then  -- 超级馈赠
@@ -879,8 +804,10 @@ end
 --------------------加入行会后触发-------------------
 function guildaddmemberafter(play,guild,name)
 end
+--------------------退出行会后触发-------------------
 function guilddelmember(play)
 end
+
 function updateguildnotice(play)
     stop(play)
     sendmsg(play,1,'{"Msg":"<font color=\'#00ff00\'>禁止修改行会通告</font>","Type":9}')
@@ -891,13 +818,10 @@ function collectmonex(play,monIDX,monName,monMakeIndex)
     setplaydef(play,"S$采集目标",monMakeIndex)
     setplaydef(play,"N$iscaiji",1)
 end
-
 function func_cjcg(play)
     setplaydef(play,"N$iscaiji",0)
     callscriptex(play, "CAIJIBYPARAM", getplaydef(play,"S$采集目标"), 0)
 end
-
-
 function func_cjsb(play)
     release_print("func_2",getbaseinfo(play,1))
 end
@@ -1053,7 +977,6 @@ end
 
 
 --------------------NPC点击触发--------------------
-local rwsg_gx = {}  -- 任务刷怪添加
 local qf_teshunpc = {
 
 }
@@ -1063,12 +986,9 @@ function clicknpc(play, npcid)
 	if qf_teshunpc[npcid] then
 		Npclib[qf_teshunpc[npcid]].main(play, npcid)
 		return true
-    elseif npcid > 200 and npcid < 400 then
+    elseif npcid > 200 and npcid < 400 then--地图NPC
         Npclib[1].main(play, npcid)
         return true
-	elseif npcid > 1000 then
-		Npclib[701].main(play, npcid)
-		return true
 	elseif npcid < 1000 then
 		Npclib[npcid].main(play, npcid)
 		return true
@@ -1081,24 +1001,18 @@ end
 function handlerequest(play, msgID, p1, p2, p3, msgData)
     release_print("handlerequest", "玩家："..getbaseinfo(play,1), "消息id："..msgID, "npcid："..p1, "按钮2："..p2, "额外3："..p3, "消息数据："..msgData)
 	if msgID == 100 then
-        if qf_teshunpc[p1] then
+        if qf_teshunpc[p1] then --可以无视距离点击npc
             Npclib[qf_teshunpc[p1]].link(play, p1, p2, p3, msgData)
-        elseif p1 > 200 and p1 < 400 then
+        elseif p1 > 200 and p1 < 400 then --地图NPC
             Npclib[1].link(play, p1, p2)
         else
             local dx = getnpcbyindex(p1)
             if dx then
-                if getbaseinfo(dx, 3) == getbaseinfo(play, 3) then
-                    local x, y = getbaseinfo(dx, 4), getbaseinfo(dx, 5)
-                    local xx, yy = getbaseinfo(play, 4), getbaseinfo(play, 5)
-                    if xx - 15 < x and xx + 15 > x and yy - 15 < y and yy + 15 > y then
-                        if qf_teshunpc[p1] then
-                            Npclib[qf_teshunpc[p1]].link(play, p1, p2, p3, msgData)
-                        elseif p1 > 1000 then
-                            Npclib[701].link(play, p1, p2, p3, msgData)
-                        elseif p1 < 1000 then
-                            Npclib[p1].link(play, p1, p2, p3, msgData)
-                        end
+                if FCheckNPCRange(play, p1, 15) then
+                    if qf_teshunpc[p1] then
+                        Npclib[qf_teshunpc[p1]].link(play, p1, p2, p3, msgData)
+                    elseif p1 < 1000 then
+                        Npclib[p1].link(play, p1, p2, p3, msgData)
                     end
                 end
             end
@@ -1106,7 +1020,7 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
 	elseif msgID == 101 then
 		Npclib['anniu'][p1](play, p2, p3, msgData)
     elseif msgID == 105 then
-        if p1 > 200 and p1 < 400 then
+        if p1 > 200 and p1 < 400 then--地图NPC
             Npclib[1].main(play, p1, p2)
         else
             Npclib[p1].main(play, p2)
