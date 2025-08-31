@@ -88,7 +88,7 @@ end
 --获取系统变量 gm_getsysvar
 ---@param param1 string 变量名
 function usercmd1(actor, param1)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     lualib:sendmsg(actor, string.format("获取 %s变量 : %s", param1, getsysvar(param1)))
 end
@@ -98,7 +98,7 @@ end
 ---@param param2 string|number 变量值
 ---@param param3 string 变量值类型
 function usercmd2(actor, param1, param2, param3)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     param2 = tonumber(param2) or param2
     if param3 == "integer" then
@@ -113,7 +113,7 @@ end
 ---@param param1 string 变量名
 ---@param param2 string 变量值类型
 function usercmd3(actor, param1, param2)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     inisysvar(param2, param1, 0)
     lualib:sendmsg(actor, string.format("声明系统自定义变量,%s - %s", param1, param2))
@@ -122,7 +122,7 @@ end
 --获取系统自定义变量 gm_getsysvarex
 ---@param param1 string 变量名
 function usercmd4(actor, param1)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     lualib:sendmsg(actor, param1 .. ":" .. getsysvarex(param1))
 end
@@ -133,7 +133,7 @@ end
 ---@param param3 string 变量值类型
 ---@param param4 number 是否保存数据库
 function usercmd5(actor, param1, param2, param3, param4)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     if param3 == "integer" then
         param2 = tonumber(param2) or 0
@@ -150,7 +150,7 @@ end
 ---@param param3 string 变量值类型
 ---@param param4 number 是否保存数据库
 function usercmd5(actor, param1, param2, param3, param4)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     if param3 == "integer" then
         param2 = tonumber(param2) or 0
@@ -168,7 +168,7 @@ end
 ---@param param4 number 参数3
 ---@param param5 string 参数3
 function usercmd6(actor, param1, param2, param3, param4, param5)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     param1 = tonumber(param1) or 0
     setgmlevel(actor,param1)
@@ -189,11 +189,11 @@ end
 
 -- 打开一个文本框 gm_openbox
 function usercmd8(actor)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local chunks = split_long_string_gbk(tbl2json(config))
     for i, chunk in ipairs(chunks) do
-        sendluamsg(actor,6000, #chunks,0,0,{ chunk })
+        sendluamsg(actor, 6000, #chunks, 0, 0, tbl2json(chunk))
     end
     return
 end
@@ -265,7 +265,7 @@ end
 ---@param param1 string 玩家名
 ---@param param2 string 变量名
 function usercmd1001(actor, param1, param2)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -289,7 +289,7 @@ end
 ---@param param3 string|number 变量值
 ---@param param4 string 变量值类型
 function usercmd1002(actor, param1, param2, param3, param4)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -318,7 +318,7 @@ end
 ---@param param1 string 玩家名
 ---@param param2 string 变量名
 function usercmd1003(actor, param1, param2)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -334,7 +334,7 @@ end
 ---@param param4 string 变量值类型
 ---@param param5 number 是否保存数据库
 function usercmd1004(actor, param1, param2, param3, param4, param5)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -353,7 +353,7 @@ end
 -- 跳转到玩家附近 gm_jumptoplay
 ---@param param1 string 玩家名
 function usercmd1005(actor, param1)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -366,7 +366,7 @@ end
 -- 拉玩家到身边 gm_bringplay
 ---@param param1 string 玩家名
 function usercmd1006(actor, param1)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -382,7 +382,7 @@ end
 ---@param param3 number 数量
 ---@param param4 number 规则
 function usercmd1007(actor, param1, param2, param3, param4)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -398,7 +398,7 @@ end
 ---@param param1 string 玩家名
 ---@param param2 string 物品名称
 function usercmd1008(actor, param1, param2)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -410,7 +410,7 @@ end
 ---@param param1 string 玩家名
 ---@param param2 string 称号名称
 function usercmd1009(actor, param1, param2)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -423,7 +423,7 @@ end
 ---@param param2 string 称号名称
 ---@param param3 number 是否激活
 function usercmd1010(actor, param1, param2, param3)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -441,7 +441,7 @@ end
 ---@param param1 string 玩家名
 ---@param param2 string 称号名称
 function usercmd1011(actor, param1, param2)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -457,7 +457,7 @@ end
 ---@param param1 string 玩家名
 ---@param param2 number buffID
 function usercmd1012(actor, param1, param2)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -475,7 +475,7 @@ end
 ---@param param2 number buffID
 ---@param param3 number 时间
 function usercmd1013(actor, param1, param2, param3)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -501,7 +501,7 @@ end
 ---@param param5 string 释放者
 ---@param param6 string 额外属性[1#10|4#20]
 function usercmd1014(actor, param1, param2, param3, param4, param5, param6)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -530,7 +530,7 @@ end
 ---@param param1 string 玩家名
 ---@param param2 number buffID
 function usercmd1015(actor, param1, param2)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -546,7 +546,7 @@ end
 ---@param param2 string 货币名字
 ---@param param3 number 数量
 function usercmd1016(actor, param1, param2, param3)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -568,7 +568,7 @@ end
 ---@param param1 string 玩家名
 ---@param param2 string 货币名字
 function usercmd1017(actor, param1, param2)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -587,7 +587,7 @@ end
 ---@param param2 string 货币名字
 ---@param param3 number 数量
 function usercmd1018(actor, param1, param2, param3)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -610,7 +610,7 @@ end
 ---@param param3 number 数量
 ---@param param4 number 绑定物品
 function usercmd1019(actor, param1, param2, param3, param4)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -630,7 +630,7 @@ end
 ---@param param3 string 货币名
 ---@param param4 number 货币数量
 function usercmd1020(actor, param1, param2, param3, param4, param5)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -667,7 +667,7 @@ end
 ---@param param2 number X
 ---@param param3 number Y
 function usercmd2001(actor, param1, param2, param3)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     param2 = tonumber(param2) or 0
     param3 = tonumber(param3) or 0
@@ -680,7 +680,7 @@ end
 ---@param param1 string 怪物名(`*`全清)
 ---@param param2 string 是否掉落
 function usercmd2002(actor, param1, param2)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local bool = param2 == "1" and true or false
     local map, x, y = getbaseinfo(actor, 3), getbaseinfo(actor, 4), getbaseinfo(actor, 5)
@@ -695,7 +695,7 @@ end
 ---@param param1 string 怪物名(`*`全清)
 ---@param param2 string 是否掉落
 function usercmd2003(actor, param1, param2)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local bool = param2 == "1" and true or false
     local map = getbaseinfo(actor, 3)
@@ -706,7 +706,7 @@ end
 -- 查询当前地图怪物 "@gm_selectmon 怪物名称"
 ---@param param1 string 怪物名(`*`全部查询)
 function usercmd2004(actor, param1)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local map = getbaseinfo(actor, 3)
     local mons = getmapmon(map, param1, 0, 0, 999)
@@ -718,7 +718,7 @@ end
 
 -- 查询当前地图玩家 "@gm_selectplay"
 function usercmd2005(actor)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local map = getbaseinfo(actor, 3)
     local player_list = getplaycount(map, true, true)
@@ -733,7 +733,7 @@ end
 ---@param param2 number X
 ---@param param3 number Y
 function usercmd2006(actor, param1, param2, param3)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     param2 = tonumber(param2) or 0
     param3 = tonumber(param3) or 0
@@ -771,7 +771,7 @@ end
 ---@param param6 number 外形[appr]
 ---@param param7 string 脚本路径[script]
 function usercmd4001(actor, param1, param2, param3, param4, param5, param6, param7)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     param2 = tonumber(param2) or 0
     param3 = tonumber(param3) or 0
@@ -802,7 +802,7 @@ end
 ---@param param6 number 数量
 ---@param param7 number 颜色
 function usercmd5001(actor, param1, param2, param3, param4, param5, param6, param7)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     param2 = tonumber(param2) or 0
     param3 = tonumber(param3) or 0
@@ -823,7 +823,7 @@ end
 ---@param param1 string 玩家名
 ---@param param2 string 行会名称
 function usercmd6001(actor, param1, param2)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -839,7 +839,7 @@ end
 
 -- 退出行会 "@gm_delguild 玩家名称"
 function usercmd6002(actor, param1, param2)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -855,7 +855,7 @@ end
 
 -- 设置行会职务 "@gm_setguildlv 玩家名称 行会职务"
 function usercmd6003(actor, param1, param2)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     local player = lualib:getplayerbyname(actor, param1)
     if player then
@@ -877,7 +877,7 @@ end
 
 -- 获取沙巴克基本信息 "@gm_castleinfo 信息索引"
 function usercmd7001(actor, param1)
-    if not lualib:playerIsGm(actor) then return end
+    --if not lualib:playerIsGm(actor) then return end
     if not lualib:checkPwd(actor) then return end
     param1 = tonumber(param1) or 1
     local config = {
