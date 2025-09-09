@@ -687,5 +687,114 @@ function Player.addteshuhuihsou(play, t)
 end
 
 
+-----------自定义属性相关---------
+
+--增加修改自定义属性
+---* actor：个人对象
+---* itemobj：物品对象
+---* group：属性分组
+---* attrIndex：属性位置和索引
+---* attrType：属性类型 1为cfg_att_score里面的属性 其他为cfg_custpro_caption属性
+---* attrColor：属性颜色
+---* realAttrId：真实属性
+---* attrId：属性ID当attrType不为1时，为显示属性
+---* isAttrPercent：属性是否为百分比（0不是百分比，1百分比）
+---* attrValue：属性值
+---@param actor any
+---@param itemobj any
+---@param group number?
+---@param attrIndex number
+---@param attrType number?
+---@param attrColor number?
+---@param realAttrId number
+---@param attrId number
+---@param isAttrPercent number
+---@param attrValue number?
+function Player.addModifyCustomAttributes(actor, itemobj, group, attrIndex, attrType, attrColor, realAttrId, attrId,
+                                          isAttrPercent, attrValue)
+    if itemobj == nil then return end
+    attrColor = attrColor or 255
+    if attrType == 1 then
+        changecustomitemabil(actor, itemobj, attrIndex, 0, attrColor, group)
+        changecustomitemabil(actor, itemobj, attrIndex, 1, realAttrId, group)
+    else
+        -- release_print(realAttrId, attrId)
+        changecustomitemabil(actor, itemobj, attrIndex, 0, attrColor, group)
+        changecustomitemabil(actor, itemobj, attrIndex, 1, realAttrId, group)
+        changecustomitemabil(actor, itemobj, attrIndex, 2, attrId, group)
+    end
+    changecustomitemabil(actor, itemobj, attrIndex, 3, isAttrPercent, group)
+    changecustomitemabil(actor, itemobj, attrIndex, 4, attrIndex, group)
+    changecustomitemvalue(actor, itemobj, attrIndex, "=", attrValue, group)
+    refreshitem(actor, itemobj)
+end
+
+--获取自定义属性值
+function Player.getModifyCustomAttributes(actor, equipObj, index, childIndex)
+    local t = json2tbl(getitemcustomabil(actor, equipObj))
+    if not t then
+        return 0
+    end
+    if not t["abil"] then
+        return 0
+    end
+    if not t["abil"][index] then
+        return 0
+    end
+    if not t["abil"][index]["v"] then
+        return 0
+    end
+
+    if not t["abil"][index]["v"][childIndex] then
+        return 0
+    end
+
+    return t["abil"][index]["v"][childIndex][3] or 0
+end
+
+--获取全部自定义属性值
+function Player.getAllModifyCustomAttributes(actor, equipObj, index)
+    local t = json2tbl(getitemcustomabil(actor, equipObj))
+    if not t then
+        return 0
+    end
+    if not t["abil"] then
+        return 0
+    end
+    if not t["abil"][index] then
+        return 0
+    end
+    local attrList = t["abil"][index]["v"]
+    if not attrList then
+        return 0
+    end
+    local result = {}
+    for _, value in ipairs(attrList) do
+        result[value[7]] = value[3]
+    end
+    return result
+end
+
+--获取数学组属性到字符串
+function Player.getAttListToTable(actor, str)
+    if not str or str == "" then
+        return
+    end
+    local attStr = getattlist(actor, str)
+    if not attStr or attStr == "" then
+        return
+    end
+    local t = string.split(attStr, "|")
+    local newt = {}
+    for _, value in ipairs(t or {}) do
+        local tmpT = string.split(value, "#")
+        if #tmpT == 3 then
+            newt[tonumber(tmpT[2])] = tonumber(tmpT[3])
+        end
+    end
+    return newt
+end
+
+
 
 return Player

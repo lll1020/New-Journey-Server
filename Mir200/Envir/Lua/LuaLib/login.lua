@@ -60,6 +60,20 @@ function Login.main(play)
 
     --------------------------------------------------临时脚本
     repairall(play)--修复全身
+
+    --绘制魔法球血球
+    local client_flag = tonumber(getconst(play, "<$CLIENTFLAG>"))
+    if client_flag == 2 then
+        callscriptex(play, "PLAYMAGICBALLEFFECT", 0, 12, 150, -1, 0, 1, 3, 6, 101)
+        callscriptex(play, "PLAYMAGICBALLEFFECT", 0, 12, 150, -1, 1, 1, -7, 6, 101)
+        callscriptex(play, "PLAYMAGICBALLEFFECT", 0, 12, 150, -1, 2, 1, 3, 6, 100)
+    else
+        callscriptex(play, "PLAYMAGICBALLEFFECT", 0, 12, 150, -1, 0, 1, 14, -10, 111)
+        callscriptex(play, "PLAYMAGICBALLEFFECT", 0, 12, 150, -1, 1, 1, -8, -10, 111)
+        callscriptex(play, "PLAYMAGICBALLEFFECT", 0, 12, 150, -1, 2, 1, 12, -10, 110)
+    end
+
+
     setbaseinfo(play,33,0)----设置光头
     setflagstatus(play,300,0) --取消挂机配置标识
     pickupitems(play,0,5,800) --自动捡物

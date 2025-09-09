@@ -462,7 +462,7 @@ function ggna(play,id)
         --
         --release_print(setitemintparam(play, 1, 1))
         --delbuff(play,20137)--30天
-        Player.zxrw_lingqu(play, 2129, "支线任务：npc_"..512)
+        humanmp(play, '-', 100, 107, 0, play, 1)
 
     end
 

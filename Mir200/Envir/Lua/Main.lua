@@ -4,8 +4,8 @@ release_print("--------------------加载Lua脚本--------------------")
 local safeRequire = include("QuestDiary/game/safeRequire.lua") --安全的调用模块
 math.randomseed(tostring(os.time()):reverse():sub(1,6))--随机数种子
 --------------------封装函数--------------------
-safeRequire("Lua/LuaLib/Lib.lua")
 safeRequire("QuestDiary/util/GameEvent.lua")        --事件管理
+safeRequire("QuestDiary/util/util.lua")        --通用函数
 
 --配置
 safeRequire("QuestDiary/config/VarCfg.lua")   --变量配置
@@ -13,7 +13,7 @@ safeRequire("QuestDiary/config/EventCfg.lua") --事件配置
 safeRequire("QuestDiary/config/ConstCfg.lua") --常量配置
 safeRequire("QuestDiary/config/ColorCfg.lua") --颜色配置
 
-
+safeRequire("Lua/LuaLib/Lib.lua")
 --特殊数据
 safeRequire("QuestDiary/BuffRun.lua")              --buff触发
 safeRequire("QuestDiary/GMBox.lua")              --后台管理系统
