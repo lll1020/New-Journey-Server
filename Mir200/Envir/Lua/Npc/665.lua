@@ -432,37 +432,7 @@ function ggna(play,id)
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>当直播地图已更换为:'..getsysvar(constant.G_zbdtbs)..'</font>","Type":9}')
     elseif id == "23" then
-
-        --local db = json2tbl(getplaydef(play,VarCfg.T_dljq))
-        --db["npc"..403][2] = 199
-        --
-        --setplaydef(play,VarCfg.T_dljq,tbl2json(db))
-
-        --local data = {
-        --    "寂渊灯",
-        --    "浮生罗盘",
-        --    "渊瞳秘鉴",
-        --}
-        --table.sort(data)
-        --for i, v in pairs(data) do
-        --   release_print(i,v)
-        --end
-
-
-        --Player.zxrw_lingqu(play, 2008, "支线任务：npc_")
-
-        --sendmail(getbaseinfo(play, 2), 0, "在线充值", "全部礼包激活奖励","初级追梦专属宝箱#1#850&高级追梦专属宝箱#1#850")
-        --sendluamsg(play,101,28,0,getflagstatus(play,VarCfg.BS_xslb),"")
-
-
-        --
-        --setitemparam(play,1,1,"996ItemValue_1")
-        --
-        --updatecustitemparam(play,1)
-        --
-        --release_print(setitemintparam(play, 1, 1))
-        --delbuff(play,20137)--30天
-        humanmp(play, '-', 100, 107, 0, play, 1)
+        addattlist(play, "属性组4", "=", "3#281#100", 1)
 
     end
 

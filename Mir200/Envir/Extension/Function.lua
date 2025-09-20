@@ -4,31 +4,6 @@
 -------------------------
 -------------------------
 
---声明自定义个人变量
-function FIniPlayVar(actor, varname, isstr)
-    local vartype = isstr and "string" or "integer"
-    if type(varname) == "table" then
-        varname = table.concat(varname, "|")
-    end
-    iniplayvar(actor, vartype, "HUMAN", varname)
-end
-
---设置自定义个人变量
-function FSetPlayVar(actor, varname, value, save)
-    value = value or 0
-    save = save or 1
-    if type(varname) == "table" then
-        for _, vname in ipairs(varname) do
-            setplayvar(actor, "HUMAN", vname, value, save)
-        end
-    else
-        setplayvar(actor, "HUMAN", varname, value, save)
-    end
-end
---设置自定义个人变量
-function SetPlayDefEx(actor, varName, value)
-    setplaydef(actor, varName, value)
-end
 --检查一个对象的范围
 function FCheckRange(obj, x, y, range)
     local cur_x, cur_y = getbaseinfo(obj, ConstCfg.gbase.x), getbaseinfo(obj, ConstCfg.gbase.y)
@@ -194,4 +169,72 @@ function FSendGongShaTips1(isKF)
                 '{"Msg":"今晚集体' ..
                         isKFStr .. '攻沙请各行会的兄弟做好准备！！！","FColor":250,"BColor":0,"Type":0,"Time":3,"SendName":"系统：","Y":"30"}')
     end
+end
+
+
+---修改角色外观(武器、衣服、特效)
+---*  play: 玩家对象
+---*  type: 0=衣服;1=武器;2=衣服特效;3武器特效;4=盾牌;5=盾牌特效
+---*  shape: 外观的shape(角色模型ID),-1表示清除
+---*  time: 时间 (秒)
+---*  param1: 仅在参数1位置为0时有效(0=覆盖时装外观, 1=时装外观优先)
+---*  param2: 仅在参数1位置为0时有效(0-斗笠、头发不变, 1-隐藏斗笠, 2-隐藏头发, 3-隐藏斗笠和头发 4-隐藏盾牌和盾牌特效)
+---@param actor string
+---@param type number
+---@param shape number
+---@param time number
+---@param param1 number
+---@param param2 number
+function FSetFeature(actor, type, shape, time, param1, param2)
+    setplaydef(actor, VarCfg["U_时装外观记录"], shape)
+    setfeature(actor, type, shape, time, param1, param2)
+    setfeature(actor, 1, 9999, time, 0, 0)
+end
+
+--幻化时装形象
+function FIllusionAppearance(actor, shape, sEffect)
+    --外观幻化
+    FSetFeature(actor, 0, shape, 655350, 0, 0)
+    --改变内观
+    if sEffect then
+        local equipObj = linkbodyitem(actor, 17)
+        setitemaddvalue(actor, equipObj, 1, 47, sEffect)
+        refreshitem(actor, equipObj)
+    end
+end
+
+--设置足迹
+function FSetMoveEff(actor, effectID)
+    setplaydef(actor, VarCfg["U_足迹外观记录"], effectID)
+    setmoveeff(actor, effectID, 1)
+end
+
+--设置光环
+function FSetGuangHuan(actor, effectID)
+    setplaydef(actor, VarCfg["U_光环外观记录"], effectID)
+    seticon(actor, ConstCfg.iconWhere.guangHuan, 1, effectID, 0, 0, 0, 0, 1)
+end
+
+--计算爆率
+function FCalculateActualExplosionRate(P)
+    local R0 = 100
+    local Delta_R = 0
+
+    if P <= 1000 then
+        Delta_R = P / 10
+    elseif P <= 3000 then
+        Delta_R = 100 + (P - 1000) / 20
+    else
+        Delta_R = 200 + (P - 3000) / 50
+    end
+
+    local R = R0 + Delta_R
+
+    if R > 400 then
+        R = 400
+    end
+
+    R = math.floor(R)
+
+    return R
 end

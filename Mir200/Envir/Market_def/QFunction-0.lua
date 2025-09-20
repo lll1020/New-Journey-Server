@@ -668,6 +668,11 @@ function sendability(play)
         setplaydef(play,"N$移动速度加成",sd)
         callscriptex(play, 'changespeedex', 1, sd)
     end
+
+    local zhenShiBaoLv = FCalculateActualExplosionRate(getbaseinfo(play,51,242)/100 - 100)
+    --设置真实爆率
+    setbaseinfo(play, 43, zhenShiBaoLv)
+
     Player.updata_zdl(play)
 end
 

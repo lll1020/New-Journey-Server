@@ -11,6 +11,130 @@ for index, value in ipairs(bind_money) do
         bind_m_tab[v] = index
     end
 end
+
+--- 自定义属性相关方法
+
+--声明自定义个人变量
+function Player.FIniPlayVar(actor, varname, isstr)
+    local vartype = isstr and "string" or "integer"
+    if type(varname) == "table" then
+        varname = table.concat(varname, "|")
+    end
+    iniplayvar(actor, vartype, "HUMAN", varname)
+end
+
+--设置自定义个人变量
+function Player.FSetPlayVar(actor, varname, value, save)
+    value = value or 0
+    save = save or 1
+    if type(varname) == "table" then
+        for _, vname in ipairs(varname) do
+            setplayvar(actor, "HUMAN", vname, value, save)
+        end
+    else
+        setplayvar(actor, "HUMAN", varname, value, save)
+    end
+end
+--设置自定义个人变量
+function Player.SetPlayDefEx(actor, varName, value)
+    setplaydef(actor, varName, value)
+end
+
+--设置json变量内容，返回table
+---* actor:人物对象(填写nil获取全局变量)
+---* varName:变量名
+---* varValue:变量内容
+---@param actor any|nil
+---@param varName string
+---@param varValue table
+---@return table|nil
+function Player.setJsonVarByTable(actor, varName, varValue)
+    if not varValue then
+        return
+    end
+    local varStr = tbl2json(varValue)
+    if actor then
+        setplaydef(actor, varName, varStr)
+    else
+        setsysvar(varName, varStr)
+    end
+end
+
+--获取json变量内容，返回table
+---* actor:人物对象(填写nil获取全局变量)
+---* varName:变量名
+---@param actor any|nil
+---@param varName string
+---@return table
+function Player.getJsonTableByVar(actor, varName)
+    local varStr = ""
+    if actor then
+        varStr = getplaydef(actor, varName)
+    else
+        varStr = getsysvar(varName)
+    end
+    local ret = json2tbl(varStr)
+    if ret == "" or type(ret) ~= "table" then ret = {} end
+    return ret
+end
+
+--设置自定义变量json变量内容
+---* actor:人物对象(填写nil获取全局变量)
+---* varName:变量名
+---* varValue:变量内容
+---@param actor any|nil
+---@param varName string
+---@param varValue table
+---@return table|nil
+function Player.setJsonPlayVarByTable(actor, varName, varValue)
+    if not varValue then
+        return
+    end
+    local varStr = tbl2json(varValue)
+    setplayvar(actor, "HUMAN", varName, varStr, 1)
+end
+
+--获取自定义变量json变量内容，返回table
+---* actor:人物对象(填写nil获取全局变量)
+---* varName:变量名
+---@param actor any|nil
+---@param varName string
+---@return table
+function Player.getJsonTableByPlayVar(actor, varName)
+    local varStr = getplayvar(actor, "HUMAN", varName)
+    local ret = json2tbl(varStr)
+    if ret == "" or type(ret) ~= "table" then ret = {} end
+    return ret
+end
+
+--设置全局自定义临时int变量
+function Player.SetGlobalTempInt(varName, value)
+    setplaydef(0, "N$" .. varName, value)
+end
+
+--获取全局自定义临时int变量
+function Player.GetGlobalTempInt(varName)
+    return getplaydef(0, "N$" .. varName)
+end
+
+--设置全局自定义临时str变量table
+function Player.SetGlobalTempTable2(varName, value)
+    setplaydef(0, "S$" .. varName, tbl2json(value))
+end
+
+--获取全局自定义临时str变量table
+function Player.GetGlobalTempTable2(varName)
+    local ret = getplaydef(0, "S$" .. varName)
+    if ret ~= "" then
+        return json2tbl(ret)
+    end
+    return {}
+end
+--- 自定义属性相关方法------end
+
+
+
+
 function Player.getMoneyNum(actor, moneytype)
     local moneynum = 0
     if bind_m_tab[moneytype] then
@@ -456,6 +580,7 @@ function Player.updata_zdl(actor, desc) --战斗力更新
     end
     if zdl ~= querymoney(actor, 29) then
         changemoney(actor,29,"=",zdl,"战斗力更新",true)
+        setplaydef(actor, VarCfg["B_记录战斗力"], tonumber(zdl))
     end
 end
 function Player.title_give(actor, title_name) --给称号

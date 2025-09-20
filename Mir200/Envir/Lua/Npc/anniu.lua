@@ -48,8 +48,8 @@ npc[1] = function(play,p2,p3,msgData)  --兑换面板
     end
 end
 
-npc[2] = function(play,p2,p3,msgData)  --回收面板
-    if p2 == 0 then
+npc[2] = function(play,p2,p3,msgData)  --背包  面板
+    if p2 == 0 then -- 回收面板
         sendluamsg(play, 101, 2, 2, 0, '{"xz":'..getplaydef(play,VarCfg.T_hsdg)..',"kg":['..getflagstatus(play,VarCfg.BS_huishou[1])..','..getflagstatus(play,VarCfg.BS_huishou[2])..','..getflagstatus(play,VarCfg.BS_huishou[3])..','..getflagstatus(play,VarCfg.BS_huishou[4])..','..getflagstatus(play,VarCfg.BS_huishou[5])..']}')
     elseif p2 == 1 then
         if p3 > 0 and p2 < 5 then
@@ -119,6 +119,31 @@ npc[2] = function(play,p2,p3,msgData)  --回收面板
     elseif p2 == 7 then
         Player.huishou(play)
         refreshbag(play)
+    elseif p2 == 999 then --销毁 单个
+        if type(p3) ~= "number" then
+            Player.sendmsgEx(play,"参数错误!")
+            return
+        end
+        local itemName = Item.getNameMakeid(play,p3)
+        local isSuccess = delitembymakeindex(play,tostring(p3),0,"物品销毁")
+        if not isSuccess then
+            Player.sendmsgEx(play,"物品销毁失败,请检查!#249")
+        else
+            if itemName then
+                Player.sendmsgEx(play,"【".. itemName .."】物品销毁成功!")
+            end
+        end
+    elseif p2 == 998 then --屏蔽全服掉落信息
+        local state = getflagstatus(play,VarCfg["F_过滤全服信息"])
+        if state == 0 then
+            filterglobalmsg(play, 1)
+            setflagstatus(play,VarCfg["F_过滤全服信息"], 1)
+            Player.sendmsgEx(play,"开启过滤全服掉落提示信息。#249")
+        else
+            filterglobalmsg(play, 0)
+            setflagstatus(play,VarCfg["F_过滤全服信息"], 0)
+            Player.sendmsgEx(play,"关闭过滤全服掉落提示信息。#249")
+        end
     end
 end
 

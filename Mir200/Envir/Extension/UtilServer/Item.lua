@@ -21,6 +21,16 @@ function Item.getIdxByName(name)
     return getstditeminfo(name,0)--[[@as integer]] or 0
 end
 
+--通过唯一ID获取物品名字
+function Item.getNameMakeid(actor, makeId)
+    local itemObj = getitembymakeindex(actor, makeId)
+    local itemName = nil
+    if itemObj ~= "0" then
+        itemName =getiteminfo(actor,itemObj,ConstCfg.iteminfo.name)
+    end
+    return itemName
+end
+
 --根据位置获取装备自定义属性的属性值
 ---*  actor : 个人对象
 ---*  pos : 位置

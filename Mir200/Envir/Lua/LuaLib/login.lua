@@ -72,6 +72,9 @@ function Login.main(play)
         callscriptex(play, "PLAYMAGICBALLEFFECT", 0, 12, 150, -1, 1, 1, -8, -10, 111)
         callscriptex(play, "PLAYMAGICBALLEFFECT", 0, 12, 150, -1, 2, 1, 12, -10, 110)
     end
+    --设置光照范围
+    setcandlevalue(play, 10)
+
 
 
     setbaseinfo(play,33,0)----设置光头
