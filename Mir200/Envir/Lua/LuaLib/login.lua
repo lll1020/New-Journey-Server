@@ -46,7 +46,7 @@ function Login.main(play)
 
         --TODO  初始化任务
         setplaydef(play,VarCfg.U_zxrw[1],1)
-        mapmove(play,"新手地图",127,268,2)
+        mapmove(play,"xtc",137,138,7)
     end
 
     --全区通报登录
