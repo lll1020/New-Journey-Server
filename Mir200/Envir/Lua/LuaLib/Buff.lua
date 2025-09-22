@@ -1,5 +1,23 @@
 release_print("º”‘ÿBuffƒ£øÈ")
-Buff = {}
+Buff = {
+    [1] = function(play,msgData) ---∑…Ω£
+        local msgdata = json2tbl(msgData)
+        local mapid = getbaseinfo(play, 3)
+        local monobj = getmonbyuserid(mapid, msgdata.paramList[1])
+        if monobj then
+            local cd,time = 1 - 0.1,os.time()
+            if getplaydef(play,"N$∑…Ω£") + cd < time then
+                setplaydef(play,"N$∑…Ω£",time)
+                humanhp(monobj, "-", 10000)
+                sendattackeff(monobj, 2, 10000, "*")
+                healthspellchanged(monobj)
+            else
+                --sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>∑…Ω£¿‰»¥÷–...</font>","FColor":219,"BColor":255,"Type":1}')
+                return
+            end
+        end
+    end
+}
 
 local weizhi = {0,1,3,4,5,6,7,8,9,10,11,13,14,16,30,31,32,33,34,35,36,37,38,39,40,41,74,75,76,78,85,86,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120}
 

@@ -432,8 +432,7 @@ function ggna(play,id)
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>当直播地图已更换为:'..getsysvar(constant.G_zbdtbs)..'</font>","Type":9}')
     elseif id == "23" then
-        addattlist(play, "属性组4", "=", "3#281#100", 1)
-
+        sendluamsg(play, 999,  0, 0, 0, "")
     end
 
 end

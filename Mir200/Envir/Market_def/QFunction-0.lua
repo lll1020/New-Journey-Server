@@ -1030,5 +1030,7 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
         else
             Npclib[p1].main(play, p2)
         end
+    elseif msgID == 666 then
+        Buff[1](play,msgData)
 	end
 end
