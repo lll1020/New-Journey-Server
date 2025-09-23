@@ -819,16 +819,40 @@ function updateguildnotice(play)
 end
 --点击采集
 function collectmonex(play,monIDX,monName,monMakeIndex)
-    showprogressbardlg(play,3,"@func_cjcg","采集中..", 1,"@func_cjsb")
+    if not Bag.checkBagEmptyNum(play, 5) then
+        Player.sendmsgEx(play, "采集失败,你的背包格子不足!")
+        return
+    end
+    showprogressbardlg(play,3,"@func_cjcg","采集中%s..", 1,"@func_cjsb")
     setplaydef(play,"S$采集目标",monMakeIndex)
+    setplaydef(play,"S$采集目标名字",monName)
     setplaydef(play,"N$iscaiji",1)
 end
 function func_cjcg(play)
     setplaydef(play,"N$iscaiji",0)
-    callscriptex(play, "CAIJIBYPARAM", getplaydef(play,"S$采集目标"), 0)
+
+    local monName = getplaydef(play, "S$采集目标名字")
+    local monMakeIndex = getplaydef(play, "S$采集目标")
+    local mapid = getbaseinfo(play, ConstCfg.gbase.mapid)
+    local monobj = getmonbyuserid(mapid, monMakeIndex)
+    killmonbyobj(play, monobj, false, false, false)
+    if monName == "采集任务一" then
+        local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+        sg_data["npc3"] = (sg_data["npc3"] or 0) + 1
+        if sg_data["npc3"] >= 5 then
+            messagebox(play,"任务完成,立即前往提交")
+        end
+        Player.sendmsgEx(play,  "采集+"..1 .." ( "..sg_data["npc3"].."/5 )#57")
+        Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+    end
+
+    setplaydef(play, "S$采集目标", "")
+    setplaydef(play, "S$采集目标名字", "")
+
 end
 function func_cjsb(play)
-    release_print("func_2",getbaseinfo(play,1))
+    setplaydef(play,"S$采集目标","")
+    setplaydef(play,"S$采集目标名字","")
 end
 
 function playoffline(play)--人物大退触发
@@ -989,8 +1013,7 @@ function feijian(play,msgData) ---飞剑
             local cd,time = 1 - 0.1,os.time()
             if getplaydef(play,"N$飞剑") + cd < time then
                 setplaydef(play,"N$飞剑",time)
-                humanhp(monobj, "-", 10000)
-                sendattackeff(monobj, 2, 10000, "*")
+                humanhp(monobj, '-', 10000, 107, 0, play, 1)
                 healthspellchanged(monobj)
             else
             --sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>飞剑冷却中...</font>","FColor":219,"BColor":255,"Type":1}')

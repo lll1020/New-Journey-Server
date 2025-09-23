@@ -36,5 +36,4 @@ function npc.link(play, npcid, p2, p3, msgData)
     end
 end
 
-
 return npc

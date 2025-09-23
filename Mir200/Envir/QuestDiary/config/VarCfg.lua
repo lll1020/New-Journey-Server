@@ -137,6 +137,7 @@ VarCfg.T_rwsg     =  "T32"                                                      
 VarCfg.T_dlsgjl     =  "T33"                                                                      --大陆杀怪数量
 
 VarCfg["T_灵根鉴定"]           = "T34"                                                                        --灵根鉴定
+VarCfg["T_各剧情杀怪"]           = "T35"                                                                        --各剧情杀怪JSON
 
 
 

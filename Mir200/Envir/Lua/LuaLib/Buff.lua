@@ -29,6 +29,7 @@ function Buff.login(play)
         end
     end
     -------------------------------------------------------------------额外附加属性登录初始化
+    --灵根鉴定
     local data = Player.getJsonTableByVar(play, VarCfg["T_灵根鉴定"])
     if data["1"] then
         local attrs = {}
@@ -39,13 +40,12 @@ function Buff.login(play)
         attrsstr = Player.getAttrTableToStr(attrs)
         addattlist(play, "灵根鉴定", "=", attrsstr, 1)
     end
-
-
+    ------------------------------------------------------------通用属性
     local attr = {}
     Player.updateSomeAddr(play,nil, attr)
 end
 
-GameEvent.add(EventCfg.onLogin, Buff.login, Buff)
+GameEvent.add(EventCfg.onLogin, Buff.login, "buff")
 
 
 function Buff.chuan(play,item)
