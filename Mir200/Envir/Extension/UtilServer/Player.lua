@@ -920,6 +920,18 @@ function Player.getAttListToTable(actor, str)
     return newt
 end
 
+--数组属性变为字符串
+function Player.getAttrTableToStr(attrs)
+    local attrStr = ""
+    local attrList = {}
+    --计算切割加成
+    for key, value in pairs(attrs) do
+        table.insert(attrList, "3#" .. key .. "#" .. value)
+    end
+    attrStr = table.concat(attrList, "|")
+    return attrStr
+end
+
 
 
 return Player

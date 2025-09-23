@@ -18,6 +18,8 @@ VarCfg["A_违规人员名单"]          = "A300"                                      
 
 
 --引擎U变量
+--个人U变量
+
 VarCfg.U_create_actor_time                  = "U0"                  --创建角色时间戳
 VarCfg.U_create_actor_openday               = "U1"                  --创建角色时已开服的天数
 VarCfg["U_等级上限"]                         = "U2"                  --U_等级上限
@@ -26,13 +28,11 @@ VarCfg["U_上次本日首次登录时间"]              = "U4"                  --U_上次本
 VarCfg["U_连续登录天数"]                     = "U5"                  --U_连续登录天数
 VarCfg["U_杀人数"]                           = "U6"                  --U_杀人数
 VarCfg["U_被杀数"]                           = "U7"                  --U_被杀数
-
 VarCfg["U_足迹外观记录"]                           = "U8"
 VarCfg["U_光环外观记录"]                           = "U9"
 VarCfg["U_时装外观记录"]                           = "U10"
 
 
---个人U变量
 VarCfg.U_zxrw           = {"U11","U12"}                                                                 --任务ID,进度
 VarCfg.U_czyz           = "U13"                                                                          --充值验证
 VarCfg.U_czje           = "U14"                                                                          --充值金额中转
@@ -46,9 +46,12 @@ VarCfg.U_hqtb           = "U24"                                                 
 VarCfg.U_dkb           = "U25"                                                                        --大狂暴--次数
 
 
+
+VarCfg["U_灵根鉴定次数"]           = "U26"                                                                        --灵根鉴定次数
+
+
 VarCfg["U_战斗力"]                          = "U176"
 --收集物品任务用
-VarCfg["U_收集破碎的魔法阵"]                 = "U177"
 
 
 
@@ -63,8 +66,6 @@ VarCfg.F_is_auto_recovery	                = 4	                    --是否开启自动
 VarCfg.F_is_auto_money	                    = 5	                    --开启吃货币
 VarCfg.F_is_auto_exp	                    = 6	                    --开启自动吃经验
 VarCfg.F_is_first_login	                    = 7	                    --是否第一次登录	
-VarCfg["F_老村长的怀表"]                     = 8	                 --老村长的怀表是否领取	
-VarCfg["F_空间法师"]                         = 9	                 --空间法师任务是否完成	
 VarCfg.F_is_auto_custom_attributes          = 10	                --是否回收鉴定和强化的装备
 VarCfg["F_是否首充"]                         = 11	                 --F_是否首充
 
@@ -89,10 +90,10 @@ VarCfg["F_解绑状态"]                          = 799                --F_首充解绑_
 
 
 --引擎J变量
+--个人J变量
 VarCfg.J_kill_boss_mum                      = "J1"                  --每日击杀Boss数量
 VarCfg["J_今日真实充值"]                     = "J2"                  --J_今日真实充值
 
---个人J变量
 VarCfg.J_mrfhw          = "J11"                                                                          --每日使用复活丹次数
 VarCfg.J_jsgw         =   {"J12","J13"}                                                                    --每日大小怪--数量
 VarCfg.J_zxsj         =   "J14"                                                                         --今日在线时间
@@ -102,24 +103,15 @@ VarCfg.J_zscz         =  "J18"                                                  
 VarCfg.J_isgs         =    "J19"                                                                     --是否进入过攻沙
 
 --引擎Z变量
-VarCfg["Z_奇遇盒子位置1"]                     = "Z1"             --Z_奇遇盒子位置1
+VarCfg["Z_位置1"]                     = "Z1"             --Z_位置1
 
 --引擎T变量
+--个人T变量
 VarCfg.T_daily_date                         = "T0"                  --格式 20211103 年月日，  每日凌晨更新，如果凌晨不在线每日第一次登陆更新
 VarCfg.T_selected_data                      = "T1"                  --回收勾选数据
 VarCfg.T_huishou_group                      = "T2"                  --记录回收分组
 VarCfg.T_tujian                             = "T3"                  --点亮图鉴的数据
 
-VarCfg.T_TianMing_Fan                       = "T4"                  --凡品图鉴点亮
-VarCfg.T_TianMing_Ling                      = "T5"                  --灵品图鉴点亮
-VarCfg.T_TianMing_Xian                      = "T6"                  --仙品图鉴点亮
-VarCfg.T_TianMing_Sheng                     = "T7"                  --圣品图鉴点亮
-VarCfg.T_TianMing_Di                        = "T8"                  --帝品图鉴点亮
-
-VarCfg["T_天命记录_1"]                       = "T10"                 --天命记录1 从左侧开始
-
-
---个人T变量
 VarCfg.T_sgcf           = "T11"                                                                          --需杀怪触发json
 VarCfg.T_hsdg           = "T12"                                                                          --回收打勾配置
 VarCfg.T_dljq          = "T13"                                                                          --各剧情JSON
@@ -144,13 +136,16 @@ VarCfg.T_tshs     =  "T31"                                                      
 VarCfg.T_rwsg     =  "T32"                                                                      --特殊任务杀怪
 VarCfg.T_dlsgjl     =  "T33"                                                                      --大陆杀怪数量
 
+VarCfg["T_灵根鉴定"]           = "T34"                                                                        --灵根鉴定
+
+
 
 
 --引擎变量 S
 VarCfg.S_cur_mapid                           = "S99"                 --当前所在地图id，切换地图时候获取上一次的地图id
 
 --引擎变量 M
-VarCfg["M_地藏王标识"]                  = "M10"                 --是否在地藏王的试炼第一层
+VarCfg["M_标识"]                  = "M1"                 --M_标识
 
 --临时自定义变量
 VarCfg.Die_Flag                             = "N$B死掉了"            --死亡触发之前处理 0 没死 1死掉了
@@ -213,15 +208,13 @@ VarCfg.NB_hide_att_214                       = "NB_att_hide_214"	   --抵抗吸血冷
 VarCfg.N_cur_level                          = "N$A_当前等级"                --当前等级(为了升级触发获取到上一次是多少级)
 
 --引擎S变量
-VarCfg["S$_追杀标记"]                        = "S$追杀标记"                 --天煞符 标识玩家
+VarCfg["S$_追杀标记"]                        = "S$追杀标记"                 --标识玩家
 
 
 --------------------------------------------------------------自定义变量-------------------------------------------------------------
 -------------字符类型-------------
-VarCfg["同步天命信息先天"]                              = "KFZF1"
 
 ----------数字类型-------------
-VarCfg["归来仍是少年CD"]                                = "KFSZ1"
 
 
 return VarCfg

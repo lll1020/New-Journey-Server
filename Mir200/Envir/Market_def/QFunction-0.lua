@@ -981,6 +981,25 @@ function castlewarend()
 end
 
 
+function feijian(play,msgData) ---·É½£
+    local msgdata = json2tbl(msgData)
+    local mapid = getbaseinfo(play, 3)
+    local monobj = getmonbyuserid(mapid, msgdata.paramList[1])
+        if monobj then
+            local cd,time = 1 - 0.1,os.time()
+            if getplaydef(play,"N$·É½£") + cd < time then
+                setplaydef(play,"N$·É½£",time)
+                humanhp(monobj, "-", 10000)
+                sendattackeff(monobj, 2, 10000, "*")
+                healthspellchanged(monobj)
+            else
+            --sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>·É½£ÀäÈ´ÖÐ...</font>","FColor":219,"BColor":255,"Type":1}')
+            return
+        end
+    end
+end
+
+
 --------------------NPCµã»÷´¥·¢--------------------
 local qf_teshunpc = {
 
@@ -1031,6 +1050,6 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
             Npclib[p1].main(play, p2)
         end
     elseif msgID == 666 then
-        Buff[1](play,msgData)
+        feijian(play,msgData)
 	end
 end
