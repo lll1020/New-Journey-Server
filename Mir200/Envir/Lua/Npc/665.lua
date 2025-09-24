@@ -11,7 +11,8 @@ function npc.main(play,npcid)
 <EquipShow|id=ui_300|x=200|y=500|index=87|showtips=1|link=@脚本命令>
 <EquipShow|id=ui_301|x=250|y=500|index=104|showtips=1|link=@脚本命令>
 
-<Button|id=ui_100|x=150|y=450|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=llxf测试|link=@ggna,23>
+<Button|id=ui_100|x=150|y=450|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=llxf测试|link=@ggna,24>
+<Button|id=ui_101|x=350|y=450|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=测试装备|link=@ggna,23>
 
 <Button|id=ui_39|x=18|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=武林盟主开始|link=@jqr_ddzbks,20>
 <Button|id=ui_40|x=100|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=武林盟主结束|link=@jqr_ddzbjs,21>
@@ -432,6 +433,20 @@ function ggna(play,id)
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>当直播地图已更换为:'..getsysvar(constant.G_zbdtbs)..'</font>","Type":9}')
     elseif id == "23" then
+        local cailiao = {
+            "殘魂必殺刃",
+            "殘魂必殺甲",
+            "殘魂神盔",
+            "殘魂神链",
+            "殘魂神镯",
+            "殘魂神戒",
+            "殘魂神带",
+            "殘魂神靴",
+        }
+        for k, v in pairs(cailiao) do
+            giveitem(play,v,1)
+        end
+    elseif id == "24" then
         sendluamsg(play,999,0,1,0,"rwjs")
 
     end

@@ -932,6 +932,39 @@ function Player.getAttrTableToStr(attrs)
     return attrStr
 end
 
+--获取装备位idx
+function Player.getEquipIdxByPos(actor, pos)
+    local itemobj = linkbodyitem(actor, pos)
+    if itemobj == "0" then return end
+    local idx = getiteminfo(actor, itemobj, ConstCfg.iteminfo.idx)
+    return idx
+end
+
+--通过位置获取装备名字
+function Player.getEquipNameByPos(actor, pos)
+    local itemobj = linkbodyitem(actor, pos)
+    if itemobj == "0" then return end
+    local name = getiteminfo(actor, itemobj, ConstCfg.iteminfo.name)
+    return name
+end
+
+--通过位置获取字段
+function Player.getEquipFieldByPos(actor, pos, type)
+    local name = Player.getEquipNameByPos(actor, pos)
+    if name then
+        local field
+        if type == 1 then
+            field = getstditeminfo(name, ConstCfg.stditeminfo.custom29)
+        elseif type == 2 then
+            field = getstditeminfo(name, ConstCfg.stditeminfo.custom30)
+        else
+            field = getstditeminfo(name, ConstCfg.stditeminfo.custom29)
+        end
+        return field
+    end
+end
+
+
 
 
 return Player
