@@ -1,7 +1,7 @@
 npc = {}
 --npc名称：升级切割
 --npc功能：
-local _config = teshudata["npc_7"]
+local _config = teshudata["npc_8"]
 
 function npc.main(play,npcid)
     sendluamsg(play,100,npcid,0,0,"")
@@ -26,7 +26,7 @@ function npc.link(play, npcid, p2, p3, msgData)
             Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
             return
         end
-        Player.takeItemByTable(play, config.cost, ",升级攻速",nil)
+        Player.takeItemByTable(play, config.cost, ",升级斗笠",nil)
 
         changeitemidx(play,getiteminfo(play,linkbodyitem(play,_config.where),1),getstditeminfo(config.give, ConstCfg.stditeminfo.idx))
         Player.sendmsgEx(play,  "恭喜你，装备提升成功，当前装备等级为"..(equipLevel + 1).."级")
@@ -35,7 +35,7 @@ function npc.link(play, npcid, p2, p3, msgData)
 
 
     elseif p2 == 2 then
-        giveonitem(play,_config.where,"攻速[lv1]",1)
+        giveonitem(play,_config.where,"斗笠[lv1]",1)
         sendluamsg(play,100,npcid,1,0,"")
     end
 end
