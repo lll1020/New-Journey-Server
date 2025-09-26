@@ -101,6 +101,7 @@ VarCfg.J_qrqd         =   "J15"                                                 
 VarCfg.J_hbdh         =   {"J16","J17"}                                                                 --每日货币兑换
 VarCfg.J_zscz         =  "J18"                                                                     --每日真实充值记录
 VarCfg.J_isgs         =    "J19"                                                                     --是否进入过攻沙
+VarCfg["J_今日材料兑换"]      =    "J20"                                                                     --每日材料兑换次数
 
 --引擎Z变量
 VarCfg["Z_位置1"]                     = "Z1"             --Z_位置1

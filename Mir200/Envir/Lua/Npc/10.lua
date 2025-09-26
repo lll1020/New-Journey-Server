@@ -26,7 +26,7 @@ function npc.link(play, npcid, p2, p3, msgData)
             Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
             return
         end
-        Player.takeItemByTable(play, config.cost, ",升级盾牌",nil)
+        Player.takeItemByTable(play, config.cost, ",升级魂体",nil)
 
         changeitemidx(play,getiteminfo(play,linkbodyitem(play,_config.where),1),getstditeminfo(config.give, ConstCfg.stditeminfo.idx))
         Player.sendmsgEx(play,  "恭喜你，装备提升成功，当前装备等级为"..(equipLevel + 1).."级")
@@ -35,7 +35,7 @@ function npc.link(play, npcid, p2, p3, msgData)
 
 
     elseif p2 == 2 then
-        giveonitem(play,_config.where,"盾牌[lv1]",1)
+        giveonitem(play,_config.where,"魂体[lv1]",1)
         sendluamsg(play,100,npcid,1,0,"")
     end
 end
