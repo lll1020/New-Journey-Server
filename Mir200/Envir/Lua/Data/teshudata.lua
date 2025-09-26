@@ -134,6 +134,25 @@ teshudata = {
 
         },
     },
+    ["npc_11"] = {
+        id = 11,
+        name = "灵根修炼",
+        randomdata = { 100, 30, 30, 30, 30, 30, 30, 30, 20, 20 },
+        fake_randomdata = { 100, 30, 30, 30, 30, 30, 30, 30, 20, 20 },
+        max_level = 10,
+        attrID = {21,25,26,28,30},
+        cost =  { {"元宝",1} },
+        max_cost =  { {"元宝",10} },
+        title = "灵根修炼一",
+        config = {
+            --配置
+            [1] = {name = "金灵根",attr_desc = "暴击几率增加",ratio = 1},
+            [2] = {name = "木灵根",attr_desc = "增加攻击伤害",ratio = 1},
+            [3] = {name = "水灵根",attr_desc = "伤害吸收",ratio = 1},
+            [4] = {name = "火灵根",attr_desc = "忽视防御",ratio = 1},
+            [5] = {name = "土灵根",attr_desc = "人物体力",ratio = 1},
+        },
+    },
     ["npc_12"] = {
         xg_day = 4,
         sd = {

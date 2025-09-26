@@ -139,6 +139,7 @@ VarCfg.T_dlsgjl     =  "T33"                                                    
 
 VarCfg["T_灵根鉴定"]           = "T34"                                                                        --灵根鉴定
 VarCfg["T_各剧情杀怪"]           = "T35"                                                                        --各剧情杀怪JSON
+VarCfg["T_灵根修炼"]           = "T36"                                                                        --灵根修炼
 
 
 

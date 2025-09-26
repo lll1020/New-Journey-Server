@@ -40,6 +40,16 @@ function Buff.login(play)
         attrsstr = Player.getAttrTableToStr(attrs)
         addattlist(play, "灵根鉴定", "=", attrsstr, 1)
     end
+    --灵根修炼
+    data = Player.getJsonTableByVar(play, VarCfg["T_灵根修炼"])
+    local attrs = {}
+    local attrsstr = ""
+    for i=1,5 do
+        attrs[teshudata["npc_11"].attrID[i]] = (data[""..i] or 0) * teshudata["npc_11"].config[i].ratio
+    end
+    attrsstr = Player.getAttrTableToStr(attrs)
+    addattlist(play, "灵根修炼", "=", attrsstr, 1)
+
     ------------------------------------------------------------通用属性
     local attr = {}
     Player.updateSomeAddr(play,nil, attr)
