@@ -447,7 +447,8 @@ function ggna(play,id)
             giveitem(play,v,1)
         end
     elseif id == "24" then
-        sendluamsg(play,999,0,1,0,"rwjs")
+        addattlist(play, "ÏÉÊ³·»È«Âú", "=", "3#1#8888|3#4#588|3#242#3800|3#244#4888", 1)
+
 
     end
 

@@ -164,7 +164,39 @@ teshudata = {
             {give = "魂体[lv2]",cost = { {"元宝",1} },},
         }
     },
-
+    ["npc_13"] = {
+        id = 13,
+        name = "好感度",
+        max_level = 10,
+        attrID = 244,
+        max_give = "兰姐的信物",
+        config = {
+            --配置
+            [0] = {ratio = 0},
+            [1] = {ratio = 100,cost =  { {"好感度道具",20} },},
+            [2] = {ratio = 200,cost =  { {"好感度道具",40} },},
+            [3] = {ratio = 300,cost =  { {"好感度道具",60} },},
+            [4] = {ratio = 400,cost =  { {"好感度道具",80} },},
+            [5] = {ratio = 500,cost =  { {"好感度道具",100} },},
+            [6] = {ratio = 1111,cost =  { {"好感度道具",200} },},
+            [7] = {ratio = 1777,cost =  { {"好感度道具",250} },},
+            [8] = {ratio = 2333,cost =  { {"好感度道具",300} },},
+            [9] = {ratio = 3333,cost =  { {"好感度道具",488} },},
+            [10] = {ratio = 5555,cost =  { {"好感度道具",588} },},
+        },
+    },
+    ["npc_14"] = {
+        id = 14,
+        name = "仙食坊",
+        title = "仙食坊全满",
+        config = {
+            --配置
+            [1] = {attr_desc = "攻击力",attrID = 4,ratio = 1,cost =  { {"仙食坊一",1} },max_level = 750,},
+            [2] = {attr_desc = "血量",attrID = 1,ratio = 1,cost =  { {"仙食坊二",1} },max_level = 750,},
+            [3] = {attr_desc = "切割",attrID = 244,ratio = 80,cost =  { {"仙食坊三",1} },max_level = 550,},
+            [4] = {attr_desc = "怪物抵抗",attrID = 255,ratio = 1,cost =  { {"仙食坊四",1} },max_level = 200,},
+            [5] = {attr_desc = "爆率",attrID = 242,ratio = 100,cost =  { {"仙食坊五",1} },max_level = 200,},
+        },
+    },
 }
-
 return teshudata

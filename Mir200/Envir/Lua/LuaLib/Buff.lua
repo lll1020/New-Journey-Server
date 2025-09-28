@@ -1,9 +1,15 @@
 release_print("加载Buff模块")
 Buff = {
-
+    [101] = function(play,zt) --仙食坊全满
+        if zt == 1 then
+            addattlist(play, "仙食坊全满", "=", "3#1#8888|3#4#588|3#242#3800|3#244#4888", 1)
+        elseif zt == 2 then
+            delattlist(play, "仙食坊全满")
+        end
+    end,
 }
 
-local weizhi = {0,1,3,4,5,6,7,8,9,10,11,13,14,16,30,31,32,33,34,35,36,37,38,39,40,41,74,75,76,78,85,86,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120}
+local weizhi = {0,1,3,4,5,6,7,8,9,10,11,13,14,16,30,31,32,33,34,35,36,37,38,39,40,41}
 
 
 function Buff.login(play)
@@ -49,6 +55,20 @@ function Buff.login(play)
     end
     attrsstr = Player.getAttrTableToStr(attrs)
     addattlist(play, "灵根修炼", "=", attrsstr, 1)
+    --兰姐好感度
+    if getplaydef(play, VarCfg["U_兰姐好感度"]) > 0 then
+        addattlist(play, "兰姐好感度", "=", "3#"..teshudata["npc_13"].attrID.."#"..teshudata["npc_13"].config[getplaydef(play, VarCfg["U_兰姐好感度"])].ratio, 1)
+    end
+    --仙食坊
+    data = Player.getJsonTableByVar(play, VarCfg["T_仙食坊"])
+    attrs = {}
+    attrsstr = ""
+    for i=1,5 do
+        attrs[teshudata["npc_14"].config[i].attrID] = (data[""..i] or 0) * teshudata["npc_14"].config[i].ratio
+    end
+    attrsstr = Player.getAttrTableToStr(attrs)
+    addattlist(play, "仙食坊", "=", attrsstr, 1)
+
 
     ------------------------------------------------------------通用属性
     local attr = {}
