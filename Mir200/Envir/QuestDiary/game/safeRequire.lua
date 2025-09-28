@@ -2,7 +2,7 @@
 
 -- 保存原始的 require 函数
 --local originalRequire = require
-local originalRequire = include
+local originalRequire = require
 -- 封装的安全 require 函数
 local function safeRequire(moduleName)
     local status, result = pcall(originalRequire, moduleName)

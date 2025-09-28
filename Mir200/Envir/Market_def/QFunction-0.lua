@@ -617,31 +617,8 @@ function playdie(play, hiter)
     local dt,x,y = getbaseinfo(play,3),getbaseinfo(play,4),getbaseinfo(play,5)
     sendmail("#" .. getbaseinfo(play, 1), 1, "系统提示", "您被["..getbaseinfo(hiter, 1).."]在"..getbaseinfo(play,45).."("..x.."."..y..")杀害了...")
     setplaydef(play,VarCfg.U_bssl,getplaydef(play,VarCfg.U_bssl)+1)
-    if not castleinfo(5) and dt ~= "比武大会" and getbaseinfo(hiter,-1) and dt ~= "武林盟主" and dt ~= "阵营对抗" and not checkkuafu(play) then
-        local U_dkb = getplaydef(play,VarCfg.U_dkb)
-        if U_dkb > 0 then
-            U_dkb = U_dkb - 1
-            setplaydef(play,VarCfg.U_dkb,U_dkb)
-            if U_dkb < 1 then
-                Player.title_del(play, '究极狂暴')
-                Buff[26](play, 2)
-                seticon(play, 0, -1)
-            end
-            Login_msg(play, 4, hiter)
-            changemoney(hiter, 3, '+', 1880000, '击杀狂暴', true)
-        end
-        if (checktitle(play,"狂暴之力") or checktitle(play,"狂暴之力[体验]")) and (checktitle(hiter,"狂暴之力") or checktitle(hiter,"狂暴之力[体验]")) then
-            if checktitle(play,"狂暴之力") then
-                Player.title_del(play, '狂暴之力')
-                changemoney(hiter, 7, '+', 688, '击杀狂暴', true)
-            else
-                Player.title_del(play, "狂暴之力[体验]")
-            end
-            seticon(play, 0, -1)
-            Login_msg(play, 4, hiter)
-        end
-    end
 
+    GameEvent.push(EventCfg.onPlaydie, play, hiter)
     if getbaseinfo(hiter,-1) then
         local cs = getplaydef(hiter,VarCfg.U_jskb) + 1
         setplaydef(hiter,VarCfg.U_jskb,cs)
@@ -877,9 +854,7 @@ function playreconnection(play)--	人物小退触发
 end
 
 function kflogin(play)--	跨服服务器进入
-    release_print("跨服服务器进入")
-    setbaseinfo(play,57,0)
-    addtocastlewarlistex(getguildinfo(getmyguild(play),1))
+
 end
 
 

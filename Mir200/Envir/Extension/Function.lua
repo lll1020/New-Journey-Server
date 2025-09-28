@@ -238,3 +238,10 @@ function FCalculateActualExplosionRate(P)
 
     return R
 end
+-----------跨服相关，跨服到本服执行-------------------
+
+--跨服到本服删除称号
+function FKuaFuToBenFuDelTitle(actor, arg1, arg2)
+    local userID = getbaseinfo(actor, ConstCfg.gbase.id)
+    kfbackcall(52, userID, tostring(arg1), tostring(arg2)) --通知本服
+end
