@@ -63,7 +63,8 @@ local npcliby = {}
 local preloadModules = {
     "anniu",   -- 想直接加载的模块
     -- 如果以后有其他模块，也可以加在这里
-    15
+    15,
+    16,
 }
 
 -- 直接加载预置模块

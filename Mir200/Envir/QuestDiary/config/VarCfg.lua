@@ -14,6 +14,8 @@ VarCfg["G_合区次数对比"]           = "G6"                                       
 VarCfg["A_天选之人json"]           = "A0"                                                                          --天选之人json
 VarCfg["A_全区首曝json"]           = "A1"                                                                          --全区首曝json
 VarCfg["A_统计信息用"]           = "A3"                                                                          --统计信息用
+VarCfg["A_行会积分记录"]           = "A4"                                                                          --A_行会积分记录
+VarCfg["A_行会积分记录跨服"]                  = "A5"                    --A_行会积分记录跨服
 VarCfg["A_违规人员名单"]          = "A300"                                                                          --违规人员名单
 
 
@@ -104,6 +106,8 @@ VarCfg.J_hbdh         =   {"J16","J17"}                                         
 VarCfg.J_zscz         =  "J18"                                                                     --每日真实充值记录
 VarCfg.J_isgs         =    "J19"                                                                     --是否进入过攻沙
 VarCfg["J_今日材料兑换"]      =    "J20"                                                                     --每日材料兑换次数
+VarCfg["J_攻沙积分"]      =    "J21"                                                                     --J_攻沙积分
+
 
 --引擎Z变量
 VarCfg["Z_位置1"]                     = "Z1"             --Z_位置1

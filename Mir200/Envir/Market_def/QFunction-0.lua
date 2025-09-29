@@ -934,6 +934,7 @@ end
 function castlewarstart()
     sendmovemsg("0", 1, 253, 0, 300, 2,"沙巴克攻城战：今日沙城战已开放，勇士们快快前往沙城传送了解详情，攻城时服务器不再刷新新的怪物，期间死亡不会掉落狂暴之力请保持在线以免领取不到...")
     sendmovemsg("0", 1, 249, 0, 250, 2,"沙巴克攻城战：今日沙城战已开放，勇士们快快前往沙城传送了解详情，攻城时服务器不再刷新新的怪物，期间死亡不会掉落狂暴之力请保持在线以免领取不到...")
+    GameEvent.push(EventCfg.gocastlewarstart)
 end
 ---占领沙巴克触发
 function getcastle0()
@@ -944,39 +945,11 @@ end
 --------------------拿沙结束触发--------------------
 function castlewarend()
     release_print("shabakejl")
-    local player_list = getplayerlst()
-    if checkkuafuserver() then
-        kfbackcall(50,getbaseinfo(getplayerbyname(castleinfo(3)), 2),"恭喜你获得沙巴克战争中胜利方会长奖励，奖励已发放，请及时提取!",teshudata["sbk"][1][1])--玩家对象发送
-    else
-        if not checkkuafuconnect() then
-            sendmail("#" .. castleinfo(3),0,"攻城奖励","恭喜你获得沙巴克战争中胜利方会长奖励，奖励已发放，请及时提取!",teshudata["sbk"][1][1])
-        end
-    end
-    for _, player in ipairs(player_list or {}) do
-        if castleidentity(player) > 0 then
-            if checkkuafuserver() then
-                kfbackcall(50,getbaseinfo(player, 2),"恭喜你获得沙巴克战争中胜利方奖励，奖励已发放，请及时提取!",teshudata["sbk"][2][1])  --玩家对象发送
-            else
-                if not checkkuafuconnect() then
-                    if  getplaydef(player,VarCfg.J_isgs) == 1 then
-                        sendmail(getbaseinfo(player,2),0,"攻城奖励","恭喜你获得沙巴克战争中胜利方奖励，奖励已发放，请及时提取!",teshudata["sbk"][2][1])
-                    end
-                end
-            end
-        elseif getmyguild(player) ~= "0" then
-            if checkkuafuserver() then
-                kfbackcall(50,getbaseinfo(player, 2),"恭喜你获得沙巴克战争中参与奖励，奖励已发放，请及时提取!",teshudata["sbk"][3][1])  --玩家对象发送
-            else
-                if not checkkuafuconnect() then
-                    if  getplaydef(player,VarCfg.J_isgs) == 1 then
-                        sendmail(getbaseinfo(player,2),0,"攻城奖励","恭喜你获得沙巴克战争奖励，奖励已发放，请及时提取!",teshudata["sbk"][3][1])
-                    end
-                end
-            end
-        end
-    end
     sendmovemsg("0", 1, 253, 0, 300, 1,"沙巴克攻城战：今日沙城战已结束，所有奖励均已发放，请各位玩家及时领取...")
     sendmovemsg("0", 1, 249, 0, 250, 1,"沙巴克攻城战：今日沙城战已结束，所有奖励均已发放，请各位玩家及时领取...")
+
+    GameEvent.push(EventCfg.goCastlewarend)
+
 end
 
 

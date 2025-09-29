@@ -9,6 +9,12 @@ function ontimerex1()
     end
 end
 
+--跨服攻沙同步数据
+function ontimerex2()
+    GameEvent.push(EventCfg.goKFGongShaSync)
+end
+
+
 
 
 ------------------------------------个人定时器begin---------------------------------
@@ -19,6 +25,13 @@ function ontimer1(play)
         Player.huishou(play)
     end
 end
+
+--攻沙个人定时器
+function ontimer2(actor)
+    GameEvent.push(EventCfg.gocastlewaring, actor)
+end
+
+
 
 -----------------个人4号定时器----------------60秒定时器
 function ontimer4(play)
