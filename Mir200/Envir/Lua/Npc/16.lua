@@ -8,6 +8,11 @@ function npc.main(play,npcid)
 end
 
 function npc.link(play,npcid,ew,aid)
+    if getmyguild(play) == "0" then
+        Player.sendmsgEx(play, string.format("你没有加入行会#249"))
+        return
+    end
+
     if ew == 1 then  --会长领取奖励
     elseif ew == 2 then  --胜利方成员领取称号奖励
     elseif ew == 2 then  --双方领取货币奖励

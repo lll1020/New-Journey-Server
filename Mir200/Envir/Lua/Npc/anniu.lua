@@ -1,52 +1,5 @@
 npc = {}
 
-npc[1] = function(play,p2,p3,msgData)  --兑换面板
-    if p2 == 0 then
-        sendluamsg(play,101,3,0,0,'{"hbdh1":'..getplaydef(play,VarCfg.J_hbdh[1])..',"hbdh2":'..getplaydef(play,VarCfg.J_hbdh[2])..'}')
-    elseif p2 == 1 then
-        if getplaydef(play,VarCfg.J_hbdh[1]) >= 10 then
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[货币兑换]</font><font color=\'#ff0000\'>每日兑换次数已达上限...</font>","Type":9}')
-            return
-        end
-        if changemoney(play,3,"-",1000000,"货币兑换",true) then
-            changemoney(play,4,"+",200000,"货币兑换",true)
-            setplaydef(play,VarCfg.J_hbdh[1], getplaydef(play,VarCfg.J_hbdh[1]) + 1)
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[货币兑换]</font><font color=\'#00ff00\'>兑换成功...</font>","Type":9}')
-            sendluamsg(play,101,3,1,1,'{"hbdh1":'..getplaydef(play,VarCfg.J_hbdh[1])..',"hbdh2":'..getplaydef(play,VarCfg.J_hbdh[2])..'}')
-
-        else
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[货币兑换]</font><font color=\'#ff0000\'>元宝不足...</font>","Type":9}')
-        end
-    elseif p2 == 2 then
-        if getplaydef(play,VarCfg.J_hbdh[2]) >= 10 then
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[货币兑换]</font><font color=\'#ff0000\'>每日兑换次数已达上限...</font>","Type":9}')
-            return
-        end
-        if changemoney(play,1,"-",1000000,"货币兑换",true) then
-            changemoney(play,2,"+",200000,"货币兑换",true)
-            setplaydef(play,VarCfg.J_hbdh[2], getplaydef(play,VarCfg.J_hbdh[2]) + 1)
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[货币兑换]</font><font color=\'#00ff00\'>兑换成功...</font>","Type":9}')
-            sendluamsg(play,101,3,1,2,'{"hbdh1":'..getplaydef(play,VarCfg.J_hbdh[1])..',"hbdh2":'..getplaydef(play,VarCfg.J_hbdh[2])..'}')
-
-        else
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[货币兑换]</font><font color=\'#ff0000\'>绑定元宝不足...</font>","Type":9}')
-        end
-    elseif p2 == 3 then
-        if changemoney(play,7,"-",1000,"货币兑换",true) then
-            changemoney(play,1,"+",2000000,"货币兑换",true)
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[货币兑换]</font><font color=\'#00ff00\'>兑换成功...</font>","Type":9}')
-        else
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[货币兑换]</font><font color=\'#ff0000\'>仙玉不足...</font>","Type":9}')
-        end
-    elseif p2 == 4 then
-        if changemoney(play,8,"-",1000,"货币兑换",true) then
-            changemoney(play,3,"+",2000000,"货币兑换",true)
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[货币兑换]</font><font color=\'#00ff00\'>兑换成功...</font>","Type":9}')
-        else
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[货币兑换]</font><font color=\'#ff0000\'>绑定仙玉不足...</font>","Type":9}')
-        end
-    end
-end
 
 npc[2] = function(play,p2,p3,msgData)  --背包  面板
     if p2 == 0 then -- 回收面板
