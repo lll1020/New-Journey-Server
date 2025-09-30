@@ -423,39 +423,39 @@ npc[502] = function(play,p2,p3,data)  --在线充值
     end
 end
 ---赞助礼包
-local zzch,sg,qsx = {"黄金赞助","铂金赞助","钻石赞助"},{0,50,100},{1,2,3}
-npc[503] = function(play,p2,p3,data)  --赞助礼包
-    if p2 == 0 then
-        sendluamsg(play, 101, 503, 0, getplaydef(play,VarCfg.U_fldt[2]),getplaydef(play,VarCfg.T_czlb))
-    elseif p2 == 1 then
-        local json = json2tbl(getplaydef(play,VarCfg.T_czlb))
-        if not json["zzlb"..p3] then
-            if getplaydef(play,VarCfg.U_fldt[2]) >= sg[p3] then
-                json["zzlb"..p3] = 1
-                setplaydef(play,VarCfg.T_czlb,tbl2json(json))
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[赞助礼包]</font><font color=\'#28ef01\'>领取成功...</font>","Type":9}')
-                Player.title_give(play,zzch[p3])
-                Player.qsx_give(play, qsx[p3], "赞助", nil)
-                if getplaydef(play,VarCfg.U_zxrw[1]) == 2 and p3 == 1 then
-                    newdeletetask(play,getplaydef(play,VarCfg.U_zxrw[1]))
-                    playeffect(play,4011,25,-50,1,0,0)
-                    sendluamsg(play, 101, 503, 2, p3,"")
-                    return
-                end
-                if json["zzlb"..1] and json["zzlb"..2] and json["zzlb"..3] then
-                    sendluamsg(play, 101, 503, 2, p3,"")
-                    return
-                end
-                sendluamsg(play, 101, 503, 1, p3,"")
-            else
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[赞助礼包]</font><font color=\'#ff0500\'>当前杀怪数量不足,无法领取...</font>","Type":9}')
-                return
-            end
-        else
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[赞助礼包]</font><font color=\'#ff0500\'>已经领取过礼包了...</font>","Type":9}')
-        end
-    end
-end
+--local zzch,sg,qsx = {"黄金赞助","铂金赞助","钻石赞助"},{0,50,100},{1,2,3}
+--npc[503] = function(play,p2,p3,data)  --赞助礼包
+--    if p2 == 0 then
+--        sendluamsg(play, 101, 503, 0, getplaydef(play,VarCfg.U_fldt[2]),getplaydef(play,VarCfg.T_czlb))
+--    elseif p2 == 1 then
+--        local json = json2tbl(getplaydef(play,VarCfg.T_czlb))
+--        if not json["zzlb"..p3] then
+--            if getplaydef(play,VarCfg.U_fldt[2]) >= sg[p3] then
+--                json["zzlb"..p3] = 1
+--                setplaydef(play,VarCfg.T_czlb,tbl2json(json))
+--                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[赞助礼包]</font><font color=\'#28ef01\'>领取成功...</font>","Type":9}')
+--                Player.title_give(play,zzch[p3])
+--                Player.qsx_give(play, qsx[p3], "赞助", nil)
+--                if getplaydef(play,VarCfg.U_zxrw[1]) == 2 and p3 == 1 then
+--                    newdeletetask(play,getplaydef(play,VarCfg.U_zxrw[1]))
+--                    playeffect(play,4011,25,-50,1,0,0)
+--                    sendluamsg(play, 101, 503, 2, p3,"")
+--                    return
+--                end
+--                if json["zzlb"..1] and json["zzlb"..2] and json["zzlb"..3] then
+--                    sendluamsg(play, 101, 503, 2, p3,"")
+--                    return
+--                end
+--                sendluamsg(play, 101, 503, 1, p3,"")
+--            else
+--                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[赞助礼包]</font><font color=\'#ff0500\'>当前杀怪数量不足,无法领取...</font>","Type":9}')
+--                return
+--            end
+--        else
+--            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[赞助礼包]</font><font color=\'#ff0500\'>已经领取过礼包了...</font>","Type":9}')
+--        end
+--    end
+--end
 ---快人一步
 npc[504] = function(play,p2,p3,data)  --快人一步
     if p2 == 0 then
