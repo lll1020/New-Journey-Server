@@ -43,24 +43,6 @@ shaguai = {
 			end
 		end
 	end,
-	["26"] = function(play,mob)      --福利大厅杀怪
-		local shu = getplaydef(play,constant.U_fldt[2])
-		setplaydef(play,constant.U_fldt[2],shu+1)
-		if teshudata.sq_jd[getbaseinfo(play,3)] then
-			local T_sq_jd = json2tbl(getplaydef(play,constant.T_sq_jd))
-			local guai = getbaseinfo(mob,1)
-			if guaiwutype[guai] == 2 and getflagstatus(play,constant.BS_mztq) == 1 then
-				T_sq_jd[getbaseinfo(play,3)] = (T_sq_jd[getbaseinfo(play,3)] or 0) + 100
-			else
-				T_sq_jd[getbaseinfo(play,3)] = (T_sq_jd[getbaseinfo(play,3)] or 0) + 1 + (1 * math.floor(getbaseinfo(play, 51, 242) / 10000))
-			end
-			if T_sq_jd[getbaseinfo(play,3)] >= teshudata.sq_jd[getbaseinfo(play,3)].sl then
-				additemtodroplist(play,mob,teshudata.sq_jd[getbaseinfo(play,3)].itme[math.random(1,#teshudata.sq_jd[getbaseinfo(play,3)].itme)])
-				T_sq_jd[getbaseinfo(play,3)] = 0
-			end
-			setplaydef(play,constant.T_sq_jd,tbl2json(T_sq_jd))
-		end
-	end,
 	["29"] = function(play,mob)      --除魔杀怪
 		local dl,boss,xg = getplayvar(play,"除魔大陆"),getplayvar(play,"除魔大怪数量"),getplayvar(play,"除魔小怪数量")
 		--检测怪物地图是否为目标大陆，检测怪物类型

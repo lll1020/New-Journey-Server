@@ -1,7 +1,7 @@
 npc = {}
 --功能21：狂暴之力
 
-local _config = teshudata["15"]
+local _config = teshudata["npc_15"]
 
 function npc.main(play,npcid)
     sendluamsg(play,100,npcid,0,0,"")
@@ -14,7 +14,7 @@ function npc.link(play,npcid,ew,aid)
         else
             if changemoney(play,7,"-",1000,"开启狂暴",true) then
                 Player.title_give(play,_config.give.ch)
-                seticon(play,0,1,10298,0,0,0,0,0)
+                seticon(play,0,1,10294,0,0,0,0,0)
                 sendluamsg(play,100,npcid,1,0,"")
                 local skillId = getskillindex(_config.give.skill)
                 addskill(play, skillId, 1)

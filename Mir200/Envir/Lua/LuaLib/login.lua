@@ -43,6 +43,9 @@ function Login.main(play)
         setplaydef(play,VarCfg.T_rwsg,"{}")--特殊任务杀怪
         setplaydef(play,VarCfg.T_dlsgjl,"{}")--大陆杀怪数量
 
+        setplaydef(play, VarCfg["U_登录天数"], 1)
+
+
         if getsysvar(VarCfg["G_新区验证"]) == 0 then
             setsysvar(VarCfg["G_新区验证"],1)
             setsysvar(VarCfg["G_开区天数"],1)

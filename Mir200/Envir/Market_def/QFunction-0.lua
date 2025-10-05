@@ -65,6 +65,9 @@ function resetday(play)
 	for _, v in pairs(constant.pz_ldql) do
 		Player.title_del(play, v)
 	end
+
+    setplaydef(play, VarCfg["U_登录天数"], getplaydef(play, VarCfg["U_登录天数"]) + 1)
+
 end
 --------------------传送戒指传送前触发触发-------------------
 function beginteleport(play)
@@ -535,6 +538,9 @@ function killmon(play, mob)
     else
         setplaydef(play,VarCfg.J_jsgw[2],getplaydef(play,VarCfg.J_jsgw[2])+1)
     end
+
+    setplaydef(play,VarCfg.U_fldt[2],getplaydef(play,constant.U_fldt[2])+1)
+
     local dt = getbaseinfo(play, 3)
     if dt ~= "xtc" then
         local mz = getbaseinfo(mob, 1, 1)

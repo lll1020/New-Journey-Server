@@ -459,7 +459,7 @@ end
 ---快人一步
 npc[504] = function(play,p2,p3,data)  --快人一步
     if p2 == 0 then
-        sendluamsg(play, 101, 504, 0, 0,'{"mztq":'..getflagstatus(play,VarCfg.BS_mztq)..',"zjxz":'..getplaydef(play,VarCfg.U_jdgh)..'}')
+        sendluamsg(play, 101, 504, 0, 0,'{"mztq":'..getflagstatus(play,VarCfg.BS_mztq)..'}')
     elseif p2 == 1 then
         if getflagstatus(play,VarCfg.BS_mztq) == 0 then
             sendluamsg(play, 101, 999, 98, 21,"")
@@ -467,7 +467,7 @@ npc[504] = function(play,p2,p3,data)  --快人一步
             sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>每人只能购买一次</font>","Type":9}')
         end
     elseif p2 == 2 then
-        sendluamsg(play, 101, 504, 2, 0,'{"mztq":'..getflagstatus(play,VarCfg.BS_mztq)..',"zjxz":'..getplaydef(play,VarCfg.U_jdgh)..'}')
+        sendluamsg(play, 101, 504, 2, 0,'{"mztq":'..getflagstatus(play,VarCfg.BS_mztq)..'}')
     end
 end
 ---自动巡航
@@ -594,11 +594,95 @@ npc[509] = function(play,p2,p3,msgData) openhyperlink(play,111,0) end
 npc[510] = function(play,p2,p3,msgData) openhyperlink(play,35,0) end
 
 npc[511] = function(play,p2,p3,msgData)  --福利大厅
+    if p2 == 0 then
+        local data = {}
+        data["T_qrbq"] = Player.getJsonTableByVar(play, VarCfg.T_qrbq)
+        data["U_dlts"] = getplaydef(play, VarCfg["U_登录天数"])
+        data["J_zxsj"] = getplaydef(play, VarCfg.J_zxsj)
+        data["U_sgsl"] = getplaydef(play,VarCfg.U_fldt[2])
+        sendluamsg(play, 101, 511, 0, 0,tbl2json(data))
+    elseif p2 == 1 then
+        local T_qrbq = Player.getJsonTableByVar(play, VarCfg.T_qrbq)
+        if p3 == 1 then--七日登录
+            local jsonData = json2tbl(msgData)
+            T_qrbq["7rqd"] = T_qrbq["7rqd"] or 0
+            T_qrbq["7rqd"] = T_qrbq["7rqd"] + 1
+            if jsonData["7rqd"] > getplaydef(play, VarCfg["U_登录天数"]) then
+                Player.sendmsgEx(play,  "登录天数不足#57")
+                return
+            elseif T_qrbq["7rqd"] > jsonData["7rqd"] then
+                Player.sendmsgEx(play,  "已经领取完毕#57")
+                return
+            end
+            if T_qrbq["7rqd"] == jsonData["7rqd"] then
+                if jsonData["7rqd"] <= 7 then
+                    Player.setJsonVarByTable(play, VarCfg.T_qrbq, T_qrbq)
+                    Player.rwjl(play,teshudata["fldt"]["7rqd"][T_qrbq["7rqd"]].jl,"七日登录奖励",nil)
+                    sendluamsg(play, 101, 511, 1, 1,tbl2json(T_qrbq))
+                else
+                    Player.sendmsgEx(play,  "七日登录奖励已经全部领取完毕#57")
+                end
+            else
+                Player.sendmsgEx(play,  "请按照顺序领取#57")
+            end
+        elseif p3 == 2 then--在线奖励
+            local jsonData = json2tbl(msgData)
+            T_qrbq["zxjl"] = T_qrbq["zxjl"] or 0
+            T_qrbq["zxjl"] = T_qrbq["zxjl"] + 1
+            if teshudata["fldt"]["zxjl"][T_qrbq["zxjl"]].time > getplaydef(play, VarCfg.J_zxsj) then
+                Player.sendmsgEx(play,  "在线时间不足#57")
+                return
+            elseif T_qrbq["zxjl"] > jsonData["zxjl"] then
+                Player.sendmsgEx(play,  "已经领取完毕#57")
+                return
+            end
+            if T_qrbq["zxjl"] == jsonData["zxjl"] then
+                if jsonData["zxjl"] <= #teshudata["fldt"]["zxjl"]then
+                    Player.setJsonVarByTable(play, VarCfg.T_qrbq, T_qrbq)
+                    Player.rwjl(play,teshudata["fldt"]["zxjl"][T_qrbq["zxjl"]].jl,"在线奖励",nil)
+                    sendluamsg(play, 101, 511, 1, 1,tbl2json(T_qrbq))
+                else
+                    Player.sendmsgEx(play,  "在线奖励已经全部领取完毕#57")
+                end
+            else
+                Player.sendmsgEx(play,  "请按照顺序领取#57")
+            end
+        elseif p3 == 2 then--杀怪奖励
+            local jsonData = json2tbl(msgData)
+            T_qrbq["sgjl"] = T_qrbq["sgjl"] or 0
+            T_qrbq["sgjl"] = T_qrbq["sgjl"] + 1
+            if teshudata["fldt"]["sgjl"][T_qrbq["sgjl"]].num > getplaydef(play,VarCfg.U_fldt[2]) then
+                Player.sendmsgEx(play,  "杀怪数量不足#57")
+                return
+            elseif T_qrbq["sgjl"] > jsonData["sgjl"] then
+                Player.sendmsgEx(play,  "已经领取完毕#57")
+                return
+            end
+            if T_qrbq["sgjl"] == jsonData["sgjl"] then
+                if jsonData["sgjl"] <= #teshudata["fldt"]["sgjl"]then
+                    Player.setJsonVarByTable(play, VarCfg.T_qrbq, T_qrbq)
+                    Player.rwjl(play,teshudata["fldt"]["sgjl"][T_qrbq["sgjl"]].jl,"杀怪奖励",nil)
+                    sendluamsg(play, 101, 511, 1, 1,tbl2json(T_qrbq))
+                else
+                    Player.sendmsgEx(play,  "杀怪奖励已经全部领取完毕#57")
+                end
+            else
+                Player.sendmsgEx(play,  "请按照顺序领取#57")
+            end
+        end
+
+    end
 end
 
 npc[512] = function(play,p2,p3,msgData)  --游戏攻略
     if p2 == 0 then
         sendluamsg(play, 101, 512, 0, 0,"")
+    end
+end
+
+npc[513] = function(play,p2,p3,msgData)  --狂暴
+    if p2 == 0 then
+        sendluamsg(play,100,15,0,0,"")
     end
 end
 
