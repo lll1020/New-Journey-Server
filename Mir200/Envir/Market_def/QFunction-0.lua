@@ -227,6 +227,22 @@ function pickupitemex(play, item)
     end
     --进背包动画
     setpickitemtobag(play,"200","101")
+
+    --TODO: 首爆装备
+    if getconst(play,"<$SERVERNAME>") ~= "" and getconst(play,"<$SERVERNAME>") ~= "直播区" or true then
+        local T_grsb = Player.getJsonTableByVar(play, VarCfg.T_grsb)
+        if teshudata["fldt"]["grsb"][idx] and not T_grsb[""..idx] then
+            T_grsb[""..idx] = 1
+            Player.setJsonVarByTable(play, VarCfg.T_grsb, T_grsb)
+        end
+        local qqsb = Player.getJsonTableByVar(play, VarCfg["A_全区首曝json"])
+        if teshudata["fldt"]["qqsb"][idx] and not qqsb[""..idx] then
+            qqsb[""..idx] = 1
+            Player.setJsonVarByTable(play, VarCfg["A_全区首曝json"], qqsb)
+            local mz = getbaseinfo(play,1)
+            sendmovemsg(play,1,253,0,185,1,'【全区首曝】: <恭喜玩家/FCOLOR=250><【'..mz..'】/FCOLOR=243><成功捡取/FCOLOR=250><【'..name..'】/FCOLOR=243>')
+        end
+    end
 end
 --------------------穿戴前触发-------------------
 function takeonbeforeex(play,item,where,makeIndex)
@@ -540,10 +556,17 @@ function killmon(play, mob)
     end
 
     setplaydef(play,VarCfg.U_fldt[2],getplaydef(play,constant.U_fldt[2])+1)
+    local mz = getbaseinfo(mob, 1, 1)
+    local T_grss = Player.getJsonTableByVar(play, VarCfg.T_grss)
+    local idx = getdbmonfieldvalue(mz, "idx")
+
+    if teshudata["fldt"]["grss"][idx] and not T_grss[""..idx] then
+        T_grss[""..idx] = 1
+        Player.setJsonVarByTable(play, VarCfg.T_grss, T_grss)
+    end
 
     local dt = getbaseinfo(play, 3)
     if dt ~= "xtc" then
-        local mz = getbaseinfo(mob, 1, 1)
         if guaiwutype[mz] and daluditu[dt] then
             local bianshi = getbaseinfo(play, 51, 207)
             if bianshi > 0 then

@@ -447,7 +447,15 @@ function ggna(play,id)
             giveitem(play,v,1)
         end
     elseif id == "24" then
-        addattlist(play, "ÏÉÊ³·»È«Âú", "=", "3#1#8888|3#4#588|3#242#3800|3#244#4888", 1)
+        local T_grss = Player.getJsonTableByVar(play, VarCfg.T_grss)
+        T_grss["1015"] = 1
+        T_grss["1016"] = 1
+        T_grss["1017"] = 1
+        T_grss["1018"] = 1
+        T_grss["1019"] = 1
+        T_grss["1020"] = 1
+        T_grss["1021"] = 1
+        Player.setJsonVarByTable(play, VarCfg.T_grss, T_grss)
 
 
     end

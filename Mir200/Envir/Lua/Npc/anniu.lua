@@ -647,7 +647,7 @@ npc[511] = function(play,p2,p3,msgData)  --福利大厅
             else
                 Player.sendmsgEx(play,  "请按照顺序领取#57")
             end
-        elseif p3 == 2 then--杀怪奖励
+        elseif p3 == 3 then--杀怪奖励
             local jsonData = json2tbl(msgData)
             T_qrbq["sgjl"] = T_qrbq["sgjl"] or 0
             T_qrbq["sgjl"] = T_qrbq["sgjl"] + 1
@@ -669,8 +669,66 @@ npc[511] = function(play,p2,p3,msgData)  --福利大厅
             else
                 Player.sendmsgEx(play,  "请按照顺序领取#57")
             end
+        elseif p3 == 4 then--个人首杀
+            local jsonData = json2tbl(msgData)
+            local T_grss = Player.getJsonTableByVar(play, VarCfg.T_grss)
+            if T_grss[jsonData["grss"]] and T_grss[jsonData["grss"]] == 2 then
+                Player.sendmsgEx(play,  "该首杀奖励已经领取完毕#57")
+                return
+            end
+            if T_grss[jsonData["grss"]] and T_grss[jsonData["grss"]] == 1 then
+                T_grss[jsonData["grss"]] = 2
+                Player.setJsonVarByTable(play, VarCfg.T_grss, T_grss)
+                Player.rwjl(play,teshudata["fldt"]["grss"][tonumber(jsonData["grss"])].give,"个人首杀奖励",nil,0)
+                sendluamsg(play, 101, 511, 2, 4,tbl2json(T_grss))
+            else --未完成
+                Player.sendmsgEx(play,  "未完成该首杀任务#57")
+                return
+            end
+        elseif p3 == 5 then--个人首爆
+            local jsonData = json2tbl(msgData)
+            local T_grsb = Player.getJsonTableByVar(play, VarCfg.T_grsb)
+            if T_grsb[jsonData["grsb"]] and T_grsb[jsonData["grsb"]] == 2 then
+                Player.sendmsgEx(play,  "该首爆奖励已经领取完毕#57")
+                return
+            end
+            if T_grsb[jsonData["grsb"]] and T_grsb[jsonData["grsb"]] == 1 then
+                T_grsb[jsonData["grsb"]] = 2
+                Player.setJsonVarByTable(play, VarCfg.T_grsb, T_grsb)
+                Player.rwjl(play,teshudata["fldt"]["grsb"][tonumber(jsonData["grsb"])].give,"个人首爆奖励",nil,0)
+                sendluamsg(play, 101, 511, 2, 4,tbl2json(T_grsb))
+            else --未完成
+                Player.sendmsgEx(play,  "未完成该首爆任务#57")
+                return
+            end
+        elseif p3 == 6 then--全区首曝
+            local jsonData = json2tbl(msgData)
+            local qqsb = Player.getJsonTableByVar(play, VarCfg["A_全区首曝json"])
+            if qqsb[jsonData["qqsb"]] and qqsb[jsonData["qqsb"]] == 2 then
+                Player.sendmsgEx(play,  "该首爆奖励已经领取完毕#57")
+                return
+            end
+            if qqsb[jsonData["qqsb"]] and qqsb[jsonData["qqsb"]] == 1 then
+                qqsb[jsonData["qqsb"]] = 2
+                Player.setJsonVarByTable(play, VarCfg["A_全区首曝json"], qqsb)
+                Player.rwjl(play,teshudata["fldt"]["qqsb"][tonumber(jsonData["qqsb"])].give,"全区首爆奖励",nil,0)
+                sendluamsg(play, 101, 511, 2, 4,tbl2json(qqsb))
+            else --未完成
+                Player.sendmsgEx(play,  "未完成该首爆任务#57")
+                return
+            end
         end
-
+    elseif p2 == 2 then
+        if p3 == 4 then--个人首杀
+            local T_grss = Player.getJsonTableByVar(play, VarCfg.T_grss)
+            sendluamsg(play, 101, 511, 2, 4,tbl2json(T_grss))
+        elseif p3 == 5 then
+            local T_grsb = Player.getJsonTableByVar(play, VarCfg.T_grsb)
+            sendluamsg(play, 101, 511, 2, 5,tbl2json(T_grsb))
+        elseif p3 == 6 then
+            local data = Player.getJsonTableByVar(nil, VarCfg["A_全区首曝json"])
+            sendluamsg(play, 101, 511, 2, 6,tbl2json(data))
+        end
     end
 end
 

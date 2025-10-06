@@ -27,7 +27,6 @@ function Login.main(play)
         setplaydef(play,VarCfg.T_zxrw,"{}")--支线任务序号
         setplaydef(play,VarCfg.T_rwjl,"{}")--任务领取记录
         setplaydef(play,VarCfg.T_xybl,"{}")--幸运爆率
-        setplaydef(play,VarCfg.T_grss,"{}")--个人首爆
         setplaydef(play,VarCfg.T_qrbq,"{}")--福利大厅
         setplaydef(play,VarCfg.T_szjl,"{}")--时装记录
         setplaydef(play,VarCfg.T_xldtsg,"{}")--系列地图杀怪

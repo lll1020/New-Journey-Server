@@ -127,7 +127,7 @@ VarCfg.T_jls           = "T15"                                                  
 VarCfg.T_zxrw           =  "T16"                                                                            --支线任务序号
 VarCfg.T_rwjl        = "T17"                                                                            --任务领取记录
 VarCfg.T_xybl           = "T18"                                                                         --幸运爆率
-VarCfg.T_grss           = "T19"                                                                         --个人首爆
+VarCfg.T_grsb           = "T19"                                                                         --个人首爆
 VarCfg.T_qrbq           = "T20"                                                                         --福利大厅
 VarCfg.T_szjl           = "T21"                                                                         --时装记录
 VarCfg.T_xldtsg           = "T22"                                                                           --系列地图杀怪
@@ -147,6 +147,7 @@ VarCfg["T_灵根鉴定"]           = "T34"                                          
 VarCfg["T_各剧情杀怪"]           = "T35"                                                                         --各剧情杀怪JSON
 VarCfg["T_灵根修炼"]           = "T36"                                                                          --灵根修炼
 VarCfg["T_仙食坊"]           = "T37"                                                                           --T_仙食坊
+VarCfg.T_grss           = "T38"                                                                         --个人首杀
 
 
 
