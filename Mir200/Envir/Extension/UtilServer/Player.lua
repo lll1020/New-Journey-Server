@@ -626,18 +626,13 @@ function Player.jl_mail(table) --奖励转邮件
 end
 function Player.dl_sz_notip(actor, dl) --大陆限制 -- 无提示
     if dl == 1 then
-        if getplaydef(actor,VarCfg.U_zxrw[1]) < 8 then
-            return false
-        end
+        return true
     end
     return true
 end
 function Player.dl_sz(actor, dl) --大陆限制 -- 有提示
     if dl == 1 then
-        if getplaydef(actor,VarCfg.U_zxrw[1]) < 8 then
-            sendmsg(actor, 1, '{"Msg":"<font color=\'#ff0000\'>请完成该大陆主线引导后再来。。。</font>","Type":9}')
-            return false
-        end
+        return true
     end
     return true
 end

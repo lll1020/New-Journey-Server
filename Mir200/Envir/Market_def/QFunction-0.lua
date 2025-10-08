@@ -1011,7 +1011,10 @@ function clicknpc(play, npcid)
 		Npclib[qf_teshunpc[npcid]].main(play, npcid)
 		return true
     elseif npcid > 200 and npcid < 400 then--地图NPC
-        Npclib[1].main(play, npcid)
+        Npclib[200].main(play, npcid)
+        return true
+    elseif npcid > 500 and npcid < 520 then--大陆地图NPC
+        Npclib[500].main(play, npcid)
         return true
 	elseif npcid < 1000 then
 		Npclib[npcid].main(play, npcid)
@@ -1027,14 +1030,16 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
 	if msgID == 100 then
         if qf_teshunpc[p1] then --可以无视距离点击npc
             Npclib[qf_teshunpc[p1]].link(play, p1, p2, p3, msgData)
-        elseif p1 > 200 and p1 < 400 then --地图NPC
-            Npclib[1].link(play, p1, p2)
         else
             local dx = getnpcbyindex(p1)
             if dx then
                 if FCheckNPCRange(play, p1, 15) then
                     if qf_teshunpc[p1] then
                         Npclib[qf_teshunpc[p1]].link(play, p1, p2, p3, msgData)
+                    elseif p1 > 200 and p1 < 500 then --地图NPC
+                        Npclib[200].link(play, p1, p2)
+                    elseif p1 > 500 and p1 < 520 then--大陆地图NPC
+                        Npclib[500].link(play, p1, p2)
                     elseif p1 < 1000 then
                         Npclib[p1].link(play, p1, p2, p3, msgData)
                     end
@@ -1045,7 +1050,9 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
 		Npclib['anniu'][p1](play, p2, p3, msgData)
     elseif msgID == 105 then
         if p1 > 200 and p1 < 400 then--地图NPC
-            Npclib[1].main(play, p1, p2)
+            Npclib[200].main(play, p1, p2)
+        elseif p1 > 500 and p1 < 520 then--大陆地图NPC
+            Npclib[500].main(play, p1, p2)
         else
             Npclib[p1].main(play, p2)
         end

@@ -1,21 +1,12 @@
 ;==============================================城市地图==============================
 [新手地图|12       新手地图] day NOALLOWUSEITEMS(盟重回城石) safe RUNMON(1) NEEDSET_OFF(300)
 
-[比武大会|D3804_2 比武大会]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) SECRET(47|神秘人|2|21) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[暴打够侧滑|msag 暴打够侧滑] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[tt|slwtzdt 天梯] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[跨服地图|bjzc 跨服地图] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day Kuafu NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-
 [D3804_2  锁妖塔] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
 [mwsl 太虚幻境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
 
 [q004|ID1_002 副本地图] noreconnect(xtc:137:138:9) NOALLOWUSEITEMS(随机传送石) ONKILLMON RUNMON(1)
-[武林盟主|xmyj 武林盟主] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE SECRET(47|神秘人|2|21)
-[新服争霸|sszj 新服争霸] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[阵营对抗|ID6_Wait 阵营对抗] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE SECRET(45|神秘人|2|21) CAMP
-[真假鸡爱慕|tmch 真假鸡爱慕] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[域外战场|fsdc  域外战场]  nnoreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石)
+
 
 [gm|q004 GM地图] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
@@ -36,62 +27,9 @@ kfhjsbk 78 105 -> kfhg 10 29
 kfhjsbk 89 96 -> kfhg 26 20
 kfhg 23 26 -> kfhjsbk 86 102
 
-[跨服阵营对抗|dzjq 跨服阵营对抗] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE SECRET(45|神秘人|2|21) CAMP
-
-[跨服BOSS地图一|xlzd 跨服BOSS地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[跨服BOSS地图二|xlzd 跨服BOSS地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[跨服BOSS地图三|xlzd 跨服BOSS地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[跨服BOSS地图四|xlzd 跨服BOSS地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[跨服BOSS地图五|xlzd 跨服BOSS地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[跨服BOSS地图六|xlzd 跨服BOSS地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[跨服BOSS地图七|xlzd 跨服BOSS地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[跨服BOSS地图八|xlzd 跨服BOSS地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[跨服BOSS地图九|xlzd 跨服BOSS地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[跨服BOSS地图十|xlzd 跨服BOSS地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-
-[跨服秘境地图1|fsdc  跨服秘境地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[跨服秘境地图2|msag  跨服秘境地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[跨服秘境地图3|mjms  跨服秘境地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[跨服秘境地图4|mjdb  跨服秘境地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-
-[鸿蒙界障|D002 鸿蒙界障] safe noreconnect(xtc:137:138:9) RUNMON(1) NEEDSET_OFF(300)
-[洪荒世界|D002 洪荒世界] safe noreconnect(xtc:137:138:9) RUNMON(1) NEEDSET_OFF(300)
-[寰宇世界|D002 寰宇世界] safe noreconnect(xtc:137:138:9) RUNMON(1) NEEDSET_OFF(300)
-[混沌世界|D002 混沌世界] safe noreconnect(xtc:137:138:9) RUNMON(1) NEEDSET_OFF(300)
 
 
-[直播地图|sg169  隐藏地图] RUNMON(1)
-[直播地图2|001  隐藏地图] RUNMON(1)
-[转场地图2|d2001  爆率地图] RUNMON(1)
-[转场地图|631  爆率地图] RUNMON(1)
 
-[sg169  隐藏地图] RUNMON(1)
-[001  隐藏地图] RUNMON(1)
-[m100  爆率地图] RUNMON(1)
-[d2001  爆率地图] RUNMON(1)
-[631  爆率地图] RUNMON(1)
-
-[BOSS地图1|xlzd BOSS地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[BOSS地图2|xlzd BOSS地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[BOSS地图3|xlzd BOSS地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[BOSS地图4|xlzd BOSS地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[BOSS地图5|xlzd BOSS地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[BOSS地图6|xlzd BOSS地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[BOSS地图7|xlzd BOSS地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[BOSS地图8|xlzd BOSS地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[BOSS地图9|xlzd BOSS地图]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-
-
-;直播地图2 87 25 -> 转场地图 142 22
-;转场地图 142 22 -> 直播地图2 87 25
-;转场地图 22 142 -> 直播地图 35 26
-;直播地图 35 26 -> 转场地图 22 142
-;直播地图 10 8 -> 转场地图2 45 347
-;转场地图2 45 347 -> 直播地图 10 8
-;转场地图2 337 57 -> 直播地图2 20 84
-;直播地图2 20 84 -> 转场地图2 337 57
-
-[万倍爆率地图|hgmj  万倍爆率地图]
 
 [D1206 剧情地图]
 
@@ -108,570 +46,110 @@ kfhg 23 26 -> kfhjsbk 86 102
 [叹息旷野|xssl  九大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 [诸天之上|xssl  十大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-
-
-;=================四大陆额外地图===============
-[万灵宗|qcdl  万灵宗]
-[天机阁|ssly  天机阁]
-[中州徐家|hgsq  中州徐家]
-[中州刘家|bjzc  中州刘家]
-
 ;==============================================一大陆野外地图==============================
-[盟重北荒|1   盟重北荒] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-;[草药谷|D4102   草药谷] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[叛军大营|15_001   叛军大营] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[盟重山脉|hgyj   盟重山脉] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[盟重南荒|15_002   盟重南荒] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[战争前线|GM_020   战争前线] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[山庄|new_44   山庄] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[幽谷|new_44   幽谷] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[洞穴|new_44   洞穴] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[古殿|new_44   古殿] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 ;==============================================二大陆野外地图==============================
+[隐藏地图二|new_44   隐藏地图] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[特殊秘境副本二|new_44   特殊秘境副本] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
+[野火帮|new_44   野火帮] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[野火帮大营|new_44   野火帮大营] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[横断山脉|121  横断山脉] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[剑魂遗迹|D30042  剑魂遗迹] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[迷惘森林|7  迷惘森林] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[剑鸣深渊|mjrk  剑鸣深渊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[诡冥墨河|hgmj  诡冥墨河] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[剑冢迷宫|gyms  剑冢迷宫] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[xx城郊|new_44   xx城郊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[神秘森林|new_44   神秘森林] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
+[兵道古藏|new_44   兵道古藏] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[乱葬岗|new_44   乱葬岗] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
+[夜魔洞|new_44   夜魔洞] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[洞穴深处|new_44   洞穴深处] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[洞穴秘境|new_44   洞穴秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 
 
 ;==============================================三大陆野外地图==============================
-
-[宗门禁地|egdl1  宗门禁地] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-
-
-[灵剑之道|BYVip05  灵剑之道] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[剑心秘谷|zxzd  剑心秘谷] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-灵剑之道 374 370 -> 剑心秘谷 79 83
-剑心秘谷 79 83 -> 灵剑之道 374 370
-
-[虚剑洞天|egdl5  虚剑洞天] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[无形之界|egdl7  无形之界] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-虚剑洞天 90 91 -> 无形之界 26 70
-无形之界 26 70 -> 虚剑洞天 90 91
-
-[赤剑山谷|szld  赤剑山谷] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)szld
-[火魂熔池|mjdb  火魂熔池] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-赤剑山谷 101 53 -> 火魂熔池 113 32
-火魂熔池 113 32 -> 赤剑山谷 101 53
-
-[雷剑神殿|bczl  雷剑神殿] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[天罚之座|cmyt  天罚之座] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-雷剑神殿 29 94 -> 天罚之座 117 130
-天罚之座 117 130 -> 雷剑神殿 29 94
-
-[云崖绝壁|yscl  云崖绝壁] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[迷途之径|0_003  迷途之径] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-云崖绝壁 121 15 -> 迷途之径 100 54
-迷途之径 100 54 -> 云崖绝壁 121 15
-
-[英灵哀殿|egdl4  英灵哀殿] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[剑啸绝渊|mjmz  剑啸绝渊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-英灵哀殿 95 74 ->  剑啸绝渊 152 101
-剑啸绝渊 152 101 ->  英灵哀殿 95 74
+[隐藏地图三|new_44   隐藏地图三] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[特殊秘境副本三|new_44   特殊秘境副本三] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+;灰界
+[灰界|new_44   灰界] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[灰界南部|new_44   灰界南部] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[灰界北部|new_44   灰界北部] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[灰界东部|new_44   灰界东部] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[灰界西部|new_44   灰界西部] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 
+;群星海
+[群星海|new_44   群星海] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+
+[外海|new_44   外海] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[神秘岛屿|new_44   神秘岛屿] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[黑暗洞窟|new_44   黑暗洞窟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+
+[千年沉船|new_44   千年沉船] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[船长室|new_44   船长室] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[水手舱|new_44   水手舱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+
+[内海|new_44   内海] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[七星岛|new_44   七星岛] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[葬星城|new_44   葬星城] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+
+[葬星海滩|new_44   群星海] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+
+
+;红尘城
+[红尘城|new_44   红尘城] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+
+[红尘城郊外|new_44   红尘城郊外] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[红尘内城|new_44   红尘内城] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[红尘客栈|new_44   红尘客栈] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+
+
+[通天塔|new_44   通天塔] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[通天塔底层|new_44   通天塔底层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[通天塔顶层|new_44   通天塔顶层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+;无主深渊
+[无主深渊|new_44   无主深渊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+
+[深渊1层|new_44   深渊1层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[深渊2层|new_44   深渊2层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[深渊3层|new_44   深渊3层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[深渊4层|new_44   深渊4层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[深渊5层|new_44   深渊5层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[深渊6层|new_44   深渊6层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[深渊7层|new_44   深渊7层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+;草药谷
+[草药谷|new_44   草药谷] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+
+[仙草田|new_44   仙草田] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[草药古深处|new_44   草药古深处] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[丹道古藏|new_44   丹道古藏] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 ;==============================================四大陆野外地图==============================
 
-[中州城外|hgyj   中州城外] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[虚渊界|cgzd  虚渊界] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-
-
-[猎魔前线|gzdj  猎魔前线] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[血戮荒原|1  血戮荒原] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[魔息战场|1_009  魔息战场] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[暗影哨所|2  暗影哨所] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-
-猎魔前线 101 20 -> 血戮荒原 327 154
-血戮荒原 26 221 -> 魔息战场 121 25
-魔息战场 28 127 -> 暗影哨所 256 71
-
-
-血戮荒原 327 154 -> 猎魔前线 101 20
-魔息战场 121 25 -> 血戮荒原 26 221
-暗影哨所 256 71 -> 魔息战场 28 127
-
-
-
-[上古丛林|19  上古丛林] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[迷踪秘径|19_1  迷踪秘径] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[藤蔓荒谷|20  藤蔓荒谷] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[古木幽庭|31  古木幽庭] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-
-上古丛林 176 29 -> 迷踪秘径 156 23
-迷踪秘径 28 121 -> 藤蔓荒谷 110 46
-藤蔓荒谷 489 438 -> 古木幽庭 172 131
-
-
-迷踪秘径 156 23 -> 上古丛林 176 29
-藤蔓荒谷 110 46 -> 迷踪秘径 28 121
-古木幽庭 172 131 -> 藤蔓荒谷 489 438
-
-
-[灵气矿场|BQdixiacheng01  灵气矿场] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[晶尘之路|BQdixiacheng02  晶尘之路] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[灵岩矿井|BQdixiacheng03  灵岩矿井] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[涌泉之脉|BQdixiacheng04  涌泉之脉] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-
-灵气矿场 20 53 -> 晶尘之路 25 265
-晶尘之路 215 41 -> 灵岩矿井 280 49
-灵岩矿井 67 263 -> 涌泉之脉 18 268
-
-
-晶尘之路 25 265 -> 灵气矿场 20 53
-灵岩矿井 280 49 -> 晶尘之路 215 41
-涌泉之脉 18 268 -> 灵岩矿井 67 263
-
-
-[不朽领域|BYVip01  不朽领域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[永生之塔|BYVip02  永生之塔] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[不灭神坛|BYVip03  不灭神坛] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[轮回圣殿|BYVip04  轮回圣殿] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-
-
-不朽领域 364 41 -> 永生之塔 60 328
-永生之塔 368 51 -> 不灭神坛 10 322
-不灭神坛 250 97 -> 轮回圣殿 72 365
-
-永生之塔 60 328 -> 不朽领域 364 41
-不灭神坛 10 322 -> 永生之塔 368 51
-轮回圣殿 72 365 -> 不灭神坛 250 97
-
-
-[诡秘深渊|D012  诡秘深渊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[幽影峡谷|D042  幽影峡谷] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[邪魂之渊|D043  邪魂之渊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[深渊幽宫|D301  深渊幽宫] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-
-诡秘深渊 73 346 -> 幽影峡谷 97 284
-幽影峡谷 249 205 -> 邪魂之渊 181 200
-邪魂之渊 50 363 -> 深渊幽宫 23 243
-
-
-幽影峡谷 97 284 -> 诡秘深渊 73 346
-邪魂之渊 181 200 -> 幽影峡谷 249 205
-深渊幽宫 23 243 -> 邪魂之渊 50 363
-
-
-[北辰山脉|D3400_1  北辰山脉] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[霜风雪岭|EDSnowMan  霜风雪岭] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[极寒冰崖|ER51_Ice  极寒冰崖] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[天霄之径|EV_bandit  天霄之径] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-北辰山脉 540 71 -> 霜风雪岭 31 222
-霜风雪岭 264 37 -> 极寒冰崖 237 38
-极寒冰崖 71 238 -> 天霄之径 222 30
-
-
-霜风雪岭 31 222 -> 北辰山脉 540 71
-极寒冰崖 237 38 -> 霜风雪岭 264 37
-天霄之径 222 30 -> 极寒冰崖 71 238
 
 ;==============================================五大陆野外地图==============================
 
-[天玄秘境|dzzj  天玄秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-
-[幽冥邪宗|D101  幽冥邪宗] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[血池溅月|D102  血池溅月] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[邪影噬魂坛|D113  邪影噬魂坛] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[千目凝视之谷|D123  千目凝视之谷] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-
-幽冥邪宗 127 175 -> 血池溅月 176 176
-血池溅月 185 83 -> 邪影噬魂坛 19 92
-邪影噬魂坛 69 265 -> 千目凝视之谷 19 91
-
-血池溅月 176 176 -> 幽冥邪宗 127 175
-邪影噬魂坛 19 92 -> 血池溅月 185 83
-千目凝视之谷 19 91 -> 邪影噬魂坛 69 265
-
-[边境之城|jtjp  边境之城] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[狼烟起|D422  狼烟起] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[孤军守残垒|D431  孤军守残垒] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[铁壁营寨烽火天|D432  铁壁营寨烽火天] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-
-
-边境之城 16 10 -> 狼烟起 27 31
-狼烟起 374 28 -> 孤军守残垒 27 179
-孤军守残垒 177 104 -> 铁壁营寨烽火天 11 145
-
-狼烟起 27 31 -> 边境之城 16 10
-孤军守残垒 27 179 -> 狼烟起 374 28
-铁壁营寨烽火天 11 145 -> 孤军守残垒 177 104
-
-[无尽深渊|mjsc  无尽深渊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[黑渊幽径|egdl4  黑渊幽径] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[深海无声谷|at94  深海无声谷] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[血肉风暴裂魂隙|egdl3  血肉风暴裂魂隙] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-
-
-无尽深渊 15 42 -> 黑渊幽径 101 78
-黑渊幽径 31 24 -> 深海无声谷 87 33
-深海无声谷 21 23 -> 血肉风暴裂魂隙 93 101
-
-黑渊幽径 101 78 -> 无尽深渊 15 42
-深海无声谷 87 33 -> 黑渊幽径 31 24
-血肉风暴裂魂隙 93 101 -> 深海无声谷 21 23
-
-[仙府遗迹|D701  仙府遗迹] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[仙池碧玉|D702  仙池碧玉] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[莲灯未冷时|D703  莲灯未冷时] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[星陨回响天幕影|D704  星陨回响天幕影] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-
-仙府遗迹 34 209 -> 仙池碧玉 212 212
-仙池碧玉 17 20 -> 莲灯未冷时 219 229
-莲灯未冷时 11 31 -> 星陨回响天幕影 234 202
-
-仙池碧玉 212 212 -> 仙府遗迹 34 209
-莲灯未冷时 219 229 -> 仙池碧玉 17 20
-星陨回响天幕影 234 202 -> 莲灯未冷时 11 31
-
-[天妖山脉|E15  天妖山脉] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[狂啸绝壁|E14  狂啸绝壁] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[血兽战吼山巅|E13  血兽战吼山巅] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[妖骨盘涡毒息林|ED2014314  妖骨盘涡毒息林] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-天妖山脉 126 555 -> 狂啸绝壁 31 36
-狂啸绝壁 345 89 -> 血兽战吼山巅 47 366
-血兽战吼山巅 382 400 -> 妖骨盘涡毒息林 126 287
-
-狂啸绝壁 31 36 -> 天妖山脉 126 555
-血兽战吼山巅 47 366 -> 狂啸绝壁 345 89
-妖骨盘涡毒息林 126 287 -> 血兽战吼山巅 382 400
-
-[圣墟秘境|D3602  圣墟秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[圣者归途|D2911  圣者归途] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[光焰引路泉影照|D3603  光焰引路泉影照] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[黄金遗冢|D3603_24  黄金遗冢] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-圣墟秘境 253 259 -> 圣者归途 24 32
-圣者归途 318 320 -> 光焰引路泉影照 255 272
-光焰引路泉影照 228 24 -> 黄金遗冢 18 75
-
-圣者归途 24 32 -> 圣墟秘境 253 259
-光焰引路泉影照 255 272 -> 圣者归途 318 320
-黄金遗冢 18 75 -> 光焰引路泉影照 228 24
 
 
 ;==============================================六大陆野外地图==============================
 
-[凌云福地|ID8_007  凌云福地] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-
-
-
-[迷城幻境|D4301  迷城幻境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[影火幽街|D4302  影火幽街] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[虚实难辨馆中影|D4304_1  虚实难辨馆中影] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[星屑回廊|D4306  星屑回廊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-迷城幻境 33 22 -> 影火幽街 172 165
-虚实难辨馆中影 28 117 -> 星屑回廊 63 229
-
-影火幽街 172 165 -> 迷城幻境 33 22
-虚实难辨馆中影 134 184 -> 影火幽街 19 21
-星屑回廊 63 229 -> 虚实难辨馆中影 28 117
-
-[战歌要塞|EF_04  战歌要塞] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[战鼓不息|WugongDYFB04  战鼓不息] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[铁狮门楼风中望|WugongDYFB05  铁狮门楼风中望] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[赤焰兵坊|WugongPTFB01  赤焰兵坊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-战歌要塞 22 99 -> 战鼓不息 24 190
-战鼓不息 113 10 -> 铁狮门楼风中望 10 26
-铁狮门楼风中望 78 171 -> 赤焰兵坊 205 230
-
-战鼓不息 24 190 -> 战歌要塞 22 99
-铁狮门楼风中望 10 26 -> 战鼓不息 113 10
-赤焰兵坊 205 230 -> 铁狮门楼风中望 78 171
-
-
-[荒古战场|QTD2304_4Z  荒古战场] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[血腥废墟|QTHY0zhuan01  血腥废墟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[废土遗址|QTHY0zhuan02  废土遗址] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[英雄遗墟|QTVip04  英雄遗墟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-荒古战场 23 38 -> 血腥废墟 165 206
-血腥废墟 22 309 -> 废土遗址 165 206
-废土遗址 22 309 -> 英雄遗墟 360 349
-
-
-血腥废墟 165 206 -> 荒古战场 23 38
-废土遗址 165 206 -> 血腥废墟 22 309
-英雄遗墟 360 349 -> 废土遗址 22 309
-
-
-
-[魁族蛮荒|EN03  魁族蛮荒] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[蛮骨平原|EF_04  蛮骨平原] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[血牙山脉|EDCarrot3  血牙山脉] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[荒灵沼泽|EDGraveyard0  荒灵沼泽] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-魁族蛮荒 38 36 -> 蛮骨平原 22 98
-蛮骨平原 100 22 -> 血牙山脉 32 142
-血牙山脉 170 44 -> 荒灵沼泽 28 262
-
-蛮骨平原 22 98 -> 魁族蛮荒 38 36
-血牙山脉 32 142 -> 蛮骨平原 100 22
-荒灵沼泽 28 262 -> 血牙山脉 170 44
-
-[苍穹之域|TiaozaoPTFB02  苍穹之域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[云阙天宫|WomaDYFb02  云阙天宫] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[星轮天池|WomaPTFb02  星轮天池] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[玄霄浮岛|ZhudongPTFB01  玄霄浮岛] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-苍穹之域 239 15 -> 云阙天宫 50 363
-云阙天宫 333 36 -> 星轮天池 50 363
-星轮天池 333 36 -> 玄霄浮岛 18 35
-
-云阙天宫 50 363 -> 苍穹之域 239 15
-星轮天池 50 363 -> 云阙天宫 333 36
-玄霄浮岛 18 35 -> 星轮天池 333 36
-
-
-[混沌荒原|ID9_02  混沌荒原] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[破界荒墟|ZD1101  破界荒墟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[湮灵断层|ZD1102  湮灵断层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[裂魂战渊|ZD1103  裂魂战渊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-混沌荒原 30 166 -> 破界荒墟 236 258
-破界荒墟 48 71 -> 湮灵断层 275 129
-湮灵断层 38 27 -> 裂魂战渊 236 258
-
-
-破界荒墟 236 258 -> 混沌荒原 30 166
-湮灵断层 275 129 -> 破界荒墟 48 71
-裂魂战渊 236 258 -> 湮灵断层 38 27
 
 
 ;==============================================七大陆野外地图==============================
 
 
 
-[赤焰火洲|D2911  赤焰火洲] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[炎心古原|D3603  炎心古原] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[焰火炼狱|D3603_24  焰火炼狱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[燎原赤林|D3603_34  燎原赤林] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-赤焰火洲 25 33 -> 炎心古原 243 254
-炎心古原 243 28 -> 焰火炼狱 19 24
-焰火炼狱 20 75 -> 燎原赤林 67 77
-
-炎心古原 243 254 -> 赤焰火洲 25 33
-焰火炼狱 19 24 -> 炎心古原 243 28
-燎原赤林 67 77 -> 焰火炼狱 20 75
-
-[海蓝天岛|12  海蓝天岛] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[澜光浅湾|13  澜光浅湾] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[云汐悬崖|20  云汐悬崖] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[天镜湖心|81  天镜湖心] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-海蓝天岛 291 121 -> 澜光浅湾 74 79
-澜光浅湾 194 208 -> 云汐悬崖 89 193
-云汐悬崖 491 520 -> 天镜湖心 91 306
-
-澜光浅湾 74 79 -> 海蓝天岛 291 121
-云汐悬崖 89 193 -> 澜光浅湾 194 208
-天镜湖心 91 306 -> 云汐悬崖 491 520
-
-
-[禁忌之森|121  禁忌之森] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[幽藤迷径|122  幽藤迷径] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[幽冥沼泽|123  幽冥沼泽] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[暗影秘境|124  暗影秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-禁忌之森 145 305 -> 幽藤迷径 219 200
-幽藤迷径 21 364 -> 幽冥沼泽 39 86
-幽冥沼泽 178 154 -> 暗影秘境 205 210
-
-
-幽藤迷径 219 200 -> 禁忌之森 145 305
-幽冥沼泽 39 86 -> 幽藤迷径 21 364
-暗影秘境 205 210 -> 幽冥沼泽 178 154
-
-
-[鬼嚎深渊|D009  鬼嚎深渊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[哀魂断口|D011  哀魂断口] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[魍魉幽道|D012  魍魉幽道] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[死域祭坛|D042  死域祭坛] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-鬼嚎深渊 449 280 -> 哀魂断口 308 33
-哀魂断口 29 348 -> 魍魉幽道 379 68
-魍魉幽道 76 349 -> 死域祭坛 99 284
-
-哀魂断口 308 33 -> 鬼嚎深渊 449 280
-魍魉幽道 379 68 -> 哀魂断口 29 348
-死域祭坛 99 284 -> 魍魉幽道 76 349
-
-[无相领域|D2101  无相领域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[虚轮镜界|D2102  虚轮镜界] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[虚幻迷宫|D2103  虚幻迷宫] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[意识荒原|D2104  意识荒原] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-无相领域 20 263 -> 虚轮镜界 278 250
-虚轮镜界 121 127 -> 虚幻迷宫 266 257
-虚幻迷宫 46 24 -> 意识荒原 284 24
-
-
-虚轮镜界 278 250 -> 无相领域 20 263
-虚幻迷宫 266 257 -> 虚轮镜界 121 127
-意识荒原 284 24 -> 虚幻迷宫 46 24
-
-
-
-[诡异裂缝|ssd  诡异裂缝] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[灵觉浮域|D3803  灵觉浮域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[无名之殿|D3804_1  无名之殿] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[血腥深渊|D601  血腥深渊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-诡异裂缝 133 43 -> 灵觉浮域 37 32
-灵觉浮域 259 29 -> 无名之殿 202 202
-无名之殿 199 386 -> 血腥深渊 74 185
-
-灵觉浮域 37 32 -> 诡异裂缝 133 43
-无名之殿 202 202 -> 灵觉浮域 259 29
-血腥深渊 74 185 -> 无名之殿 199 386
-
 
 ;==============================================八大陆野外地图==============================
-[夜哭寒泉|D043  夜哭寒泉] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[死亡古洞|125  死亡古洞] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[月光禁地|AD0030  月光禁地] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[飓涛涌境|10  飓涛涌境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-夜哭寒泉 49 362 -> 死亡古洞 327 125
-死亡古洞 92 328 -> 月光禁地 31 35
-月光禁地 142 227 -> 飓涛涌境 351 236
-
-死亡古洞 327 125 -> 夜哭寒泉 49 362
-月光禁地 31 35 -> 死亡古洞 92 328
-飓涛涌境 351 236 -> 月光禁地 142 227
-
-
-[蓝珊瑚林|15_001  蓝珊瑚林] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[赤光熔坛|D3603_44  赤光熔坛] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[赤日神殿|D3604  赤日神殿] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[初劫之痕|ZD1105  初劫之痕] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-蓝珊瑚林 72 130 -> 赤光熔坛 76 23
-赤光熔坛 68 84 -> 赤日神殿 24 165
-赤日神殿 149 66 -> 初劫之痕 170 47
-
-赤光熔坛 76 23 -> 蓝珊瑚林 72 130
-赤日神殿 24 165 -> 赤光熔坛 68 84
-初劫之痕 170 47 -> 赤日神殿 149 66
-
-
-[苍雷裂境|ZhudongPTFB02  苍雷裂境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[寂寥虚穹|ID9_01  寂寥虚穹] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[渊炎绝地|ZD1104  渊炎绝地] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[蛮神遗坛|EV013  蛮神遗坛] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-苍雷裂境 263 20 -> 寂寥虚穹 44 258
-寂寥虚穹 244 34 -> 渊炎绝地 232 249
-渊炎绝地 471 234 -> 蛮神遗坛 39 35
-
-寂寥虚穹 44 258 -> 苍雷裂境 263 20
-渊炎绝地 232 249 -> 寂寥虚穹 244 34
-蛮神遗坛 39 35 -> 渊炎绝地 471 234
-
-[古代战堡|QTVip05  古代战堡] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[雷霆断崖|SbkDixiacheng  雷霆断崖] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[血焰石阵染疆场|WugongPTFB02  血焰石阵染疆场] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[战士归骨|WugongPTFB04  战士归骨] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-古代战堡 378 368 -> 雷霆断崖 20 224
-雷霆断崖 216 88 -> 血焰石阵染疆场 46 24
-血焰石阵染疆场 47 157 -> 战士归骨 25 188
-
-雷霆断崖 20 224 -> 古代战堡 378 368
-血焰石阵染疆场 46 24 -> 雷霆断崖 216 88
-战士归骨 25 188 -> 血焰石阵染疆场 47 157
-
-[幽梦之庭|D4308  幽梦之庭] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[幻纹石径迷途归|D4307_S2  幻纹石径迷途归] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[梦魇之核噩梦醒|fsdc  梦魇之核噩梦醒] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[圣血石林孤塔声|D3604  圣血石林孤塔声] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-幽梦之庭 38 122 -> 幻纹石径迷途归 274 31
-幻纹石径迷途归 151 352 -> 梦魇之核噩梦醒 27 18
-梦魇之核噩梦醒 90 105 -> 圣血石林孤塔声 24 166
-
-幻纹石径迷途归 274 31 -> 幽梦之庭 38 122
-梦魇之核噩梦醒 27 18 -> 幻纹石径迷途归 151 352
-圣血石林孤塔声 24 166 -> 梦魇之核噩梦醒 90 105
-
-[天启之门|D3603_34  天启之门] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[幻沙古径|D2900  幻沙古径] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[万蛇洞窟|ED2012Sul_RDDB3b  万蛇洞窟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[巨爪绝崖魂断坠|ED200931Evt_5  巨爪绝崖魂断坠] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-天启之门 68 77 -> 幻沙古径 49 27
-幻沙古径 19 105 -> 万蛇洞窟 16 267
-万蛇洞窟 267 27 -> 巨爪绝崖魂断坠 21 41
-
-幻沙古径 49 27 -> 天启之门 68 77
-万蛇洞窟 16 267 -> 幻沙古径 19 105
-巨爪绝崖魂断坠 21 41 -> 万蛇洞窟 267 27
 
 ;==============================================九大陆野外地图==============================
-[獠牙石道|E02  獠牙石道] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[百目妖湖镜水魂|yyxy  百目妖湖镜水魂] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[风雷禁阁|D713  风雷禁阁] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[石苑无声沉沙道|D714  石苑无声沉沙道] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-獠牙石道 28 27 -> 百目妖湖镜水魂 16 29
-百目妖湖镜水魂 127 21 -> 风雷禁阁 302 97
-风雷禁阁 203 97 -> 石苑无声沉沙道 307 82
-
-百目妖湖镜水魂 16 29 -> 獠牙石道 28 27
-风雷禁阁 302 97 -> 百目妖湖镜水魂 127 21
-石苑无声沉沙道 307 82 -> 风雷禁阁 203 97
-
-[灵虚之塔|D715  灵虚之塔] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[归墟遗台幻梦庭|D717  归墟遗台幻梦庭] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[迷影石廊|hgjt  迷影石廊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[深渊孤灯指引|ldlzc  深渊孤灯指引] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-灵虚之塔 32 343 -> 归墟遗台幻梦庭 81 27
-归墟遗台幻梦庭 38 74 -> 迷影石廊 107 19
-迷影石廊 21 76 -> 深渊孤灯指引 141 27
-
-归墟遗台幻梦庭 81 27 -> 灵虚之塔 32 343
-迷影石廊 107 19 -> 归墟遗台幻梦庭 38 74
-深渊孤灯指引 141 27 -> 迷影石廊 21 76
-
-[禁忌裂隙|ldlzc  禁忌裂隙] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[断魂渊底骸骨路|ldlzc  断魂渊底骸骨路] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[风沙埋骨镇|D433  风沙埋骨镇] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[暗影酒馆|D434  暗影酒馆] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-禁忌裂隙 137 30 -> 断魂渊底骸骨路 32 152
-断魂渊底骸骨路 137 30 -> 风沙埋骨镇 12 103
-风沙埋骨镇 117 188 -> 暗影酒馆 12 149
-
-断魂渊底骸骨路 32 152 -> 禁忌裂隙 137 30
-风沙埋骨镇 12 103 -> 断魂渊底骸骨路 137 30
-暗影酒馆 12 149 -> 风沙埋骨镇 117 188
-
-[旧城血染街|D435  旧城血染街] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[烬灰之巷赤火痕|D436  烬灰之巷赤火痕] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[幽火燃骨坛|D201  幽火燃骨坛] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[黄泉尽头石门|D202  黄泉尽头石门] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-旧城血染街 13 142 -> 烬灰之巷赤火痕 24 18
-烬灰之巷赤火痕 185 122 -> 幽火燃骨坛 55 291
-幽火燃骨坛 312 37 -> 黄泉尽头石门 33 297
-
-烬灰之巷赤火痕 24 18 -> 旧城血染街 13 142
-幽火燃骨坛 55 291 -> 烬灰之巷赤火痕 185 122
-黄泉尽头石门 33 297 -> 幽火燃骨坛 312 37
-
-[黑棺地宫|BYVip04  黑棺地宫] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[亡咒残碑归魂|BYVip05  亡咒残碑归魂] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[白峰古道|Exmas_04  白峰古道] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[凌云冰谷|ID8_003  凌云冰谷] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-黑棺地宫 199 204 -> 亡咒残碑归魂 380 370
-亡咒残碑归魂 78 250 -> 白峰古道 355 40
-白峰古道 26 362 -> 凌云冰谷 191 205
-
-亡咒残碑归魂 380 370 -> 黑棺地宫 199 204
-白峰古道 355 40 -> 亡咒残碑归魂 78 250
-凌云冰谷 191 205 -> 白峰古道 26 362
-
-[诡音回廊|D302  诡音回廊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[迷魂秘径|D303  迷魂秘径] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[阴火祭坛|D403  阴火祭坛] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[星陨之境|Chuxianjidi  星陨之境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-诡音回廊 238 14 -> 迷魂秘径 19 219
-迷魂秘径 230 26 -> 阴火祭坛 170 20
-阴火祭坛 65 178 -> 星陨之境 53 41
-
-迷魂秘径 19 219 -> 诡音回廊 238 14
-阴火祭坛 170 20 -> 迷魂秘径 230 26
-星陨之境 53 41 -> 阴火祭坛 65 178
 
 
 ;==============================================额外杀怪地图==============================
-
-
 [slwtzdt  十六王挑战地图] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
 [cmyt 除魔妖塔] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 

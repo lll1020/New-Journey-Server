@@ -16,7 +16,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         local cs = getplaydef(play, VarCfg["U_灵根鉴定次数"])
         local data = Player.getJsonTableByVar(play, VarCfg["T_灵根鉴定"])
         if cs >= 5 then
-            Player.sendmsgEx(play, "提示:#251|你今天的鉴定次数已经用完了...")
+            Player.sendmsgEx(play, "提示:#251|你的鉴定次数已经用完了...")
             return
         end
         local attrs = {}
