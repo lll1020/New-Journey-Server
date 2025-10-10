@@ -555,7 +555,7 @@ function killmon(play, mob)
         setplaydef(play,VarCfg.J_jsgw[2],getplaydef(play,VarCfg.J_jsgw[2])+1)
     end
 
-    setplaydef(play,VarCfg.U_fldt[2],getplaydef(play,constant.U_fldt[2])+1)
+    setplaydef(play,VarCfg.U_fldt[2],getplaydef(play,VarCfg.U_fldt[2])+1)
     local mz = getbaseinfo(mob, 1, 1)
     local T_grss = Player.getJsonTableByVar(play, VarCfg.T_grss)
     local idx = getdbmonfieldvalue(mz, "idx")

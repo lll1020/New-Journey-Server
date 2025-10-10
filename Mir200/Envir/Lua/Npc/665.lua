@@ -447,16 +447,7 @@ function ggna(play,id)
             giveitem(play,v,1)
         end
     elseif id == "24" then
-        local T_grss = Player.getJsonTableByVar(play, VarCfg.T_grss)
-        T_grss["1015"] = 1
-        T_grss["1016"] = 1
-        T_grss["1017"] = 1
-        T_grss["1018"] = 1
-        T_grss["1019"] = 1
-        T_grss["1020"] = 1
-        T_grss["1021"] = 1
-        Player.setJsonVarByTable(play, VarCfg.T_grss, T_grss)
-
+        sendluamsg(play,999,0,1,0,"rwjs")
 
     end
 
