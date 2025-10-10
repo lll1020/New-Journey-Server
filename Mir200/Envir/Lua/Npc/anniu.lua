@@ -369,9 +369,9 @@ npc[17] = function(play, p2, p3, data)  --实力提升
 end
 ---首充礼包
 npc[501] = function(play,p2,p3,data)  --首充礼包
-    if p3 == 0 then
+    if p2 == 0 then
         sendluamsg(play, 101, 501, 0, 0,getflagstatus(play,VarCfg.BS_sckg))
-    elseif p3 == 1 then
+    elseif p2 == 1 then
         if querymoney(play,20) >= 10 then
             if getflagstatus(play,VarCfg.BS_sckg) == 0 then
                 setflagstatus(play,VarCfg.BS_sckg,1)
@@ -466,8 +466,6 @@ npc[504] = function(play,p2,p3,data)  --快人一步
         else
             sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>每人只能购买一次</font>","Type":9}')
         end
-    elseif p2 == 2 then
-        sendluamsg(play, 101, 504, 2, 0,'{"mztq":'..getflagstatus(play,VarCfg.BS_mztq)..'}')
     end
 end
 ---自动巡航

@@ -9,28 +9,15 @@ end
 
 function npc.link(play,npcid,ew,aid)
     if ew == 1 then
-        if querymoney(play,23) >= 998 then
-            if not checktitle(play,"踏月主宰") then
-                Player.title_give(play,"踏月主宰",1)
-                Player.rwjl(play, _config.jl, "冠名")
+        if querymoney(play,23) >= _config.cost then
+            if not checktitle(play,_config.ch) then
+                Player.title_give(play,_config.ch,1)
                 sendluamsg(play,100,npcid,0,0,"")
             else
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[踏月主宰]</font><font color=\'#ff0000\'>您已经开启过踏月主宰了</font>","Type":9}')
+                Player.sendmsgEx(play, "您已经拥有冠名称号，无需重复领取#57")
             end
         else
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[踏月主宰]</font><font color=\'#ff0000\'>您没有998充值金额，无法开启</font>","Type":9}')
-        end
-    elseif ew == 2 then
-        if querymoney(play,23) >= 3998 then
-            if not checktitle(play,"绝世无双") then
-                Player.title_give(play,"绝世无双",1)
-                Player.rwjl(play, _config.jl2, "冠名")
-                sendluamsg(play,100,npcid,0,0,"")
-            else
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[踏月主宰]</font><font color=\'#ff0000\'>您已经开启过绝世无双了</font>","Type":9}')
-            end
-        else
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[踏月主宰]</font><font color=\'#ff0000\'>您没有3998充值金额，无法开启</font>","Type":9}')
+            Player.sendmsgEx(play, "您的充值金额不足，无法领取冠名称号#57")
         end
     end
 end

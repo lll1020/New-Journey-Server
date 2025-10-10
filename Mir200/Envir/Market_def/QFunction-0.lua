@@ -746,6 +746,14 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
         Login_msg(play,18,Gold,Gold*200)
     elseif MoneyId == 21 then  --直拉礼包
         changemoney(play,23,"+",Gold,"平台累计充值",true)
+        if Gold == 98 or Gold == 117 then
+            if getflagstatus(play,constant.BS_mztq) == 0 then
+                Player.title_give(play, teshudata["anniu_504"].ch,1)
+                Player.rwjl(play, teshudata["anniu_504"].give, "快人一步",nil,1000)
+                setflagstatus(play,constant.BS_mztq,1)
+                sendluamsg(play,101,504,1,0,"")
+            end
+        end
     elseif MoneyId == 24 then  -- 超级馈赠
 
     end
