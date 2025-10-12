@@ -36,15 +36,15 @@ kfhg 23 26 -> kfhjsbk 86 102
 
 ;==============================================土城地图==============================
 [xtc         盟重省] day
-[剑门外门|dzgd   二大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[剑门内门|new_44   三大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[中州城|15  四大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[天玄界|nwsjq  五大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[北境仙域|sszj 六大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[中央仙域|new_43  七大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[诡异位面|4dlzc  八大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[叹息旷野|xssl  九大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[诸天之上|xssl  十大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[剑门外门|dzgd   二大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
+[剑门内门|new_44   三大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
+[中州城|15  四大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
+[天玄界|nwsjq  五大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
+[北境仙域|sszj 六大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
+[中央仙域|new_43  七大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
+[诡异位面|4dlzc  八大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
+[叹息旷野|xssl  九大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
+[诸天之上|xssl  十大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
 
 ;==============================================一大陆野外地图==============================
 [山庄|new_44   山庄] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)

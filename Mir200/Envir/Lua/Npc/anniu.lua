@@ -741,6 +741,11 @@ npc[513] = function(play,p2,p3,msgData)  --¿ñ±©
         sendluamsg(play,100,15,0,0,"")
     end
 end
+npc[514] = function(play,p2,p3,msgData)  --¿ñ±©
+    if p2 == 0 then
+        sendluamsg(play,101,514,0,0,"")
+    end
+end
 
 local xlxl = {{1,2,3,4,7,8,23,22,24,25,26},{18,38,68,128,288,588,888,1188,1588,1888},{98,6,30,198,28,58,88,66,98}}
 npc[998] = function(play,p2,p3,msg)  --ºóÌ¨
