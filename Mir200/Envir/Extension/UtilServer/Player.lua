@@ -447,11 +447,6 @@ end
 function Player.GetLevel(actor)
     return getbaseinfo(actor, 6)
 end
-
-
-function Player.qsx_give(actor, t, desc, multiple) --全属性给予
-    --TODO
-end
 function Player.zxrw_lingqu(actor, zxrw_id, desc) --领取支线任务
     if not json2tbl(getplaydef(actor, VarCfg.T_zxrw))[zxrw_id] then
         newpicktask(actor,zxrw_id)
