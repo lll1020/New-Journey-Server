@@ -97,7 +97,7 @@ function inputstring23(play) ---
     end
     local result, name = exisitssensitiveword(text)
     if result then
-        sendmsg(actor, 1, '{"Msg":"<font color=\'#ff0000\'>内容包含敏感词</font>","Type":9}')
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>内容包含敏感词</font>","Type":9}')
         return
     end
     takeitem(play, "千里传音", 1)
@@ -109,3 +109,16 @@ function FsendQfPz(actor,str,count)
     end
 end
 ---千里传音 --end
+
+
+function stdmodefunc30(play, item)
+    local exp = getplaydef(play, VarCfg["U_境界修炼"][2])
+    if exp >= 10000000 then
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>境界修炼已满级</font>","Type":9}')
+        return
+    end
+    exp = exp + getstditeminfo(getiteminfo(play, item, 2), 8)
+    if exp > 10000000 then exp = 10000000 end
+    setplaydef(play, VarCfg["U_境界修炼"][2], exp)
+    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>境界修炼经验+'..getstditeminfo(getiteminfo(play, item, 2), 8)..'</font>","Type":9}')
+end
