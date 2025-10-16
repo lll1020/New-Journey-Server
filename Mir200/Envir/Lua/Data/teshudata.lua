@@ -399,6 +399,12 @@ teshudata = {
 
         },
     },
+    ["anniu_501"] = {
+        id = "anniu_501",
+        name = "首冲礼包",
+        details = {},
+        endtime = 3,
+    },
     ["anniu_504"] = {
         id = 504,
         name = "解绑特权",

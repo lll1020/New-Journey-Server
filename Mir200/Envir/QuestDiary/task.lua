@@ -199,10 +199,7 @@ function clicknewtask(play,rwid)
         if lx == 0 then
 
         elseif lx == 1 then
-            if constant.rw_syb[rwid][2] == 6 and getflagstatus(play,VarCfg.BS_sckg) == 1 then
-                newdeletetask(play,getplaydef(play,VarCfg.U_zxrw[1]))
-                playeffect(play,4011,25,-50,1,0,0)
-            elseif constant.rw_syb[rwid][2] == 9 and globalinfo(3) >= 1 then
+            if constant.rw_syb[rwid][2] == 9 and globalinfo(3) >= 1 then
                 newdeletetask(play,getplaydef(play,VarCfg.U_zxrw[1]))
                 playeffect(play,4011,25,-50,1,0,0)
             else

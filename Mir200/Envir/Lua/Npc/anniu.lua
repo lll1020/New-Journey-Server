@@ -370,22 +370,73 @@ end
 ---首充礼包
 npc[501] = function(play,p2,p3,data)  --首充礼包
     if p2 == 0 then
-        sendluamsg(play, 101, 501, 0, 0,getflagstatus(play,VarCfg.BS_sckg))
+        local tmp_data = {}
+        tmp_data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
+        tmp_data["time_data"] = getsysvar(VarCfg["G_开区天数"])
+        sendluamsg(play, 101, 501, 0, 0,tbl2json(tmp_data))
     elseif p2 == 1 then
-        if querymoney(play,20) >= 10 then
-            if getflagstatus(play,VarCfg.BS_sckg) == 0 then
-                setflagstatus(play,VarCfg.BS_sckg,1)
-                local json = json2tbl(getplaydef(play,VarCfg.T_czlb))
-                json["sclb"] = true
-                setplaydef(play,VarCfg.T_czlb,tbl2json(json))
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[首充礼包]</font><font color=\'#28ef01\'>领取首充礼包成功!</font>","Type":9}')
-                sendluamsg(play, 101, 501, 0, 1,"")
+        local T_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
+        local time_data = getsysvar(VarCfg["G_开区天数"])
+        if T_data["ok"] and T_data["ok"] == 1 then
+                --时装
+                --半月弯刀
+                --天选之人
+            if time_data == 1 then
+                if not T_data["lb1"] or T_data["lb1"] ~= 1 then
+                    T_data["lb1"] = 1
+                    addskill(play,25,3)
+                    Player.setJsonTableByVar(play, VarCfg["T_首冲礼包"], T_data)
+                    sendluamsg(play,101,1005,0,0,"lqcg")
+                else
+                    sendmsg(play,1,'{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
+                end
+            elseif time_data == 2 then
+                if not T_data["lb2"] or T_data["lb2"] ~= 1 then
+                    T_data["lb2"] = 1
+                    Player.setJsonTableByVar(play, VarCfg["T_首冲礼包"], T_data)
+                    sendluamsg(play,101,1005,0,0,"lqcg")
+                else
+                    sendmsg(play,1,'{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
+                end
+            elseif time_data == 3 then
+                if not T_data["lb3"] or T_data["lb3"] ~= 1 then
+                    T_data["lb3"] = 1
+                    Player.setJsonTableByVar(play, VarCfg["T_首冲礼包"], T_data)
+                    sendluamsg(play,101,1005,0,0,"lqcg")
+                else
+                    sendmsg(play,1,'{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
+                end
             else
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[首充礼包]</font><font color=\'#ff0500\'>已经领取过了,无法重复领取...</font>","Type":9}')
+                if not T_data["lb4"] or T_data["lb4"] ~= 1 then
+                    T_data["lb4"] = 1
+                    addskill(play,25,3)
+                    Player.setJsonTableByVar(play, VarCfg["T_首冲礼包"], T_data)
+                    sendluamsg(play,101,1005,0,0,"lqcg")
+                else
+                    sendmsg(play,1,'{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
+                end
             end
         else
-            sendluamsg(play, 101, 999, 10, 7,"")
+            if teshudata["anniu_501"].endtime < time_data then
+                sendluamsg(play, 101, 999, 3, 21,"")
+            else
+                sendluamsg(play, 101, 999, 6, 21,"")
+            end
         end
+        --if getflagstatus(play,VarCfg.BS_sckg) == 1 then
+        --    setsysvar(VarCfg["G_开区天数"],getsysvar(VarCfg["G_开区天数"])+1)
+        --    if getsysvar(VarCfg["G_开区天数"]) == 1 then
+        --        --时装
+        --        --半月弯刀
+        --        --天选之人
+        --    end
+        --else
+        --    if teshudata["anniu_501"].endtime < getsysvar(VarCfg["G_开区天数"]) then
+        --        sendluamsg(play, 101, 999, 3, 21,"")
+        --    else
+        --        sendluamsg(play, 101, 999, 6, 21,"")
+        --    end
+        --end
     end
 end
 ---在线充值

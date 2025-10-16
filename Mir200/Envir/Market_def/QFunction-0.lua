@@ -746,16 +746,26 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
         Login_msg(play,18,Gold,Gold*200)
     elseif MoneyId == 21 then  --直拉礼包
         changemoney(play,23,"+",Gold,"平台累计充值",true)
-        if Gold == 98 or Gold == 117 then
+        if Gold == 98 then
             if getflagstatus(play,constant.BS_mztq) == 0 then
                 Player.title_give(play, teshudata["anniu_504"].ch,1)
                 Player.rwjl(play, teshudata["anniu_504"].give, "快人一步",nil,1000)
                 setflagstatus(play,constant.BS_mztq,1)
-                sendluamsg(play,101,504,1,0,"")
+                --sendluamsg(play,101,504,1,0,"")
+            end
+        elseif Gold == 3 then
+            local T_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
+            if not (T_data["ok"] and T_data["ok"] == 1) and teshudata["anniu_501"].endtime >= getsysvar(VarCfg["G_开区天数"]) then
+                T_data["ok"] = 1
+                Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
+            end
+        elseif Gold == 6 then
+            local T_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
+            if not (T_data["ok"] and T_data["ok"] == 1) and teshudata["anniu_501"].endtime < getsysvar(VarCfg["G_开区天数"]) then
+                T_data["ok"] = 1
+                Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
             end
         end
-    elseif MoneyId == 24 then  -- 超级馈赠
-
     end
 end
 -------------------开始挂机触发--------------------
@@ -960,10 +970,6 @@ function untitled_30405(play) seticon(play,1,-1) end
 
 --------------------聊天触发前置接口--------------------
 function triggerchat(play,sMsg,chat,msgType)
-    if getflagstatus(play,VarCfg.BS_sckg) == 0 then
-        sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>领取首冲礼包才可以开启发言...</font>","FColor":219,"BColor":255,"Type":1}')
-        return false
-    end
     return true
 end
 

@@ -78,7 +78,6 @@ VarCfg["F_是否首充"]                         = 11	                 --F_是否首充
 
 --个人标识
 VarCfg.BS_huishou       =  {101,102,103,104,105}                                                                    --自动吃灵符,自动吃经验,自动捡物,自动回收开关
-VarCfg.BS_sckg          =  107                                                                            --首冲开关
 VarCfg.BS_AIgj          =  118                                                                           --AI挂机开关
 VarCfg.BS_mztq          =  119                                                                           --快人一步激活
 VarCfg.BS_xsth          =  120                                                                          --限时特惠
@@ -150,6 +149,7 @@ VarCfg["T_各剧情杀怪"]           = "T35"                                        
 VarCfg["T_灵根修炼"]           = "T36"                                                                          --灵根修炼
 VarCfg["T_仙食坊"]           = "T37"                                                                           --T_仙食坊
 VarCfg.T_grss           = "T38"                                                                         --个人首杀
+VarCfg["T_首冲礼包"]           = "T39"                                                                         --首冲礼包
 
 
 
