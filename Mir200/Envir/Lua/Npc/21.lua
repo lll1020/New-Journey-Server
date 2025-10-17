@@ -16,12 +16,12 @@ function npc.link(play,npcid,ew,aid)
     if ew == 1 then
         local level = getplaydef(play, VarCfg["U_境界修炼"][1])
         local exp = getplaydef(play, VarCfg["U_境界修炼"][2])
-        level = level + 1
-
         if level >= _config.max_level then
             Player.sendmsgEx(play,  "你的境界已经达到了"..level.."级，无需再提升")
             return
         end
+        level = level + 1
+
         local config = _config.details[level]
         if exp >= config.need_xxz then
             local name, num = Player.checkItemNumByTable(play, config.cost)
@@ -29,7 +29,7 @@ function npc.link(play,npcid,ew,aid)
                 Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
                 return
             end
-            Player.takeItemByTable(play, config.cost, ",材料兑换",nil)
+            Player.takeItemByTable(play, config.cost, ",境界提升",nil)
 
             if FProbabilityHit(config.gl) then
                 Player.sendmsgEx(play,  "很遗憾，境界提升失败，请继续努力#57")
@@ -54,6 +54,9 @@ function Login_jjxw(play)
     local attrs = {}
     local attrsstr = ""
     local level = getplaydef(play, VarCfg["U_境界修炼"][1])
+    if level <= 0 then
+        return
+    end
     local config = _config.details[level]
     for v,k in ipairs(config.attr) do
         attrs[k[1]] = k[2]

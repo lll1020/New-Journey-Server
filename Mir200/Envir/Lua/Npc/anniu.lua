@@ -423,20 +423,6 @@ npc[501] = function(play,p2,p3,data)  --首充礼包
                 sendluamsg(play, 101, 999, 6, 21,"")
             end
         end
-        --if getflagstatus(play,VarCfg.BS_sckg) == 1 then
-        --    setsysvar(VarCfg["G_开区天数"],getsysvar(VarCfg["G_开区天数"])+1)
-        --    if getsysvar(VarCfg["G_开区天数"]) == 1 then
-        --        --时装
-        --        --半月弯刀
-        --        --天选之人
-        --    end
-        --else
-        --    if teshudata["anniu_501"].endtime < getsysvar(VarCfg["G_开区天数"]) then
-        --        sendluamsg(play, 101, 999, 3, 21,"")
-        --    else
-        --        sendluamsg(play, 101, 999, 6, 21,"")
-        --    end
-        --end
     end
 end
 ---在线充值
