@@ -7,6 +7,29 @@ Buff = {
             delattlist(play, "仙食坊全满")
         end
     end,
+    [102] = function(play,zt,Damage,Target) --轩辕剑传人  BUFF:每三刀附带额外最大攻击1%的真实伤害
+        if zt == 3 then
+            local cs = getplaydef(play,"N$buff102")
+            if cs < 3 then
+                cs = cs + 1
+                setplaydef(play,"N$buff102",cs)
+            else
+                setplaydef(play,"N$buff102",0)
+                humanhp(Target,"-",math.floor(getbaseinfo(play, 20)*0.01))
+                --Player.sendmsgEx(play,"轩辕剑传人触发真实伤害，造成"..math.floor(getbaseinfo(play, 20)*0.01).."点真实伤害！")
+            end
+        else
+            local bl = getplaydef(play,VarCfg.S_buffgjh)
+            local data = json2tbl(bl == "" and {} or bl)
+            if zt == 1 then
+                data["102"] = true
+                setplaydef(play,"N$buff102",0)
+            elseif zt == 2 then
+                data["102"] = nil
+            end
+            setplaydef(play,VarCfg.S_buffgjh,tbl2json(data))
+        end
+    end,
 }
 
 local weizhi = {0,1,3,4,5,6,7,8,9,10,11,13,14,16,30,31,32,33,34,35,36,37,38,39,40,41}
