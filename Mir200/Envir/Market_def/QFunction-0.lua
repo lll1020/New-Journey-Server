@@ -271,6 +271,7 @@ function takeonex(play, item, where, Name, makeindex)
     if where == 14 then
         changemoney(play,16,"=",1,"µÇÂ¼¸´»î",true)
     end
+    GameEvent.push(EventCfg.onTakeOnEx, play, item, where, Name, makeindex)
 end
 --------------------ÍÑÏÂºó´¥·¢-------------------
 function takeoffex(play, item, where, Name, makeindex)
@@ -278,6 +279,7 @@ function takeoffex(play, item, where, Name, makeindex)
     if where == 14 then
         changemoney(play,16,"=",0,"µÇÂ¼¸´»î",true)
     end
+    GameEvent.push(EventCfg.onTakeOffEx, play, item, where, Name, makeindex)
 end
 
 

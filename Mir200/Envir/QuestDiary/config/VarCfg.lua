@@ -56,6 +56,17 @@ VarCfg["U_境界修炼"]              = {"U28","U29"}                               
 VarCfg["U_幸运强化"]              = "U30"
 VarCfg["U_占卜次数"]              = "U31"
 
+VarCfg["U_装备强化_衣服"]              = "U32"
+VarCfg["U_装备强化_武器"]              = "U33"
+VarCfg["U_装备强化_左手"]              = "U34"
+VarCfg["U_装备强化_左戒"]              = "U35"
+VarCfg["U_装备强化_腰带"]              = "U36"
+VarCfg["U_装备强化_头盔"]              = "U37"
+VarCfg["U_装备强化_项链"]              = "U38"
+VarCfg["U_装备强化_右手"]              = "U39"
+VarCfg["U_装备强化_右戒"]              = "U40"
+VarCfg["U_装备强化_靴子"]              = "U41"
+
 
 
 VarCfg["U_战斗力"]                          = "U176"
