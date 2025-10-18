@@ -1,11 +1,11 @@
 npc = {}
---天书
+--灵根
 
-local _config = teshudata["npc_24"]
+local _config = teshudata["npc_22"]
 
 function npc.main(play,npcid)
     local data = {}
-    data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_天书"])
+    data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
     sendluamsg(play,100,npcid,0,0,tbl2json(data))
 end
 

@@ -164,6 +164,8 @@ VarCfg["T_仙食坊"]           = "T37"                                            
 VarCfg.T_grss           = "T38"                                                                         --个人首杀
 VarCfg["T_首冲礼包"]           = "T39"                                                                         --首冲礼包
 VarCfg["T_仙途奇缘"]           = "T40"                                                                         --仙途奇缘
+VarCfg["T_灵根"]           = "T41"                                                                         --灵根
+VarCfg["T_天书"]           = "T42"                                                                         --天书
 
 
 
