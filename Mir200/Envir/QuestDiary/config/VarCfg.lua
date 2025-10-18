@@ -163,6 +163,7 @@ VarCfg["T_灵根修炼"]           = "T36"                                          
 VarCfg["T_仙食坊"]           = "T37"                                                                           --T_仙食坊
 VarCfg.T_grss           = "T38"                                                                         --个人首杀
 VarCfg["T_首冲礼包"]           = "T39"                                                                         --首冲礼包
+VarCfg["T_仙途奇缘"]           = "T40"                                                                         --仙途奇缘
 
 
 

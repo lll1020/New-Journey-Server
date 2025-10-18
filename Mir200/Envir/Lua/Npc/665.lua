@@ -447,18 +447,7 @@ function ggna(play,id)
             giveitem(play,v,1)
         end
     elseif id == "24" then
-        local itemobj = linkbodyitem(play, 1)
-
-        setaddnewabil(play, -2, "=",
-                string.format("3#75#%d|3#22#%d|3#30#%d", 1, 1, 1), itemobj)
-        setitemaddvalue(play, itemobj, 1, 5, 3)
-        setitemaddvalue(play, itemobj, 1, 0, 10)
-        setitemaddvalue(play, itemobj, 1, 1, 101)
-        setitemaddvalue(play, itemobj, 1, 2, 102)
-        setitemaddvalue(play, itemobj, 1, 3, 103)
-        setitemaddvalue(play, itemobj, 1, 4, 104)
-        refreshitem(play, itemobj)
-        recalcabilitys(play)
+        FSetSerendipity(play, 12)
 
     end
 

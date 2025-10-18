@@ -800,9 +800,16 @@ npc[513] = function(play,p2,p3,msgData)  --øÒ±©
         sendluamsg(play,100,15,0,0,"")
     end
 end
-npc[514] = function(play,p2,p3,msgData)  --øÒ±©
+npc[514] = function(play,p2,p3,msgData)  -- ¿ΩÁµÿÕº
     if p2 == 0 then
         sendluamsg(play,101,514,0,0,"")
+    end
+end
+npc[515] = function(play,p2,p3,msgData)  --œ…Õæ∆Ê‘µ£®≥…æÕ£©
+    if p2 == 0 then
+        local data = {}
+        data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_œ…Õæ∆Ê‘µ"])
+        sendluamsg(play,101,515,0,0,tbl2json(data))
     end
 end
 

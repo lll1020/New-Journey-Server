@@ -238,6 +238,17 @@ function FCalculateActualExplosionRate(P)
 
     return R
 end
+
+--设置仙途奇缘
+function FSetSerendipity(actor, idx)
+    local T_data = Player.getJsonTableByVar(actor, VarCfg["T_仙途奇缘"])
+    if not T_data[""..idx] then
+        T_data[""..idx] = 1
+        Player.setJsonVarByTable(actor, VarCfg["T_仙途奇缘"], T_data)
+        scenevibration(actor,0,2,1)
+    end
+end
+
 -----------跨服相关，跨服到本服执行-------------------
 
 --跨服到本服删除称号
