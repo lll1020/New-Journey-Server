@@ -384,16 +384,17 @@ npc[501] = function(play,p2,p3,data)  --首充礼包
             if T_data["首充"] == 1 then
                 if not T_data["othen_lb"] then
                     T_data["othen_lb"] = 1
+                    T_data["jq_time"] = time_data
                     addskill(play,25,3)
-                    Player.setJsonTableByVar(play, VarCfg["T_首冲礼包"], T_data)
+                    Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
                     sendluamsg(play,101,1005,0,0,"lqcg")
-                elseif (T_data["othen_lb"] and T_data["othen_lb"] == 1) then
+                elseif (T_data["othen_lb"] and T_data["othen_lb"] == 1 and T_data["jq_time"] ~= time_data) then
                     T_data["othen_lb"] = 2
-                    Player.setJsonTableByVar(play, VarCfg["T_首冲礼包"], T_data)
+                    Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
                     sendluamsg(play,101,1005,0,0,"lqcg")
-                elseif (T_data["othen_lb"] and T_data["othen_lb"] == 2) then
+                elseif (T_data["othen_lb"] and T_data["othen_lb"] == 2 and T_data["jq_time"] ~= time_data) then
                     T_data["othen_lb"] = 3
-                    Player.setJsonTableByVar(play, VarCfg["T_首冲礼包"], T_data)
+                    Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
                     sendluamsg(play,101,1005,0,0,"lqcg")
                 else
                     sendmsg(play,1,'{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
@@ -402,42 +403,12 @@ npc[501] = function(play,p2,p3,data)  --首充礼包
                 if not T_data["othen_lb"] or T_data["othen_lb"] ~= 1 then
                     T_data["othen_lb"] = 1
                     addskill(play,25,3)
-                    Player.setJsonTableByVar(play, VarCfg["T_首冲礼包"], T_data)
+                    Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
                     sendluamsg(play,101,1005,0,0,"lqcg")
                 else
                     sendmsg(play,1,'{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
                 end
             end
-
-        --if time_data == 1 then
-        --        if not T_data["lb1"] or T_data["lb1"] ~= 1 then
-        --            T_data["lb1"] = 1
-        --            addskill(play,25,3)
-        --            Player.setJsonTableByVar(play, VarCfg["T_首冲礼包"], T_data)
-        --            sendluamsg(play,101,1005,0,0,"lqcg")
-        --        else
-        --            sendmsg(play,1,'{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
-        --        end
-        --    elseif time_data == 2 then
-        --        if not T_data["lb2"] or T_data["lb2"] ~= 1 then
-        --            T_data["lb2"] = 1
-        --            Player.setJsonTableByVar(play, VarCfg["T_首冲礼包"], T_data)
-        --            sendluamsg(play,101,1005,0,0,"lqcg")
-        --        else
-        --            sendmsg(play,1,'{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
-        --        end
-        --    elseif time_data == 3 then
-        --        if not T_data["lb3"] or T_data["lb3"] ~= 1 then
-        --            T_data["lb3"] = 1
-        --            Player.setJsonTableByVar(play, VarCfg["T_首冲礼包"], T_data)
-        --            sendluamsg(play,101,1005,0,0,"lqcg")
-        --        else
-        --            sendmsg(play,1,'{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
-        --        end
-        --    else
-        --
-        --    end
-
         else
             if teshudata["anniu_501"].endtime < time_data then
                 sendluamsg(play, 101, 999, 3, 21,"")
@@ -813,7 +784,7 @@ npc[515] = function(play,p2,p3,msgData)  --仙途奇缘（成就）
     end
 end
 
-local xlxl = {{1,2,3,4,7,8,23,22,24,25,26},{18,38,68,128,288,588,888,1188,1588,1888},{98,6,30,198,28,58,88,66,98}}
+local xlxl = {{1,2,3,4,7,8,23,22,24,25,26},{18,38,68,128,288,588,888,1188,1588,1888},{98,6,3}}
 npc[998] = function(play,p2,p3,msg)  --后台
     local qfmz = getconst(play, '<$SERVERNAME>')
     if getplaydef(play,VarCfg.S_houtaibf) ~= "" or (qfmz == "" or qfmz == "测试区" )then

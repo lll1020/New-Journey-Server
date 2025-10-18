@@ -755,14 +755,14 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
                 setflagstatus(play,constant.BS_mztq,1)
                 --sendluamsg(play,101,504,1,0,"")
             end
-        elseif Gold == 3 then
+        elseif Gold == 6 then
             local T_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
             if not (T_data["ok"] and T_data["ok"] == 1) and teshudata["anniu_501"].endtime >= getsysvar(VarCfg["G_开区天数"]) then
                 T_data["ok"] = 1
                 T_data["首充"] = 1
                 Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
             end
-        elseif Gold == 6 then
+        elseif Gold == 3 then
             local T_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
             if not (T_data["ok"] and T_data["ok"] == 1) and teshudata["anniu_501"].endtime < getsysvar(VarCfg["G_开区天数"]) then
                 T_data["ok"] = 1
