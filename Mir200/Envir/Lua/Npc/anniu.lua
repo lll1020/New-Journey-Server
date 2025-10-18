@@ -381,34 +381,26 @@ npc[501] = function(play,p2,p3,data)  --首充礼包
                 --时装
                 --半月弯刀
                 --天选之人
-            if time_data == 1 then
-                if not T_data["lb1"] or T_data["lb1"] ~= 1 then
-                    T_data["lb1"] = 1
+            if T_data["首充"] == 1 then
+                if not T_data["othen_lb"] then
+                    T_data["othen_lb"] = 1
                     addskill(play,25,3)
                     Player.setJsonTableByVar(play, VarCfg["T_首冲礼包"], T_data)
                     sendluamsg(play,101,1005,0,0,"lqcg")
-                else
-                    sendmsg(play,1,'{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
-                end
-            elseif time_data == 2 then
-                if not T_data["lb2"] or T_data["lb2"] ~= 1 then
-                    T_data["lb2"] = 1
+                elseif (T_data["othen_lb"] and T_data["othen_lb"] == 1) then
+                    T_data["othen_lb"] = 2
+                    Player.setJsonTableByVar(play, VarCfg["T_首冲礼包"], T_data)
+                    sendluamsg(play,101,1005,0,0,"lqcg")
+                elseif (T_data["othen_lb"] and T_data["othen_lb"] == 2) then
+                    T_data["othen_lb"] = 3
                     Player.setJsonTableByVar(play, VarCfg["T_首冲礼包"], T_data)
                     sendluamsg(play,101,1005,0,0,"lqcg")
                 else
                     sendmsg(play,1,'{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
                 end
-            elseif time_data == 3 then
-                if not T_data["lb3"] or T_data["lb3"] ~= 1 then
-                    T_data["lb3"] = 1
-                    Player.setJsonTableByVar(play, VarCfg["T_首冲礼包"], T_data)
-                    sendluamsg(play,101,1005,0,0,"lqcg")
-                else
-                    sendmsg(play,1,'{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
-                end
-            else
-                if not T_data["lb4"] or T_data["lb4"] ~= 1 then
-                    T_data["lb4"] = 1
+            elseif T_data["补充"] == 1 then
+                if not T_data["othen_lb"] or T_data["othen_lb"] ~= 1 then
+                    T_data["othen_lb"] = 1
                     addskill(play,25,3)
                     Player.setJsonTableByVar(play, VarCfg["T_首冲礼包"], T_data)
                     sendluamsg(play,101,1005,0,0,"lqcg")
@@ -416,6 +408,36 @@ npc[501] = function(play,p2,p3,data)  --首充礼包
                     sendmsg(play,1,'{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
                 end
             end
+
+        --if time_data == 1 then
+        --        if not T_data["lb1"] or T_data["lb1"] ~= 1 then
+        --            T_data["lb1"] = 1
+        --            addskill(play,25,3)
+        --            Player.setJsonTableByVar(play, VarCfg["T_首冲礼包"], T_data)
+        --            sendluamsg(play,101,1005,0,0,"lqcg")
+        --        else
+        --            sendmsg(play,1,'{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
+        --        end
+        --    elseif time_data == 2 then
+        --        if not T_data["lb2"] or T_data["lb2"] ~= 1 then
+        --            T_data["lb2"] = 1
+        --            Player.setJsonTableByVar(play, VarCfg["T_首冲礼包"], T_data)
+        --            sendluamsg(play,101,1005,0,0,"lqcg")
+        --        else
+        --            sendmsg(play,1,'{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
+        --        end
+        --    elseif time_data == 3 then
+        --        if not T_data["lb3"] or T_data["lb3"] ~= 1 then
+        --            T_data["lb3"] = 1
+        --            Player.setJsonTableByVar(play, VarCfg["T_首冲礼包"], T_data)
+        --            sendluamsg(play,101,1005,0,0,"lqcg")
+        --        else
+        --            sendmsg(play,1,'{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
+        --        end
+        --    else
+        --
+        --    end
+
         else
             if teshudata["anniu_501"].endtime < time_data then
                 sendluamsg(play, 101, 999, 3, 21,"")

@@ -759,12 +759,14 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
             local T_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
             if not (T_data["ok"] and T_data["ok"] == 1) and teshudata["anniu_501"].endtime >= getsysvar(VarCfg["G_开区天数"]) then
                 T_data["ok"] = 1
+                T_data["首充"] = 1
                 Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
             end
         elseif Gold == 6 then
             local T_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
             if not (T_data["ok"] and T_data["ok"] == 1) and teshudata["anniu_501"].endtime < getsysvar(VarCfg["G_开区天数"]) then
                 T_data["ok"] = 1
+                T_data["补充"] = 1
                 Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
             end
         end
