@@ -351,7 +351,7 @@ function Player.rwjl(actor, t, desc, multiple,gm)
                 else
                     str = str.."[\""..v[1].."\","..v[2].."]"
                 end
-                changemoney(actor,v[1],"+",v[2],desc,true)
+                changemoney(actor,idx,"+",v[2],desc,true)
             else
                 if multiple then v[2]=v[2]*multiple end
                 if str ~= "" then

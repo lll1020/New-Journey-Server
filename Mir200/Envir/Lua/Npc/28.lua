@@ -80,6 +80,7 @@ end
 local function _onTakeOnEx(actor, itemobj, where, itemname, makeid)
     if _config.where[where] then
         local level = getplaydef(actor, VarCfg["U_装备强化_".._config.where[where][1]])
+        setitemaddvalue(actor, itemobj, 2, 3, level) --星星
         local cfg = _config.details[level]
         if level <= 0 then
             return
@@ -99,12 +100,15 @@ end
 
 --脱装备
 local function _onTakeOffEx(actor, itemobj, where, itemname, makeid)
+    setitemaddvalue(actor, itemobj, 2, 3, 0) --星星
     if _config.where[where] then
         local attr = json2tbl(getitemcustomabil(actor,itemobj))
-        local temp_str = convert_str(attr.abilex)
-        release_print("temp_str",temp_str)
-        setaddnewabil(actor, -2, "=",temp_str, itemobj)
-        refreshitem(actor, itemobj)
+        if attr.abilex then
+            local temp_str = convert_str(attr.abilex)
+            release_print("temp_str",temp_str)
+            setaddnewabil(actor, -2, "=",temp_str, itemobj)
+            refreshitem(actor, itemobj)
+        end
     end
 end
 

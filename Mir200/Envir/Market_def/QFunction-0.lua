@@ -235,10 +235,10 @@ function pickupitemex(play, item)
             T_grsb[""..idx] = 1
             Player.setJsonVarByTable(play, VarCfg.T_grsb, T_grsb)
         end
-        local qqsb = Player.getJsonTableByVar(play, VarCfg["A_全区首曝json"])
+        local qqsb = Player.getJsonTableByVar(nil, VarCfg["A_全区首曝json"])
         if teshudata["fldt"]["qqsb"][idx] and not qqsb[""..idx] then
             qqsb[""..idx] = 1
-            Player.setJsonVarByTable(play, VarCfg["A_全区首曝json"], qqsb)
+            Player.setJsonVarByTable(nil, VarCfg["A_全区首曝json"], qqsb)
             local mz = getbaseinfo(play,1)
             sendmovemsg(play,1,253,0,185,1,'【全区首曝】: <恭喜玩家/FCOLOR=250><【'..mz..'】/FCOLOR=243><成功捡取/FCOLOR=250><【'..name..'】/FCOLOR=243>')
         end
@@ -751,7 +751,7 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
         if Gold == 98 then
             if getflagstatus(play,constant.BS_mztq) == 0 then
                 Player.title_give(play, teshudata["anniu_504"].ch,1)
-                Player.rwjl(play, teshudata["anniu_504"].give, "快人一步",nil,1000)
+                Player.rwjl(play, teshudata["anniu_504"].give, "快人一步",1,1000)
                 setflagstatus(play,constant.BS_mztq,1)
                 --sendluamsg(play,101,504,1,0,"")
             end

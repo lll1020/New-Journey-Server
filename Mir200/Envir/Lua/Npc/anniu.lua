@@ -193,7 +193,7 @@ npc[11] = function(play,p2,p3,data)  --异闻录
             end
             T_ywl["jl_"..sj.i.."_".. sj.j .."_"..sj.k] = 1
             setplaydef(play, VarCfg.T_ywl, tbl2json(T_ywl))
-            Player.rwjl(play,npc_xyl[sj.i][sj.j][sj.k].jl,"剧情jl",nil)
+            Player.rwjl(play,npc_xyl[sj.i][sj.j][sj.k].jl,"剧情jl",1)
             sendluamsg(play, 101, 11, 3, 0,
                     '{"dljq":'..getplaydef(play, VarCfg.T_dljq)
                             ..',"zxrw":'..getplaydef(play, VarCfg.T_zxrw)
@@ -248,7 +248,7 @@ npc[11] = function(play,p2,p3,data)  --异闻录
             T_ywl["jl_"..sj.i.."_".. sj.j .."_"..sj.k .."_" .. sj.z] = 1
             setplaydef(play, VarCfg.T_ywl, tbl2json(T_ywl))
             if shuju.jl then
-                Player.rwjl(play,shuju.jl,"剧情jl",nil)
+                Player.rwjl(play,shuju.jl,"剧情jl",1)
             end
             sendluamsg(play, 101, 11, 0, 0,
                     '{"dljq":'..getplaydef(play, VarCfg.T_dljq)
@@ -645,7 +645,7 @@ npc[511] = function(play,p2,p3,msgData)  --福利大厅
             if T_qrbq["7rqd"] == jsonData["7rqd"] then
                 if jsonData["7rqd"] <= 7 then
                     Player.setJsonVarByTable(play, VarCfg.T_qrbq, T_qrbq)
-                    Player.rwjl(play,teshudata["fldt"]["7rqd"][T_qrbq["7rqd"]].jl,"七日登录奖励",nil)
+                    Player.rwjl(play,teshudata["fldt"]["7rqd"][T_qrbq["7rqd"]].jl,"七日登录奖励",1)
                     sendluamsg(play, 101, 511, 1, 1,tbl2json(T_qrbq))
                 else
                     Player.sendmsgEx(play,  "七日登录奖励已经全部领取完毕#57")
@@ -667,7 +667,7 @@ npc[511] = function(play,p2,p3,msgData)  --福利大厅
             if T_qrbq["zxjl"] == jsonData["zxjl"] then
                 if jsonData["zxjl"] <= #teshudata["fldt"]["zxjl"]then
                     Player.setJsonVarByTable(play, VarCfg.T_qrbq, T_qrbq)
-                    Player.rwjl(play,teshudata["fldt"]["zxjl"][T_qrbq["zxjl"]].jl,"在线奖励",nil)
+                    Player.rwjl(play,teshudata["fldt"]["zxjl"][T_qrbq["zxjl"]].jl,"在线奖励",1)
                     sendluamsg(play, 101, 511, 1, 1,tbl2json(T_qrbq))
                 else
                     Player.sendmsgEx(play,  "在线奖励已经全部领取完毕#57")
@@ -689,7 +689,7 @@ npc[511] = function(play,p2,p3,msgData)  --福利大厅
             if T_qrbq["sgjl"] == jsonData["sgjl"] then
                 if jsonData["sgjl"] <= #teshudata["fldt"]["sgjl"]then
                     Player.setJsonVarByTable(play, VarCfg.T_qrbq, T_qrbq)
-                    Player.rwjl(play,teshudata["fldt"]["sgjl"][T_qrbq["sgjl"]].jl,"杀怪奖励",nil)
+                    Player.rwjl(play,teshudata["fldt"]["sgjl"][T_qrbq["sgjl"]].jl,"杀怪奖励",1)
                     sendluamsg(play, 101, 511, 1, 1,tbl2json(T_qrbq))
                 else
                     Player.sendmsgEx(play,  "杀怪奖励已经全部领取完毕#57")
@@ -707,7 +707,7 @@ npc[511] = function(play,p2,p3,msgData)  --福利大厅
             if T_grss[jsonData["grss"]] and T_grss[jsonData["grss"]] == 1 then
                 T_grss[jsonData["grss"]] = 2
                 Player.setJsonVarByTable(play, VarCfg.T_grss, T_grss)
-                Player.rwjl(play,teshudata["fldt"]["grss"][tonumber(jsonData["grss"])].give,"个人首杀奖励",nil,0)
+                Player.rwjl(play,teshudata["fldt"]["grss"][tonumber(jsonData["grss"])].give,"个人首杀奖励",1,0)
                 sendluamsg(play, 101, 511, 2, 4,tbl2json(T_grss))
             else --未完成
                 Player.sendmsgEx(play,  "未完成该首杀任务#57")
@@ -723,24 +723,24 @@ npc[511] = function(play,p2,p3,msgData)  --福利大厅
             if T_grsb[jsonData["grsb"]] and T_grsb[jsonData["grsb"]] == 1 then
                 T_grsb[jsonData["grsb"]] = 2
                 Player.setJsonVarByTable(play, VarCfg.T_grsb, T_grsb)
-                Player.rwjl(play,teshudata["fldt"]["grsb"][tonumber(jsonData["grsb"])].give,"个人首爆奖励",nil,0)
-                sendluamsg(play, 101, 511, 2, 4,tbl2json(T_grsb))
+                Player.rwjl(play,teshudata["fldt"]["grsb"][tonumber(jsonData["grsb"])].give,"个人首爆奖励",1,0)
+                sendluamsg(play, 101, 511, 2, 5,tbl2json(T_grsb))
             else --未完成
                 Player.sendmsgEx(play,  "未完成该首爆任务#57")
                 return
             end
         elseif p3 == 6 then--全区首曝
             local jsonData = json2tbl(msgData)
-            local qqsb = Player.getJsonTableByVar(play, VarCfg["A_全区首曝json"])
+            local qqsb = Player.getJsonTableByVar(nil, VarCfg["A_全区首曝json"])
             if qqsb[jsonData["qqsb"]] and qqsb[jsonData["qqsb"]] == 2 then
                 Player.sendmsgEx(play,  "该首爆奖励已经领取完毕#57")
                 return
             end
             if qqsb[jsonData["qqsb"]] and qqsb[jsonData["qqsb"]] == 1 then
                 qqsb[jsonData["qqsb"]] = 2
-                Player.setJsonVarByTable(play, VarCfg["A_全区首曝json"], qqsb)
-                Player.rwjl(play,teshudata["fldt"]["qqsb"][tonumber(jsonData["qqsb"])].give,"全区首爆奖励",nil,0)
-                sendluamsg(play, 101, 511, 2, 4,tbl2json(qqsb))
+                Player.setJsonVarByTable(nil, VarCfg["A_全区首曝json"], qqsb)
+                Player.rwjl(play,teshudata["fldt"]["qqsb"][tonumber(jsonData["qqsb"])].give,"全区首爆奖励",1,0)
+                sendluamsg(play, 101, 511, 2, 6,tbl2json(qqsb))
             else --未完成
                 Player.sendmsgEx(play,  "未完成该首爆任务#57")
                 return
