@@ -916,7 +916,7 @@ function Player.getAttrTableToStr(attrs)
     local attrList = {}
     --º∆À„«–∏Óº”≥…
     for key, value in pairs(attrs) do
-        table.insert(attrList, "3#" .. key .. "#" .. value)
+        table.insert(attrList, "3#" .. key .. "#" .. math.floor(value))
     end
     attrStr = table.concat(attrList, "|")
     return attrStr
