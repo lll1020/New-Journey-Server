@@ -1,5 +1,93 @@
 release_print("加载Buff模块")
 Buff = {
+
+    [70] = function(play,zt)      --被人物攻击随机(CD30秒)
+        if zt == 3 then
+            local sj = os.time()
+            if sj - getplaydef(play,"N$buff70cd") > 30 then
+                setplaydef(play,"N$buff70cd",sj)
+                map(play,getbaseinfo(play,3))
+            end
+            return 0
+        else
+            local bl = getplaydef(play,constant.S_buffbrwq)
+            local data = json2tbl(bl == "" and {} or bl)
+            if zt == 1 then
+                data["70"] = true
+                setplaydef(play,"N$buff70cd",os.time())
+            elseif zt == 2 then
+                data["70"] = nil
+            end
+            setplaydef(play,constant.S_buffbrwq,tbl2json(data))
+        end
+    end,
+    [71] = function(play,zt,Damage,Target)      --溅射伤害  打怪时5%触发闪电，电击自身8*8范围内的所有敌人，造成500真实伤害拉取怪物仇恨。
+        if zt == 3 then
+            local sj = os.time()
+            if sj - getplaydef(play,constant.N_jsys) > 6 and math.random(100) > 5 then
+                setplaydef(play,constant.N_jsys,sj)
+                local xx,yy,dqdt = getbaseinfo(play,4),getbaseinfo(play,5),getbaseinfo(play,3)
+                local mons,gjsx = getobjectinmap(dqdt, xx,yy, 10, 2),500
+                rangeharm(play,getbaseinfo(play,4),getbaseinfo(play,5),6,0,0,0,0,2,20310)
+                if #mons > 1 then
+                    for i, v in ipairs(mons) do
+                        if i < 20 then
+                            if Target ~= v then
+                                humanhp(v,"-",500,111,0,play)
+                                monmission(v,getbaseinfo(play,4)-3,getbaseinfo(play,5)-3,0)
+                            end
+                        end
+                    end
+                end
+            end
+        else
+            local bl = getplaydef(play,constant.S_buffgwh)
+            local data = json2tbl(bl == "" and {} or bl)
+            if zt == 1 then
+                data["71"] = true
+            elseif zt == 2 then
+                data["71"] = nil
+            end
+            setplaydef(play,constant.S_buffgwh,tbl2json(data))
+        end
+    end,
+    [72] = function(play,zt)      --AI挂机,被攻击自动随机
+        if zt == 3 then
+            local sj = os.time()
+            local json = json2tbl(getplaydef(play,constant.T_aigj))
+            if sj - getplaydef(play,constant.N_Aigj[1]) >= 60 and not getbaseinfo(play,0) and json.gjkg then
+                setplaydef(play,constant.N_Aigj[1],sj)
+                map(play,getbaseinfo(play,3))
+                sendmsg(play,1,'{"Msg":"<font color=\'#28ef01\'>AI挂机：被人物攻击自动随机！</font>","Type":9}')
+                startautoattack(play)
+            end
+            return 0
+        else
+            local bl = getplaydef(play,constant.S_buffbrwq)
+            local data = json2tbl(bl == "" and {} or bl)
+            if zt == 1 then
+                data["72"] = true
+            elseif zt == 2 then
+                data["72"] = nil
+            end
+            setplaydef(play,constant.S_buffbrwq,tbl2json(data))
+        end
+    end,
+    [73] = function(play,zt,Damage,Target)      --赠送属性,刀刀绿毒
+        if zt == 3 then
+            makeposion(Target,0,2,10)
+        else
+            local bl = getplaydef(play,constant.S_buffgwh)
+            local data = json2tbl(bl == "" and {} or bl)
+            if zt == 1 then
+                data["73"] = true
+            elseif zt == 2 then
+                data["73"] = nil
+            end
+            setplaydef(play,constant.S_buffgwh,tbl2json(data))
+        end
+    end,
+
     [101] = function(play,zt) --仙食坊全满
         if zt == 1 then
             addattlist(play, "仙食坊全满", "=", "3#1#8888|3#4#588|3#242#3800|3#244#4888", 1)

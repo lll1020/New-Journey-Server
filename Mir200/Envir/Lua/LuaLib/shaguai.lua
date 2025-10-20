@@ -23,23 +23,22 @@ shaguai = {
 			Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 		end
 	end,
-	["23"] = function(play,mob)      --AI挂机杀怪
-		setplaydef(play,constant.N_Aigj[2],os.time())
-		setplaydef(play,constant.N_Aigj[3],os.time())
-	end,
 	["24"] = function(play,mob)      --主线任务杀怪
-		local rwdy,sgsl,dqdt = getplaydef(play,constant.U_zxrw[1]),getplaydef(play,constant.U_zxrw[2]),getbaseinfo(play,3)
+		local rwdy,sgsl,dqdt = getplaydef(play,VarCfg.U_zxrw[1]),getplaydef(play,VarCfg.U_zxrw[2]),getbaseinfo(play,3)
 		if constant.rw_syb[rwdy] and constant.rw_syb[rwdy].sg and constant.rw_syb[rwdy].sg[1] and constant.rw_syb[rwdy].sg[1][dqdt] then
-			setplaydef(play,constant.U_zxrw[2],sgsl+1)
+			setplaydef(play,VarCfg.U_zxrw[2],sgsl+1)
+			Player.sendmsgEx(play,  "击杀怪物+"..1 .." ( "..(sgsl+1).."/"..constant.rw_syb[rwdy].sg[2].." )#57")
+
 			if sgsl+1 >= constant.rw_syb[rwdy].sg[2] then
 				shaguai.jian(play,24)
 				newdeletetask(play,rwdy)
 				if not constant.rw_syb[rwdy].jl then
 					messagebox(play,"当前任务已完成")
 				end
+
 				playeffect(play,4011,25,-50,1,0,0)
 			else
-				newchangetask(play,getplaydef(play,constant.U_zxrw[1]),sgsl+1)
+				newchangetask(play,getplaydef(play,VarCfg.U_zxrw[1]),sgsl+1)
 			end
 		end
 	end,

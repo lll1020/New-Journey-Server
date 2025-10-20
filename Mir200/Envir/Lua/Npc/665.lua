@@ -428,10 +428,6 @@ function ggna(play,id)
         repaircastle()
         addattacksabakall()
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>攻沙开始</font>","Type":9}')
-    elseif id == "22" then
-        setsysvar(constant.G_zbdtbs,getsysvar(constant.G_zbdtbs) > 5 and 1 or getsysvar(constant.G_zbdtbs) + 1)
-        sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
-        sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>当直播地图已更换为:'..getsysvar(constant.G_zbdtbs)..'</font>","Type":9}')
     elseif id == "23" then
         local cailiao = {
             "殘魂必殺刃",

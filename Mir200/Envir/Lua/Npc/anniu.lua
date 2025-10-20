@@ -107,7 +107,7 @@ end
 
 npc[5] = function(play,p2,p3,data) -- 内挂开关
     setflagstatus(play,VarCfg.BS_ngkg,p2)
-    Buff[379](play,p2 == 1 and 1 or 2)
+    Buff[70](play,p2 == 1 and 1 or 2)
     sendluamsg(play, 103, 1, 0, 0, '{"ngkg":'..p2..'}')
 end
 
@@ -367,6 +367,23 @@ npc[17] = function(play, p2, p3, data)  --实力提升
         sendluamsg(play, 101, 17, 0, 0, "")
     end
 end
+
+---新手礼包
+npc[18] = function(play, p2, p3, data)  --新手礼包
+    if p2 == 0 then  --新手礼包  --初始化页面
+        sendluamsg(play, 101, 18, 0, 0, "")
+    elseif p2 == 1 then  --领取礼包
+        local rwid = getplaydef(play,VarCfg.U_zxrw[1])
+        if rwid == 1 then
+            Player.zxrw_wancheng(play, getplaydef(play,VarCfg.U_zxrw[1]), "新手礼包") --完成任务
+            sendluamsg(play,101,1005,0,0,"lqcg")
+            sendluamsg(play, 101, 18, 1, 0, "")
+        else--已完成
+            sendmsg(play,1,'{"Msg":"<font color=\'#ff0500\'>已经领取过礼包了...</font>","Type":9}')
+            return
+        end
+    end
+end
 ---首充礼包
 npc[501] = function(play,p2,p3,data)  --首充礼包
     if p2 == 0 then
@@ -441,10 +458,10 @@ npc[502] = function(play,p2,p3,data)  --在线充值
         if json.cz4 then
             if json.jskg then
                 json.jskg = nil
-                Buff[94](play,2)
+                Buff[71](play,2)
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff0500\'>溅射功能已关闭...</font>","Type":9}')
             else
-                Buff[94](play,1)
+                Buff[71](play,1)
                 json.jskg = true
                 sendmsg(play,1,'{"Msg":"<font color=\'#28ef01\'>溅射功能已开启...</font>","Type":9}')
             end
@@ -543,9 +560,7 @@ npc[505] = function(play,p2,p3,data)  --自动巡航
                     startautoattack(play)
                     setflagstatus(play,VarCfg.BS_AIgj,1)
                     json.gjkg = true
-                    setplaydef(play,VarCfg.N_Aigj[2],os.time())
                     setplaydef(play,VarCfg.N_Aigj[5],os.time())
-                    setontimer(play, 5, 1, 0, 1)
                 else
                     sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[自动巡航]</font><font color=\'#ff0500\'>未勾选任何地图,无法进行AI挂机...</font>","Type":9}')
                 end
@@ -553,7 +568,6 @@ npc[505] = function(play,p2,p3,data)  --自动巡航
                 json.gjkg = nil
                 stopautoattack(play)
                 setflagstatus(play,VarCfg.BS_AIgj,0)
-                setofftimer(play,5)
             end
             setplaydef(play,VarCfg.T_aigj,tbl2json(json))
             sendluamsg(play, 101, 505, 4,0,tbl2json(json))
@@ -566,18 +580,10 @@ npc[505] = function(play,p2,p3,data)  --自动巡航
             if p3 == 1 then
                 if json.zgx1 then
                     json.zgx1 = nil
-                    Buff[96](play,2)
+                    Buff[72](play,2)
                 else
-                    Buff[96](play,1)
+                    Buff[72](play,1)
                     json.zgx1 = true
-                end
-            elseif p3 == 2 then
-                if json.zgx2 then
-                    json.zgx2 = nil
-                    shaguai.jian(play,23)
-                else
-                    shaguai.jia(play,23)
-                    json.zgx2 = true
                 end
             else
                 if json["zgx"..p3] then

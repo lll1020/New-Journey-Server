@@ -24,10 +24,6 @@ function Login_msg(play, id, msg, leve)
 		sendmsg(play, 2, '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'>【' .. msg .. '晋升】：</font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>成功<font color=\'#00FFFF\'>[' .. msg .. leve .. '级]</font>仙途畅通！</outline>","Type":1}')
 	elseif id == 7 then -- 神魔习练招式提示
 		sendmsg(play, 2, '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'>【锻造】：</font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>成功锻造<font color=\'#00FFFF\'>[' ..msg .. '] 到达 '..leve.. '级</font>，仙途畅通！</outline>","Type":1}')
-	elseif id == 8 then -- 星盘提升提示
-		sendmsg(play, 2, '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'>【星盘升级】：</font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>成功将<font color=\'#00FFFF\'>[' .. msg .. ']</font>修炼至<font color=\'#00FFFF\'>[LV.' .. leve .. ']</font>仙途畅通！</outline>","Type":1}')
-	elseif id == 9 then -- 仙法阁提升提示
-		sendmsg(play, 2, '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'>【仙法阁升级】：</font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>成功将<font color=\'#00FFFF\'>[' .. msg .. ']</font>修炼至<font color=\'#00FFFF\'>[LV.' .. leve .. ']</font>仙途畅通！</outline>","Type":1}')
 	elseif id == 10 then -- 回收
         if msg > 0 or leve > 0 then
             sendmsg(play, 2, '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'>【装备回收】：</font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>成功回收装备,获得<font color=\'#00FFFF\'>[' .. msg .. ']</font>元宝，<font color=\'#00FFFF\'>[' .. leve .. ']</font>灵符！</outline>","Type":1}')
@@ -40,10 +36,6 @@ function Login_msg(play, id, msg, leve)
         sendmsg(play, 2, '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'>【天渊剑甲升级】：</font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>成功升级<font color=\'#00FFFF\'>[' .. msg .. ']</font>仙途畅通！</outline>","Type":1}')
     elseif id == 15 then -- 实物回收
         sendmsgnew(play, 255, 0, '玩家{《' .. getbaseinfo(play, 1) .. '》/FCOLOR=251}实物回收{[' .. msg .. ']/FCOLOR=250}，获得灵符{[' .. leve .. ']/FCOLOR=250}', 1, 3)
-    elseif id == 16 then -- 小日卡
-        sendmsgnew(play, 255, 0, '玩家{《' .. getbaseinfo(play, 1) .. '》/FCOLOR=251}小日卡{[' .. msg .. ']/FCOLOR=250}，获得仙玉{[1000]/FCOLOR=250}元宝{[300000]/FCOLOR=250}灵符{[100000]/FCOLOR=250}', 1, 3)
-    elseif id == 17 then -- 大日卡
-        sendmsgnew(play, 255, 0, '玩家{《' .. getbaseinfo(play, 1) .. '》/FCOLOR=251}大日卡{[' .. msg .. ']/FCOLOR=250}，获得仙玉{[3000]/FCOLOR=250}元宝{[1000000]/FCOLOR=250}灵符{[300000]/FCOLOR=250}', 1, 3)
     elseif id == 18 then -- 充值
         sendmsgnew(play, 255, 0, '玩家{《' .. string.sub(getbaseinfo(play, 1), 1, 2) .. '******》/FCOLOR=251}{通过充值获得了大量仙玉/FCOLOR=250}', 1, 3)
     end
@@ -76,16 +68,7 @@ GameEvent.add(EventCfg.onLogin, Login_jmjnsh, "Login_jmjnsh")
 
 
 function login_fhsx(play)
-    local T_zzsj = json2tbl(getplaydef(play,VarCfg.T_zzsj))
-    if T_zzsj.dqzy then
-        if T_zzsj.sh and T_zzsj.sh[""..T_zzsj.dqzy] == 1 then
-            setranklevelname(play,"%s\\[踏月々沉默]\\[极·".. constant.zzxg.zy[T_zzsj.dqzy].name.."]\\击杀『"..getplaydef(play,VarCfg.U_srsl).."』")
-        else
-            setranklevelname(play,"%s\\[踏月々沉默]\\["..constant.zzxg.zy[T_zzsj.dqzy].name.."]\\击杀『"..getplaydef(play,VarCfg.U_srsl).."』")
-        end
-    else
-        setranklevelname(play,"%s\\[踏月々沉默]\\击杀『"..getplaydef(play,VarCfg.U_srsl).."』")
-    end
+    setranklevelname(play,"%s\\[踏月々沉默]\\击杀『"..getplaydef(play,VarCfg.U_srsl).."』")
 end
 GameEvent.add(EventCfg.onLogin, login_fhsx, "login_fhsx")
 

@@ -16,13 +16,15 @@ function npc.link(play,npcid,ew,aid)
             T_data.main = math.random(1, #_config.main_r)
             Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
             Player.sendmsgEx(play, "提示:#251|你获得了新的主灵根属性，请前往灵根升级界面查看")
+
+            Player.zxrw_wancheng(play, 2, "T_灵根") --完成任务
         else
             Player.sendmsgEx(play, "提示:#251|你已经拥有主灵根属性，无法再次抽取")
             return
         end
     elseif ew == 2 then--抽取副灵根
-        if not T_data.othen then
-            T_data.othen = math.random(1, #_config.other_r)
+        if not T_data.other then
+            T_data.other = math.random(1, #_config.other_r)
             Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
             Player.sendmsgEx(play, "提示:#251|你获得了新的副灵根属性，请前往灵根升级界面查看")
         else

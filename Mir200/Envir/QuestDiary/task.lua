@@ -2,35 +2,35 @@
 function task_login(play)
     ---------------------------------------------------任务初始化
     local rwid = getplaydef(play,VarCfg.U_zxrw[1])
+    local sl = getplaydef(play,VarCfg.U_zxrw[2])
     local chuli = json2tbl(getplaydef(play, VarCfg.T_zxrw))
     local chuliwp = json2tbl(getplaydef(play, VarCfg.T_rwwp))
     if chuli ~= "{}" then
         for v,k in pairs(chuli) do
             newpicktask(play,tonumber(v),k and 0 or tonumber(k))
             if constant.rw_syb[tonumber(v)] and constant.rw_syb[tonumber(v)].sjwp then
-                local sl = {}
+                local wp_sl = {}
                 -- 获取表的键并排序
                 local keys = {}
-                for k in pairs(constant.rw_syb[tonumber(v)].sjwp) do
-                    table.insert(keys, k)
+                for wp_name in pairs(constant.rw_syb[tonumber(v)].sjwp) do
+                    table.insert(keys, wp_name)
                 end
                 table.sort(keys)
                 for i, y in ipairs(keys) do
                     if chuliwp[y] then
-                        table.insert(sl,getbagitemcount(play,y) >= constant.rw_syb[tonumber(v)].sjwp[y] and constant.rw_syb[tonumber(v)].sjwp[y] or getbagitemcount(play,y))
+                        table.insert(wp_sl,getbagitemcount(play,y) >= constant.rw_syb[tonumber(v)].sjwp[y] and constant.rw_syb[tonumber(v)].sjwp[y] or getbagitemcount(play,y))
                     else
-                        table.insert(sl,constant.rw_syb[tonumber(v)].sjwp[y])
+                        table.insert(wp_sl,constant.rw_syb[tonumber(v)].sjwp[y])
                     end
                 end
                 -- 调用newpicktask函数，并将sj表中的元素作为参数传入
-                newchangetask(play, tonumber(v),unpack(sl))
+                newchangetask(play, tonumber(v),unpack(wp_sl))
             end
             Player.zxrw_teshushuaxin(play, tonumber(v), nil)
         end
     end
     if constant.rw_syb[rwid] then
-        local sy,sl = getplaydef(play,VarCfg.U_zxrw[1]),getplaydef(play,VarCfg.U_zxrw[2])
-        newpicktask(play,sy,sl)
+        newpicktask(play,rwid,sl)
         if linkbodyitem(play,2) ~= "0" and rwid == 49 then
             newchangetask(play,sy,sl)
         end
@@ -41,7 +41,7 @@ function task_login(play)
                 --release_print("任务初始化"..rwid..db[constant.rw_syb[rwid].jd[1]][2])
             elseif db[constant.rw_syb[rwid].jd[1]] and db[constant.rw_syb[rwid].jd[1]] == 1 and constant.rw_syb[rwid].jd[2] == 0 then
                 if constant.rw_syb[rwid].sjwp then
-                    local sl = {}
+                    local wp_sl = {}
                     -- 获取表的键并排序
                     local keys = {}
                     for k in pairs(constant.rw_syb[rwid].sjwp) do
@@ -50,17 +50,17 @@ function task_login(play)
                     table.sort(keys)
                     for i, y in ipairs(keys) do
                         if chuliwp[y] then
-                            table.insert(sl,getbagitemcount(play,y) >= constant.rw_syb[rwid].sjwp[y] and constant.rw_syb[rwid].sjwp[y] or getbagitemcount(play,y))
+                            table.insert(wp_sl,getbagitemcount(play,y) >= constant.rw_syb[rwid].sjwp[y] and constant.rw_syb[rwid].sjwp[y] or getbagitemcount(play,y))
                         else
-                            table.insert(sl,constant.rw_syb[rwid].sjwp[y])
+                            table.insert(wp_sl,constant.rw_syb[rwid].sjwp[y])
                         end
                     end
                     -- 调用newpicktask函数，并将sj表中的元素作为参数传入
-                    newchangetask(play, rwid,unpack(sl))
+                    newchangetask(play, rwid,unpack(wp_sl))
                 end
             end
         end
-        if constant.rw_syb[sy] and constant.rw_syb[sy].sg then
+        if constant.rw_syb[rwid] and constant.rw_syb[rwid].sg then
             if sl > 0 then
                 shaguai.jia(play,24)
                 setplaydef(play,VarCfg.N_znpc,1)
@@ -198,26 +198,21 @@ function clicknewtask(play,rwid)
         local lx = constant.rw_syb[rwid][1]
         if lx == 0 then
 
-        elseif lx == 1 then
-            if constant.rw_syb[rwid][2] == 9 and globalinfo(3) >= 1 then
-                newdeletetask(play,getplaydef(play,VarCfg.U_zxrw[1]))
-                playeffect(play,4011,25,-50,1,0,0)
-            else
-                sendluamsg(play, 101, 0, 1, 1,'{"lx":1,"fx":1,"an":'..constant.rw_syb[rwid][2]..',"ms":"点击按钮"}')
-            end
-        elseif lx == 2 then
+        elseif lx == 1 then--点击按钮
+            sendluamsg(play, 101, 0, 1, 1,'{"lx":1,"fx":1,"an":'..constant.rw_syb[rwid][2]..',"ms":"点击按钮"}')
+        elseif lx == 2 then--引导任务  npc类
             if constant.rw_syb[rwid][2] ~= getbaseinfo(play,3) then
                 mapmove(play,constant.rw_syb[rwid][2],constant.rw_syb[rwid][4],constant.rw_syb[rwid][5],3)
             end
             mapmove(play,constant.rw_syb[rwid][2],constant.rw_syb[rwid][4],constant.rw_syb[rwid][5],3)
 
             sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'..constant.rw_syb[rwid][2]..'","npcid":'..constant.rw_syb[rwid][3]..',"xx":'..constant.rw_syb[rwid][4]..',"yy":'..constant.rw_syb[rwid][5]..'}')
-        elseif lx == 3 then
+        elseif lx == 3 then--刷新任务
             sendluamsg(play, 101, 0, 1, 1,'{"lx":3,"rwid":'.. rwid ..'}')
-        elseif lx == 4 then
+        elseif lx == 4 then--直接完成类的任务
             newdeletetask(play,getplaydef(play,VarCfg.U_zxrw[1]))
             playeffect(play,4011,25,-50,1,0,0)
-        elseif lx == 5 then
+        elseif lx == 5 then--二层任务逻辑
             local dqdt = getbaseinfo(play,3)
             if constant.rw_syb[rwid][2][1] ~= dqdt and dqdt ~= constant.rw_syb[rwid][3][1] then
                 mapmove(play,constant.rw_syb[rwid][2][1],constant.rw_syb[rwid][2][3],constant.rw_syb[rwid][2][4],1)
@@ -229,9 +224,11 @@ function clicknewtask(play,rwid)
                 mapmove(play,constant.rw_syb[rwid][3][1],constant.rw_syb[rwid][3][3],constant.rw_syb[rwid][3][4],3)
                 sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'..constant.rw_syb[rwid][3][1]..'","npcid":'..constant.rw_syb[rwid][3][2]..',"xx":'..constant.rw_syb[rwid][3][3]..',"yy":'..constant.rw_syb[rwid][3][4]..'}')
             end
-        elseif lx == 9 then
+        elseif lx == 6 then--按钮类的任务触发  没有点击引导的
+            Npclib['anniu'][constant.rw_syb[rwid][2]](play, 0)
+        elseif lx == 9 then--跳转任务类地图
             mapmove(play,constant.rw_syb[rwid][2],constant.rw_syb[rwid][3],constant.rw_syb[rwid][4],3)
-        elseif lx == 11 then
+        elseif lx == 11 then--三层任务逻辑
             local dqdt = getbaseinfo(play,3)
             if constant.rw_syb[rwid][2][1] ~= dqdt and dqdt ~= constant.rw_syb[rwid][4][1] then
                 mapmove(play,constant.rw_syb[rwid][2][1],constant.rw_syb[rwid][2][3],constant.rw_syb[rwid][2][4],1)
@@ -244,11 +241,7 @@ function clicknewtask(play,rwid)
                 mapmove(play,constant.rw_syb[rwid][4][1],constant.rw_syb[rwid][4][2],constant.rw_syb[rwid][4][3],3)
                 startautoattack(play)
             end
-        elseif lx == 13 then
-
-        elseif lx == 14 then
-            sendluamsg(play, 101, 0, 1, 1,'{"lx":14}')
-        elseif lx == 15 then
+        elseif lx == 15 then--拾取物品类任务
             local dqdt = getbaseinfo(play,3)
             local clwc = true
             local chuli = json2tbl(getplaydef(play, VarCfg.T_rwwp)) --任务物品
@@ -298,9 +291,7 @@ function clicknewtask(play,rwid)
                     end
                 end
             end
-        elseif lx == 16 then
-            sendluamsg(play, 101, 0, 1, 1,'{"lx":16}')
-        elseif lx == 17 then
+        elseif lx == 17 then--等级或者转生类任务
             if constant.rw_syb[rwid][2] == 1 then
                 if constant.rw_syb[rwid][3] <= getbaseinfo(play,6) then
                     newdeletetask(play,rwid)
@@ -317,10 +308,8 @@ function clicknewtask(play,rwid)
                     sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'..constant.rw_syb[rwid][4][1]..'","npcid":'..constant.rw_syb[rwid][4][2]..',"xx":'..constant.rw_syb[rwid][4][3]..',"yy":'..constant.rw_syb[rwid][4][4]..'}')
                 end
             end
-        elseif lx == 18 then
+        elseif lx == 18 then--引导到伏妖录
             sendluamsg(play, 101, 0, 18, 1,'{"l":'..constant.rw_syb[rwid][2][1]..',"xl":'..constant.rw_syb[rwid][2][2] ..',"jm":'..constant.rw_syb[rwid][2][3] ..'}')
-        elseif lx == 23 then
-            sendluamsg(play, 101, 0, 1, 1,'{"lx":23}')
         elseif lx == 50 then -- 除魔任务
             local dl,boss,xg = getplayvar(play,"除魔大陆"),getplayvar(play,"除魔大怪数量"),getplayvar(play,"除魔小怪数量")
             if boss < 50 or xg < 500 then
@@ -331,8 +320,6 @@ function clicknewtask(play,rwid)
                 end
                 sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'..constant.rw_syb[rwid][2]..'","npcid":'..constant.rw_syb[rwid][3]..',"xx":'..constant.rw_syb[rwid][4]..',"yy":'..constant.rw_syb[rwid][5]..'}')
             end
-        elseif lx == 99 then -- 新手礼包
-            sendluamsg(play,101,28,0,getflagstatus(play,VarCfg.BS_xslb),"")
         end
     end
 end
@@ -385,7 +372,7 @@ function deletetask(play,rwid)
         elseif lx == 5 then
             delnpceffect(play,constant.rw_syb[rwid][3][2])
             delnpceffect(play,constant.rw_syb[rwid][2][2])
-        elseif lx == 6 or lx == 7 or lx == 8 then
+        elseif lx == 7 or lx == 8 then
             delnpceffect(play,constant.rw_syb[rwid][2][2])
         end
     end
@@ -437,7 +424,7 @@ function deletetask(play,rwid)
     if rwid > 2000 then
         rwcf.jian(play,rwid)
     end
-    if rwid >= 3005 then
+    if rwid >= 3000 then
         local ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
         ywl["rw_"..rwid] = 1
         setplaydef(play, VarCfg.T_ywl, tbl2json(ywl))
@@ -458,3 +445,32 @@ function deletetask(play,rwid)
         end
     end
 end
+
+rwcf = {}
+
+rwcf.jia = function(play, id)
+    local chuli = json2tbl(getplaydef(play, VarCfg.T_zxrw))
+    chuli[""..id] = true
+    setplaydef(play, VarCfg.T_zxrw, tbl2json(chuli))
+end
+
+rwcf.jian = function(play, id)
+    local chuli = json2tbl(getplaydef(play, VarCfg.T_zxrw))
+    chuli[""..id] = nil
+    setplaydef(play, VarCfg.T_zxrw, tbl2json(chuli))
+end
+
+rwcf.wpjia = function(play, id,rwid,sl)
+    local chuli = json2tbl(getplaydef(play, VarCfg.T_rwwp))
+    chuli[""..id] = {rwid,sl}
+    setplaydef(play, VarCfg.T_rwwp, tbl2json(chuli))
+end
+
+rwcf.wpjian = function(play, id)
+    local chuli = json2tbl(getplaydef(play, VarCfg.T_rwwp))
+    chuli[""..id] = nil
+    setplaydef(play, VarCfg.T_rwwp, tbl2json(chuli))
+end
+
+return rwcf
+
