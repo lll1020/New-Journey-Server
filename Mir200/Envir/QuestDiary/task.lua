@@ -446,7 +446,12 @@ function deletetask(play,rwid)
     end
 end
 
-rwcf = {}
+rwcf = {
+    [6] = {8},
+    [7] = {10},
+    [8] = {12},
+    [9] = {14},
+}
 
 rwcf.jia = function(play, id)
     local chuli = json2tbl(getplaydef(play, VarCfg.T_zxrw))

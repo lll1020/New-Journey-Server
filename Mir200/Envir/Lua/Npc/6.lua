@@ -33,6 +33,8 @@ function npc.link(play, npcid, p2, p3, msgData)
         sendluamsg(play,100,npcid,1,0,"")
         sendluamsg(play,101,1005,0,0,"qhcg")
 
+        Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
+
 
     elseif p2 == 2 then
         giveonitem(play,_config.where,"切割[lv1]",1)

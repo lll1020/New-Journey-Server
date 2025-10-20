@@ -32,6 +32,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         Player.sendmsgEx(play,  "恭喜你，装备提升成功，当前装备等级为"..(equipLevel + 1).."级")
         sendluamsg(play,100,npcid,1,0,"")
         sendluamsg(play,101,1005,0,0,"qhcg")
+        Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
 
 
     elseif p2 == 2 then
