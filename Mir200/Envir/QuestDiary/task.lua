@@ -91,7 +91,7 @@ function picktask(play,rwid)
             dx = getnpcbyindex(NPCIndex)
             x, y = getbaseinfo(dx, 4), getbaseinfo(dx, 5)
             setnpceffect(play,NPCIndex,"5055",0,130)
-        elseif lx == 6 or lx == 7 or lx == 8 then
+        elseif lx == 7 or lx == 8 then
             local NPCIndex = constant.rw_syb[rwid][2][2]
             local dx = getnpcbyindex(NPCIndex)
             local x, y = getbaseinfo(dx, 4), getbaseinfo(dx, 5)
@@ -451,6 +451,8 @@ rwcf = {
     [7] = {10},
     [8] = {12},
     [9] = {14},
+
+    [502] = {15},
 }
 
 rwcf.jia = function(play, id)

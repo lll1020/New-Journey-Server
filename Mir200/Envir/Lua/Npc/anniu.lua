@@ -130,10 +130,6 @@ local npc_xyl = {
 }
 npc[11] = function(play,p2,p3,data)  --异闻录
     if p2 == 0 then
-        if not Player.dl_sz_notip(play, 2) then
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>完成一大陆任务后开启。。。</font>","Type":9}')
-            return false
-        end
         sendluamsg(play, 101, 11, 0, 0,
                 '{"dljq":'..getplaydef(play, VarCfg.T_dljq)
                         ..',"zxrw":'..getplaydef(play, VarCfg.T_zxrw)
@@ -144,12 +140,12 @@ npc[11] = function(play,p2,p3,data)  --异闻录
         if sj.i and sj.k and sj.j and sj.z and sj.i > 0 and sj.k > 0 and sj.j > 0 and sj.z > 0 and sj.i <= #npc_xyl and sj.j <= #npc_xyl[sj.i] and sj.k <= #npc_xyl[sj.i][sj.j] and sj.z <= #npc_xyl[sj.i][sj.j][sj.k] then
             if Player.dl_sz_notip(play, sj.i) then
                 local shuju = npc_xyl[sj.i][sj.j][sj.k][sj.z]
-                if shuju[2] == 999 and sj.i > 3 then
-                    local T_ywl = json2tbl(getplaydef(play,VarCfg.T_ywl))
-                    if not (T_ywl["rw_"..shuju[3][2]] and T_ywl["rw_"..shuju[3][2]] == 1) then
-                        Player.zxrw_lingqu(play, shuju[3][2], "")
-                    end
-                end
+                --if shuju[2] == 999 and sj.i > 3 then
+                --    local T_ywl = json2tbl(getplaydef(play,VarCfg.T_ywl))
+                --    if not (T_ywl["rw_"..shuju[3][2]] and T_ywl["rw_"..shuju[3][2]] == 1) then
+                --        Player.zxrw_lingqu(play, shuju[3][2], "")
+                --    end
+                --end
                 if shuju.yd[1] == 0 then
                     sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>无法传送...</font>","Type":9}')
                 elseif shuju.yd[1] == 1 then
@@ -200,26 +196,6 @@ npc[11] = function(play,p2,p3,data)  --异闻录
                             ..',"ywl":'..getplaydef(play, VarCfg.T_ywl)
                             ..',"T_tj":'..getplaydef(play,VarCfg.T_tj)
                             ..'}')
-            if (sj.i == 2 or sj.i == 3) and sj.k < 6 then
-                for i = 1, #npc_xyl[sj.i][sj.j][sj.k + 1] do
-                    if npc_xyl[sj.i][sj.j][sj.k + 1][i][2] == 999 and (npc_xyl[sj.i][sj.j][sj.k + 1][i][3][1] == 3 or npc_xyl[sj.i][sj.j][sj.k + 1][i][3][1] == 4) then
-                        Player.zxrw_lingqu(play, npc_xyl[sj.i][sj.j][sj.k + 1][i][3][2], "")
-                    end
-                end
-            elseif sj.i == 2 and sj.k == 6 then
-                for i = 1, #npc_xyl[3][sj.j][1] do
-                    if npc_xyl[3][sj.j][1][i][2] == 999 and (npc_xyl[3][sj.j][1][i][3][1] == 3 or npc_xyl[3][sj.j][1][i][3][1] == 4) then
-                        Player.zxrw_lingqu(play, npc_xyl[3][sj.j][1][i][3][2], "")
-                    end
-                end
-                sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
-                mapmove(play, "剑门外门", 98, 84,1) --剑门外门
-                sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'.."剑门外门"..'","npcid":'.. 132 ..',"xx":'.. 97 ..',"yy":'.. 85 ..'}')
-            elseif sj.i == 3 and sj.k == 6 then
-                sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
-                mapmove(play, "剑门内门", 95, 129,1) --剑门内门
-                sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'.."剑门内门"..'","npcid":'.. 37 ..',"xx":'.. 93 ..',"yy":'.. 131 ..'}')
-            end
         end
     elseif p2 == 3 then --单个任务奖励
         local sj = json2tbl(data)
@@ -257,52 +233,6 @@ npc[11] = function(play,p2,p3,data)  --异闻录
                             ..'}')
         end
     elseif p2 == 4 then --一整个大陆任务奖励
-    elseif p2 == 5 then --专属追踪
-        local sj = json2tbl(data)
-        if sj.i and sj.k and sj.i > 0 and sj.k > 0 and sj.i <= #npc_xyl and sj.k <= #npc_xyl[sj.i][4] then
-            if Player.dl_sz_notip(play, sj.i) then
-                local shuju = npc_xyl[sj.i][4][sj.k]
-                if shuju[3] and shuju[3][1] == 0 then
-                    sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>无法传送...</font>","Type":9}')
-                else
-                    if shuju.jcch and not checktitle(play, shuju.jcch) then
-                        sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>需要称号：['..shuju.jcch..']，您没有完成前置的任务...</font>","Type":9}')
-                        return
-                    end
-                    if getplaydef(play,"N$战斗状态") < os.time() then
-                        map(play,shuju[1])
-                        sendluamsg(play,101,9999,0,0,"npc_ywl")
-                    else
-                        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}')
-                    end
-                end
-            else
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>条件不足,无法传送...</font>","Type":9}')
-            end
-        end
-    elseif p2 == 6 then --专属追踪
-        local sj = json2tbl(data)
-        if sj.i and sj.k and sj.i > 0 and sj.k > 0 and sj.i <= #npc_xyl and sj.k <= #npc_xyl[sj.i][4] then
-            if Player.dl_sz_notip(play, sj.i) and npc_xyl[sj.i][5] then
-                local shuju = npc_xyl[sj.i][5][sj.k]
-                if shuju[3] and shuju[3][1] == 0 then
-                    sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>无法传送...</font>","Type":9}')
-                else
-                    if shuju.jcch and not checktitle(play, shuju.jcch) then
-                        sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>需要称号：['..shuju.jcch..']，您没有完成前置的任务...</font>","Type":9}')
-                        return
-                    end
-                    if getplaydef(play,"N$战斗状态") < os.time() then
-                        map(play,shuju[1])
-                        sendluamsg(play,101,9999,0,0,"npc_ywl")
-                    else
-                        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}')
-                    end
-                end
-            else
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>条件不足,无法传送...</font>","Type":9}')
-            end
-        end
     end
 end
 ---记忆传送
