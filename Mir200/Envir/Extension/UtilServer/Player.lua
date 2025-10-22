@@ -578,10 +578,10 @@ function Player.updata_zdl(actor, desc) --战斗力更新
         setplaydef(actor, VarCfg["B_记录战斗力"], tonumber(zdl))
     end
 end
-function Player.title_give(actor, title_name,use) --给称号
+function Player.title_give(actor, title_name) --给称号
     if not checktitle(actor, title_name) then
         release_print("给称号",title_name,getbaseinfo(actor,1))
-        confertitle(actor, title_name,use)
+        confertitle(actor, title_name)
         local idx = getstditeminfo(title_name,8)
         if idx > 0 then
             Buff[idx](actor,1)
