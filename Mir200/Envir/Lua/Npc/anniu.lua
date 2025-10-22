@@ -712,6 +712,7 @@ npc[516] = function(play,p2,p3,msgData)  --免费赞助
             if getplaydef(play,VarCfg.U_fldt[2]) >= config.sgsl then
                 T_data["zzlb_"..p3] = 1
                 Player.setJsonVarByTable(play, VarCfg["T_免费赞助"], T_data)
+                Player.zxrw_wancheng(play, rwcf[516][1], "任务") --完成任务
                 DeleteAllTitle(play)
                 Player.title_give(play,config.ch)
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[赞助礼包]</font><font color=\'#28ef01\'>领取成功...</font>","Type":9}')

@@ -36,6 +36,7 @@ function npc.link(play,npcid,ew,aid)
                 return
             end
             mapmove(play,_config[npcid][1],_config[npcid][2],_config[npcid][3],1)
+            startautoattack(play) --×Ô¶¯¹¥»÷
         end
 
     end
