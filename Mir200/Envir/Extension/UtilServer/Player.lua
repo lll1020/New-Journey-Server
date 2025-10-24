@@ -726,6 +726,8 @@ function Player.huishou(play, hs_constant)
             if cl[9] > 0 then
                 giveitem(play,"¸±×°ËéÆ¬",cl[9],gz)
             end
+            Login_msg(play,10,cl[1],cl[2])
+
         end
     else
         local hs = hs_constant

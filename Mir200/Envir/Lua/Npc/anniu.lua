@@ -329,26 +329,26 @@ npc[501] = function(play,p2,p3,data)  --首充礼包
                 --半月弯刀
                 --天选之人
             if T_data["首充"] == 1 then
-                if not T_data["othen_lb"] then
-                    T_data["othen_lb"] = 1
+                if not T_data["other_lb"] then
+                    T_data["other_lb"] = 1
                     T_data["jq_time"] = time_data
                     addskill(play,25,3)
                     Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
                     sendluamsg(play,101,1005,0,0,"lqcg")
-                elseif (T_data["othen_lb"] and T_data["othen_lb"] == 1 and T_data["jq_time"] ~= time_data) then
-                    T_data["othen_lb"] = 2
+                elseif (T_data["other_lb"] and T_data["other_lb"] == 1 and T_data["jq_time"] ~= time_data) then
+                    T_data["other_lb"] = 2
                     Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
                     sendluamsg(play,101,1005,0,0,"lqcg")
-                elseif (T_data["othen_lb"] and T_data["othen_lb"] == 2 and T_data["jq_time"] ~= time_data) then
-                    T_data["othen_lb"] = 3
+                elseif (T_data["other_lb"] and T_data["other_lb"] == 2 and T_data["jq_time"] ~= time_data) then
+                    T_data["other_lb"] = 3
                     Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
                     sendluamsg(play,101,1005,0,0,"lqcg")
                 else
                     sendmsg(play,1,'{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
                 end
             elseif T_data["补充"] == 1 then
-                if not T_data["othen_lb"] or T_data["othen_lb"] ~= 1 then
-                    T_data["othen_lb"] = 1
+                if not T_data["other_lb"] or T_data["other_lb"] ~= 1 then
+                    T_data["other_lb"] = 1
                     addskill(play,25,3)
                     Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
                     sendluamsg(play,101,1005,0,0,"lqcg")
