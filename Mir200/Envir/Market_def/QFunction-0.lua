@@ -259,11 +259,14 @@ function takeonbeforeex(play,item,where,makeIndex)
     end
     return true
 end
---------------------穿套装触发-------------------idx为套装ID
-function groupitemonex(play,idx)
+--穿套装
+function groupitemonex(actor, idx)
+    GameEvent.push(EventCfg.onGroupItemOnEx, actor, idx)
 end
---------------------脱套装触发-------------------
-function groupitemoffex(play,idx)
+
+--脱套装
+function groupitemoffex(actor, idx)
+    GameEvent.push(EventCfg.onGroupItemOffEx, actor, idx)
 end
 --------------------穿戴后触发-------------------
 function takeonex(play, item, where, Name, makeindex)

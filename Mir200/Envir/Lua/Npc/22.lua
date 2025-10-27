@@ -16,8 +16,6 @@ function npc.link(play,npcid,ew,aid)
         T_data.level[""..math.random(1, 5)] = 0
         Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
         Player.sendmsgEx(play, "提示:#251|你获得了新的灵根，请前往灵根升级界面查看")
-        Player.zxrw_wancheng(play, 2, "T_灵根") --完成任务
-
         sendluamsg(play,100,npcid,1,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
 
     elseif ew == 2 then--装配主灵根

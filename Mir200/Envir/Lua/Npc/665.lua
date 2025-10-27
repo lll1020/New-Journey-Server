@@ -430,14 +430,14 @@ function ggna(play,id)
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>攻沙开始</font>","Type":9}')
     elseif id == "23" then
         local cailiao = {
-            "殘魂必殺刃",
-            "殘魂必殺甲",
-            "殘魂神盔",
-            "殘魂神链",
-            "殘魂神镯",
-            "殘魂神戒",
-            "殘魂神带",
-            "殘魂神靴",
+            "冥海圣刃",
+            "冥海圣武甲",
+            "冥海圣武盔",
+            "冥海圣武链",
+            "冥海圣武镯",
+            "冥海圣武戒",
+            "冥海圣武带",
+            "冥海圣武靴",
         }
         for k, v in pairs(cailiao) do
             giveitem(play,v,1)

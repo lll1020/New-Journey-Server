@@ -62,6 +62,37 @@ function stdmodefunc18(play, item)
     delitembymakeindex(play, getiteminfo(play, item, 1), sl)
 end
 
+--------------------双击物品触发-------------------元宝红包
+local itme_13 = {
+    ["元宝(小)"] = {100,1000},
+    ["元宝(中)"] = {1000,10000},
+    ["元宝(大)"] = {10000,100000},
+    ["元宝(超级)"] = {100000,1000000},
+}
+function stdmodefunc13(play, item)
+    local itemName = getiteminfo(actor, item, ConstCfg.iteminfo.name)
+    local min = itme_13[itemName][1]
+    local max = itme_13[itemName][2]
+    local num = math.random(min, max)
+    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', num, '双击获得元宝红包', true)
+    delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+end
+
+--------------------双击物品触发-------------------灵符红包
+local itme_14 = {
+    ["灵符红包(小)"] = {10,20},
+    ["灵符红包(中)"] = {30,50},
+    ["灵符红包(大)"] = {100,200},
+}
+function stdmodefunc13(play, item)
+    local itemName = getiteminfo(actor, item, ConstCfg.iteminfo.name)
+    local min = itme_14[itemName][1]
+    local max = itme_14[itemName][2]
+    local num = math.random(min, max)
+    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', num, '双击获得灵符红包', true)
+    delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+end
+
 ---千里传音
 function stdmodefunc234(play) ---千里传音 提示：使用50级
     if checkkuafu(play) then
