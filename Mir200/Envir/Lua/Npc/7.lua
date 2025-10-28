@@ -34,6 +34,10 @@ function npc.link(play, npcid, p2, p3, msgData)
         sendluamsg(play,101,1005,0,0,"qhcg")
         Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
 
+        if (equipLevel + 1) == 15 then
+            Player.title_give(play, _config.title)
+            Player.sendmsgEx(play,  "恭喜你，获得称号【".._config.title.."】#57")
+        end
 
     elseif p2 == 2 then
         giveonitem(play,_config.where,"攻速[lv1]",1)

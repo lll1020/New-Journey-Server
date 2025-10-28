@@ -726,6 +726,86 @@ npc[516] = function(play,p2,p3,msgData)  --免费赞助
         end
     end
 end
+--聚宝盆
+npc[517] = function(play,p2,p3,msgData)  --聚宝盆
+    if p2 == 0 then
+        local data = {}
+        data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_聚宝盆"])
+        data["T_data"].level = data["T_data"].level or 1
+        data["jf"] = getplaydef(play,VarCfg["U_聚宝盆积分"])
+        data["cs"] = getplaydef(play,VarCfg["J_聚宝盆领取次数"])
+        sendluamsg(play, 101, 517, 0, 0,tbl2json(data))
+    elseif p2 == 1 then -- 聚宝盆升级
+        local T_data = Player.getJsonTableByVar(play, VarCfg["T_聚宝盆"])
+        T_data.level = T_data.level or 1
+        if T_data.level == 1 then
+            local T_sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
+            if T_data["首充"] == 1 or T_data["补充"] == 1 then
+                T_data.level = 2
+                Player.setJsonVarByTable(play, VarCfg["T_聚宝盆"], T_data)
+                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#28ef01\'>升级成功...</font>","Type":9}')
+                sendluamsg(play, 101, 517, 1, 2,"")
+            else
+                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#ff0500\'>只有首充或补充过首充才可升级聚宝盆...</font>","Type":9}')
+                return
+            end
+        elseif T_data.level == 2 then
+            if getflagstatus(play,VarCfg.BS_mztq) == 1 then
+                T_data.level = 3
+                Player.setJsonVarByTable(play, VarCfg["T_聚宝盆"], T_data)
+                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#28ef01\'>升级成功...</font>","Type":9}')
+                sendluamsg(play, 101, 517, 1, 3,"")
+            else
+                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#ff0500\'>未激活【解绑特权】,无法升级聚宝盆...</font>","Type":9}')
+                return
+            end
+        elseif T_data.level == 3 then--累计充值 200
+            if querymoney(play,23) >= 200 then
+                T_data.level = 4
+                Player.setJsonVarByTable(play, VarCfg["T_聚宝盆"], T_data)
+                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#28ef01\'>升级成功...</font>","Type":9}')
+                sendluamsg(play, 101, 517, 1, 4,"")
+            else
+                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#ff0500\'>累计充值200元才能升级聚宝盆...</font>","Type":9}')
+                return
+            end
+        elseif T_data.level == 4 then--累计充值 300
+            if querymoney(play,23) >= 300 then
+                T_data.level = 5
+                Player.setJsonVarByTable(play, VarCfg["T_聚宝盆"], T_data)
+                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#28ef01\'>升级成功...</font>","Type":9}')
+                sendluamsg(play, 101, 517, 1, 5,"")
+            else
+                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#ff0500\'>累计充值300元才能升级聚宝盆...</font>","Type":9}')
+                return
+            end
+        elseif T_data.level == 5 then--满级
+            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#ff0500\'>聚宝盆已经满级...</font>","Type":9}')
+            return
+        end
+    elseif p2 == 2 then -- 聚宝盆领取奖励
+        local T_data = Player.getJsonTableByVar(play, VarCfg["T_聚宝盆"])
+        T_data.level = T_data.level or 1
+        local config = teshudata["anniu_517"].details[T_data.level]
+        local jf = getplaydef(play,VarCfg["U_聚宝盆积分"])
+        local cs = getplaydef(play,VarCfg["J_聚宝盆领取次数"])
+        if cs < config.maxcs then
+            if jf >= config.jf then
+                Player.rwjl(play,config.give,"聚宝盆奖励",1)
+                setplaydef(play,VarCfg["U_聚宝盆积分"],0)
+                setplaydef(play,VarCfg["J_聚宝盆领取次数"],cs + 1)
+                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#28ef01\'>领取成功...</font>","Type":9}')
+                sendluamsg(play, 101, 517, 2, 0,"")
+            else
+                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#ff0500\'>积分不足,无法领取奖励...</font>","Type":9}')
+                return
+            end
+        else
+            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#ff0500\'>当前等级领取次数已达上限...</font>","Type":9}')
+            return
+        end
+    end
+end
 
 
 

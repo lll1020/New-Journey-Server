@@ -128,24 +128,60 @@ kfhg 23 26 -> kfhjsbk 86 102
 [丹道古藏|new_44   丹道古藏] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 ;==============================================四大陆野外地图==============================
+[四大陆地图一|new_44   四大陆地图一] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[四大陆地图二|new_44   四大陆地图二] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[四大陆地图三|new_44   四大陆地图三] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[四大陆地图四|new_44   四大陆地图四] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[四大陆地图五|new_44   四大陆地图五] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[四大陆地图六|new_44   四大陆地图六] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[四大陆地图七|new_44   四大陆地图七] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[四大陆地图八|new_44   四大陆地图八] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 
 
 ;==============================================五大陆野外地图==============================
-
+[五大陆地图一|new_44   五大陆地图一] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[五大陆地图二|new_44   五大陆地图二] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[五大陆地图三|new_44   五大陆地图三] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[五大陆地图四|new_44   五大陆地图四] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[五大陆地图五|new_44   五大陆地图五] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[五大陆地图六|new_44   五大陆地图六] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[五大陆地图七|new_44   五大陆地图七] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[五大陆地图八|new_44   五大陆地图八] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 
 ;==============================================六大陆野外地图==============================
-
+[六大陆地图一|new_44   六大陆地图一] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[六大陆地图二|new_44   六大陆地图二] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[六大陆地图三|new_44   六大陆地图三] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[六大陆地图四|new_44   六大陆地图四] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[六大陆地图五|new_44   六大陆地图五] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[六大陆地图六|new_44   六大陆地图六] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[六大陆地图七|new_44   六大陆地图七] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[六大陆地图八|new_44   六大陆地图八] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 
 ;==============================================七大陆野外地图==============================
-
+[七大陆地图一|new_44  七大陆地图一] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[七大陆地图二|new_44  七大陆地图二] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[七大陆地图三|new_44  七大陆地图三] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[七大陆地图四|new_44  七大陆地图四] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[七大陆地图五|new_44  七大陆地图五] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[七大陆地图六|new_44  七大陆地图六] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[七大陆地图七|new_44  七大陆地图七] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[七大陆地图八|new_44  七大陆地图八] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 
 
 ;==============================================八大陆野外地图==============================
-
+[八大陆地图一|new_44   八大陆地图一] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[八大陆地图二|new_44   八大陆地图二] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[八大陆地图三|new_44   八大陆地图三] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[八大陆地图四|new_44   八大陆地图四] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[八大陆地图五|new_44   八大陆地图五] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[八大陆地图六|new_44   八大陆地图六] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[八大陆地图七|new_44   八大陆地图七] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[八大陆地图八|new_44   八大陆地图八] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 ;==============================================九大陆野外地图==============================
 
 

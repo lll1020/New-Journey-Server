@@ -19,20 +19,30 @@ function npc.link(play, npcid, p2, p3, msgData)
         end
         dj_data = dj_data + 1
         local config = _config.config[dj_data]
+
         local name, num = Player.checkItemNumByTable(play, config.cost)
         if name then
             Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
             return
         end
         Player.takeItemByTable(play, config.cost, ",兰姐好感度",nil)
+        if FProbabilityHit(config.gl) then
+            Player.sendmsgEx(play,  "很遗憾，好感度提升失败，请继续努力#57")
+            return
+        end
+
         setplaydef(play, VarCfg["U_兰姐好感度"], dj_data)
 
         delattlist(play, "兰姐好感度")
         addattlist(play, "兰姐好感度", "=", "3#".._config.attrID.."#".._config.config[dj_data].ratio, 1)
         sendluamsg(play,100,npcid,1,0,"")
 
+        if dj_data == 5 then
+            npc.half_Level(play)
+            Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
+        end
+
         if dj_data == _config.max_level then
-            npc.AllMaxLevel(play)
             Player.sendmsgEx(play, "恭喜你，你的好感度提升到了|"..dj_data.."级#249|，已满级")
         else
             Player.sendmsgEx(play, "恭喜你，你的好感度提升到了|"..dj_data.."级#249|")
@@ -42,8 +52,8 @@ function npc.link(play, npcid, p2, p3, msgData)
 end
 
 
-function npc.AllMaxLevel(play)
-    Player.rwjl(play,{{_config.max_give,1}},"兰姐好感度",nil)
+function npc.half_Level(play)
+    Player.rwjl(play,{{_config.half_give,1}},"兰姐好感度",nil)
 end
 
 

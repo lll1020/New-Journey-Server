@@ -320,14 +320,10 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
         end
 		return Damage
 	else
-        local js = getbaseinfo(Target, 18)
-        if js > 0 then
-            Damage = Damage - (Damage * js/10000)
-        end
         ---------------------------------------------对怪切割计算
 		local zd = getbaseinfo(Target, 12)
 		local sy = -1
-		if zd == 0 then
+		if zd == 0 or true then
 			local zhi = getbaseinfo(play, 51, 244)
 			if zhi > 0 then
 				humanhp(Target, '-', zhi, math.random(100) > 10 and 101 or 112, 0, play, 1)
@@ -560,6 +556,9 @@ function killmon(play, mob)
         setplaydef(play,VarCfg.J_jsgw[2],getplaydef(play,VarCfg.J_jsgw[2])+1)
     end
 
+    setplaydef(play,VarCfg["U_聚宝盆积分"],getplaydef(play,VarCfg["U_聚宝盆积分"])+math.random(1,4))
+
+
     setplaydef(play,VarCfg.U_fldt[2],getplaydef(play,VarCfg.U_fldt[2])+1)
     local mz = getbaseinfo(mob, 1, 1)
     local T_grss = Player.getJsonTableByVar(play, VarCfg.T_grss)
@@ -720,6 +719,7 @@ end
 
 --------------------累计充值改变触发-------------------冠名称号
 function moneychange23(play)
+    setplaydef(play,VarCfg["U_真实充值"],querymoney(play,23))
     if querymoney(play,23) >= 998 and not checktitle(play,"踏月主宰") then
         messagebox(play,"累计充值数量已达到,可以去领取冠名奖励了")
     end
