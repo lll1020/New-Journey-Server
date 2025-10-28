@@ -306,6 +306,10 @@ npc[18] = function(play, p2, p3, data)  --新手礼包
         local rwid = getplaydef(play,VarCfg.U_zxrw[1])
         if rwid == 1 then
             Player.zxrw_wancheng(play, getplaydef(play,VarCfg.U_zxrw[1]), "新手礼包") --完成任务
+
+
+            Player.rwjl(play,{{ "盟重回城石", 1 } ,{ "随机传送石", 1 }, { "龙骨刀", 1 }, { "龙骨甲", 1 }},"兰姐好感度",nil)
+
             sendluamsg(play,101,1005,0,0,"lqcg")
             sendluamsg(play, 101, 18, 1, 0, "")
         else--已完成
