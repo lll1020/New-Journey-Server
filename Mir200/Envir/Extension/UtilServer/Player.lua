@@ -693,12 +693,9 @@ function Player.huishou(play, hs_constant)
                         elseif huishou.zsfj[idx] then
                             if pz['2_'..huishou.zsfj[idx][1]] or pz['2_'..huishou.zsfj[idx][1].."_"..huishou.zsfj[idx][2]] or pz[""..idx] then
                                 sq = sq .. getiteminfo(play, v, 1) .. ','
-                                if huishou.zsfj[idx][1] == 9 then
-                                    cl[3] = cl[3] + huishou.zsfj[idx][4]
-                                else
-                                    cl[1] = cl[1] + huishou.zsfj[idx][4]
-                                    cl[2] = cl[2] + huishou.zsfj[idx][5]
-                                end
+                                cl[3] = cl[3] + huishou.zsfj[idx][4]
+                                cl[4] = cl[4] + huishou.zsfj[idx][5]
+                                cl[5] = cl[5] + huishou.zsfj[idx][6]
                             end
                         elseif huishou.clfj[idx] then
                             if pz['3_'..huishou.clfj[idx][1]] or pz['3_'..huishou.clfj[idx][1].."_"..huishou.clfj[idx][2]] or pz[""..idx] then
@@ -719,15 +716,11 @@ function Player.huishou(play, hs_constant)
             if cl[2] > 0 then
                 changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', cl[2] + math.floor(cl[2] * getbaseinfo(play,51,205) / 10000), '回收获得', true)
             end
-            if cl[3] > 0 then
-                changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 7 or 8, '+', cl[3], '回收获得', true)
-            end
             local gz = getflagstatus(play,VarCfg.BS_mztq) == 1 and 0 or 850
             if cl[9] > 0 then
                 giveitem(play,"副装碎片",cl[9],gz)
             end
             Login_msg(play,10,cl[1],cl[2])
-
         end
     else
         local hs = hs_constant

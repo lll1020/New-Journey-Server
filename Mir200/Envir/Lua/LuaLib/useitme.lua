@@ -38,6 +38,10 @@ function stdmodefunc10(play, item)
     end
     return false
 end
+--------------------双击物品触发-------------------经验通用
+function stdmodefunc12(play, item)
+    changeexp(play, '+', getstditeminfo(getiteminfo(play, item, 2), 8), false)
+end
 --------------------双击物品触发-------------------红名清洗卷
 function stdmodefunc20(play, item)
     setbaseinfo(play,46,getbaseinfo(play,46)-100)
@@ -84,7 +88,7 @@ local itme_14 = {
     ["灵符红包(中)"] = {30,50},
     ["灵符红包(大)"] = {100,200},
 }
-function stdmodefunc13(play, item)
+function stdmodefunc14(play, item)
     local itemName = getiteminfo(actor, item, ConstCfg.iteminfo.name)
     local min = itme_14[itemName][1]
     local max = itme_14[itemName][2]

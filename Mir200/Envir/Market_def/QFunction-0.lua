@@ -212,15 +212,15 @@ function pickupitemex(play, item)
             end
         end
     end
-	if idx > 10010 and idx < 10019 then    --经验丹
+	if idx > 10006 and idx < 10022 then    --经验丹
         local sl = getiteminfo(play, item, 5)
         changeexp(play, '+', getstditeminfo(idx, 8) * sl, false)
         delitembymakeindex(play, getiteminfo(play, item, 1), sl)
-    elseif idx > 10018 and idx < 10023 then    --元宝
+    elseif idx > 10022 and idx < 10040 then    --元宝
         local sl = getiteminfo(play, item, 5)
         changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', getstditeminfo(idx, 8) * sl, '捡物自动吃', true)
         delitembymakeindex(play, getiteminfo(play, item, 1), sl)
-    elseif idx > 10022 and idx < 10034 then    --灵符
+    elseif idx > 10045 and idx < 10063 then    --灵符
         local sl = getiteminfo(play, item, 5)
         changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', getstditeminfo(idx, 8) * sl, '捡物自动吃', true)
         delitembymakeindex(play, getiteminfo(play, item, 1), sl)
@@ -1026,7 +1026,7 @@ local qf_teshunpc = {
     [501] = 500, [502] = 500, [503] = 500, [504] = 500, [505] = 500, [506] = 500, [507] = 500, [508] = 500, [509] = 500, -- 世界地图
     [32] = 32, [33] = 32, [34] = 32, [35] = 32, [36] = 32, [37] = 32, [38] = 32, [39] = 32, [40] = 32,-- 转生
     [21] = 21,-- 境界修为
-
+    [17] = 17,-- 货币兑换
 }
 function clicknpc(play, npcid)
     --打印
