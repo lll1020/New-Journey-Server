@@ -38,7 +38,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         sendluamsg(play,100,npcid,1,0,"")
 
         if dj_data == 5 then
-            npc.half_Level(play)
+            Player.rwjl(play,{{_config.half_give,1}},"兰姐好感度",nil)
             Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
         end
 
@@ -50,14 +50,6 @@ function npc.link(play, npcid, p2, p3, msgData)
     elseif p2 == 2 then
     end
 end
-
-
-function npc.half_Level(play)
-    Player.rwjl(play,{{_config.half_give,1}},"兰姐好感度",nil)
-end
-
-
-
 
 
 return npc

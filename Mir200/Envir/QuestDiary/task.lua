@@ -151,6 +151,7 @@ function clicknewtask(play,rwid)
     if rwid < 500 and getplaydef(play,VarCfg.U_zxrw[1]) ~= rwid then
         return
     end
+     ---------------------------------------------------任务逻辑处理
     if constant.rw_syb[rwid] then
         if not constant.rw_syb[rwid].sg then
             if constant.rw_syb[rwid].ktg and constant.rw_syb[rwid].ktg == 1 then
@@ -241,6 +242,8 @@ function clicknewtask(play,rwid)
                 mapmove(play,constant.rw_syb[rwid][4][1],constant.rw_syb[rwid][4][2],constant.rw_syb[rwid][4][3],3)
                 startautoattack(play)
             end
+        elseif lx == 14 then
+            sendluamsg(play, 101, 0, 1, 1,'{"lx":14}')
         elseif lx == 15 then--拾取物品类任务
             local dqdt = getbaseinfo(play,3)
             local clwc = true
@@ -328,7 +331,7 @@ end
 --------------------删除任务触发-------------------
 function deletetask(play,rwid)
     setplaydef(play,VarCfg.N_rwlg,0)
-    if rwid < 18 then
+    if rwid < 40 then
         setplaydef(play,VarCfg.U_zxrw[1],rwid+1)
         setplaydef(play,VarCfg.U_zxrw[2],0)
     end
