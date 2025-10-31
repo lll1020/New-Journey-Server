@@ -24,5 +24,8 @@ function buffchange(play, buffid, zid, lx)
                 addbuff(play,20078,180)
             end
         end
+    elseif buffid == 20000 then if lx == 4 then Npclib['anniu'][19](play, 1, 0, "") end
+    elseif buffid == 20001 then if lx == 4 then Npclib['anniu'][19](play, 1, 0, "") end
+    elseif buffid == 20002 then if lx == 4 then Npclib['anniu'][19](play, 1, 0, "") end
     end
 end

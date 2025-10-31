@@ -145,6 +145,25 @@ function Buff.login(play)
             Buff[idx](play,1)
         end
     end
+
+    -------------------------------------------------------------------飞剑系统
+    local T_data = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
+    if T_data["open"] and T_data["open"] == 1 then
+        local level = getbaseinfo(play,39)
+        local count = 0
+        if level >= 1 or hasbuff(play,20000) then
+            count = count + 1
+        end
+        local T_data_cs = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
+        if T_data["首充"] == 1 or T_data["补充"] == 1 or hasbuff(play,20001) then
+            count = count + 1
+        end
+        if getflagstatus(play,VarCfg.BS_mztq) == 1 or hasbuff(play,20002) then
+            count = count + 1
+        end
+
+        sendluamsg(play,101,19,1,0,tbl2json({ count = count,psData = {cd = (T_data.cd or (hasbuff(play,20002) and 5) or 10)}}))
+    end
     -------------------------------------------------------------------额外附加属性登录初始化
     --灵根鉴定
     local data = Player.getJsonTableByVar(play, VarCfg["T_灵根鉴定"])

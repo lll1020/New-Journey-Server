@@ -756,6 +756,10 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
                 Player.title_give(play, teshudata["anniu_504"].ch,1)
                 Player.rwjl(play, teshudata["anniu_504"].give, "øÏ»À“ª≤Ω",1,1000)
                 setflagstatus(play,constant.BS_mztq,1)
+
+                local T_data_fj = Player.getJsonTableByVar(play, VarCfg["T_∑…Ω£"])
+                T_data_fj.cd = 5
+                Player.setJsonVarByTable(play, VarCfg["T_∑…Ω£"], T_data_fj)
                 --sendluamsg(play,101,504,1,0,"")
             end
         elseif Gold == 6 then
@@ -1003,23 +1007,6 @@ function castlewarend()
 end
 
 
-function feijian(play,msgData) ---∑…Ω£
-    local msgdata = json2tbl(msgData)
-    local mapid = getbaseinfo(play, 3)
-    local monobj = getmonbyuserid(mapid, msgdata.paramList[1])
-        if monobj then
-            local cd,time = 1 - 0.1,os.time()
-            if getplaydef(play,"N$∑…Ω£") + cd < time then
-                setplaydef(play,"N$∑…Ω£",time)
-                humanhp(monobj, '-', 10000, 107, 0, play, 1)
-                healthspellchanged(monobj)
-            else
-            --sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>∑…Ω£¿‰»¥÷–...</font>","FColor":219,"BColor":255,"Type":1}')
-            return
-        end
-    end
-end
-
 
 --------------------NPCµ„ª˜¥•∑¢--------------------
 local qf_teshunpc = {
@@ -1080,7 +1067,5 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
         else
             Npclib[p1].main(play, p2)
         end
-    elseif msgID == 666 then
-        feijian(play,msgData)
 	end
 end

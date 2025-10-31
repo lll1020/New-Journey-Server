@@ -54,10 +54,6 @@ function npc.main(play,npcid)
 	]])
 end
 
-function buff(play)
-    addbuff(play,19994)
-end
-
 
 local data = {
     {

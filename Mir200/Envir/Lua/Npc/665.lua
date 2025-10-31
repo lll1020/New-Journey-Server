@@ -443,7 +443,11 @@ function ggna(play,id)
             giveitem(play,v,1)
         end
     elseif id == "24" then
-        FSetSerendipity(play, 12)
+        Player.rwjl(play,{{ "盟重回城石", 1 } ,{ "随机传送石", 1 }, { "龙骨刀", 1 }, { "龙骨甲", 1 }},"新手礼包",nil)
+        addbuff(play,20000)
+        addbuff(play,20001)
+        addbuff(play,20002)
+        Npclib['anniu'][19](play, 1, 0, "")
 
     end
 

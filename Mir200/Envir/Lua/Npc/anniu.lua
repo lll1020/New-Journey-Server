@@ -307,14 +307,96 @@ npc[18] = function(play, p2, p3, data)  --新手礼包
         if rwid == 1 then
             Player.zxrw_wancheng(play, getplaydef(play,VarCfg.U_zxrw[1]), "新手礼包") --完成任务
 
-
-            Player.rwjl(play,{{ "盟重回城石", 1 } ,{ "随机传送石", 1 }, { "龙骨刀", 1 }, { "龙骨甲", 1 }},"兰姐好感度",nil)
+            Player.rwjl(play,{{ "盟重回城石", 1 } ,{ "随机传送石", 1 }, { "龙骨刀", 1 }, { "龙骨甲", 1 }},"新手礼包",nil)
+            addbuff(play,20000)
+            addbuff(play,20001)
+            addbuff(play,20002)
+            Npclib['anniu'][19](play, 1, 0, "")
 
             sendluamsg(play,101,1005,0,0,"lqcg")
             sendluamsg(play, 101, 18, 1, 0, "")
         else--已完成
             sendmsg(play,1,'{"Msg":"<font color=\'#ff0500\'>已经领取过礼包了...</font>","Type":9}')
             return
+        end
+    end
+end
+function feijian(play,msgData) ---飞剑
+    local msgdata = json2tbl(msgData)
+    local mapid = getbaseinfo(play, 3)
+    local monobj = getmonbyuserid(mapid, msgdata.paramList[1])
+    local nvalue = 0
+    local T_data = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
+    if monobj then
+        if msgdata.paramList[2] == 1 then
+            if getbaseinfo(play,39) >= 1 or hasbuff(play,20000) then
+                nvalue = (nvalue + 500) * (1 + ((T_data.cd or hasbuff(play,20002)) and 1 or 0) + ((T_data.ratio or hasbuff(play,20001)) and 1 or 0))
+            else
+                return
+            end
+        elseif msgdata.paramList[2] == 2 then
+            if T_data.ratio or hasbuff(play,20001) then
+                nvalue = (nvalue + 1000)
+            else
+                return
+            end
+        elseif msgdata.paramList[2] == 3 then
+            if T_data.cd or hasbuff(play,20002) then
+                nvalue = (nvalue + 5000)
+            else
+                return
+            end
+        elseif msgdata.paramList[2] == 4 then
+            return
+        end
+        local cd,time = (T_data.cd or (hasbuff(play,20002) and 5) or 10) - 0.1,os.time()
+        if getplaydef(play,"N$飞剑_"..msgdata.paramList[2]) + cd < time then
+            setplaydef(play,"N$飞剑_"..msgdata.paramList[2],time)
+            humanhp(monobj, '-', nvalue, 107, 0, play, 1)
+            healthspellchanged(monobj)
+        else
+            --sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>飞剑冷却中...</font>","FColor":219,"BColor":255,"Type":1}')
+            return
+        end
+    end
+end
+
+npc[19] = function(play, p2, p3, data)  --飞剑系统
+    if p2 == 0 then  --飞剑系统  --初始化页面
+        local tmp_data = {}
+        tmp_data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
+        sendluamsg(play, 101, 19, 0, 0, tbl2json(tmp_data))
+    elseif p2 == 1 then  --飞剑系统激活飞剑--取消激活
+        local T_data = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
+        if T_data["open"] and T_data["open"] == 1 then
+            Player.sendmsgEx(play,"飞剑已激活，无需重复激活...")
+        else
+            T_data["open"] = 1
+            Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data)
+
+            local count = 0
+            if getbaseinfo(play,39) >= 1 or hasbuff(play,20000) then
+                count = count + 1
+            end
+            local T_data_cs = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
+            if T_data["首充"] == 1 or T_data["补充"] == 1 or hasbuff(play,20001) then
+                count = count + 1
+            end
+            if getflagstatus(play,VarCfg.BS_mztq) == 1 or hasbuff(play,20002) then
+                count = count + 1
+            end
+
+            sendluamsg(play,101,19,1,0,tbl2json({ count = count,psData = {cd = (T_data.cd or (hasbuff(play,20002) and 5) or 10)}}))
+            sendmsg(play,1,'{"Msg":"<font color=\'#00ff00\'>飞剑已激活...</font>","Type":9}')
+        end
+    elseif p2 == 2 then  --飞剑伤害计算
+        feijian(play,data)
+    elseif p2 == 3 then  --飞剑取消
+        if T_data["open"] and T_data["open"] == 1 then
+            T_data["open"] = 0
+            Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data)
+            sendluamsg(play,101,19,1,1,"")
+            sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>飞剑已取消激活...</font>","Type":9}')
         end
     end
 end
@@ -339,6 +421,12 @@ npc[501] = function(play,p2,p3,data)  --首充礼包
                     addskill(play,25,3)
                     Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
                     sendluamsg(play,101,1005,0,0,"lqcg")
+
+                    local T_data_fj = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
+                    T_data_fj.ratio = 2
+                    Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data_fj)
+
+
                 elseif (T_data["other_lb"] and T_data["other_lb"] == 1 and T_data["jq_time"] ~= time_data) then
                     T_data["other_lb"] = 2
                     Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
