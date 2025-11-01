@@ -758,7 +758,7 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
                 setflagstatus(play,constant.BS_mztq,1)
 
                 local T_data_fj = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
-                T_data_fj.cd = 5
+                T_data_fj.cd = teshudata["anniu_19"].cd/2
                 Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data_fj)
                 --sendluamsg(play,101,504,1,0,"")
             end
@@ -1037,7 +1037,9 @@ end
 -- 消息号 100，NPC点击事件，p1:NPCid,p2:按钮id,p3:额外,
 --------------------消息监听触发--------------------
 function handlerequest(play, msgID, p1, p2, p3, msgData)
-    release_print("handlerequest", "玩家："..getbaseinfo(play,1), "消息id："..msgID, "npcid："..p1, "按钮2："..p2, "额外3："..p3, "消息数据："..msgData)
+    if p1 ~= 19 then
+        release_print("handlerequest", "玩家："..getbaseinfo(play,1), "消息id："..msgID, "npcid："..p1, "按钮2："..p2, "额外3："..p3, "消息数据："..msgData)
+    end
 	if msgID == 100 then
         if qf_teshunpc[p1] then --可以无视距离点击npc
             Npclib[qf_teshunpc[p1]].link(play, p1, p2, p3, msgData)

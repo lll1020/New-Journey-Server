@@ -41,6 +41,9 @@ function npc.link(play,npcid,ew,aid)
             sendluamsg(play,100,npcid,1,0,"")
             delattlist(play, "境界修为")
             Login_jjxw(play)
+            if level == 9 then
+                Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
+            end
 
             sendluamsg(play,101,1005,0,0,"tpcg")
         else

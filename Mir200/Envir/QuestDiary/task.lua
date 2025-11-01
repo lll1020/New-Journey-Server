@@ -335,6 +335,10 @@ function deletetask(play,rwid)
         setplaydef(play,VarCfg.U_zxrw[1],rwid+1)
         setplaydef(play,VarCfg.U_zxrw[2],0)
     end
+    if rwid == 18 then
+        setplaydef(play, VarCfg["U_æ≥ΩÁ–ﬁ¡∂"][2], 900)
+    end
+
     if constant.rw_syb[rwid+1] and rwid < 1000 then
         local lx = constant.rw_syb[rwid+1][1]
         if rwid < 1000 then
@@ -421,7 +425,7 @@ function deletetask(play,rwid)
         sj[""..rwid] = true
         setplaydef(play, VarCfg.T_rwjl, tbl2json(sj))
     end
-    if rwid < 18 then
+    if rwid < 40 then
         sendluamsg(play,103,1,0,0,'{"rwid":'..(rwid+1)..'}')
     end
     if rwid > 2000 then

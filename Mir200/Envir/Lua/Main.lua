@@ -69,6 +69,7 @@ local preloadModules = {
     22,
     25,
     28,
+    32,
 }
 
 -- 直接加载预置模块

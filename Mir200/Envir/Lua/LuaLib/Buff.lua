@@ -161,8 +161,7 @@ function Buff.login(play)
         if getflagstatus(play,VarCfg.BS_mztq) == 1 or hasbuff(play,20002) then
             count = count + 1
         end
-
-        sendluamsg(play,101,19,1,0,tbl2json({ count = count,psData = {cd = (T_data.cd or (hasbuff(play,20002) and 5) or 10)}}))
+        sendluamsg(play,101,19,1,0,tbl2json({ count = count,psData = {cd = (T_data.cd or (hasbuff(play,20002) and teshudata["anniu_19"].cd/2) or teshudata["anniu_19"].cd)}}))
     end
     -------------------------------------------------------------------额外附加属性登录初始化
     --灵根鉴定

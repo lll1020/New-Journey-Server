@@ -349,7 +349,8 @@ function feijian(play,msgData) ---∑…Ω£
         elseif msgdata.paramList[2] == 4 then
             return
         end
-        local cd,time = (T_data.cd or (hasbuff(play,20002) and 5) or 10) - 0.1,os.time()
+
+        local cd,time = (T_data.cd or (hasbuff(play,20002) and teshudata["anniu_19"].cd/2) or teshudata["anniu_19"].cd) - 0.1,os.time()
         if getplaydef(play,"N$∑…Ω£_"..msgdata.paramList[2]) + cd < time then
             setplaydef(play,"N$∑…Ω£_"..msgdata.paramList[2],time)
             humanhp(monobj, '-', nvalue, 107, 0, play, 1)
@@ -386,12 +387,13 @@ npc[19] = function(play, p2, p3, data)  --∑…Ω£œµÕ≥
                 count = count + 1
             end
 
-            sendluamsg(play,101,19,1,0,tbl2json({ count = count,psData = {cd = (T_data.cd or (hasbuff(play,20002) and 5) or 10)}}))
+            sendluamsg(play,101,19,1,0,tbl2json({ count = count,psData = {cd = (T_data.cd or (hasbuff(play,20002) and teshudata["anniu_19"].cd/2) or teshudata["anniu_19"].cd)}}))
             sendmsg(play,1,'{"Msg":"<font color=\'#00ff00\'>∑…Ω£“—º§ªÓ...</font>","Type":9}')
         end
     elseif p2 == 2 then  --∑…Ω£…À∫¶º∆À„
         feijian(play,data)
     elseif p2 == 3 then  --∑…Ω£»°œ˚
+        local T_data = Player.getJsonTableByVar(play, VarCfg["T_∑…Ω£"])
         if T_data["open"] and T_data["open"] == 1 then
             T_data["open"] = 0
             Player.setJsonVarByTable(play, VarCfg["T_∑…Ω£"], T_data)
