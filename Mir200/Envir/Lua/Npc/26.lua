@@ -32,7 +32,7 @@ function npc.link(play,npcid,ew,aid)
         local weight = ""
         --20次以下不出5
         if U_num < 20 then
-            weight = "1#30|2#30|3#20|4#15"
+            weight = "1#40|2#40|3#25|4#10"
         else
             weight = "1#30|2#30|3#20|4#20|5#5"
         end
