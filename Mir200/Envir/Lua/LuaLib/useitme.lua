@@ -157,3 +157,14 @@ function stdmodefunc30(play, item)
     setplaydef(play, VarCfg["U_境界修炼"][2], exp)
     sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>境界修炼经验+'..getstditeminfo(getiteminfo(play, item, 2), 8)..'</font>","Type":9}')
 end
+
+function stdmodefunc31(play, item)
+    local T_data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
+    T_data.jf = (T_data.jf or 0) + getstditeminfo(getiteminfo(play, item, 2), 8)
+    Player.setJsonVarByTable(play, VarCfg["T_天书"], T_data)
+
+    local itemobj = linkbodyitem(play, teshudata["npc_24"].where)
+    setcustomitemprogressbar(play, itemobj, 1, tbl2json({["cur"] = T_data.jf}))
+    refreshitem(play, itemobj)
+    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>天书杀意值+'..getstditeminfo(getiteminfo(play, item, 2), 8)..'</font>","Type":9}')
+end

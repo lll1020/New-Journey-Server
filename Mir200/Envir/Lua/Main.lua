@@ -67,6 +67,7 @@ local preloadModules = {
     16,
     21,
     22,
+    24,
     25,
     28,
     32,
