@@ -1,8 +1,5 @@
 
 npc = {}
-
-
-
 --Õ¼²·
 
 local _config = teshudata["npc_26"]
