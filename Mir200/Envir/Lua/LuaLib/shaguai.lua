@@ -63,6 +63,27 @@ shaguai = {
 			end
 		end
 	end,
+	["30"] = function(play,mob)      --灵根使者
+		local du = getbaseinfo(play,3)
+		if getbaseinfo(play,1).."_lgsz" == du then
+			local T_dljq = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+			T_dljq["npc_602"] = T_dljq["npc_602"] or {}
+
+			if getbaseinfo(mob,1) == "金灵根守护兽" and T_dljq["npc_602"][""..1] and T_dljq["npc_602"][""..1] == 0 then
+				T_dljq["npc_602"][""..1] = 1
+			elseif getbaseinfo(mob,1) == "木灵根守护兽" and T_dljq["npc_602"][""..2] and T_dljq["npc_602"][""..2] == 0 then
+				T_dljq["npc_602"][""..2] = 1
+			elseif getbaseinfo(mob,1) == "水灵根守护兽" and T_dljq["npc_602"][""..3] and T_dljq["npc_602"][""..3] == 0 then
+				T_dljq["npc_602"][""..3] = 1
+			elseif getbaseinfo(mob,1) == "火灵根守护兽" and T_dljq["npc_602"][""..4] and T_dljq["npc_602"][""..4] == 0 then
+				T_dljq["npc_602"][""..4] = 1
+			elseif getbaseinfo(mob,1) == "土灵根守护兽" and T_dljq["npc_602"][""..5] and T_dljq["npc_602"][""..5] == 0 then
+				T_dljq["npc_602"][""..5] = 1
+			end
+			Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
+			Player.sendmsgEx(play,  "成功击杀灵根守护兽#57")
+		end
+	end
 }
 
 

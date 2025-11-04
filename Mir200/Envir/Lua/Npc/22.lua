@@ -81,7 +81,7 @@ function npc.link(play,npcid,ew,aid)
             Player.sendmsgEx(play, "提示:#251|你的主灵根属性已经达到最高等级")
             return
         end
-        local config = aid >= 6 and _config.main_updata.details.low[T_data.level[""..aid]] or _config.main_updata.details.up[T_data.level[""..aid]]
+        local config = aid < 6 and _config.main_updata.details.low[T_data.level[""..aid]] or _config.main_updata.details.up[T_data.level[""..aid]]
         local name, num = Player.checkItemNumByTable(play, config.cost)
         if name then
             Player.sendmsgEx(play, string.format("你的|%s#249|不足#249", name))

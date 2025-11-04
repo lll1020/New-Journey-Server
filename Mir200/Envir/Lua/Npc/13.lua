@@ -37,7 +37,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         addattlist(play, "兰姐好感度", "=", "3#".._config.attrID.."#".._config.config[dj_data].ratio, 1)
         sendluamsg(play,100,npcid,1,0,"")
 
-        if dj_data == 5 then
+        if dj_data == 1 then
             Player.rwjl(play,{{_config.half_give,1}},"兰姐好感度",nil)
             Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
         end
