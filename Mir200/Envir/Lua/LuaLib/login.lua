@@ -36,7 +36,6 @@ function Login.main(play)
         setplaydef(play,VarCfg.T_ywl,"{}")--异闻录
         setplaydef(play,VarCfg.T_hdjl,"{}")--活动奖励
         setplaydef(play,VarCfg.T_zscl,"{}")--转生材料掉落
-        setplaydef(play,VarCfg.T_txzr,"{}")--天选之人点数
         setplaydef(play,VarCfg.T_sq_jd,"{}")--必爆神器计数
         setplaydef(play,VarCfg.T_tshs,"{}")--特殊回收
         setplaydef(play,VarCfg.T_rwsg,"{}")--特殊任务杀怪
@@ -44,6 +43,11 @@ function Login.main(play)
 
         setplaydef(play, VarCfg["U_登录天数"], 1)
 
+        local T_txzr = {}
+        for i = 1 ,4 do
+            table.insert(T_txzr,math.random(100000))
+        end
+        setplaydef(play,constant.T_txzr,tbl2json(T_txzr))  --天选之人点数
 
         if getsysvar(VarCfg["G_新区验证"]) == 0 then
             setsysvar(VarCfg["G_新区验证"],1)
@@ -56,6 +60,11 @@ function Login.main(play)
         setplaydef(play,VarCfg.U_zxrw[1],1)
         mapmove(play,"xtc",137,138,7)
     end
+
+
+    iniplayvar(play, "integer","HUMAN","比武大会")
+
+
 
     --全区通报登录
     if checktitle(play,"踏月主宰") then

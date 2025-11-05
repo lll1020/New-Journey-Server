@@ -115,6 +115,25 @@ function entermap(play)
     if getplaydef(play,"S$dtm") ~= dt then
         sendluamsg(play,101,1002,0,0,getmapname(dt))
     end
+    if dt == "天降财宝" then
+        addbuff(play,20003)
+    else
+        delbuff(play,20003)
+    end
+
+    if dt == "比武大会" then
+        if getsysvar(VarCfg["G_开区分钟"]) < 75 then
+            local hsmy_px = sorthumvar("比武大会",1,1,5)
+            setplaydef(play,VarCfg.N_tyecmb,1)
+            sendluamsg(play,101,498,0,0,'{"pmsj":'..tbl2json(hsmy_px)..',"grjf":'..getplayvar(play, "HUMAN", "比武大会")..'}')
+        end
+    elseif getplaydef(play,VarCfg.N_tyecmb) == 1 then
+        sendluamsg(play,101,498,2,0,"")
+        setplaydef(play,VarCfg.N_tyecmb,0)
+    end
+    if getflagstatus(play, VarCfg.BS_AIgj) == 1 and not getbaseinfo(play, 48) then
+        startautoattack(play)
+    end
 end
 
 --------------------死亡物品掉了-------------------
@@ -644,6 +663,16 @@ end
 function killplay(play,hiter)
     setplaydef(play,VarCfg.U_srsl,getplaydef(play,VarCfg.U_srsl)+1)
     login_fhsx(play)
+
+    if getsysvar(constant.G_kqfz) >= 40 and getsysvar(constant.G_kqfz) <= 50 then
+        local jf = getplayvar(play, "HUMAN", "比武大会") + 50
+        setplayvar(play, "HUMAN", "比武大会", jf, 1)
+        sendmsg(play,1,'{"Msg":"比武大会：当前积分:'..jf..'","FColor":253,"BColor":255,"Type":1}')
+        jf = getplayvar(hiter, "HUMAN", "比武大会") + 10
+        setplayvar(hiter, "HUMAN", "比武大会", jf, 1)
+        sendmsg(hiter,1,'{"Msg":"比武大会：当前积分:'..jf..'","FColor":253,"BColor":255,"Type":1}')
+    end
+
 end
 --------------------玩家死亡触发-------------------
 function playdie(play, hiter)

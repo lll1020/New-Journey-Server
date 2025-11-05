@@ -1,11 +1,13 @@
 ;==============================================城市地图==============================
 [新手地图|12       新手地图] day NOALLOWUSEITEMS(盟重回城石) safe RUNMON(1) NEEDSET_OFF(300)
+[比武大会|D3804_2 比武大会]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) SECRET(47|神秘人|2|21) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
 
 [D3804_2  锁妖塔] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
 [mwsl 太虚幻境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
 
 [q004|ID1_002 副本地图] noreconnect(xtc:137:138:9) NOALLOWUSEITEMS(随机传送石) ONKILLMON RUNMON(1)
 
+[天降财宝|xtc	天降财宝] noreconnect(0159) RUNHUMAN(1) NOTALLOWUSEMAGIC(擒龙手|十步一杀|野蛮冲撞)
 
 
 [gm|q004 GM地图] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)

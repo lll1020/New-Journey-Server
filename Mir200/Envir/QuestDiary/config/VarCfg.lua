@@ -4,11 +4,9 @@ VarCfg = {}
 VarCfg["G_开区天数"]           = "G0"                                                                          --开区天数0点+1
 VarCfg["G_开区分钟"]           = "G1"                                                                          --开区分钟
 VarCfg["G_新区验证"]           = "G2"                                                                          --新区验证
-VarCfg["G_天选之人时间"]           = {"G3","G4"}                                                                   --天选之人时间,次数
+VarCfg["G_天选之人"]           = {"G3","G4"}                                                                   --天选之人时间,次数
 VarCfg["G_跑酷提示"]           = "G5"                                                                          --跑酷提示
 VarCfg["G_合区次数对比"]           = "G6"                                                                          --合区次数对比
-
-
 
 --引擎A变量
 VarCfg["A_天选之人json"]           = "A0"                                                                          --天选之人json
@@ -103,6 +101,7 @@ VarCfg.BS_xsth          =  120                                                  
 VarCfg.BS_ngkg          =  121                                                                           --内挂被人物攻击随机(CD30秒)
 VarCfg.BS_dtcs          =  122                                                                          --地图参数，挂机用
 VarCfg.BS_zcjfb         =  123                                                                          --真充积分
+VarCfg.BS_tyrc         =  124                                                                          --奖励开关  --武林盟主
 
 VarCfg.BS_zzchxf          =  402                                                                          --赞助称号--修复用
 
@@ -206,6 +205,8 @@ VarCfg.N_Aigj           = {"N$被攻击随机","N$无怪随机","N$自动换图","N$土城随机"
 VarCfg.N_jsys           = "N$溅射延时"                                                                   --溅射延时
 VarCfg.N_znpc           = "N$找NPC"                                                                      --任务寻找NPC
 VarCfg.N_ddcs           = "N$boss传送"                                                                      --boss定点传送
+VarCfg.N_tyecmb         = "N$比武大会"                                                                   --比武大会面板
+
 
 
 VarCfg.S_buffgjq                          = "S$攻击前buff"                                                                 --攻击前buff信息

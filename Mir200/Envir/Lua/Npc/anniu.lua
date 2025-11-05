@@ -605,9 +605,10 @@ npc[506] = function(play,p2,p3,msgData)  --天选之子
                 '{"A_txzz":'..(getsysvar(VarCfg["A_天选之人json"]) == "" and "{}" or getsysvar(VarCfg["A_天选之人json"]))..
                         ',"T_txzr":'..getplaydef(play,VarCfg.T_txzr)..
                         ',"kqsj":'..getsysvar(VarCfg["G_开区分钟"])..
-                        ',"G_txzz_2":'..getsysvar(VarCfg["G_天选之人时间"][2])..
+                        ',"G_txzz_2":'..getsysvar(VarCfg["G_天选之人"][2])..
                         '}')
     end
+
 end
 
 local hd_dtmz = {
@@ -619,6 +620,15 @@ npc[507] = function(play,p2,p3,msgData)  --游戏活动
         sendluamsg(play, 101, 507, 0, 0,
                 '{"kqfz":'..getsysvar(VarCfg["G_开区分钟"])..',"hdjl":'..getplaydef(play,VarCfg.T_hdjl)..'}')
     elseif p2 == 1  then
+        if p3 == 1 then
+            Npclib['anniu'][506](play,0,0,"")
+        elseif p3 == 2 then
+            map(play, "xtc")
+        elseif p3 == 3 then
+            map(play, "天降财宝")
+        elseif p3 == 4 then
+            map(play, "比武大会")
+        end
     end
 end
 

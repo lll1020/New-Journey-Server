@@ -443,10 +443,9 @@ function ggna(play,id)
             giveitem(play,v,1)
         end
     elseif id == "24" then
-        local T_data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
-        T_data.jf = 1000
-        Player.setJsonVarByTable(play, VarCfg["T_天书"], T_data)
-
+        for i, v in ipairs(constant.pz_yxhdbg) do
+            throwitem("0", "天降财宝", 215, 53, 200, v[1], v[2], 9999, false, true, false, false)
+        end
     end
 
 end
