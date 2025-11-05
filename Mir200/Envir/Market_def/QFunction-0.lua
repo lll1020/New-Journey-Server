@@ -1079,7 +1079,7 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
                     if qf_teshunpc[p1] then
                         Npclib[qf_teshunpc[p1]].link(play, p1, p2, p3, msgData)
                     elseif p1 > 200 and p1 < 500 then --µØÍ¼NPC
-                        Npclib[200].link(play, p1, p2)
+                        Npclib[200].link(play, p1, p2,p3)
                     elseif p1 > 500 and p1 < 520 then--´óÂ½µØÍ¼NPC
                         Npclib[500].link(play, p1, p2)
                     elseif p1 < 1000 then

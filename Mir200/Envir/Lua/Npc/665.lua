@@ -443,9 +443,10 @@ function ggna(play,id)
             giveitem(play,v,1)
         end
     elseif id == "24" then
-        for i, v in ipairs(constant.pz_yxhdbg) do
-            throwitem("0", "天降财宝", 215, 53, 200, v[1], v[2], 9999, false, true, false, false)
-        end
+        local hsmy_px = sorthumvar("比武大会",1,1,5)
+        setplaydef(play,VarCfg.N_tyecmb,1)
+        sendluamsg(play,101,498,0,0,'{"pmsj":'..tbl2json(hsmy_px)..',"grjf":'..getplayvar(play, "HUMAN", "比武大会")..'}')
+
     end
 
 end

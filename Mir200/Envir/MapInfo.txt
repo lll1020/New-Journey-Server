@@ -1,16 +1,11 @@
 ;==============================================城市地图==============================
-[新手地图|12       新手地图] day NOALLOWUSEITEMS(盟重回城石) safe RUNMON(1) NEEDSET_OFF(300)
+;[新手地图|12       新手地图] day NOALLOWUSEITEMS(盟重回城石) safe RUNMON(1) NEEDSET_OFF(300)
 [比武大会|D3804_2 比武大会]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) SECRET(47|神秘人|2|21) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-
-[D3804_2  锁妖塔] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[mwsl 太虚幻境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-
-[q004|ID1_002 副本地图] noreconnect(xtc:137:138:9) NOALLOWUSEITEMS(随机传送石) ONKILLMON RUNMON(1)
-
 [天降财宝|xtc	天降财宝] noreconnect(0159) RUNHUMAN(1) NOTALLOWUSEMAGIC(擒龙手|十步一杀|野蛮冲撞)
 
-
 [gm|q004 GM地图] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+
+
 
 [hjsbk|03023 沙巴克] noreconnect(xtc:137:138:9) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
 [hg|n0150 沙巴克皇宫] noreconnect(xtc:137:138:9)  NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
@@ -34,9 +29,13 @@ kfhg 23 26 -> kfhjsbk 86 102
 
 
 [D1206 剧情地图]
+[q004|ID1_002 副本地图] noreconnect(xtc:137:138:9) NOALLOWUSEITEMS(随机传送石) ONKILLMON RUNMON(1)
+[D3804_2  锁妖塔] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
+[mwsl 太虚幻境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
 
 
-;==============================================土城地图==============================
+
+;==============================================主城地图==============================
 [xtc         盟重省] day
 [剑门外门|dzgd   二大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
 [剑门内门|new_44   三大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
@@ -49,10 +48,17 @@ kfhg 23 26 -> kfhjsbk 86 102
 [诸天之上|xssl  十大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
 
 ;==============================================一大陆野外地图==============================
-[山庄|new_44   山庄] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[幽谷|new_44   幽谷] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[洞穴|new_44   洞穴] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[古殿|new_44   古殿] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[山庄|wbmh   山庄] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[幽谷|ER62_Forest   幽谷] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[洞穴|D422   洞穴] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[古殿|D713   古殿] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+
+[山庄一|ED200931Evt_5   山庄一] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[幽谷一|ER63_Forest   幽谷一] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[洞穴一|D20012   洞穴一] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[古殿一|mjrk   古殿一] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+
+
 ;==============================================二大陆野外地图==============================
 [隐藏地图二|new_44   隐藏地图] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 [特殊秘境副本二|new_44   特殊秘境副本] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)

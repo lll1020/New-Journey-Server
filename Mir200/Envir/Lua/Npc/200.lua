@@ -3,10 +3,10 @@ npc = {}
 
 local _config = {
     --{"地图名",x,y,限制fun,提示文字,所属大陆}
-    [201] = {"山庄",100,100,nil,nil,1},
-    [202] = {"幽谷",100,100,nil,nil,1},
-    [203] = {"洞穴",100,100,nil,nil,1},
-    [204] = {"古殿",100,100,nil,nil,1},
+    [201] = {"山庄",0,0,nil,nil,1},
+    [202] = {"幽谷",0,0,nil,nil,1},
+    [203] = {"洞穴",0,0,nil,nil,1},
+    [204] = {"古殿",0,0,nil,nil,1},
 
     [205] = {"隐藏地图二",100,100,nil,nil,2},
     [206] = {"野火帮",100,100,nil,nil,2},
@@ -35,7 +35,14 @@ function npc.link(play,npcid,ew,aid)
             if not Player.dl_sz(play, _config[npcid][6]) then
                 return
             end
-            mapmove(play,_config[npcid][1],_config[npcid][2],_config[npcid][3],1)
+            release_print(_config[npcid][1] .. (aid == 1 and "一" or ""))
+            release_print((aid == 1 and "一" or ""))
+            release_print(aid)
+            if _config[npcid][2] > 0 then
+                mapmove(play,_config[npcid][1] .. (aid == 1 and "一" or ""),_config[npcid][2],_config[npcid][3],5)
+            else
+                map(play,_config[npcid][1] .. (aid == 1 and "一" or ""))
+            end
             startautoattack(play) --自动攻击
         end
 
