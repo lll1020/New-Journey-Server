@@ -150,16 +150,19 @@ function Buff.login(play)
     local T_data = Player.getJsonTableByVar(play, VarCfg["T_·É½£"])
     if T_data["open"] and T_data["open"] == 1 then
         local level = getbaseinfo(play,39)
-        local count = 0
+        local count = {}
         if level >= 1 or hasbuff(play,20000) then
-            count = count + 1
+            count["1"] = 1
         end
         local T_data_cs = Player.getJsonTableByVar(play, VarCfg["T_Ê×³åÀñ°ü"])
         if T_data["Ê×³ä"] == 1 or T_data["²¹³ä"] == 1 or hasbuff(play,20001) then
-            count = count + 1
+            count["2"] = 1
         end
         if getflagstatus(play,VarCfg.BS_mztq) == 1 or hasbuff(play,20002) then
-            count = count + 1
+            count["3"] = 1
+        end
+        if T_data.num and T_data.num >= teshudata["anniu_19"].num then
+            count["4"] = 1
         end
         sendluamsg(play,101,19,1,0,tbl2json({ count = count,psData = {cd = (T_data.cd or (hasbuff(play,20002) and teshudata["anniu_19"].cd/2) or teshudata["anniu_19"].cd)}}))
     end

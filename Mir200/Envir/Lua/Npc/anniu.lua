@@ -347,14 +347,21 @@ function feijian(play,msgData) ---∑…Ω£
                 return
             end
         elseif msgdata.paramList[2] == 4 then
-            return
+            if T_data.num and T_data.num >= teshudata["anniu_19"].num then
+                nvalue = (nvalue + 1000)
+            else
+                return
+            end
         end
+        nvalue = nvalue + ((T_data.num and T_data.num >= teshudata["anniu_19"].num) and 10000 or 0)
 
         local cd,time = (T_data.cd or (hasbuff(play,20002) and teshudata["anniu_19"].cd/2) or teshudata["anniu_19"].cd) - 0.1,os.time()
         if getplaydef(play,"N$∑…Ω£_"..msgdata.paramList[2]) + cd < time then
             setplaydef(play,"N$∑…Ω£_"..msgdata.paramList[2],time)
             humanhp(monobj, '-', nvalue, 107, 0, play, 1)
             healthspellchanged(monobj)
+            T_data.num = (T_data.num or 0) + 1
+            Player.setJsonVarByTable(play, VarCfg["T_∑…Ω£"], T_data)
         else
             --sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>∑…Ω£¿‰»¥÷–...</font>","FColor":219,"BColor":255,"Type":1}')
             return
@@ -375,16 +382,19 @@ npc[19] = function(play, p2, p3, data)  --∑…Ω£œµÕ≥
             T_data["open"] = 1
             Player.setJsonVarByTable(play, VarCfg["T_∑…Ω£"], T_data)
 
-            local count = 0
+            local count = {}
             if getbaseinfo(play,39) >= 1 or hasbuff(play,20000) then
-                count = count + 1
+                count["1"] = 1
             end
             local T_data_cs = Player.getJsonTableByVar(play, VarCfg["T_ ◊≥Â¿Ò∞¸"])
             if T_data[" ◊≥‰"] == 1 or T_data["≤π≥‰"] == 1 or hasbuff(play,20001) then
-                count = count + 1
+                count["2"] = 1
             end
             if getflagstatus(play,VarCfg.BS_mztq) == 1 or hasbuff(play,20002) then
-                count = count + 1
+                count["3"] = 1
+            end
+            if T_data.num and T_data.num >= teshudata["anniu_19"].num then
+                count["4"] = 1
             end
 
             sendluamsg(play,101,19,1,0,tbl2json({ count = count,psData = {cd = (T_data.cd or (hasbuff(play,20002) and teshudata["anniu_19"].cd/2) or teshudata["anniu_19"].cd)}}))

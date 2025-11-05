@@ -1147,6 +1147,7 @@ teshudata = {
             {name = "³à»ğ"},
         },
         cd = 3,
+        num = 999999,
     },
     ["anniu_501"] = {
         id = "anniu_501",
