@@ -26,6 +26,7 @@ function npc.link(play,npcid,ew,aid)
             sendluamsg(play,100,npcid,1,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
             return
         end
+        T_data.level = T_data.level or {}
 
         T_data.main = T_data.main or 0
         if T_data.main == aid then
@@ -54,6 +55,8 @@ function npc.link(play,npcid,ew,aid)
             sendluamsg(play,100,npcid,1,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
             return
         end
+        T_data.level = T_data.level or {}
+
         if T_data.other == aid then
             Player.sendmsgEx(play, "提示:#251|你已经装配该灵根属性，无需重复装配")
             return
@@ -72,6 +75,8 @@ function npc.link(play,npcid,ew,aid)
         sendluamsg(play,100,npcid,1,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
 
     elseif ew == 5 then--灵根升级
+        T_data.level = T_data.level or {}
+
         if not T_data.level[""..aid] then
             Player.sendmsgEx(play, "提示:#251|你还没有该灵根属性，无法进行升级")
             return
@@ -88,8 +93,12 @@ function npc.link(play,npcid,ew,aid)
             return
         end
         Player.takeItemByTable(play, config.cost, ",灵根升级",nil)
+
+        Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
         Player.sendmsgEx(play, "提示:#251|你的灵根升级成功")
-        sendluamsg(play,101,1005,0,0,"jjcg")
+        Player.updateSomeAddr(play,nil, _config.main_r[aid].attr)
+
+        sendluamsg(play,101,1005,0,0,"tpcg")
         sendluamsg(play,100,npcid,1,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
 
     end
@@ -99,6 +108,18 @@ function Login_lg(play)
     local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
     --灵根技能
     --灵根属性
+    T_data.level = T_data.level or {}
+    local attr = {}
+    for i = 1, 5 do
+        local level = T_data.level[""..i] or 0
+        if level > 0 then
+            for vv,kk in ipairs(_config.main_r[i].attr) do
+                table.insert(attr,{kk[1],kk[2] * level})
+            end
+        end
+    end
+    Player.updateSomeAddr(play,nil, attr)
+
     --灵根特殊效果
     --灵根技能
 
