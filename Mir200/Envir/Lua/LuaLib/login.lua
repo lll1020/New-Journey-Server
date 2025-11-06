@@ -130,6 +130,7 @@ function Login.main(play)
     end
 
     GameEvent.push(EventCfg.onLogin, play)
+    GameEvent.push(EventCfg.onLoginEnd, play)
 
 end
 

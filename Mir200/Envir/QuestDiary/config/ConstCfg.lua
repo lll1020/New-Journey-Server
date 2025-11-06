@@ -462,15 +462,6 @@ ConstCfg = {
         ["首饰盒位置11"] = "<$GODBLESSITEM11>",
         ["首饰盒位置12"] = "<$GODBLESSITEM12>",
     },
-
-    TM                   = {
-        ["凡品"] = 1,
-        ["灵品"] = 2,
-        ["仙品"] = 3,
-        ["圣品"] = 4,
-        ["帝品"] = 5,
-    },
-
     activitystate        = {
         closing = 0,         --关闭中
         opening = 1,         --进行中

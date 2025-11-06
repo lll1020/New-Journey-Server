@@ -10,7 +10,7 @@ Buff = {
             end
             return 0
         else
-            local bl = getplaydef(play,constant.S_buffbrwq)
+            local bl = getplaydef(play,VarCfg.S_buffbrwq)
             local data = json2tbl(bl == "" and {} or bl)
             if zt == 1 then
                 data["70"] = true
@@ -18,14 +18,14 @@ Buff = {
             elseif zt == 2 then
                 data["70"] = nil
             end
-            setplaydef(play,constant.S_buffbrwq,tbl2json(data))
+            setplaydef(play,VarCfg.S_buffbrwq,tbl2json(data))
         end
     end,
     [71] = function(play,zt,Damage,Target)      --溅射伤害  打怪时5%触发闪电，电击自身8*8范围内的所有敌人，造成500真实伤害拉取怪物仇恨。
         if zt == 3 then
             local sj = os.time()
-            if sj - getplaydef(play,constant.N_jsys) > 6 and math.random(100) > 5 then
-                setplaydef(play,constant.N_jsys,sj)
+            if sj - getplaydef(play,VarCfg.N_jsys) > 6 and math.random(100) > 5 then
+                setplaydef(play,VarCfg.N_jsys,sj)
                 local xx,yy,dqdt = getbaseinfo(play,4),getbaseinfo(play,5),getbaseinfo(play,3)
                 local mons,gjsx = getobjectinmap(dqdt, xx,yy, 10, 2),500
                 rangeharm(play,getbaseinfo(play,4),getbaseinfo(play,5),6,0,0,0,0,2,20310)
@@ -41,50 +41,162 @@ Buff = {
                 end
             end
         else
-            local bl = getplaydef(play,constant.S_buffgwh)
+            local bl = getplaydef(play,VarCfg.S_buffgwh)
             local data = json2tbl(bl == "" and {} or bl)
             if zt == 1 then
                 data["71"] = true
             elseif zt == 2 then
                 data["71"] = nil
             end
-            setplaydef(play,constant.S_buffgwh,tbl2json(data))
+            setplaydef(play,VarCfg.S_buffgwh,tbl2json(data))
         end
     end,
     [72] = function(play,zt)      --AI挂机,被攻击自动随机
         if zt == 3 then
             local sj = os.time()
-            local json = json2tbl(getplaydef(play,constant.T_aigj))
-            if sj - getplaydef(play,constant.N_Aigj[1]) >= 60 and not getbaseinfo(play,0) and json.gjkg then
-                setplaydef(play,constant.N_Aigj[1],sj)
+            local json = json2tbl(getplaydef(play,VarCfg.T_aigj))
+            if sj - getplaydef(play,VarCfg.N_Aigj[1]) >= 60 and not getbaseinfo(play,0) and json.gjkg then
+                setplaydef(play,VarCfg.N_Aigj[1],sj)
                 map(play,getbaseinfo(play,3))
                 sendmsg(play,1,'{"Msg":"<font color=\'#28ef01\'>AI挂机：被人物攻击自动随机！</font>","Type":9}')
                 startautoattack(play)
             end
             return 0
         else
-            local bl = getplaydef(play,constant.S_buffbrwq)
+            local bl = getplaydef(play,VarCfg.S_buffbrwq)
             local data = json2tbl(bl == "" and {} or bl)
             if zt == 1 then
                 data["72"] = true
             elseif zt == 2 then
                 data["72"] = nil
             end
-            setplaydef(play,constant.S_buffbrwq,tbl2json(data))
+            setplaydef(play,VarCfg.S_buffbrwq,tbl2json(data))
         end
     end,
     [73] = function(play,zt,Damage,Target)      --赠送属性,刀刀绿毒
         if zt == 3 then
             makeposion(Target,0,2,10)
         else
-            local bl = getplaydef(play,constant.S_buffgwh)
+            local bl = getplaydef(play,VarCfg.S_buffgwh)
             local data = json2tbl(bl == "" and {} or bl)
             if zt == 1 then
                 data["73"] = true
             elseif zt == 2 then
                 data["73"] = nil
             end
-            setplaydef(play,constant.S_buffgwh,tbl2json(data))
+            setplaydef(play,VarCfg.S_buffgwh,tbl2json(data))
+        end
+    end,
+    --
+    --callscriptex(play,"SETMAGICSKILLEFFT","野蛮冲撞",2704)
+    --callscriptex(play,"SETMAGICSKILLEFFT","烈火剑法",2604)
+    --callscriptex(play,"SETMAGICSKILLEFFT","逐日剑法",5602)
+    --callscriptex(play,"SETMAGICSKILLEFFT","开天斩",6604)
+    [74] = function(play,zt,Damage,Target,MagicId)      --攻杀剑术额外附加自身攻击上限35%的真实伤害
+        if zt == 3 then
+            if MagicId == 7 then
+                humanhp(Target,"-",math.floor(getbaseinfo(play, 20)*0.35))
+            end
+        else
+            local bl = getplaydef(play,VarCfg.S_buffgjh)
+            local data = json2tbl(bl == "" and {} or bl)
+            if zt == 1 then
+                data["74"] = true
+            elseif zt == 2 then
+                data["74"] = nil
+            end
+            setplaydef(play,VarCfg.S_buffgjh,tbl2json(data))
+        end
+    end,
+    [75] = function(play,zt,Damage,Target,MagicId)      --刺杀剑术有5%的几率使目标受到的伤害翻倍
+        if zt == 3 then
+            if MagicId == 12 then
+                if math.random(100) <= 5 then
+                    return Damage
+                end
+            end
+            return 0
+        else
+            local bl = getplaydef(play,VarCfg.S_buffgjq)
+            local data = json2tbl(bl == "" and {} or bl)
+            if zt == 1 then
+                data["75"] = true
+            elseif zt == 2 then
+                data["75"] = nil
+            end
+            setplaydef(play,VarCfg.S_buffgjq,tbl2json(data))
+        end
+    end,
+    [76] = function(play,zt,Damage,Target,MagicId)      --半月弯刀攻击目标时，有20%的几率使攻击速度+2.持续5秒
+        if zt == 3 then
+            if MagicId == 25 then
+                if math.random(100) <= 20 then
+                    addbuff(play, 20101)
+                end
+            end
+        else
+            local bl = getplaydef(play,VarCfg.S_buffgjh)
+            local data = json2tbl(bl == "" and {} or bl)
+            if zt == 1 then
+                data["76"] = true
+            elseif zt == 2 then
+                data["76"] = nil
+            end
+            setplaydef(play,VarCfg.S_buffgjh,tbl2json(data))
+        end
+    end,
+    [77] = function(play,zt,Damage,Target,MagicId)      --烈火剑法点燃被击中的目标3秒，没秒减少等同于释放者攻击上限20%的生命
+        if zt == 3 then
+            if MagicId == 26 then
+                humanhp(Target,"-",math.floor(getbaseinfo(play, 20)*0.2),0,1,play)
+                humanhp(Target,"-",math.floor(getbaseinfo(play, 20)*0.2),0,2,play)
+                humanhp(Target,"-",math.floor(getbaseinfo(play, 20)*0.2),0,3,play)
+            end
+        else
+            local bl = getplaydef(play,VarCfg.S_buffgjh)
+            local data = json2tbl(bl == "" and {} or bl)
+            if zt == 1 then
+                data["77"] = true
+            elseif zt == 2 then
+                data["77"] = nil
+            end
+            setplaydef(play,VarCfg.S_buffgjh,tbl2json(data))
+        end
+    end,
+    [78] = function(play,zt,Damage,Target,MagicId)      --开天斩命中目标后，使目标5秒内降低20%的防御
+        if zt == 3 then
+            if MagicId == 66 then
+                addbuff(Target, 20102)
+            end
+        else
+            local bl = getplaydef(play,VarCfg.S_buffgjh)
+            local data = json2tbl(bl == "" and {} or bl)
+            if zt == 1 then
+                data["78"] = true
+            elseif zt == 2 then
+                data["78"] = nil
+            end
+            setplaydef(play,VarCfg.S_buffgjh,tbl2json(data))
+        end
+    end,
+    [79] = function(play,zt,Damage,Target,MagicId)      --逐日剑法击中的目标为玩家时，有35%的几率使其额外减少当前HP10%的生命
+        if zt == 3 then
+            if MagicId == 56 then
+                if getbaseinfo(Target,ConstCfg.gbase.isplayer) then
+                    if math.random(100) <= 35 then
+                        humanhp(Target,"-",math.floor(getbaseinfo(Target,11)*0.1))
+                    end
+                end
+            end
+        else
+            local bl = getplaydef(play,VarCfg.S_buffgjh)
+            local data = json2tbl(bl == "" and {} or bl)
+            if zt == 1 then
+                data["79"] = true
+            elseif zt == 2 then
+                data["79"] = nil
+            end
+            setplaydef(play,VarCfg.S_buffgjh,tbl2json(data))
         end
     end,
 

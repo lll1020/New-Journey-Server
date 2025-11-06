@@ -152,12 +152,4 @@ local function _Castlewarkill(actor, play)
 end
 GameEvent.add(EventCfg.onkillplay, _Castlewarkill, "攻沙")
 
-
-----跨服同步积分
---local function _goKFGongShaSync()
---    synzvar(2,"A5","A5",1)
---end
---GameEvent.add(EventCfg.goKFGongShaSync, _goKFGongShaSync, "kf攻沙")
---
-
 return npc

@@ -41,7 +41,7 @@ function Login_msg(play, id, msg, leve)
     end
 end
 
-local jnsh_data = {"基本剑术","刺杀剑术","半月弯刀","烈火剑法","逐日剑法","开天斩"}
+local jnsh_data = {"攻杀剑术","刺杀剑术","半月弯刀","烈火剑法","开天斩","逐日剑法"}
 function Login_jnsh(play)
     for i, v in ipairs(VarCfg.N_jnsh) do
         local linshi = getplaydef(play,v)
@@ -50,7 +50,7 @@ function Login_jnsh(play)
         end
     end
 end
-GameEvent.add(EventCfg.onLogin, Login_jnsh, "Login_jnsh")
+GameEvent.add(EventCfg.onLoginEnd, Login_jnsh, "Login_jnsh")
 
 local jmjnsh_data = {"烈火剑法","逐日剑法","开天斩"}
 function Login_jmjnsh(play)
@@ -64,13 +64,13 @@ function Login_jmjnsh(play)
         end
     end
 end
-GameEvent.add(EventCfg.onLogin, Login_jmjnsh, "Login_jmjnsh")
+GameEvent.add(EventCfg.onLoginEnd, Login_jmjnsh, "Login_jmjnsh")
 
 
 function login_fhsx(play)
     setranklevelname(play,"%s\\[踏月々沉默]\\击杀『"..getplaydef(play,VarCfg.U_srsl).."』")
 end
-GameEvent.add(EventCfg.onLogin, login_fhsx, "login_fhsx")
+GameEvent.add(EventCfg.onLoginEnd, login_fhsx, "login_fhsx")
 
 
 -----------------------------各类定时器-------------------------
