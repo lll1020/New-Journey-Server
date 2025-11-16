@@ -136,11 +136,17 @@ local npc_xyl = {
                 { "天书强化",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) 
                     local T_data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
                     return (T_data.level or 0) >= 1 and true or false
-                end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                end ,khdjy = function() 
+                    local T_data = Player:JsonToTbl(Player:getServerVar("T42"))
+                    return (T_data.level or 0) >= 1 and true or false
+                end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
                 { "初识仙法",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) 
                     local T_data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
                     return T_data["tj"] and true or false
-                end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                end ,khdjy = function() 
+                    local T_data = Player:JsonToTbl(Player:getServerVar("T42"))
+                    return T_data["tj"] and true or false
+                end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
             },
             --需求
             jqd = 0,
