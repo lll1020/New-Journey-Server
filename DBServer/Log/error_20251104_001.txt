@@ -1,0 +1,46 @@
+[2025-11-04 15:31:58:379] GM 0 nType 0 sLoginID qccclllll IP 127.0.0.1 sToken 123456789a sChannel 1
+[2025-11-04 15:31:58:379] Login stp 1
+[2025-11-04 15:31:58:379] Login stp 2
+[2025-11-04 15:31:58:379] Login stp 3
+[2025-11-04 15:31:58:503] QueryChr 1 qccclllll/1/3/1/1/EHVMWQGTPVVG6TII8SM26SAJHMJ0MWQX
+[2025-11-04 15:31:58:503] QueryChr 2 qccclllll
+[2025-11-04 15:31:58:503] QueryChr 3 qccclllll
+[2025-11-04 15:31:58:503] QueryChr 4 qccclllll
+
+[2025-11-04 15:32:03:237] SelectChr 1 qccclllll/玩家名字
+[2025-11-04 15:32:03:284] SelectChr 2 qccclllll
+[2025-11-04 15:32:03:284] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-11-04 16:04:48:719] GM 0 nType 0 sLoginID qccclllll IP 127.0.0.1 sToken 123456789a sChannel 1
+[2025-11-04 16:04:48:719] Login stp 1
+[2025-11-04 16:04:48:719] Login stp 2
+[2025-11-04 16:04:48:719] Login stp 3
+[2025-11-04 16:04:48:812] QueryChr 1 qccclllll/1/3/1/1/0IPK97TVOT7BB4RIQB048TDTMH5LUEH9
+[2025-11-04 16:04:48:812] QueryChr 2 qccclllll
+[2025-11-04 16:04:48:812] QueryChr 3 qccclllll
+[2025-11-04 16:04:48:812] QueryChr 4 qccclllll
+
+[2025-11-04 16:04:53:327] New Char stp 1 {"chr":"玩家名字","job":0,"secsdk":"0","sdkid":"1","server_name":"3","sex":0,"account":"qccclllll"}
+[2025-11-04 16:04:53:327] New Char stp 2
+[2025-11-04 16:04:53:448] New Char stp 3
+[2025-11-04 16:04:53:481] SelectChr 1 qccclllll/玩家名字
+[2025-11-04 16:04:53:540] SelectChr 2 qccclllll
+[2025-11-04 16:04:53:540] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-11-04 16:06:26:538] QueryChr 1 qccclllll/1/3/1/1/0IPK97TVOT7BB4RIQB048TDTMH5LUEH9
+[2025-11-04 16:06:26:538] QueryChr 2 qccclllll
+[2025-11-04 16:06:26:538] QueryChr 3 qccclllll
+[2025-11-04 16:06:26:538] QueryChr 4 qccclllll
+[2025-11-04 16:06:26:909] SelectChr 1 qccclllll/玩家名字
+[2025-11-04 16:06:26:969] SelectChr 2 qccclllll
+[2025-11-04 16:06:26:969] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-11-05 13:04:55:021] GM 0 nType 0 sLoginID qccclllll IP 127.0.0.1 sToken 123456789a sChannel 1
+[2025-11-05 13:04:55:021] Login stp 1
+[2025-11-05 13:04:55:021] Login stp 2
+[2025-11-05 13:04:55:021] Login stp 3
+[2025-11-05 13:04:55:145] QueryChr 1 qccclllll/2/3/1/1/48JNU1QW3CKY7LJ7B05URWA64PIIAMRN
+[2025-11-05 13:04:55:145] QueryChr 2 qccclllll
+[2025-11-05 13:04:55:145] QueryChr 3 qccclllll
+[2025-11-05 13:04:55:145] QueryChr 4 qccclllll
+

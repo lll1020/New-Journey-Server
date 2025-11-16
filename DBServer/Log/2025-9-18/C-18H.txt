@@ -1,0 +1,24 @@
+2025-09-18 18:14:30 ReloadRegistWhiteList:
+2025-09-18 18:14:30 加载缓存数据：0
+Load(库):[3] [0] 2025-09-18 18:16:31 玩家名字kk Level:0  --  --  -- 
+2025-09-18 18:16:34 存储耗时：SaveHum:16,HumBodyItems:15,HumBagItems:0,UpdateHumStorageItems:0
+Save:[4] [0] 2025-09-18 18:16:34 玩家名字kk Level:2 Body[17]: MakeIndex:10011 Index:19996 btValue:49(-2141869483)  --  --  -- 
+2025-09-18 18:26:34 存储耗时：SaveHum:15,HumBodyItems:16,HumBagItems:0,UpdateHumStorageItems:0
+Save:[4] [0] 2025-09-18 18:26:34 玩家名字kk Level:30 Body[17]: MakeIndex:10011 Index:19996 btValue:49(-2141869483)  --  --  -- 
+Load(缓):[1] [0] 2025-09-18 18:33:33 玩家名字kk Level:30 Body[17]: MakeIndex:10011 Index:19996  --  --  -- 
+2025-09-18 18:33:33 存储耗时：SaveHum:15,HumBodyItems:16,HumBagItems:0,UpdateHumStorageItems:0
+Save:[4] [0] 2025-09-18 18:33:33 玩家名字kk Level:30 Body[17]: MakeIndex:10011 Index:19996 btValue:49(-2141869483)  --  --  -- 
+Load(缓):[1] [0] 2025-09-18 18:33:57 玩家名字kk Level:30 Body[17]: MakeIndex:10011 Index:19996  --  --  -- 
+2025-09-18 18:33:58 存储耗时：SaveHum:0,HumBodyItems:16,HumBagItems:0,UpdateHumStorageItems:0
+Save:[4] [0] 2025-09-18 18:33:58 玩家名字kk Level:30 Body[17]: MakeIndex:10011 Index:19996 btValue:49(-2141869483)  --  --  -- 
+Load(缓):[1] [0] 2025-09-18 18:39:12 玩家名字kk Level:30 Body[17]: MakeIndex:10011 Index:19996 btValue:47(14224)  --  --  -- 
+2025-09-18 18:39:13 存储耗时：SaveHum:15,HumBodyItems:16,HumBagItems:0,UpdateHumStorageItems:0
+Save:[4] [0] 2025-09-18 18:39:13 玩家名字kk Level:30 Body[17]: MakeIndex:10011 Index:19996 btValue:47(14224) btValue:49(-2141869483)  --  --  -- 
+Load(库):[3] [1] 2025-09-18 18:40:24 玩家名字kz Level:0  --  --  -- 
+2025-09-18 18:40:25 存储耗时：SaveHum:0,HumBodyItems:15,HumBagItems:0,UpdateHumStorageItems:0
+Save:[4] [0] 2025-09-18 18:40:25 玩家名字kz Level:2 Body[17]: MakeIndex:10013 Index:19996 btValue:49(-2141869483)  --  --  -- 
+Load(缓):[1] [1] 2025-09-18 18:40:36 玩家名字kz Level:12 Body[17]: MakeIndex:10013 Index:19996 btValue:47(14224)  --  --  -- 
+2025-09-18 18:40:37 存储耗时：SaveHum:16,HumBodyItems:16,HumBagItems:0,UpdateHumStorageItems:0
+Save:[4] [0] 2025-09-18 18:40:37 玩家名字kz Level:13 Body[17]: MakeIndex:10013 Index:19996 btValue:47(14224) btValue:49(-2141869483)  --  --  -- 
+2025-09-18 18:50:37 存储耗时：SaveHum:16,HumBodyItems:15,HumBagItems:16,UpdateHumStorageItems:0
+Save:[4] [0] 2025-09-18 18:50:37 玩家名字kz Level:30  -- Bag[0]: MakeIndex:10013 Index:19996 OverLap:0 btValue:47(14224) btValue:49(-2141869483)  --  -- 

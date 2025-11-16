@@ -126,9 +126,56 @@ end
 
 ---异闻录
 local npc_xyl = {
+   --二大陆任务
+    {
+         --第一章
+        {
+            jq = {
+                { "扫荡野火帮（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "剿灭恶徒（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "天书强化",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) 
+                    local T_data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
+                    return (T_data.level or 0) >= 1 and true or false
+                end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "初识仙法",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) 
+                    local T_data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
+                    return T_data["tj"] and true or false
+                end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+            },
+            --需求
+            jqd = 0,
+            jl = {{"绑定元宝",1000000},{"绑定灵符",100000}}
+        },
+        --第二章
+        {
+            jq = {
+                { "杀伐之路（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "讨伐夜魔（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "装备强化",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "喂养灵根",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+            },
+            jqd = 400,
+            jl = {{"绑定元宝",1000000},{"绑定灵符",100000}}
+        },
+        --第三章
+        {
+            jq = {
+                { "修复轩辕剑（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "深入野火（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "守护森林（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "兵道之谜（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "幸运增幅",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "气运占卜",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "转生·二",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
 
+            },
+            jqd = 800,
+            jl = {{"绑定元宝",1000000},{"绑定灵符",100000}}
+        },
+    },
 }
 npc[11] = function(play,p2,p3,data)  --异闻录
+-- sj.i 大陆  sj.j 章节  sj.k 暂时不用  sj.z 剧情
     if p2 == 0 then
         sendluamsg(play, 101, 11, 0, 0,
                 '{"dljq":'..getplaydef(play, VarCfg.T_dljq)
@@ -137,15 +184,9 @@ npc[11] = function(play,p2,p3,data)  --异闻录
                         ..'}')
     elseif p2 == 1 then --传送
         local sj = json2tbl(data)
-        if sj.i and sj.k and sj.j and sj.z and sj.i > 0 and sj.k > 0 and sj.j > 0 and sj.z > 0 and sj.i <= #npc_xyl and sj.j <= #npc_xyl[sj.i] and sj.k <= #npc_xyl[sj.i][sj.j] and sj.z <= #npc_xyl[sj.i][sj.j][sj.k] then
+        if sj.i and sj.j and sj.z and sj.i > 0 and sj.j > 0 and sj.z > 0 and sj.i <= #npc_xyl and sj.j <= #npc_xyl[sj.i] and sj.z <= #npc_xyl[sj.i][sj.j].jq then
             if Player.dl_sz_notip(play, sj.i) then
-                local shuju = npc_xyl[sj.i][sj.j][sj.k][sj.z]
-                --if shuju[2] == 999 and sj.i > 3 then
-                --    local T_ywl = json2tbl(getplaydef(play,VarCfg.T_ywl))
-                --    if not (T_ywl["rw_"..shuju[3][2]] and T_ywl["rw_"..shuju[3][2]] == 1) then
-                --        Player.zxrw_lingqu(play, shuju[3][2], "")
-                --    end
-                --end
+                local shuju = npc_xyl[sj.i][sj.j].jq[sj.z]
                 if shuju.yd[1] == 0 then
                     sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>无法传送...</font>","Type":9}')
                 elseif shuju.yd[1] == 1 then
@@ -173,23 +214,23 @@ npc[11] = function(play,p2,p3,data)  --异闻录
         end
     elseif p2 == 2 then --一页任务奖励
         local sj = json2tbl(data)
-        if sj.i and sj.k and sj.j and sj.i > 0 and sj.k > 0 and sj.j > 0 and sj.i <= #npc_xyl and sj.j <= #npc_xyl[sj.i] and sj.k <= #npc_xyl[sj.i][sj.j] then
+        if sj.i and sj.j and sj.i > 0 and sj.j > 0 and sj.i <= #npc_xyl and sj.j <= #npc_xyl[sj.i] then
             local T_ywl = json2tbl(getplaydef(play,VarCfg.T_ywl))
-            if T_ywl["jl_"..sj.i.."_".. sj.j .."_"..sj.k] and T_ywl["jl_"..sj.i.."_".. sj.j .."_"..sj.k] == 1 then
+            if T_ywl["jl_"..sj.i.."_".. sj.j] and T_ywl["jl_"..sj.i.."_".. sj.j] == 1 then
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>已领取过了...</font>","Type":9}')
                 return
             end
-            for i = 1, #npc_xyl[sj.i][sj.j][sj.k] do
-                if T_ywl["jl_"..sj.i.."_".. sj.j .."_"..sj.k .."_" .. i] and T_ywl["jl_"..sj.i.."_".. sj.j .."_"..sj.k .."_" .. i] == 1 then
-                    T_ywl["jl_"..sj.i.."_".. sj.j .."_"..sj.k .."_" .. i] = nil
+            for i = 1, #npc_xyl[sj.i][sj.j].jq do
+                if T_ywl["jl_"..sj.i.."_".. sj.j .."_" .. i] and T_ywl["jl_"..sj.i.."_".. sj.j .."_" .. i] == 1 then
+                    T_ywl["jl_"..sj.i.."_".. sj.j .."_" .. i] = nil
                 else
-                    sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>未完成['..npc_xyl[sj.i][sj.j][sj.k][i][1]..']剧情...</font>","Type":9}')
+                    sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>未完成['..npc_xyl[sj.i][sj.j].jq[i][1]..']剧情...</font>","Type":9}')
                     return
                 end
             end
-            T_ywl["jl_"..sj.i.."_".. sj.j .."_"..sj.k] = 1
+            T_ywl["jl_"..sj.i.."_".. sj.j] = 1
             setplaydef(play, VarCfg.T_ywl, tbl2json(T_ywl))
-            Player.rwjl(play,npc_xyl[sj.i][sj.j][sj.k].jl,"剧情jl",1)
+            Player.rwjl(play,npc_xyl[sj.i][sj.j].jl,"剧情jl",1)
             sendluamsg(play, 101, 11, 3, 0,
                     '{"dljq":'..getplaydef(play, VarCfg.T_dljq)
                             ..',"zxrw":'..getplaydef(play, VarCfg.T_zxrw)
@@ -199,38 +240,39 @@ npc[11] = function(play,p2,p3,data)  --异闻录
         end
     elseif p2 == 3 then --单个任务奖励
         local sj = json2tbl(data)
-        if sj.i and sj.k and sj.j and sj.z and sj.i > 0 and sj.k > 0 and sj.j > 0 and sj.z > 0 and sj.i <= #npc_xyl and sj.j <= #npc_xyl[sj.i] and sj.k <= #npc_xyl[sj.i][sj.j] and sj.z <= #npc_xyl[sj.i][sj.j][sj.k] then
-            local shuju = npc_xyl[sj.i][sj.j][sj.k][sj.z]
+        if sj.i and sj.j and sj.z and sj.i > 0 and sj.j > 0 and sj.z > 0 and sj.i <= #npc_xyl and sj.j <= #npc_xyl[sj.i] and sj.z <= #npc_xyl[sj.i][sj.j].jq then
+            local shuju = npc_xyl[sj.i][sj.j].jq[sj.z]
             local T_dljq = json2tbl(getplaydef(play,VarCfg.T_dljq))
             local T_ywl = json2tbl(getplaydef(play,VarCfg.T_ywl))
-            if (T_ywl["jl_"..sj.i.."_".. sj.j .."_"..sj.k] and T_ywl["jl_"..sj.i.."_".. sj.j .."_"..sj.k] == 1) or (T_ywl["jl_"..sj.i.."_".. sj.j .."_"..sj.k .."_" .. sj.z] and T_ywl["jl_"..sj.i.."_".. sj.j .."_"..sj.k .."_" .. sj.z] == 1) then
+            -- 查这个货币的数量（只查这一种，不合并绑/非绑）
+            local num = querymoney(play, getstditeminfo("剧情点", 0))
+            if num < npc_xyl[sj.i][sj.j].jqd then
+                sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>剧情点不足...</font>","Type":9}')
+                return
+            end
+            if (T_ywl["jl_"..sj.i.."_".. sj.j] and T_ywl["jl_"..sj.i.."_".. sj.j] == 1) or (T_ywl["jl_"..sj.i.."_".. sj.j .."_" .. sj.z] and T_ywl["jl_"..sj.i.."_".. sj.j .."_" .. sj.z] == 1) then
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>已完成['..shuju[1]..']剧情...</font>","Type":9}')
                 return
             end
-            if (sj.i == 2 or sj.i == 3) and sj.k > 1 then
-                if not (T_ywl["jl_"..sj.i.."_"..sj.j.."_"..(sj.k - 1)] and T_ywl["jl_"..sj.i.."_"..sj.j.."_"..(sj.k - 1)] == 1) then
-                    sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>请先完成前一章节任务...</font>","Type":9}')
-                    return
-                end
-            end
-            if shuju[2] == 999 then
-                if shuju[3][1] == 3 or shuju[3][1] == 4 then
-                    if not (T_ywl["rw_"..shuju[3][2]] and T_ywl["rw_"..shuju[3][2]] == 1) then
-                        sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>未完成['..shuju[1]..']剧情...</font>","Type":9}')
-                        return
+            if shuju.id == 999 then
+                if shuju.fwdjy(play) then
+                    --可以完成
+                    T_ywl["jl_"..sj.i.."_".. sj.j .."_" .. sj.z] = 1
+                    setplaydef(play, VarCfg.T_ywl, tbl2json(T_ywl))
+                    if shuju.jl then
+                        Player.rwjl(play,shuju.jl,"剧情jl",1)
                     end
-                end
-            end
-            T_ywl["jl_"..sj.i.."_".. sj.j .."_"..sj.k .."_" .. sj.z] = 1
-            setplaydef(play, VarCfg.T_ywl, tbl2json(T_ywl))
-            if shuju.jl then
-                Player.rwjl(play,shuju.jl,"剧情jl",1)
-            end
-            sendluamsg(play, 101, 11, 0, 0,
+                    sendluamsg(play, 101, 11, 0, 0,
                     '{"dljq":'..getplaydef(play, VarCfg.T_dljq)
                             ..',"zxrw":'..getplaydef(play, VarCfg.T_zxrw)
                             ..',"ywl":'..getplaydef(play, VarCfg.T_ywl)
                             ..'}')
+                else
+                    sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>未完成['..shuju[1]..']剧情...</font>","Type":9}')
+                    return
+                end
+            end
+           
         end
     elseif p2 == 4 then --一整个大陆任务奖励
     end

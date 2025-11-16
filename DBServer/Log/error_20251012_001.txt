@@ -1,0 +1,47 @@
+[2025-10-12 00:06:38:424] GM 0 nType 0 sLoginID qccclllll IP 127.0.0.1 sToken 123456789a sChannel 1
+[2025-10-12 00:06:38:424] Login stp 1
+[2025-10-12 00:06:38:424] Login stp 2
+[2025-10-12 00:06:38:424] Login stp 3
+[2025-10-12 00:06:38:548] QueryChr 1 qccclllll/1/3/1/1/P2BA9WHHDMITRAKLT0M1OLHR5TVOCUQ2
+[2025-10-12 00:06:38:548] QueryChr 2 qccclllll
+[2025-10-12 00:06:38:548] QueryChr 3 qccclllll
+[2025-10-12 00:06:38:548] QueryChr 4 qccclllll
+
+[2025-10-12 00:06:43:826] SelectChr 1 qccclllll/玩家名字
+[2025-10-12 00:06:43:883] SelectChr 2 qccclllll
+[2025-10-12 00:06:43:884] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-12 21:29:37:377] QueryChr 1 qccclllll/1/3/1/1/P2BA9WHHDMITRAKLT0M1OLHR5TVOCUQ2
+[2025-10-12 21:29:37:377] QueryChr 2 qccclllll
+[2025-10-12 21:29:37:377] QueryChr 3 qccclllll
+[2025-10-12 21:29:37:377] QueryChr 4 qccclllll
+[2025-10-12 21:29:37:687] SelectChr 1 qccclllll/玩家名字
+[2025-10-12 21:29:37:747] SelectChr 2 qccclllll
+[2025-10-12 21:29:37:747] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-12 23:53:05:347] GM 0 nType 0 sLoginID qccclllll IP 127.0.0.1 sToken 123456789a sChannel 1
+[2025-10-12 23:53:05:347] Login stp 1
+[2025-10-12 23:53:05:347] Login stp 2
+[2025-10-12 23:53:05:347] Login stp 3
+[2025-10-12 23:53:05:455] QueryChr 1 qccclllll/2/3/1/1/GTLXG706EPXZPSOR5WE9XPLZNSQXJ0HP
+[2025-10-12 23:53:05:455] QueryChr 2 qccclllll
+[2025-10-12 23:53:05:455] QueryChr 3 qccclllll
+[2025-10-12 23:53:05:455] QueryChr 4 qccclllll
+
+[2025-10-12 23:53:09:369] SelectChr 1 qccclllll/玩家名字
+[2025-10-12 23:53:09:426] SelectChr 2 qccclllll
+[2025-10-12 23:53:09:426] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-12 23:55:45:946] GM 0 nType 0 sLoginID qccclllll IP 127.0.0.1 sToken 123456789a sChannel 1
+[2025-10-12 23:55:45:946] Login stp 1
+[2025-10-12 23:55:45:946] Login stp 2
+[2025-10-12 23:55:45:946] Login stp 3
+[2025-10-12 23:55:46:023] QueryChr 1 qccclllll/1/3/1/1/SZVH6BXLE4VC1001BNTVFGMULOMS0BML
+[2025-10-12 23:55:46:023] QueryChr 2 qccclllll
+[2025-10-12 23:55:46:023] QueryChr 3 qccclllll
+[2025-10-12 23:55:46:023] QueryChr 4 qccclllll
+
+[2025-10-12 23:55:49:946] SelectChr 1 qccclllll/玩家名字
+[2025-10-12 23:55:49:993] SelectChr 2 qccclllll
+[2025-10-12 23:55:49:993] SelectChr 3 qccclllll 127.0.0.1/7001
+

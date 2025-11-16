@@ -1,0 +1,6 @@
+[2025-11-05 17:14:09:380] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：32; NpcThreadId: 35976, CurPlayThreadId: 35976
+
+[2025-11-05 17:25:59:731] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 35976, CurPlayThreadId: 35976
+
+[2025-11-05 20:17:10:376] [Exception]>>>>>>TBaseObject.MapRandomMove[玩家名字-30000000001762243493000005351] 不存在此地图[比武大会]，以传回应急地图[xtc]
+

@@ -1,0 +1,4 @@
+2025-08-31 06:04:28 存储耗时：SaveHum:16,HumBodyItems:15,HumBagItems:0,UpdateHumStorageItems:0
+Save:[4] [0] 2025-08-31 06:04:28 玩家名字k Level:30 Body[17]: MakeIndex:10002 Index:19996 btValue:49(-2141869483)  --  --  -- 
+2025-08-31 06:14:28 存储耗时：SaveHum:15,HumBodyItems:16,HumBagItems:0,UpdateHumStorageItems:0
+Save:[4] [0] 2025-08-31 06:14:28 玩家名字k Level:30 Body[17]: MakeIndex:10002 Index:19996 btValue:49(-2141869483)  --  --  -- 

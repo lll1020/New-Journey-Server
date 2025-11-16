@@ -1,0 +1,12 @@
+2025-09-19 08:05:14 存储耗时：SaveHum:31,HumBodyItems:15,HumBagItems:32,UpdateHumStorageItems:0
+Save:[4] [0] 2025-09-19 08:05:14 玩家名字kz Level:30 Body[17]: MakeIndex:10014 Index:19996 btValue:47(14224) btValue:49(-2141869483)  -- Bag[0]: MakeIndex:10013 Index:19996 OverLap:0 btValue:47(14224) btValue:49(-2141869483)  --  -- 
+2025-09-19 08:15:14 存储耗时：SaveHum:47,HumBodyItems:16,HumBagItems:15,UpdateHumStorageItems:0
+Save:[4] [0] 2025-09-19 08:15:14 玩家名字kz Level:30 Body[17]: MakeIndex:10014 Index:19996 btValue:47(14224) btValue:49(-2141869483)  -- Bag[0]: MakeIndex:10013 Index:19996 OverLap:0 btValue:47(14224) btValue:49(-2141869483)  --  -- 
+2025-09-19 08:25:14 存储耗时：SaveHum:31,HumBodyItems:16,HumBagItems:31,UpdateHumStorageItems:0
+Save:[4] [0] 2025-09-19 08:25:14 玩家名字kz Level:30 Body[17]: MakeIndex:10014 Index:19996 btValue:47(14224) btValue:49(-2141869483)  -- Bag[0]: MakeIndex:10013 Index:19996 OverLap:0 btValue:47(14224) btValue:49(-2141869483)  --  -- 
+2025-09-19 08:35:14 存储耗时：SaveHum:78,HumBodyItems:47,HumBagItems:0,UpdateHumStorageItems:15
+Save:[4] [0] 2025-09-19 08:35:14 玩家名字kz Level:30 Body[17]: MakeIndex:10014 Index:19996 btValue:47(14224) btValue:49(-2141869483)  -- Bag[0]: MakeIndex:10013 Index:19996 OverLap:0 btValue:47(14224) btValue:49(-2141869483)  --  -- 
+2025-09-19 08:45:14 存储耗时：SaveHum:16,HumBodyItems:31,HumBagItems:16,UpdateHumStorageItems:16
+Save:[4] [0] 2025-09-19 08:45:14 玩家名字kz Level:30 Body[17]: MakeIndex:10014 Index:19996 btValue:47(14224) btValue:49(-2141869483)  -- Bag[0]: MakeIndex:10013 Index:19996 OverLap:0 btValue:47(14224) btValue:49(-2141869483)  --  -- 
+2025-09-19 08:55:14 存储耗时：SaveHum:31,HumBodyItems:16,HumBagItems:31,UpdateHumStorageItems:0
+Save:[4] [0] 2025-09-19 08:55:14 玩家名字kz Level:30 Body[17]: MakeIndex:10014 Index:19996 btValue:47(14224) btValue:49(-2141869483)  -- Bag[0]: MakeIndex:10013 Index:19996 OverLap:0 btValue:47(14224) btValue:49(-2141869483)  --  -- 

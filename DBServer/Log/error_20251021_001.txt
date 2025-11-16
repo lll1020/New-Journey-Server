@@ -1,0 +1,351 @@
+[2025-10-21 06:17:11:140] GM 0 nType 0 sLoginID qccclllll IP 127.0.0.1 sToken 123456789a sChannel 1
+[2025-10-21 06:17:11:140] Login stp 1
+[2025-10-21 06:17:11:140] Login stp 2
+[2025-10-21 06:17:11:140] Login stp 3
+[2025-10-21 06:17:11:263] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 06:17:11:263] QueryChr 2 qccclllll
+[2025-10-21 06:17:11:263] QueryChr 3 qccclllll
+[2025-10-21 06:17:11:263] QueryChr 4 qccclllll
+
+[2025-10-21 06:17:15:148] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 06:17:15:204] SelectChr 2 qccclllll
+[2025-10-21 06:17:15:204] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 06:17:53:850] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 06:17:53:850] QueryChr 2 qccclllll
+[2025-10-21 06:17:53:850] QueryChr 3 qccclllll
+[2025-10-21 06:17:53:850] QueryChr 4 qccclllll
+[2025-10-21 06:17:54:609] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 06:17:54:665] SelectChr 2 qccclllll
+[2025-10-21 06:17:54:665] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 06:19:17:100] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 06:19:17:100] QueryChr 2 qccclllll
+[2025-10-21 06:19:17:100] QueryChr 3 qccclllll
+[2025-10-21 06:19:17:100] QueryChr 4 qccclllll
+[2025-10-21 06:19:17:288] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 06:19:17:344] SelectChr 2 qccclllll
+[2025-10-21 06:19:17:344] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 06:20:29:939] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 06:20:29:939] QueryChr 2 qccclllll
+[2025-10-21 06:20:29:939] QueryChr 3 qccclllll
+[2025-10-21 06:20:29:939] QueryChr 4 qccclllll
+
+[2025-10-21 06:20:30:204] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 06:20:30:259] SelectChr 2 qccclllll
+[2025-10-21 06:20:30:260] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 06:26:39:177] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 06:26:39:177] QueryChr 2 qccclllll
+[2025-10-21 06:26:39:177] QueryChr 3 qccclllll
+[2025-10-21 06:26:39:177] QueryChr 4 qccclllll
+[2025-10-21 06:26:39:426] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 06:26:39:482] SelectChr 2 qccclllll
+[2025-10-21 06:26:39:482] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 06:26:57:645] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 06:26:57:645] QueryChr 2 qccclllll
+[2025-10-21 06:26:57:645] QueryChr 3 qccclllll
+[2025-10-21 06:26:57:645] QueryChr 4 qccclllll
+[2025-10-21 06:26:57:861] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 06:26:57:917] SelectChr 2 qccclllll
+[2025-10-21 06:26:57:917] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 06:27:33:090] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 06:27:33:090] QueryChr 2 qccclllll
+[2025-10-21 06:27:33:090] QueryChr 3 qccclllll
+[2025-10-21 06:27:33:090] QueryChr 4 qccclllll
+[2025-10-21 06:27:33:527] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 06:27:33:582] SelectChr 2 qccclllll
+[2025-10-21 06:27:33:582] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 06:27:55:701] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 06:27:55:701] QueryChr 2 qccclllll
+[2025-10-21 06:27:55:701] QueryChr 3 qccclllll
+[2025-10-21 06:27:55:701] QueryChr 4 qccclllll
+[2025-10-21 06:27:55:918] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 06:27:55:974] SelectChr 2 qccclllll
+[2025-10-21 06:27:55:975] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 06:28:11:584] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 06:28:11:584] QueryChr 2 qccclllll
+[2025-10-21 06:28:11:584] QueryChr 3 qccclllll
+[2025-10-21 06:28:11:584] QueryChr 4 qccclllll
+[2025-10-21 06:28:12:050] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 06:28:12:105] SelectChr 2 qccclllll
+[2025-10-21 06:28:12:105] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 06:28:25:808] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 06:28:25:808] QueryChr 2 qccclllll
+[2025-10-21 06:28:25:808] QueryChr 3 qccclllll
+[2025-10-21 06:28:25:808] QueryChr 4 qccclllll
+[2025-10-21 06:28:26:320] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 06:28:26:375] SelectChr 2 qccclllll
+[2025-10-21 06:28:26:376] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 06:29:39:078] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 06:29:39:078] QueryChr 2 qccclllll
+[2025-10-21 06:29:39:078] QueryChr 3 qccclllll
+[2025-10-21 06:29:39:078] QueryChr 4 qccclllll
+[2025-10-21 06:29:39:716] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 06:29:39:771] SelectChr 2 qccclllll
+[2025-10-21 06:29:39:771] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 11:48:45:963] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 11:48:45:963] QueryChr 2 qccclllll
+[2025-10-21 11:48:45:963] QueryChr 3 qccclllll
+[2025-10-21 11:48:45:963] QueryChr 4 qccclllll
+[2025-10-21 11:48:46:272] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 11:48:46:328] SelectChr 2 qccclllll
+[2025-10-21 11:48:46:328] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 11:49:49:258] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 11:49:49:258] QueryChr 2 qccclllll
+[2025-10-21 11:49:49:258] QueryChr 3 qccclllll
+[2025-10-21 11:49:49:258] QueryChr 4 qccclllll
+[2025-10-21 11:49:49:444] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 11:49:49:499] SelectChr 2 qccclllll
+[2025-10-21 11:49:49:499] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 11:51:13:628] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 11:51:13:628] QueryChr 2 qccclllll
+[2025-10-21 11:51:13:628] QueryChr 3 qccclllll
+[2025-10-21 11:51:13:628] QueryChr 4 qccclllll
+[2025-10-21 11:51:14:064] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 11:51:14:122] SelectChr 2 qccclllll
+[2025-10-21 11:51:14:122] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 11:51:37:692] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 11:51:37:692] QueryChr 2 qccclllll
+[2025-10-21 11:51:37:692] QueryChr 3 qccclllll
+[2025-10-21 11:51:37:692] QueryChr 4 qccclllll
+[2025-10-21 11:51:39:650] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 11:51:39:704] SelectChr 2 qccclllll
+[2025-10-21 11:51:39:704] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 11:52:36:009] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 11:52:36:009] QueryChr 2 qccclllll
+[2025-10-21 11:52:36:009] QueryChr 3 qccclllll
+[2025-10-21 11:52:36:009] QueryChr 4 qccclllll
+[2025-10-21 11:52:36:549] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 11:52:36:607] SelectChr 2 qccclllll
+[2025-10-21 11:52:36:607] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 11:54:11:887] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 11:54:11:887] QueryChr 2 qccclllll
+[2025-10-21 11:54:11:887] QueryChr 3 qccclllll
+[2025-10-21 11:54:11:887] QueryChr 4 qccclllll
+[2025-10-21 11:54:12:028] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 11:54:12:084] SelectChr 2 qccclllll
+[2025-10-21 11:54:12:084] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 11:55:47:984] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 11:55:47:984] QueryChr 2 qccclllll
+[2025-10-21 11:55:47:984] QueryChr 3 qccclllll
+[2025-10-21 11:55:47:984] QueryChr 4 qccclllll
+[2025-10-21 11:55:48:187] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 11:55:48:245] SelectChr 2 qccclllll
+[2025-10-21 11:55:48:245] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 11:56:25:709] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 11:56:25:709] QueryChr 2 qccclllll
+[2025-10-21 11:56:25:709] QueryChr 3 qccclllll
+[2025-10-21 11:56:25:709] QueryChr 4 qccclllll
+[2025-10-21 11:56:25:833] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 11:56:25:889] SelectChr 2 qccclllll
+[2025-10-21 11:56:25:889] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 11:56:47:423] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 11:56:47:423] QueryChr 2 qccclllll
+[2025-10-21 11:56:47:423] QueryChr 3 qccclllll
+[2025-10-21 11:56:47:423] QueryChr 4 qccclllll
+[2025-10-21 11:56:47:577] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 11:56:47:633] SelectChr 2 qccclllll
+[2025-10-21 11:56:47:633] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 11:57:29:168] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 11:57:29:168] QueryChr 2 qccclllll
+[2025-10-21 11:57:29:168] QueryChr 3 qccclllll
+[2025-10-21 11:57:29:168] QueryChr 4 qccclllll
+[2025-10-21 11:57:29:307] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 11:57:29:364] SelectChr 2 qccclllll
+[2025-10-21 11:57:29:364] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 11:57:40:281] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 11:57:40:281] QueryChr 2 qccclllll
+[2025-10-21 11:57:40:281] QueryChr 3 qccclllll
+[2025-10-21 11:57:40:281] QueryChr 4 qccclllll
+[2025-10-21 11:57:40:485] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 11:57:40:540] SelectChr 2 qccclllll
+[2025-10-21 11:57:40:540] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 11:58:15:275] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 11:58:15:275] QueryChr 2 qccclllll
+[2025-10-21 11:58:15:275] QueryChr 3 qccclllll
+[2025-10-21 11:58:15:275] QueryChr 4 qccclllll
+[2025-10-21 11:58:16:020] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 11:58:16:077] SelectChr 2 qccclllll
+[2025-10-21 11:58:16:077] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 11:59:29:422] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 11:59:29:422] QueryChr 2 qccclllll
+[2025-10-21 11:59:29:422] QueryChr 3 qccclllll
+[2025-10-21 11:59:29:422] QueryChr 4 qccclllll
+[2025-10-21 11:59:29:578] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 11:59:29:635] SelectChr 2 qccclllll
+[2025-10-21 11:59:29:635] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 11:59:43:322] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 11:59:43:322] QueryChr 2 qccclllll
+[2025-10-21 11:59:43:322] QueryChr 3 qccclllll
+[2025-10-21 11:59:43:322] QueryChr 4 qccclllll
+[2025-10-21 11:59:43:617] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 11:59:43:674] SelectChr 2 qccclllll
+[2025-10-21 11:59:43:674] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 12:00:21:326] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 12:00:21:326] QueryChr 2 qccclllll
+[2025-10-21 12:00:21:326] QueryChr 3 qccclllll
+[2025-10-21 12:00:21:326] QueryChr 4 qccclllll
+[2025-10-21 12:00:21:886] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 12:00:21:943] SelectChr 2 qccclllll
+[2025-10-21 12:00:21:943] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 12:01:26:765] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 12:01:26:765] QueryChr 2 qccclllll
+[2025-10-21 12:01:26:765] QueryChr 3 qccclllll
+[2025-10-21 12:01:26:765] QueryChr 4 qccclllll
+[2025-10-21 12:01:26:935] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 12:01:26:993] SelectChr 2 qccclllll
+[2025-10-21 12:01:26:993] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 12:02:28:887] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 12:02:28:887] QueryChr 2 qccclllll
+[2025-10-21 12:02:28:887] QueryChr 3 qccclllll
+[2025-10-21 12:02:28:887] QueryChr 4 qccclllll
+[2025-10-21 12:02:29:075] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 12:02:29:131] SelectChr 2 qccclllll
+[2025-10-21 12:02:29:131] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 12:05:05:096] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 12:05:05:096] QueryChr 2 qccclllll
+[2025-10-21 12:05:05:096] QueryChr 3 qccclllll
+[2025-10-21 12:05:05:096] QueryChr 4 qccclllll
+[2025-10-21 12:05:05:796] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 12:05:05:853] SelectChr 2 qccclllll
+[2025-10-21 12:05:05:853] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 12:05:42:609] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 12:05:42:609] QueryChr 2 qccclllll
+[2025-10-21 12:05:42:609] QueryChr 3 qccclllll
+[2025-10-21 12:05:42:609] QueryChr 4 qccclllll
+[2025-10-21 12:05:42:731] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 12:05:42:787] SelectChr 2 qccclllll
+[2025-10-21 12:05:42:788] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 12:08:30:690] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 12:08:30:690] QueryChr 2 qccclllll
+[2025-10-21 12:08:30:690] QueryChr 3 qccclllll
+[2025-10-21 12:08:30:690] QueryChr 4 qccclllll
+
+[2025-10-21 12:09:05:334] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 12:09:05:390] SelectChr 2 qccclllll
+[2025-10-21 12:09:05:390] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 12:10:10:441] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 12:10:10:441] QueryChr 2 qccclllll
+[2025-10-21 12:10:10:441] QueryChr 3 qccclllll
+[2025-10-21 12:10:10:441] QueryChr 4 qccclllll
+[2025-10-21 12:10:10:642] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 12:10:10:701] SelectChr 2 qccclllll
+[2025-10-21 12:10:10:701] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 12:25:41:200] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 12:25:41:200] QueryChr 2 qccclllll
+[2025-10-21 12:25:41:200] QueryChr 3 qccclllll
+[2025-10-21 12:25:41:200] QueryChr 4 qccclllll
+[2025-10-21 12:25:42:336] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 12:25:42:393] SelectChr 2 qccclllll
+[2025-10-21 12:25:42:393] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 12:28:36:806] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 12:28:36:806] QueryChr 2 qccclllll
+[2025-10-21 12:28:36:806] QueryChr 3 qccclllll
+[2025-10-21 12:28:36:806] QueryChr 4 qccclllll
+[2025-10-21 12:28:37:024] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 12:28:37:080] SelectChr 2 qccclllll
+[2025-10-21 12:28:37:081] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 12:30:04:947] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 12:30:04:947] QueryChr 2 qccclllll
+[2025-10-21 12:30:04:947] QueryChr 3 qccclllll
+[2025-10-21 12:30:04:947] QueryChr 4 qccclllll
+
+[2025-10-21 12:30:05:164] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 12:30:05:224] SelectChr 2 qccclllll
+[2025-10-21 12:30:05:224] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 12:31:22:050] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 12:31:22:050] QueryChr 2 qccclllll
+[2025-10-21 12:31:22:050] QueryChr 3 qccclllll
+[2025-10-21 12:31:22:050] QueryChr 4 qccclllll
+
+[2025-10-21 12:31:31:429] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 12:31:31:487] SelectChr 2 qccclllll
+[2025-10-21 12:31:31:487] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 15:16:03:953] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 15:16:03:953] QueryChr 2 qccclllll
+[2025-10-21 15:16:03:953] QueryChr 3 qccclllll
+[2025-10-21 15:16:03:953] QueryChr 4 qccclllll
+[2025-10-21 15:16:04:677] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 15:16:04:734] SelectChr 2 qccclllll
+[2025-10-21 15:16:04:734] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 15:16:24:692] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 15:16:24:692] QueryChr 2 qccclllll
+[2025-10-21 15:16:24:692] QueryChr 3 qccclllll
+[2025-10-21 15:16:24:692] QueryChr 4 qccclllll
+[2025-10-21 15:16:24:926] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 15:16:24:985] SelectChr 2 qccclllll
+[2025-10-21 15:16:24:985] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 15:20:35:542] QueryChr 1 qccclllll/1/3/1/1/RU0PO7VZKK86Q3CCAOTE1R2K90NMVYZ9
+[2025-10-21 15:20:35:542] QueryChr 2 qccclllll
+[2025-10-21 15:20:35:542] QueryChr 3 qccclllll
+[2025-10-21 15:20:35:542] QueryChr 4 qccclllll
+[2025-10-21 15:20:36:193] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 15:20:36:249] SelectChr 2 qccclllll
+[2025-10-21 15:20:36:249] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 17:54:11:086] GM 0 nType 0 sLoginID qccclllll IP 127.0.0.1 sToken 123456789a sChannel 1
+[2025-10-21 17:54:11:086] Login stp 1
+[2025-10-21 17:54:11:086] Login stp 2
+[2025-10-21 17:54:11:086] Login stp 3
+[2025-10-21 17:54:11:208] QueryChr 1 qccclllll/2/3/1/1/OWR9OFQ5RNSPONYP65I9CRRXF6HJN67X
+[2025-10-21 17:54:11:208] QueryChr 2 qccclllll
+[2025-10-21 17:54:11:208] QueryChr 3 qccclllll
+[2025-10-21 17:54:11:208] QueryChr 4 qccclllll
+
+[2025-10-21 17:55:00:878] GM 0 nType 0 sLoginID qccclllll IP 127.0.0.1 sToken 123456789a sChannel 1
+[2025-10-21 17:55:00:878] Login stp 1
+[2025-10-21 17:55:00:879] Login stp 2
+[2025-10-21 17:55:00:879] Login stp 3
+[2025-10-21 17:55:00:971] QueryChr 1 qccclllll/3/3/1/1/4UBC45WS5KQKTOGHMEA52KHSJ1SC6MQ4
+[2025-10-21 17:55:00:971] QueryChr 2 qccclllll
+[2025-10-21 17:55:00:971] QueryChr 3 qccclllll
+[2025-10-21 17:55:00:971] QueryChr 4 qccclllll
+[2025-10-21 17:55:04:993] SelectChr 1 qccclllll/玩家名字
+
+[2025-10-21 17:55:05:057] SelectChr 2 qccclllll
+[2025-10-21 17:55:05:057] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-21 18:40:36:586] QueryChr 1 qccclllll/3/3/1/1/4UBC45WS5KQKTOGHMEA52KHSJ1SC6MQ4
+[2025-10-21 18:40:36:586] QueryChr 2 qccclllll
+[2025-10-21 18:40:36:586] QueryChr 3 qccclllll
+[2025-10-21 18:40:36:586] QueryChr 4 qccclllll
+[2025-10-21 18:40:38:188] SelectChr 1 qccclllll/玩家名字
+[2025-10-21 18:40:38:253] SelectChr 2 qccclllll
+[2025-10-21 18:40:38:253] SelectChr 3 qccclllll 127.0.0.1/7001
+

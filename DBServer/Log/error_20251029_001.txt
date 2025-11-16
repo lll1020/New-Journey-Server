@@ -1,0 +1,54 @@
+[2025-10-29 13:53:48:339] GM 0 nType 0 sLoginID qccclllll IP 127.0.0.1 sToken 123456789a sChannel 1
+[2025-10-29 13:53:48:339] Login stp 1
+[2025-10-29 13:53:48:339] Login stp 2
+[2025-10-29 13:53:48:340] Login stp 3
+[2025-10-29 13:53:48:460] QueryChr 1 qccclllll/1/3/1/1/KJ9TAUR7G8KXN25B9UIKVM8IMHL8MXW3
+[2025-10-29 13:53:48:460] QueryChr 2 qccclllll
+[2025-10-29 13:53:48:460] QueryChr 3 qccclllll
+[2025-10-29 13:53:48:460] QueryChr 4 qccclllll
+
+[2025-10-29 13:54:15:205] SelectChr 1 qccclllll/玩家名字kk
+[2025-10-29 13:54:15:263] SelectChr 2 qccclllll
+[2025-10-29 13:54:15:263] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-29 14:42:15:477] QueryChr 1 qccclllll/1/3/1/1/KJ9TAUR7G8KXN25B9UIKVM8IMHL8MXW3
+[2025-10-29 14:42:15:477] QueryChr 2 qccclllll
+[2025-10-29 14:42:15:477] QueryChr 3 qccclllll
+[2025-10-29 14:42:15:477] QueryChr 4 qccclllll
+[2025-10-29 14:42:15:925] SelectChr 1 qccclllll/玩家名字kk
+[2025-10-29 14:42:15:981] SelectChr 2 qccclllll
+[2025-10-29 14:42:15:981] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-29 15:28:06:105] GM 0 nType 0 sLoginID qccclllll IP 127.0.0.1 sToken 123456789a sChannel 1
+[2025-10-29 15:28:06:105] Login stp 1
+[2025-10-29 15:28:06:105] Login stp 2
+[2025-10-29 15:28:06:105] Login stp 3
+[2025-10-29 15:28:06:212] QueryChr 1 qccclllll/1/3/1/1/8ZNYKCUGDINJTR0MC651MUTMWCERQ1LV
+[2025-10-29 15:28:06:212] QueryChr 2 qccclllll
+[2025-10-29 15:28:06:212] QueryChr 3 qccclllll
+[2025-10-29 15:28:06:212] QueryChr 4 qccclllll
+
+[2025-10-29 15:28:12:328] SelectChr 1 qccclllll/玩家名字kk
+[2025-10-29 15:28:12:382] SelectChr 2 qccclllll
+[2025-10-29 15:28:12:382] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-29 18:53:51:924] QueryChr 1 qccclllll/1/3/1/1/8ZNYKCUGDINJTR0MC651MUTMWCERQ1LV
+[2025-10-29 18:53:51:924] QueryChr 2 qccclllll
+[2025-10-29 18:53:51:924] QueryChr 3 qccclllll
+[2025-10-29 18:53:51:924] QueryChr 4 qccclllll
+[2025-10-29 18:53:52:252] SelectChr 1 qccclllll/玩家名字kk
+[2025-10-29 18:53:52:306] SelectChr 2 qccclllll
+[2025-10-29 18:53:52:306] SelectChr 3 qccclllll 127.0.0.1/7001
+
+[2025-10-29 18:54:43:342] GM 0 nType 0 sLoginID qccclllll IP 127.0.0.1 sToken 123456789a sChannel 1
+[2025-10-29 18:54:43:342] Login stp 1
+[2025-10-29 18:54:43:342] Login stp 2
+[2025-10-29 18:54:43:342] Login stp 3
+[2025-10-29 18:54:43:405] QueryChr 1 qccclllll/2/3/1/1/ZJYOYP4OH444355HCSTW9DP3GZ3WQMYB
+[2025-10-29 18:54:43:405] QueryChr 2 qccclllll
+[2025-10-29 18:54:43:405] QueryChr 3 qccclllll
+[2025-10-29 18:54:43:405] QueryChr 4 qccclllll
+[2025-10-29 18:54:47:234] SelectChr 1 qccclllll/玩家名字kk
+[2025-10-29 18:54:47:287] SelectChr 2 qccclllll
+[2025-10-29 18:54:47:287] SelectChr 3 qccclllll 127.0.0.1/7001
+

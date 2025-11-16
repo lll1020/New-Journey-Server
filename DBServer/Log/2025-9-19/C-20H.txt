@@ -1,0 +1,13 @@
+2025-09-19 20:16:30 ReloadRegistWhiteList:
+2025-09-19 20:16:31 加载缓存数据：0
+Load(库):[3] [0] 2025-09-19 20:19:02 玩家名字 Level:0  --  --  -- 
+2025-09-19 20:19:05 存储耗时：SaveHum:125,HumBodyItems:32,HumBagItems:62,UpdateHumStorageItems:47
+Save:[4] [0] 2025-09-19 20:19:05 玩家名字 Level:2 Body[17]: MakeIndex:10001 Index:19996 btValue:49(-2141869483)  --  --  -- 
+2025-09-19 20:29:05 存储耗时：SaveHum:31,HumBodyItems:63,HumBagItems:62,UpdateHumStorageItems:47
+Save:[4] [0] 2025-09-19 20:29:05 玩家名字 Level:30 Body[17]: MakeIndex:10001 Index:19996 btValue:49(-2141869483)  --  --  -- 
+2025-09-19 20:39:05 存储耗时：SaveHum:46,HumBodyItems:47,HumBagItems:63,UpdateHumStorageItems:62
+Save:[4] [0] 2025-09-19 20:39:05 玩家名字 Level:30 Body[17]: MakeIndex:10001 Index:19996 btValue:49(-2141869483)  --  --  -- 
+2025-09-19 20:49:05 存储耗时：SaveHum:31,HumBodyItems:63,HumBagItems:47,UpdateHumStorageItems:62
+Save:[4] [0] 2025-09-19 20:49:05 玩家名字 Level:30 Body[17]: MakeIndex:10001 Index:19996 btValue:49(-2141869483)  --  --  -- 
+2025-09-19 20:59:05 存储耗时：SaveHum:32,HumBodyItems:46,HumBagItems:63,UpdateHumStorageItems:47
+Save:[4] [0] 2025-09-19 20:59:05 玩家名字 Level:30 Body[17]: MakeIndex:10001 Index:19996 btValue:49(-2141869483)  --  --  -- 

@@ -1,0 +1,255 @@
+[2025-11-04 00:41:14:425] D701 - secret map not found !!
+[2025-11-04 00:41:14:425] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-37824] 当前Thread:42348
+[2025-11-04 00:41:14:425] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2025-11-04 00:41:14:425] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-37824] 当前Thread:42348
+[2025-11-04 00:41:14:425] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2025-11-04 00:41:14:425] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-37824] 当前Thread:42348
+[2025-11-04 00:41:14:425] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2025-11-04 00:41:14:425] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-37824] 当前Thread:42348
+[2025-11-04 00:41:14:425] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2025-11-04 00:41:14:505] ---------------------线程耗时监控
+[2025-11-04 00:41:14:640] Frame-----------------------------------
+
+[2025-11-04 00:41:14:650] MainRunThread(0)-----------------------------------
+
+[2025-11-04 00:41:14:679] EnvirThread 0/0(6594-0)flag:50000004  lua: 1 CallLua:setontimerex 31-----------------------------------
+
+[2025-11-04 00:41:14:689] DbThread(0-0)-----------------------------------
+
+[2025-11-04 00:41:14:702] BoxSellDbThread(0)-----------------------------------
+
+[2025-11-04 00:41:14:712] NewHttpPost(15-0-0)-----------------------------------
+
+
+[2025-11-04 15:29:53:807] PayList Except：[DBNETLIB][ConnectionWrite (send()).]一般性网络错误。请检查网络文档。[0000000001AC8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001AC7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001AC79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001ACAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001AB9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001AB996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001AB9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000AF23B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000CD1704] System.Win.ComObj._ZN6System3Win6Comobj13SafeCallErrorEiPv (Line 1776, "System.Win.ComObj.pas" + 3)
+[0000000000AFCEB5] System._ZN6System16_CheckAutoResultEl (Line 40249, "System.pas" + 5)
+[0000000000EECBFF] Data.Win.ADODB._ZN4Data3Win5Adodb17TCustomADODataSet10OpenCursorEb (Line 3574, "Data.Win.ADODB.pas" + 5)
+[0000000000EC0354] Data.DB._ZN4Data2Db8TDataSet9SetActiveEb (Line 12665, "Data.DB.pas" + 14)
+[0000000000EC00F6] Data.DB._ZN4Data2Db8TDataSet4OpenEv (Line 12620, "Data.DB.pas" + 2)
+[0000000001488C0A] uChargeThread._ZN13Uchargethread13TChargeThread9PayListExEN6System13UnicodeStringE (Line 401, "uChargeThread.pas" + 18)
+[00000000014878AA] uChargeThread._ZN13Uchargethread13TChargeThread5OnMsgEjyPv (Line 209, "uChargeThread.pas" + 18)
+[0000000000F12228] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 186, "uThreadPools.pas" + 30)
+[0000000000F11D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000C12963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000AF2F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FF8B6ECE8D7] BaseThreadInitThunk
+[00007FF8B810C53C] RtlUserThreadStart
+
+
+[2025-11-04 15:30:56:595] D701 - secret map not found !!
+[2025-11-04 15:30:56:595] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-39400] 当前Thread:42296
+[2025-11-04 15:30:56:595] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2025-11-04 15:30:56:595] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-39400] 当前Thread:42296
+[2025-11-04 15:30:56:595] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2025-11-04 15:30:56:595] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-39400] 当前Thread:42296
+[2025-11-04 15:30:56:595] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2025-11-04 15:30:56:595] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-39400] 当前Thread:42296
+[2025-11-04 15:30:56:595] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2025-11-04 15:30:56:773] ---------------------线程耗时监控
+[2025-11-04 15:30:56:812] Frame-----------------------------------
+
+[2025-11-04 15:30:57:105] MainRunThread(15)-----------------------------------
+
+[2025-11-04 15:30:57:114] DbThread(0-0)-----------------------------------
+
+[2025-11-04 15:30:57:124] BoxSellDbThread(0)-----------------------------------
+
+[2025-11-04 15:30:57:133] NewHttpPost(16-0-0)-----------------------------------
+
+
+[2025-11-04 16:04:23:626] D701 - secret map not found !!
+[2025-11-04 16:04:23:626] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-39120] 当前Thread:38900
+[2025-11-04 16:04:23:626] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2025-11-04 16:04:23:626] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-39120] 当前Thread:38900
+[2025-11-04 16:04:23:626] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2025-11-04 16:04:23:626] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-39120] 当前Thread:38900
+[2025-11-04 16:04:23:626] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2025-11-04 16:04:23:627] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-39120] 当前Thread:38900
+[2025-11-04 16:04:23:627] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2025-11-04 16:04:23:698] ---------------------线程耗时监控
+[2025-11-04 16:04:23:855] Frame-----------------------------------
+
+[2025-11-04 16:04:23:865] MainRunThread(16)-----------------------------------
+
+[2025-11-04 16:04:23:879] EnvirThread 0/0(6625-0)flag:50000004  lua: 1 CallLua:setontimerex 31-----------------------------------
+
+[2025-11-04 16:04:23:904] DbThread(16-0)-----------------------------------
+
+[2025-11-04 16:04:23:914] BoxSellDbThread(16)-----------------------------------
+
+[2025-11-04 16:04:23:924] NewHttpPost(16-0-0)-----------------------------------
+
+
+[2025-11-04 18:00:29:149] ---------------------线程耗时监控
+[2025-11-04 18:00:29:185] Frame-----------------------------------
+
+[2025-11-04 18:00:29:231] MainRunThread(0)-----------------------------------
+
+[2025-11-04 18:00:29:263] DbThread(0-0)-----------------------------------
+
+[2025-11-04 18:00:53:855] BoxSellDbThread(0)-----------------------------------
+
+[2025-11-04 18:00:53:992] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2025-11-05 00:01:20:751] ---------------------线程耗时监控
+[2025-11-05 00:01:20:769] Frame-----------------------------------
+
+[2025-11-05 00:01:20:786] MainRunThread(0)-----------------------------------
+
+[2025-11-05 00:01:20:815] DbThread(2047-0)-----------------------------------
+
+[2025-11-05 00:01:20:832] BoxSellDbThread(0)-----------------------------------
+
+[2025-11-05 00:01:20:850] NewHttpPost(0-0-0)-----------------------------------
+
+[2025-11-05 00:01:23:014] ---------------------线程耗时监控
+[2025-11-05 00:01:23:031] Frame-----------------------------------
+
+[2025-11-05 00:01:23:048] MainRunThread(0)-----------------------------------
+
+[2025-11-05 00:01:23:071] DbThread(4312-0)-----------------------------------
+
+[2025-11-05 00:01:23:088] BoxSellDbThread(16)-----------------------------------
+
+[2025-11-05 00:01:23:106] NewHttpPost(15-0-0)-----------------------------------
+
+
+[2025-11-05 00:01:26:001] ---------------------线程耗时监控
+[2025-11-05 00:01:26:018] Frame-----------------------------------
+
+[2025-11-05 00:01:26:035] MainRunThread(0)-----------------------------------
+
+[2025-11-05 00:01:26:058] DbThread(7297-0)-----------------------------------
+
+[2025-11-05 00:01:26:077] BoxSellDbThread(16)-----------------------------------
+
+[2025-11-05 00:01:26:094] NewHttpPost(16-0-0)-----------------------------------
+
+
+[2025-11-05 00:01:29:008] ---------------------线程耗时监控
+[2025-11-05 00:01:29:025] Frame-----------------------------------
+
+[2025-11-05 00:01:29:043] MainRunThread(16)-----------------------------------
+
+[2025-11-05 00:01:29:061] EnvirThread 0/0(31-0)flag:5000000  lua: 23255 CallLua:setplaydef 89878-----------------------------------
+
+[2025-11-05 00:01:29:085] DbThread(10328-1)-----------------------------------
+
+[2025-11-05 00:01:29:103] BoxSellDbThread(0)-----------------------------------
+
+[2025-11-05 00:01:29:119] NewHttpPost(0-0-0)-----------------------------------
+
+[2025-11-05 00:01:32:006] ---------------------线程耗时监控
+[2025-11-05 00:01:32:023] Frame-----------------------------------
+
+[2025-11-05 00:01:32:040] MainRunThread(0)-----------------------------------
+
+[2025-11-05 00:01:32:058] EnvirThread 0/0(31-0)flag:5000000  lua: 23256 CallLua:getbagblank 89879-----------------------------------
+
+[2025-11-05 00:01:32:082] DbThread(13328-1)-----------------------------------
+
+[2025-11-05 00:01:32:099] BoxSellDbThread(16)-----------------------------------
+
+[2025-11-05 00:01:32:116] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2025-11-05 00:01:35:002] ---------------------线程耗时监控
+[2025-11-05 00:01:35:019] Frame-----------------------------------
+
+[2025-11-05 00:01:35:037] MainRunThread(0)-----------------------------------
+
+[2025-11-05 00:01:35:059] DbThread(16297-1)-----------------------------------
+
+[2025-11-05 00:01:35:076] BoxSellDbThread(16)-----------------------------------
+
+[2025-11-05 00:01:35:095] NewHttpPost(16-0-0)-----------------------------------
+
+[2025-11-05 00:01:38:002] ---------------------线程耗时监控
+[2025-11-05 00:01:37:930] 执行SQL异常 TDbThread.ExecSql,Sql:MERGE INTO dbo.TBL_VAR A
+USING ( SELECT 'system' AS FLD_USERID,'ITEMNUMBER' AS FLD_VAR_NAME,0 AS FLD_TYPE,'11858' AS FLD_VAR_VALUE,'2025-11-05 00:01:16.295' AS tUpdateTime,0 AS FLD_JOINTYPE 
+) B
+ON (A.FLD_USERID=B.FLD_USERID AND A.FLD_VAR_NAME=B.FLD_VAR_NAME )
+WHEN MATCHED THEN
+	UPDATE SET A.FLD_VAR_VALUE=B.FLD_VAR_VALUE,A.tUpdateTime=B.tUpdateTime,A.FLD_JOINTYPE=B.FLD_JOINTYPE
+WHEN NOT MATCHED THEN
+	INSERT(FLD_USERID,FLD_VAR_NAME,FLD_TYPE,FLD_VAR_VALUE,tUpdateTime,FLD_JOINTYPE)
+	VALUES(B.FLD_USERID,B.FLD_VAR_NAME,B.FLD_TYPE,B.FLD_VAR_VALUE,B.tUpdateTime,B.FLD_JOINTYPE);  Except：[FireDAC][Phys][ODBC][Microsoft][ODBC SQL Server Driver]通讯链接失败[0000000001AC8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001AC7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001AC79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001ACAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001AB9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001AB996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001AB9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000AF23B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000AF2418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[0000000001127E84] FireDAC.Comp.Client._ZN7Firedac4Comp6Client16TFDCustomCommand15InternalExecuteEiib (Line 6853, "FireDAC.Comp.Client.pas" + 16)
+[000000000112828F] FireDAC.Comp.Client._ZN7Firedac4Comp6Client16TFDCustomCommand7ExecuteEiib (Line 6871, "FireDAC.Comp.Client.pas" + 4)
+[0000000001131D25] FireDAC.Comp.Client._ZN7Firedac4Comp6Client17TFDAdaptedDataSet15DoExecuteSourceEii (Line 10127, "FireDAC.Comp.Client.pas" + 5)
+[00000000010E0701] FireDAC.Comp.DataSet._ZN7Firedac4Comp7Dataset10TFDDataSet7ExecuteEii (Line 3189, "FireDAC.Comp.DataSet.pas" + 9)
+[0000000001135089] FireDAC.Comp.Client._ZN7Firedac4Comp6Client14TFDCustomQuery7ExecSQLEv (Line 11583, "FireDAC.Comp.Client.pas" + 2)
+[00000000017080D6] uThread_Db._ZN10Uthread_db9TDbThread7ExecSqlEN6System13UnicodeStringEPNS1_7TVarRecEi (Line 3935, "uThread_Db.pas" + 11)
+[0000000001707C8F] uThread_Db._ZN10Uthread_db9TDbThread7ExecSqlEN6System13UnicodeStringE (Line 3861, "uThread_Db.pas" + 1)
+[00000000016FEE0A] uThread_Db._ZN10Uthread_db9TDbThread14UpdateBatchVarEv (Line 2687, "uThread_Db.pas" + 29)
+[00000000016EF016] uThread_Db._ZN10Uthread_db9TDbThread5OnRunEv (Line 458, "uThread_Db.pas" + 66)
+[0000000000F121D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000F11D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000C12963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000AF2F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FF8B6ECE8D7] BaseThreadInitThunk
+[00007FF8B810C53C] RtlUserThreadStart
+
+[2025-11-05 00:01:38:019] Frame-----------------------------------
+
+[2025-11-05 00:01:38:039] MainRunThread(0)-----------------------------------
+
+[2025-11-05 00:01:38:051] DbThread(16-0)-----------------------------------
+
+[2025-11-05 00:01:38:070] BoxSellDbThread(0)-----------------------------------
+
+[2025-11-05 00:01:38:088] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2025-11-05 12:27:45:864] ---------------------线程耗时监控
+[2025-11-05 12:27:45:884] Frame-----------------------------------
+
+[2025-11-05 12:27:45:930] MainRunThread(2016)-----------------------------------
+
+[2025-11-05 12:27:45:948] DbThread(0-0)-----------------------------------
+
+[2025-11-05 12:27:45:966] BoxSellDbThread(0)-----------------------------------
+
+[2025-11-05 12:27:45:983] NewHttpPost(0-0-0)-----------------------------------
+
+[2025-11-05 12:27:48:013] ---------------------线程耗时监控
+[2025-11-05 12:27:48:031] Frame-----------------------------------
+
+[2025-11-05 12:27:48:055] MainRunThread(4156)-----------------------------------
+
+[2025-11-05 12:27:48:078] DbThread(922-0)-----------------------------------
+
+[2025-11-05 12:27:48:097] BoxSellDbThread(16)-----------------------------------
+
+[2025-11-05 12:27:48:113] NewHttpPost(15-0-0)-----------------------------------
+
+
+[2025-11-05 12:27:51:009] ---------------------线程耗时监控
+[2025-11-05 12:27:51:025] Frame-----------------------------------
+
+[2025-11-05 12:27:51:046] MainRunThread(7156)-----------------------------------
+
+[2025-11-05 12:27:51:068] DbThread(3907-0)-----------------------------------
+
+[2025-11-05 12:27:51:084] BoxSellDbThread(16)-----------------------------------
+
+[2025-11-05 12:27:51:101] NewHttpPost(16-0-0)-----------------------------------
+
+

@@ -4,6 +4,7 @@ local bind_money = {
     {3,1},--Ôª±¦
     {4,2},--Áé·û
     {8,7},--ÏÉÓñ
+    {9},--¾çÇéµã
 }
 local bind_m_tab = {}
 for index, value in ipairs(bind_money) do

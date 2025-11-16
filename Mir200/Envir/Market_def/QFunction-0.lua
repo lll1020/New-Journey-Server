@@ -135,6 +135,15 @@ function entermap(play)
         startautoattack(play)
     end
 end
+function findpathbegin(actor)
+    local mapid = getbaseinfo(actor, ConstCfg.gbase.mapid)
+    local x = tonumber(getconst(actor, "<$ToPointX>")) or 0
+    local y = tonumber(getconst(actor, "<$ToPointY>")) or 0
+    if checkkuafu(actor) then
+    else
+        mapmove(actor, mapid, x, y)
+    end
+end
 
 --------------------À¿ÕˆŒÔ∆∑µÙ¡À-------------------
 function checkdropuseitems(play,item_wz,item_id,bool)

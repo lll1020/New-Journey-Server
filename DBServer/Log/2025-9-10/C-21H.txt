@@ -1,0 +1,12 @@
+2025-09-10 21:09:32 存储耗时：SaveHum:31,HumBodyItems:15,HumBagItems:32,UpdateHumStorageItems:15
+Save:[4] [0] 2025-09-10 21:09:32 玩家名字 Level:30 Body[17]: MakeIndex:10001 Index:19996 btValue:49(-2141869483)  -- Bag[0]: MakeIndex:10009 Index:10000 OverLap:0 btValue:49(-2141869483) addValue:1(32) Bag[1]: MakeIndex:10010 Index:10001 OverLap:0 btValue:49(-2141869483) addValue:1(32)  --  -- 
+2025-09-10 21:19:32 存储耗时：SaveHum:15,HumBodyItems:32,HumBagItems:15,UpdateHumStorageItems:0
+Save:[4] [0] 2025-09-10 21:19:32 玩家名字 Level:30 Body[17]: MakeIndex:10001 Index:19996 btValue:49(-2141869483)  -- Bag[0]: MakeIndex:10009 Index:10000 OverLap:0 btValue:49(-2141869483) addValue:1(32) Bag[1]: MakeIndex:10010 Index:10001 OverLap:0 btValue:49(-2141869483) addValue:1(32)  --  -- 
+2025-09-10 21:29:32 存储耗时：SaveHum:31,HumBodyItems:16,HumBagItems:15,UpdateHumStorageItems:0
+Save:[4] [0] 2025-09-10 21:29:32 玩家名字 Level:30 Body[17]: MakeIndex:10001 Index:19996 btValue:49(-2141869483)  -- Bag[0]: MakeIndex:10009 Index:10000 OverLap:0 btValue:49(-2141869483) addValue:1(32) Bag[1]: MakeIndex:10010 Index:10001 OverLap:0 btValue:49(-2141869483) addValue:1(32)  --  -- 
+2025-09-10 21:39:32 存储耗时：SaveHum:16,HumBodyItems:31,HumBagItems:16,UpdateHumStorageItems:0
+Save:[4] [0] 2025-09-10 21:39:32 玩家名字 Level:30 Body[17]: MakeIndex:10001 Index:19996 btValue:49(-2141869483)  -- Bag[0]: MakeIndex:10009 Index:10000 OverLap:0 btValue:49(-2141869483) addValue:1(32) Bag[1]: MakeIndex:10010 Index:10001 OverLap:0 btValue:49(-2141869483) addValue:1(32)  --  -- 
+2025-09-10 21:49:32 存储耗时：SaveHum:31,HumBodyItems:32,HumBagItems:15,UpdateHumStorageItems:0
+Save:[4] [0] 2025-09-10 21:49:32 玩家名字 Level:30 Body[17]: MakeIndex:10001 Index:19996 btValue:49(-2141869483)  -- Bag[0]: MakeIndex:10009 Index:10000 OverLap:0 btValue:49(-2141869483) addValue:1(32) Bag[1]: MakeIndex:10010 Index:10001 OverLap:0 btValue:49(-2141869483) addValue:1(32)  --  -- 
+2025-09-10 21:59:32 存储耗时：SaveHum:15,HumBodyItems:31,HumBagItems:16,UpdateHumStorageItems:0
+Save:[4] [0] 2025-09-10 21:59:32 玩家名字 Level:30 Body[17]: MakeIndex:10001 Index:19996 btValue:49(-2141869483)  -- Bag[0]: MakeIndex:10009 Index:10000 OverLap:0 btValue:49(-2141869483) addValue:1(32) Bag[1]: MakeIndex:10010 Index:10001 OverLap:0 btValue:49(-2141869483) addValue:1(32)  --  -- 

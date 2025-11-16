@@ -1,0 +1,8 @@
+[2025-10-29 13:53:07:255] LuaNPC: ID:999999999 执行 startup player: 耗时：47; NpcThreadId: 300988, CurPlayThreadId: 300988
+
+[2025-10-29 13:54:07:349] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：63; NpcThreadId: 300988, CurPlayThreadId: 300988
+
+[2025-10-29 13:54:20:124] LuaNPC:玩家名字kk ID:999999999 执行 login player:玩家名字kk 耗时：62; NpcThreadId: 300988, CurPlayThreadId: 300988
+
+[2025-10-29 13:54:46:912] LuaNPC:玩家名字kk ID:999999999 执行 clicknpc player:玩家名字kk 耗时：31; NpcThreadId: 300988, CurPlayThreadId: 300988
+

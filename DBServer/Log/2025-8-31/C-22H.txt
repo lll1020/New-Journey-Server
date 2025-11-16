@@ -1,0 +1,6 @@
+2025-08-31 22:25:38 ReloadRegistWhiteList:
+2025-08-31 22:52:51 ReloadRegistWhiteList:
+2025-08-31 22:52:51 加载缓存数据：2
+Load(缓):[1] [0] 2025-08-31 22:53:26 玩家名字k Level:30 Body[0]: MakeIndex:10002 Index:19996 btValue:49(-2141869483)  --  --  -- 
+2025-08-31 22:53:30 存储耗时：SaveHum:938,HumBodyItems:31,HumBagItems:0,UpdateHumStorageItems:0
+Save:[4] [0] 2025-08-31 22:53:30 玩家名字k Level:30 Body[17]: MakeIndex:10002 Index:19996 btValue:49(-2141869483)  --  --  -- 
