@@ -168,3 +168,59 @@ function stdmodefunc31(play, item)
     refreshitem(play, itemobj)
     sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>天书杀意值+'..getstditeminfo(getiteminfo(play, item, 2), 8)..'</font>","Type":9}')
 end
+
+
+
+
+function stdmodefunc32(play, item) --神石召唤
+    local config = teshudata["npc_53"]
+    if not config or type(config.cost) ~= "table" then
+        sendmsg(play,1,"神石召唤失败:缺少配置#57")
+        return false
+    end
+
+    local keyCost = {{"神石宝箱钥匙",1}}
+    local name, num = Player.checkItemNumByTable(play, keyCost)
+    if name then
+        Player.sendmsgEx(play, string.format("缺少|%s#249|数量|%d#249", name, num))
+        return false
+    end
+    Player.takeItemByTable(play, keyCost, ",神石召唤",nil)
+
+    local rarityPool = {
+        {weight = 7600, list = config.cost[1], tip = "稀有"},
+        {weight = 1800, list = config.cost[2], tip = "史诗"},
+        {weight = 500, list = config.cost[3], tip = "神话"},
+        {weight = 100, list = config.cost[4], tip = "传说"},
+    }
+    local rand = math.random(1,10000)
+    local acc = 0
+    local target
+    for _, entry in ipairs(rarityPool) do
+        if entry.list and #entry.list > 0 and entry.weight > 0 then
+            acc = acc + entry.weight
+            if rand <= acc then
+                target = entry
+                break
+            end
+        end
+    end
+    if not target then
+        target = rarityPool[#rarityPool]
+    end
+    if not target or not target.list or #target.list == 0 then
+        sendmsg(play,1,"神石召唤失败:奖池为空#57")
+        return false
+    end
+
+    local rewardName = target.list[math.random(#target.list)]
+    if not rewardName then
+        sendmsg(play,1,"神石召唤失败:奖品不存在#57")
+        return false
+    end
+
+    giveitem(play, rewardName, 1)
+    Player.sendmsgEx(play, string.format("神石召唤#250|稀有度:%s#249|获得:%s#218", target.tip or "", rewardName))
+end
+
+

@@ -1,5 +1,7 @@
+---@diagnostic disable: missing-return, lowercase-global
+
 ---所有行会在当晚同时攻城
-function addattacksabakall() end
+function addattacksabukall() end
 
 ---添加buff
 ---*  obj: 玩家|怪物 对象
@@ -24,7 +26,7 @@ function addbuff(obj,buffid,time,OverLap,objOwner,abil) end
 ---@param actor string
 ---@param id integer
 ---@param name string
----@param func function
+---@param func string
 function addbutshow(actor,id,name,func) end
 
 ---增加自定义按钮
@@ -84,7 +86,7 @@ function additemtodroplist(actor,mon,itemname) end
 ---@param time integer
 function addmapgate(gateName, Mapfrom, x1, y1, range, Mapto, x2, y2, time) end
 
----","地图
+---创建镜像地图
 ---*  oldMap: 原地图ID
 ---*  NewMap: 新地图ID
 ---*  NewName: 新地图名
@@ -95,7 +97,10 @@ function addmapgate(gateName, Mapfrom, x1, y1, range, Mapto, x2, y2, time) end
 ---@param NewName string
 ---@param time integer
 ---@param BackMap string|integer
-function addmirrormap(oldMap,NewMap,NewName,time,BackMap) end
+---@param miniMapID? integer
+---@param posmX? integer
+---@param posmY? integer
+function addmirrormap(oldMap,NewMap,NewName,time,BackMap,miniMapID,posmX,posmY) end
 
 ---增加宠物属性
 ---*  actor: 玩家对象
@@ -105,11 +110,11 @@ function addmirrormap(oldMap,NewMap,NewName,time,BackMap) end
 ---*  attr: 属性字符串
 ---*  type: 0或空=计算套装属性增加1=增加固定值;不计算套装属性(属性加成类无效)
 ---@param actor string
----@param idx integer
----@param attrName integer
+---@param idx integer|string
+---@param attrName integer|string
 ---@param opt string
----@param attr integer
----@param type integer
+---@param attr string
+---@param type? integer
 function addpetattlist(actor,idx,attrName,opt,attr,type) end
 
 ---增加宠物攻击表现
@@ -117,7 +122,7 @@ function addpetattlist(actor,idx,attrName,opt,attr,type) end
 ---*  idx: 宠物序号或"X"表示当前宠物
 ---*  skillid: 增加的攻击表现ID
 ---@param actor string
----@param idx integer
+---@param idx integer|string
 ---@param skillid integer
 function addpetskill(actor,idx,skillid) end
 
@@ -136,11 +141,9 @@ function addskill(actor,skillid,level) end
 function addtocastlewarlist(name,day) end
 
 ---强制把行会添加到攻城列表
----*  name: 行会名
----*  day: 天数
+---*  name: 行会名 传入"*"所有行会
 ---@param name string
----@param day integer
-function addtocastlewarlistex(name,day) end
+function addtocastlewarlistex(name) end
 
 ---本服通知触发跨服QF
 -- * msgID: 消息ID
@@ -188,7 +191,6 @@ function callscript(actor,filename,label) end
 ---*  ...: 参数1~参数10
 ---@param actor string
 ---@param scriptname string
----@param ... any
 function callscriptex(actor,scriptname,...) end
 
 ---调用传奇脚本命令2
@@ -196,12 +198,14 @@ function callscriptex(actor,scriptname,...) end
 ---@param actor string
 ---@param scriptname string
 ---@param ... any
+---@return boolean 是否满足
 function callcheckscriptex(actor,scriptname,...) end
 
 ---获取玩家沙巴克身份
 ---*  actor: 玩家对象
 ---*  return: 返回值 0-非沙巴克成员1-沙巴克成员2-沙巴克老大
 ---@param actor string
+---@return integer
 function castleidentity(actor) end
 
 ---沙巴克基本信息
@@ -300,8 +304,12 @@ function changeexp(actor,opt,count,addexp) end
 
 ---设置行会成员人数上限
 ---*  actor: 玩家对象
+---*  char: 操作符 + - =
+---*  num: 数量
 ---@param actor string
-function changeguildmemberlimit(actor) end
+---@param char string
+---@param num integer
+function changeguildmemberlimit(actor,char,num) end
 
 ---调整人物属性
 ---*  actor: 玩家对象
@@ -374,11 +382,13 @@ function delinisectionbycache(actor) end
 ---通过物品唯一id拿走物品
 ---*  actor: 玩家对象
 ---*  makeindx: 物品唯一ID,逗号(,)串联
----*  count: 玩家对象
+---*  count: 叠加物品扣除数量，不填此参数，默认全部扣除不可叠加物品全部扣除
+---*  desc: 描述
 ---@param actor string
 ---@param makeindx string|integer
 ---@param count? integer
-function delitembymakeindex(actor,makeindx,count) end
+---@param desc? string
+function delitembymakeindex(actor,makeindx,count,desc) end
 
 ---删除地图特效
 ---*  Id: 特效播放ID
@@ -394,7 +404,7 @@ function delmapgate(actor,MapId) end
 
 ---删除镜像地图
 ---*  MapId: 地图ID
----@param MapId string
+---@param MapId string|integer
 function delmirrormap(MapId) end
 
 ---删除国家
@@ -460,7 +470,7 @@ function deprivetitle(actor,name) end
 ---*  actor: 玩家对象
 ---*  opt: -1,解所有毒;0,绿毒;1,红毒;3,紫毒;5,麻痹;6,冰冻;7,蛛网
 ---@param actor string
----@param opt string
+---@param opt integer
 function detoxifcation(actor,opt) end
 
 ---下马
@@ -476,23 +486,23 @@ function forbidmyshop(actor) end
 ---获取角色所有buff
 ---*  actor: 玩家对象
 ---@param actor string
----@return any
+---@return table buff列表
 function getallbuffid(actor) end
 
 ---获取所有行会对象
----@return any
+---@return table
 function getallguild() end
 
 ---获取当前攻击模式
 ---*  actor: 玩家对象
 ---@param actor string
----@return any
+---@return integer 攻击模式：0-全体攻击1-和平攻击2-夫妻攻击3-师徒攻击4-编组攻击5-行会攻击6-红名攻击7-国家攻击
 function getattackmode(actor) end
 
 ---获取背包剩余空格数
 ---*  actor: 玩家对象
 ---@param actor string
----@return any
+---@return integer
 function getbagblank(actor) end
 
 ---获取背包物品数量
@@ -501,7 +511,7 @@ function getbagblank(actor) end
 ---@param actor string
 ---@param itemname string
 ---@param model? integer
----@return any
+---@return integer
 function getbagitemcount(actor,itemname,model) end
 
 
@@ -519,15 +529,17 @@ function getbaseinfo(obj,nID,param3) end
 ---*  actor: 玩家对象
 ---@param actor string
 ---@param moneyName string
----@return any
+---@return integer
 function getbindmoney(actor,moneyName) end
 
 ---获取buff信息
 ---*  actor: 玩家对象
+---*  buffid: buffid
+---*  type: 1=叠加层数;2=剩余时间(单位跟配置一致);3=获取施法者对象(对象离线返回nil);4=获取额外属性;
 ---@param actor string
 ---@param buffid integer
----@param type? integer
----@return any
+---@param type integer
+---@return integer|string|nil
 function getbuffinfo(actor,buffid,type) end
 
 ---获取常量
@@ -535,27 +547,27 @@ function getbuffinfo(actor,buffid,type) end
 ---*  varname: 常量名称,详见txt说明书
 ---@param actor string
 ---@param varname string
----@return any
+---@return string
 function getconst(actor,varname) end
 
 ---获取标记值
 ---*  obj: 人物|怪物对象
 ---*  index: 下标ID 0-9
 ---@param obj string
----@param index string
----@return any
+---@param index string|integer
+---@return string
 function getcurrent(obj,index) end
 
 ---根据物品获取Json
 ---*  item: 物品对象
 ---@param item string
----@return any
+---@return string
 function getitemjson(item) end
 
 ---检测装备名字的颜色
 ---*  item: 物品对象
 ---@param item string
----@return any
+---@return integer
 function getitemnamecolor(item) end
 
 ---获取当前唯一ID物品的星星数量
@@ -563,7 +575,7 @@ function getitemnamecolor(item) end
 ---*  itemmakeid: 物品唯一ID
 ---@param actor string
 ---@param itemmakeid integer
----@return any
+---@return integer
 function getitemstars(actor,itemmakeid) end
 
 ---获取指定地图玩家数量
@@ -571,9 +583,9 @@ function getitemstars(actor,itemmakeid) end
 ---*  MapId: 地图ID
 ---*  isAllgain: 是否全部获取 0=全部获取 1=排除已死亡的
 ---@param actor string
----@param MapId string
----@param isAllgain string
----@return any
+---@param MapId string|integer
+---@param isAllgain integer
+---@return integer
 function getplaycountinmap(actor,MapId,isAllgain) end
 
 ---获取玩家变量
@@ -581,50 +593,53 @@ function getplaycountinmap(actor,MapId,isAllgain) end
 ---*  varName: 变量名
 ---@param actor string
 ---@param varName string
----@return any
+---@return integer|string
 function getplaydef(actor,varName) end
 
 ---根据玩家唯一ID获取玩家对象
 ---*  string: 玩家唯一ID
 ---@param makeindex string
----@return any
+---@return string
 function getplayerbyid(makeindex)  end
 
 ---根据玩家名获取玩家对象
 ---*  name: 玩家名字
 ---@param name string
----@return any
+---@return string
 function getplayerbyname(name) end
 
 ---获取所有在线玩家列表
+---*  param: 是否剔除离线挂机玩家0=不剔除1=剔除
+---@param param? integer
 ---@return table
----@return any
-function getplayerlst() end
+function getplayerlst(param) end
 
 ---获取行会成员在行会中的职位
 ---*  actor: 玩家对象
 ---@param actor string
----@return any
+---@return integer
 function getplayguildlevel(actor) end
 
 ---获取自定义变量
 ---*  actor: 玩家对象
+---*  model: 变量范围(HUMAN/GUILD)
 ---*  varName: 变量名
 ---@param actor string
----@param varName string
----@return any
-function getplayvar(actor,varName) end
+---@param model string
+---@param varName? string
+---@return string|integer
+function getplayvar(actor,model,varName) end
 
 ---获取仓库剩余格子数
 ---*  actor: 玩家对象
 ---@param actor string
----@return any
+---@return integer
 function getsblank(actor) end
 
 ---获取技能初始冷却时间
 ---*  skillname: 玩家对象
 ---@param skillname string
----@return any
+---@return integer
 function getskillcscd(skillname) end
 
 ---获取当前技能冷却时间
@@ -632,13 +647,13 @@ function getskillcscd(skillname) end
 ---*  skillname: 技能名称
 ---@param actor string
 ---@param skillname string
----@return any
+---@return integer
 function getskilldqcd(actor,skillname) end
 
----根据技能id获取技能名字
+---根据技能名字获取技能id
 ---*  skillname: 技能名称
 ---@param skillname string
----@return any
+---@return integer
 function getskillindex(skillname) end
 
 ---获取技能信息
@@ -648,7 +663,7 @@ function getskillindex(skillname) end
 ---@param actor string
 ---@param skillid integer
 ---@param type integer
----@return any
+---@return integer|nil 没有技能，返回nil
 function getskillinfo(actor,skillid,type) end
 
 ---获取技能等级
@@ -656,7 +671,7 @@ function getskillinfo(actor,skillid,type) end
 ---*  skillid: 技能ID
 ---@param actor string
 ---@param skillid integer
----@return any
+---@return integer
 function getskilllevel(actor,skillid)  end
 
 ---获取技能强化等级
@@ -664,29 +679,28 @@ function getskilllevel(actor,skillid)  end
 ---*  skillid: 技能ID
 ---@param actor string
 ---@param skillid integer
----@return any
+---@return integer
 function getskilllevelup(actor,skillid)  end
 
 ---根据技能id获取技能名字
----*  actor: 玩家对象
----*  skillname: 技能名称
----@param actor string
----@param skillname string
----@return any
-function getskillname(actor,skillname) end
+---*  skillID: 技能ID
+---@param skillID integer
+---@return string
+function getskillname(skillID) end
 
 ---获取技能熟练度
 ---*  actor: 玩家对象
 ---@param actor string
 ---@param skillid integer
----@return any
+---@return integer
 function getskilltrain(actor,skillid) end
 
 ---根据宝宝索引获取角色宝宝对象
 ---*  actor: 玩家对象
+---*  nIndex: 索引(0开始)
 ---@param actor string
 ---@param nIndex integer
----@return any
+---@return string
 function getslavebyindex(actor,nIndex) end
 
 
@@ -695,13 +709,13 @@ function getslavebyindex(actor,nIndex) end
 ---*  item: 装备对象
 ---@param actor string
 ---@param item string
----@return any
+---@return string 开孔相关，json字符串，支持0-9共10个孔
 function getsocketableitem(actor,item) end
 
 ---获取玩家仓库最大格子数
 ---*  actor: 玩家对象
 ---@param actor string
----@return any
+---@return integer
 function getssize(actor) end
 
 ---获取buff模板信息
@@ -709,14 +723,14 @@ function getssize(actor) end
 ---*  id: 0:idx1:名称;2.组别;3.配置时间;4.配置属性;
 ---@param buffinfo integer|string
 ---@param id integer
----@return any
+---@return integer 不存在返回0
 function getstdbuffinfo(buffinfo,id) end
 
 ---获取物品基础属性
 ---*  itemid: 物品ID
 ---@param itemid integer
 ---@param id integer
----@return any
+---@return integer 不存在返回0
 function getstditematt(itemid,id) end
 
 ---获取物品基础信息
@@ -724,35 +738,35 @@ function getstditematt(itemid,id) end
 ---*  id:见说明书
 ---@param item integer|string
 ---@param id integer
----@return any
+---@return integer|string 不存在返回0
 function getstditeminfo(item,id) end
 
 ---获取仓库所有物品列表
 ---*  actor: 玩家对象
 ---@param actor string
----@return any
+---@return table
 function getstorageitems(actor) end
 
 ---获取人物伤害吸收
 ---*  actor: 玩家对象
 ---@param actor string
----@return any
+---@return integer
 function getsuckdamage(actor) end
 
 ---获取全局变量
 ---*  varName: 变量名
 ---@param varName string
----@return any
+---@return string|integer
 function getsysvar(varName) end
 
 ---获取全局自定义变量
 ---*  varName: 变量名
 ---@param varName string
----@return any
+---@return string|integer
 function getsysvarex(varName) end
 
 ---获取服务器上64位时间戳
----@return any
+---@return integer
 function gettcount64() end
 
 ---获取物品来源
@@ -760,21 +774,21 @@ function gettcount64() end
 ---*  item: 物品对象
 ---@param actor string
 ---@param item string
----@return any
+---@return string json字符串
 function getthrowitemly(actor,item) end
 
 ---获取角色所有称号
 ---*  actor: 玩家对象
 ---@param actor string
----@return any
+---@return table
 function gettitlelist(actor) end
 
 ---获取人物永久属性
 ---*  actor: 玩家对象
 ---*  nIndex: 	索引
 ---@param actor string
----@param nIndex string
----@return any
+---@param nIndex integer
+---@return integer
 function getusebonuspoint(actor,nIndex) end
 
 ---给物品
@@ -782,19 +796,23 @@ function getusebonuspoint(actor,nIndex) end
 ---*  itemname: 物品名称
 ---*  num: 	数量
 ---*  bind: 物品规则
+---*  desc: 描述
 ---@param actor string
 ---@param itemname string
----@param num integer
+---@param num? integer
 ---@param bind? integer
-function giveitem(actor,itemname,num,bind) end
+---@param desc? string
+function giveitem(actor,itemname,num,bind,desc) end
 
 ---根据json字符串给物品
 ---*  actor: 玩家对象
 ---*  json: json字符串
+---*  desc: 备注
 ---@param actor string
 ---@param json string
----@return any
-function giveitembyjson(actor,json) end
+---@param desc? string
+---@return string
+function giveitembyjson(actor,json,desc) end
 
 ---给物品,并直接穿戴
 ---*  actor: 玩家对象
@@ -802,12 +820,14 @@ function giveitembyjson(actor,json) end
 ---*  itemname: 物品名称
 ---*  num: 数量
 ---*  bind: 物品规则
+---*  desc: 描述
 ---@param actor string
 ---@param where integer
 ---@param itemname string
 ---@param num? integer
 ---@param bind? integer
-function giveonitem(actor,where,itemname,num,bind) end
+---@param desc? string
+function giveonitem(actor,where,itemname,num,bind,desc) end
 
 ---获取全局信息
 ---*  id: 见说明书
@@ -852,15 +872,17 @@ function gotonow(actor,x,y) end
 ---*  mapid: 地图Id
 ---*  x: X坐标
 ---*  y: Y坐标
----@param mapid string
+---*  type: 逻辑格类型:1.能否到达;2.安全区;3.攻城区;
+---*  return: true=相同;false=不相同
+---@param mapid string|integer
 ---@param x integer
 ---@param y integer
 ---@param type integer
----@return any
+---@return boolean
 function gridattr(mapid,x,y,type) end
 
 ---获取全局信息
----*  id: 见说明书
+---*  id:  0: 全局玩家信息<br>1: 部署时间开始 开发天数 开区天数建议获取常量<$KFDAY><br>2: 部署时间开始 开服时间 开服时间建议获取常量<$showtime><br>3: 合服次数<br>4: 合服时间<br>5: 服务器IP<br>6: 玩家数量<br>7: 背包最大数量<br>8: 引擎版本号（以线上版本为准,测试版、本地版可能存在差异）<br>9：游戏id10：服务器名称获取异常,用常量<$SERVERNAME><br>11：服务器id
 ---@param id integer
 ---@return any
 function grobalinfo(id) end
@@ -872,27 +894,29 @@ function grobalinfo(id) end
 ---*  y: Y坐标
 ---*  level: 可以传送最低等级(可以为空 为空时不检测队员的等级直接传送)
 ---*  value: 传送范围。(以队长为中心传送队友 0为不需要范围)
----*  obj: 触发字段(可以为空)
+---*  funcName: 触发字段(可以为空)
+---*  isShowEffect: 是否播放传送特效(引擎64_24.08.07新增,0/nil=展示传送特效,1=不展示传送特效)
 ---@param actor string
----@param mapid string
+---@param mapid string|integer
 ---@param x integer
 ---@param y integer
----@param level integer
----@param value integer
----@param obj string
-function groupmapmove(actor,mapid,x,y,level,value,obj) end
+---@param level? integer
+---@param value? integer
+---@param funcName? string
+---@param isShowEffect? integer
+function groupmapmove(actor,mapid,x,y,level,value,funcName,isShowEffect) end
 
 ---发送自定义颜色的文字信息
 ---*  actor: 玩家对象
----*  FColor: 地图Id
----*  BColor: X坐标
----*  Msg: Y坐标
----*  flag: 可以传送最低等级(可以为空 为空时不检测队员的等级直接传送)
+---*  FColor: 前景色
+---*  BColor: 背景色
+---*  Msg: 消息内容
+---*  flag: 发送对象：Self：只发给自己；Group：发送给组队：Map：发送到当前地图中的人物；省略参数四表示全服发送.
 ---@param actor string
----@param FColor string
+---@param FColor integer
 ---@param BColor integer
----@param Msg integer
----@param flag integer
+---@param Msg string
+---@param flag? string
 function guildnoticemsg(actor,FColor,BColor,Msg,flag) end
 
 ---是否有buff
@@ -923,7 +947,11 @@ function httppost(url,suffix,head) end
 ---*  actor: 玩家对象
 ---*  operate: 操作符号 [+增加][-减少][=等于]
 ---*  nvalue: HP点数
----*  effid: 素材ID
+---*  effid: 素材ID,cfg_damage_number表中的ID编号，ID可自行增加和配置
+---*  delay: 延时时间(秒)
+---*  hiter: 伤害来源对象
+---*  isSend: 释放广播飘血-0=不广播;1=广播
+---*  isRob: 是否强制修改归属0=强制修改归属;1=已有归属的情况不抢归属
 ---@param actor string
 ---@param operate string
 ---@param nvalue integer
@@ -931,7 +959,8 @@ function httppost(url,suffix,head) end
 ---@param delay? integer
 ---@param hiter? string
 ---@param isSend? integer
-function humanhp(actor,operate,nvalue,effid,delay,hiter,isSend) end
+---@param isRob? integer
+function humanhp(actor,operate,nvalue,effid,delay,hiter,isSend,isRob) end
 
 ---修改人物当前MP
 ---*  actor: 玩家对象
@@ -981,17 +1010,19 @@ function iniplayvar(actor,varType,varRage,varName) end
 ---初始化全局自定义变量
 ---*  type: 变量类型(integer/string)
 ---*  varName: 变量名
+---*  itype: 合区类型
 ---@param type string
 ---@param varName string
-function inisysvar(type,varName) end
+---@param itype? integer
+function inisysvar(type,varName,itype) end
 
 ---判断地图坐标是否为空
 ---*  mapname: 地图名称
 ---*  nX: 地图x坐标
 ---*  nY: 地图y坐标
 ---@param mapname string
----@param nX string
----@param nY string
+---@param nX integer
+---@param nY integer
 function isemptyinmap(mapname,nX,nY) end
 
 
@@ -1031,8 +1062,9 @@ function ispropertarget(Hiter,Target) end
 function joinnational(actor,nIdx,jobIdx) end
 
 ---字符串转换成表格
----*  str: 玩家对象
+---*  str: json字符串
 ---@param str string
+---@return table
 function json2tbl(str) end
 
 ---跨服通知触发本服QF
@@ -1094,11 +1126,11 @@ function killmonbyobj(actor,mon,drop,trigger,showdie) end
 ---*  monname: 怪物全名 填 nil|* 杀死全部
 ---*  count: 数量 填0杀死所有
 ---*  drop: 是否掉落物品
----@param mapid string
+---@param mapid string|integer
 ---@param monname string
 ---@param count integer
 ---@param drop boolean
-function killmonsters(actor,mapid,monname,count,drop) end
+function killmonsters(mapid,monname,count,drop) end
 
 ---所有跨服玩家回本服 根据执行区服自行处理
 function kuafuusergohome() end
@@ -1108,7 +1140,7 @@ function kuafuusergohome() end
 ---*  where: 装备位置
 ---@param actor string
 ---@param where integer
----@return any
+---@return string 物品对象
 function linkbodyitem(actor,where) end
 
 ---改变 人/怪物 状态
@@ -1116,18 +1148,20 @@ function linkbodyitem(actor,where) end
 ---*  type: 类型(0=绿毒 1=红毒 5=麻痹 12=冰冻 13= 蛛网 其他无效)
 ---*  time: 时间(秒)
 ---*  value: 威力 只针对绿毒有用
+---*  model: 0=不进行防护的判断1=判断防全毒、防麻痹、防冰冻、防蛛网状态
 ---@param actor string
 ---@param type integer
 ---@param time integer
 ---@param value? integer
-function makeposion(actor,type,time,value) end
+---@param model? integer
+function makeposion(actor,type,time,value,model) end
 
 ---跳转地图(随机坐标)
 ---*  actor: 玩家对象
----*  mapname: 地图名
+---*  MapId: 地图id
 ---@param actor string
----@param mapname string
-function map(actor,mapname) end
+---@param MapId string|integer
+function map(actor,MapId) end
 
 ---添加地图特效
 ---*  Id: 	特效播放ID 用于区分多个地图特效
@@ -1137,21 +1171,25 @@ function map(actor,mapname) end
 ---*  effId: 特效ID
 ---*  time: 持续时间(秒)
 ---*  mode: 模式:(0~4 0所有人可见 1自己可见 2组队可见 3行会成员可见 4敌对可见)
+---*  actor: 玩家对象(模式1~4需填写)
+---*  effectModel: 0=在人物/怪物后面1=在人物/怪物前面
 ---@param Id integer
----@param MapId string
+---@param MapId string|integer
 ---@param X integer
 ---@param Y integer
 ---@param effId integer
 ---@param time integer
 ---@param mode integer
-function mapeffect(Id,MapId,X,Y,effId,time,mode) end
+---@param actor? string
+---@param effectModel? integer
+function mapeffect(Id,MapId,X,Y,effId,time,mode,actor,effectModel) end
 
 ---设置地图杀怪经验倍数
 ---*  actor: 玩家对象
 ---*  MapId: 地图id( * 号表示所有地图)
 ---*  much: 倍率 为杀怪经验倍数 倍数除以100为真正的倍率(200 为 2 倍经验 150 为1.5倍,0表示关闭地图的杀怪经验倍数)
 ---@param actor string
----@param MapId string
+---@param MapId string|integer
 ---@param much integer
 function mapkillmonexprate(actor,MapId,much) end
 
@@ -1206,7 +1244,7 @@ function mirrormaptime(actor) end
 ---*  behind: 播放模式-0-前面-1-后面
 ---*  selfshow: 仅自己可见0-否 视野内均可见 1-是
 ---@param actor string
----@param mapid integer|string
+---@param mapid string|integer|string
 ---@param x integer
 ---@param y integer
 ---@param type integer
@@ -1228,12 +1266,14 @@ function monitems(actor,count) end
 ---*  bMapId: 移动后地图Id
 ---*  x: x坐标
 ---*  y: y坐标
+---*  range: 范围
 ---@param actor string
 ---@param aMapId string
 ---@param bMapId string
----@param x string
----@param y string
-function movemapplay(actor,aMapId,bMapId,x,y) end
+---@param x integer
+---@param y integer
+---@param range? integer
+function movemapplay(actor,aMapId,bMapId,x,y,range) end
 
 ---国家宣战
 ---*  actor: 玩家对象
@@ -1252,7 +1292,7 @@ function nationswar(actor,nIdx,iValue) end
 ---@param actor string
 ---@param NPCIdx integer
 ---@param BtnIdx integer|string
----@param sMsg string
+---@param sMsg? string
 function navigation(actor,NPCIdx,BtnIdx,sMsg) end
 
 ---刷新进行中任务状态
@@ -1280,12 +1320,12 @@ function newdeletetask(actor,nId) end
 
 ---读取表里面的第几行第几列内容(0行0列开始)
 ---*  filename: 玩家对象
----*  row: 玩家对象
----*  col: 玩家对象
+---*  row: 行数
+---*  col: 列数
 ---@param filename string
 ---@param row string|integer
----@param col string
----@return any
+---@param col string|integer
+---@return string 表内数据
 function newdqcsv(filename,row,col) end
 
 
@@ -1295,7 +1335,7 @@ function newdqcsv(filename,row,col) end
 ---*  ...: 参数1~参数10 用来替换任务内容里的%s
 ---@param actor string
 ---@param nId integer
----@param ... string
+---@param ... string|integer
 function newpicktask(actor,nId,...) end
 
 ---加载csv表格内容
@@ -1337,7 +1377,7 @@ function offlineplay(actor,time) end
 ---*  actor: 玩家对象
 ---*  nId: 	面板ID
 ---*  nState: 0=打开 1=打开面板重复点按钮不会关闭,除非主动点关闭按钮(一般做任务配合新手引导用到) 2=关闭当前面板ID
----*  rankID: ","面板ID //game_data表配置的ID 此参数只在排行榜中有效
+---*  rankID: 排行榜面板ID //game_data表配置的ID 此参数只在排行榜中有效
 ---*  isHero: 玩家/英雄页面 //打开的排行榜显示在玩家或英雄的页面(0或空=玩家，1=英雄) 此参数只在英雄合击版 排行榜中有效
 ---@param actor string
 ---@param nId integer
@@ -1347,27 +1387,27 @@ function offlineplay(actor,time) end
 function openhyperlink(actor,nId,nState,rankID,isHero) end
 
 ---打开NPC大窗口
----*  path: 玩家对象
----*  pos: 玩家对象
----*  x: 玩家对象
----*  y: 玩家对象
----*  height: 玩家对象
----*  width: 玩家对象
----*  bool: 玩家对象
----*  closeX: 玩家对象
----*  closeY: 玩家对象
----*  isMove: 玩家对象
+---*  path: 路径
+---*  pos: 显示位置
+---*  x: X坐标
+---*  y: Y坐标
+---*  height: 高度
+---*  width: 宽度
+---*  isShowBtn: 是否显示关闭按钮
+---*  closeX: 关闭按钮X坐标
+---*  closeY: 关闭按钮Y坐标
+---*  isMove: 是否可以移动(0不移动 1移动)
 ---@param path string
 ---@param pos integer
 ---@param x integer
 ---@param y integer
 ---@param height integer
 ---@param width integer
----@param bool integer
+---@param isShowBtn integer
 ---@param closeX integer
 ---@param closeY integer
 ---@param isMove integer
-function openmerchantbigdlg(path,pos,x,y,height,width,bool,closeX,closeY,isMove) end
+function openmerchantbigdlg(path,pos,x,y,height,width,isShowBtn,closeX,closeY,isMove) end
 
 ---打开指定NPC面板
 ---*  actor: 玩家对象
@@ -1392,7 +1432,8 @@ function opennpcshowex(actor,NPCIndex,nRange,nRange2) end
 ---打开仓库面板
 ---*  actor: 玩家对象
 ---@param actor string
-function openstorage(actor) end
+---@param isOpenUI? 0=打开UI;1=只下发数据
+function openstorage(actor,isOpenUI) end
 
 ---打开OK框
 ---*  actor: 玩家对象
@@ -1420,6 +1461,7 @@ function openwindows(actor,winID) end
 ---*  actor: 玩家对象
 ---@param text string
 ---@param actor string
+---@return string
 function parsetext(text,actor) end
 
 ---置换宠物属性 *只置换基础属性:形象、怪物表配置 原宠物其它属性全部保留 包括序号
@@ -1444,7 +1486,7 @@ function petstate(actor,idx) end
 ---*  item: 装备名称 多个装备用#分隔 -1表示脱下全部装备
 ---@param actor string
 ---@param idx integer
----@param item string
+---@param item string|integer
 function pettakeoff(actor,idx,item) end
 
 ---宠物穿装备 此接口不会增加物品 仅将物品的属性添加到宠物身上 并保存到数据库。
@@ -1534,8 +1576,8 @@ function querymoney(actor,id) end
 ---*  name: 怪物名字
 ---*  num: 数量(1-255)
 ---*  drop: 是否掉落 0=掉落 1=不掉落
----@param mapid string
----@param name integer
+---@param mapid string|integer
+---@param name string
 ---@param num integer
 ---@param drop integer
 function randomkillmon(mapid,name,num,drop) end
@@ -1551,6 +1593,7 @@ function randomkillmon(mapid,name,num,drop) end
 ---*  checkstate: 是否检查防冻结/麻痹/石化/冰冻/蛛网/红毒/绿毒属性0=直接设置状态;1=检查后设置状态)
 ---*  targettype: 目标类型(0或空=所有目标;1=仅人物;2=仅怪物)
 ---*  effectid: 目标身上播放的特效ID
+---*  harmNum: 群体伤害目标个数(引擎64_23.0628新增)
 ---@param actor string
 ---@param targetX integer
 ---@param targetY integer
@@ -1561,7 +1604,8 @@ function randomkillmon(mapid,name,num,drop) end
 ---@param checkstate? integer
 ---@param targettype? integer
 ---@param effectid? integer
-function rangeharm(actor,targetX,targetY,range,power,addtype,addvalue,checkstate,targettype,effectid) end
+---@param harmNum? integer
+function rangeharm(actor,targetX,targetY,range,power,addtype,addvalue,checkstate,targettype,effectid,harmNum) end
 
 ---读取Ini文件中的字段值
 ---*  actor: 玩家对象
@@ -1622,10 +1666,10 @@ function recallhero(actor) end
 ---@param param1? integer
 ---@param param2? integer
 ---@param param3? integer
----@return any
+---@return string 宝宝对象
 function recallmob(actor,monName,level,time,param1,param2,param3) end
 
----返回召唤的宠物对象
+---召唤宠物
 ---*  actor: 玩家对象
 ---*  idx: 玩家对象
 ---@param actor string
@@ -1703,8 +1747,10 @@ function require(path) end
 
 ---收回宠物
 ---*  actor: 玩家对象
+---*  idx: 宠物序号
 ---@param actor string
-function retractpettoitem(actor) end
+---@param idx integer
+function retractpettoitem(actor,idx) end
 
 ---上马
 ---*  actor: 玩家对象
@@ -1825,7 +1871,7 @@ function sendcustommsg(actor,type,msg,FColor,BColor,X,Y) end
 ---@param FColor integer
 ---@param mapdelete integer
 ---@param func string
----@param Y integer
+---@param Y? integer
 function senddelaymsg(actor,msg,time,FColor,mapdelete,func,Y) end
 
 ---发送消息
@@ -1841,7 +1887,15 @@ function senddelaymsg(actor,msg,time,FColor,mapdelete,func,Y) end
 ---@param param2? integer
 ---@param param3? integer
 ---@param sMsg? string
-function sendluamsg(actor,msgid,param1,param2,param3,sMsg) end
+---@param sendScope? integer 消息的发送范围类型
+---0=自己
+---1=全服
+---2=当前地图
+---3=视野内
+---4=当前行会
+---5=指定地图id
+---@param targetMapId? integer 当 sendScope=5 时生效，指定目标地图的ID
+function sendluamsg(actor,msgid,param1,param2,param3,sMsg,sendScope,targetMapId) end
 
 ---发送邮件
 ---*  userid: 家UserId 如果是玩家名 需要在前面加#(如:#张三)
@@ -1870,7 +1924,7 @@ function sendmail(userid,id,title,memo,rewards) end
 ---@param BColor integer
 ---@param Y integer
 ---@param scroll integer
----@param msg integer
+---@param msg string
 function sendmovemsg(actor,type,FColor,BColor,Y,scroll,msg) end
 
 ---发送聊天框消息
@@ -1958,7 +2012,7 @@ function setattackmode(actor,mode,time) end
 ---@param evetime integer
 ---@param experience integer
 ---@param isSafe integer
----@param mapid integer
+---@param mapid string|integer
 ---@param opt integer
 ---@param alltime integer
 ---@param level integer
@@ -1994,7 +2048,7 @@ function setbodycolor(actor,color,time) end
 ---*  Prefix: 前缀信息 空则清除聊天前缀
 ---*  color: 背景色
 ---@param actor string
----@param Prefix string
+---@param Prefix? string
 ---@param color integer
 function setchatprefix(actor,Prefix,color) end
 
@@ -2032,7 +2086,7 @@ function setdura(actor,itemmakeid,char,dura) end
 ---关闭地图计时器
 ---*  MapId: 地图ID
 ---*  Idx: 计时器ID
----@param MapId integer|string
+---@param MapId string|integer|string
 ---@param Idx integer
 function setenvirofftimer(MapId,Idx) end
 
@@ -2041,7 +2095,7 @@ function setenvirofftimer(MapId,Idx) end
 ---*  Idx: 计时器ID
 ---*  second: 时长(秒)
 ---*  func: 触发跳转的函数
----@param MapId integer|string
+---@param MapId string|integer|string
 ---@param Idx integer
 ---@param second integer
 ---@param func string
@@ -2068,7 +2122,7 @@ function setgmlevel(actor,gmlevel) end
 ---*  index: 索引   0-行会公告
 ---*  value: 属性值
 ---@param actor string
----@param index string
+---@param index integer
 ---@param value string
 function setguildinfo(actor,index,value) end
 
@@ -2087,21 +2141,21 @@ function setguildvar(guild,varName,value,isSave) end
 ---*  actor: 玩家对象
 ---*  where: 位置 0-9
 ---*  effType: 播放效果(0图片名称 1特效ID)
----*  resName: X坐标 (为空时默认X=0)
+---*  resName: 图片名或者特效ID
 ---*  x: Y坐标 (为空时默认Y=0)
 ---*  y: Y坐标 (为空时默认Y=0)
 ---*  autoDrop: 自动补全空白位置0,1(0=掉 1=不掉)
 ---*  selfSee: 是否只有自己看见0=所有人都可见;1=仅仅自己可见;
 ---*  posM: 播放位置(不填默认为0)0=在角色之上;1=在角色之下;
 ---@param actor string
----@param where string
----@param effType string
----@param resName string
----@param x? string
----@param y? string
----@param autoDrop? string
----@param selfSee? string
----@param posM? string
+---@param where integer
+---@param effType integer
+---@param resName? integer|string
+---@param x? integer
+---@param y? integer
+---@param autoDrop? integer
+---@param selfSee? integer
+---@param posM? integer
 function seticon(actor,where,effType,resName,x,y,autoDrop,selfSee,posM) end
 
 ---设置物品记录信息
@@ -2145,12 +2199,14 @@ function setitemeffect(actor,index,bageffectid,ineffectid,order1,order2,item) en
 ---*  actor: 玩家对象
 ---*  pos: 装备位置 (-1时是OK框中的装备0~16 17~46 55)
 ---*  char: 操作符(+ - =)
----*  actor: 内观图片
+---*  pictrue: 内观图片
+---*  itemobj: 物品对象
 ---@param actor string
 ---@param pos integer
 ---@param char string
 ---@param pictrue integer
-function setitemlooks(actor,pos,char,pictrue) end
+---@param itemobj? string
+function setitemlooks(actor,pos,char,pictrue,itemobj) end
 
 ---设置物品绑定状态
 ---*  item: 物品对象
@@ -2163,13 +2219,13 @@ function setitemstate(item,bind,state) end
 
 ---增加技能防御力
 ---*  actor: 玩家对象
----*  skillname: 玩家对象
----*  value: 玩家对象
----*  type: 玩家对象
+---*  skillname: 技能名称
+---*  value: 抵消威力值
+---*  type: 计算方式(0按点数计算,1按百分比计算)
 ---@param actor string
 ---@param skillname string
----@param value string
----@param type string
+---@param value integer
+---@param type integer
 function setmagicdefpower(actor,skillname,value,type) end
 
 ---增加技能威力
@@ -2179,8 +2235,8 @@ function setmagicdefpower(actor,skillname,value,type) end
 ---*  type: 计算方式(0按点数计算,1按百分比计算)
 ---@param actor string
 ---@param skillname string
----@param value string
----@param type string
+---@param value integer
+---@param type integer
 function setmagicpower(actor,skillname,value,type) end
 
 ---把怪物设置成宝宝
@@ -2194,7 +2250,7 @@ function setmonmaster(mon,actor) end
 ---*  actor: 玩家对象
 ---*  jobIdx: 职位编号
 ---@param actor string
----@param jobIdx string
+---@param jobIdx integer
 function setnationking(actor,jobIdx) end
 
 ---修改国家职位名称
@@ -2203,22 +2259,22 @@ function setnationking(actor,jobIdx) end
 ---*  jobIdx: 职位编号
 ---*  jobName: 职位名称
 ---@param actor string
----@param nIdx string
----@param jobIdx string
+---@param nIdx integer
+---@param jobIdx integer
 ---@param jobName string
 function setnationrank(actor,nIdx,jobIdx,jobName) end
 
 ---设置装备的元素属性
 ---*  actor: 玩家对象
----*  where: 装备位置-1-OK框中的装备 0~55-身上的装备
----*  iAttr: 玩家对象
----*  sFlag: 玩家对象
----*  iValue: 玩家对象
+---*  where: 装备位置(-2操作物品对象)
+---*  iAttr: 属性
+---*  sFlag: 比较符(=+-)
+---*  iValue: 数值(1-100)，百分比
 ---@param actor string
----@param where string
----@param iAttr string
+---@param where integer
+---@param iAttr integer
 ---@param sFlag string
----@param iValue string
+---@param iValue integer
 function setnewitemvalue(actor,where,iAttr,sFlag,iValue) end
 
 ---设置NPC特效
@@ -2228,10 +2284,10 @@ function setnewitemvalue(actor,where,iAttr,sFlag,iValue) end
 ---*  X: X坐标
 ---*  Y: Y坐标
 ---@param actor string
----@param NPCIndex string
----@param Effect string
----@param X string
----@param Y string
+---@param NPCIndex integer
+---@param Effect integer
+---@param X integer
+---@param Y integer
 function setnpceffect(actor,NPCIndex,Effect,X,Y) end
 
 ---移除全局定时器
@@ -2262,11 +2318,9 @@ function setontimer(actor,id,RunTick,RunTime,kf) end
 ------添加全局定时器
 ---*  id: 定时器ID
 ---*  tick: 执行间隔 秒
----*  count: 执行次数 为0时不限次数
 ---@param id integer
 ---@param tick integer
----@param count? integer
-function setontimerex(id,tick,count) end
+function setontimerex(id,tick) end
 
 ---获取宠物蛋等级
 ---*  actor: 玩家对象
@@ -2379,7 +2433,7 @@ function setsysvar(varName,varValue) end
 ---*  isSave: 是否保存(0/1)
 ---@param varName string
 ---@param varValue string|integer
----@param isSave integer
+---@param isSave? integer
 function setsysvarex(varName,varValue,isSave) end
 
 ---设置当前攻击目标
@@ -2444,9 +2498,10 @@ function socketableitem(actor,item,hole,index) end
 ---*  sortflag: 0-升序 1-降序
 ---*  count: 获取的数据量 为空或0取所有 取前几名
 ---@param varName string
----@param playflag string
----@param sortflag string
----@param count string
+---@param playflag integer
+---@param sortflag integer
+---@param count? integer
+---@return table
 function sorthumvar(varName,playflag,sortflag,count) end
 
 ---开启自动挂机
@@ -2492,11 +2547,14 @@ function takedlgitem(actor,count) end
 ---*  itemname: 物品名称
 ---*  qty: 数量
 ---*  IgnoreJP: 忽略极品0 所有都扣除1 极品不扣除
+---*  desc:描述
 ---@param actor string
 ---@param itemname string
 ---@param qty integer
----@param IgnoreJP integer
-function takeitem(actor,itemname,qty,IgnoreJP) return boolean end
+---@param IgnoreJP? integer
+---@param desc? string
+---@return boolean 是否扣除成功
+function takeitem(actor,itemname,qty,IgnoreJP,desc) end
 
 ---脱下装备
 ---*  actor: 玩家对象
@@ -2524,15 +2582,15 @@ function takeonitem(actor,where,makeindex) end
 function tasktopshow(actor,nId) end
 
 ---表格转换成字符串
----*  tbl: 玩家对象
+---*  tbl: table表
 ---@param tbl table
----@return any
+---@return string
 function tbl2json(tbl) end
 
 ---剔除离线挂机角色
----*  mapID: 地图号 “*”表示全部地图
----*  level: 剔除等级 低于此等级均剔除“*”表示所有
----*  count: 最大剔除玩家数 “*”表示所有
+---*  mapID: 地图号 "*"表示全部地图
+---*  level: 剔除等级 低于此等级均剔除"*"表示所有
+---*  count: 最大剔除玩家数 "*"表示所有
 ---@param mapID string|integer
 ---@param level string|integer
 ---@param count string|integer
@@ -2544,9 +2602,9 @@ function tdummy(mapID,level,count) end
 ---*  time: 时间(秒)
 ---*  objtype: 对象  0-玩家 1-宝宝
 ---@param actor string
----@param type string
----@param time string
----@param objtype string
+---@param type integer
+---@param time integer
+---@param objtype integer
 function throughhum(actor,type,time,objtype) end
 
 ---在地图上放置物品
@@ -2576,8 +2634,8 @@ function throughhum(actor,type,time,objtype) end
 ---@param take boolean
 ---@param onlyself boolean
 ---@param xyinorder boolean
----@param overlap integer
----@param isAuto boolean
+---@param overlap? integer
+---@param isAuto? boolean
 function throwitem(actor,MapId,X,Y,range,itemName,count,time,hint,take,onlyself,xyinorder,overlap,isAuto) end
 
 ---收回英雄
@@ -2589,7 +2647,7 @@ function unrecallhero(actor) end
 ---*  actor: 玩家对象
 ---*  idx: 宠物序号
 ---@param actor string
----@param idx string
+---@param idx string|integer
 function unrecallpet(actor,idx) end
 
 ---给人物装备面板加特效
@@ -2607,7 +2665,7 @@ function updateequipeffect(actor,effectid,position) end
 ---*  winID: 面板ID 101-装备 106-称号 1011-时装
 ---@param actor string
 ---@param userid string
----@param winID string
+---@param winID integer
 function viewplayer(actor,userid,winID) end
 
 ---写入Ini文件中的字段值
@@ -2643,21 +2701,20 @@ function writeinibycache(filename,section,item,value) end
 ---*  mapID: 地图ID
 ---@param actor string
 ---@param mapID string|integer
----@return any
+---@return table
 function getmapgate(actor,mapID) end
 
 ---根据名称获取地图基础信息
----*  mapname: 地图名称
+---*  mapID: 地图ID
 ---*  nIndex: 0:地图宽 1:地图高
----@param mapname string
+---@param mapID string
 ---@param nIndex integer
----@return any
-function getmapinfo(mapname,nIndex) end
+---@return integer
+function getmapinfo(mapID,nIndex) end
 
 ---获取地图指定范围内的怪物对象列表
 ---*  mapID: 地图ID
----*  monName: 地图名称
----*  nIndex: 怪物名 为空 or * 为检测所有怪
+---*  monName: 怪物名 为空 or * 为检测所有怪
 ---*  nx: 坐标X
 ---*  ny: 坐标Y
 ---*  nRange: 范围
@@ -2666,21 +2723,21 @@ function getmapinfo(mapname,nIndex) end
 ---@param nx integer
 ---@param ny integer
 ---@param nRange integer
----@return any
+---@return table 怪物对象列表
 function getmapmon(mapID,monName,nx,ny,nRange) end
 
 ---根据地图id返回地图名
 ---*  mapID: 地图ID
 ---@param mapID string|integer
----@return any
+---@return string 地图名
 function getmapname(mapID) end
 
 ---返回怪物基础信息
 ---*  monidx: 怪物idx
 ---*  id: id取值:1-怪物名称;2-怪物名字颜色;3-杀死怪物获得的经验值;
----@param monidx string
----@param id string
----@return any
+---@param monidx integer
+---@param id integer
+---@return integer|string
 function getmonbaseinfo(monidx,id) end
 
 ---根据UserId返回怪物对象
@@ -2688,7 +2745,7 @@ function getmonbaseinfo(monidx,id) end
 ---*  monUserId: 怪物userid
 ---@param mapID string|integer
 ---@param monUserId string
----@return any
+---@return string
 function getmonbyuserid(mapID,monUserId) end
 
 ---获取指定地图怪物数量
@@ -2698,39 +2755,39 @@ function getmonbyuserid(mapID,monUserId) end
 ---@param mapID string|integer
 ---@param MonId integer
 ---@param isAllMon boolean
----@return any
+---@return integer
 function getmoncount(mapID,MonId,isAllMon) end
 
 ---获取怪物位置及复活时间（仅支持小地图上提示的怪物）
 ---*  mapID: 地图ID
 ---@param mapID string|integer
----@return any
+---@return string 	怪物Json数据
 function getmonrefresh(mapID) end
 
 ---获取玩家所在的行会对象
 ---*  actor: 玩家对象
 ---@param actor string
----@return any
+---@return string 行会对象没有行会返回"0"
 function getmyguild(actor) end
 
 ---获取物品的附加属性
 ---*  item: 玩家对象
----*  value: 元素属性 见说明书
+---*  value: 元素属性<br>0:暴击几率<br>1攻击伤害<br>2:物理伤害减少<br>3:魔法伤害减少<br>4:忽视目标防御<br>5:所有伤害反弹<br>6:目标爆率<br>7:人物体力增加<br>8:人物魔力增加<br>11:暴击伤害
 ---@param item string
 ---@param value integer
----@return any
+---@return integer
 function getnewitemaddvalue(item,value) end
 
 ---根据ID获取NPC对象
 ---*  npcIdx: NPC表内的idx
 ---@param npcIdx integer
----@return any
+---@return string
 function getnpcbyindex(npcIdx) end
 
 ---获取NPC对象的Idx
 ---*  npc: npc对象
 ---@param npc string
----@return any
+---@return integer
 function getnpcindex(npc) end
 
 ---获取地图上指定范围内的对象
@@ -2744,8 +2801,8 @@ function getnpcindex(npc) end
 ---@param Y integer
 ---@param range integer
 ---@param flag integer
----@return any
-function getobjectinmap(mapID,X,Y,range,flag) end
+---@return table
+function getstringinmap(mapID,X,Y,range,flag) end
 
 ---获取对面人物的名字
 ---*  actor: 玩家对象
@@ -2757,7 +2814,7 @@ function getoppositeobj(actor) end
 ---*  actor: 玩家对象
 ---*  idx: 宠物序号或""X"表示当前宠物
 ---@param actor string
----@param idx integer
+---@param idx integer|string
 ---@return any
 function getpet(actor,idx) end
 
@@ -2869,11 +2926,11 @@ function getguildmembercount(actor) end
 
 ---获取行会自定义变量
 ---*  guild: 行会对象
----*  index: 索引 0-行会ID1-行会名称2-行会公告3-行会成员名单（返回table）4-行会掌门人名称
+---*  varName: 变量名
 ---@param guild string
----@param index string
+---@param varName string
 ---@return any
-function getguildvar(guild,index) end
+function getguildvar(guild,varName) end
 
 ---获取英雄对象
 ---*  actor: 玩家对象
@@ -2901,8 +2958,8 @@ function gethumability(actor,id) end
 ---*  actor: 玩家对象
 ---*  nWhere: 位置 对应cfg_att_score 属性ID
 ---@param actor string
----@param nWhere string
----@return any
+---@param nWhere integer
+---@return integer
 function gethumnewvalue(actor,nWhere) end
 
 ---获取物品记录信息
@@ -2910,12 +2967,14 @@ function gethumnewvalue(actor,nWhere) end
 ---*  item: 物品对象
 ---*  type: [1,2,3]
 ---*  position: 当type=1,取值范围[0..49] type=2,取值范围[0..19]
+---*  model: 0=附加属性;1=基础属性+附加属性
 ---@param actor string
 ---@param item string
 ---@param type integer
 ---@param position integer
+---@param model integer
 ---@return any
-function getitemaddvalue(actor,item,type,position) end
+function getitemaddvalue(actor,item,type,position,model) end
 
 ---根据物品唯一ID获得物品对象
 ---*  actor: 玩家对象
@@ -2936,7 +2995,7 @@ function getitemcustomabil(actor,item) end
 ---获取物品信息
 ---*  actor: 玩家对象
 ---*  item: 物品对象
----*  id: 1:唯一ID2:物品ID3:剩余持久4:最大持久5:叠加数量6:绑定状态
+---*  id: 1:唯一ID2:物品ID3:剩余持久4:最大持久5:叠加数量6:绑定状态7:物品名称(引擎64_23.08.30新增)8:物品改名后的名称(引擎64_24.08.07新增)
 ---@param actor string
 ---@param item string
 ---@param id integer
@@ -2987,7 +3046,7 @@ function exisitssensitiveword(str) end
 ---*  actor: 玩家对象
 ---*  flag: 是否过滤0-不过滤1-过滤
 ---@param actor string
----@param flag string
+---@param flag integer
 function filterglobalmsg(actor,flag) end
 
 ---搜索行会
@@ -2995,6 +3054,7 @@ function filterglobalmsg(actor,flag) end
 ---*  key: 	搜索关键词
 ---@param index integer
 ---@param key string
+---@return string
 function findguild(index,key) end
 
 ---清除宠物属性
@@ -3002,8 +3062,8 @@ function findguild(index,key) end
 ---*  idx: 	宠物序号
 ---*  attrName: 清空对应属性组的属性;nil清除所有属性组
 ---@param actor string
----@param idx integer
----@param attrName? integer
+---@param idx integer|string
+---@param attrName? integer|string
 function delpetattlist(actor,idx,attrName) end
 
 ---删除宠物攻击表现
@@ -3011,7 +3071,7 @@ function delpetattlist(actor,idx,attrName) end
 ---*  idx: 宠物序号或"X"表示当前宠物
 ---*  skillid: 增加的攻击表现ID 为cfg_monattack表中的ID
 ---@param actor string
----@param idx integer
+---@param idx integer|string
 ---@param skillid integer
 function delpetskill(actor,idx,skillid) end
 
@@ -3101,17 +3161,19 @@ function delgroupmember(actor,memberId) end
 ---*  use: 开启激活 1激活
 ---@param actor string
 ---@param name string
----@param use integer
+---@param use? integer
 function confertitle(actor,name,use) end
 
 ---扣除人物通用货币数量(多货币依次计算)
 ---*  actor: 玩家对象
 ---*  moneyname: 货币名称
----*  actor: 对应货币值
+---*  count: 对应货币值
+---*  desc: 描述
 ---@param actor string
 ---@param moneyname string
 ---@param count integer
-function consumebindmoney(actor,moneyname,count) end
+---@param desc? string
+function consumebindmoney(actor,moneyname,count,desc) end
 
 ---创建队伍
 ---*  actor: 玩家对象
@@ -3144,7 +3206,7 @@ function createnation(actor,nIdx,cName,maxNum) end
 ---*  actor: 玩家对象
 ---*  X: X坐标
 ---*  Y: Y坐标
----*  npcJosn: NPC信息 json字符串
+---*  npcJosn: NPC信息Json字符串
 ---@param actor string
 ---@param X integer
 ---@param Y integer
@@ -3157,7 +3219,7 @@ function createnpc(actor,X,Y,npcJosn) end
 ---*  level: 怪物等级
 ---@param actor string
 ---@param monname string
----@param level string
+---@param level integer
 function createpet(actor,monname,level) end
 
 ---修改人物临时属性（带有效期）
@@ -3186,7 +3248,7 @@ function changeitemidx(actor,itemmakeid,itemidx) end
 ---*  color: 颜色(0-255)颜色=0时恢复默认颜色
 ---@param actor string
 ---@param item string
----@param color string
+---@param color integer
 function changeitemnamecolor(actor,item,color) end
 
 ---修改武器、衣服外观
@@ -3306,9 +3368,12 @@ function checkheroname(actor,name) end
 ---检测 人/怪物 状态
 ---*  objcfg: 玩家/怪物 对象
 ---*  type: 类型 见说明书
+---*  model: 禁止行为
 ---@param objcfg string
 ---@param type integer
 ---@param model? integer
+---@return boolean 是否存在
+---@return integer 状态剩余时间
 function checkhumanstate(objcfg,type,model) end
 
 ---检测当前人物是否在跨服的地图
@@ -3390,8 +3455,10 @@ function checktitle(actor,title) end
 
 ---删除延迟
 ---*  actor: 玩家对象
+---*  func: 需要删除的延时函数,不填为清除全部
 ---@param actor string
-function cleardelaygoto(actor) end
+---@param func? string
+function cleardelaygoto(actor,func) end
 
 ---清理自定义全局变量
 ---*  varName: 变量名, * -所有变量
@@ -3445,7 +3512,7 @@ function clearitemmap(MapId,X,Y,range,itemName) end
 ---*  range: 范围
 ---*  count: 数量
 ---*  color: 颜色(0~255)
----@param mapid string
+---@param mapid string|integer|string
 ---@param X integer
 ---@param Y integer
 ---@param monname string
@@ -3470,7 +3537,7 @@ function genmon(mapid,X,Y,monname,range,count,color) end
 ---*  nNatMonPk: 不同国家怪物是否可PK(0=不可以, 1=可以)
 ---*  nPlayerPk: 人物是否可以攻击相同国家怪物(0=可以, 1=不可以)
 ---*  nNg: 是否是内功怪(0=普通怪, 1=内功怪)
----@param mapid string
+---@param mapid string|integer
 ---@param x integer
 ---@param y integer
 ---@param monname string
@@ -3485,19 +3552,20 @@ function genmon(mapid,X,Y,monname,range,count,color) end
 ---@param nNatMonPk? integer
 ---@param nPlayerPk? integer
 ---@param nNg? integer
----@return any 
+---@return table 怪物列表
 function genmonex(mapid, x, y, monname, range, count, owner, color, showName, isFilt, countryName, nAttack, nNatMonPk, nPlayerPk, nNg) end
 
 -- ========================== ↓↓↓ 23.08.30新增 ↓↓↓==========================
 
----刷怪
+---等概率或者按权限随机获取分割字符串
 ---*  str: 需要获取随机的字符串
 ---*  param1: 0=系统权重随机,有几个字符串就是几份之一;1=按#位权重随机总权重为各项位权重的总和
 ---*  param2: 0=返回值都显示#权重数字;1=返回值都不显示#权重数字;2=返回值1显示,返回值2不显示;3=返回值2显示,返回值1不显示
 ---@param str string
 ---@param param1 integer
 ---@param param2 integer
----@return any
+---@return string 随机到的字符串
+---@return string 剩余的字符串
 function ransjstr(str,param1,param2) end
 
 ---给按钮增加红点
@@ -3531,15 +3599,17 @@ function reddel(play, win_id, btn_id) end
 ---从装备位扣除物品
 ---*  player: 玩家对象
 ---*  where: 装备位
+---*  desc: 描述
 ---@param player string
 ---@param where integer
----@return any
-function delbodyitem(player, where) end
+---@param desc? string
+---@return boolean 是否扣除成功
+function delbodyitem(player, where, desc) end
 
 ---发送地图消息
 ---*  mapid: 地图id
 ---*  msg: Json消息内容
----@param mapid string
+---@param mapid string|integer
 ---@param msg string
 function sendmapmsg(mapid, msg) end
 
@@ -3549,8 +3619,8 @@ function sendmapmsg(mapid, msg) end
 ---*  posY: y坐标集
 ---*  modle: 0=寻路, 1=巡逻
 ---@param player string
----@param posX integer
----@param posY integer
+---@param posX string
+---@param posY string
 ---@param modle integer
 function monmission(player, posX, posY, modle) end
 
@@ -3562,7 +3632,7 @@ function monmission(player, posX, posY, modle) end
 ---*  posX2: 新坐标X
 ---*  posY2: 新坐标Y
 ---@param monName string
----@param mapID string
+---@param mapID string|integer
 ---@param posX1 integer
 ---@param posY1 integer
 ---@param posX2 integer
@@ -3571,7 +3641,7 @@ function movemontopos(monName, mapID, posX1, posY1, posX2, posY2) end
 
 ---骰子功能
 ---*  player: 玩家对象
----*  num: 点数(1~6)
+---*  num: 动画数量;比如3就是会出现3个骰子转动
 ---*  funcName: 动画结束触发
 ---@param player string
 ---@param num integer
@@ -3586,7 +3656,7 @@ function readskillng(player) end
 ---获取内功等级
 ---*  player: 玩家对象
 ---@param player string
----@return any
+---@return integer
 function getnglevel(player) end
 
 ---调整人物内功等级
@@ -3656,7 +3726,7 @@ function addmpper(player, opt, value) end
 ---@param player string
 ---@param itemName? string
 ---@param isbind? integer
----@return any
+---@return table|string 道具列表，无道具情况返回"0"
 function getbagitems(player, itemName, isbind) end
 
 ---修改经络的修炼等级格式
@@ -3684,13 +3754,13 @@ function addskillex(player, skillName, skillLevel) end
 ---*  fieldName: 字段名
 ---@param monIdx_monName string
 ---@param fieldName string
----@return any
+---@return string|integer
 function getdbmonfieldvalue(monIdx_monName, fieldName) end
 
 ---新增接口根据StdMode获取装备位
 ---*  player: 道具StdMode
 ---@param stdMode integer
----@return any
+---@return integer
 function getposbystdmode(stdMode) end
 
 ---英雄改名接口
@@ -3713,7 +3783,7 @@ function deldsfuncall(player, funcName) end
 ---*  model: 1=开启, 0=停止
 ---@param player string
 ---@param funcName string
----@param model string
+---@param model integer
 function cngdsfuncallstate(player, funcName, model) end
 
 ---增加系统任务计时
@@ -3768,17 +3838,23 @@ function printusetime(play, on_off) end
 ---*  play: 玩家对象
 ---*  logAct: 日志ID
 ---*  loginfo: 日志内容
+---*  nParam1~nParam5: 整数型(可空)最大支持21亿
 ---@param play string
 ---@param logAct integer
 ---@param loginfo string
-function logact(play, logAct, loginfo) end
+---@param nParam1? integer
+---@param nParam2? integer
+---@param nParam3? integer
+---@param nParam4? integer
+---@param nParam5? integer
+function logact(play, logAct, loginfo,nParam1,nParam2,nParam3,nParam4,nParam5) end
 
 ---获取物品原始各项数据库字段值参数
 ---*  itemIdx/itemName: 物品ID/物品名称
 ---*  fieldName: 字段名
 ---@param itemIdx_itemName string
 ---@param fieldName string
----@return any
+---@return string|integer
 function getdbitemfieldvalue(itemIdx_itemName, fieldName) end
 
 ---修复城门,城墙等
@@ -3806,8 +3882,9 @@ function clientswitch(play, type, time) end
 ---获取当前地图行会成员数量
 ---*  mapID: 地图编号
 ---*  guildName: 行会名字或*(*等于未加入行会人物)
----@param mapID string
----@param guildName integer
+---@param mapID string|integer
+---@param guildName string
+---@return integer
 function maphanghcyguild(mapID, guildName) end
 
 ---绑定背包满触发
@@ -3825,12 +3902,12 @@ function bindEvent(play, bindingType, isOpen, callbackFunc) end
 ---*  mapID: 地图编号
 ---*  monName: 怪物名称，*表示所有怪物
 ---*  model: 怪物名字格式，0=默认名称(带数字), 1=显示名字(不带数字)
----*  param: 0/nil=获取表格内刷的怪物状态, 1=获取表格内和脚本刷的怪物状态
----@param mapID string
+---*  param: 0=获取表格内刷的怪物状态, 1=获取表格内和脚本刷的怪物状态
+---@param mapID string|integer
 ---@param monName string
 ---@param model integer
 ---@param param? integer
----@return any
+---@return table
 function mapbossinfo(mapID, monName, model, param) end
 
 ---拉起微信和qq等功能
@@ -3840,19 +3917,19 @@ function mapbossinfo(mapID, monName, model, param) end
 ---*  param2: 参数2=3,填入QQ群key
 ---@param play string
 ---@param model integer
----@param param1 integer
----@param param2 string
+---@param param1? integer
+---@param param2? string
 function sendforqqwx(play, model, param1, param2) end
 
 ---开启/关闭地图参数
 ---*  mapID: 地图编号
 ---*  mapParam: 地图参数
----*  model: 0/nil=关闭地图参数, 1=开启地图参数
+---*  model: 0=关闭地图参数, 1=开启地图参数
 ---*  param: 地图参数里的需要的参数
----@param mapID string
+---@param mapID string|integer
 ---@param mapParam string
----@param model integer
----@param param string
+---@param model string|integer
+---@param param? string|integer
 function setmapmode(mapID, mapParam, model, param) end
 
 ---装备批量增加附加属性
@@ -3865,7 +3942,7 @@ function setmapmode(mapID, mapParam, model, param) end
 ---@param where integer
 ---@param opt string
 ---@param attrStr string
----@param item string
+---@param item? string
 function setaddnewabil(play, where, opt, attrStr, item) end
 
 ---获取人物身上装备属性值命令
@@ -3877,9 +3954,9 @@ function setaddnewabil(play, where, opt, attrStr, item) end
 ---@param play string
 ---@param model integer
 ---@param attrID integer
----@param where string
----@param item string
----@return any
+---@param where integer
+---@param item? string
+---@return string
 function getitemattidvalue(play, model, attrID, where, item) end
 
 ---获取角色所有属性
@@ -3927,15 +4004,15 @@ function createfile(path) end
 ---*  line: 写入行数(0~65535)
 ---@param path string
 ---@param str string
----@param line string
+---@param line integer
 function addtextlist(path, str, line) end
 
 ---获取文本文件指定行的字符串 
 ---*  path: 文件路径
 ---*  line: 指定行(0~1000)
 ---@param path string
----@param line string
----@return any
+---@param line integer
+---@return string
 function getrandomtext(path, line) end
 
 ---获取文本文件指定行的内容[根据符号分割]
@@ -3943,9 +4020,9 @@ function getrandomtext(path, line) end
 ---*  line: 指定行
 ---*  symbol: 符号
 ---@param path string
----@param line string
+---@param line integer
 ---@param symbol string
----@return any
+---@return table
 function getliststringex(path, line, symbol) end
 
 ---取字符串在列表中的下标
@@ -3953,7 +4030,7 @@ function getliststringex(path, line, symbol) end
 ---*  str: 字符串
 ---@param path string
 ---@param str string
----@return any
+---@return integer|nil 字符串所在行，未找到返回nil
 function getstringpos(path, str) end
 
 ---删除文本文件的内容
@@ -3961,7 +4038,7 @@ function getstringpos(path, str) end
 ---*  line: 指定行
 ---*  model: 删除模式(0=删除行, 1=清空行, 2=删除随机行(参数2失效))
 ---@param path string
----@param line string
+---@param line? string
 ---@param model integer
 function deltextlist(path, line, model) end
 
@@ -3974,8 +4051,10 @@ function clearnamelist(path) end
 ---*  path: 文件路径
 ---*  str: 字符串
 ---@param path string
----@param str string
-function checktextlist(path, str) end
+---@param str1 string
+---@param str2? string
+---@return boolean
+function checktextlist(path, str1,str2) end
 
 ---检查字符串是否在指定文件中
 ---*  path: 文件路径
@@ -4086,8 +4165,8 @@ function getmaintongfile(serverID, filePath, path) end
 ---@param itemName string
 ---@param itemNum integer
 ---@param bind integer
----@param desc string
----@return any 
+---@param desc? string
+---@return boolean 是否扣除成功
 function takeitemex(play, itemName, itemNum, bind, desc) end
 
 ---判断绑定状态
@@ -4095,7 +4174,7 @@ function takeitemex(play, itemName, itemNum, bind, desc) end
 ---*  bind: 绑定类型(0-8)
 ---@param item string
 ---@param bind integer
----@return any 
+---@return boolean 是否绑定
 function checkitemstate(item, bind) end
 
 ---设置装备部位属性加成(万分比)
@@ -4104,18 +4183,17 @@ function checkitemstate(item, bind) end
 ---*  sFlag: 操作符(=,+,-)
 ---*  pro: 倍数(万分比)
 ---@param play string
----@param where string
+---@param where integer
 ---@param sFlag string
 ---@param pro integer
----@return any 
 function setequipaddvalue(play, where, sFlag, pro) end
 
 ---获取装备部位属性加成(万分比)
 ---*  play: 玩家对象
 ---*  where: 装备部位
 ---@param play string
----@param where string
----@return any 
+---@param where integer
+---@return integer
 function getequipaddvalue(play, where) end
 
 -- ========================== ↓↓↓ 23.12.07新增 ↓↓↓==========================
@@ -4156,7 +4234,7 @@ function addinternalforce(play, sFlag, value, model) end
 ---*  param1: 仅在参数1位置为0时有效(0=覆盖时装外观, 1=时装外观优先)
 ---*  param2: 仅在参数1位置为0时有效(0-斗笠、头发不变, 1-隐藏斗笠, 2-隐藏头发, 3-隐藏斗笠和头发 4-隐藏盾牌和盾牌特效)
 ---@param play string
----@param type string
+---@param type integer
 ---@param shape integer
 ---@param time integer
 ---@param param1 integer
@@ -4182,11 +4260,12 @@ function changespeedex(play, model, value, time) end
 ---@param play string
 ---@param skillName string
 ---@param effectID integer
----@param effectID2 integer
+---@param effectID2? integer
 function setmagicskillefft(play, skillName, effectID, effectID2) end
 
 ---获取当前虚拟机id[npcid]
----@return integer
+---*  return: npcID（NPC配置表中的ID）<br>特殊npcid:QF=999999999,QM=999999996,LuaCond=999999995,LuaFunc=999999994
+---@return integer 
 function getsysindex() end
 
 
@@ -4206,12 +4285,12 @@ function senddiymsg(play, jsonStr) end
 ---@param time integer
 function killpulseexprate(play, pro, time) end
 
----设置杀怪内功经验倍数
+---设置地图的杀怪内功经验倍数
 ---*  play: 玩家对象
 ---*  mapid: 地图id("*"代表所有地图)
 ---*  pro: 倍率(倍数除以100为真正的倍率(200为2倍经验，150为1.5倍))
 ---@param play string
----@param mapid integer
+---@param mapid string|integer|string
 ---@param pro integer
 function plusemapkillmonexprate(play, mapid, pro) end
 
@@ -4227,7 +4306,7 @@ function bonuspoint(play, sFlag, value) end
 ---获取人物转生属性点
 ---*  play: 玩家对象
 ---@param play string
----@return any 
+---@return integer
 function getbonuspoint(play) end
 
 -- ========================== ↓↓↓ 2024-xx-xx等待发布 ↓↓↓==========================
@@ -4240,7 +4319,7 @@ function getbonuspoint(play) end
 ---*  level: 宝宝等级(最高为7)，级别越高伤害越高
 ---*  count: 数量
 ---*  time: 叛变时间(分钟)
----*  color: 是否自动变色（0不改变颜色，建议填0，填1-7为宝宝身上颜色值[颜色有1-7种颜色]，填-1为自动变色，宝宝攻击力会随颜色变化，不建议使用）
+---*  color: 是否自动变色（0不改变颜色，建议填0，填1-7为宝宝身上颜色值[颜色有1-7种颜色]，填-1为自动变色，宝宝攻击力会随颜色变化）
 ---*  ignore: 设置大于0，检测时不计算该宝宝数量(仅M2控制的召唤数量)
 ---*  nolevelup: 宝宝不升级（0：宝宝升级，1：宝宝）
 ---*  hide: 隐藏主人名（0：不隐藏；1：隐藏）
@@ -4261,66 +4340,71 @@ function getbonuspoint(play) end
 ---@param inherit? integer
 ---@param hp? integer
 ---@param buff? string
----@return any 
+---@return table 怪物对象列表 
 function recallmobex(actor, name, x, y, level, count, time, color, ignore, nolevelup, hide, inherit, hp, buff) end
 
 
 ---读取配置文件
 ---*  readPath: 配置文件路径
 ---@param readPath string
----@return any 
+---@return table 表格所有数据内容
 function readexcel(readPath) end
 
 
 ---检查玩家物品
 ---*  actor: 玩家对象
 ---*  item_str: 物品名称#物品数量&物品名称#物品数量 (&=和的意思)
----*  is_id: 参数1中的物品名称是ID还是道具名称（0，道具名称，1，道具ID）
 ---*  is_bind: 0/1/2（0=不检测 1.非绑定 2.绑定）
+---*  is_id: 参数1中的物品名称是ID还是道具名称（0，道具名称，1，道具ID）
 ---@param actor string
 ---@param item_str string
----@param is_id integer
 ---@param is_bind integer
----@return any 
+---@param is_id integer
+---@return boolean 满足条件 
 function checkitems(actor, item_str, is_id, is_bind) end
 
 
 ---消耗玩家物品
 ---*  actor: 玩家对象
 ---*  item_str: 物品名称#物品数量&物品名称#物品数量 (&=和的意思)
+---*  var_name: 存入变量名,用于扣除成功后判断扣除道具中是否有绑定的(0=非绑定1=绑定)
 ---*  model: 参数1中的物品名称是ID还是道具名称（0，道具名称，1，道具ID）
 ---*  is_bind: 0/1/2（0=不检测 1.非绑定 2.绑定）
+---*  desc: 描述
 ---@param actor string
 ---@param item_str string
+---@param var_name string
 ---@param model integer
 ---@param is_bind integer
----@return any 
-function takes(actor, item_str, model, is_bind) end
+---@param desc? string
+---@return boolean 是否扣除成功
+function takes(actor, item_str, var_name, model, is_bind,desc) end
 
 
 ---扣除角色穿戴的装备
 ---*  actor: 玩家对象
 ---*  itemName: 装备名称
 ---*  num: 扣除物品数量
+---*  desc: 描述
 ---@param actor string
 ---@param itemName string
 ---@param num integer
----@return any 
-function takew(actor, itemName, num) end
+---@param desc? string
+---@return boolean
+function takew(actor, itemName, num,desc) end
 
 ---获取人物所有称号
 ---*  play: 玩家对象
 ---@param play string
----@return any 
+---@return table 
 function newgettitlelist(play) end
 
 
 ---增加回收组别
 ---*  actor: 玩家对象
----*  recyclingType: 回收组别，对应表中group字段(支持多类别配置用“;”分割)
+---*  recyclingType: 回收组别，对应表中group字段(支持多类别配置用";"分割)
 ---@param actor string
 ---@param recyclingType string
----@return any 
 function addrecyclingtype(actor, recyclingType) end
 
 
@@ -4329,13 +4413,11 @@ function addrecyclingtype(actor, recyclingType) end
 ---*  idx: 回收组别索引，-1表示清空回收组别
 ---@param actor string
 ---@param idx string
----@return any 
 function delrecyclingtype(actor, idx) end
 
 ---执行回收
 ---*  actor: 玩家对象
 ---@param actor string
----@return any 
 function execrecycling(actor) end
 
 ---执行自动回收
@@ -4343,9 +4425,8 @@ function execrecycling(actor) end
 ---*  interval: 检测间隔时间（单位：秒）
 ---*  max_bag_space: 背包最大空间（单位：格子）
 ---@param actor string
----@param interval integer
----@param max_bag_space integer
----@return any
+---@param interval? integer
+---@param max_bag_space? integer
 function autorecycling(actor, interval, max_bag_space) end
 
 
@@ -4364,7 +4445,7 @@ function autorecycling(actor, interval, max_bag_space) end
 ---*  attackPVP: 不同国家怪物是否PK(0,1)
 ---*  mobNameColor: 怪物名字颜色
 ---*  disableSelfPlayerAttack: 是否禁止本国玩家攻击(0,1)
----@param mapID string
+---@param mapID string|integer
 ---@param x string
 ---@param y string
 ---@param mob string
@@ -4378,7 +4459,6 @@ function autorecycling(actor, interval, max_bag_space) end
 ---@param attackPVP integer
 ---@param mobNameColor integer
 ---@param disableSelfPlayerAttack integer
----@return any 
 function mission(mapID, x, y, mob, moby, count, range, mobName, target, country, attackSelfPlayer, attackPVP, mobNameColor, disableSelfPlayerAttack) end
 
 
@@ -4387,5 +4467,535 @@ function mission(mapID, x, y, mob, moby, count, range, mobName, target, country,
 ---*  boxID: OK框编号
 ---@param actor string
 ---@param boxID integer
----@return any 
 function updateboxitem(actor, boxID) end
+
+---判断地图定时器是否存在
+---*  mapID: 地图id
+---*  timerid: 计时器id
+---@param mapID string
+---@param timerid integer
+---@return boolean
+function hasenvirtimer(mapID, timerid) end
+
+---判断玩家定时器是否存在
+---*  actor: 玩家对象
+---*  timerid: 计时器id
+---@param actor string
+---@param timerid integer
+---@return boolean 是否拥有
+function hastimer(actor, timerid) end
+
+---判断全局定时器是否存在
+---*  timerid: 计时器id
+---@param timerid integer
+---@return boolean 是否拥有
+function hastimerex(timerid) end
+
+---改变称号时间
+---*  actor: 玩家对象
+---*  titleName: 称号名称
+---*  operation: 操作符（+,-,=）
+---*  cour: 时间(+,-传入操作时间(秒), =传入时间戳)
+---@param actor string
+---@param titleName string
+---@param operation string
+---@param cour integer
+function changetitletime(actor, titleName, operation, cour) end
+
+---改变行会名称
+---*  actor: 玩家对象
+---*  guildName: 需要改名的行会名
+---*  newGuildName: 新的行会名字
+---@param actor string
+---@param guildName string
+---@param newGuildName string
+function changeguildname(actor, guildName, newGuildName) end
+
+---获取攻城列表
+function getcastlewarlist() end
+
+---重置技能冷却时间
+---*  actor: 玩家对象
+---*  skill: 技能名称|技能ID
+---*  time: 减免的cd时间(秒)传入0则重置技能CD
+---*  timeType: 0=时间单位为秒;1=时间单位为毫秒
+---@param actor string
+---@param skill string|integer
+---@param time? integer
+---@param timeType? integer
+function skillrestcd(actor, skill, time, timeType) end
+
+---重置怪物生成计时器
+---*  mapID: 地图ID
+---*  monPosX: 怪物X坐标
+---*  monPosY: 怪物Y坐标
+---*  monName: 怪物名称
+---@param mapID string|integer
+---@param monPosX integer
+---@param monPosY integer
+---@param monName string
+function resetmongentick(mapID,monPosX,monPosY,monName) end
+
+---获取IP地址下所有的在线角色名称列表
+---*  IPAddress: IP地址
+---*  getAllPlayers: 是否获取全部玩家列表0/1(默认限制返回200个)
+---@param IPAddress string
+---@param getAllPlayers integer
+---@return table
+function getplaylistbyip(IPAddress, getAllPlayers) end
+
+---发送登陆信息[反外挂]
+---@param userID string 玩家唯一ID
+function sendloginmsg(userID) end
+
+---检测登陆信息[反外挂]
+---@param userID string 玩家唯一ID
+function logincheckent(userID) end
+
+---增加天气
+---@param mapID string 地图ID
+---@param model integer 天气效果 (1=黄沙效果,2=花瓣效果,3=下雪效果)
+---@param time integer 有效时间(秒)
+function setweathereffect(mapID, model, time) end
+
+---删除天气
+---@param mapID string 地图ID
+---@param model integer 天气效果 (0=关闭所有效果,1=黄沙效果,2=花瓣效果,3=下雪效果)
+function delweathereffect(mapID, model) end
+
+---开启宝箱
+---@param actor string 玩家对象
+---@param boxidx integer 宝箱ID
+---@param num integer 次数(不读数据表次数,只认这里的次数)
+function opendragonbox(actor, boxidx, num) end
+
+--- 雇佣沙巴克弓箭手/卫士
+--- @since 引擎64_24.05.23
+--- @param monID integer 弓箭手/卫士ID
+--- @param monType? integer 类型；默认为0，0=弓箭手, 1=卫士
+--- @note 雇佣弓箭手/守卫需要消耗城堡金币, 可以在[M2-参数设置-城堡参数]中设置雇佣弓箭/卫士=0
+--- @note 弓箭手/守卫的尸体消失后才能进行雇佣
+function castlearchergen(monID, monType) end
+
+
+--- 检测身上佩戴的装备
+--- @since 引擎64_24.05.23
+--- @param actor string 玩家对象
+--- @param item_name string 装备名称
+--- @param item_num integer 装备名称
+--- @return boolean 是否穿戴
+function checkitemw(actor, item_name,item_num) end
+
+
+--- 设置等级锁
+--- @since 引擎64_24.05.23
+--- @param actor string 玩家对象
+--- @param itype integer 0:解除锁定, 1:锁定到达最大等级时并且不获取怪物经验, 2:锁定到达最大等级时累积经验(int64)
+--- @param level integer 锁住最大等级
+function setlocklevel(actor, itype,level) end
+
+
+--- 复位属性点数
+--- @since 引擎64_24.05.23
+--- @param actor string 玩家对象
+function restbonuspoint(actor) end
+
+
+--- 批量给予物品
+--- @since 引擎64_24.05.23
+--- @param actor string 玩家对象
+--- @param itemStr string 物品参数；物品名称#数量#绑定状态&物品名称#数量#绑定状态
+--- @param desc string 描述
+function gives(actor, itemStr, desc) end
+
+
+--- 返回前端面板消息[合成系统]
+--- @since 引擎64_24.05.23
+--- @param actor string 玩家对象
+--- @param idx string|integer 合成表idx
+--- @param json string json信息
+function sendactionofjson(actor, idx, json) end
+
+
+--- 设置人物照亮范围（光照）
+--- @since 引擎64_24.05.23
+--- @param actor string 玩家对象
+--- @param value integer 人物照亮范围值；-1=按读取装备的光照值
+function setcandlevalue(actor, value) end
+
+
+--- 指定怪物的爆出
+--- @since 引擎64_24.05.23
+--- @param actor string 玩家对象
+--- @param monItem string 怪物名称
+--- @param value integer 可爆出次数；最大多爆20次
+--- @param delayTime integer? 延迟毫秒数；默认为0
+function monitemsex(actor, monItem, value, delayTime) end
+
+
+--- 传送戒指传送前触发
+--- @since 引擎64_24.05.23
+--- @param actor string 玩家对象
+--- @param X integer 目标点X坐标
+--- @param Y integer 目标点Y坐标
+--- @return boolean 是否允许传送
+function beginteleport(actor, X, Y) end
+
+
+--- 获取英雄模式
+--- @since 引擎64_24.05.23
+--- @param actor string 玩家对象
+--- @treturn integer 英雄模式；0=攻击, 1=跟随, 2= 休息
+function getherosta(actor) end
+
+
+--- 设置英雄模式
+--- @since 引擎64_24.05.23
+--- @param actor string 玩家对象
+--- @param model integer 英雄模式；0=攻击, 1=跟随, 2= 休息
+function setherosta(actor, model) end
+
+
+--- 英雄传送到主体身边
+--- @since 引擎64_24.05.23
+--- @param actor string 玩家对象
+function herofollow(actor) end
+
+--- 存储物品str变量[拓展]
+---@since 引擎64_24.05.23
+---@param actor string 玩家对象
+---@param where integer 装备位置(-2则传入物品对象)
+---@param idx integer 变量位置(1-20)
+---@param value string 变量值
+---@param itemobj? string 物品对象(参数2传入-2时有效)
+function setitemparam(actor, where, idx, value, itemobj) end
+
+--- 获取物品str变量[拓展]
+---@since 引擎64_24.05.23
+---@param actor string 玩家对象
+---@param where integer 装备位置(-2则传入物品对象)
+---@param idx integer 变量位置(1-20)
+---@param itemobj? string 物品对象(参数2传入-2时有效)
+---@return string result 变量值
+function getitemparam(actor, where, idx, itemobj) end
+
+--- 存储物品int变量[拓展]
+---@since 引擎64_24.05.23
+---@param actor string 玩家对象
+---@param where integer 装备位置(-2则传入物品对象)
+---@param idx integer 变量位置(1-50)
+---@param value integer 变量值(Int64)
+---@param itemobj? string 物品对象(参数2传入-2时有效)
+function setitemintparam(actor, where, idx, value, itemobj) end
+
+--- 获取物品int变量[拓展]
+---@since 引擎64_24.05.23
+---@param actor string 玩家对象
+---@param where integer 装备位置(-2则传入物品对象)
+---@param idx integer 变量位置(1-50)
+---@param itemobj? string 物品对象(参数2传入-2时有效)
+---@return integer result 变量值
+function getitemintparam(actor, where, idx, itemobj) end
+
+--- 更新物品变量到数据库[拓展]
+---@since 引擎64_24.05.23
+---@param actor string 玩家对象
+---@param where integer 装备位置(-2则传入物品对象)
+---@param itemobj? string 物品对象(参数2传入-2时有效)
+function updatecustitemparam(actor, where, itemobj) end
+
+--- 设置对象int变量
+---@since 引擎64_24.05.23
+---@param obj string 怪物/NPC对象
+---@param idx integer 变量位置(0-4)
+---@param value integer 变量值
+function setobjintvar(obj, idx, value) end
+
+--- 获取对象int变量
+---@since 引擎64_24.05.23
+---@param obj string 怪物/NPC对象
+---@param idx integer 变量位置(0-4)
+---@return integer result 变量值
+function getobjintvar(obj, idx) end
+
+--- 设置对象str变量
+---@since 引擎64_24.05.23
+---@param obj string 怪物/NPC对象
+---@param idx integer 变量位置(0-4)
+---@param value string 变量值
+function setobjstrvar(obj, idx, value) end
+
+--- 获取对象str变量
+---@since 引擎64_24.05.23
+---@param obj string 怪物/NPC对象
+---@param idx integer 变量位置(0-4)
+---@return string result 变量值
+function getobjstrvar(obj, idx) end
+
+--- 设置地图int变量
+---@since 引擎64_24.05.23
+---@param mapid string|integer 地图编号
+---@param idx integer 变量位置(0-49)
+---@param value integer 变量值
+function setenvirintvar(mapid, idx, value) end
+
+--- 获取地图int变量
+---@since 引擎64_24.05.23
+---@param mapid string|integer 地图编号
+---@param idx integer 变量位置(0-49)
+---@return integer result 变量值
+function getenvirintvar(mapid, idx) end
+
+--- 设置地图str变量
+---@since 引擎64_24.05.23
+---@param mapid string|integer 地图编号
+---@param idx integer 变量位置(0-49)
+---@param value string 变量值
+function setenvirstrvar(mapid, idx, value) end
+
+--- 获取地图str变量
+---@since 引擎64_24.05.23
+---@param mapid string|integer 地图编号
+---@param idx integer 变量位置(0-49)
+---@return string result 变量值
+function getenvirstrvar(mapid, idx) end
+
+--- 设置buff堆叠层数
+---@since 引擎64_24.05.23
+---@param actor string 对象
+---@param buffid integer buffid
+---@param opt string 操作符 '+' '-' '='
+---@param stack integer buff层数 不可超出表中最大层数
+---@param itimer boolean 是否重置buff 时间
+function buffstack(actor, buffid, opt, stack, itimer) end
+
+--- 在地图上生成掉落物品
+---@since 引擎64_24.05.23
+---@param mapid string|integer 地图id
+---@param actor string 归属对象 填nil则无归属 且拾取cd时间会被设置为0
+---@param X integer x坐标
+---@param Y integer y坐标
+---@param json string 掉落json
+---@param data string 物品来源(参考设置物品来源)
+---@param range? integer 范围
+---@param owner? integer 掉落归属:
+-- 0 -仅判断是否有归属可以捡取
+-- 1-自由捡取
+-- 2-行会拾取
+-- 3-无归属捡取（有捡取时间限制）
+-- 4-掉落物品仅归属自己
+---@return table result 物品makeindex列表
+function gendropitem(mapid, actor, X, Y, json, data, range, owner) end
+
+--- 对目标释放技能
+---@since 引擎64_24.05.23
+---@param actor string 玩家对象
+---@param skillID integer 技能ID
+---@param sType integer 类型 1-普通技能 2-强化技能
+---@param sLevel integer 技能等级
+---@param target string 目标对象
+---@param data integer 是否显示施法动作 0-不显示 1-显示
+function releasemagic_target(actor, skillID, sType, sLevel, target, data) end
+
+--- 对坐标释放技能
+---@since 引擎64_24.05.23
+---@param actor string 玩家对象
+---@param skillID integer 技能ID
+---@param sType integer 类型 1-普通技能 2-强化技能
+---@param sLevel integer 技能等级
+---@param X integer 目标点X坐标
+---@param Y integer 目标点Y坐标
+---@param data integer 是否显示施法动作 0-不显示 1-显示
+function releasemagic_pos(actor, skillID, sType, sLevel, X, Y, data) end
+
+--- 让怪物释放自定义技能
+---@since 引擎64_24.05.23
+---@param mon string 怪物对象
+---@param skillID integer 自定义技能id
+---@param X integer 目标点X坐标
+---@param Y integer 目标点Y坐标
+---@param target string 目标对象
+function mon_docustommagic(mon, skillID, X, Y, target) end
+
+--- 添加自定义怪物攻击表现
+---@since 引擎64_24.05.23
+---@param mon string 怪物对象
+---@param skillID integer 攻击表现id,对应cfg_monattack表
+function addmonattack(mon, skillID) end
+
+--- 获取自定义排行榜缓存数据
+---@since 引擎64_24.05.23
+---@param rankidx string 自定义排行榜页签
+---@return string result 排行榜数据,json格式
+function getsortdata(rankidx) end
+
+--- 添加机器人事件
+---@since 引擎64_24.05.23
+---@param scheduledName string 机器人名称
+---@param executeMethod string 执行方式
+---@param time string 时间参数
+---@param funcName string 跳转标签
+function addscheduled(scheduledName, executeMethod, time, funcName) end
+
+--- 删除机器人事件
+---@since 引擎64_24.05.23
+---@param scheduledName string 机器人名称
+function delscheduled(scheduledName) end
+
+--- 判断机器人事件
+---@since 引擎64_24.05.23
+---@param scheduledName string 机器人名称
+---@return boolean result true=有事件,false=无事件
+function hasscheduled(scheduledName) end
+
+--- 添加系统延时回调
+---@since 引擎64_24.05.23
+---@param time integer 时间(毫秒)
+---@param funcName string 触发函数
+function grobaldelaygoto(time, funcName) end
+
+--- 删除系统延时回调
+---@since 引擎64_24.05.23
+---@param funcName? string 需要删除的延时函数,不填为清除全部
+---@param value? integer 是否忽视标签参数,0=不忽视,要完整填写添加时的参数,1=忽视,只判断函数名
+function grobalcleardelaygoto(funcName, value) end
+
+--- 改变宠物外观
+---@since 引擎64_24.05.23
+---@param actor string 玩家对象
+---@param petIdx string|integer 宠物序号,X表示当前宠物
+---@param appr? integer 怪物外观ID(怪物Appr),0=还原
+function setpetappr(actor, petIdx, appr) end
+
+--- 清掉地图某范围的怪物
+---@since 引擎64_24.05.23
+---@param mapID string 地图ID
+---@param x integer 坐标X
+---@param y integer 坐标Y
+---@param range integer 范围
+---@param monName integer 怪物名,*表示所有怪物
+---@param isDrop integer 是否爆物品,0=不爆,1=爆
+---@param isClear integer 是否清尸体,0=不清,1=清
+function killmapmon(mapID, x, y, range, monName, isDrop, isClear) end
+
+-- ========================== ↓↓↓ 24.08.07新增 ↓↓↓==========================
+
+--- 接口获取角色所有技能
+---@param actor string 玩家对象
+---@return table 技能列表
+function getallskills(actor) end
+
+--- 接口发起行会战
+---@param guildName1 string 宣战行会名字
+---@param guildName2 string 敌对行会名字
+---@param time integer 时间(分)
+---@return boolean 是否发起成功
+function setguildwar(guildName1, guildName2, time) end
+
+--- 判断行会之间是否宣战
+---@param guildName1 string 行会名字/行会对象
+---@param guildName2 string 行会名字/行会对象
+---@return boolean 是否宣战
+function iswarguild(guildName1, guildName2) end
+
+--- 判断行会之间是否结盟
+---@param guildName1 string 行会名字/行会对象
+---@param guildName2 string 行会名字/行会对象
+---@return boolean 是否宣战
+function isallyguild(guildName1, guildName2) end
+
+--- 判断国家之间是否宣战
+---@param nationIDX1 integer 国家ID
+---@param nationIDX2 integer 国家ID
+---@return boolean 是否宣战
+function iswarnation(nationIDX1, nationIDX2) end
+
+--- 国家宣战
+---@param nationIDX1 integer 国家ID
+---@param nationIDX2 integer 国家ID
+---@return boolean 是否宣战成功
+function setnationwar(nationIDX1, nationIDX2) end
+
+--- 获取国家人数
+---@param nationIDX integer 国家ID
+---@return integer 国家人数
+function getnationmembercount(nationIDX) end
+
+--- 设置阵营ID
+---@param actor string 玩家对象
+---@param campid integer 阵营id
+function setcamp(actor, campid) end
+
+--- 获取阵营ID
+---@param actor string 玩家对象
+---@return integer 阵营id
+function getcamp(actor) end
+
+--- 接口删除Envir目录下的指定文件
+---@param path string 文件路径
+---@return boolean 是否删除成功
+function delfile(path) end
+
+---表格转换成字符串
+---*  tbl: table表
+---@param tbl table
+---@return string
+function tbl2jsonex(tbl) end
+
+---字符串转换成表格
+---*  str: json字符串
+---@param str string
+---@return table
+function json2tblex(str) end
+
+---字符串转换成表格(扩展版)
+---相较于json2tbl接口会将传入的空字符串返回nil
+---@param str string
+---@return table|nil
+function json2tblex(str) end
+
+---表格转换成字符串(扩展版)
+---相较于tbl2json接口会将数字key值转换为字符串
+---@param tbl table
+---@return string
+function tbl2jsonex(tbl) end
+
+---根据唯一id获取视野内的目标对象
+---特殊：该接口只能获取玩家[参数1]视野内的目标,用于解决TXT调用LUA时获取对象困难问题
+---@param player string 玩家对象
+---@param userID string 目标唯一ID
+---@return string|nil 目标对象
+function getvisibleactor(player, userID) end
+
+---设置宠物飘字特效
+---@param actor string 玩家对象
+---@param petIdx string|integer 宠物序号,X表示当前宠物
+---@param damageID integer 飘字特效ID
+function setpetatkefftype(actor, petIdx, damageID) end
+
+---设置宠物等级
+---@param actor string 玩家对象
+---@param petIdx string|integer 宠物序号,X表示当前宠物
+---@param sFlag string 操作符(=,+,-)
+---@param level integer 等级值
+---@param lType integer 0-等级，1-转生等级
+function petlevel(actor, petIdx, sFlag, level, lType) end
+
+---设置宠物经验
+---@param actor string 玩家对象
+---@param petIdx string|integer 宠物序号,X表示当前宠物
+---@param sFlag string 操作符(=,+,-)
+---@param exp integer 经验值
+function petexp(actor, petIdx, sFlag, exp) end
+
+---单独嘲讽
+---@param play string 玩家对象
+---@param monObj string 怪物对象（指定要吸引的怪物）
+function dotauntex(play, monObj) end
+
+---单独嘲讽怪物
+---@param play string 玩家对象
+---@param monObj string 怪物对象（指定要嘲讽的特定怪物）
+---@param isMove integer 0=怪物漂移到人物边 1=怪物瞬移到目前人物坐标 2=怪物瞬移到目前人物面前
+---@param unLimit integer 0=无限制 1=怪物/人物攻击目标不归属自己的不可被吸
+function monmoveex(play, monObj, isMove, unLimit) end
