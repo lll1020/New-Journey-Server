@@ -23,6 +23,19 @@ shaguai = {
 			Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 		end
 	end,
+	["3"] = function(play,mob)      --开辟仙府
+		local du = getbaseinfo(play,3)
+		if daluditu[du] and daluditu[du] == 3 then
+			local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+			sg_data["npc55"] = (sg_data["npc55"] or 0) + 1
+			if sg_data["npc55"] >= 200 then
+				shaguai.jian(play,3)
+				messagebox(play,"任务完成,立即前往提交")
+			end
+			Player.sendmsgEx(play,  "开辟仙府#253|击杀怪物+"..1 .." ( "..sg_data["npc55"].."/200 )#57")
+			Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+		end
+	end,
 	["24"] = function(play,mob)      --主线任务杀怪
 		local rwdy,sgsl,dqdt = getplaydef(play,VarCfg.U_zxrw[1]),getplaydef(play,VarCfg.U_zxrw[2]),getbaseinfo(play,3)
 		if constant.rw_syb[rwdy] and constant.rw_syb[rwdy].sg and constant.rw_syb[rwdy].sg[1] and constant.rw_syb[rwdy].sg[1][dqdt] then
