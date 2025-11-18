@@ -3,7 +3,8 @@ local _config = {
     id = 55,
     shaguai_id = 3,
     name = "开辟仙府",
-    num = 200
+    num = 200,
+    rwjl = {{"仙草种子",9},{"元宝",200000}},
 }
 
 
@@ -39,6 +40,7 @@ function npc.link(play, npcid, p2, p3, msgData)
                 Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
                 Player.sendmsgEx(play,  "任务完成")
                 sendluamsg(play,101,1005,0,0,"rwwc")
+                Player.rwjl(play, _config.rwjl, "开辟仙府任务奖励")
             else
                 Player.sendmsgEx(play,  "你还没有完成任务#57")
                 return

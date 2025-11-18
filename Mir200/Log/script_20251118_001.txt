@@ -1,0 +1,12 @@
+[2025-11-18 05:35:31:297] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 17464, CurPlayThreadId: 17464
+
+[2025-11-18 06:42:31:701] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 17464, CurPlayThreadId: 17464
+[2025-11-18 06:42:31:701] [玩家名字]Lua执行耗时过高:31ms msgid:101 2 998 0 
+
+[2025-11-18 06:58:56:919] LuaNPC:玩家名字 ID:999999999 执行 moneychange16 player:玩家名字 耗时：31; NpcThreadId: 17464, CurPlayThreadId: 17464
+[2025-11-18 06:58:56:919] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 17464, CurPlayThreadId: 17464
+
+[2025-11-18 15:51:49:954] LuaNPC:玩家名字 ID:999999999 执行 takeonex player:玩家名字 耗时：31; NpcThreadId: 17464, CurPlayThreadId: 17464
+
+[2025-11-18 16:49:03:746] LuaNPC:玩家名字 ID:999999999 执行 takeonbeforeex player:玩家名字 耗时：31; NpcThreadId: 17464, CurPlayThreadId: 17464
+

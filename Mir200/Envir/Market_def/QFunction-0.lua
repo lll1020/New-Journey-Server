@@ -274,17 +274,17 @@ function pickupitemex(play, item)
 end
 --------------------´©´÷Ç°´¥·¢-------------------
 function takeonbeforeex(play,item,where,makeIndex)
-    if where == 22 then
-        if getiteminfo(play,item,2) > 21043 then
-            callscriptex(play,"TAKEONMAKEINDEX",23,makeIndex)
-            return false
-        end
-    elseif where == 24 then
-        if getiteminfo(play,item,2) > 21043 then
-            callscriptex(play,"TAKEONMAKEINDEX",25,makeIndex)
-            return false
-        end
-    end
+    -- if where == 22 then
+    --     if getiteminfo(play,item,2) > 21043 then
+    --         callscriptex(play,"TAKEONMAKEINDEX",23,makeIndex)
+    --         return false
+    --     end
+    -- elseif where == 24 then
+    --     if getiteminfo(play,item,2) > 21043 then
+    --         callscriptex(play,"TAKEONMAKEINDEX",25,makeIndex)
+    --         return false
+    --     end
+    -- end
     return true
 end
 --´©Ì××°
