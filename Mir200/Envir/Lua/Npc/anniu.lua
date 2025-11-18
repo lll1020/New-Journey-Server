@@ -131,22 +131,22 @@ local npc_xyl = {
          --第一章
         {
             jq = {
-                { "扫荡野火帮（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
-                { "剿灭恶徒（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "扫荡野火帮（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"二大陆主城",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "剿灭恶徒（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"二大陆主城",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
                 { "天书强化",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) 
                     local T_data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
                     return (T_data.level or 0) >= 1 and true or false
                 end ,khdjy = function() 
                     local T_data = Player:JsonToTbl(Player:getServerVar("T42"))
                     return (T_data.level or 0) >= 1 and true or false
-                end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                end,yd = {1,"二大陆主城",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
                 { "初识仙法",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) 
                     local T_data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
                     return T_data["tj"] and true or false
                 end ,khdjy = function() 
                     local T_data = Player:JsonToTbl(Player:getServerVar("T42"))
                     return T_data["tj"] and true or false
-                end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                end,yd = {1,"二大陆主城",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
             },
             --需求
             jqd = 0,
@@ -155,10 +155,10 @@ local npc_xyl = {
         --第二章
         {
             jq = {
-                { "杀伐之路（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
-                { "讨伐夜魔（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
-                { "装备强化",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
-                { "喂养灵根",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "杀伐之路（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"二大陆主城",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "讨伐夜魔（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"二大陆主城",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "装备强化",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"二大陆主城",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "喂养灵根",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"二大陆主城",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
             },
             jqd = 400,
             jl = {{"绑定元宝",1000000},{"绑定灵符",100000}}
@@ -166,13 +166,13 @@ local npc_xyl = {
         --第三章
         {
             jq = {
-                { "修复轩辕剑（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
-                { "深入野火（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
-                { "守护森林（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
-                { "兵道之谜（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
-                { "幸运增幅",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
-                { "气运占卜",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
-                { "转生·二",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"剑门外门",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "修复轩辕剑（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"二大陆主城",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "深入野火（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"二大陆主城",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "守护森林（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"二大陆主城",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "兵道之谜（剧）",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"二大陆主城",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "幸运增幅",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"二大陆主城",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "气运占卜",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"二大陆主城",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
+                { "转生·二",id = 999, jl = {{"剧情点",100}},fwdjy = function(play) return true end ,khdjy = function() return true end,yd = {1,"二大陆主城",166,109,83} ,desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)" },
 
             },
             jqd = 800,

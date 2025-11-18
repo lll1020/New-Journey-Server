@@ -84,7 +84,7 @@ function qing(play)
 end
 
 function sandalu(play)
-    mapmove(play,"中州城",643,175,4)
+    mapmove(play,"四大陆主城",643,175,4)
 end
 
 function buff(play)
@@ -129,15 +129,15 @@ function buff(play)
 end
 
 function sidalu(play)
-    mapmove(play,"天玄界",47,46,4)
+    mapmove(play,"五大陆主城",47,46,4)
 end
 
 function wudalu(play)
-    mapmove(play,"北境仙域",53,43,4)
+    mapmove(play,"六大陆主城",53,43,4)
 end
 
 function liudalu(play)
-    mapmove(play,"中央仙域",197,189,5)
+    mapmove(play,"七大陆主城",197,189,5)
 end
 
 function jhb(play)

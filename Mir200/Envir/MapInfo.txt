@@ -33,19 +33,23 @@ kfhg 23 26 -> kfhjsbk 86 102
 [D3804_2  锁妖塔] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
 [mwsl 太虚幻境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
 
+cgzd		27180	27179
+dhzj		27191	27190
+hgsq		27159	27158
+tmxz		10347	10346
 
 
 ;==============================================主城地图==============================
 [xtc         盟重省] day
-[剑门外门|dzgd   二大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
-[剑门内门|new_44   三大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
-[中州城|15  四大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
-[天玄界|nwsjq  五大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
-[北境仙域|sszj 六大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
-[中央仙域|new_43  七大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
-[诡异位面|4dlzc  八大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
-[叹息旷野|xssl  九大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
-[诸天之上|xssl  十大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
+[二大陆主城|new_44   极光城] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
+[三大陆主城|tmxz   苍云大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
+[四大陆主城|cgzd  若水大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
+[五大陆主城|dhzj  红尘大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
+[六大陆主城|hgsq 灵虚大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
+[七大陆主城|xssl  七大陆主城] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
+[八大陆主城|xssl  八大陆主城] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
+[九大陆主城|xssl  九大陆主城] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
+[十大陆主城|xssl  十大陆主城] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
 
 ;==============================================一大陆野外地图==============================
 [山庄|wbmh   山庄] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
@@ -66,7 +70,7 @@ kfhg 23 26 -> kfhjsbk 86 102
 [野火帮|new_44   野火帮] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 [野火帮大营|new_44   野火帮大营] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[xx城郊|new_44   xx城郊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[极光城郊|new_44   极光城郊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 [神秘森林|new_44   神秘森林] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 [兵道古藏|new_44   兵道古藏] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)

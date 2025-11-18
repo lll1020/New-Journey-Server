@@ -15,19 +15,19 @@ function stdmodefunc10(play, item)
 
     local du = getbaseinfo(play, 3)
     if getplaydef(play,"N$战斗状态") < os.time() then
-        if du == "xtc" or du == "剑门外门" or du == "剑门内门" or du == "中州城" or du == "天玄界" or du == "北境仙域" or du == "中央仙域" or du == "诡异位面" or du == "叹息旷野" then
+        if du == "xtc" or du == "二大陆主城" or du == "三大陆主城" or du == "四大陆主城" or du == "五大陆主城" or du == "六大陆主城" or du == "七大陆主城" or du == "八大陆主城" or du == "九大陆主城" then
             mapmove(play, 'xtc', 137,138,8)
             addhpper(play, '=', 100)
             addmpper(play, '=', 100)
         elseif daluditu[du] and daluditu[du] == 1 then mapmove(play, "xtc",137,138,5) addhpper(play, '=', 100) addmpper(play, '=', 100)
-        elseif daluditu[du] and daluditu[du] == 2 then mapmove(play, "剑门外门",104,85,4) addhpper(play, '=', 100) addmpper(play, '=', 100)
-        elseif daluditu[du] and daluditu[du] == 3 then mapmove(play, "剑门内门",104,119,5) addhpper(play, '=', 100) addmpper(play, '=', 100)
-        elseif daluditu[du] and daluditu[du] == 4 then mapmove(play, "中州城",649,183,3) addhpper(play, '=', 100) addmpper(play, '=', 100)
-        elseif daluditu[du] and daluditu[du] == 5 then mapmove(play, "天玄界",47,46,4) addhpper(play, '=', 100) addmpper(play, '=', 100)
-        elseif daluditu[du] and daluditu[du] == 6 then mapmove(play, "北境仙域",53,43,4) addhpper(play, '=', 100) addmpper(play, '=', 100)
-        elseif daluditu[du] and daluditu[du] == 7 then mapmove(play, "中央仙域",24,22,5) addhpper(play, '=', 100) addmpper(play, '=', 100)
-        elseif daluditu[du] and daluditu[du] == 8 then mapmove(play, "诡异位面",62,61,5) addhpper(play, '=', 100) addmpper(play, '=', 100)
-        elseif daluditu[du] and daluditu[du] == 9 then mapmove(play, "叹息旷野",92,76,5) addhpper(play, '=', 100) addmpper(play, '=', 100)
+        elseif daluditu[du] and daluditu[du] == 2 then mapmove(play, "二大陆主城",104,85,4) addhpper(play, '=', 100) addmpper(play, '=', 100)
+        elseif daluditu[du] and daluditu[du] == 3 then mapmove(play, "三大陆主城",104,119,5) addhpper(play, '=', 100) addmpper(play, '=', 100)
+        elseif daluditu[du] and daluditu[du] == 4 then mapmove(play, "四大陆主城",649,183,3) addhpper(play, '=', 100) addmpper(play, '=', 100)
+        elseif daluditu[du] and daluditu[du] == 5 then mapmove(play, "五大陆主城",47,46,4) addhpper(play, '=', 100) addmpper(play, '=', 100)
+        elseif daluditu[du] and daluditu[du] == 6 then mapmove(play, "六大陆主城",53,43,4) addhpper(play, '=', 100) addmpper(play, '=', 100)
+        elseif daluditu[du] and daluditu[du] == 7 then mapmove(play, "七大陆主城",24,22,5) addhpper(play, '=', 100) addmpper(play, '=', 100)
+        elseif daluditu[du] and daluditu[du] == 8 then mapmove(play, "八大陆主城",62,61,5) addhpper(play, '=', 100) addmpper(play, '=', 100)
+        elseif daluditu[du] and daluditu[du] == 9 then mapmove(play, "九大陆主城",92,76,5) addhpper(play, '=', 100) addmpper(play, '=', 100)
         else
             mapmove(play, 'xtc', 137,138,8)
             addhpper(play, '=', 100)
