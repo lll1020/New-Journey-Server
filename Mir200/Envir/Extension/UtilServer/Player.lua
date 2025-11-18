@@ -393,7 +393,7 @@ function Player.sendmsgEx(actor, arg2, arg3)
         if type(payload) ~= "string" or payload == "" then
             return
         end
-        Player.sendmsgEx(actor, channel, payload)
+        sendmsg(actor, channel, payload)
         return
     end
 
@@ -412,7 +412,7 @@ function Player.sendmsgEx(actor, arg2, arg3)
         content = content .. "<font color='" .. hexColor .. "'>" .. text[1] .. "</font>"
     end
     if content ~= "" then
-        Player.sendmsgEx(actor, ConstCfg.notice.own, '{"Msg":"' .. content .. '","Type":9}')
+        sendmsg(actor, ConstCfg.notice.own, '{"Msg":"' .. content .. '","Type":9}')
     end
 end
 --在屏幕中间给自己播放特效

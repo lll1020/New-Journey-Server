@@ -596,56 +596,48 @@ npc[505] = function(play,p2,p3,data)  --自动巡航
         setplaydef(play,VarCfg.T_aigj,tbl2json(json))
         sendluamsg(play, 101, 505, 3, p3,getplaydef(play,VarCfg.T_aigj))
     elseif p2 == 4 then
-        if getflagstatus(play,VarCfg.BS_18cz) == 1 then
-            local json = json2tbl(getplaydef(play,VarCfg.T_aigj))
-            if getflagstatus(play,VarCfg.BS_AIgj) == 0 then
-                local yz = 0
-                for i = 1, 10, 1 do
-                    if json["fgx"..i] then
-                        yz = 1
-                        break
-                    end
+        local json = json2tbl(getplaydef(play,VarCfg.T_aigj))
+        if getflagstatus(play,VarCfg.BS_AIgj) == 0 then
+            local yz = 0
+            for i = 1, 10, 1 do
+                if json["fgx"..i] then
+                    yz = 1
+                    break
                 end
-                if yz == 1 then
-                    startautoattack(play)
-                    setflagstatus(play,VarCfg.BS_AIgj,1)
-                    json.gjkg = true
-                    setplaydef(play,VarCfg.N_Aigj[5],os.time())
-                else
-                    Player.sendmsgEx(play,1,'{"Msg":"<font color=\'#ff7700\'>[自动巡航]</font><font color=\'#ff0500\'>未勾选任何地图,无法进行AI挂机...</font>","Type":9}')
-                end
-            else
-                json.gjkg = nil
-                stopautoattack(play)
-                setflagstatus(play,VarCfg.BS_AIgj,0)
             end
-            setplaydef(play,VarCfg.T_aigj,tbl2json(json))
-            sendluamsg(play, 101, 505, 4,0,tbl2json(json))
+            if yz == 1 then
+                startautoattack(play)
+                setflagstatus(play,VarCfg.BS_AIgj,1)
+                json.gjkg = true
+                setplaydef(play,VarCfg.N_Aigj[5],os.time())
+            else
+                Player.sendmsgEx(play,1,'{"Msg":"<font color=\'#ff7700\'>[自动巡航]</font><font color=\'#ff0500\'>未勾选任何地图,无法进行AI挂机...</font>","Type":9}')
+            end
         else
-            Player.sendmsgEx(play,1,'{"Msg":"<font color=\'#ff7700\'>[自动巡航]</font><font color=\'#ff0000\'>未激活【自动巡航】,无法使用，可在在线充值激活...</font>","Type":9}')
+            json.gjkg = nil
+            stopautoattack(play)
+            setflagstatus(play,VarCfg.BS_AIgj,0)
         end
+        setplaydef(play,VarCfg.T_aigj,tbl2json(json))
+        sendluamsg(play, 101, 505, 4,0,tbl2json(json))
     elseif p2 == 5 then
-        if getflagstatus(play,VarCfg.BS_18cz) == 1 then
-            local json = json2tbl(getplaydef(play,VarCfg.T_aigj))
-            if p3 == 1 then
-                if json.zgx1 then
-                    json.zgx1 = nil
-                    Buff[72](play,2)
-                else
-                    Buff[72](play,1)
-                    json.zgx1 = true
-                end
+        local json = json2tbl(getplaydef(play,VarCfg.T_aigj))
+        if p3 == 1 then
+            if json.zgx1 then
+                json.zgx1 = nil
+                Buff[72](play,2)
             else
-                if json["zgx"..p3] then
-                    json["zgx"..p3] = nil
-                else
-                    json["zgx"..p3] = true
-                end
+                Buff[72](play,1)
+                json.zgx1 = true
             end
-            setplaydef(play,VarCfg.T_aigj,tbl2json(json))
+        else
+            if json["zgx"..p3] then
+                json["zgx"..p3] = nil
+            else
+                json["zgx"..p3] = true
+            end
         end
-    else
-        Player.sendmsgEx(play,1,'{"Msg":"<font color=\'#ff7700\'>[自动巡航]</font><font color=\'#ff0000\'>未激活【自动巡航】,无法使用，可在在线充值激活...</font>","Type":9}')
+        setplaydef(play,VarCfg.T_aigj,tbl2json(json))
     end
 end
 ---天选之人

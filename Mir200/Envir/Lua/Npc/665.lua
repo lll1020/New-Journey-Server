@@ -452,10 +452,11 @@ function ggna(play,id)
             giveitem(play,v,1)
         end
     elseif id == "24" then
-        local hsmy_px = sorthumvar("比武大会",1,1,5)
-        setplaydef(play,VarCfg.N_tyecmb,1)
-        sendluamsg(play,101,498,0,0,'{"pmsj":'..tbl2json(hsmy_px)..',"grjf":'..getplayvar(play, "HUMAN", "比武大会")..'}')
-
+        sendluamsg(play, 101, 11, 0, 0,
+                '{"dljq":'..getplaydef(play, VarCfg.T_dljq)
+                        ..',"zxrw":'..getplaydef(play, VarCfg.T_zxrw)
+                        ..',"ywl":'..getplaydef(play, VarCfg.T_ywl)
+                        ..'}')
     end
 
 end
