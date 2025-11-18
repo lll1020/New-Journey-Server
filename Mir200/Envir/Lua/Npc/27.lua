@@ -1,8 +1,10 @@
 
 npc = {}
+
+
 --
 
-local _config = teshudata["npc_27"]
+local _config = Guard.getConfig("npc_27")
 
 
 function npc.main(play,npcid)
@@ -12,6 +14,21 @@ function npc.main(play,npcid)
 end
 
 function npc.link(play,npcid,ew,aid)
+    -- npc_guard: 入参校验
+    if not Guard.ensurePlayer(play, npcid) then
+        return
+    end
+    local __guardAction = Guard.normalizeAction(play, npcid, ew)
+    if __guardAction == nil then
+        return
+    end
+    ew = __guardAction
+    -- npc_guard: 操作白名单（优化：限定合法操作编号）
+    local __guardAllowedActions = Guard.newActionSet({1})
+    if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
+        return
+    end
+
     if ew == 1 then
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_技能升级"])
         T_data.level = T_data.level or {}

@@ -1,7 +1,9 @@
 npc = {}
+
+
 --
 
-local _config = teshudata["npc_43"]
+local _config = Guard.getConfig("npc_43")
 
 function npc.main(play,npcid)
     local data = {}
@@ -10,6 +12,21 @@ function npc.main(play,npcid)
 end
 
 function npc.link(play,npcid,ew,aid,data)
+    -- npc_guard: 入参校验
+    if not Guard.ensurePlayer(play, npcid) then
+        return
+    end
+    local __guardAction = Guard.normalizeAction(play, npcid, ew)
+    if __guardAction == nil then
+        return
+    end
+    ew = __guardAction
+    -- npc_guard: 操作白名单（优化：限定合法操作编号）
+    local __guardAllowedActions = Guard.newActionSet({1})
+    if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
+        return
+    end
+
     if ew == 1 then --
         local dj_num = getplaydef(play, VarCfg["U_江湖称号"])
         if dj_num >= _config.max_level then

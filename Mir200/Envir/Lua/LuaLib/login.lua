@@ -111,9 +111,9 @@ function Login.main(play)
 
     ---------------------------------------------------自动相关
     if getflagstatus(play,VarCfg.BS_huishou[4]) == 1 then
-        sendmsg(play,1,'{"Msg":"[自动回收已开启]","FColor":219,"BColor":255,"Type":1}')
+        Player.sendmsgEx(play,1,'{"Msg":"[自动回收已开启]","FColor":219,"BColor":255,"Type":1}')
     else
-        sendmsg(play,1,'{"Msg":"[自动回收已关闭]","FColor":56,"BColor":255,"Type":1}')
+        Player.sendmsgEx(play,1,'{"Msg":"[自动回收已关闭]","FColor":56,"BColor":255,"Type":1}')
     end
     ---------------------------------------------------顶戴
     if checktitle(play,"狂暴之力") then

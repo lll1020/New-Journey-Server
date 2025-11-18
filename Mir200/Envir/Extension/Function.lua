@@ -141,11 +141,11 @@ function FOpenNpcShowEx(actor, npcID)
 end
 --大飘屏
 function FsendHuoDongGongGao(msgStr)
-    sendmsg("0", 2, '{"Msg":"' .. msgStr .. '","FColor":249,"BColor":0,"Type":5,"Time":3,"SendId":"123","Y":"100"}')
-    sendmsg("0", 2, '{"Msg":"' .. msgStr .. '","FColor":249,"BColor":0,"Type":5,"Time":3,"SendId":"123","Y":"140"}')
-    sendmsg("0", 2, '{"Msg":"' .. msgStr .. '","FColor":249,"BColor":0,"Type":5,"Time":3,"SendId":"123","Y":"180"}')
-    sendmsg("0", 2, '{"Msg":"' .. msgStr .. '","FColor":249,"BColor":0,"Type":5,"Time":3,"SendId":"123","Y":"220"}')
-    sendmsg("0", 2, '{"Msg":"' .. msgStr .. '","FColor":249,"BColor":0,"Type":5,"Time":3,"SendId":"123","Y":"260"}')
+    Player.sendmsgEx("0", 2, '{"Msg":"' .. msgStr .. '","FColor":249,"BColor":0,"Type":5,"Time":3,"SendId":"123","Y":"100"}')
+    Player.sendmsgEx("0", 2, '{"Msg":"' .. msgStr .. '","FColor":249,"BColor":0,"Type":5,"Time":3,"SendId":"123","Y":"140"}')
+    Player.sendmsgEx("0", 2, '{"Msg":"' .. msgStr .. '","FColor":249,"BColor":0,"Type":5,"Time":3,"SendId":"123","Y":"180"}')
+    Player.sendmsgEx("0", 2, '{"Msg":"' .. msgStr .. '","FColor":249,"BColor":0,"Type":5,"Time":3,"SendId":"123","Y":"220"}')
+    Player.sendmsgEx("0", 2, '{"Msg":"' .. msgStr .. '","FColor":249,"BColor":0,"Type":5,"Time":3,"SendId":"123","Y":"260"}')
 end
 
 -----------------------攻沙提示
@@ -155,17 +155,17 @@ function FSendGongShaTips1(isKF)
     if isKF then
         isKFStr = "跨服"
     end
-    sendmsg("0", 2,
+    Player.sendmsgEx("0", 2,
             '{"Msg":"今晚集体' ..
                     isKFStr .. '攻沙请各行会的兄弟做好准备！！！","FColor":250,"BColor":0,"Type":6,"Time":6,"SendName":"系统：","Y":"0"}')
-    sendmsg("0", 2,
+    Player.sendmsgEx("0", 2,
             '{"Msg":"今晚集体' ..
                     isKFStr .. '攻沙请各行会的兄弟做好准备！！！","FColor":250,"BColor":0,"Type":6,"Time":6,"SendName":"系统：","Y":"0"}')
-    sendmsg("0", 2,
+    Player.sendmsgEx("0", 2,
             '{"Msg":"今晚集体' ..
                     isKFStr .. '攻沙请各行会的兄弟做好准备！！！","FColor":250,"BColor":0,"Type":6,"Time":6,"SendName":"系统：","Y":"0"}')
     for i = 1, 5, 1 do
-        sendmsg("0", 2,
+        Player.sendmsgEx("0", 2,
                 '{"Msg":"今晚集体' ..
                         isKFStr .. '攻沙请各行会的兄弟做好准备！！！","FColor":250,"BColor":0,"Type":0,"Time":3,"SendName":"系统：","Y":"30"}')
     end

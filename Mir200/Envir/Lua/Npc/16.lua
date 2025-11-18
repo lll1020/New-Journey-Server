@@ -1,13 +1,30 @@
 npc = {}
+
+
 --功能21：沙巴克
 
-local _config = teshudata["sbk"]
+local _config = Guard.getConfig("sbk")
 
 function npc.main(play,npcid)
     sendluamsg(play,100,npcid,0,0,"")
 end
 
 function npc.link(play,npcid,ew,aid)
+    -- npc_guard: 入参校验
+    if not Guard.ensurePlayer(play, npcid) then
+        return
+    end
+    local __guardAction = Guard.normalizeAction(play, npcid, ew)
+    if __guardAction == nil then
+        return
+    end
+    ew = __guardAction
+    -- npc_guard: 操作白名单（优化：限定合法操作编号）
+    local __guardAllowedActions = Guard.newActionSet({1, 2})
+    if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
+        return
+    end
+
     if getmyguild(play) == "0" then
         Player.sendmsgEx(play, string.format("你没有加入行会#249"))
         return

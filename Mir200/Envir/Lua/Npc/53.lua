@@ -1,6 +1,8 @@
 npc = {}
 
-local _config = teshudata["npc_53"]
+
+
+local _config = Guard.getConfig("npc_53")
 
 -- 构建指定等级的槽位列表及映射，用于快速校验材料是否合法
 local function buildSlotLookup(level)
@@ -60,27 +62,42 @@ function npc.main(play,npcid)
 end
 
 function npc.link(play,npcid,ew,aid,data)
+    -- npc_guard: 入参校验
+    if not Guard.ensurePlayer(play, npcid) then
+        return
+    end
+    local __guardAction = Guard.normalizeAction(play, npcid, ew)
+    if __guardAction == nil then
+        return
+    end
+    ew = __guardAction
+    -- npc_guard: 操作白名单（优化：限定合法操作编号）
+    local __guardAllowedActions = Guard.newActionSet({1})
+    if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
+        return
+    end
+
     if ew == 1 then -- 合成主流程
         local ok, jsondata = pcall(json2tbl, data or "{}")
         if not ok or type(jsondata) ~= "table" then
-            sendmsg(play,1,"合成失败：请重新提交数据#57")
+            Player.sendmsgEx(play,1,"合成失败：请重新提交数据#57")
             return
         end
 
         if type(jsondata.itemlist) ~= "table" then
-            sendmsg(play,1,"合成失败：无法判断物品#57")
+            Player.sendmsgEx(play,1,"合成失败：无法判断物品#57")
             return
         end
 
         local totalItems = #jsondata.itemlist
         if totalItems ~= _config.needitemnum then
-            sendmsg(play,1,"合成失败：请放入正确物品数量")
+            Player.sendmsgEx(play,1,"合成失败：请放入正确物品数量")
             return
         end
 
         local level = tonumber(jsondata.item_level)
         if not level or level < 1 then
-            sendmsg(play,1,"合成失败：物品等级无效#57")
+            Player.sendmsgEx(play,1,"合成失败：物品等级无效#57")
             return
         end
 
@@ -88,7 +105,7 @@ function npc.link(play,npcid,ew,aid,data)
         local currentLevelList, slotLookup = buildSlotLookup(level)
         local nextLevelList = _config.cost[level + 1]
         if not currentLevelList or not slotLookup or not nextLevelList then
-            sendmsg(play,1,"合成失败：对应等级配置缺失#57")
+            Player.sendmsgEx(play,1,"合成失败：对应等级配置缺失#57")
             return
         end
 
@@ -99,14 +116,14 @@ function npc.link(play,npcid,ew,aid,data)
             local makeIdx = tostring(rawMakeIdx)
             local itemObj = getitembymakeindex(play, makeIdx)
             if not itemObj then
-                sendmsg(play,1,"合成失败：存在材料已被使用#57")
+                Player.sendmsgEx(play,1,"合成失败：存在材料已被使用#57")
                 return
             end
 
             local itemName = getiteminfo(play, itemObj, ConstCfg.iteminfo.name)
             local slotIndex = slotLookup[itemName]
             if not slotIndex then
-                sendmsg(play,1,"合成失败：存在非当前等级材料#57")
+                Player.sendmsgEx(play,1,"合成失败：存在非当前等级材料#57")
                 return
             end
 
@@ -117,7 +134,7 @@ function npc.link(play,npcid,ew,aid,data)
             end
             info.count = info.count + 1
             if info.count > info.total then
-                sendmsg(play,1,"合成失败：材料数量不足#57")
+                Player.sendmsgEx(play,1,"合成失败：材料数量不足#57")
                 return
             end
 
@@ -127,13 +144,13 @@ function npc.link(play,npcid,ew,aid,data)
         -- 计算目标槽位：同槽位 10 件必定成功，否则按数量/10 概率
         local chosenSlot, guaranteed, slotWeight = chooseSlot(slotCounts, _config.needitemnum)
         if not chosenSlot then
-            sendmsg(play,1,"合成失败：未找到可用槽位#57")
+            Player.sendmsgEx(play,1,"合成失败：未找到可用槽位#57")
             return
         end
 
         local rewardName = nextLevelList[chosenSlot]
         if not rewardName then
-            sendmsg(play,1,"合成失败：未找到对应上一级#57")
+            Player.sendmsgEx(play,1,"合成失败：未找到对应上一级#57")
             return
         end
 

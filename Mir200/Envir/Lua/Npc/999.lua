@@ -1,5 +1,7 @@
 npc = {}
 
+
+
 function npc.main(play,npcid)
     local zhid = tonumber(getconst(play,"<$USERACCOUNT>"))
     if constant.pz_htqx[zhid] or getconst(play, '<$SERVERNAME>') == "" or getconst(play, '<$SERVERNAME>') == "测试区" then
@@ -35,10 +37,10 @@ end
 function jjlggna(play,id)
     if id == "1" then
         setbaseinfo(play,39,36)
-        sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
     elseif id == "2" then
         callscriptex(play, "CHANGELEVEL", "=", 200)
-        sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
     elseif id == "3" then
         if getplaydef(play,VarCfg.U_zxrw[1])then
             newdeletetask(play,getplaydef(play,VarCfg.U_zxrw[1]))
@@ -57,10 +59,10 @@ function jjlggna(play,id)
     elseif id == "13" then
     elseif id == "14" then
         callscriptex(play, "CHANGELEVEL", "+", 10)
-        sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
     elseif id == "15" then
         callscriptex(play, "CHANGELEVEL", "-", 10)
-        sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
     elseif id == "16" then
     elseif id == "17" then
     elseif id == "18" then

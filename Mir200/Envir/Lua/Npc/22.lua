@@ -1,7 +1,9 @@
 npc = {}
+
+
 --灵根
 
-local _config = teshudata["npc_22"]
+local _config = Guard.getConfig("npc_22")
 
 function npc.main(play,npcid)
     local data = {}
@@ -10,6 +12,21 @@ function npc.main(play,npcid)
 end
 
 function npc.link(play,npcid,ew,aid)
+    -- npc_guard: 入参校验
+    if not Guard.ensurePlayer(play, npcid) then
+        return
+    end
+    local __guardAction = Guard.normalizeAction(play, npcid, ew)
+    if __guardAction == nil then
+        return
+    end
+    ew = __guardAction
+    -- npc_guard: 操作白名单（优化：限定合法操作编号）
+    local __guardAllowedActions = Guard.newActionSet({1, 2, 3, 5})
+    if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
+        return
+    end
+
     local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
     T_data.level = T_data.level or {}
     if ew == 1 then--抽取低级灵根

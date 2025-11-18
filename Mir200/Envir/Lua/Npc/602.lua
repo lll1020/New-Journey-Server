@@ -1,7 +1,9 @@
 npc = {}
+
+
 --灵根使者
 
-local _config = teshudata["npc_602"]
+local _config = Guard.getConfig("npc_602")
 
 function npc.main(play,npcid)
     local data = {}
@@ -11,6 +13,21 @@ function npc.main(play,npcid)
 end
 
 function npc.link(play,npcid,ew,aid)
+    -- npc_guard: 入参校验
+    if not Guard.ensurePlayer(play, npcid) then
+        return
+    end
+    local __guardAction = Guard.normalizeAction(play, npcid, ew)
+    if __guardAction == nil then
+        return
+    end
+    ew = __guardAction
+    -- npc_guard: 操作白名单（优化：限定合法操作编号）
+    local __guardAllowedActions = Guard.newActionSet({1, 2})
+    if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
+        return
+    end
+
     if ew == 1 then--进入副本
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
         local T_dljq = Player.getJsonTableByVar(play, VarCfg.T_dljq)
@@ -84,7 +101,7 @@ function npc_602_fb_end(play)
         if getmoncount(dtm,-1,true) < 1 then --副本怪物已经清空
             delmirrormap(dtm)
         else --副本怪物未清空
-            sendmsg(play,1,'{"Msg":"<font color=\'#00ff00\'>未通过本层,请继续修行吧...</font>","Type":9}')
+            Player.sendmsgEx(play,1,'{"Msg":"<font color=\'#00ff00\'>未通过本层,请继续修行吧...</font>","Type":9}')
             delmirrormap(dtm)
         end
     end

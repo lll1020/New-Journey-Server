@@ -1,7 +1,9 @@
 npc = {}
+
+
 --天书
 
-local _config = teshudata["npc_24"]
+local _config = Guard.getConfig("npc_24")
 
 function npc.main(play,npcid)
     local data = {}
@@ -10,6 +12,21 @@ function npc.main(play,npcid)
 end
 
 function npc.link(play,npcid,ew,aid,data)
+    -- npc_guard: 入参校验
+    if not Guard.ensurePlayer(play, npcid) then
+        return
+    end
+    local __guardAction = Guard.normalizeAction(play, npcid, ew)
+    if __guardAction == nil then
+        return
+    end
+    ew = __guardAction
+    -- npc_guard: 操作白名单（优化：限定合法操作编号）
+    local __guardAllowedActions = Guard.newActionSet({1, 2})
+    if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
+        return
+    end
+
     local T_data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
     local json_data = json2tbl(data)
     if ew == 1 then -- 强化

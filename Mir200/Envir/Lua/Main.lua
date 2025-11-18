@@ -34,6 +34,8 @@ safeRequire("Envir/Lua/LuaLib/shaguai.lua")
 safeRequire("Envir/Lua/LuaLib/useitme.lua")
 --------------------套装属性模块--------------------
 safeRequire("Envir/Lua/LuaLib/itemattr.lua")
+--------------------安全辅助库模块--------------------
+safeRequire("Envir/Lua/LuaLib/npc_guard.lua")
 --扩展
 --release_print("--------------------背包接口--------------------")
 safeRequire("Envir/Extension/UtilServer/Bag.lua")

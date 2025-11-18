@@ -1,13 +1,30 @@
 npc = {}
+
+
 --地图跳转npc
 
-local _config = teshudata["sjdt"]
+local _config = Guard.getConfig("sjdt")
 
 function npc.main(play,npcid)
     sendluamsg(play,100,npcid,0,0,"")
 end
 
 function npc.link(play,npcid,ew,aid)
+    -- npc_guard: 入参校验
+    if not Guard.ensurePlayer(play, npcid) then
+        return
+    end
+    local __guardAction = Guard.normalizeAction(play, npcid, ew)
+    if __guardAction == nil then
+        return
+    end
+    ew = __guardAction
+    -- npc_guard: 操作白名单（优化：限定合法操作编号）
+    local __guardAllowedActions = Guard.newActionSet({1})
+    if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
+        return
+    end
+
     if ew == 1 then
         if _config[npcid] and Player.dl_sz(play, _config[npcid][6]) then
             if getplaydef(play,"N$战斗状态") < os.time() then
@@ -19,7 +36,7 @@ function npc.link(play,npcid,ew,aid)
 
 
             else
-                sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}')
+                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}')
             end
         end
 

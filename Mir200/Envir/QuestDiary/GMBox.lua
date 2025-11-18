@@ -23,8 +23,8 @@ function lualib:playerIsGm(actor)
 end
 
 function lualib:sendmsg(actor, str)
-    sendmsg(actor, 1, string.format('{"Msg":"<font color=\'#D2B48C\'>[GM]%s</font>","Type":9}', str))
-    sendmsg(actor, 1, string.format('{"Msg":"<font color=\'#D2B48C\'>[GM]%s</font>","Type":1}', str))
+    Player.sendmsgEx(actor, 1, string.format('{"Msg":"<font color=\'#D2B48C\'>[GM]%s</font>","Type":9}', str))
+    Player.sendmsgEx(actor, 1, string.format('{"Msg":"<font color=\'#D2B48C\'>[GM]%s</font>","Type":1}', str))
 end
 
 --获取玩家对象

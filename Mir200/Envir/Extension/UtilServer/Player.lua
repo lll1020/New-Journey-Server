@@ -372,13 +372,13 @@ end
 --发送消息个人
 function Player.sendmsg(actor, msg)
     if type(msg) == "string" then
-        sendmsg(actor, ConstCfg.notice.own, '{"Msg":"' .. msg .. '","Type":9}')
+        Player.sendmsgEx(actor, ConstCfg.notice.own, '{"Msg":"' .. msg .. '","Type":9}')
     elseif type(msg) == "table" then
         local MsgStr = ""
         for _, v in ipairs(msg) do
             MsgStr = MsgStr .. "<font color='" .. v[1] .. "'>" .. v[2] .. "</font>"
         end
-        sendmsg(actor, ConstCfg.notice.own, '{"Msg":"' .. MsgStr .. '","Type":9}')
+        Player.sendmsgEx(actor, ConstCfg.notice.own, '{"Msg":"' .. MsgStr .. '","Type":9}')
     end
 end
 
@@ -386,11 +386,22 @@ end
 --* actor：个人对象
 --* str：消息内容 格式 文本#颜色|文本#颜色 (颜色值0-255)
 --* defaultColor：默认颜色 默认为白色
-function Player.sendmsgEx(actor, str, defaultColor)
+function Player.sendmsgEx(actor, arg2, arg3)
+    if type(arg2) == "number" then
+        local channel = arg2
+        local payload = arg3
+        if type(payload) ~= "string" or payload == "" then
+            return
+        end
+        Player.sendmsgEx(actor, channel, payload)
+        return
+    end
+
+    local str = arg2
     if str == nil or str == "" then
         return
     end
-    defaultColor = defaultColor or 250
+    local defaultColor = arg3 or 250
     local content = ""
     local part = string.split(str, "|")
     for _, v in ipairs(part) do
@@ -401,9 +412,7 @@ function Player.sendmsgEx(actor, str, defaultColor)
         content = content .. "<font color='" .. hexColor .. "'>" .. text[1] .. "</font>"
     end
     if content ~= "" then
-        sendmsg(actor, ConstCfg.notice.own, '{"Msg":"' .. content .. '","Type":9}')
-    else
-        return
+        Player.sendmsgEx(actor, ConstCfg.notice.own, '{"Msg":"' .. content .. '","Type":9}')
     end
 end
 --在屏幕中间给自己播放特效
