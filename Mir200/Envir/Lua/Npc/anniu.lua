@@ -1251,7 +1251,7 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
             end
         elseif p3 == 3 then --杀怪奖励
             -- VarCfg.U_fldt[2] 记录玩家今日杀怪量，对应 teshudata["fldt"]["sgjl"] 的领取进度
-            local jsonData = json2tbl(msgData)
+            local jsonData = json2tbl(msgData) or {}
             T_qrbq["sgjl"] = T_qrbq["sgjl"] or 0
             T_qrbq["sgjl"] = T_qrbq["sgjl"] + 1
             if teshudata["fldt"]["sgjl"][T_qrbq["sgjl"]].num > getplaydef(play, VarCfg.U_fldt[2]) then
@@ -1274,8 +1274,39 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
             end
         elseif p3 == 4 then --个人首杀
             -- T_grss 保存个人首杀任务状态：1=已完成待领，2=已领取，键为怪物ID
-            local jsonData = json2tbl(msgData)
+            local jsonData = json2tbl(msgData) or {}
             local T_grss = Player.getJsonTableByVar(play, VarCfg.T_grss)
+            if tonumber(jsonData["isall"]) == 1 then
+                if type(T_grss) ~= "table" then
+                    T_grss = {}
+                end
+                local rewardCfg = teshudata["fldt"] and teshudata["fldt"]["grss"] or {}
+                local hasReward = false
+                for key, status in pairs(T_grss) do
+                    if status == 1 then
+                        local index = tonumber(key)
+                        local cfg = index and rewardCfg[index]
+                        if cfg then
+                            T_grss[key] = 2
+                            Player.rwjl(
+                                play,
+                                cfg.give,
+                                "个人首杀奖励",
+                                1,
+                                0
+                            )
+                            hasReward = true
+                        end
+                    end
+                end
+                if hasReward then
+                    Player.setJsonVarByTable(play, VarCfg.T_grss, T_grss)
+                    sendluamsg(play, 101, 511, 2, 4, tbl2json(T_grss))
+                else
+                    Player.sendmsgEx(play, "未完成该首杀任务#57")
+                end
+                return
+            end
             if T_grss[jsonData["grss"]] and T_grss[jsonData["grss"]] == 2 then
                 Player.sendmsgEx(play, "该首杀奖励已经领取完毕#57")
                 return
@@ -1297,8 +1328,39 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
             end
         elseif p3 == 5 then --个人首爆
             -- T_grsb 结构与首杀类似，表示个人首爆奖励的完成/领取状态
-            local jsonData = json2tbl(msgData)
+            local jsonData = json2tbl(msgData) or {}
             local T_grsb = Player.getJsonTableByVar(play, VarCfg.T_grsb)
+            if tonumber(jsonData["isall"]) == 1 then
+                if type(T_grsb) ~= "table" then
+                    T_grsb = {}
+                end
+                local rewardCfg = teshudata["fldt"] and teshudata["fldt"]["grsb"] or {}
+                local hasReward = false
+                for key, status in pairs(T_grsb) do
+                    if status == 1 then
+                        local index = tonumber(key)
+                        local cfg = index and rewardCfg[index]
+                        if cfg then
+                            T_grsb[key] = 2
+                            Player.rwjl(
+                                play,
+                                cfg.give,
+                                "个人首爆奖励",
+                                1,
+                                0
+                            )
+                            hasReward = true
+                        end
+                    end
+                end
+                if hasReward then
+                    Player.setJsonVarByTable(play, VarCfg.T_grsb, T_grsb)
+                    sendluamsg(play, 101, 511, 2, 5, tbl2json(T_grsb))
+                else
+                    Player.sendmsgEx(play, "未完成该首爆任务#57")
+                end
+                return
+            end
             if T_grsb[jsonData["grsb"]] and T_grsb[jsonData["grsb"]] == 2 then
                 Player.sendmsgEx(play, "该首爆奖励已经领取完毕#57")
                 return
@@ -1320,8 +1382,39 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
             end
         elseif p3 == 6 then --全区首曝
             -- A_全区首曝json 为全局变量，需要以 nil actor 读取，逻辑与个人首爆一致但作用于全服
-            local jsonData = json2tbl(msgData)
+            local jsonData = json2tbl(msgData) or {}
             local qqsb = Player.getJsonTableByVar(nil, VarCfg["A_全区首曝json"])
+            if tonumber(jsonData["isall"]) == 1 then
+                if type(qqsb) ~= "table" then
+                    qqsb = {}
+                end
+                local rewardCfg = teshudata["fldt"] and teshudata["fldt"]["qqsb"] or {}
+                local hasReward = false
+                for key, status in pairs(qqsb) do
+                    if status == 1 then
+                        local index = tonumber(key)
+                        local cfg = index and rewardCfg[index]
+                        if cfg then
+                            qqsb[key] = 2
+                            Player.rwjl(
+                                play,
+                                cfg.give,
+                                "全区首曝奖励",
+                                1,
+                                0
+                            )
+                            hasReward = true
+                        end
+                    end
+                end
+                if hasReward then
+                    Player.setJsonVarByTable(nil, VarCfg["A_全区首曝json"], qqsb)
+                    sendluamsg(play, 101, 511, 2, 6, tbl2json(qqsb))
+                else
+                    Player.sendmsgEx(play, "未完成该首曝任务#57")
+                end
+                return
+            end
             if qqsb[jsonData["qqsb"]] and qqsb[jsonData["qqsb"]] == 2 then
                 Player.sendmsgEx(play, "该首爆奖励已经领取完毕#57")
                 return

@@ -26,3 +26,6 @@
 [2025-11-19 06:24:46:404] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 31912, CurPlayThreadId: 31912
 [2025-11-19 06:24:46:404] [玩家名字]Lua执行耗时过高:31ms msgid:100 26 1 0 
 
+[2025-11-19 19:40:05:608] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 11792, CurPlayThreadId: 11792
+[2025-11-19 19:40:05:608] [玩家名字]Lua执行耗时过高:31ms msgid:101 511 1 3 {"sgjl":4}
+
