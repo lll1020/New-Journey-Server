@@ -166,8 +166,7 @@ function Player.checkItemNumByTable(actor, t, multiple)
     for _,item in ipairs(t) do
         local idx,num = getstditeminfo(item[1], 0),item[2]
         if multiple then num=num*multiple end
-        
-        local name = getstditeminfo(idx, 1) or "未知材料"
+local name = getstditeminfo(idx, 1) or "未知材料"
         if Item.isCurrency(idx) then        --货币
             if not Player.checkMoneyNum(actor, idx, num) then
                 return name, num

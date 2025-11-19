@@ -67,6 +67,10 @@ function resetday(play)
 	end
 
     setplaydef(play, VarCfg["U_登录天数"], getplaydef(play, VarCfg["U_登录天数"]) + 1)
+    local T_qrbq = Player.getJsonTableByVar(play, VarCfg.T_qrbq)
+    T_qrbq["zxjl"] = T_qrbq["zxjl"] or 0
+    T_qrbq["sgjl"] = T_qrbq["sgjl"] or 0
+    Player.setJsonVarByTable(play, VarCfg.T_qrbq, T_qrbq)
 
 end
 --------------------传送戒指传送前触发触发-------------------
