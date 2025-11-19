@@ -131,3 +131,1416 @@
 [2025-11-19 20:36:24:680] NewHttpPost(0-0-0)-----------------------------------
 
 
+[2025-11-19 20:53:41:149] D701 - secret map not found !!
+[2025-11-19 20:53:41:149] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-27652] 当前Thread:15592
+[2025-11-19 20:53:41:150] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2025-11-19 20:53:41:150] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-27652] 当前Thread:15592
+[2025-11-19 20:53:41:150] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2025-11-19 20:53:41:150] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-27652] 当前Thread:15592
+[2025-11-19 20:53:41:150] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2025-11-19 20:53:41:150] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-27652] 当前Thread:15592
+[2025-11-19 20:53:41:150] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2025-11-19 20:53:41:197] ---------------------线程耗时监控
+[2025-11-19 20:53:41:330] Frame-----------------------------------
+
+[2025-11-19 20:53:41:340] MainRunThread(0)-----------------------------------
+
+[2025-11-19 20:53:41:349] EnvirThread 0/0(31-0)flag:5000000  lua: 1 CallLua:setontimerex 35-----------------------------------
+
+[2025-11-19 20:53:41:358] DbThread(0-0)-----------------------------------
+
+[2025-11-19 20:53:41:367] BoxSellDbThread(0)-----------------------------------
+
+[2025-11-19 20:53:41:377] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2025-11-19 21:38:04:631] DBConnect TBoxSellDbThread加载M2数据库异常 [FireDAC][Phys][ODBC][Microsoft][ODBC SQL Server Driver][DBNETLIB]SQL Server 不存在或访问被拒绝
+[2025-11-19 21:38:04:638] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:38:11:760] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:38:21:751] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:38:31:762] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:38:41:755] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:38:51:758] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:39:01:757] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:39:11:759] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:39:21:753] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:39:31:749] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:39:41:751] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:39:51:757] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:40:01:753] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:40:11:751] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:40:21:758] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:40:31:748] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:40:41:758] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:40:51:761] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:41:01:761] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:41:11:756] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:41:21:756] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:41:31:758] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:41:41:747] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:41:51:749] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:42:01:752] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:42:11:758] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:42:21:763] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:42:31:749] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:42:41:748] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:42:51:750] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:43:01:748] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:43:11:749] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:43:21:757] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:43:31:753] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:43:41:749] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:43:51:759] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:44:01:759] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:44:11:754] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:44:21:753] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:44:31:747] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:44:41:755] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:44:51:749] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E6F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[0000000000E5AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[0000000000E5AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[00007FFFFDB8DB3E] Unknown function at IsDialogMessageA
+[00007FFFFDBAC057] Unknown function at 
+[00007FFFFDBAD956] SoftModalMessageBox
+[00007FFFFDBE05D2] Unknown function at MessageBoxIndirectA
+[00007FFFFDBE002F] MessageBoxTimeoutW
+[00007FFFFDBDFE85] MessageBoxW
+[0000000000EF4B6C] Vcl.Forms._ZN3Vcl5Forms12TApplication10MessageBoxEPKwS3_i (Line 11758, "Vcl.Forms.pas" + 26)
+[0000000001E78CE5] svMain._ZN6Svmain8TFrmMain14FormCloseQueryEPN6System7TObjectERb (Line 1995, "svMain.pas" + 8)
+[0000000000EEC610] Vcl.Forms._ZN3Vcl5Forms11TCustomForm10CloseQueryEv (Line 7786, "Vcl.Forms.pas" + 9)
+[0000000000EEC504] Vcl.Forms._ZN3Vcl5Forms11TCustomForm5CloseEv (Line 7757, "Vcl.Forms.pas" + 4)
+[0000000000EEA6E9] Vcl.Forms._ZN3Vcl5Forms11TCustomForm7WMCloseERN6Winapi8Messages11TWMNoParamsE (Line 7048, "Vcl.Forms.pas" + 2)
+[0000000000B906A4] System._ZN6System7TObject8DispatchEPv (Line 19206, "System.pas" + 10)
+[0000000000D99B60] Vcl.Controls._ZN3Vcl8Controls8TControl7WndProcERN6Winapi8Messages8TMessageE (Line 7592, "Vcl.Controls.pas" + 92)
+[0000000000DA1017] Vcl.Controls._ZN3Vcl8Controls11TWinControl7WndProcERN6Winapi8Messages8TMessageE (Line 10646, "Vcl.Controls.pas" + 172)
+[0000000000EE52FC] Vcl.Forms._ZN3Vcl5Forms11TCustomForm7WndProcERN6Winapi8Messages8TMessageE (Line 5017, "Vcl.Forms.pas" + 222)
+[0000000000DA014C] Vcl.Controls._ZN3Vcl8Controls11TWinControl11MainWndProcERN6Winapi8Messages8TMessageE (Line 10323, "Vcl.Controls.pas" + 5)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB970CC] Unknown function at SendMessageW
+[00007FFFFDBC7E93] Unknown function at GetWindowDpiAwarenessContext
+[00007FFFFFC85CE4] KiUserCallbackDispatcher
+[00007FFFFD271344] NtUserMessageCall
+[00007FFFFDB93AAB] Unknown function at GetSystemMetrics
+[00007FFFFDB93944] Unknown function at GetSystemMetrics
+(00000000000033CD) [00007FFFF8FF43CD]
+[00007FFFF903EBC6] Unknown function at GetThemeSysBool
+(0000000000004CFF) [00007FFFF8FF5CFF]
+(0000000000004591) [00007FFFF8FF5591]
+[00007FFFFDB950FA] Unknown function at IsWindowUnicode
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9730C] CallWindowProcW
+[0000000000DA1190] Vcl.Controls._ZN3Vcl8Controls11TWinControl14DefaultHandlerEPv (Line 10685, "Vcl.Controls.pas" + 30)
+[0000000000EE88B3] Vcl.Forms._ZN3Vcl5Forms11TCustomForm14DefaultHandlerEPv (Line 6358, "Vcl.Forms.pas" + 12)
+[0000000000DA3EF4] Vcl.Controls._ZN3Vcl8Controls11TWinControl12WMSysCommandERN6Winapi8Messages13TWMSysCommandE (Line 11907, "Vcl.Controls.pas" + 23)
+[0000000000EEA819] Vcl.Forms._ZN3Vcl5Forms11TCustomForm12WMSysCommandERN6Winapi8Messages13TWMSysCommandE (Line 7099, "Vcl.Forms.pas" + 15)
+[0000000000B906A4] System._ZN6System7TObject8DispatchEPv (Line 19206, "System.pas" + 10)
+[0000000000D99B60] Vcl.Controls._ZN3Vcl8Controls8TControl7WndProcERN6Winapi8Messages8TMessageE (Line 7592, "Vcl.Controls.pas" + 92)
+[0000000000DA1017] Vcl.Controls._ZN3Vcl8Controls11TWinControl7WndProcERN6Winapi8Messages8TMessageE (Line 10646, "Vcl.Controls.pas" + 172)
+[0000000000EE52FC] Vcl.Forms._ZN3Vcl5Forms11TCustomForm7WndProcERN6Winapi8Messages8TMessageE (Line 5017, "Vcl.Forms.pas" + 222)
+[0000000000DA014C] Vcl.Controls._ZN3Vcl8Controls11TWinControl11MainWndProcERN6Winapi8Messages8TMessageE (Line 10323, "Vcl.Controls.pas" + 5)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB970CC] Unknown function at SendMessageW
+[00007FFFFDBC7E93] Unknown function at GetWindowDpiAwarenessContext
+[00007FFFFFC85CE4] KiUserCallbackDispatcher
+[00007FFFFD271344] NtUserMessageCall
+[00007FFFFDB93AAB] Unknown function at GetSystemMetrics
+[00007FFFFDB93944] Unknown function at GetSystemMetrics
+(00000000000033CD) [00007FFFF8FF43CD]
+(0000000000001629) [00007FFFF8FF2629]
+(0000000000004CFF) [00007FFFF8FF5CFF]
+(0000000000004591) [00007FFFF8FF5591]
+[00007FFFFDB950FA] Unknown function at IsWindowUnicode
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9730C] CallWindowProcW
+[0000000000DA1190] Vcl.Controls._ZN3Vcl8Controls11TWinControl14DefaultHandlerEPv (Line 10685, "Vcl.Controls.pas" + 30)
+[0000000000EE88B3] Vcl.Forms._ZN3Vcl5Forms11TCustomForm14DefaultHandlerEPv (Line 6358, "Vcl.Forms.pas" + 12)
+[0000000000D9A493] Vcl.Controls._ZN3Vcl8Controls8TControl15WMNCLButtonDownERN6Winapi8Messages15TWMNCHitMessageE (Line 7748, "Vcl.Controls.pas" + 3)
+[0000000000EEA1E6] Vcl.Forms._ZN3Vcl5Forms11TCustomForm15WMNCLButtonDownERN6Winapi8Messages15TWMNCHitMessageE (Line 6905, "Vcl.Forms.pas" + 18)
+[0000000000B906A4] System._ZN6System7TObject8DispatchEPv (Line 19206, "System.pas" + 10)
+[0000000000D99B60] Vcl.Controls._ZN3Vcl8Controls8TControl7WndProcERN6Winapi8Messages8TMessageE (Line 7592, "Vcl.Controls.pas" + 92)
+[0000000000DA1017] Vcl.Controls._ZN3Vcl8Controls11TWinControl7WndProcERN6Winapi8Messages8TMessageE (Line 10646, "Vcl.Controls.pas" + 172)
+[0000000000EE52FC] Vcl.Forms._ZN3Vcl5Forms11TCustomForm7WndProcERN6Winapi8Messages8TMessageE (Line 5017, "Vcl.Forms.pas" + 222)
+[0000000000DA014C] Vcl.Controls._ZN3Vcl8Controls11TWinControl11MainWndProcERN6Winapi8Messages8TMessageE (Line 10323, "Vcl.Controls.pas" + 5)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:44:52:401] ProgramException Except：Access violation at address 0000000000FB204C in module 'M2Server.exe'. Write of address 0000000000000020[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B67AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001B679B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001B6AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001B59702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001B5996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001B59B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000B91B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFFFC863FF] Unknown function at __chkstk
+[00007FFFFFB32327] Unknown function at RtlLocateExtendedFeature
+[00007FFFFFC85D3E] KiUserExceptionDispatcher
+[0000000000FB204C] uThreadPools._ZN12Uthreadpools11TThreadPool7PostMsgEjyPv (Line 131, "uThreadPools.pas" + 1)
+[0000000001B8F1C5] M2Share._ZN7M2share14SaveSysVarListEPN7Grobal28TVarInfoE (Line 3982, "M2Share.pas" + 13)
+[0000000001B8F01F] M2Share._ZN7M2share14SaveSysVarListEN6System13UnicodeStringES1_b (Line 3962, "M2Share.pas" + 40)
+[0000000001E6F0BB] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 307, "svMain.pas" + 5)
+[0000000001E78D29] svMain._ZN6Svmain8TFrmMain14FormCloseQueryEPN6System7TObjectERb (Line 2003, "svMain.pas" + 16)
+[0000000000EEC610] Vcl.Forms._ZN3Vcl5Forms11TCustomForm10CloseQueryEv (Line 7786, "Vcl.Forms.pas" + 9)
+[0000000000EEC504] Vcl.Forms._ZN3Vcl5Forms11TCustomForm5CloseEv (Line 7757, "Vcl.Forms.pas" + 4)
+[0000000000EEA6E9] Vcl.Forms._ZN3Vcl5Forms11TCustomForm7WMCloseERN6Winapi8Messages11TWMNoParamsE (Line 7048, "Vcl.Forms.pas" + 2)
+[0000000000B906A4] System._ZN6System7TObject8DispatchEPv (Line 19206, "System.pas" + 10)
+[0000000000D99B60] Vcl.Controls._ZN3Vcl8Controls8TControl7WndProcERN6Winapi8Messages8TMessageE (Line 7592, "Vcl.Controls.pas" + 92)
+[0000000000DA1017] Vcl.Controls._ZN3Vcl8Controls11TWinControl7WndProcERN6Winapi8Messages8TMessageE (Line 10646, "Vcl.Controls.pas" + 172)
+[0000000000EE52FC] Vcl.Forms._ZN3Vcl5Forms11TCustomForm7WndProcERN6Winapi8Messages8TMessageE (Line 5017, "Vcl.Forms.pas" + 222)
+[0000000000DA014C] Vcl.Controls._ZN3Vcl8Controls11TWinControl11MainWndProcERN6Winapi8Messages8TMessageE (Line 10323, "Vcl.Controls.pas" + 5)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB970CC] Unknown function at SendMessageW
+[00007FFFFDBC7E93] Unknown function at GetWindowDpiAwarenessContext
+[00007FFFFFC85CE4] KiUserCallbackDispatcher
+[00007FFFFD271344] NtUserMessageCall
+[00007FFFFDB93AAB] Unknown function at GetSystemMetrics
+[00007FFFFDB93944] Unknown function at GetSystemMetrics
+(00000000000033CD) [00007FFFF8FF43CD]
+[00007FFFF903EBC6] Unknown function at GetThemeSysBool
+(0000000000004CFF) [00007FFFF8FF5CFF]
+(0000000000004591) [00007FFFF8FF5591]
+[00007FFFFDB950FA] Unknown function at IsWindowUnicode
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9730C] CallWindowProcW
+[0000000000DA1190] Vcl.Controls._ZN3Vcl8Controls11TWinControl14DefaultHandlerEPv (Line 10685, "Vcl.Controls.pas" + 30)
+[0000000000EE88B3] Vcl.Forms._ZN3Vcl5Forms11TCustomForm14DefaultHandlerEPv (Line 6358, "Vcl.Forms.pas" + 12)
+[0000000000DA3EF4] Vcl.Controls._ZN3Vcl8Controls11TWinControl12WMSysCommandERN6Winapi8Messages13TWMSysCommandE (Line 11907, "Vcl.Controls.pas" + 23)
+[0000000000EEA819] Vcl.Forms._ZN3Vcl5Forms11TCustomForm12WMSysCommandERN6Winapi8Messages13TWMSysCommandE (Line 7099, "Vcl.Forms.pas" + 15)
+[0000000000B906A4] System._ZN6System7TObject8DispatchEPv (Line 19206, "System.pas" + 10)
+[0000000000D99B60] Vcl.Controls._ZN3Vcl8Controls8TControl7WndProcERN6Winapi8Messages8TMessageE (Line 7592, "Vcl.Controls.pas" + 92)
+[0000000000DA1017] Vcl.Controls._ZN3Vcl8Controls11TWinControl7WndProcERN6Winapi8Messages8TMessageE (Line 10646, "Vcl.Controls.pas" + 172)
+[0000000000EE52FC] Vcl.Forms._ZN3Vcl5Forms11TCustomForm7WndProcERN6Winapi8Messages8TMessageE (Line 5017, "Vcl.Forms.pas" + 222)
+[0000000000DA014C] Vcl.Controls._ZN3Vcl8Controls11TWinControl11MainWndProcERN6Winapi8Messages8TMessageE (Line 10323, "Vcl.Controls.pas" + 5)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB970CC] Unknown function at SendMessageW
+[00007FFFFDBC7E93] Unknown function at GetWindowDpiAwarenessContext
+[00007FFFFFC85CE4] KiUserCallbackDispatcher
+[00007FFFFD271344] NtUserMessageCall
+[00007FFFFDB93AAB] Unknown function at GetSystemMetrics
+[00007FFFFDB93944] Unknown function at GetSystemMetrics
+(00000000000033CD) [00007FFFF8FF43CD]
+(0000000000001629) [00007FFFF8FF2629]
+(0000000000004CFF) [00007FFFF8FF5CFF]
+(0000000000004591) [00007FFFF8FF5591]
+[00007FFFFDB950FA] Unknown function at IsWindowUnicode
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9730C] CallWindowProcW
+[0000000000DA1190] Vcl.Controls._ZN3Vcl8Controls11TWinControl14DefaultHandlerEPv (Line 10685, "Vcl.Controls.pas" + 30)
+[0000000000EE88B3] Vcl.Forms._ZN3Vcl5Forms11TCustomForm14DefaultHandlerEPv (Line 6358, "Vcl.Forms.pas" + 12)
+[0000000000D9A493] Vcl.Controls._ZN3Vcl8Controls8TControl15WMNCLButtonDownERN6Winapi8Messages15TWMNCHitMessageE (Line 7748, "Vcl.Controls.pas" + 3)
+[0000000000EEA1E6] Vcl.Forms._ZN3Vcl5Forms11TCustomForm15WMNCLButtonDownERN6Winapi8Messages15TWMNCHitMessageE (Line 6905, "Vcl.Forms.pas" + 18)
+[0000000000B906A4] System._ZN6System7TObject8DispatchEPv (Line 19206, "System.pas" + 10)
+[0000000000D99B60] Vcl.Controls._ZN3Vcl8Controls8TControl7WndProcERN6Winapi8Messages8TMessageE (Line 7592, "Vcl.Controls.pas" + 92)
+[0000000000DA1017] Vcl.Controls._ZN3Vcl8Controls11TWinControl7WndProcERN6Winapi8Messages8TMessageE (Line 10646, "Vcl.Controls.pas" + 172)
+[0000000000EE52FC] Vcl.Forms._ZN3Vcl5Forms11TCustomForm7WndProcERN6Winapi8Messages8TMessageE (Line 5017, "Vcl.Forms.pas" + 222)
+[0000000000DA014C] Vcl.Controls._ZN3Vcl8Controls11TWinControl11MainWndProcERN6Winapi8Messages8TMessageE (Line 10323, "Vcl.Controls.pas" + 5)
+[0000000000CB8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[0000000000EF42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000EF4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[0000000000EF47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[0000000001E813E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-19 21:45:20:700] D701 - secret map not found !!
+[2025-11-19 21:45:20:700] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-27548] 当前Thread:29096
+[2025-11-19 21:45:20:700] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2025-11-19 21:45:20:700] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-27548] 当前Thread:29096
+[2025-11-19 21:45:20:700] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2025-11-19 21:45:20:700] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-27548] 当前Thread:29096
+[2025-11-19 21:45:20:700] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2025-11-19 21:45:20:700] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-27548] 当前Thread:29096
+[2025-11-19 21:45:20:700] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2025-11-19 21:45:20:862] ---------------------线程耗时监控
+[2025-11-19 21:45:21:188] Frame-----------------------------------
+
+[2025-11-19 21:45:21:197] MainRunThread(0)-----------------------------------
+
+[2025-11-19 21:45:21:206] DbThread(0-0)-----------------------------------
+
+[2025-11-19 21:45:21:214] BoxSellDbThread(0)-----------------------------------
+
+[2025-11-19 21:45:21:223] NewHttpPost(0-0-0)-----------------------------------
+
+
