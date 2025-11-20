@@ -1,2 +1,19 @@
 [2025-11-20 08:21:56:629] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：78; NpcThreadId: 17692, CurPlayThreadId: 17692
 
+[2025-11-20 20:35:05:288] Func Fail, obj is nil: GetItemInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getiteminfo'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:77: in function <E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:76>
+[2025-11-20 20:35:06:031] Func Fail, obj is nil: GetItemInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getiteminfo'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:77: in function <E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:76>
+[2025-11-20 20:35:06:655] Func Fail, obj is nil: GetItemInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getiteminfo'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:77: in function <E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:76>
+[2025-11-20 20:35:07:152] Func Fail, obj is nil: GetItemInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getiteminfo'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:77: in function <E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:76>
+
+[2025-11-20 20:56:41:991] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：32; NpcThreadId: 17692, CurPlayThreadId: 17692
+
+[2025-11-20 21:06:56:987] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：32; NpcThreadId: 17692, CurPlayThreadId: 17692
+
