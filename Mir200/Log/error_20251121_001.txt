@@ -1,0 +1,121 @@
+[2025-11-21 00:48:40:447] D701 - secret map not found !!
+[2025-11-21 00:48:40:447] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-9068] 当前Thread:27400
+[2025-11-21 00:48:40:447] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2025-11-21 00:48:40:447] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-9068] 当前Thread:27400
+[2025-11-21 00:48:40:447] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2025-11-21 00:48:40:447] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-9068] 当前Thread:27400
+[2025-11-21 00:48:40:447] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2025-11-21 00:48:40:447] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-9068] 当前Thread:27400
+[2025-11-21 00:48:40:447] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2025-11-21 00:48:40:521] ---------------------线程耗时监控
+[2025-11-21 00:48:40:647] Frame-----------------------------------
+
+[2025-11-21 00:48:40:658] MainRunThread(16)-----------------------------------
+
+[2025-11-21 00:48:40:667] DbThread(0-0)-----------------------------------
+
+[2025-11-21 00:48:40:674] BoxSellDbThread(156)-----------------------------------
+
+[2025-11-21 00:48:40:684] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2025-11-21 02:02:43:397] ProgramException Except：Cannot create file "E:\新起航\服务端\Mir200\GlobalVal.ini". 另一个程序正在使用此文件，进程无法访问。[0000000001ED8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001ED7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001ED79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001EDAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001EC9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001EC996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001EC9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000F023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000F02418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[000000000100B9D4] System.Classes._ZN6System7Classes11TFileStreamC3ENS_13UnicodeStringEt (Line 9547, "System.Classes.pas" + 6)
+[0000000001006540] System.Classes._ZN6System7Classes8TStrings10SaveToFileENS_13UnicodeStringEPNS_8Sysutils9TEncodingE (Line 7183, "System.Classes.pas" + 1)
+[00000000010A3497] System.IniFiles._ZN6System8Inifiles11TMemIniFile10UpdateFileEv (Line 1214, "System.IniFiles.pas" + 13)
+[00000000021DF294] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 323, "svMain.pas" + 21)
+[00000000021DF481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[00000000011CAE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[00000000011CAC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000001028A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[00000000012642F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000001264368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[00000000012647BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[00000000021F13E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+
+[2025-11-21 02:32:05:304] D701 - secret map not found !!
+[2025-11-21 02:32:05:304] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-488] 当前Thread:3744
+[2025-11-21 02:32:05:304] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2025-11-21 02:32:05:304] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-488] 当前Thread:3744
+[2025-11-21 02:32:05:304] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2025-11-21 02:32:05:304] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-488] 当前Thread:3744
+[2025-11-21 02:32:05:304] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2025-11-21 02:32:05:304] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-488] 当前Thread:3744
+[2025-11-21 02:32:05:304] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2025-11-21 02:32:05:428] ---------------------线程耗时监控
+[2025-11-21 02:32:05:683] Frame-----------------------------------
+
+[2025-11-21 02:32:05:709] MainRunThread(0)-----------------------------------
+
+[2025-11-21 02:32:05:729] EnvirThread 0/0(31-0)flag:5000000  lua: 1 CallLua:setontimerex 35-----------------------------------
+
+[2025-11-21 02:32:05:747] DbThread(16-0)-----------------------------------
+
+[2025-11-21 02:32:05:767] BoxSellDbThread(15)-----------------------------------
+
+[2025-11-21 02:32:05:787] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2025-11-21 02:32:58:314] D701 - secret map not found !!
+[2025-11-21 02:32:58:314] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-14660] 当前Thread:2096
+[2025-11-21 02:32:58:314] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2025-11-21 02:32:58:314] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-14660] 当前Thread:2096
+[2025-11-21 02:32:58:314] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2025-11-21 02:32:58:314] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-14660] 当前Thread:2096
+[2025-11-21 02:32:58:314] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2025-11-21 02:32:58:314] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-14660] 当前Thread:2096
+[2025-11-21 02:32:58:314] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2025-11-21 02:32:58:379] ---------------------线程耗时监控
+[2025-11-21 02:32:58:553] Frame-----------------------------------
+
+[2025-11-21 02:32:58:562] MainRunThread(16)-----------------------------------
+
+[2025-11-21 02:32:58:570] EnvirThread 0/0(6469-0)flag:50000004  lua: 1 CallLua:setontimerex 35-----------------------------------
+
+[2025-11-21 02:32:58:578] DbThread(0-0)-----------------------------------
+
+[2025-11-21 02:32:58:599] BoxSellDbThread(0)-----------------------------------
+
+[2025-11-21 02:32:58:608] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2025-11-21 02:47:31:191] ProgramException Except：Cannot create file "E:\新起航\服务端\Mir200\GlobalVal.ini". 另一个程序正在使用此文件，进程无法访问。[0000000001ED8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001ED7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001ED79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001EDAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001EC9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001EC996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001EC9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000F023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000F02418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[000000000100B9D4] System.Classes._ZN6System7Classes11TFileStreamC3ENS_13UnicodeStringEt (Line 9547, "System.Classes.pas" + 6)
+[0000000001006540] System.Classes._ZN6System7Classes8TStrings10SaveToFileENS_13UnicodeStringEPNS_8Sysutils9TEncodingE (Line 7183, "System.Classes.pas" + 1)
+[00000000010A3497] System.IniFiles._ZN6System8Inifiles11TMemIniFile10UpdateFileEv (Line 1214, "System.IniFiles.pas" + 13)
+[00000000021DF294] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 323, "svMain.pas" + 21)
+[00000000021DF481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[00000000011CAE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[00000000011CAC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000001028A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFFFDB97846] Unknown function at CallWindowProcW
+[00007FFFFDB9539D] Unknown function at IsWindowUnicode
+[00000000012642F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000001264368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[00000000012647BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[00000000021F13E2] M2Server._ZN8M2server14initializationEv
+[00007FFFFE87E8D7] BaseThreadInitThunk
+[00007FFFFFBAC53C] RtlUserThreadStart
+
+

@@ -14,6 +14,7 @@ VarCfg["A_全区首曝json"]           = "A1"                                       
 VarCfg["A_统计信息用"]           = "A3"                                                                          --统计信息用
 VarCfg["A_行会积分记录"]           = "A4"                                                                          --A_行会积分记录
 VarCfg["A_行会积分记录跨服"]                  = "A5"                    --A_行会积分记录跨服
+VarCfg.A_XianFuRank =                   "A6"
 VarCfg["A_违规人员名单"]          = "A300"                                                                          --违规人员名单
 
 
@@ -176,7 +177,7 @@ VarCfg["T_聚宝盆"]           = "T44"                                            
 
 VarCfg["T_飞剑"]           = "T45"                                                                         --T_飞剑
 VarCfg["T_技能升级"]           = "T46"                                                                         --T_技能升级
-VarCfg["T_仙府"]           = "T47"                                                                         --T_仙府
+VarCfg.T_XianFuData           = "T47"                                                                         --T_仙府
 
 
 

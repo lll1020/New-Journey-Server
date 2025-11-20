@@ -616,6 +616,87 @@ teshudata = {
         },
         ch = {"初入江湖","崭露头角","名动一方","闯荡四海","一战成名","威震八荒","纵横天下","一代宗师","盖世英豪","武林至尊","天外飞仙","破虚登仙","通天战神","超凡入圣","至尊无敌"},
     },
+    ["npc_44"] = {
+        id = 44,                                   -- NPC 编号
+        name = "仙府",                             -- 功能名称
+        gridSize = 9,                              -- 菜园地块数量
+        visitorLogLimit = 30,                      -- 访客石最大保留条数
+        PlantCfg = {                               -- 灵草种植配置
+            Low = {
+                name = "低阶灵草",                 -- 名称
+                cost = {{"低阶灵草种子",1}},       --种子名称
+                matureTime = 5,              -- 成熟时间(秒)
+                canSteal = true,                   -- 是否可被偷
+                product = {{"低阶灵草",20}},              -- 收获
+            },
+            High = {
+                name = "高阶灵草",
+                cost = {{"高阶灵草种子",1}},       --种子名称
+                matureTime = 5,
+                canSteal = false,
+                product = {{"高阶灵草",20}},              -- 收获
+            },
+        },
+        StealCfg = {                               -- 偷菜规则
+            dailyStealLimit = 10,                  -- 每日偷菜总次数
+            perTargetDailyLimit = 2,               -- 同一目标每日可被偷次数
+            cooldown = 5 * 60,                     -- 偷同一目标冷却(秒)
+            stealAmount = 1,                       -- 单次偷取株数
+        },
+        LikeCfg = {                                -- 点赞规则
+            dailyLikePerTarget = 1,                -- 每人每日对同一目标点赞次数
+            likeValue = 1,                         -- 每次点赞增加的仙华值
+        },
+        RefineCfg = {                              -- 炼丹配置
+            furnaceCd = 60,                        -- 炼丹炉冷却
+            recipes = {
+                ["灵根丹"] = {
+                    cost = {{"低阶灵草",10},{"元宝", 5000}},         -- 消耗灵草
+                },
+                ["修为丹"] = {
+                    cost = {{"高阶灵草", 5},{"灵符", 20}},      -- 消耗灵草
+                },
+            },
+        },
+        DecorateCfg = {                            -- 府邸装扮
+            [101] = {id = 101, name = "竹林雅院", xiangHua = 20, cost = {{"元宝", 5000}}},
+            [102] = {id = 102, name = "桃花居", xiangHua = 50, cost = {{"灵符", 100}}},
+            [201] = {id = 201, name = "烟雨轻岚", xiangHua = 80, cost = {{"灵符", 260}}},
+        },
+        TitleCfg = {                               -- 称号配置
+            DanMaster = {id = 1, name = "极品炼丹师"},
+            BeastMaster = {id = 2, name = "极品御兽师"},
+            XianHuaRank1 = {id = 3, name = "荣华天下"},
+        },
+        PetCfg = {                                 -- 灵兽设置
+            eggs = {
+                wooden = {id = "wooden", name = "木灵蛋", cost = {{"元宝", 20000}}, beast = {type = "wood", maxLevel = 3}},
+                jade = {id = "jade", name = "玉兽蛋", cost = {{"灵符", 60}}, beast = {type = "jade", maxLevel = 5}},
+            },
+            feed = {resource = "essence", perFeed = 1, exp = 10}, -- 喂养材料/经验
+            identify = {
+                cost = {{"灵符", 5}},                -- 鉴定消耗
+                bloodlinePool = {"坚韧", "灵动", "迅捷", "护主"}, -- 血脉词条
+            },
+        },
+        ShopCfg = {                                -- 仙府商城
+            seeds = {
+                {id = "Low", seed = "低阶灵草种子", name = "低阶灵草种子", cost = {{"元宝", 10000}}},
+                {id = "High", seed = "高阶灵草种子", name = "高阶灵草种子", cost = {{"灵符", 100}}},
+            },
+            eggs = {
+                {id = "wooden", name = "木灵蛋", cost = {{"元宝", 20000}}},
+                {id = "jade", name = "玉兽蛋", cost = {{"灵符", 60}}},
+            },
+            materials = {
+                {id = "essence", name = "怪物精魄", cost = {{"元宝", 8000}}},
+            },
+        },
+        RankCfg = {                                -- 排行榜设置
+            resetHour = 0,                        -- 预留字段(每日刷新点)
+            topN = 20,                            -- 前端展示数量
+        },
+    },
     ["npc_51"] = {
         id = 51,
         name = "斗笠升级2",
@@ -1352,9 +1433,12 @@ teshudata = {
         [507] = {"七大陆主城",92,76,nil,nil,6,5},
         [508] = {"八大陆主城",92,76,nil,nil,7,5},
         [509] = {"九大陆主城",92,76,nil,nil,8,5},
-    },
+    },   
 }
 return teshudata
+
+
+
 
 
 

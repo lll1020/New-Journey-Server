@@ -1,0 +1,5 @@
+[2025-11-21 01:31:13:961] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：62; NpcThreadId: 9068, CurPlayThreadId: 9068
+[2025-11-21 01:31:13:961] [玩家名字]Lua执行耗时过高:62ms msgid:100 44 1 0 {"action":"plant","param":{"gridId":1,"seedId":"Low"}}
+[2025-11-21 01:31:15:961] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：78; NpcThreadId: 9068, CurPlayThreadId: 9068
+[2025-11-21 01:31:15:961] [玩家名字]Lua执行耗时过高:78ms msgid:100 44 1 0 {"action":"plant","param":{"gridId":1,"seedId":"Low"}}
+

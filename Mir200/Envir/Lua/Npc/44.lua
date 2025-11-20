@@ -1,45 +1,1010 @@
 npc = {}
 
+--[[
+仙府总览：
+1. 所有玩法参数都来自 teshudata["npc_44"]，这里会读取 gridSize、currencyMap、PlantCfg 等子表，确保策划调表即可改玩法。
+2. 玩家个人数据单独存放在 VarCfg.T_XianFuData，对他人访问时从在线角色实时拉取，避免历史全服大表。
+3. 仙华排行榜只在仙华值发生变动时写入 VarCfg.A_XianFuRank，当天发奖逻辑仍由定时器处理。
+]]
 
---npc名称：
---npc功能：
 local _config = Guard.getConfig("npc_44")
+local PlantCfg = _config.PlantCfg or {}
+local StealCfg = _config.StealCfg or {}
+local LikeCfg = _config.LikeCfg or {}
+local RefineCfg = _config.RefineCfg or {}
+local DecorateCfg = _config.DecorateCfg or {}
+local TitleCfg = _config.TitleCfg or {}
+local PetCfg = _config.PetCfg or {}
+local ShopCfg = _config.ShopCfg or {}
+local RankCfg = _config.RankCfg or {}
+local visitorLimit = _config.visitorLogLimit or 20
+local gridSize = _config.gridSize or 9
 
-function npc.main(play,npcid)
-    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
-    if jq_data["npc55"] and jq_data["npc55"] >= 2 then
-        sendluamsg(play,100,npcid,0,0,tbl2json(Player.getJsonTableByVar(play, VarCfg["T_仙府"])))
-    else -- 未完成该前置任务
-        Player.sendmsgEx(play,  "你还未完成开辟仙府任务，无法进行该操作#57")
+local HerbAliasByName = {}
+for key, cfg in pairs(PlantCfg) do
+    if type(cfg) == "table" and cfg.name then
+        HerbAliasByName[cfg.name] = key
+    end
+end
+
+local function herbNameBySeed(seedId)
+    local cfg = PlantCfg[seedId]
+    return (cfg and cfg.name) or seedId
+end
+
+local function syncHerbAlias(record, herbName)
+    if record.herbs[herbName] then
+        return record.herbs[herbName]
+    end
+    local alias = HerbAliasByName[herbName]
+    if alias and record.herbs[alias] then
+        record.herbs[herbName] = record.herbs[alias]
+        record.herbs[alias] = nil
+        return record.herbs[herbName]
+    end
+    return 0
+end
+
+local function ensureHerbCount(record, herbName)
+    record.herbs[herbName] = record.herbs[herbName] or 0
+    return record.herbs[herbName]
+end
+
+local PLAYER_DATA_VAR = VarCfg.T_XianFuData or "T47"
+local RANK_VAR = VarCfg.A_XianFuRank or "A6"
+
+---------------------------------------------------------------------
+-- Common: 基础工具
+---------------------------------------------------------------------
+local Common = {}
+
+function Common.now()
+    return os.time()
+end
+
+function Common.today(ts)
+    return os.date("%Y-%m-%d", ts or Common.now())
+end
+
+function Common.ensureDailyCounter(counter, today)
+    counter = counter or {}
+    if counter.date ~= today then
+        counter.date = today
+        counter.count = 0
+        counter.map = {}
+    end
+    counter.map = counter.map or {}
+    return counter
+end
+
+function Common.checkCost(play, cost)
+    if not cost or #cost == 0 then
+        return true
+    end
+    local name, num = Player.checkItemNumByTable(play, cost)
+    if name then
+        return false, name, num
+    end
+    return true
+end
+
+function Common.payCost(play, cost, reason)
+    if not cost or #cost == 0 then
         return
     end
+    Player.takeItemByTable(play, cost, reason or ",npc_44", nil)
+end
+
+local function hasHerbCost(record, herbCost)
+    for _, item in ipairs(herbCost or {}) do
+        local name, need = item[1], item[2] or 0
+        if (syncHerbAlias(record, name) or 0) < need then
+            return false, name
+        end
+    end
+    return true
+end
+
+local function consumeHerbCost(record, herbCost)
+    for _, item in ipairs(herbCost or {}) do
+        local name, need = item[1], item[2] or 0
+        syncHerbAlias(record, name)
+        record.herbs[name] = math.max(0, (record.herbs[name] or 0) - need)
+    end
+end
+
+function Common.appendBounded(list, entry, limit)
+    list = list or {}
+    table.insert(list, 1, entry)
+    local cap = limit or 20
+    while #list > cap do
+        table.remove(list)
+    end
+    return list
+end
+
+local function cloneRewardList(list)
+    local result = {}
+    for _, info in ipairs(list or {}) do
+        result[#result + 1] = {info[1], info[2]}
+    end
+    return result
+end
+
+local function addProductStat(record, reward)
+    for _, info in ipairs(reward or {}) do
+        local name, amount = info[1], info[2] or 0
+        record.herbs[name] = (record.herbs[name] or 0) + amount
+    end
+end
+
+local function summarizeReward(reward)
+    local parts = {}
+    for _, info in ipairs(reward or {}) do
+        table.insert(parts, string.format("%s*%d", info[1], info[2] or 0))
+    end
+    return table.concat(parts, "/")
+end
+
+---------------------------------------------------------------------
+-- Storage: 玩家数据读写
+---------------------------------------------------------------------
+local Storage = {}
+
+local function normalizeInventory(container)
+    container = container or {}
+    for key, value in pairs(container) do
+        if type(value) ~= "number" then
+            container[key] = tonumber(value) or value
+        end
+    end
+    container.Low = tonumber(container.Low) or container.Low or 0
+    container.High = tonumber(container.High) or container.High or 0
+    return container
+end
+
+local function resetPlot(plot, id)
+    plot.seedId = nil
+    plot.state = "empty"
+    plot.gridId = id
+    plot.plantedAt = nil
+    plot.finishAt = nil
+    plot.canSteal = false
+    plot.product = nil
+end
+
+function Storage.loadPlayer(play)
+    return Player.getJsonTableByVar(play, PLAYER_DATA_VAR) or {}
+end
+
+function Storage.savePlayer(play, data)
+    Player.setJsonVarByTable(play, PLAYER_DATA_VAR, data)
+end
+
+function Storage.ensureRecord(play, opts)
+    local record = Storage.loadPlayer(play)
+    if type(record) ~= "table" then
+        record = {}
+    end
+    record.meta = record.meta or {}
+    local playerName = (opts and opts.name) or Player.GetName(play) or record.meta.name or "unknown"
+    record.meta.key = playerName
+    record.meta.name = playerName
+    record.meta.lastActive = opts and opts.now or Common.now()
+    record.herbs = normalizeInventory(record.herbs)
+    record.seeds = {}
+    record.fields = record.fields or {}
+    record.steal = record.steal or {}
+    record.guard = record.guard or {}
+    record.likes = record.likes or {received = {total = 0}, given = {}}
+    record.likes.received = record.likes.received or {total = 0}
+    record.likes.given = record.likes.given or {}
+    record.decoration = record.decoration or {owned = {}, equipped = nil, xiangHua = 0}
+    record.refine = record.refine or {lastTime = 0, collection = {}}
+    record.pet = record.pet or {eggs = {}, beasts = {}, bestiary = {}, materials = {essence = 0}}
+    record.pet.eggs = record.pet.eggs or {}
+    record.pet.beasts = record.pet.beasts or {}
+    record.pet.bestiary = record.pet.bestiary or {}
+    record.pet.materials = record.pet.materials or {essence = 0}
+    record.visitor = record.visitor or {log = {}}
+    record.visitor.log = record.visitor.log or {}
+    record.stats = record.stats or {xiangHua = 0}
+    Storage.ensurePlots(record)
+    return record
+end
+
+function Storage.ensurePlots(record)
+    for i = 1, gridSize do
+        local plot = record.fields[i]
+        if type(plot) ~= "table" then
+            plot = {gridId = i}
+            record.fields[i] = plot
+        end
+        plot.gridId = i
+        plot.state = plot.state or "empty"
+        if plot.state == "empty" then
+            resetPlot(plot, i)
+        end
+    end
+end
+
+function Storage.syncGrowth(record, now)
+    now = now or Common.now()
+    for _, plot in pairs(record.fields) do
+        if plot.state == "growing" and plot.finishAt and now >= plot.finishAt then
+            plot.state = "mature"
+        end
+        if plot.state ~= "empty" and plot.seedId and not PlantCfg[plot.seedId] then
+            resetPlot(plot, plot.gridId)
+        end
+    end
+end
+
+function Storage.buildPublicSnapshot(record)
+    return {
+        key = record.meta.key,
+        name = record.meta.name,
+        xiangHua = record.stats.xiangHua or 0,
+        herbs = record.herbs,
+        fields = record.fields,
+        decoration = record.decoration,
+        pet = {
+            beasts = record.pet.beasts,
+            bestiary = record.pet.bestiary,
+        },
+    }
+end
+
+---------------------------------------------------------------------
+-- Planting
+---------------------------------------------------------------------
+local Planting = {}
+
+function Planting.plant(play, record, params, now)
+    local gridId = tonumber(params.gridId)
+    local seedId = params.seedId
+    local cfg = PlantCfg[seedId]
+    if not cfg then
+        return false, "种子配置不存在"
+    end
+    local plot = record.fields[gridId]
+    if not plot then
+        return false, "地块不存在"
+    end
+    Storage.syncGrowth(record, now)
+    if plot.state ~= "empty" then
+        return false, "当前地块已占用"
+    end
+    local ok, lack = Common.checkCost(play, cfg.cost)
+    if not ok then
+        return false, string.format("%s不足", lack or "cost")
+    end
+    Common.payCost(play, cfg.cost, "xianfu_seed")
+    local startAt = now or Common.now()
+    plot.seedId = seedId
+    plot.state = "growing"
+    plot.plantedAt = startAt
+    plot.finishAt = startAt + (cfg.matureTime or 0)
+    plot.canSteal = cfg.canSteal and true or false
+    plot.product = cloneRewardList(cfg.product)
+    return true, {plot = plot}
+end
+
+function Planting.harvest(play, record, params, now)
+    local gridId = tonumber(params.gridId)
+    local plot = record.fields[gridId]
+    if not plot then
+        return false, "地块不存在"
+    end
+    Storage.syncGrowth(record, now)
+    if plot.state ~= "mature" then
+        return false, "尚未成熟"
+    end
+    if not plot.product or #plot.product == 0 then
+        resetPlot(plot, gridId)
+        return false, "没有可收获的灵草"
+    end
+    Player.rwjl(play, plot.product, "仙府收获", 1, 0)
+    addProductStat(record, plot.product)
+    resetPlot(plot, gridId)
+    return true, {herbs = record.herbs, plot = plot}
+end
+
+---------------------------------------------------------------------
+-- Shop
+---------------------------------------------------------------------
+local Shop = {}
+
+local function indexShop(list)
+    local dict = {}
+    for _, item in ipairs(list or {}) do
+        dict[item.id] = item
+    end
+    return dict
+end
+
+local ShopIndex = {
+    seeds = indexShop(ShopCfg.seeds),
+    eggs = indexShop(ShopCfg.eggs),
+    materials = indexShop(ShopCfg.materials),
+}
+
+local function multiplyCost(cost, amount)
+    local result = {}
+    for _, info in ipairs(cost or {}) do
+        result[#result + 1] = {info[1], (info[2] or 0) * amount}
+    end
+    return result
+end
+
+local function purchase(play, entry, amount, reason)
+    if not entry then
+        return false, "商品不存在"
+    end
+    amount = math.max(1, tonumber(amount) or 1)
+    local cost = multiplyCost(entry.cost, amount)
+    local ok, lack = Common.checkCost(play, cost)
+    if not ok then
+        return false, string.format("%s不足", lack or "cost")
+    end
+    Common.payCost(play, cost, reason or "xianfu_shop")
+    return true, amount
+end
+
+function Shop.buySeed(play, record, params)
+    local entry = ShopIndex.seeds[params.id]
+    local ok, amountOrErr = purchase(play, entry, params.amount, "xianfu_seed_shop")
+    if not ok then
+        return false, amountOrErr
+    end
+    local reward = {{entry.seed, amountOrErr}}
+    Player.rwjl(play, reward, "仙府购种", 1, 0)
+    return true, {reward = reward}
+end
+
+function Shop.buyEgg(play, record, params)
+    local entry = ShopIndex.eggs[params.id]
+    local ok, amountOrErr = purchase(play, entry, params.amount, "xianfu_egg_shop")
+    if not ok then
+        return false, amountOrErr
+    end
+    record.pet.eggs[entry.id] = (record.pet.eggs[entry.id] or 0) + amountOrErr
+    return true, {eggs = record.pet.eggs}
+end
+
+function Shop.buyMaterial(play, record, params)
+    local entry = ShopIndex.materials[params.id]
+    local ok, amountOrErr = purchase(play, entry, params.amount, "xianfu_material")
+    if not ok then
+        return false, amountOrErr
+    end
+    record.pet.materials[entry.id] = (record.pet.materials[entry.id] or 0) + amountOrErr
+    return true, {materials = record.pet.materials}
+end
+
+---------------------------------------------------------------------
+-- Steal / Visitor / Like / Decoration / Refine / Pet 
+---------------------------------------------------------------------
+local Steal = {}
+
+local function pickStealPlot(record, gridId)
+    local id = tonumber(gridId)
+    if not id then
+        return nil, nil, "请指定可偷取的地块位置"
+    end
+    local plot = record.fields[id]
+    if type(plot) ~= "table" then
+        return nil, nil, "目标地块不存在"
+    end
+    if plot.state ~= "mature" then
+        return nil, nil, "目标地块尚未成熟"
+    end
+    if not plot.product or #plot.product == 0 then
+        return nil, nil, "目标地块没有可偷的灵草"
+    end
+    local cfg = PlantCfg[plot.seedId]
+    if not (cfg and cfg.canSteal) then
+        return nil, nil, "该地块禁止偷取"
+    end
+    return plot, cfg
+end
+
+local function ensureStealCooldown(stat)
+    stat.cooldown = stat.cooldown or {}
+    return stat.cooldown
+end
+
+function Steal.try(play, thiefRecord, targetRecord, now, gridId)
+    if thiefRecord.meta.key == targetRecord.meta.key then
+        return false, "不能偷取自己"
+    end
+    Storage.syncGrowth(targetRecord, now)
+    local plot, cfg, err = pickStealPlot(targetRecord, gridId)
+    if not plot then
+        return false, err or "没有可偷的灵草"
+    end
+    local today = Common.today(now)
+    thiefRecord.steal.daily = Common.ensureDailyCounter(thiefRecord.steal.daily, today)
+    if thiefRecord.steal.daily.count >= (StealCfg.dailyStealLimit or 0) then
+        return false, "今日偷菜次数已满"
+    end
+    targetRecord.guard.daily = Common.ensureDailyCounter(targetRecord.guard.daily, today)
+    if targetRecord.guard.daily.count >= (StealCfg.perTargetDailyLimit or 0) then
+        return false, "对方今日被偷次数已满"
+    end
+    local bucket = ensureStealCooldown(thiefRecord.steal)
+    local cd = bucket[targetRecord.meta.key] or 0
+    if cd > now then
+        return false, "仍在冷却中"
+    end
+    if not plot.product or #plot.product == 0 then
+        return false, "没有剩余灵草"
+    end
+    local reward = cloneRewardList(plot.product)
+    Player.rwjl(play, reward, "仙府偷菜", 1, 0)
+    addProductStat(thiefRecord, reward)
+    thiefRecord.steal.daily.count = thiefRecord.steal.daily.count + 1
+    targetRecord.guard.daily.count = targetRecord.guard.daily.count + 1
+    bucket[targetRecord.meta.key] = now + (StealCfg.cooldown or 0)
+    resetPlot(plot, plot.gridId)
+    return true, {product = reward, plot = plot}
+end
+
+local Visitor = {}
+
+function Visitor.push(record, fromName, action, detail, now)
+    record.visitor.log = Common.appendBounded(record.visitor.log, {
+        from = fromName,
+        action = action,
+        detail = detail,
+        time = now or Common.now(),
+    }, visitorLimit)
+    return record.visitor.log
+end
+
+local Like = {}
+
+function Like.perform(play, actorRecord, targetRecord, now)
+    if actorRecord.meta.key == targetRecord.meta.key then
+        return false, "不能给自己点赞"
+    end
+    local today = Common.today(now)
+    actorRecord.likes.given[targetRecord.meta.key] = actorRecord.likes.given[targetRecord.meta.key] or {date = "", count = 0}
+    local node = actorRecord.likes.given[targetRecord.meta.key]
+    if node.date ~= today then
+        node.date = today
+        node.count = 0
+    end
+    if node.count >= (LikeCfg.dailyLikePerTarget or 0) then
+        return false, "今日已点赞过TA"
+    end
+    node.count = node.count + 1
+    targetRecord.likes.received.total = (targetRecord.likes.received.total or 0) + 1
+    targetRecord.stats.xiangHua = (targetRecord.stats.xiangHua or 0) + (LikeCfg.likeValue or 0)
+    return true, {xiangHua = targetRecord.stats.xiangHua}
+end
+
+local Decoration = {}
+
+function Decoration.buy(play, record, decoId)
+    local entry = DecorateCfg[decoId]
+    if not entry then
+        return false, "装扮不存在"
+    end
+    if record.decoration.owned[decoId] then
+        return false, "已拥有该装扮"
+    end
+    local ok, lack = Common.checkCost(play, entry.cost)
+    if not ok then
+        return false, string.format("%s不足", lack or "cost")
+    end
+    Common.payCost(play, entry.cost, "xianfu_deco")
+    record.decoration.owned[decoId] = true
+    return true, {owned = record.decoration.owned}
+end
+
+function Decoration.equip(record, decoId)
+    local entry = DecorateCfg[decoId]
+    if not entry then
+        return false, "装扮不存在"
+    end
+    if not record.decoration.owned[decoId] then
+        return false, "请先购买"
+    end
+    local prev = record.decoration.xiangHua or 0
+    record.decoration.equipped = decoId
+    record.decoration.xiangHua = entry.xiangHua or 0
+    record.stats.xiangHua = (record.stats.xiangHua or 0) - prev + record.decoration.xiangHua
+    return true, {equipped = decoId, xiangHua = record.stats.xiangHua}
+end
+
+local Refine = {}
+
+local function hasAllRecipes(record)
+    for name in pairs(RefineCfg.recipes or {}) do
+        if not record.refine.collection[name] then
+            return false
+        end
+    end
+    return true
+end
+
+function Refine.start(play, record, params, now)
+    local recipe = RefineCfg.recipes and RefineCfg.recipes[params.recipeId]
+    if not recipe then
+        return false, "丹方不存在"
+    end
+    local cd = RefineCfg.furnaceCd or 0
+    if (record.refine.lastTime or 0) + cd > now then
+        return false, "炼丹炉冷却中"
+    end
+    local ok, lack = Common.checkCost(play, recipe.cost or recipe.costCurrency)
+    if not ok then
+        return false, string.format("%s不足", lack or "cost")
+    end
+    Common.payCost(play, recipe.cost or recipe.costCurrency, "xianfu_refine")
+    record.refine.lastTime = now
+    record.refine.collection[params.recipeId] = true
+    local reward = cloneRewardList(recipe.product or {{params.recipeId, 1}})
+    Player.rwjl(play, reward, "仙府炼丹", 1, 0)
+    --暂时不用称号
+    -- if hasAllRecipes(record) and TitleCfg.DanMaster then
+    --     Player.title_give(play, TitleCfg.DanMaster.name)
+    -- end
+    return true, {reward = reward, collection = record.refine.collection, lastTime = record.refine.lastTime}
+end
+
+local Pet = {}
+
+local function newPetId(eggId, now)
+    return string.format("%s_%d", eggId or "pet", now)
+end
+
+local function getEggCfg(eggId)
+    return PetCfg.eggs and PetCfg.eggs[eggId]
+end
+
+function Pet.hatch(play, record, params, now)
+    local cfg = getEggCfg(params.eggId)
+    if not cfg then
+        return false, "灵蛋不存在"
+    end
+    record.pet.eggs[params.eggId] = record.pet.eggs[params.eggId] or 0
+    if record.pet.eggs[params.eggId] <= 0 then
+        return false, "灵蛋数量不足"
+    end
+    record.pet.eggs[params.eggId] = record.pet.eggs[params.eggId] - 1
+    local petId = newPetId(params.eggId, now)
+    record.pet.beasts[petId] = {
+        id = petId,
+        type = cfg.beast.type,
+        level = 1,
+        exp = 0,
+        maxLevel = cfg.beast.maxLevel,
+    }
+    record.pet.bestiary[cfg.beast.type] = true
+    if TitleCfg.BeastMaster then
+        local total, owned = 0, 0
+        for _ in pairs(PetCfg.eggs or {}) do total = total + 1 end
+        for _ in pairs(record.pet.bestiary) do owned = owned + 1 end
+        -- if total > 0 and owned >= total then
+        --     Player.title_give(play, TitleCfg.BeastMaster.name)
+        -- end
+    end
+    return true, {petId = petId, pets = record.pet.beasts}
+end
+
+function Pet.feed(play, record, params)
+    local pet = record.pet.beasts[params.petId]
+    if not pet then
+        return false, "灵兽不存在"
+    end
+    local feedCfg = PetCfg.feed or {}
+    local need = (params.amount or 1) * (feedCfg.perFeed or 1)
+    record.pet.materials[feedCfg.resource or "essence"] = record.pet.materials[feedCfg.resource or "essence"] or 0
+    if record.pet.materials[feedCfg.resource or "essence"] < need then
+        return false, "材料不足"
+    end
+    record.pet.materials[feedCfg.resource or "essence"] = record.pet.materials[feedCfg.resource or "essence"] - need
+    pet.exp = pet.exp + (params.amount or 1) * (feedCfg.exp or 0)
+    local needExp = pet.level * 10
+    while pet.exp >= needExp and pet.level < (pet.maxLevel or 1) do
+        pet.exp = pet.exp - needExp
+        pet.level = pet.level + 1
+        needExp = pet.level * 10
+    end
+    return true, {pet = pet, materials = record.pet.materials}
+end
+
+function Pet.identify(play, record, params)
+    local pet = record.pet.beasts[params.petId]
+    if not pet then
+        return false, "灵兽不存在"
+    end
+    local cost = PetCfg.identify and PetCfg.identify.cost
+    local ok, lack = Common.checkCost(play, cost)
+    if not ok then
+        return false, string.format("%s不足", lack or "cost")
+    end
+    Common.payCost(play, cost, "xianfu_pet_identify")
+    local pool = PetCfg.identify and PetCfg.identify.bloodlinePool or {"灵动"}
+    local affix = pool[math.random(1, #pool)]
+    pet.bloodline = {name = affix, rollAt = Common.now()}
+    if TitleCfg.BeastMaster and pet.bloodline and pet.bloodline.name then
+        record.pet.bestiary[pet.bloodline.name] = true
+    end
+    return true, {pet = pet}
+end
+
+---------------------------------------------------------------------
+-- Rank: 仙华榜
+---------------------------------------------------------------------
+local Rank = {}
+
+function Rank.load()
+    local data = Player.getJsonTableByVar(nil, RANK_VAR) or {}
+    data.entries = data.entries or {}
+    return data
+end
+
+function Rank.save(data)
+    Player.setJsonVarByTable(nil, RANK_VAR, data)
+end
+
+function Rank.maybeUpdate(rankData, record)
+    local key = record.meta.key
+    local value = record.stats.xiangHua or 0
+    local node = rankData.entries[key]
+    if node and node.value == value then
+        return false
+    end
+    rankData.entries[key] = {name = record.meta.name, value = value}
+    return true
+end
+
+function Rank.getTopList(rankData)
+    local snapshot = {}
+    for key, node in pairs(rankData.entries or {}) do
+        table.insert(snapshot, {key = key, name = node.name, value = node.value})
+    end
+    table.sort(snapshot, function(a, b)
+        if a.value == b.value then
+            return (a.name or "") < (b.name or "")
+        end
+        return (a.value or 0) > (b.value or 0)
+    end)
+    local limit = math.min(RankCfg.topN or 20, #snapshot)
+    local result = {}
+    for i = 1, limit do
+        result[i] = snapshot[i]
+    end
+    return result
+end
+
+---------------------------------------------------------------------
+-- 状态加载 / 持久化
+---------------------------------------------------------------------
+local function loadState(play)
+    local now = Common.now()
+    local record = Storage.ensureRecord(play, {name = Player.GetName(play), now = now})
+    Storage.syncGrowth(record, now)
+    return {
+        now = now,
+        player = play,
+        record = record,
+        rank = Rank.load(),
+    }
+end
+
+local function persistState(state, rankDirty)
+    Storage.savePlayer(state.player, state.record)
+    if rankDirty then
+        Rank.save(state.rank)
+    end
+end
+
+local function buildSnapshot(state)
+    return {
+        player = {
+            key = state.record.meta.key,
+            name = state.record.meta.name,
+            xiangHua = state.record.stats.xiangHua or 0,
+            herbs = state.record.herbs,
+            fields = state.record.fields,
+            steal = state.record.steal,
+            guard = state.record.guard,
+            likes = state.record.likes,
+            decoration = state.record.decoration,
+            refine = state.record.refine,
+            pet = state.record.pet,
+            visitor = state.record.visitor,
+        },
+        cfg = {
+            plant = PlantCfg,
+            steal = StealCfg,
+            like = LikeCfg,
+            refine = RefineCfg,
+            decorate = DecorateCfg,
+            pet = PetCfg,
+            shop = ShopCfg,
+        },
+        rank = Rank.getTopList(state.rank),
+    }
+end
+
+local function pushAction(play, npcid, action, ok, msg, state, extra)
+    sendluamsg(play, 100, npcid, 1, 0, tbl2json({
+        action = action,
+        ok = ok,
+        message = msg or "",
+        extra = extra,
+        state = buildSnapshot(state),
+    }))
+end
+
+local function findOnlineTargetByName(targetName)
+    if not targetName or targetName == "" then
+        return nil, nil, "请输入玩家名字"
+    end
+    local actor = getplayerbyname and getplayerbyname(targetName)
+    if actor == nil or actor == 0 then
+        return nil, nil, "对方不在线或不存在"
+    end
+    local record = Storage.ensureRecord(actor, {name = Player.GetName(actor), now = Common.now()})
+    Storage.syncGrowth(record, Common.now())
+    return actor, record
+end
+
+---------------------------------------------------------------------
+-- Action handlers
+---------------------------------------------------------------------
+local ActionHandler = {}
+
+function ActionHandler.sync(play, npcid, state)
+    persistState(state, false)
+    pushAction(play, npcid, "sync", true, "", state)
+end
+
+function ActionHandler.plant(play, npcid, state, params)
+    local ok, res = Planting.plant(play, state.record, params or {}, state.now)
+    local rankDirty = Rank.maybeUpdate(state.rank, state.record)
+    persistState(state, rankDirty)
+    if not ok then
+        Player.sendmsgEx(play, res or "播种失败#57")
+        return
+    end
+    Player.sendmsgEx(play, "播种成功#57")
+    pushAction(play, npcid, "plant", true, "播种成功", state, res)
+end
+
+function ActionHandler.harvest(play, npcid, state, params)
+    local ok, res = Planting.harvest(play, state.record, params or {}, state.now)
+    local rankDirty = Rank.maybeUpdate(state.rank, state.record)
+    persistState(state, rankDirty)
+    if not ok then
+        Player.sendmsgEx(play, res or "尚未成熟#57")
+        return
+    end
+    Player.sendmsgEx(play, "收获完成#57")
+    pushAction(play, npcid, "harvest", true, "收获完成", state, res)
+end
+
+function ActionHandler.buySeed(play, npcid, state, params)
+    local ok, res = Shop.buySeed(play, state.record, params or {})
+    local rankDirty = Rank.maybeUpdate(state.rank, state.record)
+    persistState(state, rankDirty)
+    if not ok then
+        Player.sendmsgEx(play, res or "购买失败#57")
+        return
+    end
+    Player.sendmsgEx(play, "购买成功#57")
+    pushAction(play, npcid, "buySeed", true, "购买成功", state, res)
+end
+
+function ActionHandler.buyEgg(play, npcid, state, params)
+    local ok, res = Shop.buyEgg(play, state.record, params or {})
+    local rankDirty = Rank.maybeUpdate(state.rank, state.record)
+    persistState(state, rankDirty)
+    if not ok then
+        Player.sendmsgEx(play, res or "购买失败#57")
+        return
+    end
+    Player.sendmsgEx(play, "购买成功#57")
+    pushAction(play, npcid, "buyEgg", true, "购买成功", state, res)
+end
+
+function ActionHandler.buyMaterial(play, npcid, state, params)
+    local ok, res = Shop.buyMaterial(play, state.record, params or {})
+    persistState(state, false)
+    if not ok then
+        Player.sendmsgEx(play, res or "购买失败#57")
+        return
+    end
+    Player.sendmsgEx(play, "购买成功#57")
+    pushAction(play, npcid, "buyMaterial", true, "购买成功", state, res)
+end
+
+function ActionHandler.refine(play, npcid, state, params)
+    local ok, res = Refine.start(play, state.record, params or {}, state.now)
+    local rankDirty = Rank.maybeUpdate(state.rank, state.record)
+    persistState(state, rankDirty)
+    if not ok then
+        Player.sendmsgEx(play, res or "炼丹失败#57")
+        return
+    end
+    Player.sendmsgEx(play, "炼丹完成#57")
+    pushAction(play, npcid, "refine", true, "炼丹完成", state, res)
+end
+
+function ActionHandler.buyDecoration(play, npcid, state, params)
+    local ok, res = Decoration.buy(play, state.record, params and params.decoId)
+    local rankDirty = Rank.maybeUpdate(state.rank, state.record)
+    persistState(state, rankDirty)
+    if not ok then
+        Player.sendmsgEx(play, res or "购买失败#57")
+        return
+    end
+    Player.sendmsgEx(play, "购买成功#57")
+    pushAction(play, npcid, "buyDecoration", true, "购买成功", state, res)
+end
+
+function ActionHandler.equipDecoration(play, npcid, state, params)
+    local ok, res = Decoration.equip(state.record, params and params.decoId)
+    local rankDirty = Rank.maybeUpdate(state.rank, state.record)
+    persistState(state, rankDirty)
+    if not ok then
+        Player.sendmsgEx(play, res or "装扮无法生效#57")
+        return
+    end
+    Player.sendmsgEx(play, "装扮已生效#57")
+    pushAction(play, npcid, "equipDecoration", true, "装扮已生效", state, res)
+end
+
+function ActionHandler.hatch(play, npcid, state, params)
+    local ok, res = Pet.hatch(play, state.record, params or {}, state.now)
+    persistState(state, false)
+    if not ok then
+        Player.sendmsgEx(play, res or "孵化失败#57")
+        return
+    end
+    Player.sendmsgEx(play, "孵化成功#57")
+    pushAction(play, npcid, "hatch", true, "孵化成功", state, res)
+end
+
+function ActionHandler.feed(play, npcid, state, params)
+    local ok, res = Pet.feed(play, state.record, params or {})
+    persistState(state, false)
+    if not ok then
+        Player.sendmsgEx(play, res or "喂养失败#57")
+        return
+    end
+    Player.sendmsgEx(play, "喂养完成#57")
+    pushAction(play, npcid, "feed", true, "喂养完成", state, res)
+end
+
+function ActionHandler.identify(play, npcid, state, params)
+    local ok, res = Pet.identify(play, state.record, params or {})
+    local rankDirty = Rank.maybeUpdate(state.rank, state.record)
+    persistState(state, rankDirty)
+    if not ok then
+        Player.sendmsgEx(play, res or "鉴定失败#57")
+        return
+    end
+    Player.sendmsgEx(play, "鉴定完成#57")
+    pushAction(play, npcid, "identify", true, "鉴定完成", state, res)
+end
+
+local function handleVisit(play, npcid, state, params, fn)
+    local targetName = params and params.targetName
+    if not targetName or targetName == "" then
+        Player.sendmsgEx(play, "请输入要拜访的玩家名字#57")
+        return
+    end
+    local actor, record, err = findOnlineTargetByName(targetName)
+    if not actor then
+        Player.sendmsgEx(play, (err or "对方不在线") .. "#57")
+        return
+    end
+    fn(actor, record, params or {})
+end
+
+function ActionHandler.like(play, npcid, state, params)
+    handleVisit(play, npcid, state, params or {}, function(actor, targetRecord)
+        local ok, res = Like.perform(play, state.record, targetRecord, state.now)
+        if ok then
+            Visitor.push(targetRecord, state.record.meta.name, "like", "+" .. (LikeCfg.likeValue or 0), state.now)
+            Storage.savePlayer(actor, targetRecord)
+            if Rank.maybeUpdate(state.rank, targetRecord) then
+                Rank.save(state.rank)
+            end
+        end
+        local rankDirty = Rank.maybeUpdate(state.rank, state.record)
+        persistState(state, rankDirty)
+        if not ok then
+            Player.sendmsgEx(play, res or "点赞失败#57")
+            return
+        end
+        Player.sendmsgEx(play, "点赞成功#57")
+        pushAction(play, npcid, "like", true, "点赞成功", state, res)
+    end)
+end
+
+function ActionHandler.steal(play, npcid, state, params)
+    handleVisit(play, npcid, state, params or {}, function(actor, targetRecord, visitParams)
+        local ok, res = Steal.try(play, state.record, targetRecord, state.now, tonumber(visitParams.gridId))
+        if ok then
+            Visitor.push(targetRecord, state.record.meta.name, "steal", "-" .. summarizeReward(res.product), state.now)
+            Storage.savePlayer(actor, targetRecord)
+            Rank.save(state.rank)
+        end
+        local rankDirty = Rank.maybeUpdate(state.rank, state.record)
+        persistState(state, rankDirty)
+        if not ok then
+            Player.sendmsgEx(play, res or "偷取失败#57")
+            return
+        end
+        Player.sendmsgEx(play, "偷取成功#57")
+        pushAction(play, npcid, "steal", true, "偷取成功", state, res)
+    end)
+end
+
+function ActionHandler.visit(play, npcid, state, params)
+    handleVisit(play, npcid, state, params or {}, function(actor, targetRecord)
+        local snapshot = Storage.buildPublicSnapshot(targetRecord)
+        snapshot.isGuest = true
+        Storage.savePlayer(actor, targetRecord)
+        persistState(state, false)
+        pushAction(play, npcid, "visit", true, "", state, {target = snapshot, visitMode = true})
+    end)
+end
+
+---------------------------------------------------------------------
+-- NPC 入口
+---------------------------------------------------------------------
+function npc.main(play, npcid)
+    -- local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+    -- if not (jq_data["npc55"] and jq_data["npc55"] >= 2) then
+    --     Player.sendmsgEx(play, "你还未开启相关剧情，暂无法使用#57")
+    --     return
+    -- end
+    local state = loadState(play)
+    persistState(state, Rank.maybeUpdate(state.rank, state.record))
+    sendluamsg(play, 100, npcid, 0, 0, tbl2json(buildSnapshot(state)))
 end
 
 function npc.link(play, npcid, p2, p3, msgData)
-    -- npc_guard: 入参校验
     if not Guard.ensurePlayer(play, npcid) then
         return
     end
-    local __guardAction = Guard.normalizeAction(play, npcid, p2)
-    if __guardAction == nil then
+    local action = Guard.normalizeAction(play, npcid, p2)
+    if not action then
         return
     end
-    p2 = __guardAction
-    -- npc_guard: 操作白名单（优化：限定合法操作编号）
-    local __guardAllowedActions = Guard.newActionSet({1, 2})
-    if not Guard.ensureActionAllowed(play, npcid, p2, __guardAllowedActions) then
+    if not Guard.ensureActionAllowed(play, npcid, action, Guard.newActionSet({1, 2})) then
         return
     end
-
-    local T_data = Player.getJsonTableByVar(play,VarCfg["T_仙府"])
-    if p2 == 1 then ---灵草种植
-       
-    elseif p2 == 2 then  ---府邸装扮
-        
+    local payload = Guard.safeJsonDecode(play, msgData, nil, {})
+    payload.action = payload.action or payload.op or "sync"
+    local state = loadState(play)
+    local handler = ActionHandler[payload.action]
+    if not handler then
+        pushAction(play, npcid, payload.action, false, "未知操作", state)
+        return
     end
+    handler(play, npcid, state, payload.param or payload)
 end
 
-
-
-
 return npc
+
+
+
+
+
+
+
+
+
+
+
+
+

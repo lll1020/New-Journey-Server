@@ -1167,7 +1167,7 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
         data["T_qrbq"] = Player.getJsonTableByVar(play, VarCfg.T_qrbq)
         data["U_dlts"] = getplaydef(play, VarCfg["U_登录天数"])
         data["J_zxsj"] = getplaydef(play, VarCfg.J_zxsj)
-        data["U_sgsl"] = getplaydef(play, VarCfg.U_fldt[2])
+        data["U_sgsl"] = getplaydef(play, VarCfg.J_jsgw[1]) + getplaydef(play, VarCfg.J_jsgw[2])
         sendluamsg(play, 101, 511, 0, 0, tbl2json(data))
     elseif p2 == 1 then
         -- 福利大厅任务进度存放在玩家 T_qrbq 变量中，包含七日登录/在线/杀怪等字段
@@ -1259,7 +1259,7 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
             local jsonData = json2tbl(msgData) or {}
             T_qrbq["sgjl"] = T_qrbq["sgjl"] or 0
             T_qrbq["sgjl"] = T_qrbq["sgjl"] + 1
-            if teshudata["fldt"]["sgjl"][T_qrbq["sgjl"]].num > getplaydef(play, VarCfg.U_fldt[2]) then
+            if teshudata["fldt"]["sgjl"][T_qrbq["sgjl"]].num > getplaydef(play, VarCfg.J_jsgw[1]) + getplaydef(play, VarCfg.J_jsgw[2]) then
                 Player.sendmsgEx(play, "杀怪数量不足#57")
                 return
             elseif T_qrbq["sgjl"] > jsonData["sgjl"] then
