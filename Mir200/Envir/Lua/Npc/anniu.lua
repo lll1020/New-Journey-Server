@@ -681,7 +681,7 @@ npc[18] = function(play, p2, p3, data) --新手礼包
 
             Player.rwjl(
                 play,
-                { { "盟重回城石", 1 }, { "随机传送石", 1 }, { "龙骨刀", 1 }, { "龙骨甲", 1 } },
+                {{"复活戒指",1},{"麻痹戒指",1},{"斗笠[lv1]",1},{"攻速[lv1]",1}, {"切割[lv1]",1},{ "盟重回城石", 1 }, { "随机传送石", 1 }, { "龙骨刀", 1 }, { "龙骨甲", 1 } },
                 "新手礼包",
                 nil
             )
@@ -689,6 +689,11 @@ npc[18] = function(play, p2, p3, data) --新手礼包
             addbuff(play, 20001)
             addbuff(play, 20002)
             Npclib["anniu"][19](play, 1, 0, "")
+
+            --新手技能
+            for _, v in pairs(constant.pz_xrjn) do
+                addskill(play,v[1],v[2])
+            end
 
             sendluamsg(play, 101, 1005, 0, 0, "lqcg")
             sendluamsg(play, 101, 18, 1, 0, "")

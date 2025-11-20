@@ -6,10 +6,7 @@ function Login.main(play)
         setbagcount(play,126) --格子
         giveonitem(play,17,"时装衣服",1)
         addbuff(play,19999) --新手泡点buff
-        --新手技能
-        for _, v in pairs(constant.pz_xrjn) do
-            addskill(play,v[1],v[2])
-        end
+
 
 
 
