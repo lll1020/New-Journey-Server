@@ -52,7 +52,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
 
 
-    elseif p2 == 2 then
+    elseif p2 == 2 and false then
         if p3 == 1 then
             giveonitem(play,_config.where[p3],"复活戒指",1)
         elseif p3 == 2 then

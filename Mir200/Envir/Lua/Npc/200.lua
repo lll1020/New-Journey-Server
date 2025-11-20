@@ -52,18 +52,19 @@ function npc.link(play,npcid,ew,aid)
             if not Player.dl_sz(play, _config[npcid][6]) then
                 return
             end
-            release_print(_config[npcid][1] .. (aid == 1 and "一" or ""))
-            release_print((aid == 1 and "一" or ""))
-            release_print(aid)
             if _config[npcid][2] > 0 then
                 mapmove(play,_config[npcid][1] .. (aid == 1 and "一" or ""),_config[npcid][2],_config[npcid][3],5)
             else
                 map(play,_config[npcid][1] .. (aid == 1 and "一" or ""))
             end
-            startautoattack(play) --自动攻击
+            delaygoto(play,200,"npc_200_fbjs",0)
         end
 
     end
+end
+---- NPC副本结束后回调
+function npc_200_fbjs(play)
+    startautoattack(play) --自动攻击
 end
 
 return npc

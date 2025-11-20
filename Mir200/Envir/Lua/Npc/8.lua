@@ -52,7 +52,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
 
 
-    elseif p2 == 2 then
+    elseif p2 == 2 and false then
         giveonitem(play,_config.where,"斗笠[lv1]",1)
         sendluamsg(play,100,npcid,1,0,"")
     end

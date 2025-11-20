@@ -56,7 +56,7 @@ function npc.link(play, npcid, p2, p3, msgData)
             Player.sendmsgEx(play,  "¹§Ï²Äã£¬»ñµÃ³ÆºÅ¡¾".._config.title.."¡¿#57")
         end
 
-    elseif p2 == 2 then
+    elseif p2 == 2 and false then
         giveonitem(play,_config.where,"¹¥ËÙ[lv1]",1)
         sendluamsg(play,100,npcid,1,0,"")
     end
