@@ -625,14 +625,14 @@ teshudata = {
             Low = {
                 name = "低阶灵草",                 -- 名称
                 cost = {{"低阶灵草种子",1}},       --种子名称
-                matureTime = 5,              -- 成熟时间(秒)
+                matureTime = 30 *60,              -- 成熟时间(秒)
                 canSteal = true,                   -- 是否可被偷
                 product = {{"低阶灵草",20}},              -- 收获
             },
             High = {
                 name = "高阶灵草",
                 cost = {{"高阶灵草种子",1}},       --种子名称
-                matureTime = 5,
+                matureTime = 16 *60,
                 canSteal = false,
                 product = {{"高阶灵草",20}},              -- 收获
             },
@@ -1298,7 +1298,7 @@ teshudata = {
         ["fldt_cfg"] = {
             seven_login = {
                 -- 七日登录奖励相关的可配参数
-                online_limit = 10,                -- 每日领奖需要累计在线分钟数
+                online_limit = 5,                -- 每日领奖需要累计在线分钟数
                 privilege_no_zero = true,         -- 特权翻牌禁止出现数字0
                 privilege_final_multiple = 2,     -- 特权玩家最终翻牌数字额外倍数
                 digit = {

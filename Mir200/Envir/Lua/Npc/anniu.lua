@@ -1226,7 +1226,9 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
                 end
             end
             Player.setJsonVarByTable(play, VarCfg.T_qrbq, T_qrbq)
-            Player.rwjl(play, dayReward.jl, "七日登录奖励", 1)
+            sendmail(getbaseinfo(player,2),0,"七日登录奖励","七日登录奖励,奖励已下发!",Player.jl_mail(dayReward.jl))
+
+
             if finalAwardToGive > 0 then
                 Player.rwjl(play, { { "绑定元宝", finalAwardToGive } }, "七日翻牌幸运奖励", 1)
             end
