@@ -452,7 +452,10 @@ function ggna(play,id)
             giveitem(play,v,1)
         end
     elseif id == "24" then
-       sendluamsg(play, 101, 18, 0, 0, "")
+      --飞剑系统  --初始化页面
+        local tmp_data = {}
+        tmp_data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
+        sendluamsg(play, 101, 19, 0, 0, tbl2json(tmp_data))
     end
 
 end

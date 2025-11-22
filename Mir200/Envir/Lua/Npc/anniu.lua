@@ -817,6 +817,14 @@ npc[19] = function(play, p2, p3, data) --飞剑系统
             sendluamsg(play, 101, 19, 1, 1, "")
             Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>飞剑已取消激活...</font>","Type":9}')
         end
+    elseif p2 == 4 then --飞剑开关
+        local T_data = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
+        if T_data["open"] and T_data["open"] == 1 then
+            Npclib['anniu'][19](play, 3, 0, "")
+        else
+            Npclib['anniu'][19](play, 1, 0, "")
+        end
+
     end
 end
 ---首充礼包
