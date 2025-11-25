@@ -140,13 +140,14 @@ function entermap(play)
     end
 end
 function findpathbegin(actor)
-    local mapid = getbaseinfo(actor, ConstCfg.gbase.mapid)
-    local x = tonumber(getconst(actor, "<$ToPointX>")) or 0
-    local y = tonumber(getconst(actor, "<$ToPointY>")) or 0
-    if checkkuafu(actor) then
-    else
-        mapmove(actor, mapid, x, y)
-    end
+    --寻路自动传送
+    -- local mapid = getbaseinfo(actor, ConstCfg.gbase.mapid)
+    -- local x = tonumber(getconst(actor, "<$ToPointX>")) or 0
+    -- local y = tonumber(getconst(actor, "<$ToPointY>")) or 0
+    -- if checkkuafu(actor) then
+    -- else
+    --     mapmove(actor, mapid, x, y)
+    -- end
 end
 
 --------------------死亡物品掉了-------------------

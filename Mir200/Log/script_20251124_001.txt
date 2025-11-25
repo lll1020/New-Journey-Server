@@ -1,0 +1,2 @@
+[2025-11-25 00:14:16:739] LuaNPC:玩家名字kl ID:999999999 执行 clicknpc player:玩家名字kl 耗时：31; NpcThreadId: 24192, CurPlayThreadId: 24192
+

@@ -3,3 +3,6 @@
 [2025-11-23 04:06:47:167] LuaNPC:玩家名字kl ID:999999999 执行 handlerequest player:玩家名字kl 耗时：31; NpcThreadId: 32736, CurPlayThreadId: 32736
 [2025-11-23 04:06:47:167] [玩家名字kl]Lua执行耗时过高:31ms msgid:105 665 665 0 
 
+[2025-11-23 07:55:31:951] LuaNPC:玩家名字kl ID:999999999 执行 handlerequest player:玩家名字kl 耗时：78; NpcThreadId: 32736, CurPlayThreadId: 32736
+[2025-11-23 07:55:31:951] [玩家名字kl]Lua执行耗时过高:78ms msgid:100 503 1 0 
+
