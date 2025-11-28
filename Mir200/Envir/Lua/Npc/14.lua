@@ -31,6 +31,13 @@ function npc.link(play, npcid, p2, p3, msgData)
     if p2 == 1 then
         local jsonData = json2tbl(msgData)
 
+        
+        local equipLevel = Player.getEquipFieldByPos(play, _config.where, 1) or 0
+        if equipLevel == 0 then
+            Player.sendmsgEx(play,  "请先装备酒葫芦#57")
+            return
+        end
+
         local dj_data = Player.getJsonTableByVar(play, VarCfg["T_仙食坊"])
         dj_data[""..jsonData.idx] = dj_data[""..jsonData.idx] or 0
         if dj_data[""..jsonData.idx] >= _config.config[jsonData.idx].max_level then
@@ -54,14 +61,17 @@ function npc.link(play, npcid, p2, p3, msgData)
             end
         end
         attrsstr = Player.getAttrTableToStr(attrs)
-        delattlist(play, "仙食坊")
-        addattlist(play, "仙食坊", "=", attrsstr, 1)
+
+        local itemobj = linkbodyitem(play,_config.where)
+        setaddnewabil(play, -2, "=",attrsstr, itemobj)
+        refreshitem(play, itemobj)
+        recalcabilitys(play)
 
         Player.setJsonVarByTable(play, VarCfg["T_仙食坊"], dj_data)
         local data = {}
         data["dj_data"] = dj_data
         sendluamsg(play,100,npcid,1,0,tbl2json(data))
-        Player.sendmsgEx(play,  string.format("修炼成功，%s提升到了%d级", _config.config[jsonData.idx].cost[1][1], dj_data[""..jsonData.idx]))
+        Player.sendmsgEx(play,  string.format("成功，%s提升到了%d级", _config.config[jsonData.idx].cost[1][1], dj_data[""..jsonData.idx]))
         if isall then
             npc.AllMaxLevel(play)
         end
@@ -80,6 +90,25 @@ function npc.AllMaxLevel(play)
 
 end
 
+
+
+local function _onTakeOnEx(actor, itemobj, where, itemname, makeid)
+    if where == _config.where then
+         --仙食坊
+        local data = Player.getJsonTableByVar(play, VarCfg["T_仙食坊"])
+        attrs = {}
+        attrsstr = ""
+        for i=1,5 do
+            attrs[teshudata["npc_14"].config[i].attrID] = (data[""..i] or 0) * teshudata["npc_14"].config[i].ratio
+        end
+        attrsstr = Player.getAttrTableToStr(attrs)
+        setaddnewabil(play, -2, "=",attrsstr, itemobj)
+        refreshitem(play, itemobj)
+        recalcabilitys(play)
+    end
+end
+--穿装备触发
+GameEvent.add(EventCfg.onTakeOnEx, _onTakeOnEx, "酒葫芦附加属性")
 
 
 

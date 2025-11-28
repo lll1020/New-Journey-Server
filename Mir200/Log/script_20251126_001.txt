@@ -1,0 +1,51 @@
+[2025-11-26 23:32:10:817] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 1396, CurPlayThreadId: 1396
+[2025-11-26 23:32:10:817] [玩家名字]Lua执行耗时过高:31ms msgid:105 665 665 0 
+
+[2025-11-26 23:34:55:207] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：32; NpcThreadId: 1396, CurPlayThreadId: 1396
+
+[2025-11-27 01:13:21:675] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 1396, CurPlayThreadId: 1396
+[2025-11-27 01:13:21:675] [玩家名字]Lua执行耗时过高:31ms msgid:100 11 1 0 {"idx":1}
+[2025-11-27 01:13:22:303] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 1396, CurPlayThreadId: 1396
+[2025-11-27 01:13:22:303] [玩家名字]Lua执行耗时过高:31ms msgid:100 11 1 0 {"idx":1}
+[2025-11-27 01:13:23:688] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：46; NpcThreadId: 1396, CurPlayThreadId: 1396
+[2025-11-27 01:13:23:688] [玩家名字]Lua执行耗时过高:46ms msgid:100 11 1 0 {"idx":1}
+
+[2025-11-28 04:03:14:320] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：62; NpcThreadId: 1396, CurPlayThreadId: 1396
+[2025-11-28 04:03:14:320] [玩家名字]Lua执行耗时过高:62ms msgid:100 14 1 0 {"idx":5}
+
+[2025-11-28 04:10:37:936] Func Fail, obj is nil: SetAddNewAbil Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'setaddnewabil'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/14.lua:105: in function <E:\新起航\服务端\Mir200\Envir/lua/Npc/14.lua:95>
+	[C]: in function 'pcall'
+	E:\新起航\服务端\Mir200\Envir/QuestDiary/util/GameEvent.lua:85: in function 'push'
+	.\Envir\Market_Def\QFunction-0.lua:310: in function <.\Envir\Market_Def\QFunction-0.lua:305>
+[2025-11-28 04:10:37:936] Func Fail, obj is nil: RefreshItem Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'refreshitem'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/14.lua:106: in function <E:\新起航\服务端\Mir200\Envir/lua/Npc/14.lua:95>
+	[C]: in function 'pcall'
+	E:\新起航\服务端\Mir200\Envir/QuestDiary/util/GameEvent.lua:85: in function 'push'
+	.\Envir\Market_Def\QFunction-0.lua:310: in function <.\Envir\Market_Def\QFunction-0.lua:305>
+[2025-11-28 04:10:37:936] Func Fail, obj is nil: RecalcAbilitys Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'recalcabilitys'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/14.lua:107: in function <E:\新起航\服务端\Mir200\Envir/lua/Npc/14.lua:95>
+	[C]: in function 'pcall'
+	E:\新起航\服务端\Mir200\Envir/QuestDiary/util/GameEvent.lua:85: in function 'push'
+	.\Envir\Market_Def\QFunction-0.lua:310: in function <.\Envir\Market_Def\QFunction-0.lua:305>
+
+[2025-11-28 04:10:50:788] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：406; NpcThreadId: 1396, CurPlayThreadId: 1396
+[2025-11-28 04:10:50:788] [玩家名字]Lua执行耗时过高:406ms msgid:100 14 1 0 {"idx":1}
+[2025-11-28 04:10:50:812] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 1396, CurPlayThreadId: 1396
+[2025-11-28 04:10:50:812] [玩家名字]Lua执行耗时过高:31ms msgid:100 14 1 0 {"idx":1}
+[2025-11-28 04:10:50:867] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 1396, CurPlayThreadId: 1396
+[2025-11-28 04:10:50:867] [玩家名字]Lua执行耗时过高:31ms msgid:100 14 1 0 {"idx":1}
+[2025-11-28 04:10:50:987] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 1396, CurPlayThreadId: 1396
+[2025-11-28 04:10:50:987] [玩家名字]Lua执行耗时过高:31ms msgid:100 14 1 0 {"idx":1}
+[2025-11-28 04:10:51:985] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 1396, CurPlayThreadId: 1396
+[2025-11-28 04:10:51:985] [玩家名字]Lua执行耗时过高:31ms msgid:100 14 1 0 {"idx":1}
+
+[2025-11-28 04:13:40:331] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 1396, CurPlayThreadId: 1396
+[2025-11-28 04:13:40:331] [玩家名字]Lua执行耗时过高:31ms msgid:100 14 1 0 {"idx":5}
+
+[2025-11-28 08:13:19:584] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 1396, CurPlayThreadId: 1396
+[2025-11-28 08:13:19:584] [玩家名字]Lua执行耗时过高:31ms msgid:101 2 999 10182 
+

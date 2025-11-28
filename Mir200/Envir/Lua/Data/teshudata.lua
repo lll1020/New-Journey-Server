@@ -192,6 +192,7 @@ teshudata = {
     },
     ["npc_14"] = {
         id = 14,
+        where = 16,
         name = "ÏÉÊ³·»",
         title = "ÏÉÊ³·»È«Âú",
         config = {

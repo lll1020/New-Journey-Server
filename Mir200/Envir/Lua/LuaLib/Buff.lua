@@ -303,17 +303,7 @@ function Buff.login(play)
     if getplaydef(play, VarCfg["U_兰姐好感度"]) > 0 then
         addattlist(play, "兰姐好感度", "=", "3#"..teshudata["npc_13"].attrID.."#"..teshudata["npc_13"].config[getplaydef(play, VarCfg["U_兰姐好感度"])].ratio, 1)
     end
-    --仙食坊
-    data = Player.getJsonTableByVar(play, VarCfg["T_仙食坊"])
-    attrs = {}
-    attrsstr = ""
-    for i=1,5 do
-        attrs[teshudata["npc_14"].config[i].attrID] = (data[""..i] or 0) * teshudata["npc_14"].config[i].ratio
-    end
-    attrsstr = Player.getAttrTableToStr(attrs)
-    addattlist(play, "仙食坊", "=", attrsstr, 1)
-
-
+   
     ------------------------------------------------------------通用属性
     local attr = {}
     Player.updateSomeAddr(play,nil, attr)

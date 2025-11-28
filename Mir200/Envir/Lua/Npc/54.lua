@@ -68,19 +68,19 @@ function npc.link(play, npcid, p2, p3, msgData)
             sendluamsg(play,100,npcid,1,0,tbl2json(data))
             Player.sendmsgEx(play,  string.format("修炼成功，%s提升到了%d级", _config.config[jsonData.idx].name, dj_data[""..jsonData.idx]))
             if isall then
-                npc.AllMaxLevel(play)
+                AllMaxLevel(play)
             end
         else
             Player.sendmsgEx(play,  "修炼失败，灵根没有提升#57")
             return
         end
     elseif p2 == 2 then
-        npc.AllMaxLevel(play)
+        AllMaxLevel(play)
     end
 end
 
 
-function npc.AllMaxLevel(play)
+function AllMaxLevel(play)
     if not checktitle(play, _config.del_title) then 
         Player.sendmsgEx(play,  "你还未获得称号：|".._config.del_title.."#249|，无法进行高级淬体#57")
         return
@@ -110,7 +110,7 @@ function npc.AllMaxLevel(play)
     Player.setJsonVarByTable(play, VarCfg["T_灵根修炼"], dj_data)
     local data = {}
     data["dj_data"] = dj_data
-    sendluamsg(play,100,npcid,1,0,tbl2json(data))
+    sendluamsg(play,100,54,1,0,tbl2json(data))
     Player.sendmsgEx(play, "恭喜你获得称号：|".._config.title.."#249|，称号属性永久生效")
 
 end

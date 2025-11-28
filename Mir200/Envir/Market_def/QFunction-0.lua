@@ -651,6 +651,16 @@ function moneychange16(play)
         changemode(play,23,999999999,querymoney(play,15))
     end
 end
+--------------------货币改变触发-------------------充值触发
+function moneychange23(play)
+    local _config = Guard.getConfig("npc_20")
+    if querymoney(play,23) >= _config.cost then
+        if not checktitle(play,_config.ch) then
+            Player.title_give(play,_config.ch,1)
+            messagebox(play,"恭喜您获得称号：【".._config.ch.."】")
+        end
+    end
+end
 --------------------人物前复活触发-------------------
 function nextdie(play)
 end
