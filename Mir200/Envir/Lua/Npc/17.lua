@@ -36,20 +36,20 @@ function npc.link(play, npcid, p2, p3, msgData)
         else
             sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[»õ±Ò¶Ò»»]</font><font color=\'#ff0000\'>°ó¶¨Ôª±¦²»×ã...</font>","Type":9}')
         end
-    elseif p2 == 3 then
-        if changemoney(play,7,"-",1000,"»õ±Ò¶Ò»»",true) then
-            changemoney(play,1,"+",2000000,"»õ±Ò¶Ò»»",true)
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[»õ±Ò¶Ò»»]</font><font color=\'#00ff00\'>¶Ò»»³É¹¦...</font>","Type":9}')
-        else
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[»õ±Ò¶Ò»»]</font><font color=\'#ff0000\'>ÏÉÓñ²»×ã...</font>","Type":9}')
-        end
-    elseif p2 == 4 then
-        if changemoney(play,8,"-",1000,"»õ±Ò¶Ò»»",true) then
-            changemoney(play,3,"+",2000000,"»õ±Ò¶Ò»»",true)
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[»õ±Ò¶Ò»»]</font><font color=\'#00ff00\'>¶Ò»»³É¹¦...</font>","Type":9}')
-        else
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[»õ±Ò¶Ò»»]</font><font color=\'#ff0000\'>°ó¶¨ÏÉÓñ²»×ã...</font>","Type":9}')
-        end
+    -- elseif p2 == 3 then
+    --     if changemoney(play,7,"-",1000,"»õ±Ò¶Ò»»",true) then
+    --         changemoney(play,1,"+",2000000,"»õ±Ò¶Ò»»",true)
+    --         sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[»õ±Ò¶Ò»»]</font><font color=\'#00ff00\'>¶Ò»»³É¹¦...</font>","Type":9}')
+    --     else
+    --         sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[»õ±Ò¶Ò»»]</font><font color=\'#ff0000\'>ÏÉÓñ²»×ã...</font>","Type":9}')
+    --     end
+    -- elseif p2 == 4 then
+    --     if changemoney(play,8,"-",1000,"»õ±Ò¶Ò»»",true) then
+    --         changemoney(play,3,"+",2000000,"»õ±Ò¶Ò»»",true)
+    --         sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[»õ±Ò¶Ò»»]</font><font color=\'#00ff00\'>¶Ò»»³É¹¦...</font>","Type":9}')
+    --     else
+    --         sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[»õ±Ò¶Ò»»]</font><font color=\'#ff0000\'>°ó¶¨ÏÉÓñ²»×ã...</font>","Type":9}')
+    --     end
     end
 end
 
