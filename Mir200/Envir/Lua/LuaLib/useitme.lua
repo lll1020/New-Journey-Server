@@ -48,7 +48,7 @@ function stdmodefunc20(play, item)
     Player.sendmsgEx(play,1,'{"Msg":"pk值下降100了...","FColor":219,"BColor":255,"Type":1}')
     Player.sendmsgEx(play,1,'{"Msg":"剩余'..getbaseinfo(play,46)..'...","FColor":219,"BColor":255,"Type":1}')
 end
---------------------双击物品触发-------------------仙玉通用
+--------------------双击物品触发-------------------灵石通用
 function stdmodefunc21(play, item)
     changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 7 or 8, '+', getstditeminfo(getiteminfo(play, item, 2), 8), '双击获得', true)
 end

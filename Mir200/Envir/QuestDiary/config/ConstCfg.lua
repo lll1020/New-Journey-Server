@@ -265,7 +265,7 @@ ConstCfg = {
     money                = {
         yb      = 2,              --元宝
         bindyb  = 4,              --绑定元宝
-        lingfu  = 5,              --灵符
+        lingfu  = 5,              --元宝
         zuanshi = 12,             --钻石
         ryd     = 9,              --荣誉点
         czd     = 10,             --充值点 1rmb = 1充值点

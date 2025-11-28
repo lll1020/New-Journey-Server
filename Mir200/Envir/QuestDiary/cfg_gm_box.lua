@@ -8,7 +8,7 @@ local config = {
     {page = 1, index = 6,  Command = "@gm_sendluamsg GM权限", title = "设置我的GM权限", default = "2#10"},
 
     --//玩家
-    {page = 2, index = 1,  Command = "@gm_givechongzhi 玩家名 充值金额 货币名 货币数量 是否计入活动累充", title = "补发充值", pageName = "玩家", default = "2##USER_NAME|3#10|4#灵符|5#100", selectList = "6#0^1#不计入^计入"},
+    {page = 2, index = 1,  Command = "@gm_givechongzhi 玩家名 充值金额 货币名 货币数量 是否计入活动累充", title = "补发充值", pageName = "玩家", default = "2##USER_NAME|3#10|4#元宝|5#100", selectList = "6#0^1#不计入^计入"},
     {page = 2, index = 2,  Command = "@gm_getplayvar 玩家名 变量名", title = "获取玩家变量", default = "2##USER_NAME"},
     {page = 2, index = 3,  Command = "@gm_setplayvar 玩家名 变量名 变量值 变量值类型", title = "设置玩家变量",default = "2##USER_NAME|5#integer", selectList = "5#integer^string#数字型^字符型"},
     {page = 2, index = 4,  Command = "@gm_getplayvarex 玩家名 变量名", title = "获取玩家自定义变量", default = "2##USER_NAME"},

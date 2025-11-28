@@ -1,9 +1,9 @@
 release_print("UtilServer Player.lua")
 Player = {}
 local bind_money = {
-    {3,1},--元宝
-    {4,2},--灵符
-    {8,7},--仙玉
+    {3,1},--金币 金币
+    {4,2},--元宝 元宝
+    {8,7},--灵石 灵石
     {9},--剧情点
 }
 local bind_m_tab = {}
@@ -197,7 +197,7 @@ function Player.takeItemByTable(actor, t, desc, multiple)
                     if num == 0 then break end
                     local bdyb = querymoney(actor, value)
                     if num > bdyb then    --所需货币不够时 先扣除第一货币 然后循环第二 第三
-                        changemoney(actor, value, "-", bdyb, desc, true)   --首先扣除所有绑定元宝
+                        changemoney(actor, value, "-", bdyb, desc, true)   --首先扣除所有绑定金币
                         num = num - bdyb
                     else
                         changemoney(actor, value, "-", num, desc, true)
@@ -668,13 +668,13 @@ function Player.huishou(play, hs_constant)
 
         for i, v in pairs(item or {}) do
             local idx = getiteminfo(play, v, 2)
-            if idx > 10022 and idx < 10034 then    --灵符
+            if idx > 10022 and idx < 10034 then    --元宝
                 if kg1 == 1 then
                     local sl = getiteminfo(play, v, 5)
                     changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', getstditeminfo(idx, 8) * sl, '机器人吃', true)
                     delitembymakeindex(play, getiteminfo(play, v, 1), sl)
                 end
-            elseif idx > 10018 and idx < 10023 then    --元宝
+            elseif idx > 10018 and idx < 10023 then    --金币
                 if kg2 == 1 then
                     if fd_sjyb[idx] then
                         local sl = getiteminfo(play, v, 5)
@@ -734,8 +734,8 @@ function Player.huishou(play, hs_constant)
     else
         local hs = hs_constant
         local cl = {0,0,0,0,0}--材料
-        local yb,jb = 0,0 --元宝灵符
-        local xy = 0  --仙玉
+        local yb,jb = 0,0 --金币元宝
+        local xy = 0  --灵石
         local jc = 0 --副装
         local T_tshs = json2tbl(getplaydef(play, VarCfg.T_tshs))
         local gz = getflagstatus(play,VarCfg.BS_mztq) == 1 and 0 or 850

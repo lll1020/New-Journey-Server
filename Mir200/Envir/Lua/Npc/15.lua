@@ -29,16 +29,16 @@ function npc.link(play,npcid,ew,aid)
         if checktitle(play,_config.give.ch) then
             Player.sendmsgEx(play,1,'{"Msg":"<font color=\'#ff7700\'>[狂暴之力]</font><font color=\'#ff0000\'>您已经开启过狂暴之力了</font>","Type":9}')
         else
-            if changemoney(play,7,"-",1000,"开启狂暴",true) then
+            if changemoney(play,7,"-",100,"开启狂暴",true) then
                 Player.title_give(play,_config.give.ch)
                 seticon(play,0,1,10294,0,0,0,0,0)
-                sendluamsg(play,100,npcid,1,0,"")
+                messagebox(play,"恭喜您获得称号：【".._config.give.ch.."】")
                 local skillId = getskillindex(_config.give.skill)
                 addskill(play, skillId, 1)
                 Player.sendmsgEx(play,1,'{"Msg":"<font color=\'#ff7700\'>[狂暴之力]</font><font color=\'#00ff00\'>恭喜您成功开启狂暴之力</font>","Type":9}')
                 Login_msg(play,3)
             else
-                Player.sendmsgEx(play,1,'{"Msg":"<font color=\'#ff7700\'>[狂暴之力]</font><font color=\'#ff0000\'>您没有1000仙玉，无法开启</font>","Type":9}')
+                Player.sendmsgEx(play,1,'{"Msg":"<font color=\'#ff7700\'>[狂暴之力]</font><font color=\'#ff0000\'>您没有100灵石，无法开启</font>","Type":9}')
             end
         end
     end

@@ -37,7 +37,7 @@ function Login_msg(play, id, msg, leve)
     elseif id == 15 then -- 实物回收
         sendmsgnew(play, 255, 0, '玩家{《' .. getbaseinfo(play, 1) .. '》/FCOLOR=251}实物回收{[' .. msg .. ']/FCOLOR=250}，获得灵符{[' .. leve .. ']/FCOLOR=250}', 1, 3)
     elseif id == 18 then -- 充值
-        sendmsgnew(play, 255, 0, '玩家{《' .. string.sub(getbaseinfo(play, 1), 1, 2) .. '******》/FCOLOR=251}{通过充值获得了大量仙玉/FCOLOR=250}', 1, 3)
+        sendmsgnew(play, 255, 0, '玩家{《' .. string.sub(getbaseinfo(play, 1), 1, 2) .. '******》/FCOLOR=251}{通过充值获得了大量灵石/FCOLOR=250}', 1, 3)
     end
 end
 

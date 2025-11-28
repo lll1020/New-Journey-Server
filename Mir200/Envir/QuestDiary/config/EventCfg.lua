@@ -93,7 +93,7 @@ EventCfg.onSendAbility              = "onSendAbility"                 --ÊôĞÔ¸Ä±ä
 EventCfg.onAddSkillPower            = "onAddSkillPower"               --Ôö¼Ó¼¼ÄÜÍşÁ¦
 
 
-EventCfg.goBill                     = "goBill"                        --³äÖµÏà¹Ø(ÔÂ¿¨¹¦ÄÜÓÃÀ´¿Û³ıÁé·û²¢×èÖ¹ÀÛ¼Æ³äÖµ)
+EventCfg.goBill                     = "goBill"                        --³äÖµÏà¹Ø(ÔÂ¿¨¹¦ÄÜÓÃÀ´¿Û³ıÔª±¦²¢×èÖ¹ÀÛ¼Æ³äÖµ)
 EventCfg.onBagChange                = "onBagChange"                   --±³°ü¸ñ×ÓÊı·¢ËÍ±ä»¯
 EventCfg.onRevive                   = "onRevive"                      --¸´»î´¥·¢
 EventCfg.onRecycling                = "onRecycling"                   --»ØÊÕ´¥·¢
@@ -188,7 +188,7 @@ EventCfg.OverloadPower              = "OverloadPower"                  --Õ½Á¦¼ÆË
 EventCfg.OverloadGongSu             = "OverloadGongSu"                 --¹¥ËÙ¼ÆËãÍêºó----ÖØÔØ
 EventCfg.OverloadMoneyJinBi         = "OverloadMoneyJinBi"             --½ğ±Ò¸Ä±äºó----ÖØÔØ
 EventCfg.OverloadMoneyYuanBao       = "OverloadMoneyYuanBao"           --Ôª±¦¸Ä±äºó----ÖØÔØ
-EventCfg.OverloadMoneyLingFu        = "OverloadMoneyLingFu"            --Áé·û¸Ä±äºó----ÖØÔØ
+EventCfg.OverloadMoneyLingFu        = "OverloadMoneyLingFu"            --Ôª±¦¸Ä±äºó----ÖØÔØ
 EventCfg.OverloadMoneyJiFen         = "OverloadMoneyJiFen"             --³äÖµ»ı·Ö¸Ä±äºó----ÖØÔØ
 EventCfg.onHuiShouFinish            = "onHuiShouFinish"                --»ØÊÕÍê³É´¥·¢
 EventCfg.onCostMoney                = "onCostMoney"                    --ÏûºÄ»õ±Ò´¥·¢

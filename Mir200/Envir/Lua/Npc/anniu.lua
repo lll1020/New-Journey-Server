@@ -632,12 +632,12 @@ npc[13] = function(play, p2, p3, data) -- 记录石
         if jlsinfo then
             --判断当前玩家是否处于战斗状态
             if getplaydef(play, "N$战斗状态") < os.time() then
-                --是不是有足够的仙玉
-                if getbindmoney(play, "仙玉") < 100 then
+                --是不是有足够的灵石
+                if getbindmoney(play, "灵石") < 100 then
                     Player.sendmsgEx(
                         play,
                         1,
-                        '{"Msg":"<font color=\'#ff0500\'>仙玉不足,无法传送...</font>","Type":9}'
+                        '{"Msg":"<font color=\'#ff0500\'>灵石不足,无法传送...</font>","Type":9}'
                     )
                     return
                 end

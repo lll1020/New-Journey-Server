@@ -249,11 +249,11 @@ function pickupitemex(play, item)
         local sl = getiteminfo(play, item, 5)
         changeexp(play, '+', getstditeminfo(idx, 8) * sl, false)
         delitembymakeindex(play, getiteminfo(play, item, 1), sl)
-    elseif idx > 10022 and idx < 10040 then    --元宝
+    elseif idx > 10022 and idx < 10040 then    --金币
         local sl = getiteminfo(play, item, 5)
         changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', getstditeminfo(idx, 8) * sl, '捡物自动吃', true)
         delitembymakeindex(play, getiteminfo(play, item, 1), sl)
-    elseif idx > 10045 and idx < 10063 then    --灵符
+    elseif idx > 10045 and idx < 10063 then    --元宝
         local sl = getiteminfo(play, item, 5)
         changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', getstditeminfo(idx, 8) * sl, '捡物自动吃', true)
         delitembymakeindex(play, getiteminfo(play, item, 1), sl)
@@ -620,16 +620,16 @@ function killmon(play, mob)
 end
 
 
---------------------货币改变触发-------------------元宝
+--------------------货币改变触发-------------------金币
 function moneychange1(play)
-    local gb = getplaydef(play,"N$元宝改变触发")
+    local gb = getplaydef(play,"N$金币改变触发")
     if gb > 0 and Buff[gb] then
         Buff[gb](play, 1)
     end
 end
---------------------货币改变触发-------------------灵符
+--------------------货币改变触发-------------------元宝
 function moneychange2(play)
-    local gb = getplaydef(play,"N$灵符改变触发")
+    local gb = getplaydef(play,"N$元宝改变触发")
     if gb > 0 and Buff[gb] then
         Buff[gb](play, 1)
     end
@@ -784,7 +784,7 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
     release_print("充值触发","玩家："..getbaseinfo(play,1), "金额："..Gold, "订单:"..ProductId, "货币id:"..MoneyId, "是否真充:"..(isReal and "是" or "否"))
     setplaydef(play,VarCfg.J_zscz,(getplaydef(play,VarCfg.J_zscz) or 0) + Gold)
 
-    if MoneyId == 7 then   ---仙玉充值
+    if MoneyId == 7 then   ---灵石充值
         local lb_json, sy = getplaydef(play, VarCfg.T_czlb), constant.cz_jeyz[Gold]
         lb_json = lb_json == "" and {} or json2tbl(lb_json)
         if constant.cz_jeyz[Gold] and getplaydef(play, VarCfg.U_czyz) == constant.cz_jeyz[Gold] and not lb_json["cz" .. sy] then
