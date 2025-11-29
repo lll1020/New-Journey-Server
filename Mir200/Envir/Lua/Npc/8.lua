@@ -53,7 +53,7 @@ function npc.link(play, npcid, p2, p3, msgData)
 
 
     elseif p2 == 2 and false then
-        giveonitem(play,_config.where,"¶·óÒ[lv1]",1)
+        giveonitem(play,_config.where,"¶·óÒ",1)
         sendluamsg(play,100,npcid,1,0,"")
     end
 end
