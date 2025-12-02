@@ -26,7 +26,7 @@ function Login_msg(play, id, msg, leve)
 		Player.sendmsgEx(play, 2, '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'>【锻造】：</font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>成功锻造<font color=\'#00FFFF\'>[' ..msg .. '] 到达 '..leve.. '级</font>，仙途畅通！</outline>","Type":1}')
 	elseif id == 10 then -- 回收
         if msg > 0 or leve > 0 then
-            Player.sendmsgEx(play, 2, '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'>【装备回收】：</font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>成功回收装备,获得<font color=\'#00FFFF\'>[' .. msg .. ']</font>元宝，<font color=\'#00FFFF\'>[' .. leve .. ']</font>灵符！</outline>","Type":1}')
+            Player.sendmsgEx(play, 2, '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'>【装备回收】：</font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>成功回收装备,获得<font color=\'#00FFFF\'>[' .. msg .. ']</font>元宝，<font color=\'#00FFFF\'>[' .. leve .. ']</font>元宝！</outline>","Type":1}')
         end
 	elseif id == 12 then -- 成功开启风暴提示
 		sendmsgnew(play, 255, 0, '究极狂暴：玩家{《' .. getbaseinfo(play, 1) .. '》/FCOLOR=251}成功开启{[究极狂暴]/FCOLOR=250},击杀此人可获得额外奖励...', 1, 3)
@@ -35,7 +35,7 @@ function Login_msg(play, id, msg, leve)
     elseif id == 14 then -- 天渊剑甲升级提示
         Player.sendmsgEx(play, 2, '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'>【天渊剑甲升级】：</font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>成功升级<font color=\'#00FFFF\'>[' .. msg .. ']</font>仙途畅通！</outline>","Type":1}')
     elseif id == 15 then -- 实物回收
-        sendmsgnew(play, 255, 0, '玩家{《' .. getbaseinfo(play, 1) .. '》/FCOLOR=251}实物回收{[' .. msg .. ']/FCOLOR=250}，获得灵符{[' .. leve .. ']/FCOLOR=250}', 1, 3)
+        sendmsgnew(play, 255, 0, '玩家{《' .. getbaseinfo(play, 1) .. '》/FCOLOR=251}实物回收{[' .. msg .. ']/FCOLOR=250}，获得元宝{[' .. leve .. ']/FCOLOR=250}', 1, 3)
     elseif id == 18 then -- 充值
         sendmsgnew(play, 255, 0, '玩家{《' .. string.sub(getbaseinfo(play, 1), 1, 2) .. '******》/FCOLOR=251}{通过充值获得了大量灵石/FCOLOR=250}', 1, 3)
     end

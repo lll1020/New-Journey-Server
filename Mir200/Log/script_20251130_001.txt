@@ -1,0 +1,17 @@
+[2025-12-01 11:24:59:767] LuaNPC:玩家名字 ID:999999999 执行 clicknewtask player:玩家名字 耗时：32; NpcThreadId: 27388, CurPlayThreadId: 27388
+
+[2025-12-01 11:29:56:394] LuaNPC:玩家名字 ID:999999999 执行 stdmodefunc48 player:玩家名字 耗时：32; NpcThreadId: 27388, CurPlayThreadId: 27388
+
+[2025-12-01 11:33:39:873] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：375; NpcThreadId: 27388, CurPlayThreadId: 27388
+[2025-12-01 11:33:41:809] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 27388, CurPlayThreadId: 27388
+
+[2025-12-01 11:33:46:009] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：266; NpcThreadId: 27388, CurPlayThreadId: 27388
+
+[2025-12-01 11:33:47:443] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：32; NpcThreadId: 27388, CurPlayThreadId: 27388
+[2025-12-01 11:33:49:566] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：47; NpcThreadId: 27388, CurPlayThreadId: 27388
+
+[2025-12-01 11:33:52:131] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：125; NpcThreadId: 27388, CurPlayThreadId: 27388
+[2025-12-01 11:33:56:687] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：47; NpcThreadId: 27388, CurPlayThreadId: 27388
+
+[2025-12-01 11:33:58:528] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：157; NpcThreadId: 27388, CurPlayThreadId: 27388
+

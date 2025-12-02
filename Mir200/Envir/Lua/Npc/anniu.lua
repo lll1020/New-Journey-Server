@@ -47,13 +47,13 @@ npc[2] = function(play, p2, p3, msgData) --背包  面板
                 Player.sendmsgEx(
                     play,
                     1,
-                    '{"Msg":"<font color=\'#00ff00\'>自动吃灵符已开启...</font>","Type":9}'
+                    '{"Msg":"<font color=\'#00ff00\'>自动吃元宝已开启...</font>","Type":9}'
                 )
             else
                 Player.sendmsgEx(
                     play,
                     1,
-                    '{"Msg":"<font color=\'#ff0000\'>自动吃灵符已关闭...</font>","Type":9}'
+                    '{"Msg":"<font color=\'#ff0000\'>自动吃元宝已关闭...</font>","Type":9}'
                 )
             end
             setflagstatus(play, VarCfg.BS_huishou[1], msgData)
@@ -239,7 +239,7 @@ local npc_xyl = {
             },
             --需求
             jqd = 0,
-            jl = { { "绑定元宝", 1000000 }, { "绑定灵符", 100000 } },
+            jl = { { "绑定元宝", 1000000 }, { "绑定元宝", 100000 } },
         },
         --第二章
         {
@@ -298,7 +298,7 @@ local npc_xyl = {
                 },
             },
             jqd = 400,
-            jl = { { "绑定元宝", 1000000 }, { "绑定灵符", 100000 } },
+            jl = { { "绑定元宝", 1000000 }, { "绑定元宝", 100000 } },
         },
         --第三章
         {
@@ -396,7 +396,7 @@ local npc_xyl = {
                 },
             },
             jqd = 800,
-            jl = { { "绑定元宝", 1000000 }, { "绑定灵符", 100000 } },
+            jl = { { "绑定元宝", 1000000 }, { "绑定元宝", 100000 } },
         },
     },
 }

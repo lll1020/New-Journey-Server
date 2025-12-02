@@ -53,7 +53,7 @@ function stdmodefunc21(play, item)
     changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 7 or 8, '+', getstditeminfo(getiteminfo(play, item, 2), 8), '双击获得', true)
 end
 
---------------------双击物品触发-------------------灵符通用
+--------------------双击物品触发-------------------元宝通用
 function stdmodefunc11(play, item)
     local sl = getiteminfo(play, item, 5)
     changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', getstditeminfo(getiteminfo(play, item, 2), 8) * sl, '双击获得', true)
@@ -82,19 +82,30 @@ function stdmodefunc13(play, item)
     delitembymakeindex(play, getiteminfo(play, item, 1), 1)
 end
 
---------------------双击物品触发-------------------灵符红包
+--------------------双击物品触发-------------------元宝红包
 local itme_14 = {
-    ["灵符红包(小)"] = {10,20},
-    ["灵符红包(中)"] = {30,50},
-    ["灵符红包(大)"] = {100,200},
+    ["元宝红包(小)"] = {10,20},
+    ["元宝红包(中)"] = {30,50},
+    ["元宝红包(大)"] = {100,200},
 }
 function stdmodefunc14(play, item)
     local itemName = getiteminfo(actor, item, ConstCfg.iteminfo.name)
     local min = itme_14[itemName][1]
     local max = itme_14[itemName][2]
     local num = math.random(min, max)
-    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', num, '双击获得灵符红包', true)
+    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', num, '双击获得元宝红包', true)
     delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+end
+function stdmodefunc48(play, item) -- 真实充值卷
+    local wpid = getiteminfo(play,item,2)
+    local sl = getiteminfo(play, item, 5)
+    local wpjg = getstditeminfo(wpid,8)
+    changemoney(play,23,"+",wpjg*sl,"真实充值卷",true)
+    changemoney(play,8,"+",wpjg*100*sl,"真实充值卷",true)
+    --changemoney(play,23,"+",wpjg*sl,"真实充值卷",true)  --累计充值
+    --sendmsg(play, 1, '{"Msg":"真实充值增加:'..wpjg*sl..'","FColor":253,"BColor":255,"Type":1}')
+    delitembymakeindex(play, getiteminfo(play, item, 1), sl)
+    --release_print(getiteminfo(play,item,2))
 end
 
 ---千里传音
