@@ -101,7 +101,7 @@ function npc_602_fb_end(play)
         if getmoncount(dtm,-1,true) < 1 then --副本怪物已经清空
             delmirrormap(dtm)
         else --副本怪物未清空
-            Player.sendmsgEx(play,1,'{"Msg":"<font color=\'#00ff00\'>未通过本层,请继续修行吧...</font>","Type":9}')
+            Player.sendmsgEx(play,'{"Msg":"<font color=\'#00ff00\'>未通过本层,请继续修行吧...</font>","Type":9}')
             delmirrormap(dtm)
         end
     end

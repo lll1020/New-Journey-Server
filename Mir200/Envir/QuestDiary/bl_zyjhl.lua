@@ -8,3 +8,18 @@ function bl_zyjhl2(play,mingzi)
     end
     return false
 end
+--------------------爆率监听触发-------------------全服孤品
+function bl_zyjhl3(play,mingzi)
+    local data = Player.getJsonTableByVar(nil, VarCfg["A_全服孤品"])
+    local hqcs = globalinfo(3)
+    if querymoney(play,23) >= 1000 then
+        if hqcs >= 3 then
+            if data and not data[mingzi] then
+                data[mingzi] = getbaseinfo(play,1)
+                Player.setJsonVarByTable(nil, VarCfg["A_全服孤品"], data)
+                return true
+            end
+        end
+    end
+    return false
+end

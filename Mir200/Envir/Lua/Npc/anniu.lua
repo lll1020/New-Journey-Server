@@ -89,9 +89,9 @@ npc[2] = function(play, p2, p3, msgData) --背包  面板
             setflagstatus(play, VarCfg.BS_huishou[3], msgData)
         elseif p3 == 4 then
             if msgData == "1" then
-                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>自动回收已开启...</font>","Type":9}')
+                Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>自动回收已开启...</font>","Type":9}')
             else
-                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>自动回收已关闭...</font>","Type":9}')
+                Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>自动回收已关闭...</font>","Type":9}')
             end
             setflagstatus(play, VarCfg.BS_huishou[4], msgData)
         elseif p3 == 5 then
@@ -165,11 +165,11 @@ npc[6] = function(play, p2, p3, data) -- 屏蔽系统消息
     if getplaydef(play, "N$是否屏蔽系统消息") == 0 then
         setplaydef(play, "N$是否屏蔽系统消息", 1)
         filterglobalmsg(play, 1)
-        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>不在接受系统提示消息...</font>","Type":9}')
+        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>不在接受系统提示消息...</font>","Type":9}')
     else
         setplaydef(play, "N$是否屏蔽系统消息", 0)
         filterglobalmsg(play, 0)
-        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>正常接收系统消息...</font>","Type":9}')
+        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>正常接收系统消息...</font>","Type":9}')
     end
 end
 
@@ -434,7 +434,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
             if Player.dl_sz_notip(play, sj.i) then
                 local shuju = npc_xyl[sj.i][sj.j].jq[sj.z]
                 if shuju.yd[1] == 0 then
-                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>无法传送...</font>","Type":9}')
+                    Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>无法传送...</font>","Type":9}')
                 elseif shuju.yd[1] == 1 then
                     if getplaydef(play, "N$战斗状态") < os.time() then
                         mapmove(play, shuju.yd[2], shuju.yd[4], shuju.yd[5], 2)
@@ -486,7 +486,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
         if sj.i and sj.j and sj.i > 0 and sj.j > 0 and sj.i <= #npc_xyl and sj.j <= #npc_xyl[sj.i] then
             local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
             if T_ywl["jl_" .. sj.i .. "_" .. sj.j] and T_ywl["jl_" .. sj.i .. "_" .. sj.j] == 1 then
-                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>已领取过了...</font>","Type":9}')
+                Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>已领取过了...</font>","Type":9}')
                 return
             end
             for i = 1, #npc_xyl[sj.i][sj.j].jq do
@@ -545,7 +545,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
             -- 查这个货币的数量（只查这一种，不合并绑/非绑）
             local num = querymoney(play, getstditeminfo("剧情点", 0))
             if num < npc_xyl[sj.i][sj.j].jqd then
-                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>剧情点不足...</font>","Type":9}')
+                Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>剧情点不足...</font>","Type":9}')
                 return
             end
             if
@@ -610,11 +610,11 @@ npc[13] = function(play, p2, p3, data) -- 记录石
         local xx, yy, dt = getbaseinfo(play, 4), getbaseinfo(play, 5), getbaseinfo(play, 3)
         if string.find(dt, "_") then
             --向客户端发送消息，通知玩家处于副本地图，无法记录
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>副本地图无法记录...</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>副本地图无法记录...</font>","Type":9}')
             return
         elseif checkkuafu(play) or jinzhigj[dt] then
             --向客户端发送消息，通知玩家处于禁止记录的地图，无法记录
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>当前地图无法记录...</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>当前地图无法记录...</font>","Type":9}')
             return
         end
         --将当前玩家的坐标和地图信息存入记录石信息中
@@ -656,7 +656,7 @@ npc[13] = function(play, p2, p3, data) -- 记录石
             end
         else
             --向客户端发送消息，通知记录石不存在
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>记录石不存在...</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>记录石不存在...</font>","Type":9}')
         end
     end
 end
@@ -698,7 +698,7 @@ npc[18] = function(play, p2, p3, data) --新手礼包
             sendluamsg(play, 101, 1005, 0, 0, "lqcg")
             sendluamsg(play, 101, 18, 1, 0, "")
         else --已完成
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>已经领取过礼包了...</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0500\'>已经领取过礼包了...</font>","Type":9}')
             return
         end
     end
@@ -752,7 +752,7 @@ function feijian(play, msgData) ---飞剑
             T_data.num = (T_data.num or 0) + 1
             Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data)
         else
-            --Player.sendmsgEx(play,1,'{"Msg":"<font color=\'#ff0000\'>飞剑冷却中...</font>","FColor":219,"BColor":255,"Type":1}')
+            --Player.sendmsgEx(play,'{"Msg":"<font color=\'#ff0000\'>飞剑冷却中...</font>","FColor":219,"BColor":255,"Type":1}')
             return
         end
     end
@@ -805,7 +805,7 @@ npc[19] = function(play, p2, p3, data) --飞剑系统
                     },
                 })
             )
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>飞剑已激活...</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>飞剑已激活...</font>","Type":9}')
         end
     elseif p2 == 2 then --飞剑伤害计算
         feijian(play, data)
@@ -815,7 +815,7 @@ npc[19] = function(play, p2, p3, data) --飞剑系统
             T_data["open"] = 0
             Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data)
             sendluamsg(play, 101, 19, 1, 1, "")
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>飞剑已取消激活...</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>飞剑已取消激活...</font>","Type":9}')
         end
     elseif p2 == 4 then --飞剑开关
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
@@ -918,11 +918,11 @@ npc[502] = function(play, p2, p3, data) --在线充值
             if json.jskg then
                 json.jskg = nil
                 Buff[71](play, 2)
-                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>溅射功能已关闭...</font>","Type":9}')
+                Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0500\'>溅射功能已关闭...</font>","Type":9}')
             else
                 Buff[71](play, 1)
                 json.jskg = true
-                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#28ef01\'>溅射功能已开启...</font>","Type":9}')
+                Player.sendmsgEx(play,  '{"Msg":"<font color=\'#28ef01\'>溅射功能已开启...</font>","Type":9}')
             end
             setplaydef(play, VarCfg.T_czlb, tbl2json(json))
         end
@@ -936,7 +936,7 @@ npc[504] = function(play, p2, p3, data) --快人一步
         if getflagstatus(play, VarCfg.BS_mztq) == 0 then
             sendluamsg(play, 101, 999, 98, 21, "")
         else
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>每人只能购买一次</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>每人只能购买一次</font>","Type":9}')
         end
     end
 end
@@ -1826,10 +1826,10 @@ npc[998] = function(play, p2, p3, msg) --后台
                             )
                         elseif p3 == 4 then
                             if checktitle(dx, data.ch) then
-                                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>拿...</font>","Type":9}')
+                                Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>拿...</font>","Type":9}')
                                 Player.title_del(dx, data.ch)
                             else
-                                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>给...</font>","Type":9}')
+                                Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>给...</font>","Type":9}')
                                 Player.title_give(dx, data.ch)
                             end
                         end
@@ -2084,7 +2084,7 @@ npc[1004] = function(play, p2, p3, msg) --排行榜查询
             )
             sendluamsg(play, 101, 1004, 0, 0, '{"userid":"' .. msg .. '","zdl":' .. querymoney(dx, 29) .. "}")
         else
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>玩家不在线</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>玩家不在线</font>","Type":9}')
         end
     end
 end

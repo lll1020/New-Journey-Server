@@ -34,24 +34,24 @@ function ggn(play,id)
     if id == "1" then
         local item = linkbodyitem(play,73)
         if item == "0" then
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
         else
             if checktitle(play,"狂暴之力") then
-                Player.sendmsgEx(play,1,'{"Msg":"<font color=\'#ff0000\'>您已经开启过狂暴之力了</font>","Type":9}')
+                Player.sendmsgEx(play,'{"Msg":"<font color=\'#ff0000\'>您已经开启过狂暴之力了</font>","Type":9}')
             else
                 confertitle(play,"狂暴之力")
                 changecustomitemvalue(play,linkbodyitem(play,73),0,"=",20,1)
-                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+                Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
             end
         end
     elseif id == "2" then
         local item = linkbodyitem(play, 71)
         if item == "0" then
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
         else
             local sx = json2tbl(getitemcustomabil(play, item))
             if sx.abil[2].v[1][3] >= 30 then
-                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>已满级</font>","Type":9}')
+                Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>已满级</font>","Type":9}')
             else
                 changecustomitemvalue(play,item,0,"=",30,1)
                 changecustomitemvalue(play,item,1,"=",1500,1)
@@ -63,13 +63,13 @@ function ggn(play,id)
                 changecustomitemvalue(play,item,6,"=",600,1)
                 changecustomitemvalue(play,item,7,"=",600,1)
                 confertitle(play,"传功阁大神魔")
-                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+                Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
             end
         end
     elseif id == "3" then
         local item = linkbodyitem(play, 71)
         if item == "0" then
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
         else
             changecustomitemvalue(play,item,0,"=",400,0)
             changecustomitemvalue(play,item,1,"=",400,0)
@@ -82,22 +82,22 @@ function ggn(play,id)
             changecustomitemvalue(play,item,6,"=",20,0)
             changecustomitemvalue(play,item,7,"=",10,0)
             changecustomitemvalue(play,item,8,"=",20,0)
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
     elseif id == "4" then
         local zs = getbaseinfo(play,39)
         if zs > 5 then
-            Player.sendmsgEx(play,1,'{"Msg":"<font color=\'#ff7700\'>[转生]</font><font color=\'#ff0000\'>您转生在我这已经满级了</font>","Type":9}')
+            Player.sendmsgEx(play,'{"Msg":"<font color=\'#ff7700\'>[转生]</font><font color=\'#ff0000\'>您转生在我这已经满级了</font>","Type":9}')
         else
             setbaseinfo(play,39,6)
             confertitle(play,"6重转生")
             changecustomitemvalue(play,linkbodyitem(play,72),0,"=",15,2)
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
     elseif id == "5" then
         local item = linkbodyitem(play, 71)
         if item == "0" then
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
         else
             changecustomitemvalue(play,item,0,"=",500,2)
             changecustomitemvalue(play,item,1,"=",5000,2)
@@ -110,12 +110,12 @@ function ggn(play,id)
             changecustomitemvalue(play,item,8,"=",20,2)
             changecustomitemvalue(play,item,9,"=",40,2)
             confertitle(play,"八卦十重")
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
     elseif id == "6" then
         local item = linkbodyitem(play, 71)
         if item == "0" then
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
         else
             changecustomitemvalue(play,item,0,"=",10,3)
             changecustomitemvalue(play,item,1,"=",10,3)
@@ -132,19 +132,19 @@ function ggn(play,id)
             changecustomitemvalue(play,item,2,"=",15,4)
             changecustomitemvalue(play,item,3,"=",30,4)
             confertitle(play,"仙法阁十重")
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
     elseif id == "7" then
         local item = linkbodyitem(play, 71)
         if item == "0" then
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
         else
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
     elseif id == "8" then
         local item = linkbodyitem(play, 72)
         if item == "0" then
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
         else
             changecustomitemvalue(play,item,0,"+",100,0)
             changecustomitemvalue(play,item,1,"+",100,0)
@@ -160,12 +160,12 @@ function ggn(play,id)
             data.xt8 = 1
             setplaydef(play,VarCfg.T_ystz,tbl2json(data))
             confertitle(play,"天才地宝(地)")
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
     elseif id == "9" then
         local item = linkbodyitem(play, 72)
         if item == "0" then
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
         else
             changecustomitemvalue(play,item,0,"+",250,0)
             changecustomitemvalue(play,item,1,"+",250,0)
@@ -181,12 +181,12 @@ function ggn(play,id)
             data.yy8 = 1
             setplaydef(play,VarCfg.T_ystz,tbl2json(data))
             confertitle(play,"天才地宝(天)")
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
     elseif id == "10" then
         local item = linkbodyitem(play, 72)
         if item == "0" then
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
         else
             changecustomitemvalue(play,item,0,"+",500,0)
             changecustomitemvalue(play,item,1,"+",500,0)
@@ -202,21 +202,21 @@ function ggn(play,id)
             data.xc8 = 1
             setplaydef(play,VarCfg.T_ystz,tbl2json(data))
             confertitle(play,"天才地宝(神)")
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
     elseif id == "11" then
         setplaydef(play,VarCfg.T_gjyj,'{"gjyj":[100000,100000,100000,100000,100000,100000,100000,100000,100000,0,0,0]}')  --冠绝一界
-        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
     elseif id == "12" then
         setplaydef(play,VarCfg.U_qhdj[1],66)
         setplaydef(play,VarCfg.U_qhdj[2],66)
-        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
     elseif id == "13" then
         reddot(play, 200, 100, 10, 10, 0, "res/public/ists.png")
         reddot(play, 200, 101, 10, 10, 0, "res/public/ists.png")
         reddot(play, 0, tonumber("Button"), 10, 10, 0, "res/public/ists.png")
-        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
-        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>角色红点</font>","Type":9}')
+        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>角色红点</font>","Type":9}')
     elseif id == "14" then
         sendluamsg(play,101,1002,0,0,"测试地图")
     end
@@ -226,16 +226,16 @@ function ggna(play,id)
     if id == "1" then
         local item = linkbodyitem(play,73)
         if item == "0" then
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
         else
             deprivetitle(play,"狂暴之力")
             changecustomitemvalue(play,linkbodyitem(play,73),0,"=",0,1)
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
     elseif id == "2" then
         local item = linkbodyitem(play, 71)
         if item == "0" then
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
         else
             changecustomitemvalue(play,item,0,"=",0,1)
             changecustomitemvalue(play,item,1,"=",0,1)
@@ -248,12 +248,12 @@ function ggna(play,id)
             changecustomitemvalue(play,item,8,"=",0,1)
             deprivetitle(play,"传功阁小神魔")
             deprivetitle(play,"传功阁大神魔")
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
     elseif id == "3" then
         local item = linkbodyitem(play, 71)
         if item == "0" then
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
         else
             changecustomitemvalue(play,item,0,"=",0,0)
             changecustomitemvalue(play,item,1,"=",0,0)
@@ -268,7 +268,7 @@ function ggna(play,id)
             for i = 10, 200, 10 do
                 deprivetitle(play,"神诀感悟："..i.."次")
             end
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
     elseif id == "4" then
         setbaseinfo(play,39,0)
@@ -279,11 +279,11 @@ function ggna(play,id)
         deprivetitle(play,"5重转生")
         deprivetitle(play,"6重转生")
         changecustomitemvalue(play,linkbodyitem(play,72),0,"=",0,2)
-        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
     elseif id == "5" then
         local item = linkbodyitem(play, 71)
         if item == "0" then
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
         else
             changecustomitemvalue(play,item,0,"=",0,2)
             changecustomitemvalue(play,item,1,"=",0,2)
@@ -297,12 +297,12 @@ function ggna(play,id)
             changecustomitemvalue(play,item,9,"=",0,2)
             deprivetitle(play,"八卦五重")
             deprivetitle(play,"八卦十重")
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
     elseif id == "6" then
         local item = linkbodyitem(play, 71)
         if item == "0" then
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
         else
             changecustomitemvalue(play,item,0,"=",0,3)
             changecustomitemvalue(play,item,1,"=",0,3)
@@ -320,19 +320,19 @@ function ggna(play,id)
             changecustomitemvalue(play,item,3,"=",0,4)
             deprivetitle(play,"仙法阁五重")
             deprivetitle(play,"仙法阁十重")
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
     elseif id == "7" then
         local item = linkbodyitem(play,71)
         if item == "0" then
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
         else
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
     elseif id == "8" then
         local item = linkbodyitem(play,72)
         if item == "0" then
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
         else
             changecustomitemvalue(play,item,0,"-",100,0)
             changecustomitemvalue(play,item,1,"-",100,0)
@@ -348,12 +348,12 @@ function ggna(play,id)
             data.xt8 = nil
             setplaydef(play,VarCfg.T_ystz,tbl2json(data))
             deprivetitle(play,"天才地宝(地)")
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
     elseif id == "9" then
         local item = linkbodyitem(play,72)
         if item == "0" then
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
         else
             changecustomitemvalue(play,item,0,"-",250,0)
             changecustomitemvalue(play,item,1,"-",250,0)
@@ -369,12 +369,12 @@ function ggna(play,id)
             data.yy8 = nil
             setplaydef(play,VarCfg.T_ystz,tbl2json(data))
             deprivetitle(play,"天才地宝(天)")
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
     elseif id == "10" then
         local item = linkbodyitem(play,72)
         if item == "0" then
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
         else
             changecustomitemvalue(play,item,0,"-",500,0)
             changecustomitemvalue(play,item,1,"-",500,0)
@@ -390,33 +390,33 @@ function ggna(play,id)
             data.xc8 = nil
             setplaydef(play,VarCfg.T_ystz,tbl2json(data))
             deprivetitle(play,"天才地宝(神)")
-            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
         end
     elseif id == "11" then
         setplaydef(play,VarCfg.T_gjyj,'{"gjyj":[100000,100000,100000,100000,100000,100000,100000,100000,100000,0,0,0],"dhjl":[0,0,0,0,0,0,0,0,0]}')  --冠绝一界
-        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
     elseif id == "12" then
         setplaydef(play,VarCfg.T_gjyj,'{"gjyj":[100000,100000,100000,100000,100000,100000,100000,100000,100000,0,0,0],"dhjl":[1,1,1,1,1,0,0,0,0]}')  --冠绝一界
-        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
     elseif id == "13" then
         setbaseinfo(play,39,36)
-        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
     elseif id == "14" then
         callscriptex(play, "CHANGELEVEL", "=", 200)
-        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
     elseif id == "15" then
         local wpdx = linkbodyitem(play,76)
         local item = linkbodyitem(play,17)
         setitemcustomabil(play, wpdx,getitemcustomabil(play, item))
-        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
     elseif id == "16" then
         setplaydef(play,VarCfg.U_zllv,1)
-        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
     elseif id == "17" then
         local zl = json2tbl(getplaydef(play,VarCfg.T_zlxj))
         zl["dj"] = 1 + zl["dj"]
         setplaydef(play,VarCfg.T_zlxj,tbl2json(zl))
-        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
     elseif id == "18" then
         if getplaydef(play,VarCfg.U_zxrw[1])then
             newdeletetask(play,getplaydef(play,VarCfg.U_zxrw[1]))
@@ -429,7 +429,7 @@ function ggna(play,id)
     elseif id == "21" then
         repaircastle()
         addattacksabakall()
-        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>攻沙开始</font>","Type":9}')
+        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>攻沙开始</font>","Type":9}')
     elseif id == "23" then
         local cailiao = {
 "骷髅头盔[时装]",

@@ -15,6 +15,8 @@ VarCfg["A_统计信息用"]           = "A3"                                         
 VarCfg["A_行会积分记录"]           = "A4"                                                                          --A_行会积分记录
 VarCfg["A_行会积分记录跨服"]                  = "A5"                    --A_行会积分记录跨服
 VarCfg.A_XianFuRank =                   "A6"
+VarCfg["A_全服孤品"]          = "A7"                                                                          --A_全服孤品
+
 VarCfg["A_违规人员名单"]          = "A300"                                                                          --违规人员名单
 
 

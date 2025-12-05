@@ -811,6 +811,35 @@ teshudata = {
           "土灵根守护兽",
       },
     },
+    ["npc_1002"] = {
+        id = 1002,
+        name = "装扮",
+        details = {
+            sz = {
+                {name = "时装：首充", sEffect = 60037, shape = 1301},
+                {name = "时装：虫豸", sEffect = 60038, shape = 1302},
+                {name = "时装：骷髅", sEffect = 60039, shape = 1303},
+                {name = "时装：4大陆", sEffect = 60040, shape = 1304},
+                {name = "时装：5大陆", sEffect = 60041, shape = 1305},
+                {name = "时装：6大陆", sEffect = 60042, shape = 1306},
+                {name = "时装：冠名", sEffect = 60043, shape = 1307},
+            },
+            ch = {
+                {name = "天下谁人不识君", sEffect = 5103},
+                {name = "第一神壕", sEffect = 5104},
+                {name = "一剑开天门", sEffect = 5105},
+                {name = "潇洒天地笑红尘", sEffect = 5106},
+                {name = "狂歌一曲醉流年", sEffect = 5107},
+                {name = "当今棋圣", sEffect = 5108},
+            }
+        },
+      
+    },
+    ["npc_1003"] = {idx = 1,cost =  { {"焚天石",35},{"金币",1000000}},},
+    ["npc_1004"] = {idx = 2,cost =  { {"焚天石",35},{"金币",1000000}},},
+    ["npc_1005"] = {idx = 3,cost =  { {"焚天石",35},{"金币",1000000}},},
+    ["npc_1006"] = {idx = 4,cost =  { {"焚天石",35},{"金币",1000000}},},
+    ["npc_1007"] = {idx = 5,cost =  { {"焚天石",35},{"金币",1000000}},},
     ["sbk"] = {
         minimum = 600,  --最小积分才能获取奖励
         killPoint = 50, --杀人获得50积分

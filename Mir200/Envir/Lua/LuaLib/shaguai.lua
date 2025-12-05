@@ -72,7 +72,7 @@ shaguai = {
 			newchangetask(play, 1300,dl, boss < 50 and boss or 50,xg < 500 and xg or 500)
 			if boss >= 50 and xg >= 500 then
 				shaguai.jian(play,29)
-				Player.sendmsgEx(play,1,'{"Msg":"<font color=\'#00ff00\'>恭喜你完成除魔任务...</font>","Type":9}')
+				Player.sendmsgEx(play,'{"Msg":"<font color=\'#00ff00\'>恭喜你完成除魔任务...</font>","Type":9}')
 			end
 		end
 	end,

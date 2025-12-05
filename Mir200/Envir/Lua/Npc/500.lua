@@ -36,7 +36,7 @@ function npc.link(play,npcid,ew,aid)
 
 
             else
-                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}')
+                Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}')
             end
         end
 

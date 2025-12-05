@@ -19,3 +19,61 @@
 [2025-11-30 00:48:45:122] NewHttpPost(15-0-0)-----------------------------------
 
 
+[2025-12-03 14:09:50:045] Socket Err:10061
+[2025-12-03 14:09:50:204] 执行SQL异常 TDbThread.ExecSql,Sql:MERGE INTO dbo.TBL_VAR A
+USING ( SELECT 'system' AS FLD_USERID,'ITEMNUMBER' AS FLD_VAR_NAME,0 AS FLD_TYPE,'12198' AS FLD_VAR_VALUE,'2025-12-03 14:09:47.829' AS tUpdateTime,0 AS FLD_JOINTYPE 
+) B
+ON (A.FLD_USERID=B.FLD_USERID AND A.FLD_VAR_NAME=B.FLD_VAR_NAME )
+WHEN MATCHED THEN
+	UPDATE SET A.FLD_VAR_VALUE=B.FLD_VAR_VALUE,A.tUpdateTime=B.tUpdateTime,A.FLD_JOINTYPE=B.FLD_JOINTYPE
+WHEN NOT MATCHED THEN
+	INSERT(FLD_USERID,FLD_VAR_NAME,FLD_TYPE,FLD_VAR_VALUE,tUpdateTime,FLD_JOINTYPE)
+	VALUES(B.FLD_USERID,B.FLD_VAR_NAME,B.FLD_TYPE,B.FLD_VAR_VALUE,B.tUpdateTime,B.FLD_JOINTYPE);  Except：[FireDAC][Phys][ODBC][Microsoft][ODBC SQL Server Driver]通讯链接失败[00000000012A8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000012A7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000012A79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000012AAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001299702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[000000000129996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001299AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000002D23B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[00000000002D2418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[0000000000907E84] FireDAC.Comp.Client._ZN7Firedac4Comp6Client16TFDCustomCommand15InternalExecuteEiib (Line 6853, "FireDAC.Comp.Client.pas" + 16)
+[000000000090828F] FireDAC.Comp.Client._ZN7Firedac4Comp6Client16TFDCustomCommand7ExecuteEiib (Line 6871, "FireDAC.Comp.Client.pas" + 4)
+[0000000000911D25] FireDAC.Comp.Client._ZN7Firedac4Comp6Client17TFDAdaptedDataSet15DoExecuteSourceEii (Line 10127, "FireDAC.Comp.Client.pas" + 5)
+[00000000008C0701] FireDAC.Comp.DataSet._ZN7Firedac4Comp7Dataset10TFDDataSet7ExecuteEii (Line 3189, "FireDAC.Comp.DataSet.pas" + 9)
+[0000000000915089] FireDAC.Comp.Client._ZN7Firedac4Comp6Client14TFDCustomQuery7ExecSQLEv (Line 11583, "FireDAC.Comp.Client.pas" + 2)
+[0000000000EE80D6] uThread_Db._ZN10Uthread_db9TDbThread7ExecSqlEN6System13UnicodeStringEPNS1_7TVarRecEi (Line 3935, "uThread_Db.pas" + 11)
+[0000000000EE7C8F] uThread_Db._ZN10Uthread_db9TDbThread7ExecSqlEN6System13UnicodeStringE (Line 3861, "uThread_Db.pas" + 1)
+[0000000000EDEE0A] uThread_Db._ZN10Uthread_db9TDbThread14UpdateBatchVarEv (Line 2687, "uThread_Db.pas" + 29)
+[0000000000ECF016] uThread_Db._ZN10Uthread_db9TDbThread5OnRunEv (Line 458, "uThread_Db.pas" + 66)
+[00000000006F21D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[00000000006F1D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[00000000003F2963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[00000000002D2F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FF9E0A8E8D7] BaseThreadInitThunk
+[00007FF9E11AC53C] RtlUserThreadStart
+
+[2025-12-03 14:09:51:991] [Exception]TMainRunThread.LoadKuaFuConfig Error  Except：[FireDAC][Phys][ODBC][Microsoft][ODBC SQL Server Driver][DBNETLIB]ConnectionWrite (send()).[00000000012A8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000012A7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000012A79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000012AAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001299702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[000000000129996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001299AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000002D23B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[00000000002D2418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[000000000091484F] FireDAC.Comp.Client._ZN7Firedac4Comp6Client15TFDRdbmsDataSet10OpenCursorEb (Line 11214, "FireDAC.Comp.Client.pas" + 9)
+[00000000006A0354] Data.DB._ZN4Data2Db8TDataSet9SetActiveEb (Line 12665, "Data.DB.pas" + 14)
+[00000000008BB3BF] FireDAC.Comp.DataSet._ZN7Firedac4Comp7Dataset10TFDDataSet9SetActiveEb (Line 1615, "FireDAC.Comp.DataSet.pas" + 8)
+[00000000006A00F6] Data.DB._ZN4Data2Db8TDataSet4OpenEv (Line 12620, "Data.DB.pas" + 2)
+[00000000015BEFFF] svMain._ZN6Svmain14TMainRunThread15LoadKuaFuConfigEv (Line 3408, "svMain.pas" + 9)
+[00000000015BF868] svMain._ZN6Svmain14TMainRunThread15CheckKuaFuStateEv (Line 3476, "svMain.pas" + 3)
+[00000000015BD31E] svMain._ZN6Svmain14TMainRunThread5OnRunEv (Line 2798, "svMain.pas" + 155)
+[00000000006F21D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[00000000006F1D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[00000000003F2963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[00000000002D2F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FF9E0A8E8D7] BaseThreadInitThunk
+[00007FF9E11AC53C] RtlUserThreadStart
+
+
