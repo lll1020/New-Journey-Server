@@ -29,7 +29,7 @@ function npc.link(play,npcid,ew,aid)
 
     local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
     T_data.level = T_data.level or {}
-    if ew == 1 then--抽取低级灵根
+    if ew == 1 and false then--抽取低级灵根
         T_data.level[""..math.random(1, 5)] = 0
         Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
         Player.sendmsgEx(play, "提示:#251|你获得了新的灵根，请前往灵根升级界面查看")
