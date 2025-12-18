@@ -1,0 +1,19 @@
+[2025-12-14 21:01:57:277] >>>>>>HumTime id:0  onTimer1-15 
+
+[2025-12-14 21:10:48:640] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：63; NpcThreadId: 15220, CurPlayThreadId: 15220
+[2025-12-14 21:10:48:640] [玩家名字]Lua执行耗时过高:63ms msgid:100 501 1 0 
+
+[2025-12-15 21:52:41:331] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：109; NpcThreadId: 15220, CurPlayThreadId: 15220
+[2025-12-15 21:52:41:331] [玩家名字]Lua执行耗时过高:109ms msgid:100 28 1 0 
+
+[2025-12-15 23:14:13:433] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：78; NpcThreadId: 15220, CurPlayThreadId: 15220
+[2025-12-15 23:14:13:433] [玩家名字]Lua执行耗时过高:78ms msgid:100 28 1 4 
+
+[2025-12-15 23:24:30:925] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 15220, CurPlayThreadId: 15220
+[2025-12-15 23:24:30:925] [玩家名字]Lua执行耗时过高:31ms msgid:105 665 665 0 
+
+[2025-12-16 00:09:13:504] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：31; NpcThreadId: 15220, CurPlayThreadId: 15220
+[2025-12-16 00:09:13:504] [玩家名字k]Lua执行耗时过高:31ms msgid:100 28 1 10 
+
+[2025-12-16 22:47:33:334] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：32; NpcThreadId: 15220, CurPlayThreadId: 15220
+

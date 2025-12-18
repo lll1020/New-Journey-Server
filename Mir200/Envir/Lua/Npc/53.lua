@@ -103,6 +103,10 @@ function npc.link(play,npcid,ew,aid,data)
 
         -- 当前等级与下一等级的配置必须存在
         local currentLevelList, slotLookup = buildSlotLookup(level)
+        if level >= 3 then
+            Player.sendmsgEx(play,"合成失败：已达最高等级#57")
+            return
+        end
         local nextLevelList = _config.cost[level + 1]
         if not currentLevelList or not slotLookup or not nextLevelList then
             Player.sendmsgEx(play,"合成失败：对应等级配置缺失#57")

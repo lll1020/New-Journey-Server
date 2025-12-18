@@ -68,6 +68,7 @@ function npc.link(play,npcid,ew,aid)
             Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
             Player.sendmsgEx(play, "恭喜你，成功激活了#249|灵根")
             sendluamsg(play,100,npcid,2,aid,"")
+            sendluamsg(play,101,1005,0,0,"rwwc")
         else
             Player.sendmsgEx(play, "激活条件未达成，无法激活灵根#57")
         end

@@ -94,10 +94,10 @@ kfhg 23 26 -> kfhjsbk 86 102
 [灰界西部|D11032   灰界西部] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 
-[虚妄山脉|new_44   灰界北部] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[鬼嘲深渊|new_44   灰界西部] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[叹息旷野|new_44   灰界东部] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[禁忌之海|new_44   灰界南部] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[虚妄山脉|new_44   虚妄山脉] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[鬼嘲深渊|new_44   鬼嘲深渊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[叹息旷野|new_44   叹息旷野] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[禁忌之海|new_44   禁忌之海] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 
 ;藏星海

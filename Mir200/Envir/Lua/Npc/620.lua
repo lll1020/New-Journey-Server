@@ -3,10 +3,12 @@ npc = {}
 
 --ÐÞ¸´ÐùÔ¯½£
 
-local _config = Guard.getConfig("npc_601")
+local _config = Guard.getConfig("npc_620")
 
 function npc.main(play,npcid)
-    sendluamsg(play,100,npcid,0,0,"")
+    local data = {}
+    data["T_dljq"] = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+    sendluamsg(play,100,npcid,0,0,tbl2json(data))
 end
 
 function npc.link(play,npcid,ew,aid)
@@ -26,20 +28,22 @@ function npc.link(play,npcid,ew,aid)
     end
 
     if ew == 1 then
-        if not checktitle(play, _config.details.ch) then
+        local T_dljq = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+        if not T_dljq["npc_620"] or T_dljq["npc_620"] < 2 then
             local name, num = Player.checkItemNumByTable(play, _config.cost)
             if name then
                 Player.sendmsgEx(play, string.format("ÄãµÄ|%s#249|²»×ã|%d#249", name, num))
+                Player.sendmsgEx(play, "ÒõÑôÓñÅåºÏ³ÉÊ§°Ü#57")
                 return
             end
-            Player.takeItemByTable(play, _config.cost, ",ÐÞ¸´ÐùÔ¯½£",nil)
-
-
-            Player.title_give(play, _config.details.ch)
-            Player.sendmsgEx(play, "ÐùÔ¯½£ÐÞ¸´³É¹¦£¬»ñµÃ³ÆºÅ¡¾".._config.details.ch.."¡¿")
+            Player.takeItemByTable(play, _config.cost, ",ÒõÑôÓñÅå",nil)
+            T_dljq["npc_620"] = 2
+            Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
+            sendluamsg(play,100,npcid,1,0,"")
+            Player.sendmsgEx(play, "ÒõÑôÓñÅåºÏ³É³É¹¦#57")
             sendluamsg(play,101,1005,0,0,"rwwc")
         else
-            Player.sendmsgEx(play, "ÄãÒÑ¾­ÓµÓÐÐùÔ¯½£³ÆºÅ£¬ÎÞÐèÐÞ¸´#249")
+            Player.sendmsgEx(play, "ÄãÒÑ¾­ÓµÓÐÒõÑôÓñÅå#249")
             return
         end
     end

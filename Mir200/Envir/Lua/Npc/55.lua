@@ -49,6 +49,7 @@ function npc.link(play, npcid, p2, p3, msgData)
             Player.sendmsgEx(play,  "领取任务")
             shaguai.jia(play,_config.shaguai_id)
             sendluamsg(play,101,1005,0,0,"rwjs")
+            sendluamsg(play,100,npcid,1,1,"")
         end
     elseif p2 == 2 then
         if jq_data["npc55"] and jq_data["npc55"] == 1 then --已领取
@@ -58,6 +59,7 @@ function npc.link(play, npcid, p2, p3, msgData)
                 Player.sendmsgEx(play,  "任务完成")
                 sendluamsg(play,101,1005,0,0,"rwwc")
                 Player.rwjl(play, _config.rwjl, "开辟仙府任务奖励")
+                sendluamsg(play,100,npcid,1,2,"")
             else
                 Player.sendmsgEx(play,  "你还没有完成任务#57")
                 return
