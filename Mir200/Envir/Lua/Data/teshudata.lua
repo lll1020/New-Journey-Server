@@ -709,6 +709,19 @@ teshudata = {
         },
         ch = "灾厄杀手",
     },
+    ["npc_47"] = {
+        id = 47,
+        name = "藏宝图",
+        give = {{"铲子",1}},
+        cost = {{"藏宝图碎片",10}},
+        weight = "1#70|2#20|3#10",
+        max = 3,
+        details = {
+            {itme = "贵族藏宝图",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",1},{"元宝",1},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "地图2",map_x = 1,map_y = 1},{map_name = "地图2",map_x = 1,map_y = 1},{map_name = "地图2",map_x = 1,map_y = 1}}},
+            {itme = "王室藏宝图",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",1},{"元宝",1},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "地图3",map_x = 1,map_y = 1},{map_name = "地图3",map_x = 1,map_y = 1},{map_name = "地图3",map_x = 1,map_y = 1}}},
+            {itme = "普通藏宝图",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",1},{"元宝",1},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "地图1",map_x = 1,map_y = 1},{map_name = "地图1",map_x = 1,map_y = 1},{map_name = "地图1",map_x = 1,map_y = 1}}},
+        },
+    },
     ["npc_51"] = {
         id = 51,
         name = "斗笠升级2",

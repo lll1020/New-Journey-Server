@@ -118,6 +118,7 @@ VarCfg["F_解绑状态"]                          = 799                --F_首充解绑_
 --个人J变量
 VarCfg.J_kill_boss_mum                      = "J1"                  --每日击杀Boss数量
 VarCfg["J_今日真实充值"]                     = "J2"                  --J_今日真实充值
+VarCfg["J_今日藏宝图次数"]                     = "J2"                  --J_今日藏宝图次数
 
 VarCfg.J_mrfhw          = "J11"                                                                          --每日使用复活丹次数
 VarCfg.J_jsgw         =   {"J12","J13"}                                                                    --每日大小怪--数量
@@ -180,6 +181,8 @@ VarCfg["T_聚宝盆"]           = "T44"                                            
 VarCfg["T_飞剑"]           = "T45"                                                                         --T_飞剑
 VarCfg["T_技能升级"]           = "T46"                                                                         --T_技能升级
 VarCfg.T_XianFuData           = "T47"                                                                         --T_仙府
+VarCfg["T_藏宝图"]           = "T48"                                                                         --T_藏宝图
+
 
 
 
