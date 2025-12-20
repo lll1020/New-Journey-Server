@@ -182,6 +182,7 @@ VarCfg["T_飞剑"]           = "T45"                                              
 VarCfg["T_技能升级"]           = "T46"                                                                         --T_技能升级
 VarCfg.T_XianFuData           = "T47"                                                                         --T_仙府
 VarCfg["T_藏宝图"]           = "T48"                                                                         --T_藏宝图
+VarCfg["T_八卦"]           = "T49"                                                                         --T_八卦
 
 
 

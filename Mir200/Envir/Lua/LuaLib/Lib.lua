@@ -11,29 +11,21 @@ function Login_msg(play, id, msg, leve)
 	if id == 0 then -- 新人登录提示语句
 		sendmsgnew(play, 255, 0, '玩家{《' .. getbaseinfo(play, 1) .. '》/FCOLOR=251}登录{[' .. getconst(play, '<$SERVERNAME>') .. ']/FCOLOR=250}，修真世界定将掀起一阵血雨腥风！！！', 1, 3)
 	elseif id == 1 then -- 下地图提示语句
-		Player.sendmsgEx(play,  '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'>【地图打宝】：</font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>前往地图<font color=\'#00FFFF\'>[' .. getbaseinfo(play, 45) .. ']</font>开始探险之旅！</outline>","Type":1}')
+		sendmsgnew(play, 255, 0,  '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'>【地图打宝】：</font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>前往地图<font color=\'#00FFFF\'>[' .. getbaseinfo(play, 45) .. ']</font>开始探险之旅！</outline>","Type":1}', 1, 3)
 	elseif id == 2 then -- 转生成功提示
-		Player.sendmsgEx(play,  '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'>【人物转生】：</font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>成功转生<font color=\'#00FFFF\'>[' .. msg .. ']</font>仙途畅通！</outline>","Type":1}')
+        sendmsgnew(play, 255, 0,  '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'>【人物转生】：</font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>成功转生<font color=\'#00FFFF\'>[' .. msg .. ']</font>仙途畅通！</outline>","Type":1}', 1, 3)
 	elseif id == 3 then -- 成功开启狂暴提示
 		sendmsgnew(play, 255, 0, '狂暴之力：玩家{《' .. getbaseinfo(play, 1) .. '》/FCOLOR=251}成功开启{[狂暴之力]/FCOLOR=250},击杀此人可获得额外奖励...', 1, 3)
 	elseif id == 4 then -- 死亡掉狂暴提示
 		sendmsgnew(play, 255, 0, '前方战报：狂暴玩家{《' .. getbaseinfo(play, 1) .. '》/FCOLOR=251}被{《' .. getbaseinfo(msg, 1) .. '》/FCOLOR=250}斩杀，被碾碎在脚下。...', 1, 3)
-	elseif id == 5 then -- 轩辕剑，切割之斧提示
-		Player.sendmsgEx(play,  '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'>【' .. msg .. '晋升】：</font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>成功升级<font color=\'#00FFFF\'>[' .. msg .. ']</font>仙途畅通！</outline>","Type":1}')
-	elseif id == 6 then -- 公用修炼提示
-		Player.sendmsgEx(play,  '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'>【' .. msg .. '晋升】：</font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>成功<font color=\'#00FFFF\'>[' .. msg .. leve .. '级]</font>仙途畅通！</outline>","Type":1}')
-	elseif id == 7 then -- 神魔习练招式提示
-		Player.sendmsgEx(play,  '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'>【锻造】：</font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>成功锻造<font color=\'#00FFFF\'>[' ..msg .. '] 到达 '..leve.. '级</font>，仙途畅通！</outline>","Type":1}')
-	elseif id == 10 then -- 回收
+    elseif id == 10 then -- 回收
         if msg > 0 or leve > 0 then
-            Player.sendmsgEx(play,  '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'>【装备回收】：</font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>成功回收装备,获得<font color=\'#00FFFF\'>[' .. msg .. ']</font>元宝，<font color=\'#00FFFF\'>[' .. leve .. ']</font>元宝！</outline>","Type":1}')
+            sendmsgnew(play, 255, 0, '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'>【装备回收】：</font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>成功回收装备,获得<font color=\'#00FFFF\'>[' .. msg .. ']</font>元宝，<font color=\'#00FFFF\'>[' .. leve .. ']</font>元宝！</outline>","Type":1}' , 1, 3)
         end
 	elseif id == 12 then -- 成功开启风暴提示
 		sendmsgnew(play, 255, 0, '究极狂暴：玩家{《' .. getbaseinfo(play, 1) .. '》/FCOLOR=251}成功开启{[究极狂暴]/FCOLOR=250},击杀此人可获得额外奖励...', 1, 3)
     elseif id == 13 then -- 死亡掉狂暴提示
 		sendmsgnew(play, 255, 0, '前方战报：风暴玩家{《' .. getbaseinfo(play, 1) .. '》/FCOLOR=251}被{《' .. getbaseinfo(msg, 1) .. '》/FCOLOR=250}手起刀落放倒在地...', 1, 3)
-    elseif id == 14 then -- 天渊剑甲升级提示
-        Player.sendmsgEx(play,  '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'>【天渊剑甲升级】：</font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>成功升级<font color=\'#00FFFF\'>[' .. msg .. ']</font>仙途畅通！</outline>","Type":1}')
     elseif id == 15 then -- 实物回收
         sendmsgnew(play, 255, 0, '玩家{《' .. getbaseinfo(play, 1) .. '》/FCOLOR=251}实物回收{[' .. msg .. ']/FCOLOR=250}，获得元宝{[' .. leve .. ']/FCOLOR=250}', 1, 3)
     elseif id == 18 then -- 充值

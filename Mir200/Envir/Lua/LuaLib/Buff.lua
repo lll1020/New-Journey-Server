@@ -58,7 +58,7 @@ Buff = {
             if sj - getplaydef(play,VarCfg.N_Aigj[1]) >= 60 and not getbaseinfo(play,0) and json.gjkg then
                 setplaydef(play,VarCfg.N_Aigj[1],sj)
                 map(play,getbaseinfo(play,3))
-                Player.sendmsgEx(play,'{"Msg":"<font color=\'#28ef01\'>AI挂机：被人物攻击自动随机！</font>","Type":9}')
+                sendmsg(play,1,'{"Msg":"<font color=\'#28ef01\'>AI挂机：被人物攻击自动随机！</font>","Type":9}')
                 startautoattack(play)
             end
             return 0

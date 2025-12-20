@@ -5,7 +5,7 @@ function stdmodefunc9(play, item)
     if getplaydef(play,"N$战斗状态") < os.time() then
         map(play,getbaseinfo(play,3))
     else
-        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}')
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}')
     end
     return false
 end
@@ -34,7 +34,7 @@ function stdmodefunc10(play, item)
             addmpper(play, '=', 100)
         end
     else
-        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}')
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}')
     end
     return false
 end
@@ -45,8 +45,8 @@ end
 --------------------双击物品触发-------------------红名清洗卷
 function stdmodefunc20(play, item)
     setbaseinfo(play,46,getbaseinfo(play,46)-100)
-    Player.sendmsgEx(play,'{"Msg":"pk值下降100了...","FColor":219,"BColor":255,"Type":1}')
-    Player.sendmsgEx(play,'{"Msg":"剩余'..getbaseinfo(play,46)..'...","FColor":219,"BColor":255,"Type":1}')
+    sendmsg(play,1,'{"Msg":"pk值下降100了...","FColor":219,"BColor":255,"Type":1}')
+    sendmsg(play,1,'{"Msg":"剩余'..getbaseinfo(play,46)..'...","FColor":219,"BColor":255,"Type":1}')
 end
 --------------------双击物品触发-------------------灵石通用
 function stdmodefunc21(play, item)
@@ -112,38 +112,38 @@ end
 function stdmodefunc234(play) ---千里传音 提示：使用50级
     if checkkuafu(play) then
         stop(play)
-        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>跨服不能使用该物品</font>","Type":9}')
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>跨服不能使用该物品</font>","Type":9}')
         return
     end
     stop(play)
     if getbaseinfo(play,6) < 60 then
-        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>使用千里传音需要达到60级！</font>","Type":9}')
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>使用千里传音需要达到60级！</font>","Type":9}')
         return
     end
     say(play, "<发送/@@InputString23(请输入传音内容：)>\\")
 end
 function inputstring23(play) ---
     if getbaseinfo(play,6) < 60 then
-        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>使用千里传音需要达到60级！</font>","Type":9}')
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>使用千里传音需要达到60级！</font>","Type":9}')
         return
     end
     local text = getplaydef(play, "S23")
     local name_len = string.len(text)
     if name_len < 1 then
-        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>请输入内容</font>","Type":9}')
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>请输入内容</font>","Type":9}')
         return
     end
     if name_len > 100 then
-        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>内容过长</font>","Type":9}')
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>内容过长</font>","Type":9}')
         return
     end
     if getbagitemcount(play, "千里传音") < 1 then
-        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>千里传音不足</font>","Type":9}')
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>千里传音不足</font>","Type":9}')
         return
     end
     local result, name = exisitssensitiveword(text)
     if result then
-        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>内容包含敏感词</font>","Type":9}')
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>内容包含敏感词</font>","Type":9}')
         return
     end
     takeitem(play, "千里传音", 1)
@@ -151,7 +151,7 @@ function inputstring23(play) ---
 end
 function FsendQfPz(actor,str,count)
     for i = 1, count, 1 do
-        Player.sendmsgEx(actor, 2, '{"Msg":"'..str..'","FColor":250,"BColor":0,"Y":'..(90+i*30)..',"Type":5}')
+        sendmsg(actor, 2, '{"Msg":"'..str..'","FColor":250,"BColor":0,"Y":'..(90+i*30)..',"Type":5}')
     end
 end
 ---千里传音 --end
@@ -160,13 +160,13 @@ end
 function stdmodefunc30(play, item)
     local exp = getplaydef(play, VarCfg["U_境界修炼"][2])
     if exp >= 10000000 then
-        Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>境界修炼已满级</font>","Type":9}')
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>境界修炼已满级</font>","Type":9}')
         return
     end
     exp = exp + getstditeminfo(getiteminfo(play, item, 2), 8)
     if exp > 10000000 then exp = 10000000 end
     setplaydef(play, VarCfg["U_境界修炼"][2], exp)
-    Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>境界修炼经验+'..getstditeminfo(getiteminfo(play, item, 2), 8)..'</font>","Type":9}')
+    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>境界修炼经验+'..getstditeminfo(getiteminfo(play, item, 2), 8)..'</font>","Type":9}')
 end
 
 function stdmodefunc31(play, item)
@@ -177,7 +177,7 @@ function stdmodefunc31(play, item)
     local itemobj = linkbodyitem(play, teshudata["npc_24"].where)
     setcustomitemprogressbar(play, itemobj, 1, tbl2json({["cur"] = T_data.jf}))
     refreshitem(play, itemobj)
-    Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>天书杀意值+'..getstditeminfo(getiteminfo(play, item, 2), 8)..'</font>","Type":9}')
+    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>天书杀意值+'..getstditeminfo(getiteminfo(play, item, 2), 8)..'</font>","Type":9}')
 end
 
 

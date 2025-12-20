@@ -79,7 +79,7 @@ function beginteleport(play)
     local sj  = os.time()
     local bl = sj - getplaydef(play,"N$传送功能CD")
     if bl < 5 then
-        Player.sendmsgEx(play,'{"Msg":"请等待'..(5-bl)..'秒后在使用","FColor":56,"BColor":255,"Type":1}')
+        sendmsg(play,1,'{"Msg":"请等待'..(5-bl)..'秒后在使用","FColor":56,"BColor":255,"Type":1}')
         return false
     end
     local du = getbaseinfo(play, 3)
@@ -87,7 +87,7 @@ function beginteleport(play)
         setplaydef(play,"N$传送功能CD",sj)
         return true
     end
-    Player.sendmsgEx(play,  '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}')
+    sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}')
     return false
 end
 
@@ -104,7 +104,7 @@ function ai_qhdt(play)
             if #lins > 0 and not getbaseinfo(play,0) then
                 map(play, lins[math.random(#lins)])
                 delaygoto(play, 500, "ai_ksgj", 0)
-                Player.sendmsgEx(play,  '{"Msg":"<font color=\'#28ef01\'>AI挂机：已自动切换地图!</font>","Type":9}')
+                sendmsg(play, 1, '{"Msg":"<font color=\'#28ef01\'>AI挂机：已自动切换地图!</font>","Type":9}')
             end
         end
     end
@@ -457,7 +457,7 @@ function attack(play, Target, Hiter, MagicId)
 			setplaydef(play, VarCfg.N_gscd, sj)
 			setplaydef(play, VarCfg.N_dqgs, gs)
 			callscriptex(play, 'changespeedex', 2, gs)
-			Player.sendmsgEx(play,  '{"Msg":"<font color=\'#00ff00\'>当前攻击速度+' .. gs .. '%</font>","Type":9}')
+			sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>当前攻击速度+' .. gs .. '%</font>","Type":9}')
 		end
 	end
 	local bl = getplaydef(play, VarCfg.S_buffgjh)
@@ -608,7 +608,7 @@ function killmon(play, mob)
             local bianshi = getbaseinfo(play, 51, 207)
             if bianshi > 0 then
                 if math.random(10000) <= bianshi then
-                    Player.sendmsgEx(play,'{"Msg":"<font color=\'#00ff00\'>[鞭尸]</font>触发鞭尸['..mz..']","FColor":253,"BColor":255,"Type":9}')
+                    sendmsg(play,1,'{"Msg":"<font color=\'#00ff00\'>[鞭尸]</font>触发鞭尸['..mz..']","FColor":253,"BColor":255,"Type":9}')
                     local guaiwu = genmonex(getbaseinfo(play, 3), getbaseinfo(play, 4), getbaseinfo(play, 5), mz, 1, 1, play, 254, mz .. "[鞭尸]", 0)
                     for _, v in pairs(guaiwu) do
                         humanhp(v, "=", 1)
@@ -691,7 +691,7 @@ function killplay(play,hiter)
     if getsysvar(constant.G_kqfz) >= 40 and getsysvar(constant.G_kqfz) <= 50 then
         local jf = getplayvar(play, "HUMAN", "比武大会") + 50
         setplayvar(play, "HUMAN", "比武大会", jf, 1)
-        Player.sendmsgEx(play,'{"Msg":"比武大会：当前积分:'..jf..'","FColor":253,"BColor":255,"Type":1}')
+        sendmsg(play,1,'{"Msg":"比武大会：当前积分:'..jf..'","FColor":253,"BColor":255,"Type":1}')
         jf = getplayvar(hiter, "HUMAN", "比武大会") + 10
         setplayvar(hiter, "HUMAN", "比武大会", jf, 1)
         Player.sendmsgEx(hiter,1,'{"Msg":"比武大会：当前积分:'..jf..'","FColor":253,"BColor":255,"Type":1}')
@@ -834,12 +834,12 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
 end
 -------------------开始挂机触发--------------------
 function startautoplaygame(play)
-    Player.sendmsgEx(play,  '{"BColor":69,"FColor":255,"Msg":"开启挂机","Type":1}')
+    sendmsg(play, 1, '{"BColor":69,"FColor":255,"Msg":"开启挂机","Type":1}')
     setflagstatus(play,300,1)
 end
 -------------------停止挂机触发--------------------
 function stopautoplaygame(play)
-    Player.sendmsgEx(play,  '{"BColor":69,"FColor":255,"Msg":"停止挂机","Type":1}')
+    sendmsg(play, 1, '{"BColor":69,"FColor":255,"Msg":"停止挂机","Type":1}')
     setflagstatus(play,300,0)
 end
 
@@ -903,7 +903,7 @@ end
 
 function updateguildnotice(play)
     stop(play)
-    Player.sendmsgEx(play,'{"Msg":"<font color=\'#00ff00\'>禁止修改行会通告</font>","Type":9}')
+    sendmsg(play,1,'{"Msg":"<font color=\'#00ff00\'>禁止修改行会通告</font>","Type":9}')
 end
 --点击采集
 function collectmonex(play,monIDX,monName,monMakeIndex)
@@ -974,7 +974,7 @@ end
 
 function canpaimaiitem(actor,itemIdx,itemMakeIndex,moneyType,price)
     if checkkuafu(actor) then
-        Player.sendmsgEx(actor, 1, '{"Msg":"<font color=\'#ff0000\'>跨服不能上架拍卖行！</font>","Type":9}')
+        sendmsg(actor, 1, '{"Msg":"<font color=\'#ff0000\'>跨服不能上架拍卖行！</font>","Type":9}')
         callscriptex(actor,"allowpaimai","1")
         return
     end
@@ -982,21 +982,21 @@ end
 
 function biddingpaimaiitem(actor)
     if checkkuafu(actor) then
-        Player.sendmsgEx(actor,1, '{"Msg":"<font color=\'#ff0000\'>跨服不能使用拍卖行！</font>","Type":9}')
+        sendmsg(actor,1, '{"Msg":"<font color=\'#ff0000\'>跨服不能使用拍卖行！</font>","Type":9}')
         callscriptex(actor,"allowpaimai","1")
         return
     end
 end
 function cangetbackpaimaiitem(actor)
     if checkkuafu(actor) then
-        Player.sendmsgEx(actor, 1, '{"Msg":"<font color=\'#ff0000\'>跨服不能使用拍卖行！</font>","Type":9}')
+        sendmsg(actor, 1, '{"Msg":"<font color=\'#ff0000\'>跨服不能使用拍卖行！</font>","Type":9}')
         callscriptex(actor,"allowpaimai","1")
         return
     end
 end
 function buypaimaiitem(actor,itemIdx,itemMakeIndex,moneyType,price)
     if checkkuafu(actor) then
-        Player.sendmsgEx(actor, 1, '{"Msg":"<font color=\'#ff0000\'>跨服不能使用拍卖行！</font>","Type":9}')
+        sendmsg(actor, 1, '{"Msg":"<font color=\'#ff0000\'>跨服不能使用拍卖行！</font>","Type":9}')
         callscriptex(actor,"allowpaimai","1")
         return
     end

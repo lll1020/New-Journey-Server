@@ -33,7 +33,7 @@ function npc.link(play,npcid,ew,aid,data)
         local J_cs = getplaydef(play, VarCfg["J_今日藏宝图次数"])
         if J_cs >= _config.max then
             Player.sendmsgEx(play, "今日藏宝图次数已达上限#249")
-            return
+            return 
         end
 
         local name, num = Player.checkItemNumByTable(play, _config.cost)
@@ -41,6 +41,7 @@ function npc.link(play,npcid,ew,aid,data)
             Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
             return
         end
+        Player.takeItemByTable(play, _config.cost, ",藏宝图",nil)
 
         local level = ransjstr(_config.weight, 1, 3)
         level = tonumber(level)
