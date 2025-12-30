@@ -1,0 +1,11 @@
+[2025-12-21 12:55:44:538] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：32; NpcThreadId: 37060, CurPlayThreadId: 37060
+
+[2025-12-21 15:42:35:410] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：31; NpcThreadId: 44808, CurPlayThreadId: 44808
+[2025-12-21 15:42:35:410] [玩家名字k]Lua执行耗时过高:31ms msgid:100 502 1 0 
+
+[2025-12-23 17:39:10:585] LuaNPC:玩家名字k ID:999999999 执行 sendability player:玩家名字k 耗时：31; NpcThreadId: 44808, CurPlayThreadId: 44808
+[2025-12-23 17:39:10:587] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：31; NpcThreadId: 44808, CurPlayThreadId: 44808
+
+[2025-12-24 08:26:18:767] LuaNPC:玩家名字k ID:999999999 执行 sendability player:玩家名字k 耗时：32; NpcThreadId: 44808, CurPlayThreadId: 44808
+[2025-12-24 08:26:18:773] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：32; NpcThreadId: 44808, CurPlayThreadId: 44808
+

@@ -62,7 +62,7 @@ function npc.link(play,npcid,ew,aid)
 
     end
 end
----- NPC副本结束后回调
+---- 
 function npc_200_fbjs(play)
     startautoattack(play) --自动攻击
 end

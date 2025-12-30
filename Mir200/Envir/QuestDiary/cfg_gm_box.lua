@@ -197,3 +197,6 @@ local config = {
     {page = 11, index = 17, Command = "@map", title = "显示地图信息"},
 }
 return config
+
+
+

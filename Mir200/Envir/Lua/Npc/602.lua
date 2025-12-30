@@ -83,7 +83,7 @@ function syt_jrdt_602(play,idx)
     addmirrormap("D3804_2",dtm,"灵根副本",300,"xtc")
     --设置玩家进入镜像地图
     mapmove(play,dtm,29,27,2)
-    local gw = genmonex(dtm,29,31,_config.mob[idx],2,1,0,54,"",0)
+    local gw = genmonex(dtm,29,31,_config.details[idx].mob_name,2,1,0,54,"",0)
 
     startautoattack(play)
     delaygoto(play,100,"@npc_602_fbjs")

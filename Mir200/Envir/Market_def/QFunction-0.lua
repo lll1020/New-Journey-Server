@@ -124,7 +124,6 @@ function entermap(play)
     else
         delbuff(play,20003)
     end
-
     if dt == "比武大会" then
         if getsysvar(VarCfg["G_开区分钟"]) < 75 then
             local hsmy_px = sorthumvar("比武大会",1,1,5)

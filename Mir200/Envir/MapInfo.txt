@@ -152,62 +152,62 @@ kfhg 23 26 -> kfhjsbk 86 102
 
 
 ;四大陆地图一
-[酆都鬼城|new_44   酆都鬼城] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[鬼门关|new_44   鬼门关] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[黄泉路|new_44   黄泉路] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[酆都鬼城|egdl1   酆都鬼城] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[鬼门关|mjsc   鬼门关] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[黄泉路|D2900   黄泉路] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[奈何桥|new_44   奈何桥] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[罗酆六天|new_44   罗酆六天] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[十八层地狱|new_44   十八层地狱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[六道轮回|new_44   六道轮回] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[奈何桥|D2907   奈何桥] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[罗酆六天|ID8_004   罗酆六天] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[十八层地狱|ttyj   十八层地狱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[六道轮回|egdl4   六道轮回] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 ;四大陆地图二
-[大唐·长安城|new_44   大唐·长安城] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[东海龙宫|new_44   东海龙宫] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[黑风山|new_44   黑风山] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[黄风岭|new_44   黄风岭] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[女儿国|new_44   女儿国] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[通天河|new_44   通天河] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[狮驼岭|new_44   狮驼岭] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[天竺山|new_44   天竺山] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[火焰山|new_44   火焰山] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[大唐·长安城|bjzc   大唐·长安城] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[东海龙宫|cgzd   东海龙宫] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[黑风山|ER61_Forest   黑风山] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[黄风岭|ER71_Raider   黄风岭] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[女儿国|qcdl   女儿国] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[通天河|ER51_Ice   通天河] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[狮驼岭|001   狮驼岭] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[天竺山|sdlzc   天竺山] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[火焰山|gzdj   火焰山] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 ;四大陆地图三
-[生肖灵域|new_44   生肖灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[生肖灵域|tbsl   生肖灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[灵域·一层|new_44   灵域·一层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[灵域·一层|srsjq   灵域·一层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[子鼠灵域|new_44   子鼠灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[丑牛灵域|new_44   丑牛灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[寅虎灵域|new_44   寅虎灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[卯兔灵域|new_44   卯兔灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[灵域·二层|new_44   灵域·二层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[子鼠灵域|sgzc   子鼠灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[丑牛灵域|sj   丑牛灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[寅虎灵域|fxsjq   寅虎灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[卯兔灵域|yinzlj   卯兔灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[灵域·二层|xwyz   灵域·二层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[辰龙灵域|new_44   辰龙灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[巳蛇灵域|new_44   巳蛇灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[午马灵域|new_44   午马灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[未羊灵域|new_44   未羊灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[灵域·三层|new_44   灵域·三层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[辰龙灵域|ID8_007   辰龙灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[巳蛇灵域|PanyeShiKuPTFB02   巳蛇灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[午马灵域|QTD2304_4Z   午马灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[未羊灵域|WomaDYFb00   未羊灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[灵域·三层|4dlzc   灵域·三层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[申猴灵域|new_44   申猴灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[酉鸡灵域|new_44   酉鸡灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[戌狗灵域|new_44   戌狗灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[亥猪灵域|new_44   亥猪灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[灵域·秘境|new_44   灵域·秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[申猴灵域|XS01   申猴灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[酉鸡灵域|YGShiwang01   酉鸡灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[戌狗灵域|ZD1103   戌狗灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[亥猪灵域|D3802_S3   亥猪灵域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[灵域·秘境|cymj   灵域·秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 ;四大陆地图四
 
-[传说之地|new_44   传说之地] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[盘古开天|new_44   盘古开天] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[羿射九日|new_44   羿射九日] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[传说之地|dzyj   传说之地] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[盘古开天|dldlzc   盘古开天] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[羿射九日|D3400_1   羿射九日] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[不周山|new_44   不周山] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[女娲补天|new_44   女娲补天] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[不周山|yzlj   不周山] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[女娲补天|tzlj   女娲补天] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[黑白无常|new_44   黑白无常] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[后土娘娘|new_44   后土娘娘] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[真假玉帝|new_44   真假玉帝] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[白蛇传说|new_44   白蛇传说] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[黑白无常|tzlj   黑白无常] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[后土娘娘|D30042   后土娘娘] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[真假玉帝|dsdlzc   真假玉帝] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[白蛇传说|ID9_00   白蛇传说] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 
 

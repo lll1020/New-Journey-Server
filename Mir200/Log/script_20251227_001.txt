@@ -1,0 +1,5 @@
+[2025-12-28 10:47:09:166] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：31; NpcThreadId: 46608, CurPlayThreadId: 46608
+
+[2025-12-29 07:11:39:894] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：47; NpcThreadId: 46608, CurPlayThreadId: 46608
+[2025-12-29 07:11:39:894] [玩家名字k]Lua执行耗时过高:47ms msgid:100 44 1 0 {"action":"buySeed","param":{"amount":1,"id":"Low"}}
+

@@ -649,7 +649,7 @@ teshudata = {
             likeValue = 1,                         -- 每次点赞增加的仙华值
         },
         RefineCfg = {                              -- 炼丹配置
-            furnaceCd = 60,                        -- 炼丹炉冷却
+            furnaceCd = 2,                        -- 炼丹炉冷却
             recipes = {
                 ["灵根丹"] = {
                     cost = {{"低阶灵草",10},{"金币", 5000}},         -- 消耗灵草
@@ -663,6 +663,17 @@ teshudata = {
             [101] = {id = 101, name = "竹林雅院", xiangHua = 20, cost = {{"金币", 5000}}},
             [102] = {id = 102, name = "桃花居", xiangHua = 50, cost = {{"元宝", 100}}},
             [201] = {id = 201, name = "烟雨轻岚", xiangHua = 80, cost = {{"元宝", 260}}},
+            [301] = {id = 301, name = "烟雨轻岚1", xiangHua = 80, cost = {{"元宝", 260}}},
+            [401] = {id = 401, name = "烟雨轻岚2", xiangHua = 80, cost = {{"元宝", 260}}},
+            [501] = {id = 501, name = "烟雨轻岚3", xiangHua = 80, cost = {{"元宝", 260}}},
+        },
+        DecorateplaceCfg = {
+            statue = {posX = 50, posY = 50,list = {201}},        -- 雕像装饰位置
+            cave = {posX = 300, posY = 100,list = {301}},  -- 洞府装饰位置
+            welcome = {posX = 300, posY = 100,list = {401}},  -- 欢迎语装饰位置
+            spring = {posX = 300, posY = 100,list = {501}},  -- 灵泉装饰位置
+            wall = {posX = 50, posY = 200,list = {101,102}},        -- 祥云装饰位置
+
         },
         TitleCfg = {                               -- 称号配置
             DanMaster = {id = 1, name = "极品炼丹师"},

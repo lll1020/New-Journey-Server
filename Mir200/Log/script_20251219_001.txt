@@ -11,3 +11,6 @@
 [2025-12-20 14:33:27:588] [玩家名字k]Lua执行耗时过高:281ms msgid:100 201 1 0 
 [2025-12-20 14:33:27:888] LuaNPC:玩家名字k ID:999999999 执行 npc_200_fbjs player:玩家名字k 耗时：109; NpcThreadId: 27924, CurPlayThreadId: 27924
 
+[2025-12-20 15:54:09:674] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：47; NpcThreadId: 27924, CurPlayThreadId: 27924
+[2025-12-20 15:54:09:674] [玩家名字k]Lua执行耗时过高:47ms msgid:100 602 1 1 
+

@@ -44,7 +44,7 @@ function Login.main(play)
         for i = 1 ,4 do
             table.insert(T_txzr,math.random(100000))
         end
-        setplaydef(play,constant.T_txzr,tbl2json(T_txzr))  --天选之人点数
+        setplaydef(play,VarCfg.T_txzr,tbl2json(T_txzr))  --天选之人点数
 
         if getsysvar(VarCfg["G_新区验证"]) == 0 then
             setsysvar(VarCfg["G_新区验证"],1)

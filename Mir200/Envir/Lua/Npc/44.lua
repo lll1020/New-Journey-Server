@@ -13,12 +13,40 @@ local StealCfg = _config.StealCfg or {}
 local LikeCfg = _config.LikeCfg or {}
 local RefineCfg = _config.RefineCfg or {}
 local DecorateCfg = _config.DecorateCfg or {}
+local DecorateplaceCfg = _config.DecorateplaceCfg or {}
 local TitleCfg = _config.TitleCfg or {}
 local PetCfg = _config.PetCfg or {}
 local ShopCfg = _config.ShopCfg or {}
 local RankCfg = _config.RankCfg or {}
 local visitorLimit = _config.visitorLogLimit or 20
 local gridSize = _config.gridSize or 9
+
+local function buildDecoPlaceIndex(cfg)
+    local idx = {}
+    for place, info in pairs(cfg or {}) do
+        for _, id in ipairs(info.list or {}) do
+            idx[tostring(id)] = place
+            if type(id) == "number" then
+                idx[id] = place
+            end
+        end
+    end
+    return idx
+end
+
+local DecoPlaceIndex = buildDecoPlaceIndex(DecorateplaceCfg)
+
+local function calcDecorationXiangHua(equipped)
+    local sum = 0
+    for _, decoId in pairs(equipped or {}) do
+        local entry = DecorateCfg[decoId] or DecorateCfg[tonumber(decoId)] or DecorateCfg[tostring(decoId)]
+        if entry and entry.xiangHua then
+            sum = sum + (entry.xiangHua or 0)
+        end
+    end
+
+    return sum
+end
 
 local HerbAliasByName = {}
 for key, cfg in pairs(PlantCfg) do
@@ -163,6 +191,33 @@ local function normalizeInventory(container)
     return container
 end
 
+local function normalizeDecoration(decoration)
+    decoration = decoration or {}
+    local owned = {}
+    for key, value in pairs(decoration.owned or {}) do
+        owned[tostring(key)] = value and true or false
+    end
+    decoration.owned = owned
+
+    local equipped = {}
+    if type(decoration.equipped) == "table" then
+        for place, id in pairs(decoration.equipped) do
+            if id then
+                local key = tostring(id)
+                local pos = DecoPlaceIndex[key] or DecoPlaceIndex[tonumber(key)] or tostring(place)
+                equipped[pos] = key
+            end
+        end
+    elseif decoration.equipped then
+        local key = tostring(decoration.equipped)
+        local pos = DecoPlaceIndex[key] or DecoPlaceIndex[tonumber(key)] or "default"
+        equipped[pos] = key
+    end
+    decoration.equipped = equipped
+    decoration.xiangHua = calcDecorationXiangHua(decoration.equipped)
+    return decoration
+end
+
 local function resetPlot(plot, id)
     plot.seedId = nil
     plot.state = "empty"
@@ -199,7 +254,7 @@ function Storage.ensureRecord(play, opts)
     record.likes = record.likes or {received = {total = 0}, given = {}}
     record.likes.received = record.likes.received or {total = 0}
     record.likes.given = record.likes.given or {}
-    record.decoration = record.decoration or {owned = {}, equipped = nil, xiangHua = 0}
+    record.decoration = normalizeDecoration(record.decoration)
     record.refine = record.refine or {lastTime = 0, collection = {}}
     record.pet = record.pet or {eggs = {}, beasts = {}, bestiary = {}, materials = {essence = 0}}
     record.pet.eggs = record.pet.eggs or {}
@@ -481,17 +536,28 @@ function Like.perform(play, actorRecord, targetRecord, now)
     node.count = node.count + 1
     targetRecord.likes.received.total = (targetRecord.likes.received.total or 0) + 1
     targetRecord.stats.xiangHua = (targetRecord.stats.xiangHua or 0) + (LikeCfg.likeValue or 0)
-    return true, {xiangHua = targetRecord.stats.xiangHua}
+    targetRecord.stats.likenum = (targetRecord.stats.likenum or 0) + 1
+    return true, {xiangHua = targetRecord.stats.xiangHua, likenum = targetRecord.stats.likenum}
 end
 
 local Decoration = {}
 
+local function decoKey(id)
+    return id and tostring(id) or nil
+end
+
+local function decoEntry(decoId)
+    local idNum = tonumber(decoId)
+    return DecorateCfg[decoId] or (idNum and DecorateCfg[idNum]) or DecorateCfg[tostring(decoId)]
+end
+
 function Decoration.buy(play, record, decoId)
-    local entry = DecorateCfg[decoId]
+    local key = decoKey(decoId)
+    local entry = decoEntry(key)
     if not entry then
         return false, "装扮不存在"
     end
-    if record.decoration.owned[decoId] then
+    if record.decoration.owned[key] then
         return false, "已拥有该装扮"
     end
     local ok, lack = Common.checkCost(play, entry.cost)
@@ -499,23 +565,29 @@ function Decoration.buy(play, record, decoId)
         return false, string.format("%s不足", lack or "cost")
     end
     Common.payCost(play, entry.cost, "xianfu_deco")
-    record.decoration.owned[decoId] = true
+    record.decoration.owned[key] = true
     return true, {owned = record.decoration.owned}
 end
 
 function Decoration.equip(record, decoId)
-    local entry = DecorateCfg[decoId]
+    local key = decoKey(decoId)
+    local entry = decoEntry(key)
     if not entry then
         return false, "装扮不存在"
     end
-    if not record.decoration.owned[decoId] then
+    if not record.decoration.owned[key] then
         return false, "请先购买"
     end
+    local place = DecoPlaceIndex[key] or DecoPlaceIndex[tonumber(key)]
+    if not place then
+        return false, "装扮位置未配置"
+    end
     local prev = record.decoration.xiangHua or 0
-    record.decoration.equipped = decoId
-    record.decoration.xiangHua = entry.xiangHua or 0
-    record.stats.xiangHua = (record.stats.xiangHua or 0) - prev + record.decoration.xiangHua
-    return true, {equipped = decoId, xiangHua = record.stats.xiangHua}
+    record.decoration.equipped[place] = key
+    local total = calcDecorationXiangHua(record.decoration.equipped)
+    record.decoration.xiangHua = total
+    record.stats.xiangHua = (record.stats.xiangHua or 0) - prev + total
+    return true, {equipped = record.decoration.equipped, xiangHua = record.stats.xiangHua}
 end
 
 local Refine = {}
@@ -564,77 +636,77 @@ local function getEggCfg(eggId)
     return PetCfg.eggs and PetCfg.eggs[eggId]
 end
 
-function Pet.hatch(play, record, params, now)
-    local cfg = getEggCfg(params.eggId)
-    if not cfg then
-        return false, "灵蛋不存在"
-    end
-    record.pet.eggs[params.eggId] = record.pet.eggs[params.eggId] or 0
-    if record.pet.eggs[params.eggId] <= 0 then
-        return false, "灵蛋数量不足"
-    end
-    record.pet.eggs[params.eggId] = record.pet.eggs[params.eggId] - 1
-    local petId = newPetId(params.eggId, now)
-    record.pet.beasts[petId] = {
-        id = petId,
-        type = cfg.beast.type,
-        level = 1,
-        exp = 0,
-        maxLevel = cfg.beast.maxLevel,
-    }
-    record.pet.bestiary[cfg.beast.type] = true
-    if TitleCfg.BeastMaster then
-        local total, owned = 0, 0
-        for _ in pairs(PetCfg.eggs or {}) do total = total + 1 end
-        for _ in pairs(record.pet.bestiary) do owned = owned + 1 end
-        -- if total > 0 and owned >= total then
-        --     Player.title_give(play, TitleCfg.BeastMaster.name)
-        -- end
-    end
-    return true, {petId = petId, pets = record.pet.beasts}
-end
+-- function Pet.hatch(play, record, params, now)
+--     local cfg = getEggCfg(params.eggId)
+--     if not cfg then
+--         return false, "灵蛋不存在"
+--     end
+--     record.pet.eggs[params.eggId] = record.pet.eggs[params.eggId] or 0
+--     if record.pet.eggs[params.eggId] <= 0 then
+--         return false, "灵蛋数量不足"
+--     end
+--     record.pet.eggs[params.eggId] = record.pet.eggs[params.eggId] - 1
+--     local petId = newPetId(params.eggId, now)
+--     record.pet.beasts[petId] = {
+--         id = petId,
+--         type = cfg.beast.type,
+--         level = 1,
+--         exp = 0,
+--         maxLevel = cfg.beast.maxLevel,
+--     }
+--     record.pet.bestiary[cfg.beast.type] = true
+--     if TitleCfg.BeastMaster then
+--         local total, owned = 0, 0
+--         for _ in pairs(PetCfg.eggs or {}) do total = total + 1 end
+--         for _ in pairs(record.pet.bestiary) do owned = owned + 1 end
+--         -- if total > 0 and owned >= total then
+--         --     Player.title_give(play, TitleCfg.BeastMaster.name)
+--         -- end
+--     end
+--     return true, {petId = petId, pets = record.pet.beasts}
+-- end
 
-function Pet.feed(play, record, params)
-    local pet = record.pet.beasts[params.petId]
-    if not pet then
-        return false, "灵兽不存在"
-    end
-    local feedCfg = PetCfg.feed or {}
-    local need = (params.amount or 1) * (feedCfg.perFeed or 1)
-    record.pet.materials[feedCfg.resource or "essence"] = record.pet.materials[feedCfg.resource or "essence"] or 0
-    if record.pet.materials[feedCfg.resource or "essence"] < need then
-        return false, "材料不足"
-    end
-    record.pet.materials[feedCfg.resource or "essence"] = record.pet.materials[feedCfg.resource or "essence"] - need
-    pet.exp = pet.exp + (params.amount or 1) * (feedCfg.exp or 0)
-    local needExp = pet.level * 10
-    while pet.exp >= needExp and pet.level < (pet.maxLevel or 1) do
-        pet.exp = pet.exp - needExp
-        pet.level = pet.level + 1
-        needExp = pet.level * 10
-    end
-    return true, {pet = pet, materials = record.pet.materials}
-end
+-- function Pet.feed(play, record, params)
+--     local pet = record.pet.beasts[params.petId]
+--     if not pet then
+--         return false, "灵兽不存在"
+--     end
+--     local feedCfg = PetCfg.feed or {}
+--     local need = (params.amount or 1) * (feedCfg.perFeed or 1)
+--     record.pet.materials[feedCfg.resource or "essence"] = record.pet.materials[feedCfg.resource or "essence"] or 0
+--     if record.pet.materials[feedCfg.resource or "essence"] < need then
+--         return false, "材料不足"
+--     end
+--     record.pet.materials[feedCfg.resource or "essence"] = record.pet.materials[feedCfg.resource or "essence"] - need
+--     pet.exp = pet.exp + (params.amount or 1) * (feedCfg.exp or 0)
+--     local needExp = pet.level * 10
+--     while pet.exp >= needExp and pet.level < (pet.maxLevel or 1) do
+--         pet.exp = pet.exp - needExp
+--         pet.level = pet.level + 1
+--         needExp = pet.level * 10
+--     end
+--     return true, {pet = pet, materials = record.pet.materials}
+-- end
 
-function Pet.identify(play, record, params)
-    local pet = record.pet.beasts[params.petId]
-    if not pet then
-        return false, "灵兽不存在"
-    end
-    local cost = PetCfg.identify and PetCfg.identify.cost
-    local ok, lack = Common.checkCost(play, cost)
-    if not ok then
-        return false, string.format("%s不足", lack or "cost")
-    end
-    Common.payCost(play, cost, "xianfu_pet_identify")
-    local pool = PetCfg.identify and PetCfg.identify.bloodlinePool or {"灵动"}
-    local affix = pool[math.random(1, #pool)]
-    pet.bloodline = {name = affix, rollAt = Common.now()}
-    if TitleCfg.BeastMaster and pet.bloodline and pet.bloodline.name then
-        record.pet.bestiary[pet.bloodline.name] = true
-    end
-    return true, {pet = pet}
-end
+-- function Pet.identify(play, record, params)
+--     local pet = record.pet.beasts[params.petId]
+--     if not pet then
+--         return false, "灵兽不存在"
+--     end
+--     local cost = PetCfg.identify and PetCfg.identify.cost
+--     local ok, lack = Common.checkCost(play, cost)
+--     if not ok then
+--         return false, string.format("%s不足", lack or "cost")
+--     end
+--     Common.payCost(play, cost, "xianfu_pet_identify")
+--     local pool = PetCfg.identify and PetCfg.identify.bloodlinePool or {"灵动"}
+--     local affix = pool[math.random(1, #pool)]
+--     pet.bloodline = {name = affix, rollAt = Common.now()}
+--     if TitleCfg.BeastMaster and pet.bloodline and pet.bloodline.name then
+--         record.pet.bestiary[pet.bloodline.name] = true
+--     end
+--     return true, {pet = pet}
+-- end
 
 ---------------------------------------------------------------------
 -- Rank: 仙华榜
@@ -655,17 +727,18 @@ function Rank.maybeUpdate(rankData, record)
     local key = record.meta.key
     local value = record.stats.xiangHua or 0
     local node = rankData.entries[key]
-    if node and node.value == value then
+    local likenum = record.stats.likenum or 0
+    if node and node.value == value and node.likenum == likenum then
         return false
     end
-    rankData.entries[key] = {name = record.meta.name, value = value}
+    rankData.entries[key] = {name = record.meta.name, value = value, likenum = likenum}
     return true
 end
 
 function Rank.getTopList(rankData)
     local snapshot = {}
     for key, node in pairs(rankData.entries or {}) do
-        table.insert(snapshot, {key = key, name = node.name, value = node.value})
+        table.insert(snapshot, {key = key, name = node.name, value = node.value, likenum = node.likenum})
     end
     table.sort(snapshot, function(a, b)
         if a.value == b.value then
@@ -709,6 +782,7 @@ local function buildSnapshot(state)
             key = state.record.meta.key,
             name = state.record.meta.name,
             xiangHua = state.record.stats.xiangHua or 0,
+            likenum = state.record.stats.likenum or 0,
             herbs = state.record.herbs,
             fields = state.record.fields,
             steal = state.record.steal,
@@ -871,28 +945,28 @@ function ActionHandler.hatch(play, npcid, state, params)
     pushAction(play, npcid, "hatch", true, "孵化成功", state, res)
 end
 
-function ActionHandler.feed(play, npcid, state, params)
-    local ok, res = Pet.feed(play, state.record, params or {})
-    persistState(state, false)
-    if not ok then
-        Player.sendmsgEx(play, res or "喂养失败#57")
-        return
-    end
-    Player.sendmsgEx(play, "喂养完成#57")
-    pushAction(play, npcid, "feed", true, "喂养完成", state, res)
-end
+-- function ActionHandler.feed(play, npcid, state, params)
+--     local ok, res = Pet.feed(play, state.record, params or {})
+--     persistState(state, false)
+--     if not ok then
+--         Player.sendmsgEx(play, res or "喂养失败#57")
+--         return
+--     end
+--     Player.sendmsgEx(play, "喂养完成#57")
+--     pushAction(play, npcid, "feed", true, "喂养完成", state, res)
+-- end
 
-function ActionHandler.identify(play, npcid, state, params)
-    local ok, res = Pet.identify(play, state.record, params or {})
-    local rankDirty = Rank.maybeUpdate(state.rank, state.record)
-    persistState(state, rankDirty)
-    if not ok then
-        Player.sendmsgEx(play, res or "鉴定失败#57")
-        return
-    end
-    Player.sendmsgEx(play, "鉴定完成#57")
-    pushAction(play, npcid, "identify", true, "鉴定完成", state, res)
-end
+-- function ActionHandler.identify(play, npcid, state, params)
+--     local ok, res = Pet.identify(play, state.record, params or {})
+--     local rankDirty = Rank.maybeUpdate(state.rank, state.record)
+--     persistState(state, rankDirty)
+--     if not ok then
+--         Player.sendmsgEx(play, res or "鉴定失败#57")
+--         return
+--     end
+--     Player.sendmsgEx(play, "鉴定完成#57")
+--     pushAction(play, npcid, "identify", true, "鉴定完成", state, res)
+-- end
 
 local function handleVisit(play, npcid, state, params, fn)
     local targetName = params and params.targetName

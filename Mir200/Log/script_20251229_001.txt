@@ -1,0 +1,14 @@
+[2025-12-29 12:09:38:797] LuaNPC: ID:999999999 执行 startup player: 耗时：31; NpcThreadId: 42676, CurPlayThreadId: 42676
+
+[2025-12-29 12:27:35:623] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：31; NpcThreadId: 42676, CurPlayThreadId: 42676
+[2025-12-29 12:27:35:623] [玩家名字k]Lua执行耗时过高:31ms msgid:100 44 1 0 {"action":"plant","param":{"seedId":"Low","gridId":1}}
+
+[2025-12-29 21:24:14:198] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：32; NpcThreadId: 42676, CurPlayThreadId: 42676
+
+[2025-12-29 21:24:50:342] LuaNPC:玩家名字k ID:999999999 执行 entermap player:玩家名字k 耗时：31; NpcThreadId: 42676, CurPlayThreadId: 42676
+[2025-12-29 21:24:50:342] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：47; NpcThreadId: 42676, CurPlayThreadId: 42676
+[2025-12-29 21:24:50:342] [玩家名字k]Lua执行耗时过高:47ms msgid:100 502 1 0 
+
+[2025-12-29 21:27:29:526] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：31; NpcThreadId: 42676, CurPlayThreadId: 42676
+[2025-12-29 21:27:29:526] [玩家名字k]Lua执行耗时过高:31ms msgid:105 665 665 0 
+

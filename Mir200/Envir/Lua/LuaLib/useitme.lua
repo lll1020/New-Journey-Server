@@ -4,6 +4,9 @@ function stdmodefunc9(play, item)
     setplaydef(play,"S$dtm",getbaseinfo(play, 3))
     if getplaydef(play,"N$战斗状态") < os.time() then
         map(play,getbaseinfo(play,3))
+        -- if getflagstatus(play, 300) == 1 then
+        --     startautoattack(play)
+        -- end
     else
         sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}')
     end
