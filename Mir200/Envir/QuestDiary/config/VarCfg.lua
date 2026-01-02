@@ -183,6 +183,8 @@ VarCfg["T_¼¼ÄÜÉý¼¶"]           = "T46"                                          
 VarCfg.T_XianFuData           = "T47"                                                                         --T_ÏÉ¸®
 VarCfg["T_²Ø±¦Í¼"]           = "T48"                                                                         --T_²Ø±¦Í¼
 VarCfg["T_°ËØÔ"]           = "T49"                                                                         --T_°ËØÔ
+VarCfg["T_ÁéÊÞ"]           = "T50"                                                                         --T_ÁéÊÞ
+VarCfg["T_ËøÑýËþ"]           = "T51"                                                                         --T_ËøÑýËþ
 
 
 

@@ -19,3 +19,53 @@
 [2025-12-29 12:09:39:358] NewHttpPost(0-0-0)-----------------------------------
 
 
+[2025-12-30 15:42:05:151] ---------------------线程耗时监控
+[2025-12-30 15:42:08:493] Frame-----------------------------------
+
+[2025-12-30 15:42:08:537] MainRunThread(2015)-----------------------------------
+
+[2025-12-30 15:42:08:557] EnvirThread 0/0(31-0)flag:5000000  lua: 39211 CallLua:getbagblank 58791-----------------------------------
+
+[2025-12-30 15:42:08:576] DbThread(16-0)-----------------------------------
+
+[2025-12-30 15:42:08:595] BoxSellDbThread(15)-----------------------------------
+
+[2025-12-30 15:42:08:614] NewHttpPost(0-0-0)-----------------------------------
+
+[2025-12-30 15:42:08:625] ---------------------线程耗时监控
+[2025-12-30 15:42:08:644] Frame-----------------------------------
+
+[2025-12-30 15:42:06:675] [Exception]TMainRunThread.LoadKuaFuConfig Error  Except：[FireDAC][Phys][ODBC][Microsoft][ODBC SQL Server Driver][SQL Server]资源池 'default' 没有足够的系统内存来运行此查询。[00000000012E8281] JclDebug.TJclStackInfoList.Create (Line 5509, "JclDebug.pas" + 34)
+[00000000012E7AD2] JclDebug.JclCreateStackList (Line 5351, "JclDebug.pas" + 1)
+[00000000012E79B2] JclDebug.DoExceptionStackTrace (Line 5292, "JclDebug.pas" + 20)
+[00000000012EAAA5] JclDebug.DoExceptNotify (Line 6741, "JclDebug.pas" + 7)
+[00000000012D9702] JclHookExcept.TNotifierItem.DoNotify (Line 272, "JclHookExcept.pas" + 5)
+[00000000012D996B] JclHookExcept.DoExceptNotify (Line 339, "JclHookExcept.pas" + 13)
+[00000000012D9AD0] JclHookExcept.HookedRaiseException (Line 381, "JclHookExcept.pas" + 14)
+[00000000003123B3] System.@RaiseAtExcept (Line 22402, "System.pas" + 32)
+[0000000000312418] System.@RaiseAgain (Line 23481, "System.pas" + 9)
+[00000000012C048C] JclTD32.TJclTD32InfoParser.Create (Line 1123, "JclTD32.pas" + 14)
+[00000000012C18EF] JclTD32.TJclPeBorTD32Image.CheckDebugData (Line 1642, "JclTD32.pas" + 6)
+[00000000012C185E] JclTD32.TJclPeBorTD32Image.AfterOpen (Line 1633, "JclTD32.pas" + 3)
+[00000000012D1897] JclPeImage.AttachLoadedModule64 (Line 3224, "JclPeImage.pas" + 25)
+[00000000012D1961] JclPeImage.TJclPeImage.AttachLoadedModule (Line 3235, "JclPeImage.pas" + 9)
+[00000000012E453F] JclDebug.TJclDebugInfoTD32.InitializeSource (Line 4195, "JclDebug.pas" + 4)
+[00000000012E3232] JclDebug.TJclDebugInfoList.CreateDebugInfo (Line 3839, "JclDebug.pas" + 8)
+[00000000012E3321] JclDebug.TJclDebugInfoList.GetItemFromModule (Line 3869, "JclDebug.pas" + 15)
+[00000000012E33D6] JclDebug.TJclDebugInfoList.GetLocationInfo (Line 3885, "JclDebug.pas" + 2)
+[00000000012E596A] JclDebug.GetLocationInfo (Line 4683, "JclDebug.pas" + 5)
+[00000000012E5ACD] JclDebug.GetLocationInfoStr (Line 4700, "JclDebug.pas" + 2)
+[00000000012E8606] JclDebug.TJclStackInfoList.AddToStrings (Line 5596, "JclDebug.pas" + 7)
+[00000000012E7A62] JclDebug.JclLastExceptStackListToStrings (Line 5310, "JclDebug.pas" + 6)
+
+[2025-12-30 15:42:08:659] MainRunThread(5484)-----------------------------------
+
+[2025-12-30 15:42:08:678] EnvirThread 0/0(31-0)flag:5000000  lua: 39211 CallLua:getbagblank 58791-----------------------------------
+
+[2025-12-30 15:42:08:695] DbThread(16-0)-----------------------------------
+
+[2025-12-30 15:42:08:713] BoxSellDbThread(15)-----------------------------------
+
+[2025-12-30 15:42:08:731] NewHttpPost(16-0-0)-----------------------------------
+
+

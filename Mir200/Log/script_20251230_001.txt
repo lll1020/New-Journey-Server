@@ -1,0 +1,50 @@
+[2026-01-02 19:23:48:852] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：141; NpcThreadId: 27776, CurPlayThreadId: 27776
+[2026-01-02 19:23:48:852] [玩家名字k]Lua执行耗时过高:141ms msgid:100 64 5 0 {"idx":1}
+
+[2026-01-02 20:19:50:753] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：78; NpcThreadId: 27776, CurPlayThreadId: 27776
+[2026-01-02 20:19:50:753] [玩家名字k]Lua执行耗时过高:78ms msgid:100 64 3 0 {"idx":1}
+
+[2026-01-02 20:21:02:922] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：172; NpcThreadId: 27776, CurPlayThreadId: 27776
+[2026-01-02 20:21:02:922] [玩家名字k]Lua执行耗时过高:172ms msgid:100 64 3 0 {"idx":1}
+
+[2026-01-02 20:23:21:379] LuaNPC:玩家名字k ID:999999999 执行 moneychange16 player:玩家名字k 耗时：31; NpcThreadId: 27776, CurPlayThreadId: 27776
+[2026-01-02 20:23:21:380] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：31; NpcThreadId: 27776, CurPlayThreadId: 27776
+
+[2026-01-02 20:29:57:824] Func Fail, obj is nil: SetBaseInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'setbaseinfo'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/64.lua:135: in function 'Login_lszh'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/64.lua:73: in function 'link'
+	.\Envir\Market_Def\QFunction-0.lua:1134: in function <.\Envir\Market_Def\QFunction-0.lua:1116>
+
+[2026-01-02 20:30:07:727] Func Fail, obj is nil: SetBaseInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'setbaseinfo'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/64.lua:135: in function 'Login_lszh'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/64.lua:73: in function 'link'
+	.\Envir\Market_Def\QFunction-0.lua:1134: in function <.\Envir\Market_Def\QFunction-0.lua:1116>
+[2026-01-02 20:30:07:852] Func Fail, obj is nil: SetBaseInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'setbaseinfo'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/64.lua:135: in function 'Login_lszh'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/64.lua:73: in function 'link'
+	.\Envir\Market_Def\QFunction-0.lua:1134: in function <.\Envir\Market_Def\QFunction-0.lua:1116>
+[2026-01-02 20:30:07:979] Func Fail, obj is nil: SetBaseInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'setbaseinfo'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/64.lua:135: in function 'Login_lszh'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/64.lua:73: in function 'link'
+	.\Envir\Market_Def\QFunction-0.lua:1134: in function <.\Envir\Market_Def\QFunction-0.lua:1116>
+
+[2026-01-02 20:32:43:416] Func Fail, obj is nil: SetBaseInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'setbaseinfo'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/64.lua:135: in function 'Login_lszh'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/64.lua:73: in function 'link'
+	.\Envir\Market_Def\QFunction-0.lua:1134: in function <.\Envir\Market_Def\QFunction-0.lua:1116>
+[2026-01-02 20:32:43:660] Func Fail, obj is nil: SetBaseInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'setbaseinfo'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/64.lua:135: in function 'Login_lszh'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/64.lua:73: in function 'link'
+	.\Envir\Market_Def\QFunction-0.lua:1134: in function <.\Envir\Market_Def\QFunction-0.lua:1116>
+[2026-01-02 20:32:43:783] Func Fail, obj is nil: SetBaseInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'setbaseinfo'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/64.lua:135: in function 'Login_lszh'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/64.lua:73: in function 'link'
+	.\Envir\Market_Def\QFunction-0.lua:1134: in function <.\Envir\Market_Def\QFunction-0.lua:1116>
+

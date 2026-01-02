@@ -1089,6 +1089,8 @@ local qf_teshunpc = {
     [32] = 32, [33] = 32, [34] = 32, [35] = 32, [36] = 32, [37] = 32, [38] = 32, [39] = 32, [40] = 32,-- 转生
     [21] = 21,-- 境界修为
     [17] = 17,-- 货币兑换
+    [44] = 44,-- 仙府
+    [64] = 64,-- 仙府
     [1003] = 1003,[1004] = 1003,[1005] = 1003,[1006] = 1003,[1007] = 1003, -- 各大陆时装兑换
 }
 function clicknpc(play, npcid)
@@ -1116,7 +1118,7 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
     if p1 ~= 19 then
         release_print("handlerequest", "玩家："..getbaseinfo(play,1), "消息id："..msgID, "npcid："..p1, "按钮2："..p2, "额外3："..p3, "消息数据："..msgData)
     end
-	if msgID == 100 then
+	if msgID == 100 then 
         if qf_teshunpc[p1] then --可以无视距离点击npc
             Npclib[qf_teshunpc[p1]].link(play, p1, p2, p3, msgData)
         else

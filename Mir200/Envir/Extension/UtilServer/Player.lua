@@ -61,6 +61,18 @@ function Player.setJsonVarByTable(actor, varName, varValue)
     end
 end
 
+function Player.setJsonTableByVar(actor, varName, varValue)
+    if not varValue then
+        return
+    end
+    local varStr = tbl2json(varValue)
+    if actor then
+        setplaydef(actor, varName, varStr)
+    else
+        setsysvar(varName, varStr)
+    end
+end
+
 --获取json变量内容，返回table
 ---* actor:人物对象(填写nil获取全局变量)
 ---* varName:变量名
