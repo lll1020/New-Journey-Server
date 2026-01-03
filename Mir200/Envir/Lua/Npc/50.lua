@@ -28,65 +28,62 @@ function npc.link(play,npcid,ew,aid,data)
     end
 
     if ew == 1 then --
-        local T_data = Player.getJsonTableByVar(play, VarCfg["T_八卦"])
+        local T_data = Player.getJsonTableByVar(play, VarCfg["T_锁妖塔"])
+        ttt_jrdt(play)
+    end
 
-        --从8个里面随机一个没有激活的
-        local unactivated = {}
-        for v,k in ipairs(_config.details) do
-            if not T_data[""..v] or T_data[""..v] ~= 1 then
-                table.insert(unactivated, v)
-            end
-        end
-        if #unactivated == 0 then
-            Player.sendmsgEx(play, "你已经激活完成了所有卦象")
-            return
-        end
-        local random_index = math.random(1, #unactivated)
-        local idx = unactivated[random_index]
+        
+
+end
 
 
-        local name, num = Player.checkItemNumByTable(play, _config.cost)
-        if name then
-            Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
-            return
-        end
-        Player.takeItemByTable(play, _config.cost, ",八卦",nil)
+function ttt_jrdt(play)
+    --创建镜像地图
+    local dtm = getbaseinfo(play,1).."_ttt"
+    if checkmirrormap(dtm) then
+        delmirrormap(dtm)
+    end
+    local syt_cs = 1
+    addmirrormap("D3804_2",dtm,"通天塔第"..syt_cs.."层",300,"xtc")
+    --设置玩家进入镜像地图
+    mapmove(play,dtm,29,27,2)
+    local gw = genmonex(dtm,29,31,"金灵根守护兽",2,1,0,54,"",0)
 
-        T_data[""..idx] = 1
-        Player.setJsonVarByTable(play, VarCfg["T_八卦"], T_data)
+    startautoattack(play)
+    setenvirontimer(dtm,1,1,"@ttt_dsq,"..play..","..dtm..","..syt_cs)
+    delaygoto(play,100,"@ttt_djs")
+end
 
-        if #unactivated == 1 then
-            Player.title_give(play, _config.ch)
-            Player.sendmsgEx(play,  "恭喜你，获得称号【".._config.ch.."】#57")
-        end
+function ttt_djs(play)
+    senddelaymsg(play,"距离副本通关剩余%s",180,250,1,"@ttt_end")
+end
 
-        local data = {}
-        data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_八卦"])
-        sendluamsg(play,100,npcid,0,0,tbl2json(data))
-        delattlist(play, "八卦属性")
-        Login_bg(play)
 
+function ttt_dsq(xt,play,dtm,data)
+    if getplaycount(dtm,false,true) == "0" then
+        setenvirofftimer(dtm,1)
+        delmirrormap(dtm)
+    elseif getmoncount(dtm,-1,true) < 1 then
+        setenvirofftimer(dtm,1)
+        ttt_end(play)
+        senddelaymsg(play,"距离副本通关剩余%s",5,250,1)
     end
 end
 
 
-function Login_bg(play)
-    local attrs = {}
-    local attrsstr = ""
-    local T_data = Player.getJsonTableByVar(play, VarCfg["T_八卦"])
-    
-    for v,k in ipairs(_config.details) do
-        if T_data[""..v] and T_data[""..v] == 1 then
-            for v,k in ipairs(k.attr) do
-                attrs[k[1]] = k[2]
-            end
+function ttt_end(play)
+    local dtm = getbaseinfo(play,1).."_ttt"
+    if getbaseinfo(play,3) == dtm then
+        if getmoncount(dtm,-1,true) < 1 then --副本怪物已经清空
+            setenvirofftimer(dtm,1)
             
+        else --副本怪物未清空  一个npc 重新挑战
+            setenvirofftimer(dtm,1)
+            sendmsg(play,1,'{"Msg":"<font color=\'#00ff00\'>未通过...</font>","Type":9}')
+            delmirrormap(dtm)
         end
     end
-    attrsstr = Player.getAttrTableToStr(attrs)
-    addattlist(play, "八卦属性", "=", attrsstr, 1)
 end
-GameEvent.add(EventCfg.onLogin, Login_bg, "Login_bg")
 
 
 return npc

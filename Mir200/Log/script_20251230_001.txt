@@ -48,3 +48,5 @@
 	E:\新起航\服务端\Mir200\Envir/lua/Npc/64.lua:73: in function 'link'
 	.\Envir\Market_Def\QFunction-0.lua:1134: in function <.\Envir\Market_Def\QFunction-0.lua:1116>
 
+[2026-01-03 00:57:29:764] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：47; NpcThreadId: 27776, CurPlayThreadId: 27776
+
