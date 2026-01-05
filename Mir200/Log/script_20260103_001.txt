@@ -7,3 +7,12 @@
 [2026-01-03 18:42:26:313] LuaNPC:玩家名字k ID:999999999 执行 sendability player:玩家名字k 耗时：31; NpcThreadId: 27020, CurPlayThreadId: 27020
 [2026-01-03 18:42:26:314] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：47; NpcThreadId: 27020, CurPlayThreadId: 27020
 
+[2026-01-04 00:00:04:186] LuaNPC:玩家名字k ID:999999999 执行 resetday player:玩家名字k 耗时：31; NpcThreadId: 27020, CurPlayThreadId: 27020
+
+[2026-01-04 14:43:06:408] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：31; NpcThreadId: 27020, CurPlayThreadId: 27020
+[2026-01-04 14:43:06:408] [玩家名字k]Lua执行耗时过高:31ms msgid:100 501 1 0 
+
+[2026-01-04 20:22:28:998] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：32; NpcThreadId: 27020, CurPlayThreadId: 27020
+[2026-01-04 20:22:28:998] [玩家名字k]Lua执行耗时过高:32ms msgid:100 66 2 0 {"idx":1}
+[2026-01-04 20:22:29:089] LuaNPC:玩家名字k ID:999999999 执行 sendability player:玩家名字k 耗时：46; NpcThreadId: 27020, CurPlayThreadId: 27020
+

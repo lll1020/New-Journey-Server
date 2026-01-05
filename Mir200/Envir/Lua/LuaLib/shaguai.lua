@@ -92,6 +92,16 @@ shaguai = {
 				T_dljq["npc_602"][""..4] = 1
 			elseif getbaseinfo(mob,1) == "土灵根守护兽" and T_dljq["npc_602"][""..5] and T_dljq["npc_602"][""..5] == 0 then
 				T_dljq["npc_602"][""..5] = 1
+			elseif getbaseinfo(mob,1) == "雷灵根守护兽" and T_dljq["npc_68"][""..1] and T_dljq["npc_68"][""..1] == 0 then
+				T_dljq["npc_68"][""..1] = 1
+			elseif getbaseinfo(mob,1) == "风灵根守护兽" and T_dljq["npc_68"][""..2] and T_dljq["npc_68"][""..2] == 0 then
+				T_dljq["npc_68"][""..2] = 1
+			elseif getbaseinfo(mob,1) == "冰灵根守护兽" and T_dljq["npc_68"][""..3] and T_dljq["npc_68"][""..3] == 0 then
+				T_dljq["npc_68"][""..3] = 1
+			elseif getbaseinfo(mob,1) == "焚灵根守护兽" and T_dljq["npc_68"][""..4] and T_dljq["npc_68"][""..4] == 0 then
+				T_dljq["npc_68"][""..4] = 1
+			elseif getbaseinfo(mob,1) == "岩灵根守护兽" and T_dljq["npc_68"][""..5] and T_dljq["npc_68"][""..5] == 0 then
+				T_dljq["npc_68"][""..5] = 1
 			end
 			Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
 			Player.sendmsgEx(play,  "成功击杀灵根守护兽#57")
