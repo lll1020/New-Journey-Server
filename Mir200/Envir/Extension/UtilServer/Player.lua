@@ -175,10 +175,12 @@ function Player.checkMoneyNum(actor, moneytype, num)
 end
 --检查 物品 货币 装备是否满足数量(数量不足返回不足物品的名字)
 function Player.checkItemNumByTable(actor, t, multiple)
+    if not t then return end
+    if t == {} then return end
     for _,item in ipairs(t) do
         local idx,num = getstditeminfo(item[1], 0),item[2]
         if multiple then num=num*multiple end
-local name = getstditeminfo(idx, 1) or "未知材料"
+        local name = getstditeminfo(idx, 1) or "未知材料"
         if Item.isCurrency(idx) then        --货币
             if not Player.checkMoneyNum(actor, idx, num) then
                 return name, num

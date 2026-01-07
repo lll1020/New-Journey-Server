@@ -121,7 +121,7 @@ function npc.link(play,npcid,ew,aid,data)
         Player.takeItemByTable(play, {{_config.config.ls[json_data.idx].syw,1},{"元宝",1880000}}, ",灵兽圣遗物",nil)
         T_data.syw[""..json_data.idx] = 1
         Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
-        sendluamsg(play, 100, npcid, 4, json_data.idx, "")
+        sendluamsg(play, 100, npcid, 1, 0, tbl2json({T_data = T_data}))
         Player.sendmsgEx(play, string.format("你成功为灵兽|%s#249|装备了圣遗物|%s#249|", _config.config.ls[json_data.idx].name, _config.config.ls[json_data.idx].syw))
 
         if T_data.syw["1"] and T_data.syw["2"] and T_data.syw["3"] and T_data.syw["4"] and T_data.syw["5"] and not T_data.syw_all then
@@ -129,7 +129,7 @@ function npc.link(play,npcid,ew,aid,data)
             Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
             Player.title_give(play, _config.syw_ch)
             Player.sendmsgEx(play, "恭喜你为所有灵兽装备了圣遗物，获得了|上古神兽掌控者#249|称号#57")
-            sendluamsg(play,100,npcid,5,0,"")
+            sendluamsg(play,100,npcid,1,0,"")
         end
 
             

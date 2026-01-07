@@ -212,6 +212,8 @@ kfhg 23 26 -> kfhjsbk 86 102
 
 
 ;==============================================五大陆野外地图==============================
+[酒仙秘境|new_44   酒仙秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+
 [五大陆地图一|new_44   五大陆地图一] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 [五大陆地图二|new_44   五大陆地图二] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 [五大陆地图三|new_44   五大陆地图三] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)

@@ -1,3 +1,11 @@
 [2026-01-05 22:33:37:920] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：32; NpcThreadId: 5532, CurPlayThreadId: 5532
 [2026-01-05 22:33:37:920] [玩家名字k]Lua执行耗时过高:32ms msgid:100 69 5 0 {"idx":1}
 
+[2026-01-07 01:38:41:349] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：63; NpcThreadId: 5532, CurPlayThreadId: 5532
+[2026-01-07 01:38:41:349] [玩家名字k]Lua执行耗时过高:63ms msgid:100 70 1 0 {"idx":1}
+
+[2026-01-07 16:01:48:259] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：250; NpcThreadId: 5532, CurPlayThreadId: 5532
+[2026-01-07 16:01:48:259] [玩家名字k]Lua执行耗时过高:250ms msgid:100 71 1 0 
+
+[2026-01-07 16:03:16:041] LuaNPC:玩家名字k ID:999999999 执行 playoffline player:玩家名字k 耗时：79; NpcThreadId: 5532, CurPlayThreadId: 5532
+

@@ -7,6 +7,22 @@ function buffchufa(play, buffid, zid)
         else
             delbuff(play, 19999)
         end
+    elseif buffid == 20103 then
+
+        local curzuiyi = getplaydef(play, VarCfg["J_醉意值"])
+        if curzuiyi < 100 then
+            Player.sendmsgEx(play, string.format("你的醉意值未达上限|%d#249|，无法开启|醉酒狂魔舞#57", _config.max_zuiyi))
+            delbuff(play, 20103)
+            return
+        end
+
+
+        local name, num = Player.checkItemNumByTable(play, {{"元宝",200}})
+        if name then
+            delbuff(play, 20103)
+            return
+        end
+        Player.takeItemByTable(play, {{"元宝",200}}, ",醉酒狂魔舞",nil)
     end
 end
 --------------------buff监听触发-------------------
@@ -27,5 +43,10 @@ function buffchange(play, buffid, zid, lx)
     elseif buffid == 20000 then if lx == 4 then Npclib['anniu'][19](play, 3, 0, "") Npclib['anniu'][19](play, 1, 0, "") end
     elseif buffid == 20001 then if lx == 4 then Npclib['anniu'][19](play, 3, 0, "") Npclib['anniu'][19](play, 1, 0, "") end
     elseif buffid == 20002 then if lx == 4 then Npclib['anniu'][19](play, 3, 0, "") Npclib['anniu'][19](play, 1, 0, "") end
+    elseif buffid == 20103 then 
+        if getbaseinfo(play,1) == "酒仙秘境" then
+            mapmove(play, "xtc",137,138,5)
+            Player.sendmsgEx(play, "醉酒狂魔舞效果消失#57|,你离开了|酒仙秘境#249")
+        end
     end
 end

@@ -1,0 +1,15 @@
+[2026-01-07 17:09:30:183] LuaNPC:玩家名字k ID:999999999 执行 groupitemonex player:玩家名字k 耗时：32; NpcThreadId: 34312, CurPlayThreadId: 34312
+
+[2026-01-07 17:12:55:121] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：31; NpcThreadId: 34312, CurPlayThreadId: 34312
+
+[2026-01-07 17:20:14:265] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：32; NpcThreadId: 34312, CurPlayThreadId: 34312
+
+[2026-01-07 17:55:16:735] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：31; NpcThreadId: 34312, CurPlayThreadId: 34312
+[2026-01-07 17:55:16:735] [玩家名字k]Lua执行耗时过高:31ms msgid:100 70 2 0 
+
+[2026-01-07 18:07:29:062] LuaNPC:玩家名字k ID:999999999 执行 sendability player:玩家名字k 耗时：32; NpcThreadId: 34312, CurPlayThreadId: 34312
+[2026-01-07 18:07:29:063] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：32; NpcThreadId: 34312, CurPlayThreadId: 34312
+
+[2026-01-07 18:08:19:242] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：203; NpcThreadId: 34312, CurPlayThreadId: 34312
+[2026-01-07 18:08:19:242] [玩家名字k]Lua执行耗时过高:203ms msgid:100 70 2 0 
+
