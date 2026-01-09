@@ -2,7 +2,6 @@ npc = {}
 
 
 
-local _config = Guard.getConfig("npc_71")
 
 function npc.main(play,npcid)
     sendluamsg(play,100,npcid,0,0,tbl2json({num = getplaydef(play, VarCfg["J_×íÒâÖµ"])}))

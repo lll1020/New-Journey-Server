@@ -2015,11 +2015,11 @@ ClothsWoman=
 WoodenSword=
 Candle=
 [CustUserItem]
-Where71=
-Where72=
-Where73=
-Where74=
-Where75=
+Where71=201
+Where72=202
+Where73=203
+Where74=204
+Where75=205
 Where76=
 Where77=307,308,309,310,311,312,313,314,315,316,317,318
 Where78=307,308,309,310,311,312,313,314,315,316,317,318

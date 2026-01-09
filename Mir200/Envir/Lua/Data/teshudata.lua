@@ -1023,6 +1023,28 @@ teshudata = {
             {cost = {{"十年仙酒",1}},num = 10},
         },
     },
+    ["npc_72"] = {
+        id = 72,
+        name = "时光之杖",
+        where = 71,
+        cost = {
+            {"时光鉴定石",1},
+        },
+        config = {
+            --配置
+            [1] = {attr_desc = "人物攻击",attrID = 35,ratio = 100,max_level = 10,},
+            [2] = {attr_desc = "人物体力",attrID = 30,ratio = 1,max_level = 10,},
+            [3] = {attr_desc = "人物防御",attrID = 36,ratio = 100,max_level = 10,},
+            [4] = {attr_desc = "暴击伤害",attrID = 22,ratio = 1,max_level = 10,},
+            [5] = {attr_desc = "暴击抵抗",attrID = 23,ratio = 1,max_level = 10,},
+            [6] = {attr_desc = "对怪增伤",attrID = 245,ratio = 100,max_level = 10,},
+            [7] = {attr_desc = "对怪吸血",attrID = 81,ratio = 100,max_level = 5,},
+            [8] = {attr_desc = "生命偷取",attrID = 34,ratio = 100,max_level = 5,},
+            [9] = {attr_desc = "神圣一击",attrID = 79,ratio = 100,max_level = 10,},
+            [10] = {attr_desc = "神圣伤害",attrID = 80,ratio = 100,max_level = 10,},
+        },
+        
+    },
     ---剧情类npc
     ["npc_601"] = {
         id = 601,

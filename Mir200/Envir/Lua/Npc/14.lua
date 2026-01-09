@@ -95,16 +95,16 @@ end
 local function _onTakeOnEx(actor, itemobj, where, itemname, makeid)
     if where == _config.where then
          --仙食坊
-        local data = Player.getJsonTableByVar(play, VarCfg["T_仙食坊"])
-        attrs = {}
-        attrsstr = ""
+        local data = Player.getJsonTableByVar(actor, VarCfg["T_仙食坊"])
+        local attrs = {}
+        local attrsstr = ""
         for i=1,5 do
             attrs[teshudata["npc_14"].config[i].attrID] = (data[""..i] or 0) * teshudata["npc_14"].config[i].ratio
         end
         attrsstr = Player.getAttrTableToStr(attrs)
-        setaddnewabil(play, -2, "=",attrsstr, itemobj)
-        refreshitem(play, itemobj)
-        recalcabilitys(play)
+        setaddnewabil(actor, -2, "=",attrsstr, itemobj)
+        refreshitem(actor, itemobj)
+        recalcabilitys(actor)
     end
 end
 --穿装备触发
