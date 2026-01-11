@@ -31,6 +31,10 @@ function npc.link(play,npcid,ew,aid,data)
             Player.sendmsgEx(play, "请先装备".._config.now.."#249|进行升级#57")
             return
         end
+        if equipname == _config.give then
+            Player.sendmsgEx(play, "你的斗笠已经是最高级别，无法继续升级#57")
+            return
+        end
         local name, num = Player.checkItemNumByTable(play, _config.cost)
         if name then
             Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))

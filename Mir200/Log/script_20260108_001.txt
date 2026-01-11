@@ -5,3 +5,9 @@
 
 [2026-01-09 17:45:37:071] LuaNPC:玩家名字k ID:999999999 执行 attack player:玩家名字k 耗时：32; NpcThreadId: 25672, CurPlayThreadId: 25672
 
+[2026-01-10 22:00:54:074] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：32; NpcThreadId: 25672, CurPlayThreadId: 25672
+
+[2026-01-11 03:45:04:401] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：32; NpcThreadId: 25672, CurPlayThreadId: 25672
+
+[2026-01-12 01:23:48:214] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：32; NpcThreadId: 25672, CurPlayThreadId: 25672
+
