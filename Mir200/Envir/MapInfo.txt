@@ -212,77 +212,77 @@ kfhg 23 26 -> kfhjsbk 86 102
 
 
 ;==============================================五大陆野外地图==============================
-[酒仙秘境|new_44   酒仙秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[酒仙秘境|egdl1   酒仙秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 ;五大陆地图一
-[灵兽谷|new_44   灵兽谷] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[青龙之境|new_44   青龙之境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[朱雀之境|new_44   朱雀之境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[玄武之境|new_44   玄武之境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[白虎之境|new_44   白虎之境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[麒麟之境|new_44   麒麟之境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[灵兽谷|xlzd   灵兽谷] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[青龙之境|D2902   青龙之境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[朱雀之境|D2901   朱雀之境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[玄武之境|D2904   玄武之境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[白虎之境|ZD1103   白虎之境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[麒麟之境|D22021   麒麟之境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 ;五大陆地图二
-[时空裂隙|new_44   时空裂隙] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[时空裂隙|D30042   时空裂隙] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[倚天江湖|new_44   倚天江湖] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[冰火岛|new_44   冰火岛] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[光明顶|new_44   光明顶] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[倚天江湖|tzlj   倚天江湖] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[冰火岛|TrainField_06   冰火岛] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[光明顶|srsjq   光明顶] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[三国乱世|new_44   三国乱世] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[虎牢关|new_44   虎牢关] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[赤壁|new_44   赤壁] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[三国乱世|D009   三国乱世] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[虎牢关|D005   虎牢关] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[赤壁|D3501   赤壁] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[水浒再临|new_44   水浒再临] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[景阳冈|new_44   景阳冈] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[狮子楼|new_44   狮子楼] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[水浒再临|123   水浒再临] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[景阳冈|TrainField_01   景阳冈] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[狮子楼|kmzx   狮子楼] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 ;五大陆地图三
-[生命边界|new_44   生命边界] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[生命边界|tzj   生命边界] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[白骨神庙|new_44   白骨神庙] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[神庙暗廊|new_44   神庙暗廊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[白骨神庙|D009   白骨神庙] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[神庙暗廊|D1012   神庙暗廊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[诡冥墨河|new_44   诡冥墨河] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[河神寝宫|new_44   河神寝宫] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[诡冥墨河|ID7_002   诡冥墨河] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[河神寝宫|ID7_004   河神寝宫] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[赤焰焚殿|new_44   赤焰焚殿] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[赤焰焚殿二层|new_44   赤焰焚殿二层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[赤焰焚殿三层|new_44   赤焰焚殿三层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[赤焰焚殿|ID8_005   赤焰焚殿] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[赤焰焚殿二层|ID8_001   赤焰焚殿二层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[赤焰焚殿三层|ER43_Fire   赤焰焚殿三层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[葬天旧土|new_44   葬天旧土] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[葬天旧土|EV_MysticDun21   葬天旧土] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 ;五大陆地图四
-[聊斋志异|new_44   聊斋志异] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[兰若寺|new_44   兰若寺] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[画壁|new_44   画壁] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[崂山|new_44   崂山] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[罗刹海市|new_44   罗刹海市] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[聊斋志异|mjmz   聊斋志异] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[兰若寺|hgsq   兰若寺] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[画壁|mjsc   画壁] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[崂山|mjrk   崂山] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[罗刹海市|egdl6   罗刹海市] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 ;五大陆地图五
-[敦煌遗梦|new_44   敦煌遗梦] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[莫高窟|new_44   莫高窟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[月牙泉?|new_44   月牙泉?] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[玉门关|new_44   玉门关] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[阳关道|new_44   阳关道] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[敦煌遗梦|at94   敦煌遗梦] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[莫高窟|fsdc1   莫高窟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[月牙泉|ID7_003   月牙泉] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[玉门关|ID7_000   玉门关] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[阳关道|ID6_001   阳关道] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 ;五大陆地图六
-[世界禁墟|new_44   世界禁墟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[世界禁墟|hgmj   世界禁墟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[大地禁墟一层|new_44   大地禁墟一层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[大地禁墟二层|new_44   大地禁墟二层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[大地禁墟三层|new_44   大地禁墟三层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[大地禁墟一层|hgsx   大地禁墟一层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[大地禁墟二层|hgmz   大地禁墟二层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[大地禁墟三层|hgjl   大地禁墟三层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[天空禁墟一层|new_44   天空禁墟一层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[天空禁墟二层|new_44   天空禁墟二层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[天空禁墟三层|new_44   天空禁墟三层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[天空禁墟一层|gxm   天空禁墟一层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[天空禁墟二层|gzdj   天空禁墟二层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[天空禁墟三层|fxsjq   天空禁墟三层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[海洋禁墟一层|new_44   海洋禁墟一层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[海洋禁墟二层|new_44   海洋禁墟二层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[海洋禁墟三层|new_44   海洋禁墟三层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[海洋禁墟一层|D2101   海洋禁墟一层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[海洋禁墟二层|D2104   海洋禁墟二层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[海洋禁墟三层|D2102   海洋禁墟三层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[青铜禁墟一层|new_44   青铜禁墟一层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[青铜禁墟二层|new_44   青铜禁墟二层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[青铜禁墟三层|new_44   青铜禁墟三层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[青铜禁墟一层|D22032   青铜禁墟一层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[青铜禁墟二层|D22021   青铜禁墟二层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[青铜禁墟三层|D1206   青铜禁墟三层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 
 ;==============================================六大陆野外地图==============================

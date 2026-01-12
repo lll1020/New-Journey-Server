@@ -11,3 +11,5 @@
 
 [2026-01-12 01:23:48:214] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：32; NpcThreadId: 25672, CurPlayThreadId: 25672
 
+[2026-01-12 04:57:04:602] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：31; NpcThreadId: 25672, CurPlayThreadId: 25672
+
