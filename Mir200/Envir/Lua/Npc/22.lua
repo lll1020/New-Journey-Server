@@ -100,7 +100,7 @@ function npc.link(play,npcid,ew,aid)
         end
         T_data.level[""..aid] = (T_data.level[""..aid] or 0) + 1
         if T_data.level[""..aid] > _config.main_updata.max_level then
-            Player.sendmsgEx(play, "提示:#251|你的主灵根属性已经达到最高等级")
+            Player.sendmsgEx(play, "提示:#251|你的灵根等级已经达到最高等级")
             return
         end
         local config = aid < 6 and _config.main_updata.details.low[T_data.level[""..aid]] or _config.main_updata.details.up[T_data.level[""..aid]]
@@ -116,7 +116,7 @@ function npc.link(play,npcid,ew,aid)
         Player.updateSomeAddr(play,nil, _config.main_r[aid].attr)
 
         sendluamsg(play,101,1005,0,0,"tpcg")
-        sendluamsg(play,100,npcid,1,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
+        sendluamsg(play,100,npcid,2,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
 
     end
 end
@@ -127,7 +127,7 @@ function Login_lg(play)
     --灵根属性
     T_data.level = T_data.level or {}
     local attr = {}
-    for i = 1, 5 do
+    for i = 1, 10 do
         local level = T_data.level[""..i] or 0
         if level > 0 then
             for vv,kk in ipairs(_config.main_r[i].attr) do
@@ -142,6 +142,98 @@ function Login_lg(play)
 
 end
 GameEvent.add(EventCfg.onLogin, Login_lg, "Login_lg")
+
+function npc.lgcf(play,zt,Damage,Target)
+    --灵根效果触发
+    local sj = os.time()
+    local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
+    T_data.level = T_data.level or {}
+    
+    if not T_data.main then
+        return 0
+    end
+    if not (T_data.level[""..T_data.main] and T_data.level[""..T_data.main] > 0) then
+        return 0
+    end
+    local level = T_data.level[""..T_data.main]
+    local config = _config.main_r[T_data.main]
+    if sj - getplaydef(play,"N$buff_lg") >= 30 then
+        if T_data.main == 1 then--金
+            addbuff(play,20104)
+        elseif T_data.main == 2 then--木
+            Player.updateSomeAddr_time(play, nil, {{1, math.floor(level*config.value1*getbaseinfo(play, 20))}},10)
+        elseif T_data.main == 3 then--水
+            addbuff(play,20105)
+        elseif T_data.main == 4 then--火
+            addbuff(Target,20105,10,level,play)
+        elseif T_data.main == 5 then--土
+        elseif T_data.main == 6 then--雷
+            addbuff(Target,20107,10,level,play)
+        elseif T_data.main == 7 then--风
+            Player.updateSomeAddr_time(play, nil, {{243, math.floor(level*config.value1*100)}},10)
+        elseif T_data.main == 8 then--冰
+            local xx,yy,dqdt = getbaseinfo(play,4),getbaseinfo(play,5),getbaseinfo(play,3)
+            local mons,plays = getobjectinmap(dqdt, xx,yy, 3, 2),getobjectinmap(dqdt, xx,yy, 3, 1)
+            -- if #mons > 1 then
+            --     for i, v in ipairs(mons) do
+            --         if i < 20 then
+                        
+            --         end
+            --     end
+            -- end
+            if #plays > 1 then
+                for i, v in ipairs(plays) do
+                    if i < 20 then
+                        Player.updateSomeAddr_time(v, {{243, math.floor(level*config.value1*100)}}, nil,10)
+                        Player.updateSomeAddr_time(v, {{201, math.floor(level*config.value1)}}, nil,10)
+                    end
+                end
+            end
+        elseif T_data.main == 9 then--焚
+            recallself(play,10,1,level*config.value1,0,0,0,0,0,0,"20108")
+        elseif T_data.main == 10 then--岩
+            addbuff(play,20109,level * 0.5,level,play)
+        end
+        setplaydef(play,"N$buff_lg",sj)
+        if not T_data.other then
+            return 0
+        end
+        --副灵根效果触发
+        if not (T_data.level[""..T_data.other] and T_data.level[""..T_data.other] > 0) then
+            return 0
+        end
+        level = T_data.level[""..T_data.other]
+        config = _config.main_r[T_data.other]
+        if T_data.other == 1 then--金
+            humanhp(Target,"-",math.floor(level*config.value2),0,1,play)
+        elseif T_data.other == 2 then--木
+            Player.updateSomeAddr_time(play, nil, {{71, math.floor(level*config.value1*(getbaseinfo(play, 20) - getbaseinfo(play, 19))/10)}},10)
+        elseif T_data.other == 3 then--水
+            Player.updateSomeAddr_time(Target, {{243, 1000}}, nil,10)
+        elseif T_data.other == 4 then--火
+            addbuff(Target,20105,10,level,play)
+        elseif T_data.other == 5 then--土
+            Player.updateSomeAddr_time(play, nil, {{26, math.floor(level*config.value1*100)},{27, math.floor(level*config.value1*100)}},10)
+        elseif T_data.other == 6 then--雷
+            
+        elseif T_data.other == 7 then--风
+            Player.updateSomeAddr_time(play, nil, {{200, math.floor(level*config.value1)},{201, math.floor(level*config.value1)}},10)
+        elseif T_data.other == 8 then--冰  有[冰灵根等级*2%]概率冰冻周围单位1秒
+            if math.random(1,100) <= level * config.value2 then
+                rangeharm(play,getbaseinfo(play,4),getbaseinfo(play,5),3,0,2,1,0,2,0)
+            end
+            
+        elseif T_data.other == 9 then--焚
+            rangeharm(play,getbaseinfo(play,4),getbaseinfo(play,5),3,level * config.value2,0,0,0,2,0)
+        elseif T_data.other == 10 then--岩
+            Player.updateSomeAddr_time(play, nil, {{206, math.floor(level*config.value1)}},10)
+        end
+            
+        return 0
+    end
+    return 0
+
+end
 
 
 return npc

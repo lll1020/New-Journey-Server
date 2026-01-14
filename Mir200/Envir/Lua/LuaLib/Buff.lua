@@ -230,6 +230,37 @@ Buff = {
             setplaydef(play,VarCfg.S_buffgjh,tbl2json(data))
         end
     end,
+    [103] = function(play,zt,Damage,Target) --触发攻击系的灵根
+        if zt == 3 then
+            Npclib[22].lgcf(play,zt,Damage,Target)
+        else
+            local bl = getplaydef(play,VarCfg.S_buffgjh)
+            local data = json2tbl(bl == "" and {} or bl)
+            if zt == 1 then
+                data["103"] = true
+                setplaydef(play,"N$buff_lg",0)
+            elseif zt == 2 then
+                data["103"] = nil
+            end
+            setplaydef(play,VarCfg.S_buffgjh,tbl2json(data))
+        end
+    end,
+    [104] = function(play,zt,Damage,Target) --触发被攻击系的灵根
+        if zt == 3 then
+            Npclib[22].lgcf(play,zt,Damage,Target)
+            return 0
+        else
+            local bl = getplaydef(play,VarCfg.S_buffbgjq)
+            local data = json2tbl(bl == "" and {} or bl)
+            if zt == 1 then
+                data["104"] = true
+                setplaydef(play,"N$buff_lg",os.time())
+            elseif zt == 2 then
+                data["104"] = nil
+            end
+            setplaydef(play,VarCfg.S_buffbgjq,tbl2json(data))
+        end
+    end,
 }
 
 local weizhi = {0,1,3,4,5,6,7,8,9,10,11,13,14,16,30,31,32,33,34,35,36,37,38,39,40,41}

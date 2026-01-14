@@ -459,12 +459,7 @@ function ggna(play,id)
             giveitem(play,v,1)
         end
     elseif id == "24" then
-        local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
-    T_data.level = T_data.level or {}
-      T_data.level[""..math.random(1, 5)] = 0
-        Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
-        Player.sendmsgEx(play, "提示:#251|你获得了新的灵根，请前往灵根升级界面查看")
-        sendluamsg(play,100,npcid,1,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
+        recallself(play,10,1,100,0,0,0,0,0,0,"20108")
 
     end
 

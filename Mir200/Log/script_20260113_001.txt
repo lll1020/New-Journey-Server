@@ -1,0 +1,8 @@
+[2026-01-13 18:24:43:102] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：32; NpcThreadId: 31900, CurPlayThreadId: 31900
+
+[2026-01-13 18:25:21:013] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：32; NpcThreadId: 31900, CurPlayThreadId: 31900
+
+[2026-01-13 18:27:09:642] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：32; NpcThreadId: 31900, CurPlayThreadId: 31900
+
+[2026-01-15 00:48:09:706] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：32; NpcThreadId: 31900, CurPlayThreadId: 31900
+
