@@ -1,0 +1,29 @@
+[2026-01-15 03:07:25:114] LuaNPC:玩家名字 ID:999999999 执行 attack player:玩家名字 耗时：297; NpcThreadId: 30528, CurPlayThreadId: 30528
+
+[2026-01-15 04:22:40:715] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：32; NpcThreadId: 30528, CurPlayThreadId: 30528
+[2026-01-15 04:22:40:715] [玩家名字]Lua执行耗时过高:32ms msgid:100 28 1 0 
+
+[2026-01-15 20:59:00:444] LuaNPC:系统控制 ID:999999999 执行 jqr_shabake player:系统控制 耗时：31; NpcThreadId: 30528, CurPlayThreadId: 30528
+
+[2026-01-16 22:31:20:968] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 30528, CurPlayThreadId: 30528
+
+[2026-01-16 22:36:37:311] LuaNPC:玩家名字 ID:999999999 执行 groupitemonex player:玩家名字 耗时：32; NpcThreadId: 30528, CurPlayThreadId: 30528
+[2026-01-16 22:36:37:341] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 30528, CurPlayThreadId: 30528
+
+[2026-01-16 22:40:18:649] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：47; NpcThreadId: 30528, CurPlayThreadId: 30528
+
+[2026-01-16 22:41:36:043] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 30528, CurPlayThreadId: 30528
+[2026-01-16 22:41:36:043] [玩家名字]Lua执行耗时过高:31ms msgid:100 501 1 0 
+
+[2026-01-17 00:56:57:980] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：32; NpcThreadId: 30528, CurPlayThreadId: 30528
+
+[2026-01-17 00:57:10:710] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 30528, CurPlayThreadId: 30528
+
+[2026-01-17 00:58:47:635] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：110; NpcThreadId: 30528, CurPlayThreadId: 30528
+[2026-01-17 00:58:47:635] [玩家名字]Lua执行耗时过高:110ms msgid:100 54 1 0 {"idx":3}
+
+[2026-01-17 01:02:45:829] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 30528, CurPlayThreadId: 30528
+
+[2026-01-17 01:14:45:286] LuaNPC:玩家名字 ID:999999999 执行 deletetask player:玩家名字 耗时：32; NpcThreadId: 30528, CurPlayThreadId: 30528
+[2026-01-17 01:14:45:294] LuaNPC:玩家名字 ID:999999999 执行 clicknewtask player:玩家名字 耗时：32; NpcThreadId: 30528, CurPlayThreadId: 30528
+

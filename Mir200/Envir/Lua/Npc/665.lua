@@ -459,7 +459,11 @@ function ggna(play,id)
             giveitem(play,v,1)
         end
     elseif id == "24" then
-        recallself(play,10,1,100,0,0,0,0,0,0,"20108")
+        Player.title_give(play,"初窥天机",1)
+        Player.title_give(play,"通灵神眼",1)
+        Player.title_give(play,"天机尊者",1)
+        Player.title_give(play,"命运掌控",1)
+        Player.title_give(play,"玄秘宗师",1)
 
     end
 

@@ -138,6 +138,8 @@ function Login_lg(play)
     Player.updateSomeAddr(play,nil, attr)
 
     --灵根特殊效果
+    Buff[103](play,1)
+    Buff[104](play,1)
     --灵根技能
 
 end
@@ -161,6 +163,7 @@ function npc.lgcf(play,zt,Damage,Target)
         if T_data.main == 1 then--金
             addbuff(play,20104)
         elseif T_data.main == 2 then--木
+            release_print("木灵根触发")
             Player.updateSomeAddr_time(play, nil, {{1, math.floor(level*config.value1*getbaseinfo(play, 20))}},10)
         elseif T_data.main == 3 then--水
             addbuff(play,20105)
@@ -209,7 +212,7 @@ function npc.lgcf(play,zt,Damage,Target)
         elseif T_data.other == 2 then--木
             Player.updateSomeAddr_time(play, nil, {{71, math.floor(level*config.value1*(getbaseinfo(play, 20) - getbaseinfo(play, 19))/10)}},10)
         elseif T_data.other == 3 then--水
-            Player.updateSomeAddr_time(Target, {{243, 1000}}, nil,10)
+            -- Player.updateSomeAddr_time(Target, {{243, 1000}}, nil,10)
         elseif T_data.other == 4 then--火
             addbuff(Target,20105,10,level,play)
         elseif T_data.other == 5 then--土

@@ -8,7 +8,7 @@ local _config = Guard.getConfig("npc_70")
 function npc.main(play,npcid)
     local equipname = Player.getEquipNameByPos(play, _config.where)
     if equipname ~= _config.now then
-        Player.sendmsgEx(play, "请先装备【".._config.now.."#249】|进行升级#57")
+        Player.sendmsgEx(play, "请先装备【".._config.now.."】#249|进行升级#57")
         return
     end
     sendluamsg(play,100,npcid,0,0,tbl2json({num = getplaydef(play, VarCfg["J_醉意值"])}))

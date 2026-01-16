@@ -38,7 +38,7 @@ function npc.link(play,npcid,ew,aid)
         end
         T_dljq["npc_602"] = T_dljq["npc_602"] or {}
         if T_dljq["npc_602"][""..aid] and T_dljq["npc_602"][""..aid] == 1 then
-            Player.sendmsgEx(play, "你已经达成了该灵根的激活条件，可以直接激活#57")
+            npc.link(play,npcid,2,aid)
             return
         end
         if aid == 1 then --金 --无，跟引导开
@@ -65,6 +65,8 @@ function npc.link(play,npcid,ew,aid)
         T_dljq["npc_602"] = T_dljq["npc_602"] or {}
         if T_dljq["npc_602"][""..aid] and T_dljq["npc_602"][""..aid] == 1 then
             T_data.level[""..aid] = 0
+            T_dljq["npc_602"][""..aid] = 2
+            Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
             Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
             Player.sendmsgEx(play, "恭喜你，成功激活了#249|灵根")
             sendluamsg(play,100,npcid,2,aid,"")

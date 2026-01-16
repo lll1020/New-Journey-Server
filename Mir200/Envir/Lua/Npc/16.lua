@@ -62,10 +62,10 @@ function npc.addPlayerPoints(guildName, playerName, points)
     end
     guildPoints[guildName][playerName] = points
     if checkkuafuserver() then
-        Player.setJsonVarByTable(nil, VarCfg["A_行会积分记录跨服"], "kf行会积分记录")
+        Player.setJsonVarByTable(nil, VarCfg["A_行会积分记录跨服"], guildPoints)
         synzvar(2,"A5","A5",1)
     else
-        Player.setJsonVarByTable(nil, VarCfg["A_行会积分记录"], "行会积分记录")
+        Player.setJsonVarByTable(nil, VarCfg["A_行会积分记录"], guildPoints)
     end
 
 end

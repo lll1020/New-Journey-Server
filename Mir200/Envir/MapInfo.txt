@@ -7,8 +7,8 @@
 
 
 
-[hjsbk|03023 沙巴克] noreconnect(xtc:137:138:9) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[hg|n0150 沙巴克皇宫] noreconnect(xtc:137:138:9)  NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
+[hjsbk|03023 沙巴克] noreconnect(xtc:137:138:9) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE day
+[hg|n0150 沙巴克皇宫] noreconnect(xtc:137:138:9)  NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE day
 hjsbk 85 100 -> hg 20 24
 hjsbk 80 105 -> hg 16 29
 hjsbk 78 105 -> hg 10 29
@@ -16,8 +16,8 @@ hjsbk 89 96 -> hg 26 20
 hg 23 26 -> hjsbk 86 102
 
 
-[kfhjsbk|03023 跨服沙巴克] noreconnect(xtc:137:138:9) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE Kuafu
-[kfhg|n0150 沙巴克皇宫] noreconnect(xtc:137:138:9)  NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE Kuafu
+[kfhjsbk|03023 跨服沙巴克] noreconnect(xtc:137:138:9) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE Kuafu day
+[kfhg|n0150 沙巴克皇宫] noreconnect(xtc:137:138:9)  NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE Kuafu day
 kfhjsbk 85 100 -> kfhg 20 24
 kfhjsbk 80 105 -> kfhg 16 29
 kfhjsbk 78 105 -> kfhg 10 29
