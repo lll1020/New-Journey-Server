@@ -30,9 +30,31 @@ function npc.link(play,npcid,ew,aid)
         return
     end
 
-    if ew == 1 then  --会长领取奖励
+    if ew == 1 then  --传送进地图
+        if not castleinfo(5) then
+            Player.sendmsgEx(play, string.format("当前不是沙巴克攻城时间，无法进入沙巴克地图#249"))
+            return
+        end
+
+        local isInMap = false
+        for _, mapInfo in ipairs(_config.map) do
+            if FCheckMap(play, mapInfo.mpa_name) then
+                isInMap = true
+                break
+            end
+        end
+
+        if isInMap then
+            Player.sendmsgEx(play, string.format("你已经在沙巴克地图中，无需重复传送#249"))
+            return
+        end
+
+        local targetMap = _config.map[aid]
+        mapmove(play, targetMap.mpa_name, targetMap.x, targetMap.y, 5)
+    
     elseif ew == 2 then  --胜利方成员领取称号奖励
-    elseif ew == 2 then  --双方领取货币奖励
+    elseif ew == 3 then  --胜利方成员领取称号奖励
+    elseif ew == 4 then  --双方领取货币奖励
 
     end
 end

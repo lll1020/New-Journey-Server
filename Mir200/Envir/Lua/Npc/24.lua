@@ -38,8 +38,10 @@ function npc.link(play,npcid,ew,aid,data)
                 return
             end
             local config = _config.details[1].details[T_data.level]
+            -- release_print("天书强化配置:", T_data.level)
+            -- release_print("天书强化配置:", tbl2json(config))
             if (T_data.jf or 0) < config.jf then
-                Player.sendmsgEx(play, "你的天书积分不足，无法进行强化#57")
+                Player.sendmsgEx(play, "你的天书杀意值不足，无法进行强化#57")
                 return
             end
             Player.sendmsgEx(play, "恭喜你，天书强化成功，当前天书等级为|"..T_data.level.."级#249|")
@@ -104,6 +106,13 @@ function npc.link(play,npcid,ew,aid,data)
         else
         end
     end
+end
+
+function npc.wangshi(play,idx,data)
+    local T_data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
+    T_data.wangshi = T_data.wangshi or {}
+    T_data.wangshi[""..idx] = data
+    Player.setJsonVarByTable(play, VarCfg["T_天书"], T_data)
 end
 
 
