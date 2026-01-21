@@ -58,7 +58,7 @@ function npc.link(play, npcid, p2, p3, msgData)
                 Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
                 Player.sendmsgEx(play,  "任务完成")
                 sendluamsg(play,101,1005,0,0,"rwwc")
-                Player.rwjl(play, _config.rwjl, "开辟仙府任务奖励")
+                Player.rwjl(play, _config.rwjl, "开辟仙府任务奖励",1)
                 sendluamsg(play,100,npcid,1,2,"")
             else
                 Player.sendmsgEx(play,  "你还没有完成任务#57")

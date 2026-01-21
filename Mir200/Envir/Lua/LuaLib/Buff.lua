@@ -261,6 +261,22 @@ Buff = {
             setplaydef(play,VarCfg.S_buffbgjq,tbl2json(data))
         end
     end,
+    [105] = function(play,zt,Damage,Target) --¥•∑¢¡È ﬁ
+        if zt == 3 then
+            Npclib[64].lscf(play,zt,Damage,Target)
+            return 0
+        else
+            local bl = getplaydef(play,VarCfg.S_buffgjh)
+            local data = json2tbl(bl == "" and {} or bl)
+            if zt == 1 then
+                data["105"] = true
+                setplaydef(play,"N$buff_ls",os.time())
+            elseif zt == 2 then
+                data["105"] = nil
+            end
+            setplaydef(play,VarCfg.S_buffbgjq,tbl2json(data))
+        end
+    end,
 }
 
 local weizhi = {0,1,3,4,5,6,7,8,9,10,11,13,14,16,30,31,32,33,34,35,36,37,38,39,40,41}

@@ -50,17 +50,20 @@ function npc.link(play,npcid,ew,aid,data)
             Player.sendmsgEx(play, string.format("你成功抽取到灵兽|%s#249|x1", _config.config.ls[randomNum].name))
             Player.sendmsgEx(play, "你已获得该灵兽的初始星级，快去召唤它吧#57")
             Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
-            sendluamsg(play, 100, npcid, 1, randomNum, "")
+            sendluamsg(play,100,npcid,1,0,tbl2json({T_data = T_data}))
+            Player.updateSomeAddr(play,nil, _config.config.ls[randomNum].attr_give)
+            Player.updateSomeAddr(play,nil, _config.config.wy.det[T_data.ls[""..randomNum]].attr)
         else
         -- 最大星级4
             if T_data.ls_sp[""..randomNum] >= _config.max_star then
-                Player.sendmsgEx(play, string.format("你抽取到的灵兽|%s#249|已达最大星级", _config.config.ls[randomNum].name))
+                Player.sendmsgEx(play, string.format("你抽取到的灵兽|%s#249|已达最大星级,转换为材料", _config.config.ls[randomNum].name))
+                Player.rwjl(play, {{"灵兽丹",3},{"灵石",500},{"妖怪精魄",10}}, "灵兽抽取",1,1000)
                 return
             end
             T_data.ls_sp[""..randomNum] = T_data.ls_sp[""..randomNum] + 1
             Player.sendmsgEx(play, string.format("你成功抽取到灵兽|%s#249|x1|已自动转换为星级", _config.config.ls[randomNum].name))
             Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
-            sendluamsg(play, 100, npcid, 2, randomNum, "")
+            sendluamsg(play,100,npcid,1,0,tbl2json({T_data = T_data}))
         end
         -- T_data.ls_sp[randomNum] = (T_data.ls_sp[randomNum] or 0) + 1
         -- Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
@@ -71,6 +74,11 @@ function npc.link(play,npcid,ew,aid,data)
         T_data.ls_sp = T_data.ls_sp or {}
         if not T_data.ls[""..json_data.idx] or T_data.ls[""..json_data.idx] <= 0 then
             Player.sendmsgEx(play, "你没有该灵兽，请先抽取灵兽")
+            return
+        end
+        local Tlg_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
+        if Tlg_data.main and Tlg_data.main == _config.config.ls[json_data.idx].yq[1] and Tlg_data.main == _config.config.ls[json_data.idx].yq[2] then
+            Player.sendmsgEx(play, "你的主灵根与该灵兽的契约灵根冲突，无法出战该灵兽")
             return
         end
         T_data.dqzh = json_data.idx
@@ -98,7 +106,8 @@ function npc.link(play,npcid,ew,aid,data)
         Player.takeItemByTable(play, _config.config.wy.cost[T_data.ls[""..json_data.idx] + 1] or {}, ",灵兽喂养",nil)
         T_data.ls[""..json_data.idx] = T_data.ls[""..json_data.idx] + 1
         Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
-        sendluamsg(play, 100, npcid, 3, json_data.idx, "")
+        Player.updateSomeAddr(play,_config.config.wy.det[T_data.ls[""..json_data.idx] - 1] and _config.config.wy.det[T_data.ls[""..json_data.idx] - 1].attr or nil, _config.config.wy.det[T_data.ls[""..json_data.idx]].attr)
+        sendluamsg(play,100,npcid,3,0,tbl2json({T_data = T_data}))
         Player.sendmsgEx(play, string.format("你成功喂养灵兽|%s#249|，当前喂养次数|%d#249|", _config.config.ls[json_data.idx].name, T_data.ls[""..json_data.idx]))
     elseif ew == 4 then -- 灵兽升星
     elseif ew == 5 then -- 灵兽装备圣遗物
@@ -138,21 +147,42 @@ function npc.link(play,npcid,ew,aid,data)
 end
 
 function Login_lszh(play)
-    -- local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
-    -- T_data.dqzh = T_data.dqzh or 0
-    -- if T_data.dqzh == 0 then
-    --     return
-    -- end
-    -- local ncount = getbaseinfo(play,38)
-    -- for i = 0 ,ncount-1 do
-    --     local mob = getslavebyindex(play,i)
-    --     killmonbyobj(play,mob,false,false,false)
-    -- end
-    -- sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[灵兽]</font><font color=\'#00ff00\'>成功召唤灵兽【'.._config.config.ls[T_data.dqzh].name..'】...</font>","Type":9}')
-    -- local cw = recallmob(play, _config.config.ls[T_data.dqzh].name,7,0,0,0,0)
-    -- setbaseinfo(cw, 50, 6) -- 设置为灵兽
+    local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
+    T_data.ls = T_data.ls or {}
+    for i = 1,5 do
+        T_data.ls[""..i] = T_data.ls[""..i] or 0
+        if T_data.ls[""..i] > 0 then
+            Player.updateSomeAddr(play,nil, _config.config.wy.det[T_data.ls[""..i]].attr)
+        end
+    end
+    Player.updateSomeAddr(play,nil, _config.config.ls[T_data.dqzh].attr_give)
+    Buff[105](play,1)
 end
 GameEvent.add(EventCfg.onLogin, Login_lszh, "灵兽召唤")
+
+function npc.lscf(play,zt,Damage,Target)
+
+    local sj = os.time()
+    local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
+    
+    if not T_data.dqzh then
+        return 0
+    end
+    local Tlg_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
+    if Tlg_data.main and (Tlg_data.main == _config.config.ls[T_data.dqzh].yq[1] or Tlg_data.main == _config.config.ls[T_data.dqzh].yq[2]) then
+            return
+        end
+    
+    if sj - getplaydef(play,"N$buff_ls") >= 30 then
+        local cw = recallmob(play, _config.config.ls[T_data.dqzh].name,7,1,0,0,0)
+        sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[灵兽]</font><font color=\'#00ff00\'>成功召唤灵兽【'.._config.config.ls[T_data.dqzh].name..'】...</font>","Type":9}')
+        setplaydef(play,"N$buff_ls",sj)
+        Player.updateSomeAddr_time(play,nil, _config.config.ls[T_data.dqzh].b_attr,_config.config.ls[T_data.dqzh].b_time)
+        
+    end
+    return 0
+
+end
 
 
 return npc

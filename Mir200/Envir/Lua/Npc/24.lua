@@ -111,6 +111,10 @@ end
 function npc.wangshi(play,idx,data)
     local T_data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
     T_data.wangshi = T_data.wangshi or {}
+    if T_data.wangshi[""..idx] then
+        -- Player.sendmsgEx(play, "你已经记录过该往事#57")
+        return
+    end
     T_data.wangshi[""..idx] = data
     Player.setJsonVarByTable(play, VarCfg["T_天书"], T_data)
 end

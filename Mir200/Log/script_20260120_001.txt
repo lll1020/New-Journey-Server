@@ -1,0 +1,4 @@
+[2026-01-20 02:06:26:576] LuaNPC:玩家名字k ID:999999999 执行 entermap player:玩家名字k 耗时：31; NpcThreadId: 110964, CurPlayThreadId: 110964
+[2026-01-20 02:06:26:576] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：31; NpcThreadId: 110964, CurPlayThreadId: 110964
+[2026-01-20 02:06:26:576] [玩家名字k]Lua执行耗时过高:31ms msgid:100 206 1 0 
+

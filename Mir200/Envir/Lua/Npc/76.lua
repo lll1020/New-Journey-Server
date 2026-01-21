@@ -59,7 +59,7 @@ function npc.link(play, npcid, p2, p3, msgData)
     
         Player.setJsonVarByTable(play, VarCfg.T_dljq, T_data)
         Player.sendmsgEx(play,  "你完成了该任务#57")
-        Player.rwjl(play, _config.details[json_data.idx].reward, "天命试炼")
+        Player.rwjl(play, _config.details[json_data.idx].reward, "天命试炼",1)
         sendluamsg(play,100,npcid,1,0,tbl2json({T_data = T_data}))
 
     elseif p2 == 2 then

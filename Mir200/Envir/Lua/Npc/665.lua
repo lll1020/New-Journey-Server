@@ -459,11 +459,7 @@ function ggna(play,id)
             giveitem(play,v,1)
         end
     elseif id == "24" then
-        Player.title_give(play,"初窥天机",1)
-        Player.title_give(play,"通灵神眼",1)
-        Player.title_give(play,"天机尊者",1)
-        Player.title_give(play,"命运掌控",1)
-        Player.title_give(play,"玄秘宗师",1)
+        Npclib[24].wangshi(play, 1,{"2014"})
 
     end
 
