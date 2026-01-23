@@ -783,6 +783,119 @@ npc[19] = function(play, p2, p3, data) --飞剑系统
 
     end
 end
+
+npc[30] = function(play, p2, p3, data) --砍树系统
+    
+    if p2 == 0 then
+        --砍树系统  --初始化页面
+        local tmp_data = {}
+        tmp_data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
+        sendluamsg(play, 101, 30, 0, 0, tbl2json(tmp_data))
+    elseif p2 == 1 then --升级
+        local T_data = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
+        local config = teshudata["anniu_30"]
+        if p3 == 1 then  --升级斧子
+            T_data.axe = T_data.axe or 1
+            if T_data.axe >= config.updata[1].max_level then
+                Player.sendmsgEx(play, "斧子已满级，无需升级...")
+                return
+            end
+            local name, num = Player.checkItemNumByTable(play, config.updata[1].details[T_data.axe].cost)
+            if name then
+                Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+                return
+            end
+            Player.takeItemByTable(play, config.updata[1].details[T_data.axe].cost, ",砍树系统",nil)
+            T_data.axe = T_data.axe + 1
+            Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
+            Player.sendmsgEx(play, "斧子升级成功，当前斧子等级为|"..T_data.axe.."#249|")
+            sendluamsg(play, 101, 30, 2, 1, tbl2json({T_data = T_data}))
+
+        elseif p3 == 2 then--升级自动升级
+            T_data.auto = T_data.auto or 1
+            if T_data.auto >= config.updata[2].max_level then
+                Player.sendmsgEx(play, "自动砍树已满级，无需升级...")
+                return
+            end
+            local name, num = Player.checkItemNumByTable(play, config.updata[2].details[T_data.auto].cost)
+            if name then
+                Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+                return
+            end
+            Player.takeItemByTable(play, config.updata[2].details[T_data.auto].cost, ",砍树系统",nil)
+            T_data.auto = T_data.auto + 1
+            Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
+            Player.sendmsgEx(play, "自动砍树升级成功，当前自动砍树等级为|"..T_data.auto.."#249|")
+            sendluamsg(play, 101, 30, 2, 2, tbl2json({T_data = T_data}))
+        end
+    elseif p2 == 2 then --获得奖励
+        local config = teshudata["anniu_30"]
+        local T_data = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
+        T_data.axe = T_data.axe or 1
+        T_data.auto = T_data.auto or 1
+        T_data.num = T_data.num or 0
+
+        if p3 == 1 then -- 打开页面时自动的奖励
+            -- release_print("砍树系统自动奖励触发")
+            -- release_print(os.time())
+            -- release_print(getplaydef(play,"N$自动砍树") + config.updata[1].details[T_data.axe].ratio * config.updata[2].details[T_data.auto].ratio * config.base_time)
+            if os.time() >= getplaydef(play,"N$自动砍树") + (config.updata[1].details[T_data.axe].ratio * config.updata[2].details[T_data.auto].ratio * config.base_time) then
+                local jl = ransjstr(config.updata[1].details[T_data.axe].jl, 1, 3)
+                setplaydef(play,"N$自动砍树",os.time())
+                T_data.num = T_data.num + 1
+                Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
+                sendluamsg(play, 101, 30, 1, 0, tbl2json({T_data = T_data}))
+                Player.rwjl(play, {{jl,1}}, "砍树系统自动奖励", 1,0)
+                sendluamsg(play, 101, 30, 3, 0, tbl2json({{jl,1}}))   
+            else
+                return
+            end
+        elseif p3 == 2 then -- 打开页面时手动点击的奖励
+            local name, num = Player.checkItemNumByTable(play, config.click.cost)
+            if name then
+                Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+                return
+            end
+            Player.takeItemByTable(play, config.click.cost, ",砍树系统",nil)
+
+            T_data.num = T_data.num + 1
+            Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
+            sendluamsg(play, 101, 30, 1, 0, tbl2json({T_data = T_data}))
+
+            local jl = ransjstr(config.updata[1].details[T_data.axe].jl, 1, 3)
+            release_print("砍树系统奖励:",tbl2json(jl))
+            Player.rwjl(play, {{jl,1}}, "砍树系统自动奖励", 1,0)
+            sendluamsg(play, 101, 30, 3, 0, tbl2json({{jl,1}}))
+        end
+    elseif p2 == 3 then --定时器开关
+        local T_data = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
+        if not (getplaydef(play,"N$自动砍树") == 1) then
+            Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
+            setontimer(play,7,60,0,1)
+            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>自动砍树已开启...</font>","Type":9}')
+            setplaydef(play,"N$自动砍树",os.time())
+        else
+            Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
+            setofftimer(play,7)
+            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>自动砍树已关闭...</font>","Type":9}')
+            setplaydef(play,"N$自动砍树",os.time())
+        end
+    elseif p2 == 4 then --兑换盲盒
+        local config = teshudata["anniu_30"]
+        local T_data = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
+        T_data.dh_num = T_data.dh_num or 1
+        local name, num = Player.checkItemNumByTable(play, T_data.dh_num > #config.dh.details and config.dh.cost or config.dh.details[T_data.dh_num].cost)
+        if name then
+            Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+            return
+        end
+        Player.takeItemByTable(play, T_data.dh_num > #config.dh.details and config.dh.cost or config.dh.details[T_data.dh_num].cost, ",砍树系统",nil)
+        T_data.dh_num = T_data.dh_num + 1
+        Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
+        Player.rwjl(play, {{"砍树盲盒",1}}, "砍树系统盲盒兑换", 1,1000)
+        sendluamsg(play, 101, 30, 4, 0, tbl2json({T_data = T_data}))
+    end
+end
 ---首充礼包
 npc[501] = function(play, p2, p3, data) --首充礼包
     if p2 == 0 then
@@ -1170,7 +1283,7 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
                 end
             end
             Player.setJsonVarByTable(play, VarCfg.T_qrbq, T_qrbq)
-            sendmail(getbaseinfo(player,2),0,"七日登录奖励","七日登录奖励,奖励已下发!",Player.jl_mail(dayReward.jl))
+            sendmail(getbaseinfo(play,2),0,"七日登录奖励","七日登录奖励,奖励已下发!",Player.jl_mail(dayReward.jl))
 
 
             if finalAwardToGive > 0 then

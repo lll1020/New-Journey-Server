@@ -237,4 +237,11 @@ function stdmodefunc32(play, item) --神石召唤
     Player.sendmsgEx(play, string.format("神石召唤#250|稀有度:%s#249|获得:%s#218", target.tip or "", rewardName))
 end
 
+function stdmodefunc33(play, item) --灵兽圣遗物自选礼盒
+    
+end
+function stdmodefunc34(play, item) --砍树盲盒
+    
+end
+
 

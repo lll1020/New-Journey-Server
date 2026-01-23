@@ -164,6 +164,7 @@ function npc.lscf(play,zt,Damage,Target)
 
     local sj = os.time()
     local T_data = Player.getJsonTableByVar(play, VarCfg["T_¡È ﬁ"])
+    T_data.ls = T_data.ls or {}
     
     if not T_data.dqzh then
         return 0
@@ -174,10 +175,10 @@ function npc.lscf(play,zt,Damage,Target)
         end
     
     if sj - getplaydef(play,"N$buff_ls") >= 30 then
-        local cw = recallmob(play, _config.config.ls[T_data.dqzh].name,7,1,0,0,0)
+        local cw = recallmobex(play, _config.config.ls[T_data.dqzh].name,0,0,7,1,_config.config.wy.det[T_data.ls[""..T_data.dqzh]].time,0,0,0,0,0,0,"")
         sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[¡È ﬁ]</font><font color=\'#00ff00\'>≥…π¶’ŸªΩ¡È ﬁ°æ'.._config.config.ls[T_data.dqzh].name..'°ø...</font>","Type":9}')
         setplaydef(play,"N$buff_ls",sj)
-        Player.updateSomeAddr_time(play,nil, _config.config.ls[T_data.dqzh].b_attr,_config.config.ls[T_data.dqzh].b_time)
+        Player.updateSomeAddr_time(play,nil, _config.config.ls[T_data.dqzh].b_attr,_config.config.wy.det[T_data.ls[""..T_data.dqzh]].time)
         
     end
     return 0

@@ -5,6 +5,7 @@ local bind_money = {
     {4,2},--元宝 元宝
     {8,7},--灵石 灵石
     {9},--剧情点
+    {30},--仙府币
 }
 local bind_m_tab = {}
 for index, value in ipairs(bind_money) do
@@ -628,18 +629,15 @@ end
 function Player.jl_mail(table) --奖励转邮件
     local str = ""
     for v,k in pairs(table) do
-        if v == "wp" then
-            for i = 1,#k do
-                str = str .. k[i][1] .. "#" .. k[i][2] .. "#850&"
-            end
-        end
-        if v == "hb" then
-            for i = 1,#k do
-                str = str .. k[i][1] .. "#" .. k[i][2] .. "&"
-            end
+        local idx = getstditeminfo(k[1], 0)
+        if Item.isCurrency(idx) then        --货币
+            str = str .. k[1] .. "#" .. k[2] .. "&"
+            
+        else                                    --物品 装备
+            str = str .. k[1] .. "#" .. k[2] .. "#850&"
         end
     end
-    --release_print("jl_mail",str)
+    -- release_print("jl_mail",str)
     return str
 end
 function Player.dl_sz_notip(actor, dl) --大陆限制 -- 无提示

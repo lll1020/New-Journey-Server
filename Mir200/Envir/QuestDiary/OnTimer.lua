@@ -182,6 +182,43 @@ function ontimer10(play)
         mapmove(play,"xtc",137,138,5)
     end
 end
+-----------------个人7号定时器---------------砍树--60s
+function ontimer7(play)
+    -- release_print("砍树系统")
+    -- release_print(os.time())
+    -- release_print(getplaydef(play,"N$自动砍树") + 59)
+    if os.time() < getplaydef(play,"N$自动砍树") + 59 then
+        return
+    end
+    local T_data = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
+    local config = teshudata["anniu_30"]
+    T_data.axe = T_data.axe or 1
+    T_data.auto = T_data.auto or 1
+    local jl = {}
+    for i = 1,60/(config.updata[1].details[T_data.axe].ratio * config.updata[2].details[T_data.auto].ratio * config.base_time) do
+        table.insert(jl, {ransjstr(config.updata[1].details[T_data.axe].jl, 1, 3),1})
+    end
+    -- 对 jl 处理 v[1] 相同的合并 增加v[2]
+    local merged_jl = {}
+    for _, v in ipairs(jl) do
+        local found = false
+        for _, mj in ipairs(merged_jl) do
+            if mj[1] == v[1] then
+                mj[2] = mj[2] + v[2]
+                found = true
+                break
+            end
+        end
+        if not found then
+            table.insert(merged_jl, {v[1], v[2]})
+        end
+    end
+    T_data.num = (T_data.num or 0) + 60/config.updata[1].details[T_data.axe].ratio * config.updata[2].details[T_data.auto].ratio * config.base_time
+    Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
+    -- release_print("砍树系统奖励:",tbl2json(merged_jl))
+    setplaydef(play,"N$自动砍树",os.time())
+    sendmail(getbaseinfo(play,2),0,"砍树奖励","每分钟砍树奖励",Player.jl_mail(merged_jl))
+end
 
 ------------------------------------个人定时器end---------------------------------
 -----------------地图定时器----------------

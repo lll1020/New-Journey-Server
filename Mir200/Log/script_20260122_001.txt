@@ -1,0 +1,7 @@
+[2026-01-22 14:35:10:020] LuaNPC:玩家名字k ID:999999999 执行 struckdamage player:玩家名字k 耗时：328; NpcThreadId: 264168, CurPlayThreadId: 264168
+
+[2026-01-22 17:17:42:839] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：31; NpcThreadId: 262192, CurPlayThreadId: 262192
+[2026-01-22 17:17:42:839] [玩家名字k]Lua执行耗时过高:31ms msgid:100 44 1 0 {"param":{"id":"Low","amount":1},"action":"buySeed"}
+
+[2026-01-22 17:22:44:428] LuaNPC:玩家名字k ID:999999999 执行 struckdamage player:玩家名字k 耗时：469; NpcThreadId: 262192, CurPlayThreadId: 262192
+

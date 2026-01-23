@@ -61,6 +61,9 @@ function Login.main(play)
 
     iniplayvar(play, "integer","HUMAN","比武大会")
 
+    Npclib['anniu'][30](play, 3, 1, "") --初始化砍树系统
+
+
 
 
     --全区通报登录
@@ -87,7 +90,8 @@ function Login.main(play)
         callscriptex(play, "PLAYMAGICBALLEFFECT", 0, 12, 150, -1, 2, 1, 12, -10, 110)
     end
     --设置光照范围
-    setcandlevalue(play, 10)
+    setcandlevalue(play, 20)
+    addbuff(play, 19994) --光照buff
 
 
 
