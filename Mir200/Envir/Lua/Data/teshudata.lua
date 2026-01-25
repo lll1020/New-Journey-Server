@@ -856,9 +856,9 @@ teshudata = {
         weight = "1#70|2#20|3#10",
         max = 3,
         details = {
-            {itme = "贵族藏宝图",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",1},{"元宝",1},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "地图2",map_x = 1,map_y = 1},{map_name = "地图2",map_x = 1,map_y = 1},{map_name = "地图2",map_x = 1,map_y = 1}}},
-            {itme = "王室藏宝图",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",1},{"元宝",1},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "地图3",map_x = 1,map_y = 1},{map_name = "地图3",map_x = 1,map_y = 1},{map_name = "地图3",map_x = 1,map_y = 1}}},
-            {itme = "普通藏宝图",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",1},{"元宝",1},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "地图1",map_x = 1,map_y = 1},{map_name = "地图1",map_x = 1,map_y = 1},{map_name = "地图1",map_x = 1,map_y = 1}}},
+            {item = "贵族藏宝图",mob_name = "贵族宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",1},{"元宝",1},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "地图2",map_x = 1,map_y = 1},{map_name = "地图2",map_x = 1,map_y = 1},{map_name = "地图2",map_x = 1,map_y = 1}}},
+            {item = "王室藏宝图",mob_name = "王室宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",1},{"元宝",1},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "地图3",map_x = 1,map_y = 1},{map_name = "地图3",map_x = 1,map_y = 1},{map_name = "地图3",map_x = 1,map_y = 1}}},
+            {item = "普通藏宝图",mob_name = "普通宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",1},{"元宝",1},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "地图1",map_x = 1,map_y = 1},{map_name = "地图1",map_x = 1,map_y = 1},{map_name = "地图1",map_x = 1,map_y = 1}}},
         },
     },
     ["npc_49"] = {
@@ -955,7 +955,7 @@ teshudata = {
     ["npc_54"] = {
         id = 54,
         name = "高级淬体",
-        randomdata = { 100, 30, 30, 30, 30, 30, 30, 30, 20, 20 },
+        randomdata = { 100, 30, 30, 30, 30, 30, 30, 30, 20, 20        ,100, 30, 30, 30, 30, 30, 30, 30, 20, 20 },
         fake_randomdata = { 100, 30, 30, 30, 30, 30, 30, 30, 20, 20 },
         max_level = 20,
         attrID = {21,25,26,28,30},
@@ -1228,11 +1228,11 @@ teshudata = {
     },
     ["npc_602"] = {
         details = {
-            {mob_name= "金灵根守护兽",mob_shape = 12034,scale = 0.7,time = 300,nandu = "ss",yq = "无",jl = "激活金灵根"},
-            {mob_name= "木灵根守护兽",mob_shape = 12035,time = 300,nandu = "ss",yq = "无",jl = "激活木灵根"},
-            {mob_name= "水灵根守护兽",mob_shape = 12036,time = 300,nandu = "ss",yq = "无",jl = "激活水灵根"},
-            {mob_name= "火灵根守护兽",mob_shape = 12037,time = 300,nandu = "ss",yq = "无",jl = "激活火灵根"},
-            {mob_name= "土灵根守护兽",mob_shape = 12038,time = 300,nandu = "ss",yq = "无",jl = "激活土灵根"},
+            {mob_name= "金灵根守护兽",mob_shape = 12034,scale = 0.7,time = 300,nandu = "ss",yq = "主线剧情引导",jl = "激活金灵根"},
+            {mob_name= "木灵根守护兽",mob_shape = 12035,time = 300,nandu = "ss",yq = "江湖称号达到：崭露头角",jl = "激活木灵根"},
+            {mob_name= "水灵根守护兽",mob_shape = 12036,time = 300,nandu = "ss",yq = "江湖称号达到：名动一方",jl = "激活水灵根"},
+            {mob_name= "火灵根守护兽",mob_shape = 12037,time = 300,nandu = "ss",yq = "江湖称号达到：闯荡四海",jl = "激活火灵根"},
+            {mob_name= "土灵根守护兽",mob_shape = 12038,time = 300,nandu = "ss",yq = "天书拥有1个红色仙法",jl = "激活土灵根"},
         },
     },
     ["npc_620"] = {

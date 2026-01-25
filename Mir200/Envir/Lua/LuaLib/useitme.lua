@@ -240,8 +240,50 @@ end
 function stdmodefunc33(play, item) --灵兽圣遗物自选礼盒
     
 end
-function stdmodefunc34(play, item) --砍树盲盒
-    
+function stdmodefunc34(play, item) --砍树盲盒 
 end
+function stdmodefunc35(play, item) --藏宝图
+    
+    -- release_print("藏宝图物品使用逻辑待实现")
+    local name = getiteminfo(play, item, 8)
+    local map_info = string.match(name or "", "%[(.-)%]")
+    if not map_info then
+        release_print("藏宝图地图信息解析失败:", name or "")
+        return false
+    end
 
+    local parts = split(map_info, ",")
+    local map_name = parts[1]
+    local map_x = tonumber(parts[2])
+    local map_y = tonumber(parts[3])
+
+    release_print("藏宝图地图信息:", map_name or "", map_x or 0, map_y or 0)
+    if not map_name or not map_x or not map_y then
+        release_print("藏宝图地图信息不完整:", map_info or "")
+        return false
+    end
+    if getbaseinfo(play, 3) == map_name then
+        
+        if math.abs(getbaseinfo(play,4) - map_x) <= 1 and math.abs(getbaseinfo(play,5) - map_y) <= 1 then
+            -- 触发挖宝逻辑
+            release_print("触发挖宝逻辑")
+            local name, num = Player.checkItemNumByTable(play, {{"铲子",1}})
+            if name then
+                Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+                return false
+            end
+            local gw = genmonex(map_name,map_x,map_y,teshudata["npc_47"].details[getstditeminfo(getiteminfo(play, item, 2), 8)].mob_name,1,1,0,54,"",0)
+            return true
+        else
+            Player.sendmsgEx(play, "当前位置不是藏宝图指定的坐标，无法使用！#249")
+            return false
+        end
+    else
+        Player.sendmsgEx(play, "当前地图不是藏宝图指定的地图，无法使用！#249")
+        return false
+    end
+    -- changeitemname(play,-2,detail.item.."["..map.map_name..","..map.map_x..","..map.map_y.."]",itemobj)
+
+end
+    
 

@@ -60,9 +60,12 @@ function Login.main(play)
 
 
     iniplayvar(play, "integer","HUMAN","比武大会")
+    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+    if jq_data["npc55"] and jq_data["npc55"] >= 2 then
+        Npclib['anniu'][30](play, 3, 1, "") --初始化砍树系统
+    end
 
-    Npclib['anniu'][30](play, 3, 1, "") --初始化砍树系统
-
+    
 
 
 

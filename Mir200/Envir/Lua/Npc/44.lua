@@ -1036,11 +1036,11 @@ end
 -- NPC 入口
 ---------------------------------------------------------------------
 function npc.main(play, npcid)
-    -- local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
-    -- if not (jq_data["npc55"] and jq_data["npc55"] >= 2) then
-    --     Player.sendmsgEx(play, "你还未开启相关剧情，暂无法使用#57")
-    --     return
-    -- end
+    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+    if not (jq_data["npc55"] and jq_data["npc55"] >= 2) then
+        Player.sendmsgEx(play, "你还未开启相关剧情，暂无法使用#57")
+        return
+    end
     local state = loadState(play)
     persistState(state, Rank.maybeUpdate(state.rank, state.record))
     sendluamsg(play, 100, npcid, 0, 0, tbl2json(buildSnapshot(state)))
@@ -1055,6 +1055,11 @@ function npc.link(play, npcid, p2, p3, msgData)
         return
     end
     if not Guard.ensureActionAllowed(play, npcid, action, Guard.newActionSet({1, 2})) then
+        return
+    end
+    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+    if not (jq_data["npc55"] and jq_data["npc55"] >= 2) then
+        Player.sendmsgEx(play, "你还未开启相关剧情，暂无法使用#57")
         return
     end
     local payload = Guard.safeJsonDecode(play, msgData, nil, {})

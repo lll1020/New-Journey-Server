@@ -931,6 +931,21 @@ function func_cjcg(play)
         end
         Player.sendmsgEx(play,  "采集+"..1 .." ( "..sg_data["npc3"].."/5 )#57")
         Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+    elseif monName == "贵族宝藏" then
+        local jl = teshudata["npc_47"].details[1].jl
+        local randomNum = ransjstr(jl.weight, 1, 3)
+        randomNum = tonumber(randomNum)
+        Player.rwjl(play, {jl.details[randomNum]}, "贵族宝藏",1,1000)
+    elseif monName == "王室宝藏" then
+        local jl = teshudata["npc_47"].details[2].jl
+        local randomNum = ransjstr(jl.weight, 1, 3)
+        randomNum = tonumber(randomNum)
+        Player.rwjl(play, {jl.details[randomNum]}, "贵族宝藏",1,1000)
+    elseif monName == "普通宝藏" then
+        local jl = teshudata["npc_47"].details[3].jl
+        local randomNum = ransjstr(jl.weight, 1, 3)
+        randomNum = tonumber(randomNum)
+        Player.rwjl(play, {jl.details[randomNum]}, "贵族宝藏",1,1000)
     end
 
     setplaydef(play, "S$采集目标", "")

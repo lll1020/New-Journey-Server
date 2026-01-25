@@ -42,11 +42,43 @@ function npc.link(play,npcid,ew,aid)
             return
         end
         if aid == 1 then --金 --无，跟引导开
-
+            if getplaydef(play,VarCfg.U_zxrw[1]) >= 20 then
+            else
+                Player.sendmsgEx(play, "激活条件未达成，无法进入灵根试炼副本#57")
+                return
+            end
         elseif aid == 2 then --木 --江湖称号达到：崭露头角
+            if getplaydef(play, VarCfg["U_江湖称号"]) >= 2 then
+            else
+                Player.sendmsgEx(play, "激活条件未达成，无法进入灵根试炼副本#57")
+                return
+            end
         elseif aid == 3 then --水 --江湖称号达到：名动一方
+            if getplaydef(play, VarCfg["U_江湖称号"]) >= 3 then
+            else
+                Player.sendmsgEx(play, "激活条件未达成，无法进入灵根试炼副本#57")
+                return
+            end
         elseif aid == 4 then --火 --江湖称号达到：闯荡四海
+            if getplaydef(play, VarCfg["U_江湖称号"]) >= 4 then
+            else
+                Player.sendmsgEx(play, "激活条件未达成，无法进入灵根试炼副本#57")
+                return
+            end
         elseif aid == 5 then --土 --天书拥有1个红色仙法
+            local T_ts_data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
+            T_ts_data["caowei"] = T_ts_data["caowei"] or {}
+            local count = 0
+            for index, value in ipairs(T_ts_data["caowei"]) do
+                if value[1] >= 5 then
+                    count = count + 1
+                end
+            end
+            if count >= 1 then
+            else
+                Player.sendmsgEx(play, "激活条件未达成，无法进入灵根试炼副本#57")
+                return
+            end
 
         end
         T_dljq["npc_602"][""..aid] = 0

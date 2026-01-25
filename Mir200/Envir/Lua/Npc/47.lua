@@ -47,16 +47,20 @@ function npc.link(play,npcid,ew,aid,data)
         level = tonumber(level)
         J_cs = J_cs + 1
         
-        T_data["map_"..J_cs] = _config.details[level].map[math.random(1,#_config.details)]
-        T_data["level_"..J_cs] = level
+        -- T_data["map_"..J_cs] = _config.details[level].map[math.random(1,#_config.details)]
+        -- T_data["level_"..J_cs] = level
+        local detail = _config.details[level]
+        local map = detail.map[math.random(1,#detail.map)]
+        release_print("藏宝图详情:", tbl2json(detail))
+        release_print("藏宝图生成:", tbl2json(map))
+
+
+        local itemobj = giveitem(play,detail.item,1)
+        changeitemname(play,-2,detail.item.."["..map.map_name..","..map.map_x..","..map.map_y.."]",itemobj)
 
         Player.setJsonVarByTable(play, VarCfg["T_藏宝图"], T_data)
         setplaydef(play, VarCfg["J_今日藏宝图次数"], J_cs)
 
-
-        local data = {}
-        data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_藏宝图"])
-        data["J_cs"] = getplaydef(play, VarCfg["J_今日藏宝图次数"])
         npc.main(play,npcid)
         
     end

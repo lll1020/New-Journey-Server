@@ -81,13 +81,13 @@ function npc.link(play,npcid,ew,aid,data)
             recalcabilitys(play)
 
 
-            sendluamsg(play,100,npcid,1,0,"")
+            sendluamsg(play,100,npcid,1,0,tbl2json({ ["T_data"] = T_data} ))
         else
             Player.sendmsgEx(play, "请先穿戴对应部位的装备#249")
             return
         end
     elseif ew == 2 then --仙法
-        if 1 then
+        if json_data["caowei"] and json_data["caowei"] <= 10 then
             local randomNum = ransjstr(_config.details[2].weight, 1, 3)
             randomNum = tonumber(randomNum)
 

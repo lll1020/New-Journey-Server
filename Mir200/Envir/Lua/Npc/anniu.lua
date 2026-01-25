@@ -785,6 +785,11 @@ npc[19] = function(play, p2, p3, data) --飞剑系统
 end
 
 npc[30] = function(play, p2, p3, data) --砍树系统
+    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+    if not (jq_data["npc55"] and jq_data["npc55"] >= 2) then
+        Player.sendmsgEx(play, "你还未开启相关剧情，暂无法使用#57")
+        return
+    end
     
     if p2 == 0 then
         --砍树系统  --初始化页面
@@ -871,7 +876,7 @@ npc[30] = function(play, p2, p3, data) --砍树系统
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
         if not (getplaydef(play,"N$自动砍树") == 1) then
             Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
-            setontimer(play,7,60,0,1)
+            setontimer(play,7,60*20,0,1)
             sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>自动砍树已开启...</font>","Type":9}')
             setplaydef(play,"N$自动砍树",os.time())
         else
