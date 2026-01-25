@@ -19,3 +19,146 @@
 [2026-01-25 09:18:23:904] NewHttpPost(15-0-0)-----------------------------------
 
 
+[2026-01-25 14:10:56:725] ---------------------线程耗时监控
+[2026-01-25 14:10:56:735] Frame-----------------------------------
+
+[2026-01-25 14:10:56:746] MainRunThread(0)-----------------------------------
+
+[2026-01-25 14:10:57:314] EnvirThread 0/0(2032-1)flag:10000997  lua: 6852 CallLua:include 10481-----------------------------------
+
+[2026-01-25 14:10:57:324] DbThread(16-0)-----------------------------------
+
+[2026-01-25 14:10:57:334] BoxSellDbThread(0)-----------------------------------
+
+[2026-01-25 14:10:57:344] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-01-25 14:10:59:235] ---------------------线程耗时监控
+[2026-01-25 14:10:59:244] Frame-----------------------------------
+
+[2026-01-25 14:10:59:254] MainRunThread(16)-----------------------------------
+
+[2026-01-25 14:10:59:304] EnvirThread 0/0(4547-1)flag:10000997  lua: 6852 CallLua:release_print 10489-----------------------------------
+
+[2026-01-25 14:10:59:314] DbThread(15-0)-----------------------------------
+
+[2026-01-25 14:10:59:324] BoxSellDbThread(16)-----------------------------------
+
+[2026-01-25 14:10:59:334] NewHttpPost(0-0-0)-----------------------------------
+
+[2026-01-25 14:11:02:004] ---------------------线程耗时监控
+[2026-01-25 14:11:02:014] Frame-----------------------------------
+
+[2026-01-25 14:11:02:025] MainRunThread(0)-----------------------------------
+
+[2026-01-25 14:11:02:200] EnvirThread 0/0(7313-1)flag:10000997  lua: 6852 CallLua:release_print 10500-----------------------------------
+
+[2026-01-25 14:11:02:211] DbThread(0-0)-----------------------------------
+
+[2026-01-25 14:11:02:220] BoxSellDbThread(0)-----------------------------------
+
+[2026-01-25 14:11:02:230] NewHttpPost(16-0-0)-----------------------------------
+
+
+[2026-01-25 19:12:48:653] ---------------------线程耗时监控
+[2026-01-25 19:12:49:471] Frame-----------------------------------
+
+[2026-01-25 19:12:49:490] MainRunThread(0)-----------------------------------
+
+[2026-01-25 19:12:49:502] EnvirThread 0/0(2859-1)flag:10000997  lua: 13884 CallLua:include 20031-----------------------------------
+
+[2026-01-25 19:12:49:521] DbThread(16-0)-----------------------------------
+
+[2026-01-25 19:12:49:539] BoxSellDbThread(15)-----------------------------------
+
+[2026-01-25 19:12:49:559] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-01-25 19:12:51:011] ---------------------线程耗时监控
+[2026-01-25 19:12:51:029] Frame-----------------------------------
+
+[2026-01-25 19:12:51:047] MainRunThread(0)-----------------------------------
+
+[2026-01-25 19:12:51:199] EnvirThread 0/0(4422-1)flag:10000997  lua: 13884 CallLua:release_print 20038-----------------------------------
+
+[2026-01-25 19:12:51:219] DbThread(0-0)-----------------------------------
+
+[2026-01-25 19:12:51:237] BoxSellDbThread(16)-----------------------------------
+
+[2026-01-25 19:12:51:254] NewHttpPost(15-0-0)-----------------------------------
+
+
+[2026-01-25 19:13:07:936] ---------------------线程耗时监控
+[2026-01-25 19:13:07:956] Frame-----------------------------------
+
+[2026-01-25 19:13:07:975] MainRunThread(0)-----------------------------------
+
+[2026-01-25 19:13:32:543] DbThread(2063-0)-----------------------------------
+
+[2026-01-25 19:13:34:071] BoxSellDbThread(0)-----------------------------------
+
+[2026-01-25 19:13:34:089] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-01-25 19:19:30:327] lua.RecallMobEx Except：Access violation at address 00007FFF6DABA5AF in module 'Lua5.1.dll'. Read of address FFFFFFFFFFFFFFFF[00007FFF6DABA5AF] Unknown function at lua_newstate
+[0000000001E77AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001E779B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001E7AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001E69702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001E6996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001E69B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000EA1B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFFA6CA62FF] Unknown function at __chkstk
+[00007FFFA6B52327] Unknown function at RtlLocateExtendedFeature
+[00007FFFA6CA5C3E] KiUserExceptionDispatcher
+[00007FFF6DABA5AF] Unknown function at lua_newstate
+[00007FFF6DA78F8D] lua_rawset
+[0000000001BC10D2] uMyLua._ZN6Umylua6TMyLua11RecallMobExEPv (Line 24720, "uMyLua.pas" + 77)
+[0000000001791E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFF6DA72C36]
+[00007FFF6DA789EA] lua_pcall
+[0000000001B8B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000001B89256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001FD0DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001F2113D] ObjBase._ZN7Objbase11TBaseObject23StruckDamageFuncNpcCallExPS0_i (Line 11311, "ObjBase.pas" + 20)
+[0000000001F12A31] ObjBase._ZN7Objbase11TBaseObject12StruckDamageERxPS0_bib (Line 9175, "ObjBase.pas" + 59)
+[0000000001F17482] ObjBase._ZN7Objbase11TBaseObject7_AttackERtPS0_i (Line 9815, "ObjBase.pas" + 43)
+[0000000001F099F3] ObjBase._ZN7Objbase11TBaseObject9AttackDirEPS0_ti (Line 7824, "ObjBase.pas" + 11)
+[0000000001F26148] ObjBase._ZN7Objbase13TAnimalObject6AttackEPNS_11TBaseObjectEi (Line 11958, "ObjBase.pas" + 2)
+[0000000001A15482] ObjMon._ZN6Objmon8TMonster12AttackTargetEv (Line 882, "ObjMon.pas" + 25)
+[0000000001A12A35] ObjMon._ZN6Objmon8TMonster3RunEv (Line 501, "ObjMon.pas" + 94)
+[0000000001A18544] ObjMon._ZN6Objmon10TATMonster3RunEv (Line 1375, "ObjMon.pas" + 13)
+[00000000018B1F7F] MonManage._ZN9Monmanage10TMonManage3RunEv (Line 987, "MonManage.pas" + 154)
+[0000000001D4D772] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 906, "Envir.pas" + 32)
+[0000000001A7B12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000012C21D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[00000000012C1D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000FC2963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000EA2F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFFA4F7E8D7] BaseThreadInitThunk
+[00007FFFA6BCC53C] RtlUserThreadStart
+
+
+[2026-01-25 19:39:09:970] D701 - secret map not found !!
+[2026-01-25 19:39:09:970] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-173720] 当前Thread:177352
+[2026-01-25 19:39:09:970] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2026-01-25 19:39:09:970] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-173720] 当前Thread:177352
+[2026-01-25 19:39:09:970] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2026-01-25 19:39:09:970] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-173720] 当前Thread:177352
+[2026-01-25 19:39:09:970] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2026-01-25 19:39:09:970] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-173720] 当前Thread:177352
+[2026-01-25 19:39:09:970] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2026-01-25 19:39:10:215] ---------------------线程耗时监控
+[2026-01-25 19:39:10:682] Frame-----------------------------------
+
+[2026-01-25 19:39:10:701] MainRunThread(0)-----------------------------------
+
+[2026-01-25 19:39:10:723] EnvirThread 0/0(31-0)flag:5000000  lua: 1 CallLua:setontimerex 471-----------------------------------
+
+[2026-01-25 19:39:10:742] DbThread(15-0)-----------------------------------
+
+[2026-01-25 19:39:10:761] BoxSellDbThread(16)-----------------------------------
+
+[2026-01-25 19:39:10:781] NewHttpPost(0-0-0)-----------------------------------
+
+

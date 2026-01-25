@@ -14,4 +14,4 @@ function npc.main(play,npcid)
 end
 
 
-return npc
+return npc 

@@ -77,8 +77,8 @@ kfhg 23 26 -> kfhjsbk 86 102
 [神秘森林|EZ025   神秘森林] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 极光城郊 71 152 -> 神秘森林 45 51
 
-[兵道古藏|ID8_010   兵道古藏] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[乱葬岗|ID9_00   乱葬岗] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[兵道古藏|ID8_010   杀伐道场] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[乱葬岗|ID9_00   煞魔古刹] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 兵道古藏 105 46 -> 乱葬岗 174 214
 
 [夜魔洞|ZD203   夜魔洞] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)

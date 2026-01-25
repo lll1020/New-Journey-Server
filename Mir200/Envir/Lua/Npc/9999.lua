@@ -465,8 +465,20 @@ function ggna(play,id)
             giveitem(play,v,1)
         end
     elseif id == "24" then
-        local itemobj = giveitem(play,"¹ó×å²Ø±¦Í¼",1)
-        changeitemname(play,-2,"llxf²âÊÔ²Ø±¦Í¼",itemobj)
+        sendluamsg(
+            play,
+            101,
+            11,
+            0,
+            0,
+            '{"dljq":'
+                .. getplaydef(play, VarCfg.T_dljq)
+                .. ',"zxrw":'
+                .. getplaydef(play, VarCfg.T_zxrw)
+                .. ',"ywl":'
+                .. getplaydef(play, VarCfg.T_ywl)
+                .. "}"
+        )
 
     end
 
