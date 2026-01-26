@@ -32,6 +32,7 @@ kfhg 23 26 -> kfhjsbk 86 102
 [q004|ID1_002 副本地图] noreconnect(xtc:137:138:9) NOALLOWUSEITEMS(随机传送石) ONKILLMON RUNMON(1)
 [D3804_2  锁妖塔] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
 [mwsl 太虚幻境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
+[副本|mwsl 任务副本] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
 
 
 ;==============================================额外杀怪地图==============================
@@ -136,7 +137,8 @@ kfhg 23 26 -> kfhjsbk 86 102
 [七星岛|E15   七星岛] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 [葬星城|14   葬星城] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[葬星海滩|72   葬星海滩] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[葬星海滩|tyzj   葬星海滩(潮起)] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[葬星海滩1|tqzj   葬星海滩(潮落)] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 
 藏星海 133 22 -> 藏星外海 134 28

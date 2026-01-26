@@ -285,5 +285,11 @@ function stdmodefunc35(play, item) --藏宝图
     -- changeitemname(play,-2,detail.item.."["..map.map_name..","..map.map_x..","..map.map_y.."]",itemobj)
 
 end
+function stdmodefunc36(play, item) --海盗宝箱
+end
+function stdmodefunc37(play, item) --船长的宝藏
+end
+function stdmodefunc38(play, item) --海贼王装备随机宝箱
+end
     
 

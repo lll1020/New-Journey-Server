@@ -465,20 +465,10 @@ function ggna(play,id)
             giveitem(play,v,1)
         end
     elseif id == "24" then
-        sendluamsg(
-            play,
-            101,
-            11,
-            0,
-            0,
-            '{"dljq":'
-                .. getplaydef(play, VarCfg.T_dljq)
-                .. ',"zxrw":'
-                .. getplaydef(play, VarCfg.T_zxrw)
-                .. ',"ywl":'
-                .. getplaydef(play, VarCfg.T_ywl)
-                .. "}"
-        )
+        local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+        local key = "npc_640"
+        jq_data[key] = 0
+        Player.setJsonTableByVar(play, VarCfg.T_dljq, jq_data)
 
     end
 

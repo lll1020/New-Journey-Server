@@ -30,12 +30,17 @@ function npc.link(play,npcid,ew,aid,data)
     if ew == 1 then --
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_dljq"])
         T_data["npc_46"] = T_data["npc_46"] or {}
-        for i = 1, 4 do
-            if not (T_data["npc_46"][""..i] and T_data["npc_46"][""..i] == 2) then
-                Player.sendmsgEx(play, "你还有未完成的试炼任务，无法领取奖励#57")
-                return
-            end
+        if not Guard.ensureCost(play, _config.cost) then
+            return
         end
+        Guard.consumeCost(play, _config.cost, ","..(_config.name or "剧情任务"))
+
+        -- for i = 1, 4 do
+        --     if not (T_data["npc_46"][""..i] and T_data["npc_46"][""..i] == 2) then
+        --         Player.sendmsgEx(play, "你还有未完成的试炼任务，无法领取奖励#57")
+        --         return
+        --     end
+        -- end
         T_data["npc_46"]["wc"] = 1
         Player.setJsonVarByTable(play, VarCfg["T_dljq"], T_data)
         Player.title_give(play, _config.ch)

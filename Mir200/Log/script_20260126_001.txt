@@ -1,0 +1,10 @@
+[2026-01-26 13:51:46:249] LuaNPC:玩家名字 ID:999999999 执行 struckdamage player:玩家名字 耗时：296; NpcThreadId: 186544, CurPlayThreadId: 186544
+
+[2026-01-26 15:57:40:611] LuaNPC:玩家名字 ID:999999999 执行 attack player:玩家名字 耗时：31; NpcThreadId: 5652, CurPlayThreadId: 5652
+
+[2026-01-26 18:11:49:551] LuaNPC:玩家名字 ID:999999999 执行 sendability player:玩家名字 耗时：31; NpcThreadId: 5652, CurPlayThreadId: 5652
+[2026-01-26 18:11:49:551] LuaNPC:玩家名字 ID:999999999 执行 moneychange16 player:玩家名字 耗时：31; NpcThreadId: 5652, CurPlayThreadId: 5652
+[2026-01-26 18:11:49:551] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 5652, CurPlayThreadId: 5652
+
+[2026-01-26 20:12:55:823] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 5652, CurPlayThreadId: 5652
+
