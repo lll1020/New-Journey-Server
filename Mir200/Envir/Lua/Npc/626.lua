@@ -79,7 +79,7 @@ function npc_626_enter(play)
     mapmove(play, dtm, 29, 27, 2)
 
     local mob_name = _config.mob or "¹ÖÎï"
-    genmonex(dtm, 29, 31, mob_name, 1, 1, 0, 54, "", 0)
+    genmonex(dtm, 32, 36, mob_name, 1, 1, 0, 54, "", 0)
 
     startautoattack(play)
     setenvirontimer(dtm, 1, 1, "@npc_626_dsq,"..play..","..dtm)
@@ -92,6 +92,15 @@ function npc_626_dsq(xt,play,dtm,data)
         delmirrormap(dtm)
         return
     end
+
+    if getbaseinfo(play,3) == dtm and not hasbuff(play, 20112) then
+        local maxhp = getbaseinfo(play, 10)
+        local hurt = math.floor(maxhp * 0.1)
+        if hurt > 0 then
+            humanhp(play, "-", hurt, 0, 0, play)
+        end
+    end
+
     if getmoncount(dtm,-1,true) < 1 then
         setenvirofftimer(dtm, 1)
         npc_626_finish(play)

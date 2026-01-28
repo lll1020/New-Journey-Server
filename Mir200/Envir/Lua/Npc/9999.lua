@@ -466,10 +466,14 @@ function ggna(play,id)
         end
     elseif id == "24" then
         local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
-        local key = "npc_640"
-        jq_data[key] = 0
+        jq_data["npc_625"] = 0
+        jq_data["npc_626"] = 0
+        jq_data["npc_627"] = 0
+        jq_data["npc_628"] = 0
         Player.setJsonTableByVar(play, VarCfg.T_dljq, jq_data)
+        -- release_print("≤‚ ‘LLXF")
 
+        -- Npclib[654].link(play, 654, 1, 0, "")
     end
 
 end

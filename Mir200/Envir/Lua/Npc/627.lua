@@ -79,7 +79,7 @@ function npc_627_enter(play)
     mapmove(play, dtm, 29, 27, 2)
 
     local mob_name = _config.mob or "怪物"
-    genmonex(dtm, 29, 31, mob_name, 1, 1, 0, 54, "", 0)
+    genmonex(dtm, 32, 36, mob_name, 1, 1, 0, 54, "", 0)
 
     startautoattack(play)
     setenvirontimer(dtm, 1, 1, "@npc_627_dsq,"..play..","..dtm)
@@ -92,6 +92,21 @@ function npc_627_dsq(xt,play,dtm,data)
         delmirrormap(dtm)
         return
     end
+
+    if getbaseinfo(play,3) == dtm and not hasbuff(play, 20111) then
+        local px = getbaseinfo(play,4)
+        local py = getbaseinfo(play,5)
+        local mons = getobjectinmap(dtm, px, py, 10, 2)
+        if mons and #mons > 0 and not hasbuff(play, 20114) then
+            for _, v in ipairs(mons[1]) do
+                local rx = 33 + math.random(-20, 20)
+                local ry = 36 + math.random(-20, 20)
+                movemontopos("息灾", getbaseinfo(v,3), getbaseinfo(v,4), getbaseinfo(v,5), rx, ry)
+            end
+            -- Player.sendmsgEx(play, "没有使用定身丹，无法靠近怪物#57")
+        end
+    end
+
     if getmoncount(dtm,-1,true) < 1 then
         setenvirofftimer(dtm, 1)
         npc_627_finish(play)
@@ -134,3 +149,5 @@ function npc_627_finish(play)
 end
 
 return npc
+
+

@@ -409,3 +409,5 @@ function npc.link(play, npcid, ew, aid, data)
 end
 
 return npc
+
+

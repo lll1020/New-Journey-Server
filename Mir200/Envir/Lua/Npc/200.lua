@@ -10,20 +10,20 @@ local _config = {
     [203] = {"洞穴",0,0,nil,nil,1, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
     [204] = {"古殿",0,0,nil,nil,1, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
 
-    [205] = {"隐藏地图二",0,0,nil,nil,2, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+    -- [205] = {"隐藏地图二",0,0,nil,nil,2, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
     [206] = {"野火帮",100,100,nil,nil,2, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
     [207] = {"极光城郊",100,100,nil,nil,2, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
     [208] = {"兵道古藏",100,100,nil,nil,2, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
     [209] = {"夜魔洞",100,100,nil,nil,2, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
-    [210] = {"特殊秘境副本二",0,0,nil,nil,2, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+    -- [210] = {"特殊秘境副本二",0,0,nil,nil,2, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
 
-    [211] = {"隐藏地图三",0,0,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+    -- [211] = {"隐藏地图三",0,0,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
     [212] = {"灰界",100,100,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
     [213] = {"藏星海",100,100,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
     [214] = {"苍云城",100,100,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
     -- [215] = {"无主深渊",100,100,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
     [216] = {"草药谷",100,100,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
-    [217] = {"特殊秘境副本三",0,0,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+    -- [217] = {"特殊秘境副本三",0,0,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
 
     [218] = {"酆都鬼城",100,100,nil,nil,4, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
     [219] = {"大唐·长安城",100,100,nil,nil,4, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
@@ -36,8 +36,16 @@ local _config = {
     [225] = {"聊斋志异",100,100,nil,nil,5, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
     [226] = {"敦煌遗梦",100,100,nil,nil,5, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
     [227] = {"世界禁墟",100,100,nil,nil,5, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
-
-
+}
+local _config_spa = {
+    --{"地图名",x,y,限制fun,提示文字,所属大陆}
+    [300] = {"虚妄山脉", 92, 50,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+    [301] = {"鬼嘲深渊", 273, 33,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+    [302] = {"叹息旷野", 34, 41,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+    [303] = {"禁忌之海", 33, 133,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+    [304] = {"葬星海滩", 184, 40,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+    [305] = {"船长室", 40, 46,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+    [306] = {"水手舱", 59, 11,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
 }
 
 function npc.main(play,npcid)
@@ -78,6 +86,49 @@ function npc.link(play,npcid,ew,aid)
             end
             delaygoto(play,200,"npc_200_fbjs",0)
         end
+        if _config_spa[npcid] then
+            local config = _config_spa[npcid]
+            if not Player.dl_sz(play, config[6]) then
+                return
+            end
+                        local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+            if npcid == 300 then -- 虚妄山脉  621 对应的任务完成可以进入
+                if not (jq_data["npc_621"] and jq_data["npc_621"] >= 2) then
+                    Player.sendmsgEx(play, "任务未完成，无法进入#57")
+                    return
+                end
+            elseif npcid == 301 then -- 鬼嘲深渊  623 对应的任务完成可以进入
+                if not (jq_data["npc_623"] and jq_data["npc_623"] >= 2) then
+                    Player.sendmsgEx(play, "任务未完成，无法进入#57")
+                    return
+                end
+            elseif npcid == 302 then -- 叹息旷野  622 对应的任务完成可以进入
+                if not (jq_data["npc_622"] and jq_data["npc_622"] >= 2) then
+                    Player.sendmsgEx(play, "任务未完成，无法进入#57")
+                    return
+                end
+            elseif npcid == 303 then -- 禁忌之海  624 对应的任务完成可以进入
+                if not (jq_data["npc_624"] and jq_data["npc_624"] >= 2) then
+                    Player.sendmsgEx(play, "任务未完成，无法进入#57")
+                    return
+                end
+            elseif npcid == 304 then -- 葬星海滩  对应定时器的 切换地图触发
+                local hour = tonumber(os.date("%H")) or 0
+                mapmove(play,(hour % 2 == 0) and "葬星海滩" or "葬星海滩1",config[2],config[3],5)
+                return
+            elseif npcid == 305 then -- 船长室 629的任务完成 -a
+                if jq_data["npc_629_a"] ~= 1 then
+                    Player.sendmsgEx(play, "未完成对应提交，无法进入#57")
+                    return
+                end
+            elseif npcid == 306 then -- 水手舱 629的任务完成 -b
+                if jq_data["npc_629_b"] ~= 1 then
+                    Player.sendmsgEx(play, "未完成对应提交，无法进入#57")
+                    return
+                end
+            end
+            mapmove(play,config[1],config[2],config[3],5)
+        end
 
     end
 end
@@ -87,3 +138,4 @@ function npc_200_fbjs(play)
 end
 
 return npc
+

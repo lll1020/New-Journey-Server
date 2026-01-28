@@ -39,14 +39,6 @@ function UCheckNPCRange(actor, moduleid, npcidx, range)
 end
 
 --回城
-function FBackZone(actor)
-    local taskID = getplaydef(actor, VarCfg["U_主线任务进度"])
-    if taskID < 7 then
-        mapmove(actor, "起源村", 113, 249, 2)
-        return
-    end
-    mapmove(actor, "n3", 330, 330, 5)
-end
 
 --飞地图固定随机点
 function FMapMove(actor, mapid, x, y, x_ran, y_ran)

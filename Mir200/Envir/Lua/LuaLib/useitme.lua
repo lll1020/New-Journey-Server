@@ -291,5 +291,17 @@ function stdmodefunc37(play, item) --船长的宝藏
 end
 function stdmodefunc38(play, item) --海贼王装备随机宝箱
 end
+function stdmodefunc39(play, item) --特殊丹药
+    local idx = getstditeminfo(getiteminfo(play, item, 2), 8)
+    if idx == 1 then
+        addbuff(play, 20110)
+    elseif idx == 2 then
+        addbuff(play, 20111)
+    elseif idx == 3 then
+        addbuff(play, 20112)
+    elseif idx == 4 then
+        addbuff(play, 20113)
+    end
+end
     
 

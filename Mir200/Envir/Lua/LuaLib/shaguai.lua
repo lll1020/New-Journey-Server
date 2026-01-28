@@ -375,6 +375,185 @@ shaguai = {
 		Player.sendmsgEx(play,  (config.name or "任务").."击杀+"..1 .." ( "..sg_data[key].."/"..(config.num or 0).." )#57")
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
+
+
+	["645"] = function(play,mob)      --黄风大圣
+		local config = teshudata["npc_645"]
+		if not config then
+			return
+		end
+		if config.map and getbaseinfo(play,3) ~= config.map then
+			return
+		end
+		local mob_name = getbaseinfo(mob,1)
+		if config.mob and config.mob ~= "" and mob_name ~= config.mob then
+			return
+		end
+		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+		local key = "npc_645"
+		sg_data[key] = (sg_data[key] or 0) + 1
+		if sg_data[key] >= (config.num or 0) then
+			shaguai.jian(play,645)
+			messagebox(play,"任务完成,立即前往提交")
+		end
+		Player.sendmsgEx(play,  (config.name or "任务").."击杀+"..1 .." ( "..sg_data[key].."/"..(config.num or 0).." )#57")
+		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+	end,
+	["653"] = function(play,mob)      --天虎的游戏
+		local config = teshudata["npc_653"]
+		if not config then
+			return
+		end
+		local ls_data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
+		if not ls_data or ls_data.dqzh ~= 4 then
+			return
+		end
+		if config.map and getbaseinfo(play,3) ~= config.map then
+			return
+		end
+		local mob_name = getbaseinfo(mob,1)
+		if config.mob and config.mob ~= "" and mob_name ~= config.mob then
+			return
+		end
+		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+		local key = "npc_653"
+		sg_data[key] = (sg_data[key] or 0) + 1
+		if sg_data[key] >= (config.num or 0) then
+			shaguai.jian(play,653)
+			messagebox(play,"任务完成,立即前往提交")
+		end
+		Player.sendmsgEx(play,  (config.name or "任务").."击杀+"..1 .." ( "..sg_data[key].."/"..(config.num or 0).." )#57")
+		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+	end,
+	["658"] = function(play,mob)      --天羊的游戏
+		local config = teshudata["npc_658"]
+		if not config then
+			return
+		end
+		if config.map and getbaseinfo(play,3) ~= config.map then
+			return
+		end
+		local mob_name = getbaseinfo(mob,1)
+		if config.mob and config.mob ~= "" and mob_name ~= config.mob then
+			return
+		end
+		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+		local key = "npc_658"
+		sg_data[key] = (sg_data[key] or 0) + 1
+		if sg_data[key] >= (config.num or 0) then
+			shaguai.jian(play,658)
+			messagebox(play,"任务完成,立即前往提交")
+		end
+		Player.sendmsgEx(play,  (config.name or "任务").."击杀+"..1 .." ( "..sg_data[key].."/"..(config.num or 0).." )#57")
+		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+	end,
+	["661"] = function(play,mob)      --天狗的游戏
+		local config = teshudata["npc_661"]
+		if not config then
+			return
+		end
+		if config.map and getbaseinfo(play,3) ~= config.map then
+			return
+		end
+		local mob_name = getbaseinfo(mob,1)
+		if config.mob and config.mob ~= "" and mob_name ~= config.mob then
+			return
+		end
+		local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+		local key = "npc_661"
+		if not jq_data[key] or jq_data[key] ~= 1 then
+			return
+		end
+		if jq_data[key.."_ok"] == 1 then
+			return
+		end
+		local limit = config.time or 0
+		local start = jq_data[key.."_st"] or 0
+		if limit > 0 and (os.time() - start) > limit then
+			return
+		end
+		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+		sg_data[key] = (sg_data[key] or 0) + 1
+		if sg_data[key] >= (config.num or 0) then
+			jq_data[key.."_ok"] = 1
+			Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+			shaguai.jian(play,661)
+			messagebox(play,"任务完成,立即前往提交")
+		end
+		Player.sendmsgEx(play,  (config.name or "任务").."击杀+"..1 .." ( "..sg_data[key].."/"..(config.num or 0).." )#57")
+		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+	end,
+	["666"] = function(play,mob)      --捉鬼人
+		local config = teshudata["npc_666"]
+		if not config then
+			return
+		end
+		if config.map and getbaseinfo(play,3) ~= config.map then
+			return
+		end
+		local mob_name = getbaseinfo(mob,1)
+		if config.mob and config.mob ~= "" and mob_name ~= config.mob then
+			return
+		end
+		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+		local key = "npc_666"
+		sg_data[key] = (sg_data[key] or 0) + 1
+		if sg_data[key] >= (config.num or 0) then
+			shaguai.jian(play,666)
+			messagebox(play,"任务完成,立即前往提交")
+		end
+		Player.sendmsgEx(play,  (config.name or "任务").."击杀+"..1 .." ( "..sg_data[key].."/"..(config.num or 0).." )#57")
+		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+	end,
+	["648"] = function(play,mob)      --大闹狮驼岭
+		local config = teshudata["npc_648"]
+		if not config then
+			return
+		end
+		if config.map and getbaseinfo(play,3) ~= config.map then
+			return
+		end
+		local mob_name = getbaseinfo(mob,1)
+		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+		local key = "npc_648"
+		local key_a = key.."_a"
+		local key_b = key.."_b"
+		local key_c = key.."_c"
+		local match_a = (mob_name == config.mob_a)
+		local match_b = (mob_name == config.mob_b)
+		local match_c = (mob_name == config.mob_c)
+		if not match_a and not match_b and not match_c then
+			if (not config.mob_a or config.mob_a == "") and (not config.mob_b or config.mob_b == "") and (not config.mob_c or config.mob_c == "") then
+				if (sg_data[key_a] or 0) < (config.num_a or 0) then
+					match_a = true
+				elseif (sg_data[key_b] or 0) < (config.num_b or 0) then
+					match_b = true
+				else
+					match_c = true
+				end
+			else
+				return
+			end
+		end
+		if match_a then
+			sg_data[key_a] = (sg_data[key_a] or 0) + 1
+		end
+		if match_b then
+			sg_data[key_b] = (sg_data[key_b] or 0) + 1
+		end
+		if match_c then
+			sg_data[key_c] = (sg_data[key_c] or 0) + 1
+		end
+		local a = sg_data[key_a] or 0
+		local b = sg_data[key_b] or 0
+		local c = sg_data[key_c] or 0
+		if a >= (config.num_a or 0) and b >= (config.num_b or 0) and c >= (config.num_c or 0) then
+			shaguai.jian(play,648)
+			messagebox(play,"任务完成,立即前往提交")
+		end
+		Player.sendmsgEx(play,  (config.name or "任务").."击杀+"..1 .." ( "..a.."/"..(config.num_a or 0).." , "..b.."/"..(config.num_b or 0).." , "..c.."/"..(config.num_c or 0).." )#57")
+		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+	end,
 	["631"] = function(play,mob)      --谁是内鬼
 		local config = teshudata["npc_631"]
 		if not config then
@@ -438,7 +617,7 @@ shaguai = {
 		end
 		local guai = getbaseinfo(mob,1)
 		local guaitype = (guaiwutype[guai] or 0)
-		if guaitype == 2 then
+		if guaitype >= 1 then
 			local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
 			local key = "npc_635"
 			sg_data[key] = (sg_data[key] or 0) + 1
@@ -449,6 +628,56 @@ shaguai = {
 			Player.sendmsgEx(play,  (config.name or "任务").."击杀+"..1 .." ( "..sg_data[key].."/"..(config.num or 0).." )#57")
 			Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 		end
+	end,
+	["642"] = function(play,mob)      --资格考验
+		local config = teshudata["npc_642"]
+		if not config then
+			return
+		end
+		if config.map and getbaseinfo(play,3) ~= config.map then
+			return
+		end
+		local guai = getbaseinfo(mob,1)
+		local guaitype = (guaiwutype[guai] or 0)
+		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+		local key = "npc_642"
+		local key_a = key.."_a"
+		local key_b = key.."_b"
+		if guaitype == 2 then
+			sg_data[key_b] = (sg_data[key_b] or 0) + 1
+		else
+			sg_data[key_a] = (sg_data[key_a] or 0) + 1
+		end
+		local a = sg_data[key_a] or 0
+		local b = sg_data[key_b] or 0
+		if a >= (config.num_a or 0) and b >= (config.num_b or 0) then
+			shaguai.jian(play,642)
+			messagebox(play,"任务完成,立即前往提交")
+		end
+		Player.sendmsgEx(play,  (config.name or "任务").."击杀小怪/首领+"..1 .." ( "..a.."/"..(config.num_a or 0).." , "..b.."/"..(config.num_b or 0).." )#57")
+		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+	end,
+	["644"] = function(play,mob)      --我的袈裟！
+		local config = teshudata["npc_644"]
+		if not config then
+			return
+		end
+		if config.map and getbaseinfo(play,3) ~= config.map then
+			return
+		end
+		local mob_name = getbaseinfo(mob,1)
+		if config.mob and config.mob ~= "" and mob_name ~= config.mob then
+			return
+		end
+		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+		local key = "npc_644"
+		sg_data[key] = (sg_data[key] or 0) + 1
+		if sg_data[key] >= (config.num or 0) then
+			shaguai.jian(play,644)
+			messagebox(play,"任务完成,立即前往提交")
+		end
+		Player.sendmsgEx(play,  (config.name or "任务").."击杀+"..1 .." ( "..sg_data[key].."/"..(config.num or 0).." )#57")
+		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
 }
 
@@ -465,3 +694,7 @@ shaguai.jian = function(play, id)
 end
 
 return shaguai
+
+
+
+

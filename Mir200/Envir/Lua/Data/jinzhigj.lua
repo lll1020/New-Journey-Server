@@ -27,6 +27,9 @@ jinzhigj={
     ["洪荒世界"] = true,
     ["寰宇世界"] = true,
     ["混沌世界"] = true,
+
+    ["葬星海滩"] = true,
+    ["葬星海滩1"] = true,
 }
 return jinzhigj
 

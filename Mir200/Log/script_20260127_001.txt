@@ -1,0 +1,25 @@
+[2026-01-27 14:32:12:701] LuaNPC: ID:999999999 执行 startup player: 耗时：47; NpcThreadId: 33532, CurPlayThreadId: 33532
+
+[2026-01-27 17:10:48:156] LuaNPC:玩家名字 ID:999999999 执行 stdmodefunc10 player:玩家名字 耗时：31; NpcThreadId: 32984, CurPlayThreadId: 32984
+
+[2026-01-27 17:11:23:190] Func Fail, obj is nil: MonMission Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'monmission'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/654.lua:107: in function 'link'
+	.\Envir\Market_Def\QFunction-0.lua:1156: in function <.\Envir\Market_Def\QFunction-0.lua:1138>
+
+[2026-01-27 17:12:26:211] Func Fail, obj is nil: MonMission Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'monmission'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/654.lua:107: in function 'link'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/9999.lua:474: in function <E:\新起航\服务端\Mir200\Envir/lua/Npc/9999.lua:231>
+
+[2026-01-27 21:42:34:770] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：63; NpcThreadId: 31908, CurPlayThreadId: 31908
+[2026-01-27 21:42:34:770] [玩家名字]Lua执行耗时过高:63ms msgid:100 649 1 0 
+
+[2026-01-27 22:39:46:860] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：62; NpcThreadId: 31908, CurPlayThreadId: 31908
+[2026-01-27 22:39:46:860] [玩家名字]Lua执行耗时过高:62ms msgid:100 651 1 1 
+
+[2026-01-28 12:07:10:458] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 31908, CurPlayThreadId: 31908
+[2026-01-28 12:07:10:458] [玩家名字]Lua执行耗时过高:31ms msgid:100 8 1 0 
+
+[2026-01-28 14:00:59:740] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：47; NpcThreadId: 31908, CurPlayThreadId: 31908
+

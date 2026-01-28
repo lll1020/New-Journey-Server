@@ -274,7 +274,34 @@ Buff = {
             elseif zt == 2 then
                 data["105"] = nil
             end
-            setplaydef(play,VarCfg.S_buffbgjq,tbl2json(data))
+            setplaydef(play,VarCfg.S_buffgjh,tbl2json(data))
+        end
+    end,
+    [106] = function(play,zt,Damage,Target) --攻击嘲灾  如果没有buff_106 则对玩家造成100%的伤害
+        if zt == 3 then
+            if Target == nil then
+                return 0
+            end
+            -- release_print("嘲灾触发")
+            -- release_print(getbaseinfo(Target,1))
+            -- release_print(hasbuff(play,20110))
+            
+            if getbaseinfo(Target,1) == "嘲灾" then
+                local hasbuff20110 = hasbuff(play,20110)
+                if not hasbuff20110 then
+                    humanhp(play, "-", Damage, 0, 0)
+                    -- release_print("嘲灾触发，造成"..Damage.."点伤害")
+                end
+            end
+        else
+            local bl = getplaydef(play,VarCfg.S_buffgwq)
+            local data = json2tbl(bl == "" and {} or bl)
+            if zt == 1 then
+                data["106"] = true
+            elseif zt == 2 then
+                data["106"] = nil
+            end
+            setplaydef(play,VarCfg.S_buffgwq,tbl2json(data))
         end
     end,
 }

@@ -1,0 +1,722 @@
+[2026-01-28 16:38:53:696] D701 - secret map not found !!
+[2026-01-28 16:38:53:696] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-47432] 当前Thread:47880
+[2026-01-28 16:38:53:696] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2026-01-28 16:38:53:696] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-47432] 当前Thread:47880
+[2026-01-28 16:38:53:696] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2026-01-28 16:38:53:696] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-47432] 当前Thread:47880
+[2026-01-28 16:38:53:696] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2026-01-28 16:38:53:696] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-47432] 当前Thread:47880
+[2026-01-28 16:38:53:696] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2026-01-28 16:38:53:834] ---------------------线程耗时监控
+[2026-01-28 16:38:53:912] Frame-----------------------------------
+
+[2026-01-28 16:38:54:113] MainRunThread(15)-----------------------------------
+
+[2026-01-28 16:38:54:132] DbThread(16-0)-----------------------------------
+
+[2026-01-28 16:38:54:152] BoxSellDbThread(0)-----------------------------------
+
+[2026-01-28 16:38:54:170] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-01-28 16:40:39:566] lua.RecallMobEx Except：Access violation at address 00007FFC04F1A5AF in module 'Lua5.1.dll'. Read of address FFFFFFFFFFFFFFFF[00007FFC04F1A5AF] Unknown function at lua_newstate
+[0000000000FF7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000000FF79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000000FFAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000000FE9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000000FE996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000000FE9B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000021B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFC420862FF] Unknown function at __chkstk
+[00007FFC41F32327] Unknown function at RtlLocateExtendedFeature
+[00007FFC42085C3E] KiUserExceptionDispatcher
+[00007FFC04F1A5AF] Unknown function at lua_newstate
+[00007FFC04ED8F8D] lua_rawset
+[0000000000D410D2] uMyLua._ZN6Umylua6TMyLua11RecallMobExEPv (Line 24720, "uMyLua.pas" + 77)
+[0000000000911E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFC04ED2C36]
+[00007FFC04ED89EA] lua_pcall
+[0000000000D0B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000000D09256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001150DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001151555] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEi (Line 25223, "ObjPlay.pas" + 2)
+[00000000010A20F3] ObjBase._ZN7Objbase11TBaseObject17AttackFuncNpcCallExPS0_ib (Line 11394, "ObjBase.pas" + 31)
+[0000000001066C13] ObjBase._ZN7Objbase11TBaseObject7OperateEPN7Grobal215TProcessMessageE (Line 2312, "ObjBase.pas" + 261)
+[00000000010A3DCF] ObjBase._ZN7Objbase13TAnimalObject7OperateEPN7Grobal215TProcessMessageE (Line 11601, "ObjBase.pas" + 25)
+[0000000001060151] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1132, "ObjBase.pas" + 20)
+[00000000010A3B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[0000000000B92DA5] ObjMon._ZN6Objmon8TMonster3RunEv (Line 560, "ObjMon.pas" + 153)
+[0000000000B98544] ObjMon._ZN6Objmon10TATMonster3RunEv (Line 1375, "ObjMon.pas" + 13)
+[0000000000A31F7F] MonManage._ZN9Monmanage10TMonManage3RunEv (Line 987, "MonManage.pas" + 154)
+[0000000000ECD772] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 906, "Envir.pas" + 32)
+[0000000000BFB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000004421D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000441D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000142963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000022F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC412FE8D7] BaseThreadInitThunk
+[00007FFC41FAC53C] RtlUserThreadStart
+
+
+[2026-01-28 16:41:26:806] lua.RecallMobEx Except：Access violation at address 00007FFC04F1A5AF in module 'Lua5.1.dll'. Read of address FFFFFFFFFFFFFFFF[00007FFC04F1A5AF] Unknown function at lua_newstate
+[0000000000FF7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000000FF79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000000FFAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000000FE9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000000FE996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000000FE9B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000021B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFC420862FF] Unknown function at __chkstk
+[00007FFC41F32327] Unknown function at RtlLocateExtendedFeature
+[00007FFC42085C3E] KiUserExceptionDispatcher
+[00007FFC04F1A5AF] Unknown function at lua_newstate
+[00007FFC04ED8F8D] lua_rawset
+[0000000000D410D2] uMyLua._ZN6Umylua6TMyLua11RecallMobExEPv (Line 24720, "uMyLua.pas" + 77)
+[0000000000911E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFC04ED2C36]
+[00007FFC04ED89EA] lua_pcall
+[0000000000D0B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000000D09256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001150DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001151555] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEi (Line 25223, "ObjPlay.pas" + 2)
+[00000000010A20F3] ObjBase._ZN7Objbase11TBaseObject17AttackFuncNpcCallExPS0_ib (Line 11394, "ObjBase.pas" + 31)
+[0000000001066C13] ObjBase._ZN7Objbase11TBaseObject7OperateEPN7Grobal215TProcessMessageE (Line 2312, "ObjBase.pas" + 261)
+[00000000010A3DCF] ObjBase._ZN7Objbase13TAnimalObject7OperateEPN7Grobal215TProcessMessageE (Line 11601, "ObjBase.pas" + 25)
+[0000000001060151] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1132, "ObjBase.pas" + 20)
+[00000000010A3B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[0000000000B92DA5] ObjMon._ZN6Objmon8TMonster3RunEv (Line 560, "ObjMon.pas" + 153)
+[0000000000B98544] ObjMon._ZN6Objmon10TATMonster3RunEv (Line 1375, "ObjMon.pas" + 13)
+[0000000000A31F7F] MonManage._ZN9Monmanage10TMonManage3RunEv (Line 987, "MonManage.pas" + 154)
+[0000000000ECD772] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 906, "Envir.pas" + 32)
+[0000000000BFB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000004421D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000441D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000142963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000022F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC412FE8D7] BaseThreadInitThunk
+[00007FFC41FAC53C] RtlUserThreadStart
+
+
+[2026-01-28 16:42:40:580] lua.RecallMobEx Except：Access violation at address 00007FFC04F1A5AF in module 'Lua5.1.dll'. Read of address FFFFFFFFFFFFFFFF[00007FFC04F1A5AF] Unknown function at lua_newstate
+[0000000000FF7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000000FF79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000000FFAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000000FE9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000000FE996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000000FE9B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000021B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFC420862FF] Unknown function at __chkstk
+[00007FFC41F32327] Unknown function at RtlLocateExtendedFeature
+[00007FFC42085C3E] KiUserExceptionDispatcher
+[00007FFC04F1A5AF] Unknown function at lua_newstate
+[00007FFC04ED8F8D] lua_rawset
+[0000000000D410D2] uMyLua._ZN6Umylua6TMyLua11RecallMobExEPv (Line 24720, "uMyLua.pas" + 77)
+[0000000000911E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFC04ED2C36]
+[00007FFC04ED89EA] lua_pcall
+[0000000000D0B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000000D09256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001150DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001151555] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEi (Line 25223, "ObjPlay.pas" + 2)
+[00000000010A20F3] ObjBase._ZN7Objbase11TBaseObject17AttackFuncNpcCallExPS0_ib (Line 11394, "ObjBase.pas" + 31)
+[0000000001066C13] ObjBase._ZN7Objbase11TBaseObject7OperateEPN7Grobal215TProcessMessageE (Line 2312, "ObjBase.pas" + 261)
+[00000000010A3DCF] ObjBase._ZN7Objbase13TAnimalObject7OperateEPN7Grobal215TProcessMessageE (Line 11601, "ObjBase.pas" + 25)
+[0000000001060151] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1132, "ObjBase.pas" + 20)
+[00000000010A3B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[0000000000B92DA5] ObjMon._ZN6Objmon8TMonster3RunEv (Line 560, "ObjMon.pas" + 153)
+[0000000000B98544] ObjMon._ZN6Objmon10TATMonster3RunEv (Line 1375, "ObjMon.pas" + 13)
+[0000000000A31F7F] MonManage._ZN9Monmanage10TMonManage3RunEv (Line 987, "MonManage.pas" + 154)
+[0000000000ECD772] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 906, "Envir.pas" + 32)
+[0000000000BFB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000004421D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000441D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000142963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000022F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC412FE8D7] BaseThreadInitThunk
+[00007FFC41FAC53C] RtlUserThreadStart
+
+
+[2026-01-28 16:43:36:620] lua.RecallMobEx Except：Access violation at address 00007FFC04F1A5AF in module 'Lua5.1.dll'. Read of address FFFFFFFFFFFFFFFF[00007FFC04F1A5AF] Unknown function at lua_newstate
+[0000000000FF7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000000FF79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000000FFAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000000FE9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000000FE996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000000FE9B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000021B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFC420862FF] Unknown function at __chkstk
+[00007FFC41F32327] Unknown function at RtlLocateExtendedFeature
+[00007FFC42085C3E] KiUserExceptionDispatcher
+[00007FFC04F1A5AF] Unknown function at lua_newstate
+[00007FFC04ED8F8D] lua_rawset
+[0000000000D410D2] uMyLua._ZN6Umylua6TMyLua11RecallMobExEPv (Line 24720, "uMyLua.pas" + 77)
+[0000000000911E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFC04ED2C36]
+[00007FFC04ED89EA] lua_pcall
+[0000000000D0B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000000D09256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001150DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001151555] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEi (Line 25223, "ObjPlay.pas" + 2)
+[00000000010A20F3] ObjBase._ZN7Objbase11TBaseObject17AttackFuncNpcCallExPS0_ib (Line 11394, "ObjBase.pas" + 31)
+[0000000001066C13] ObjBase._ZN7Objbase11TBaseObject7OperateEPN7Grobal215TProcessMessageE (Line 2312, "ObjBase.pas" + 261)
+[00000000010A3DCF] ObjBase._ZN7Objbase13TAnimalObject7OperateEPN7Grobal215TProcessMessageE (Line 11601, "ObjBase.pas" + 25)
+[0000000001060151] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1132, "ObjBase.pas" + 20)
+[00000000010A3B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[0000000000B92DA5] ObjMon._ZN6Objmon8TMonster3RunEv (Line 560, "ObjMon.pas" + 153)
+[0000000000B98544] ObjMon._ZN6Objmon10TATMonster3RunEv (Line 1375, "ObjMon.pas" + 13)
+[0000000000A31F7F] MonManage._ZN9Monmanage10TMonManage3RunEv (Line 987, "MonManage.pas" + 154)
+[0000000000ECD772] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 906, "Envir.pas" + 32)
+[0000000000BFB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000004421D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000441D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000142963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000022F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC412FE8D7] BaseThreadInitThunk
+[00007FFC41FAC53C] RtlUserThreadStart
+
+
+[2026-01-28 16:44:26:198] lua.RecallMobEx Except：Access violation at address 00007FFC04F1A5AF in module 'Lua5.1.dll'. Read of address FFFFFFFFFFFFFFFF[00007FFC04F1A5AF] Unknown function at lua_newstate
+[0000000000FF7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000000FF79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000000FFAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000000FE9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000000FE996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000000FE9B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000021B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFC420862FF] Unknown function at __chkstk
+[00007FFC41F32327] Unknown function at RtlLocateExtendedFeature
+[00007FFC42085C3E] KiUserExceptionDispatcher
+[00007FFC04F1A5AF] Unknown function at lua_newstate
+[00007FFC04ED8F8D] lua_rawset
+[0000000000D410D2] uMyLua._ZN6Umylua6TMyLua11RecallMobExEPv (Line 24720, "uMyLua.pas" + 77)
+[0000000000911E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFC04ED2C36]
+[00007FFC04ED89EA] lua_pcall
+[0000000000D0B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000000D09256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001150DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001151555] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEi (Line 25223, "ObjPlay.pas" + 2)
+[00000000010A20F3] ObjBase._ZN7Objbase11TBaseObject17AttackFuncNpcCallExPS0_ib (Line 11394, "ObjBase.pas" + 31)
+[0000000001066C13] ObjBase._ZN7Objbase11TBaseObject7OperateEPN7Grobal215TProcessMessageE (Line 2312, "ObjBase.pas" + 261)
+[00000000010A3DCF] ObjBase._ZN7Objbase13TAnimalObject7OperateEPN7Grobal215TProcessMessageE (Line 11601, "ObjBase.pas" + 25)
+[0000000001060151] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1132, "ObjBase.pas" + 20)
+[00000000010A3B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[0000000000B92DA5] ObjMon._ZN6Objmon8TMonster3RunEv (Line 560, "ObjMon.pas" + 153)
+[0000000000B98544] ObjMon._ZN6Objmon10TATMonster3RunEv (Line 1375, "ObjMon.pas" + 13)
+[0000000000A31F7F] MonManage._ZN9Monmanage10TMonManage3RunEv (Line 987, "MonManage.pas" + 154)
+[0000000000ECD772] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 906, "Envir.pas" + 32)
+[0000000000BFB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000004421D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000441D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000142963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000022F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC412FE8D7] BaseThreadInitThunk
+[00007FFC41FAC53C] RtlUserThreadStart
+
+
+[2026-01-28 16:45:50:870] lua.RecallMobEx Except：Access violation at address 00007FFC04F1A5AF in module 'Lua5.1.dll'. Read of address FFFFFFFFFFFFFFFF[00007FFC04F1A5AF] Unknown function at lua_newstate
+[0000000000FF7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000000FF79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000000FFAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000000FE9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000000FE996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000000FE9B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000021B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFC420862FF] Unknown function at __chkstk
+[00007FFC41F32327] Unknown function at RtlLocateExtendedFeature
+[00007FFC42085C3E] KiUserExceptionDispatcher
+[00007FFC04F1A5AF] Unknown function at lua_newstate
+[00007FFC04ED8F8D] lua_rawset
+[0000000000D410D2] uMyLua._ZN6Umylua6TMyLua11RecallMobExEPv (Line 24720, "uMyLua.pas" + 77)
+[0000000000911E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFC04ED2C36]
+[00007FFC04ED89EA] lua_pcall
+[0000000000D0B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000000D09256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001150DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001151555] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEi (Line 25223, "ObjPlay.pas" + 2)
+[00000000010A20F3] ObjBase._ZN7Objbase11TBaseObject17AttackFuncNpcCallExPS0_ib (Line 11394, "ObjBase.pas" + 31)
+[0000000001066C13] ObjBase._ZN7Objbase11TBaseObject7OperateEPN7Grobal215TProcessMessageE (Line 2312, "ObjBase.pas" + 261)
+[00000000010A3DCF] ObjBase._ZN7Objbase13TAnimalObject7OperateEPN7Grobal215TProcessMessageE (Line 11601, "ObjBase.pas" + 25)
+[0000000001060151] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1132, "ObjBase.pas" + 20)
+[00000000010A3B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[0000000000B92DA5] ObjMon._ZN6Objmon8TMonster3RunEv (Line 560, "ObjMon.pas" + 153)
+[0000000000B98544] ObjMon._ZN6Objmon10TATMonster3RunEv (Line 1375, "ObjMon.pas" + 13)
+[0000000000A31F7F] MonManage._ZN9Monmanage10TMonManage3RunEv (Line 987, "MonManage.pas" + 154)
+[0000000000ECD772] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 906, "Envir.pas" + 32)
+[0000000000BFB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000004421D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000441D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000142963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000022F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC412FE8D7] BaseThreadInitThunk
+[00007FFC41FAC53C] RtlUserThreadStart
+
+
+[2026-01-28 16:46:49:747] lua.RecallMobEx Except：Access violation at address 00007FFC04F1A5AF in module 'Lua5.1.dll'. Read of address FFFFFFFFFFFFFFFF[00007FFC04F1A5AF] Unknown function at lua_newstate
+[0000000000FF7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000000FF79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000000FFAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000000FE9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000000FE996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000000FE9B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000021B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFC420862FF] Unknown function at __chkstk
+[00007FFC41F32327] Unknown function at RtlLocateExtendedFeature
+[00007FFC42085C3E] KiUserExceptionDispatcher
+[00007FFC04F1A5AF] Unknown function at lua_newstate
+[00007FFC04ED8F8D] lua_rawset
+[0000000000D410D2] uMyLua._ZN6Umylua6TMyLua11RecallMobExEPv (Line 24720, "uMyLua.pas" + 77)
+[0000000000911E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFC04ED2C36]
+[00007FFC04ED89EA] lua_pcall
+[0000000000D0B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000000D09256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001150DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001151555] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEi (Line 25223, "ObjPlay.pas" + 2)
+[00000000010A20F3] ObjBase._ZN7Objbase11TBaseObject17AttackFuncNpcCallExPS0_ib (Line 11394, "ObjBase.pas" + 31)
+[0000000001066C13] ObjBase._ZN7Objbase11TBaseObject7OperateEPN7Grobal215TProcessMessageE (Line 2312, "ObjBase.pas" + 261)
+[00000000010A3DCF] ObjBase._ZN7Objbase13TAnimalObject7OperateEPN7Grobal215TProcessMessageE (Line 11601, "ObjBase.pas" + 25)
+[0000000001060151] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1132, "ObjBase.pas" + 20)
+[00000000010A3B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[0000000000B92DA5] ObjMon._ZN6Objmon8TMonster3RunEv (Line 560, "ObjMon.pas" + 153)
+[0000000000B98544] ObjMon._ZN6Objmon10TATMonster3RunEv (Line 1375, "ObjMon.pas" + 13)
+[0000000000A31F7F] MonManage._ZN9Monmanage10TMonManage3RunEv (Line 987, "MonManage.pas" + 154)
+[0000000000ECD772] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 906, "Envir.pas" + 32)
+[0000000000BFB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000004421D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000441D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000142963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000022F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC412FE8D7] BaseThreadInitThunk
+[00007FFC41FAC53C] RtlUserThreadStart
+
+
+[2026-01-28 16:47:55:200] lua.RecallMobEx Except：Access violation at address 00007FFC04F1A5AF in module 'Lua5.1.dll'. Read of address FFFFFFFFFFFFFFFF[00007FFC04F1A5AF] Unknown function at lua_newstate
+[0000000000FF7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000000FF79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000000FFAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000000FE9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000000FE996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000000FE9B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000021B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFC420862FF] Unknown function at __chkstk
+[00007FFC41F32327] Unknown function at RtlLocateExtendedFeature
+[00007FFC42085C3E] KiUserExceptionDispatcher
+[00007FFC04F1A5AF] Unknown function at lua_newstate
+[00007FFC04ED8F8D] lua_rawset
+[0000000000D410D2] uMyLua._ZN6Umylua6TMyLua11RecallMobExEPv (Line 24720, "uMyLua.pas" + 77)
+[0000000000911E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFC04ED2C36]
+[00007FFC04ED89EA] lua_pcall
+[0000000000D0B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000000D09256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001150DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001151555] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEi (Line 25223, "ObjPlay.pas" + 2)
+[00000000010A20F3] ObjBase._ZN7Objbase11TBaseObject17AttackFuncNpcCallExPS0_ib (Line 11394, "ObjBase.pas" + 31)
+[0000000001066C13] ObjBase._ZN7Objbase11TBaseObject7OperateEPN7Grobal215TProcessMessageE (Line 2312, "ObjBase.pas" + 261)
+[00000000010A3DCF] ObjBase._ZN7Objbase13TAnimalObject7OperateEPN7Grobal215TProcessMessageE (Line 11601, "ObjBase.pas" + 25)
+[0000000001060151] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1132, "ObjBase.pas" + 20)
+[00000000010A3B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[0000000000BB2342] ObjMon2._ZN7Objmon213TSoulStoneMon3RunEv (Line 1820, "ObjMon2.pas" + 11)
+[0000000000A31F7F] MonManage._ZN9Monmanage10TMonManage3RunEv (Line 987, "MonManage.pas" + 154)
+[0000000000ECD772] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 906, "Envir.pas" + 32)
+[0000000000BFB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000004421D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000441D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000142963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000022F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC412FE8D7] BaseThreadInitThunk
+[00007FFC41FAC53C] RtlUserThreadStart
+
+
+[2026-01-28 16:53:09:474] lua.RecallMobEx Except：Access violation at address 00007FFC04F1A5AF in module 'Lua5.1.dll'. Read of address FFFFFFFFFFFFFFFF[00007FFC04F1A5AF] Unknown function at lua_newstate
+[0000000000FF7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000000FF79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000000FFAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000000FE9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000000FE996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000000FE9B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000021B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFC420862FF] Unknown function at __chkstk
+[00007FFC41F32327] Unknown function at RtlLocateExtendedFeature
+[00007FFC42085C3E] KiUserExceptionDispatcher
+[00007FFC04F1A5AF] Unknown function at lua_newstate
+[00007FFC04ED8F8D] lua_rawset
+[0000000000D410D2] uMyLua._ZN6Umylua6TMyLua11RecallMobExEPv (Line 24720, "uMyLua.pas" + 77)
+[0000000000911E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFC04ED2C36]
+[00007FFC04ED89EA] lua_pcall
+[0000000000D0B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000000D09256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001150DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001151555] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEi (Line 25223, "ObjPlay.pas" + 2)
+[00000000010A20F3] ObjBase._ZN7Objbase11TBaseObject17AttackFuncNpcCallExPS0_ib (Line 11394, "ObjBase.pas" + 31)
+[0000000001066C13] ObjBase._ZN7Objbase11TBaseObject7OperateEPN7Grobal215TProcessMessageE (Line 2312, "ObjBase.pas" + 261)
+[00000000010A3DCF] ObjBase._ZN7Objbase13TAnimalObject7OperateEPN7Grobal215TProcessMessageE (Line 11601, "ObjBase.pas" + 25)
+[0000000001060151] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1132, "ObjBase.pas" + 20)
+[00000000010A3B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[0000000000B92DA5] ObjMon._ZN6Objmon8TMonster3RunEv (Line 560, "ObjMon.pas" + 153)
+[0000000000B98544] ObjMon._ZN6Objmon10TATMonster3RunEv (Line 1375, "ObjMon.pas" + 13)
+[0000000000A31F7F] MonManage._ZN9Monmanage10TMonManage3RunEv (Line 987, "MonManage.pas" + 154)
+[0000000000ECD772] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 906, "Envir.pas" + 32)
+[0000000000BFB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000004421D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000441D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000142963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000022F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC412FE8D7] BaseThreadInitThunk
+[00007FFC41FAC53C] RtlUserThreadStart
+
+
+[2026-01-28 17:00:55:865] lua.RecallMobEx Except：Access violation at address 00007FFC04F1A5AF in module 'Lua5.1.dll'. Read of address FFFFFFFFFFFFFFFF[00007FFC04F1A5AF] Unknown function at lua_newstate
+[0000000000FF7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000000FF79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000000FFAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000000FE9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000000FE996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000000FE9B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000021B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFC420862FF] Unknown function at __chkstk
+[00007FFC41F32327] Unknown function at RtlLocateExtendedFeature
+[00007FFC42085C3E] KiUserExceptionDispatcher
+[00007FFC04F1A5AF] Unknown function at lua_newstate
+[00007FFC04ED8F8D] lua_rawset
+[0000000000D410D2] uMyLua._ZN6Umylua6TMyLua11RecallMobExEPv (Line 24720, "uMyLua.pas" + 77)
+[0000000000911E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFC04ED2C36]
+[00007FFC04ED89EA] lua_pcall
+[0000000000D0B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000000D09256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001150DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001151555] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEi (Line 25223, "ObjPlay.pas" + 2)
+[00000000010A20F3] ObjBase._ZN7Objbase11TBaseObject17AttackFuncNpcCallExPS0_ib (Line 11394, "ObjBase.pas" + 31)
+[0000000001066C13] ObjBase._ZN7Objbase11TBaseObject7OperateEPN7Grobal215TProcessMessageE (Line 2312, "ObjBase.pas" + 261)
+[00000000010A3DCF] ObjBase._ZN7Objbase13TAnimalObject7OperateEPN7Grobal215TProcessMessageE (Line 11601, "ObjBase.pas" + 25)
+[0000000001060151] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1132, "ObjBase.pas" + 20)
+[00000000010A3B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[0000000000B92DA5] ObjMon._ZN6Objmon8TMonster3RunEv (Line 560, "ObjMon.pas" + 153)
+[0000000000B98544] ObjMon._ZN6Objmon10TATMonster3RunEv (Line 1375, "ObjMon.pas" + 13)
+[0000000000A31F7F] MonManage._ZN9Monmanage10TMonManage3RunEv (Line 987, "MonManage.pas" + 154)
+[0000000000ECD772] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 906, "Envir.pas" + 32)
+[0000000000BFB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000004421D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000441D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000142963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000022F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC412FE8D7] BaseThreadInitThunk
+[00007FFC41FAC53C] RtlUserThreadStart
+
+
+[2026-01-28 17:07:51:908] lua.RecallMobEx Except：Access violation at address 00007FFC04F1A5AF in module 'Lua5.1.dll'. Read of address FFFFFFFFFFFFFFFF[00007FFC04F1A5AF] Unknown function at lua_newstate
+[0000000000FF7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000000FF79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000000FFAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000000FE9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000000FE996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000000FE9B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000021B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFC420862FF] Unknown function at __chkstk
+[00007FFC41F32327] Unknown function at RtlLocateExtendedFeature
+[00007FFC42085C3E] KiUserExceptionDispatcher
+[00007FFC04F1A5AF] Unknown function at lua_newstate
+[00007FFC04ED8F8D] lua_rawset
+[0000000000D410D2] uMyLua._ZN6Umylua6TMyLua11RecallMobExEPv (Line 24720, "uMyLua.pas" + 77)
+[0000000000911E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFC04ED2C36]
+[00007FFC04ED89EA] lua_pcall
+[0000000000D0B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000000D09256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001150DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001151555] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEi (Line 25223, "ObjPlay.pas" + 2)
+[00000000010A20F3] ObjBase._ZN7Objbase11TBaseObject17AttackFuncNpcCallExPS0_ib (Line 11394, "ObjBase.pas" + 31)
+[0000000001066C13] ObjBase._ZN7Objbase11TBaseObject7OperateEPN7Grobal215TProcessMessageE (Line 2312, "ObjBase.pas" + 261)
+[00000000010A3DCF] ObjBase._ZN7Objbase13TAnimalObject7OperateEPN7Grobal215TProcessMessageE (Line 11601, "ObjBase.pas" + 25)
+[0000000001060151] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1132, "ObjBase.pas" + 20)
+[00000000010A3B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[0000000000B92DA5] ObjMon._ZN6Objmon8TMonster3RunEv (Line 560, "ObjMon.pas" + 153)
+[0000000000B98544] ObjMon._ZN6Objmon10TATMonster3RunEv (Line 1375, "ObjMon.pas" + 13)
+[0000000000A31F7F] MonManage._ZN9Monmanage10TMonManage3RunEv (Line 987, "MonManage.pas" + 154)
+[0000000000ECD772] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 906, "Envir.pas" + 32)
+[0000000000BFB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000004421D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000441D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000142963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000022F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC412FE8D7] BaseThreadInitThunk
+[00007FFC41FAC53C] RtlUserThreadStart
+
+
+[2026-01-28 17:09:47:236] lua.RecallMobEx Except：Access violation at address 00007FFC04F1A5AF in module 'Lua5.1.dll'. Read of address FFFFFFFFFFFFFFFF[00007FFC04F1A5AF] Unknown function at lua_newstate
+[0000000000FF7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000000FF79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000000FFAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000000FE9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000000FE996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000000FE9B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000021B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFC420862FF] Unknown function at __chkstk
+[00007FFC41F32327] Unknown function at RtlLocateExtendedFeature
+[00007FFC42085C3E] KiUserExceptionDispatcher
+[00007FFC04F1A5AF] Unknown function at lua_newstate
+[00007FFC04ED8F8D] lua_rawset
+[0000000000D410D2] uMyLua._ZN6Umylua6TMyLua11RecallMobExEPv (Line 24720, "uMyLua.pas" + 77)
+[0000000000911E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFC04ED2C36]
+[00007FFC04ED89EA] lua_pcall
+[0000000000D0B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000000D09256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001150DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001151555] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEi (Line 25223, "ObjPlay.pas" + 2)
+[00000000010A20F3] ObjBase._ZN7Objbase11TBaseObject17AttackFuncNpcCallExPS0_ib (Line 11394, "ObjBase.pas" + 31)
+[0000000001066C13] ObjBase._ZN7Objbase11TBaseObject7OperateEPN7Grobal215TProcessMessageE (Line 2312, "ObjBase.pas" + 261)
+[00000000010A3DCF] ObjBase._ZN7Objbase13TAnimalObject7OperateEPN7Grobal215TProcessMessageE (Line 11601, "ObjBase.pas" + 25)
+[0000000001060151] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1132, "ObjBase.pas" + 20)
+[00000000010A3B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[0000000000B92DA5] ObjMon._ZN6Objmon8TMonster3RunEv (Line 560, "ObjMon.pas" + 153)
+[0000000000B98544] ObjMon._ZN6Objmon10TATMonster3RunEv (Line 1375, "ObjMon.pas" + 13)
+[0000000000A31F7F] MonManage._ZN9Monmanage10TMonManage3RunEv (Line 987, "MonManage.pas" + 154)
+[0000000000ECD772] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 906, "Envir.pas" + 32)
+[0000000000BFB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000004421D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000441D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000142963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000022F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC412FE8D7] BaseThreadInitThunk
+[00007FFC41FAC53C] RtlUserThreadStart
+
+
+[2026-01-28 17:15:24:081] lua.RecallMobEx Except：Access violation at address 00007FFC04F1A5AF in module 'Lua5.1.dll'. Read of address FFFFFFFFFFFFFFFF[00007FFC04F1A5AF] Unknown function at lua_newstate
+[0000000000FF7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000000FF79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000000FFAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000000FE9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000000FE996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000000FE9B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000021B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFC420862FF] Unknown function at __chkstk
+[00007FFC41F32327] Unknown function at RtlLocateExtendedFeature
+[00007FFC42085C3E] KiUserExceptionDispatcher
+[00007FFC04F1A5AF] Unknown function at lua_newstate
+[00007FFC04ED8F8D] lua_rawset
+[0000000000D410D2] uMyLua._ZN6Umylua6TMyLua11RecallMobExEPv (Line 24720, "uMyLua.pas" + 77)
+[0000000000911E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFC04ED2C36]
+[00007FFC04ED89EA] lua_pcall
+[0000000000D0B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000000D09256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001150DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001151555] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEi (Line 25223, "ObjPlay.pas" + 2)
+[00000000010A20F3] ObjBase._ZN7Objbase11TBaseObject17AttackFuncNpcCallExPS0_ib (Line 11394, "ObjBase.pas" + 31)
+[0000000001066C13] ObjBase._ZN7Objbase11TBaseObject7OperateEPN7Grobal215TProcessMessageE (Line 2312, "ObjBase.pas" + 261)
+[00000000010A3DCF] ObjBase._ZN7Objbase13TAnimalObject7OperateEPN7Grobal215TProcessMessageE (Line 11601, "ObjBase.pas" + 25)
+[0000000001060151] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1132, "ObjBase.pas" + 20)
+[00000000010A3B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[0000000000B92DA5] ObjMon._ZN6Objmon8TMonster3RunEv (Line 560, "ObjMon.pas" + 153)
+[0000000000B98544] ObjMon._ZN6Objmon10TATMonster3RunEv (Line 1375, "ObjMon.pas" + 13)
+[0000000000A31F7F] MonManage._ZN9Monmanage10TMonManage3RunEv (Line 987, "MonManage.pas" + 154)
+[0000000000ECD772] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 906, "Envir.pas" + 32)
+[0000000000BFB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000004421D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000441D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000142963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000022F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC412FE8D7] BaseThreadInitThunk
+[00007FFC41FAC53C] RtlUserThreadStart
+
+
+[2026-01-28 17:16:09:084] lua.RecallMobEx Except：Access violation at address 00007FFC04F1A5AF in module 'Lua5.1.dll'. Read of address FFFFFFFFFFFFFFFF[00007FFC04F1A5AF] Unknown function at lua_newstate
+[0000000000FF7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000000FF79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000000FFAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000000FE9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000000FE996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000000FE9B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000021B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFC420862FF] Unknown function at __chkstk
+[00007FFC41F32327] Unknown function at RtlLocateExtendedFeature
+[00007FFC42085C3E] KiUserExceptionDispatcher
+[00007FFC04F1A5AF] Unknown function at lua_newstate
+[00007FFC04ED8F8D] lua_rawset
+[0000000000D410D2] uMyLua._ZN6Umylua6TMyLua11RecallMobExEPv (Line 24720, "uMyLua.pas" + 77)
+[0000000000911E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFC04ED2C36]
+[00007FFC04ED89EA] lua_pcall
+[0000000000D0B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000000D09256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001150DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001151555] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEi (Line 25223, "ObjPlay.pas" + 2)
+[00000000010A20F3] ObjBase._ZN7Objbase11TBaseObject17AttackFuncNpcCallExPS0_ib (Line 11394, "ObjBase.pas" + 31)
+[0000000001066C13] ObjBase._ZN7Objbase11TBaseObject7OperateEPN7Grobal215TProcessMessageE (Line 2312, "ObjBase.pas" + 261)
+[00000000010A3DCF] ObjBase._ZN7Objbase13TAnimalObject7OperateEPN7Grobal215TProcessMessageE (Line 11601, "ObjBase.pas" + 25)
+[0000000001060151] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1132, "ObjBase.pas" + 20)
+[00000000010A3B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[0000000000B92DA5] ObjMon._ZN6Objmon8TMonster3RunEv (Line 560, "ObjMon.pas" + 153)
+[0000000000B98544] ObjMon._ZN6Objmon10TATMonster3RunEv (Line 1375, "ObjMon.pas" + 13)
+[0000000000A31F7F] MonManage._ZN9Monmanage10TMonManage3RunEv (Line 987, "MonManage.pas" + 154)
+[0000000000ECD772] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 906, "Envir.pas" + 32)
+[0000000000BFB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000004421D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000441D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000142963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000022F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC412FE8D7] BaseThreadInitThunk
+[00007FFC41FAC53C] RtlUserThreadStart
+
+
+[2026-01-28 17:19:38:323] lua.RecallMobEx Except：Access violation at address 00007FFC04F1A5AF in module 'Lua5.1.dll'. Read of address FFFFFFFFFFFFFFFF[00007FFC04F1A5AF] Unknown function at lua_newstate
+[0000000000FF7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000000FF79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000000FFAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000000FE9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000000FE996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000000FE9B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000021B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFC420862FF] Unknown function at __chkstk
+[00007FFC41F32327] Unknown function at RtlLocateExtendedFeature
+[00007FFC42085C3E] KiUserExceptionDispatcher
+[00007FFC04F1A5AF] Unknown function at lua_newstate
+[00007FFC04ED8F8D] lua_rawset
+[0000000000D410D2] uMyLua._ZN6Umylua6TMyLua11RecallMobExEPv (Line 24720, "uMyLua.pas" + 77)
+[0000000000911E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFC04ED2C36]
+[00007FFC04ED89EA] lua_pcall
+[0000000000D0B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000000D09256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001150DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001151555] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEi (Line 25223, "ObjPlay.pas" + 2)
+[00000000010A20F3] ObjBase._ZN7Objbase11TBaseObject17AttackFuncNpcCallExPS0_ib (Line 11394, "ObjBase.pas" + 31)
+[0000000001066C13] ObjBase._ZN7Objbase11TBaseObject7OperateEPN7Grobal215TProcessMessageE (Line 2312, "ObjBase.pas" + 261)
+[00000000010A3DCF] ObjBase._ZN7Objbase13TAnimalObject7OperateEPN7Grobal215TProcessMessageE (Line 11601, "ObjBase.pas" + 25)
+[0000000001060151] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1132, "ObjBase.pas" + 20)
+[00000000010A3B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[0000000000B92DA5] ObjMon._ZN6Objmon8TMonster3RunEv (Line 560, "ObjMon.pas" + 153)
+[0000000000B98544] ObjMon._ZN6Objmon10TATMonster3RunEv (Line 1375, "ObjMon.pas" + 13)
+[0000000000A31F7F] MonManage._ZN9Monmanage10TMonManage3RunEv (Line 987, "MonManage.pas" + 154)
+[0000000000ECD772] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 906, "Envir.pas" + 32)
+[0000000000BFB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000004421D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000441D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000142963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000022F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC412FE8D7] BaseThreadInitThunk
+[00007FFC41FAC53C] RtlUserThreadStart
+
+
+[2026-01-28 17:20:57:126] lua.RecallMobEx Except：Access violation at address 00007FFC04F1A5AF in module 'Lua5.1.dll'. Read of address FFFFFFFFFFFFFFFF[00007FFC04F1A5AF] Unknown function at lua_newstate
+[0000000000FF7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000000FF79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000000FFAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000000FE9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000000FE996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000000FE9B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000021B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFC420862FF] Unknown function at __chkstk
+[00007FFC41F32327] Unknown function at RtlLocateExtendedFeature
+[00007FFC42085C3E] KiUserExceptionDispatcher
+[00007FFC04F1A5AF] Unknown function at lua_newstate
+[00007FFC04ED8F8D] lua_rawset
+[0000000000D410D2] uMyLua._ZN6Umylua6TMyLua11RecallMobExEPv (Line 24720, "uMyLua.pas" + 77)
+[0000000000911E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFC04ED2C36]
+[00007FFC04ED89EA] lua_pcall
+[0000000000D0B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000000D09256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001150DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001151555] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEi (Line 25223, "ObjPlay.pas" + 2)
+[00000000010A20F3] ObjBase._ZN7Objbase11TBaseObject17AttackFuncNpcCallExPS0_ib (Line 11394, "ObjBase.pas" + 31)
+[0000000001066C13] ObjBase._ZN7Objbase11TBaseObject7OperateEPN7Grobal215TProcessMessageE (Line 2312, "ObjBase.pas" + 261)
+[00000000010A3DCF] ObjBase._ZN7Objbase13TAnimalObject7OperateEPN7Grobal215TProcessMessageE (Line 11601, "ObjBase.pas" + 25)
+[0000000001060151] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1132, "ObjBase.pas" + 20)
+[00000000010A3B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[0000000000B92A45] ObjMon._ZN6Objmon8TMonster3RunEv (Line 504, "ObjMon.pas" + 97)
+[0000000000B98544] ObjMon._ZN6Objmon10TATMonster3RunEv (Line 1375, "ObjMon.pas" + 13)
+[0000000000A31F7F] MonManage._ZN9Monmanage10TMonManage3RunEv (Line 987, "MonManage.pas" + 154)
+[0000000000ECD772] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 906, "Envir.pas" + 32)
+[0000000000BFB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000004421D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000441D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000142963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000022F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC412FE8D7] BaseThreadInitThunk
+[00007FFC41FAC53C] RtlUserThreadStart
+
+
+[2026-01-28 17:22:31:450] lua.RecallMobEx Except：Access violation at address 00007FFC04F1A5AF in module 'Lua5.1.dll'. Read of address FFFFFFFFFFFFFFFF[00007FFC04F1A5AF] Unknown function at lua_newstate
+[0000000000FF7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000000FF79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000000FFAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000000FE9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000000FE996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000000FE9B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000021B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFC420862FF] Unknown function at __chkstk
+[00007FFC41F32327] Unknown function at RtlLocateExtendedFeature
+[00007FFC42085C3E] KiUserExceptionDispatcher
+[00007FFC04F1A5AF] Unknown function at lua_newstate
+[00007FFC04ED8F8D] lua_rawset
+[0000000000D410D2] uMyLua._ZN6Umylua6TMyLua11RecallMobExEPv (Line 24720, "uMyLua.pas" + 77)
+[0000000000911E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFC04ED2C36]
+[00007FFC04ED89EA] lua_pcall
+[0000000000D0B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000000D09256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001150DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001151555] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEi (Line 25223, "ObjPlay.pas" + 2)
+[00000000010A20F3] ObjBase._ZN7Objbase11TBaseObject17AttackFuncNpcCallExPS0_ib (Line 11394, "ObjBase.pas" + 31)
+[0000000001066C13] ObjBase._ZN7Objbase11TBaseObject7OperateEPN7Grobal215TProcessMessageE (Line 2312, "ObjBase.pas" + 261)
+[00000000010A3DCF] ObjBase._ZN7Objbase13TAnimalObject7OperateEPN7Grobal215TProcessMessageE (Line 11601, "ObjBase.pas" + 25)
+[0000000001060151] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1132, "ObjBase.pas" + 20)
+[00000000010A3B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[0000000000B92A45] ObjMon._ZN6Objmon8TMonster3RunEv (Line 504, "ObjMon.pas" + 97)
+[0000000000B98544] ObjMon._ZN6Objmon10TATMonster3RunEv (Line 1375, "ObjMon.pas" + 13)
+[0000000000A31F7F] MonManage._ZN9Monmanage10TMonManage3RunEv (Line 987, "MonManage.pas" + 154)
+[0000000000ECD772] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 906, "Envir.pas" + 32)
+[0000000000BFB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000004421D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000441D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000142963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000022F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC412FE8D7] BaseThreadInitThunk
+[00007FFC41FAC53C] RtlUserThreadStart
+
+
+[2026-01-28 22:33:55:465] lua.RecallMobEx Except：Access violation at address 00007FFC04F1A5AF in module 'Lua5.1.dll'. Read of address FFFFFFFFFFFFFFFF[00007FFC04F1A5AF] Unknown function at lua_newstate
+[0000000000FF7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000000FF79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000000FFAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000000FE9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000000FE996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000000FE9B31] JclHookExcept._ZN13Jclhookexcept19HookedExceptObjProcEPN6System16TExceptionRecordE (Line 395, "JclHookExcept.pas" + 5)
+[0000000000021B17] System._ZN6System23_DelphiExceptionHandlerEPNS_16TExceptionRecordEyPvS2_ (Line 21118, "System.pas" + 53)
+[00007FFC420862FF] Unknown function at __chkstk
+[00007FFC41F32327] Unknown function at RtlLocateExtendedFeature
+[00007FFC42085C3E] KiUserExceptionDispatcher
+[00007FFC04F1A5AF] Unknown function at lua_newstate
+[00007FFC04ED8F8D] lua_rawset
+[0000000000D410D2] uMyLua._ZN6Umylua6TMyLua11RecallMobExEPv (Line 24720, "uMyLua.pas" + 77)
+[0000000000911E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFC04ED2C36]
+[00007FFC04ED89EA] lua_pcall
+[0000000000D0B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000000D09256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001150DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001151555] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEi (Line 25223, "ObjPlay.pas" + 2)
+[00000000010A20F3] ObjBase._ZN7Objbase11TBaseObject17AttackFuncNpcCallExPS0_ib (Line 11394, "ObjBase.pas" + 31)
+[0000000001066C13] ObjBase._ZN7Objbase11TBaseObject7OperateEPN7Grobal215TProcessMessageE (Line 2312, "ObjBase.pas" + 261)
+[00000000010A3DCF] ObjBase._ZN7Objbase13TAnimalObject7OperateEPN7Grobal215TProcessMessageE (Line 11601, "ObjBase.pas" + 25)
+[0000000001060151] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1132, "ObjBase.pas" + 20)
+[00000000010A3B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[0000000000B92DA5] ObjMon._ZN6Objmon8TMonster3RunEv (Line 560, "ObjMon.pas" + 153)
+[0000000000B98544] ObjMon._ZN6Objmon10TATMonster3RunEv (Line 1375, "ObjMon.pas" + 13)
+[0000000000A31F7F] MonManage._ZN9Monmanage10TMonManage3RunEv (Line 987, "MonManage.pas" + 154)
+[0000000000ECD772] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 906, "Envir.pas" + 32)
+[0000000000BFB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000004421D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000441D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000142963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000022F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC412FE8D7] BaseThreadInitThunk
+[00007FFC41FAC53C] RtlUserThreadStart
+
+

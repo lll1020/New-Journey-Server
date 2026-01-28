@@ -13,4 +13,29 @@
 ;沙巴克测试  --正式关闭
 ;#AutoRun NPC RunOnDay 17:59:00 @xxjqr_kfshabake 2
 ;5点定时  除魔
-#AutoRun NPC RunOnDay 05:00:00 @ql_smmrrw 0
+;#AutoRun NPC RunOnDay 05:00:00 @ql_smmrrw 0
+;葬星海滩 切换
+#AutoRun NPC RunOnDay 01:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 02:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 03:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 04:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 05:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 06:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 07:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 08:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 09:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 10:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 11:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 12:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 13:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 14:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 15:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 16:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 17:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 18:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 19:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 20:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 21:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 22:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 23:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 24:00:00 @jqr_zxht_change 0

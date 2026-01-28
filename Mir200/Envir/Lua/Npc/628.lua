@@ -11,6 +11,46 @@ function npc.main(play,npcid)
     sendluamsg(play,100,npcid,0,0,tbl2json(data))
 end
 
+local function npc_628_spawn_main(dtm)
+    local mob_name = _config.mob or "怪物"
+    genmonex(dtm, 32, 36, mob_name, 1, 1, 0, 54, "", 0)
+end
+
+local function npc_628_spawn_x(dtm)
+    local mob_name = _config.mob_x or "怪物[目标]"
+    genmonex(dtm, 32, 36, mob_name, 1, 1, 0, 54, "", 0)
+end
+
+local function npc_628_count_by_name(dtm, name)
+    if not name or name == "" then
+        return 0
+    end
+    local list = getobjectinmap(dtm, 0, 0, 999, 2)
+    local cnt = 0
+    if list then
+        for _, v in ipairs(list) do
+            if getbaseinfo(v,1) == name then
+                cnt = cnt + 1
+            end
+        end
+    end
+    return cnt
+end
+
+local function npc_628_kill_by_name(play, dtm, name)
+    if not name or name == "" then
+        return
+    end
+    local list = getobjectinmap(dtm, 0, 0, 999, 2)
+    if list then
+        for _, v in ipairs(list) do
+            if getbaseinfo(v,1) == name then
+                humanhp(v, "-", 999999999, 0, 0, play)
+            end
+        end
+    end
+end
+
 function npc.link(play,npcid,ew,aid)
     -- npc_guard: 入参校验
     if not Guard.ensurePlayer(play, npcid) then
@@ -78,8 +118,11 @@ function npc_628_enter(play)
     addmirrormap(base_map, dtm, _config.name or "副本", 300, "xtc")
     mapmove(play, dtm, 29, 27, 2)
 
-    local mob_name = _config.mob or "怪物"
-    genmonex(dtm, 29, 31, mob_name, 1, 1, 0, 54, "", 0)
+    if hasbuff(play, 20113) then
+        npc_628_spawn_main(dtm)
+    else
+        npc_628_spawn_x(dtm)
+    end
 
     startautoattack(play)
     setenvirontimer(dtm, 1, 1, "@npc_628_dsq,"..play..","..dtm)
@@ -92,6 +135,7 @@ function npc_628_dsq(xt,play,dtm,data)
         delmirrormap(dtm)
         return
     end
+
     if getmoncount(dtm,-1,true) < 1 then
         setenvirofftimer(dtm, 1)
         npc_628_finish(play)
@@ -100,6 +144,20 @@ function npc_628_dsq(xt,play,dtm,data)
         end
         delmirrormap(dtm)
     end
+
+    local main_name = _config.mob or "怪物"
+    local x_name = _config.mob_x or "怪物[目标]"
+
+    if hasbuff(play, 20113) then
+        if npc_628_count_by_name(dtm, main_name) < 1 then
+            npc_628_spawn_main(dtm)
+        end
+        if npc_628_count_by_name(dtm, main_name) >= 1 and npc_628_count_by_name(dtm, x_name) >= 1 then
+            npc_628_kill_by_name(play, dtm, x_name)
+        end
+    end
+
+    
 end
 
 function npc_628_timeout(play)

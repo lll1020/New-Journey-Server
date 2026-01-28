@@ -140,7 +140,14 @@ function entermap(play)
 end
 function findpathbegin(actor)
     --寻路自动传送
-    -- local mapid = getbaseinfo(actor, ConstCfg.gbase.mapid)
+    local mapid = getbaseinfo(actor, ConstCfg.gbase.mapid)
+    if string.find(mapid, "_") then
+        Player.sendmsgEx(actor, "当前地图无法自动寻路传送#57")
+        -- gotonow(actor,getconst(actor, "<$ToPointX>"),getconst(actor, "<$ToPointY>"))
+        gotonow(actor, getbaseinfo(actor, ConstCfg.gbase.x), getbaseinfo(actor, ConstCfg.gbase.y))
+    
+        return false
+    end
     -- local x = tonumber(getconst(actor, "<$ToPointX>")) or 0
     -- local y = tonumber(getconst(actor, "<$ToPointY>")) or 0
     -- if checkkuafu(actor) then
@@ -892,6 +899,26 @@ function jqr_kfshabakejltz()
         sendmovemsg("0", 1, 253, 0, 150, 5,"沙巴克攻城战：今日沙城战将于9点结束,奖励于攻城结束自动发放（跨服攻沙需要保证在跨服内）保持在线以免领取不到...")
     end
 end
+--------------------机器人触发脚本-------------------葬星海滩 切换
+function jqr_zxht_change()
+    release_print("葬星海滩涨落潮切换触发")
+    release_print("当前时间小时数为："..os.date("%H"))
+    
+
+    local hour = tonumber(os.date("%H")) or 0
+    local map_even = "葬星海滩"
+    local map_odd = "葬星海滩1"
+    local target = (hour % 2 == 0) and map_even or map_odd
+    local source = (hour % 2 == 0) and map_odd or map_even
+    release_print("当前地图为："..target)
+    local players = getobjectinmap(source, 0, 0, 999, 1)
+    if players then
+        for _, v in pairs(players) do
+            map(v, target)      
+            Player.sendmsgEx(v, "葬星海滩涨落潮已切换，已为你传送#57")
+        end
+    end
+end
 
 --------------------加入行会后触发-------------------
 function guildaddmemberafter(play,guild,name)
@@ -946,6 +973,10 @@ function func_cjcg(play)
         local randomNum = ransjstr(jl.weight, 1, 3)
         randomNum = tonumber(randomNum)
         Player.rwjl(play, {jl.details[randomNum]}, "贵族宝藏",1,1000)
+    elseif monName == "仙草" then
+        Player.rwjl(play, {{"仙草[任务]",1}}, "贝壳",1,0)
+    elseif monName == "贝壳" then
+        Player.rwjl(play, {{"贝壳",1}}, "贝壳",1,0)
     end
 
     setplaydef(play, "S$采集目标", "")
@@ -963,6 +994,7 @@ function playoffline(play)--人物大退触发
         setofftimer(play,4)
         setofftimer(play,5)
         setofftimer(play,6)
+        setofftimer(play,7)
         mapmove(play, 'xtc',137,138,8)
         offlineplay(play,9999)
     end
@@ -973,6 +1005,7 @@ function playreconnection(play)--	人物小退触发
         setofftimer(play,4)
         setofftimer(play,5)
         setofftimer(play,6)
+        setofftimer(play,7)
         mapmove(play, 'xtc',137,138,8)
         offlineplay(play,9999)
     end
@@ -1116,7 +1149,7 @@ function clicknpc(play, npcid)
 	if qf_teshunpc[npcid] then
 		Npclib[qf_teshunpc[npcid]].main(play, npcid)
 		return true
-    elseif npcid > 200 and npcid < 400 then--地图NPC
+    elseif npcid > 200 and npcid < 500 then--地图NPC
         Npclib[200].main(play, npcid)
         return true
     elseif npcid > 500 and npcid < 520 then--大陆地图NPC
@@ -1166,3 +1199,7 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
         end
 	end
 end
+
+
+
+

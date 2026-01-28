@@ -79,7 +79,8 @@ function npc_625_enter(play)
     mapmove(play, dtm, 29, 27, 2)
 
     local mob_name = _config.mob or "π÷ŒÔ"
-    genmonex(dtm, 29, 31, mob_name, 1, 1, 0, 54, "", 0)
+    genmonex(dtm, 32, 36, mob_name, 1, 1, 0, 54, "", 0)
+    Buff[106](play,1)
 
     startautoattack(play)
     setenvirontimer(dtm, 1, 1, "@npc_625_dsq,"..play..","..dtm)
