@@ -29,7 +29,30 @@ function npc.link(play,npcid,ew,aid)
     end
 
     if ew == 1 then
-        
+        local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+        local key = "npc_680"
+        if jq_data[key] and jq_data[key] >= 2 then
+            Player.sendmsgEx(play, "你已经完成了该任务#57")
+            return
+        end
+
+        if not Guard.ensureCost(play, _config.cost) then
+            return
+        end
+        Guard.consumeCost(play, _config.cost, ","..(_config.name or "剧情任务"))
+
+        jq_data[key] = 2
+        Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+        Player.sendmsgEx(play, "任务完成#57")
+        if _config.ch then
+            Player.title_give(play, _config.ch)
+        end
+        sendluamsg(play,101,1005,0,0,"rwwc")
+        local reward = _config.jl or _config.rwjl
+        if reward then
+            Player.rwjl(play, reward, (_config.name or "剧情任务").."奖励", 1)
+        end
+        sendluamsg(play,100,npcid,1,2,"")
     end
 end
 
