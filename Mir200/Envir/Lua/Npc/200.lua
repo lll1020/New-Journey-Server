@@ -46,6 +46,20 @@ local _config_spa = {
     [304] = {"葬星海滩", 184, 40,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
     [305] = {"船长室", 40, 46,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
     [306] = {"水手舱", 59, 11,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+
+    [307] = {"黄泉路", 49, 29,nil,nil,4, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+    [308] = {"罗酆六天", 71, 78,nil,nil,4, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+    [309] = {"东海龙宫", 31, 83,nil,nil,4, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+    [310] = {"黑风山", 158, 72,nil,nil,4, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+    [311] = {"黄风岭", 92, 368,nil,nil,4, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+    [312] = {"女儿国", 161, 146,nil,nil,4, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+    [313] = {"通天河", 237, 39,nil,nil,4, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+    [314] = {"狮驼岭", 17, 87,nil,nil,4, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+    [315] = {"天竺山", 68, 66,nil,nil,4, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+    [316] = {"灵域·二层", 72, 25,nil,nil,4, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+    [317] = {"灵域·三层", 63, 61,nil,nil,4, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+    [318] = {"灵域·秘境", 21, 20,nil,nil,4, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
+
 }
 
 function npc.main(play,npcid)
@@ -126,6 +140,66 @@ function npc.link(play,npcid,ew,aid)
                     Player.sendmsgEx(play, "未完成对应提交，无法进入#57")
                     return
                 end
+            elseif npcid == 307 then -- 黄泉路 667的任务完成
+                if not (jq_data["npc_667"] and jq_data["npc_667"] >= 2) then
+                    Player.sendmsgEx(play, "任务未完成，无法进入#57")
+                    return
+                end
+            elseif npcid == 308 then -- 罗酆六天 669的任务完成
+                if not (jq_data["npc_669"] and jq_data["npc_669"] >= 2) then
+                    Player.sendmsgEx(play, "任务未完成，无法进入#57")
+                    return
+                end
+            elseif npcid == 309 then -- 东海龙宫 642的任务完成
+                if not (jq_data["npc_642"] and jq_data["npc_642"] >= 2) then
+                    Player.sendmsgEx(play, "任务未完成，无法进入#57")
+                    return
+                end
+            elseif npcid == 310 then -- 黑风山 643的任务完成
+                if not (jq_data["npc_643"] and jq_data["npc_643"] >= 2) then
+                    Player.sendmsgEx(play, "任务未完成，无法进入#57")
+                    return
+                end
+            elseif npcid == 311 then -- 黄风岭 644的任务完成
+                if not (jq_data["npc_644"] and jq_data["npc_644"] >= 2) then
+                    Player.sendmsgEx(play, "任务未完成，无法进入#57")
+                    return
+                end
+            elseif npcid == 312 then -- 女儿国 645的任务完成
+                if not (jq_data["npc_645"] and jq_data["npc_645"] >= 2) then
+                    Player.sendmsgEx(play, "任务未完成，无法进入#57")
+                    return
+                end
+            elseif npcid == 313 then -- 通天河 646的任务完成
+                if not (jq_data["npc_646"] and jq_data["npc_646"] >= 2) then
+                    Player.sendmsgEx(play, "任务未完成，无法进入#57")
+                    return
+                end
+            elseif npcid == 314 then -- 狮驼岭 647的任务完成
+                if not (jq_data["npc_647"] and jq_data["npc_647"] >= 2) then
+                    Player.sendmsgEx(play, "任务未完成，无法进入#57")
+                    return
+                end
+            elseif npcid == 315 then -- 天竺山 648的任务完成
+                if not (jq_data["npc_648"] and jq_data["npc_648"] >= 2) then
+                    Player.sendmsgEx(play, "任务未完成，无法进入#57")
+                    return
+                end
+            elseif npcid == 316 then -- 灵域·二层 663的任务完成
+                if not (jq_data["npc_663"] and jq_data["npc_663"] >= 2) then
+                    Player.sendmsgEx(play, "任务未完成，无法进入#57")
+                    return
+                end
+            elseif npcid == 317 then -- 灵域·三层 664的任务完成
+                if not (jq_data["npc_664"] and jq_data["npc_664"] >= 2) then
+                    Player.sendmsgEx(play, "任务未完成，无法进入#57")
+                    return
+                end
+            elseif npcid == 318 then -- 灵域·秘境 665的任务完成
+                if not (jq_data["npc_665"] and jq_data["npc_665"] >= 2) then
+                    Player.sendmsgEx(play, "任务未完成，无法进入#57")
+                    return
+                end
             end
             mapmove(play,config[1],config[2],config[3],5)
         end
@@ -138,4 +212,5 @@ function npc_200_fbjs(play)
 end
 
 return npc
+
 

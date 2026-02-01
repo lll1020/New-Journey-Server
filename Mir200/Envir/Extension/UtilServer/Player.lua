@@ -969,6 +969,18 @@ function Player.getEquipFieldByPos(actor, pos, type)
         return field
     end
 end
+--查询背包神器位是否有对应装备
+function Player.hasEquipInArtifactSlot(actor, itemname)
+    for i = 77 , 88 do
+        local itemobj = linkbodyitem(actor,i)
+        local name = getiteminfo(actor,itemobj,7)
+        if name == itemname then
+            return i
+        end
+    end
+    return nil
+
+end
 
 
 

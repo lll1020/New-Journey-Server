@@ -43,6 +43,11 @@ function npc.link(play,npcid,ew,aid)
             Player.sendmsgEx(play, "小兰好感度未满级#57")
             return
         end
+        local where = Player.hasEquipInArtifactSlot(play, "金箍棒")
+        if not where then
+            Player.sendmsgEx(play, "你需要装备金箍棒才能完成任务#57")
+            return
+        end
         if not Guard.ensureCost(play, _config.cost) then
             return
         end
@@ -53,6 +58,16 @@ function npc.link(play,npcid,ew,aid)
         Player.sendmsgEx(play, "任务完成")
         sendluamsg(play,101,1005,0,0,"rwwc")
         Player.rwjl(play, _config.rwjl or {{"元宝",1},{"金币",1}}, (_config.name or "剧情任务").."奖励", 1)
+        local itemobj = linkbodyitem(play,where)
+        local item_json = getitemcustomabil(play, itemobj)
+        release_print(item_json)
+        item_json = json2tbl(item_json)
+        if item_json then
+            item_json = json2tbl('{"abil":[{"i":0,"t":"[九九八十难]","c":251,"v":[]}],"name":""}')
+        end
+        item_json.abil[1].v[3] = {1,244,8000,0,15,3,3}
+        item_json = tbl2json(item_json)
+        setitemcustomabil(play, itemobj, item_json)
         sendluamsg(play,100,npcid,1,2,"")
     end
 end

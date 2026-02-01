@@ -27,6 +27,7 @@ function npc.link(play,npcid,ew,aid)
     if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
         return
     end
+    
 
     if ew == 1 then
         local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
