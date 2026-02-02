@@ -60,15 +60,15 @@ function npc.link(play,npcid,ew,aid)
         cnt = cnt + 1
         jq_data[cntKey] = cnt
 
-        local jl_c = _config.jl_c
-        if jl_c and #jl_c > 0 then
-            local idx = math.random(1, #jl_c)
-            local reward = {jl_c[idx]}
-            Player.rwjl(play, reward, (_config.name or "剧情任务").."小奖励", 1)
-        end
         if cnt >= 5 then
             jq_data[key] = 2
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+            local jl_c = _config.jl_c
+            if jl_c and #jl_c > 0 then
+                local idx = math.random(1, #jl_c)
+                local reward = {jl_c[idx]}
+                Player.rwjl(play, reward, (_config.name or "剧情任务").."小奖励", 1)
+            end
             Player.sendmsgEx(play, "任务完成#57")
             if _config.ch then
                 Player.title_give(play, _config.ch)
@@ -79,6 +79,12 @@ function npc.link(play,npcid,ew,aid)
         else
             jq_data[key] = 1
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+            local jl_c = _config.jl_c
+            if jl_c and #jl_c > 0 then
+                local idx = math.random(1, #jl_c)
+                local reward = {jl_c[idx]}
+                Player.rwjl(play, reward, (_config.name or "剧情任务").."小奖励", 1)
+            end
             Player.sendmsgEx(play, string.format("提交成功：%d/5#57", cnt))
             npc.main(play,npcid)
         end
@@ -86,5 +92,7 @@ function npc.link(play,npcid,ew,aid)
 end
 
 return npc
+
+
 
 

@@ -44,14 +44,13 @@ function npc.link(play,npcid,ew,aid)
         Guard.consumeCost(play, _config.cost, ","..(_config.name or "剧情任务"))
         cnt = cnt + 1
         jq_data[key] = cnt
-
+        Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         local jl_c = _config.jl_c
         if jl_c and #jl_c > 0 then
             local idx = math.random(1, #jl_c)
             local reward = {jl_c[idx]}
             Player.rwjl(play, reward, (_config.name or "剧情任务").."小奖励", 1)
         end
-        Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         Player.sendmsgEx(play, string.format("提交进度：%d/%d#57", cnt, max_num))
 
         if cnt >= max_num then
@@ -73,5 +72,6 @@ function npc.link(play,npcid,ew,aid)
 end
 
 return npc
+
 
 

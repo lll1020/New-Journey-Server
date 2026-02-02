@@ -193,7 +193,10 @@ function ontimer7(play)
     local T_data = Player.getJsonTableByVar(play, VarCfg["T_¿³Ê÷ÏµÍ³"])
     local config = teshudata["anniu_30"]
     T_data.axe = T_data.axe or 1
-    T_data.auto = T_data.auto or 1
+    T_data.auto = T_data.auto or 0
+    if not (T_data.auto > 0) then
+        return
+    end
     local jl = {}
     for i = 1,(60*20)/(config.updata[1].details[T_data.axe].ratio * config.updata[2].details[T_data.auto].ratio * config.base_time) do
         table.insert(jl, {ransjstr(config.updata[1].details[T_data.axe].jl, 1, 3),1})

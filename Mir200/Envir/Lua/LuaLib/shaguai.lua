@@ -55,6 +55,61 @@ shaguai = {
 			end
 		end
 	end,
+	["25"] = function(play,mob)      --天书杀意值：按天书等级与大陆限制
+		-- 天书杀意值：按天书等级与大陆限制
+		local ts_cfg = teshudata["npc_24"]
+		if ts_cfg then
+			local ts_data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
+			local ts_lv = ts_data and (ts_data.level or 0) or 0
+			local jf = (ts_data.jf or 0) + 1
+
+			if ts_lv >= 0 then
+				local allow = false
+				local dl = daluditu[getbaseinfo(play,3)]
+				if jf >= 0 and jf <= 1000 then
+					allow = true
+				elseif jf >= 1001 and jf <= 6000 then
+					allow = (dl >= 2)
+				elseif jf >= 6001 and jf <= 16000 then
+					allow = (dl >= 3)
+				elseif jf >= 16001 and jf <= 36000 then
+					allow = (dl >= 4)
+				elseif jf >= 36001 and jf <= 130000 then
+					allow = (dl >= 5)
+				end
+
+				-- if allow then
+				-- 	local min_hp = 0
+				-- 	if ts_cfg.kill_min_hp and dl and ts_cfg.kill_min_hp[dl] then
+				-- 		min_hp = ts_cfg.kill_min_hp[dl]
+				-- 	end
+				-- 	if min_hp and min_hp > 0 then
+				-- 		local monidx = tonumber(getbaseinfo(mob,2)) or 0
+				-- 		if monidx > 0 then
+				-- 			local mhp = tonumber(getmonbaseinfo(monidx, 4)) or 0
+				-- 			if mhp < min_hp then
+				-- 				allow = false
+				-- 			end
+				-- 		else
+				-- 			allow = false
+				-- 		end
+				-- 	end
+				-- end
+
+				if allow then
+					ts_data = ts_data or {}
+					ts_data.jf = jf + 1
+					Player.setJsonVarByTable(play, VarCfg["T_天书"], ts_data)
+
+					local itemobj = linkbodyitem(play, ts_cfg.where)
+					if itemobj and itemobj ~= "0" then
+						setcustomitemprogressbar(play, itemobj, 1, tbl2json({["cur"] = ts_data.jf}))
+						refreshitem(play, itemobj)
+					end
+				end
+			end
+		end
+	end,
 	["29"] = function(play,mob)      --除魔杀怪
 		local dl,boss,xg = getplayvar(play,"除魔大陆"),getplayvar(play,"除魔大怪数量"),getplayvar(play,"除魔小怪数量")
 		--检测怪物地图是否为目标大陆，检测怪物类型
@@ -680,7 +735,6 @@ shaguai = {
 			Player.sendmsgEx(play,  (config.name or "任务").."击杀+"..1 .." ( "..sg_data[key].."/"..(config.num or 0).." )#57")
 			Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 		end
-		
 	end,
 	["635"] = function(play,mob)      --送葬者(BOSS)
 		local config = teshudata["npc_635"]
@@ -773,6 +827,14 @@ shaguai.jian = function(play, id)
 end
 
 return shaguai
+
+
+
+
+
+
+
+
 
 
 

@@ -475,29 +475,31 @@ function ggna(play,id)
 
         -- Npclib[654].link(play, 654, 1, 0, "")
 
-        local where = Player.hasEquipInArtifactSlot(play, "金箍棒")
-        -- release_print(where)
-        if not where then
-            Player.sendmsgEx(play, "你需要装备金箍棒才能完成任务#57")
-            return
-        end
-        local itemobj = linkbodyitem(play,where)
-        local item_json = getitemcustomabil(play, itemobj)
-        release_print(item_json)
-        item_json = json2tbl(item_json)
-        if item_json then
-            item_json = json2tbl('{"abil":[{"i":0,"t":"[附加属性]","c":251,"v":[]}],"name":""}')
-        end
-        item_json.abil[1].v[1] = {1,253,200,1,13,1,1}
-        item_json.abil[1].v[2] = {1,200,300,1,14,2,2}
-        item_json.abil[1].v[3] = {1,244,8000,0,15,3,3}
-        item_json.abil[1].v[4] = {1,30,5,1,16,4,4}
-        item_json.abil[1].v[5] = {1,73,100,1,17,5,5}
-        item_json.abil[1].v[6] = {1,89,100,1,18,6,6}
-        item_json.abil[1].v[7] = {1,206,100,1,19,7,7}
-        item_json = tbl2json(item_json)
-        -- release_print(type(item_json))
-        setitemcustomabil(play, itemobj, item_json)
+        -- local where = Player.hasEquipInArtifactSlot(play, "金箍棒")
+        -- -- release_print(where)
+        -- if not where then
+        --     Player.sendmsgEx(play, "你需要装备金箍棒才能完成任务#57")
+        --     return
+        -- end
+        -- local itemobj = linkbodyitem(play,where)
+        -- local item_json = getitemcustomabil(play, itemobj)
+        -- release_print(item_json)
+        -- item_json = json2tbl(item_json)
+        -- if item_json then
+        --     item_json = json2tbl('{"abil":[{"i":0,"t":"[附加属性]","c":251,"v":[]}],"name":""}')
+        -- end
+        -- item_json.abil[1].v[1] = {1,253,200,1,13,1,1}
+        -- item_json.abil[1].v[2] = {1,200,300,1,14,2,2}
+        -- item_json.abil[1].v[3] = {1,244,8000,0,15,3,3}
+        -- item_json.abil[1].v[4] = {1,30,5,1,16,4,4}
+        -- item_json.abil[1].v[5] = {1,73,100,1,17,5,5}
+        -- item_json.abil[1].v[6] = {1,89,100,1,18,6,6}
+        -- item_json.abil[1].v[7] = {1,206,100,1,19,7,7}
+        -- item_json = tbl2json(item_json)
+        -- -- release_print(type(item_json))
+        -- setitemcustomabil(play, itemobj, item_json)
+        Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], {})
+
 
     end
 

@@ -63,7 +63,7 @@ function npc.link(play,npcid,ew,aid)
                 recalcabilitys(play)
                 sendluamsg(play,100,npcid,1,aid,"")
 
-                if nextLevel == 10 or nextLevel == 20 or nextLevel ==30 then
+                if nextLevel == 10 or nextLevel == 20 or nextLevel == 30 then
                     Player.sendmsgEx(play, "恭喜你，|".._config.where[aid][1].."#249|部位的装备强化提升到了|"..nextLevel.."级#249|，属性大幅提升！")
                     delattlist(play, "装备强化")
                     Login_zbqh(play)

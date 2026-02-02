@@ -36,15 +36,15 @@ end
 local function npc_671_finish_level(play, dtm, level)
     local details = _config.details or {}
     local cfg = details[level]
-    if cfg and cfg.jl then
-        Player.rwjl(play, cfg.jl, (_config.name or "剧情任务").."奖励", 1)
-    end
 
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     jq_data["npc_671_lv"] = level
     jq_data["npc_671_cur"] = nil
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
 
+    if cfg and cfg.jl then
+        Player.rwjl(play, cfg.jl, (_config.name or "剧情任务").."奖励", 1)
+    end
     npc_671_back(play)
     if dtm and checkmirrormap(dtm) then
         setenvirofftimer(dtm,1)
@@ -187,6 +187,7 @@ function npc_671_dsq(xt,play,dtm,data)
 end
 
 return npc
+
 
 
 

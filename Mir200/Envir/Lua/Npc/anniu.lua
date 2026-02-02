@@ -698,9 +698,8 @@ function feijian(play, msgData) ---飞剑
         end
         nvalue = nvalue + ((T_data.num and T_data.num >= teshudata["anniu_19"].num) and 10000 or 0)
 
-        local cd, time =
-            (T_data.cd or (hasbuff(play, 20002) and teshudata["anniu_19"].cd / 2) or teshudata["anniu_19"].cd) - 0.1,
-            os.time()
+        local cd = (T_data.cd or (hasbuff(play, 20002) and teshudata["anniu_19"].cd / 2) or teshudata["anniu_19"].cd) - 0.1
+        local time = os.time()
         if getplaydef(play, "N$飞剑_" .. msgdata.paramList[2]) + cd < time then
             setplaydef(play, "N$飞剑_" .. msgdata.paramList[2], time)
             humanhp(monobj, "-", nvalue, 107, 0, play, 1)
@@ -734,7 +733,7 @@ npc[19] = function(play, p2, p3, data) --飞剑系统
                 count["1"] = 1
             end
             local T_data_cs = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
-            if T_data["首充"] == 1 or T_data["补充"] == 1 or hasbuff(play, 20001) then
+            if T_data_cs["首充"] == 1 or T_data_cs["补充"] == 1 or hasbuff(play, 20001) then
                 count["2"] = 1
             end
             if getflagstatus(play, VarCfg.BS_mztq) == 1 or hasbuff(play, 20002) then
@@ -837,14 +836,13 @@ npc[30] = function(play, p2, p3, data) --砍树系统
         local config = teshudata["anniu_30"]
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
         T_data.axe = T_data.axe or 1
-        T_data.auto = T_data.auto or 1
         T_data.num = T_data.num or 0
 
         if p3 == 1 then -- 打开页面时自动的奖励
             -- release_print("砍树系统自动奖励触发")
             -- release_print(os.time())
             -- release_print(getplaydef(play,"N$自动砍树") + config.updata[1].details[T_data.axe].ratio * config.updata[2].details[T_data.auto].ratio * config.base_time)
-            if os.time() >= getplaydef(play,"N$自动砍树") + (config.updata[1].details[T_data.axe].ratio * config.updata[2].details[T_data.auto].ratio * config.base_time) then
+            if os.time() >= getplaydef(play,"N$自动砍树") + (config.updata[1].details[T_data.axe].ratio * config.updata[2].details[T_data.auto or 1].ratio * config.base_time) then
                 local jl = ransjstr(config.updata[1].details[T_data.axe].jl, 1, 3)
                 setplaydef(play,"N$自动砍树",os.time())
                 T_data.num = T_data.num + 1
@@ -874,16 +872,21 @@ npc[30] = function(play, p2, p3, data) --砍树系统
         end
     elseif p2 == 3 then --定时器开关
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
-        if not (getplaydef(play,"N$自动砍树") == 1) then
+        if not (getplaydef(play,"N$自动砍树") == 1) or true then
+            T_data.auto = T_data.auto or 1
             Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
             setontimer(play,7,60*20,0,1)
             sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>自动砍树已开启...</font>","Type":9}')
             setplaydef(play,"N$自动砍树",os.time())
-        else
-            Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
-            setofftimer(play,7)
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>自动砍树已关闭...</font>","Type":9}')
-            setplaydef(play,"N$自动砍树",os.time())
+            local tmp_data = {}
+            tmp_data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
+            sendluamsg(play, 101, 30, 0, 0, tbl2json(tmp_data))
+            
+        -- else
+        --     Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
+        --     setofftimer(play,7)
+        --     sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>自动砍树已关闭...</font>","Type":9}')
+        --     setplaydef(play,"N$自动砍树",os.time())
         end
     elseif p2 == 4 then --兑换盲盒
         local config = teshudata["anniu_30"]
@@ -1350,27 +1353,23 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
                     T_grss = {}
                 end
                 local rewardCfg = teshudata["fldt"] and teshudata["fldt"]["grss"] or {}
-                local hasReward = false
+                local rewardList = {}
                 for key, status in pairs(T_grss) do
                     if status == 1 then
                         local index = tonumber(key)
                         local cfg = index and rewardCfg[index]
                         if cfg then
                             T_grss[key] = 2
-                            Player.rwjl(
-                                play,
-                                cfg.give,
-                                "个人首杀奖励",
-                                1,
-                                0
-                            )
-                            hasReward = true
+                            rewardList[#rewardList + 1] = cfg.give
                         end
                     end
                 end
-                if hasReward then
+                if #rewardList > 0 then
                     Player.setJsonVarByTable(play, VarCfg.T_grss, T_grss)
                     sendluamsg(play, 101, 511, 2, 4, tbl2json(T_grss))
+                    for _, give in ipairs(rewardList) do
+                        Player.rwjl(play, give, "个人首杀奖励", 1, 0)
+                    end
                 else
                     Player.sendmsgEx(play, "未完成该首杀任务#57")
                 end
@@ -1404,27 +1403,23 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
                     T_grsb = {}
                 end
                 local rewardCfg = teshudata["fldt"] and teshudata["fldt"]["grsb"] or {}
-                local hasReward = false
+                local rewardList = {}
                 for key, status in pairs(T_grsb) do
                     if status == 1 then
                         local index = tonumber(key)
                         local cfg = index and rewardCfg[index]
                         if cfg then
                             T_grsb[key] = 2
-                            Player.rwjl(
-                                play,
-                                cfg.give,
-                                "个人首爆奖励",
-                                1,
-                                0
-                            )
-                            hasReward = true
+                            rewardList[#rewardList + 1] = cfg.give
                         end
                     end
                 end
-                if hasReward then
+                if #rewardList > 0 then
                     Player.setJsonVarByTable(play, VarCfg.T_grsb, T_grsb)
                     sendluamsg(play, 101, 511, 2, 5, tbl2json(T_grsb))
+                    for _, give in ipairs(rewardList) do
+                        Player.rwjl(play, give, "个人首爆奖励", 1, 0)
+                    end
                 else
                     Player.sendmsgEx(play, "未完成该首爆任务#57")
                 end
@@ -1458,27 +1453,23 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
                     qqsb = {}
                 end
                 local rewardCfg = teshudata["fldt"] and teshudata["fldt"]["qqsb"] or {}
-                local hasReward = false
+                local rewardList = {}
                 for key, status in pairs(qqsb) do
                     if status == 1 then
                         local index = tonumber(key)
                         local cfg = index and rewardCfg[index]
                         if cfg then
                             qqsb[key] = 2
-                            Player.rwjl(
-                                play,
-                                cfg.give,
-                                "全区首曝奖励",
-                                1,
-                                0
-                            )
-                            hasReward = true
+                            rewardList[#rewardList + 1] = cfg.give
                         end
                     end
                 end
-                if hasReward then
+                if #rewardList > 0 then
                     Player.setJsonVarByTable(nil, VarCfg["A_全区首曝json"], qqsb)
                     sendluamsg(play, 101, 511, 2, 6, tbl2json(qqsb))
+                    for _, give in ipairs(rewardList) do
+                        Player.rwjl(play, give, "全区首曝奖励", 1, 0)
+                    end
                 else
                     Player.sendmsgEx(play, "未完成该首曝任务#57")
                 end
@@ -1651,9 +1642,9 @@ npc[517] = function(play, p2, p3, msgData) --聚宝盆
         local cs = getplaydef(play, VarCfg["J_聚宝盆领取次数"])
         if cs < config.maxcs then
             if jf >= config.jf then
-                Player.rwjl(play, config.give, "聚宝盆奖励", 1)
                 setplaydef(play, VarCfg["U_聚宝盆积分"], 0)
                 setplaydef(play, VarCfg["J_聚宝盆领取次数"], cs + 1)
+                Player.rwjl(play, config.give, "聚宝盆奖励", 1)
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#28ef01\'>领取成功...</font>","Type":9}' )
                 sendluamsg(play, 101, 517, 2, 0, "")
             else
@@ -2112,4 +2103,5 @@ for npcId, handler in pairs(npc) do
 end
 
 return npc
+
 

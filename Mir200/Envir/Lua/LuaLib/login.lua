@@ -64,6 +64,8 @@ function Login.main(play)
     if jq_data["npc55"] and jq_data["npc55"] >= 2 then
         Npclib['anniu'][30](play, 3, 1, "") --初始化砍树系统
     end
+    --天书  杀意值
+    shaguai.jia(play,25)
 
     
 

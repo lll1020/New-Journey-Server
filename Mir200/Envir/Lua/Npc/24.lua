@@ -87,16 +87,55 @@ function npc.link(play,npcid,ew,aid,data)
             return
         end
     elseif ew == 2 then --仙法
-        if json_data["caowei"] and json_data["caowei"] <= 10 then
-            local randomNum = ransjstr(_config.details[2].weight, 1, 3)
+        if json_data["caowei"] then
+            local slot = tonumber(json_data["caowei"]) or 0
+            if slot < 1 or slot > 10 then
+                return
+            end
+
+            local cfg = _config.details[2]
+            local unlock_lv = cfg.unlock_lv or {}
+            local need_lv = unlock_lv[slot] or 1
+            local cur_lv = T_data.level or 0
+            if cur_lv < need_lv then
+                Player.sendmsgEx(play, string.format("天书等级达到%d级才可解锁该仙法槽位#57", need_lv))
+                return
+            end
+
+            T_data["caowei"] = T_data["caowei"] or {}
+            local slot_key = ""..slot
+            local is_first = (T_data["caowei"][slot_key] == nil)
+
+            if is_first then
+                Player.sendmsgEx(play, "首次解锁仙法槽位，不消耗材料#57")
+            end
+
+            if not is_first then
+                local cost_cfg = cfg.cost
+                if cost_cfg then
+                    local name, num = Player.checkItemNumByTable(play, cost_cfg[1])
+                    if name then
+                        local name2, num2 = Player.checkItemNumByTable(play, cost_cfg[2])
+                        if name2 then
+                            Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name2, num2))
+                            return
+                        end
+                        Player.sendmsgEx(play, "仙法卷轴不足，改用灵石消耗#57")
+                        Player.takeItemByTable(play, cost_cfg[2], ",天书仙法", nil)
+                    else
+                        Player.takeItemByTable(play, cost_cfg[1], ",天书仙法", nil)
+                    end
+                end
+            end
+
+            local randomNum = ransjstr(cfg.weight, 1, 3)
             randomNum = tonumber(randomNum)
 
-            local idx = math.random(1,#_config.details[2].details[randomNum])
-            T_data["caowei"] = T_data["caowei"] or {}
-            if T_data["caowei"][""..json_data["caowei"]] then
-                xianfa_del(play,T_data["caowei"][""..json_data["caowei"]][1],T_data["caowei"][""..json_data["caowei"]][2])
+            local idx = math.random(1,#cfg.details[randomNum])
+            if T_data["caowei"][slot_key] then
+                xianfa_del(play, T_data["caowei"][slot_key][1], T_data["caowei"][slot_key][2])
             end
-            T_data["caowei"][""..json_data["caowei"]] = {randomNum,idx}
+            T_data["caowei"][slot_key] = {randomNum,idx}
             T_data["tj"] = T_data["tj"] or {}
             T_data["tj"][randomNum.."_"..idx] = 1
             Player.setJsonVarByTable(play, VarCfg["T_天书"], T_data)
@@ -161,3 +200,19 @@ end
 GameEvent.add(EventCfg.onTakeOnEx, _onTakeOnEx, "天书初始化")
 
 return npc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

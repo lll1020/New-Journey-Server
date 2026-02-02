@@ -14,7 +14,7 @@ function npc.link(play, npcid, p2, p3, msgData)
             return
         end
         if changemoney(play,3,"-",1000000,"»õ±Ò¶Ò»»",true) then
-            changemoney(play,4,"+",200000,"»õ±Ò¶Ò»»",true)
+            changemoney(play,4,"+",10000,"»õ±Ò¶Ò»»",true)
             setplaydef(play,VarCfg.J_hbdh[1], getplaydef(play,VarCfg.J_hbdh[1]) + 1)
             sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[»õ±Ò¶Ò»»]</font><font color=\'#00ff00\'>¶Ò»»³É¹¦...</font>","Type":9}')
             sendluamsg(play,100,npcid,1,0,'{"hbdh1":'..getplaydef(play,VarCfg.J_hbdh[1])..',"hbdh2":'..getplaydef(play,VarCfg.J_hbdh[2])..'}')
@@ -28,7 +28,7 @@ function npc.link(play, npcid, p2, p3, msgData)
             return
         end
         if changemoney(play,1,"-",1000000,"»õ±Ò¶Ò»»",true) then
-            changemoney(play,2,"+",200000,"»õ±Ò¶Ò»»",true)
+            changemoney(play,2,"+",10000,"»õ±Ò¶Ò»»",true)
             setplaydef(play,VarCfg.J_hbdh[2], getplaydef(play,VarCfg.J_hbdh[2]) + 1)
             sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[»õ±Ò¶Ò»»]</font><font color=\'#00ff00\'>¶Ò»»³É¹¦...</font>","Type":9}')
             sendluamsg(play,100,npcid,1,0,'{"hbdh1":'..getplaydef(play,VarCfg.J_hbdh[1])..',"hbdh2":'..getplaydef(play,VarCfg.J_hbdh[2])..'}')
