@@ -62,7 +62,7 @@ function Login.main(play)
     iniplayvar(play, "integer","HUMAN","比武大会")
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     if jq_data["npc55"] and jq_data["npc55"] >= 2 then
-        Npclib['anniu'][30](play, 3, 1, "") --初始化砍树系统
+        Npclib['anniu'][30](play, 3, 0, "") --初始化砍树系统
     end
     --天书  杀意值
     shaguai.jia(play,25)

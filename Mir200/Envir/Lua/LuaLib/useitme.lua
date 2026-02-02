@@ -303,5 +303,19 @@ function stdmodefunc39(play, item) --Ãÿ ‚µ§“©
         addbuff(play, 20113)
     end
 end
+function stdmodefunc40(play, item) --Ãÿ ‚µ§“©
+    local idx = getstditeminfo(getiteminfo(play, item, 2), 8)
+    if idx == 1 then
+        
+    elseif idx == 2 then
+        
+    elseif idx == 3 then
+        
+    elseif idx == 4 then
+    elseif idx == 5 then
+    elseif idx == 6 then
+        
+    end
     
+end
 

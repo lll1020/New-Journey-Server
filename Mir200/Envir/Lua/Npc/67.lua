@@ -33,7 +33,7 @@ function npc.link(play,npcid,ew,aid,data)
     local json_data = json2tbl(data)
     
 
-    if ew == 1 then -- 福娃猜拳
+    if ew == 1 then -- 
 
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_生肖守护"])
 
@@ -59,6 +59,7 @@ function npc.link(play,npcid,ew,aid,data)
             -- 全部激活，发奖励
             T_data["jl1"] = 1
             Player.setJsonTableByVar(play, VarCfg["T_生肖守护"], T_data)
+            Player.updateSomeAddr(play,nil, {{81,300}})
             Player.giveItemByTable(play, _config.details.jl[1].give or {}, "生肖守护全激活奖励", nil)
             Player.sendmsgEx(play, "恭喜你激活了第一层生肖守护，获得了|生肖守护神#249|奖励#57")
             sendluamsg(play,100,npcid,2,1,"")
@@ -66,6 +67,7 @@ function npc.link(play,npcid,ew,aid,data)
             -- 全部激活，发奖励
             T_data["jl2"] = 1
             Player.setJsonTableByVar(play, VarCfg["T_生肖守护"], T_data)
+            Player.updateSomeAddr(play,nil, {{79,300}})
             Player.giveItemByTable(play, _config.details.jl[2].give or {}, "生肖守护全激活奖励", nil)
             Player.sendmsgEx(play, "恭喜你激活了第二层生肖守护，获得了|生肖守护神#249|奖励#57")
             sendluamsg(play,100,npcid,2,2,"")
@@ -73,6 +75,7 @@ function npc.link(play,npcid,ew,aid,data)
             -- 全部激活，发奖励
             T_data["jl3"] = 1
             Player.setJsonTableByVar(play, VarCfg["T_生肖守护"], T_data)
+            Player.updateSomeAddr(play,nil, {{22,3}})
             Player.giveItemByTable(play, _config.details.jl[3].give or {}, "生肖守护全激活奖励", nil)
             Player.sendmsgEx(play, "恭喜你激活了第三层生肖守护，获得了|生肖守护神#249|奖励#57")
             sendluamsg(play,100,npcid,2,3,"")
@@ -89,6 +92,15 @@ function npc.link(play,npcid,ew,aid,data)
 
     end
 end
+
+function Login_sxsh(play)
+    local T_data = Player.getJsonTableByVar(play, VarCfg["T_生肖守护"])
+    if T_data["jl1"] then Player.updateSomeAddr(play,nil, {{81,300}}) end
+    if T_data["jl2"] then Player.updateSomeAddr(play,nil, {{79,300}}) end
+    if T_data["jl3"] then Player.updateSomeAddr(play,nil, {{22,3}}) end
+    
+end
+GameEvent.add(EventCfg.onLogin, Login_sxsh, "Login_生肖守护")
 
 
 return npc

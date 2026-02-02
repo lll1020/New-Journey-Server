@@ -878,10 +878,11 @@ npc[30] = function(play, p2, p3, data) --砍树系统
             setontimer(play,7,60*20,0,1)
             sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>自动砍树已开启...</font>","Type":9}')
             setplaydef(play,"N$自动砍树",os.time())
-            local tmp_data = {}
-            tmp_data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
-            sendluamsg(play, 101, 30, 0, 0, tbl2json(tmp_data))
-            
+            if p2 == 1 then
+                local tmp_data = {}
+                tmp_data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
+                sendluamsg(play, 101, 30, 0, 0, tbl2json(tmp_data))
+            end
         -- else
         --     Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
         --     setofftimer(play,7)
@@ -1591,7 +1592,7 @@ npc[517] = function(play, p2, p3, msgData) --聚宝盆
         T_data.level = T_data.level or 1
         if T_data.level == 1 then
             local T_sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
-            if T_data["首充"] == 1 or T_data["补充"] == 1 then
+            if T_sc_data["首充"] == 1 or T_sc_data["补充"] == 1 then
                 T_data.level = 2
                 Player.setJsonVarByTable(play, VarCfg["T_聚宝盆"], T_data)
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#28ef01\'>升级成功...</font>","Type":9}' )
