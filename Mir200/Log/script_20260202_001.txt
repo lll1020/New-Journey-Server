@@ -1,0 +1,5 @@
+[2026-02-02 23:42:35:326] LuaNPC:玩家名字 ID:999999999 执行 groupitemonex player:玩家名字 耗时：31; NpcThreadId: 40712, CurPlayThreadId: 40712
+[2026-02-02 23:42:35:504] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：125; NpcThreadId: 40712, CurPlayThreadId: 40712
+
+[2026-02-03 00:02:35:881] LuaNPC:玩家名字 ID:999999999 执行 ontimer7 player:玩家名字 耗时：31; NpcThreadId: 40712, CurPlayThreadId: 40712
+

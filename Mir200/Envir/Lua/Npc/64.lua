@@ -77,14 +77,15 @@ function npc.link(play,npcid,ew,aid,data)
             return
         end
         local Tlg_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
-        if Tlg_data.main and Tlg_data.main == _config.config.ls[json_data.idx].yq[1] and Tlg_data.main == _config.config.ls[json_data.idx].yq[2] then
-            Player.sendmsgEx(play, "你的主灵根与该灵兽的契约灵根冲突，无法出战该灵兽")
-            return
-        end
         T_data.dqzh = json_data.idx
         Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
-        Player.sendmsgEx(play, string.format("你成功出战了灵兽|%s#249|，快去战斗吧！", _config.config.ls[json_data.idx].name))
         Login_lszh(play)
+        if Tlg_data.main and (Tlg_data.main == _config.config.ls[json_data.idx].yq[1] or Tlg_data.main == _config.config.ls[json_data.idx].yq[2]) then
+            Player.sendmsgEx(play, string.format("你成功出战了灵兽|%s#249|，快去战斗吧！", _config.config.ls[json_data.idx].name))
+        else
+            Player.sendmsgEx(play, "你的主灵根与该灵兽的契约灵根冲突，可能无法出战该灵兽,请切换主灵根")
+        end
+        
     elseif ew == 3 then -- 灵兽升级 --喂养
         T_data.ls = T_data.ls or {}
         -- T_data.ls_sp 

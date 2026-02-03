@@ -36,6 +36,14 @@ function npc.link(play,npcid,ew,aid)
         end
         level = level + 1
         local config = _config.details[level]
+        local gl = config.gl
+        if xianfa_has and xianfa_has(play, "无比幸运") then
+            -- 天书仙法无比幸运：提升幸运强化成功率（上限100%）
+            gl = gl + 10
+            if gl > 100 then
+                gl = 100
+            end
+        end
         local name, num = Player.checkItemNumByTable(play, config.cost)
         if name then
             Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
@@ -43,7 +51,7 @@ function npc.link(play,npcid,ew,aid)
         end
         Player.takeItemByTable(play, config.cost, ",幸运强化",nil)
 
-        if FProbabilityHit(config.gl) then
+        if FProbabilityHit(gl) then
             Player.sendmsgEx(play,  "很遗憾，境界提升失败，请继续努力#57")
             return
         end
@@ -77,3 +85,5 @@ GameEvent.add(EventCfg.onLogin, Login_xxqh, "Login_xxqh")
 
 
 return npc
+
+

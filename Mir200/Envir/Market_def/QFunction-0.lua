@@ -137,6 +137,15 @@ function entermap(play)
     if getflagstatus(play, VarCfg.BS_AIgj) == 1 and not getbaseinfo(play, 48) then
         startautoattack(play)
     end
+    -- 切换地图触发：用于刷新天书仙法等模块状态
+    GameEvent.push(EventCfg.goSwitchMap, play)
+end
+-- 进入/离开队伍触发（引擎回调入口）
+function entergroup(play, ...)
+    GameEvent.push(EventCfg.onEnterGroup, play, ...)
+end
+function leavegroup(play, ...)
+    GameEvent.push(EventCfg.onLeaveGroup, play, ...)
 end
 function findpathbegin(actor)
     --寻路自动传送
@@ -161,6 +170,10 @@ function checkdropuseitems(play,item_wz,item_id,bool)
     local zb_dx = linkbodyitem(play,item_wz)
     local dt = getbaseinfo(play, 3)
     if dt == "阵营对抗" or dt == "跨服阵营对抗" or dt == "武林盟主" then
+        return false
+    end
+    -- 天书仙法：守财奴每日一次防掉落
+    if xianfa_check_drop and xianfa_check_drop(play) == false then
         return false
     end
     if getitemaddvalue(play,zb_dx,2,1) ~= 0 then
@@ -555,13 +568,21 @@ function struckdamage(play, Hiter, Target, MagicId, Damage)
         ew = -ew
     end
 
-	local xi = getbaseinfo(play, 51, 206)
-	if xi > 0 then
-		xi = Damage / 10000 * xi
-		sendattackeff(play, 108, xi, "*")
-		xi = -xi
-	end
-    return (Damage + ew + xi) > 0 and (Damage + ew + xi) or 1
+    local xi = getbaseinfo(play, 51, 206)
+    if xi > 0 then
+        xi = Damage / 10000 * xi
+        sendattackeff(play, 108, xi, "*")
+        xi = -xi
+    end
+    local final = Damage + ew + xi
+    -- 天书仙法：双刃剑/诅咒冠冕等被动修正最终伤害
+    if xianfa_struck_adjust then
+        local adj = xianfa_struck_adjust(play, final, Hiter, MagicId)
+        if type(adj) == "number" then
+            final = adj
+        end
+    end
+    return final > 0 and final or 1
 end
 --------------------被攻击后触发-------------------
 function struck(play, Hiter, Target, MagicId)
@@ -691,6 +712,8 @@ function revival(play)
 end
 --------------------杀死玩家触发-------------------
 function killplay(play,hiter)
+    -- 杀人事件：派发给监听模块（如天书仙法）
+    GameEvent.push(EventCfg.onkillplay, play, hiter)
     setplaydef(play,VarCfg.U_srsl,getplaydef(play,VarCfg.U_srsl)+1)
     login_fhsx(play)
 
@@ -726,8 +749,12 @@ function yc_fuhuo_hc(play)
     delaygoto(play, 2000, "ai_qhdt", 0)
 end
 --------------------人物升级触发-------------------
-function playlevelup(play)
-
+function playlevelup(play, level, oldlevel)
+    -- 升级事件：派发给监听模块（如天书仙法）
+    if not level then
+        level = getbaseinfo(play, ConstCfg.gbase.level)
+    end
+    GameEvent.push(EventCfg.onPlayLevelUp, play, level, oldlevel)
 end
 
 --------------------属性改变触发-------------------
@@ -1200,6 +1227,8 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
         end
 	end
 end
+
+
 
 
 

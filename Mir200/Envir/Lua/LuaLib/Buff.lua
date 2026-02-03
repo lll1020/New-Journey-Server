@@ -199,7 +199,43 @@ Buff = {
             setplaydef(play,VarCfg.S_buffgjh,tbl2json(data))
         end
     end,
+    [301] = function(play,zt,Damage,Target,MagicId,Model) --天书仙法攻击触发
+        -- zt=1/2：注册或移除攻击触发；zt=3：攻击回调并返回额外伤害
 
+        if zt == 3 then
+            if xianfa_attack_trigger then
+                return xianfa_attack_trigger(play, Damage, Target, MagicId, Model) or 0
+            end
+            return 0
+        else
+            local bl = getplaydef(play,VarCfg.S_buffgjq)
+            local data = json2tbl(bl == "" and {} or bl)
+            if zt == 1 then
+                data["301"] = true
+            elseif zt == 2 then
+                data["301"] = nil
+            end
+            setplaydef(play,VarCfg.S_buffgjq,tbl2json(data))
+        end
+    end,
+    [302] = function(play,zt) --天书仙法复活触发
+        -- zt=1/2：注册或移除复活触发；zt=4：复活后回调
+
+        if zt == 4 then
+            if xianfa_revive_trigger then
+                xianfa_revive_trigger(play)
+            end
+        else
+            local bl = getplaydef(play,VarCfg.S_bufffuhuo)
+            local data = json2tbl(bl == "" and {} or bl)
+            if zt == 1 then
+                data["302"] = true
+            elseif zt == 2 then
+                data["302"] = nil
+            end
+            setplaydef(play,VarCfg.S_bufffuhuo,tbl2json(data))
+        end
+    end,
     [101] = function(play,zt) --仙食坊全满
         if zt == 1 then
             addattlist(play, "仙食坊全满", "=", "3#1#8888|3#4#588|3#242#3800|3#244#4888", 1)
@@ -400,3 +436,4 @@ function Buff.tuo(play,item)
     end
 end
 return Buff
+

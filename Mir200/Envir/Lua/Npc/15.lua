@@ -37,6 +37,9 @@ function npc.link(play,npcid,ew,aid)
                 addskill(play, skillId, 1)
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[狂暴之力]</font><font color=\'#00ff00\'>恭喜您成功开启狂暴之力</font>","Type":9}')
                 Login_msg(play,3)
+                -- 开启狂暴后触发事件（用于刷新天书仙法等模块）
+                GameEvent.push(EventCfg.goKuangBao, play)
+                GameEvent.push(EventCfg.OpenKuangBao, play)
             else
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[狂暴之力]</font><font color=\'#ff0000\'>您没有100灵石，无法开启</font>","Type":9}')
             end

@@ -73,7 +73,14 @@ ConstCfg = {
         color           = 56, --颜色（0~255）
         fashion         = 58, --时装显示状态(仅人物)  0=不显示 1=显示
         issbk           = 60, --是否在攻城区域(bool)
-        offline         = 61  --是否为离线挂机状态(bool)
+        offline         = 61, --是否为离线挂机状态(bool)
+        mon_custom      = 62, --获取怪物表自定义常量(25列)
+        bag_size        = 63, --人物背包大小
+        body_color      = 64, --获取对象当前的身体颜色值
+        back_map        = 65, --获取对象的回城地图
+        attack_target   = 67, --获取对象的攻击对象
+        owner           = 68, --怪物归属对象
+        dir             = 69  --获取对象当前的方向(新增于引擎64_23.08.30)
     },
     --顶戴位置
     iconWhere = {
@@ -510,3 +517,7 @@ ConstCfg = {
 }
 
 return ConstCfg
+
+
+
+
