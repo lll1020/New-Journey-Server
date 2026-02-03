@@ -1,0 +1,13 @@
+[2026-02-03 19:36:55:540] LuaNPC: ID:999999999 执行 startup player: 耗时：94; NpcThreadId: 45984, CurPlayThreadId: 45984
+
+[2026-02-03 19:37:13:823] LuaNPC:玩家名字 ID:999999999 执行 groupitemonex player:玩家名字 耗时：31; NpcThreadId: 45984, CurPlayThreadId: 45984
+[2026-02-03 19:37:13:964] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：125; NpcThreadId: 45984, CurPlayThreadId: 45984
+
+[2026-02-03 19:42:54:449] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 45984, CurPlayThreadId: 45984
+[2026-02-03 19:42:54:449] [玩家名字]Lua执行耗时过高:31ms msgid:100 24 1 0 
+
+[2026-02-03 19:43:58:125] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：47; NpcThreadId: 45984, CurPlayThreadId: 45984
+[2026-02-03 19:43:58:125] [玩家名字]Lua执行耗时过高:47ms msgid:100 44 1 0 {"action":"harvest","param":{"gridId":1}}
+
+[2026-02-03 23:41:55:598] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：31; NpcThreadId: 45984, CurPlayThreadId: 45984
+

@@ -1660,7 +1660,7 @@ npc[517] = function(play, p2, p3, msgData) --æ€±¶≈Ë
 end
 
 local xlxl =
-    { { 1, 2, 3, 4, 7, 8, 23, 22, 24, 25, 26 }, { 18, 38, 68, 128, 288, 588, 888, 1188, 1588, 1888 }, { 98, 6, 3 } }
+    { { 1, 2, 3, 4, 7, 8, 23, 22, 24, 25, 26 }, constant.cz_je, { 98, 6, 3 } }
 npc[998] = function(play, p2, p3, msg) --∫ÛÃ®
     local qfmz = getconst(play, "<$SERVERNAME>")
     if getplaydef(play, VarCfg.S_houtaibf) ~= "" or (qfmz == "" or qfmz == "≤‚ ‘«¯") then

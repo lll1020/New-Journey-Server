@@ -772,11 +772,11 @@ function sendability(play)
     Player.updata_zdl(play)
 end
 
-local czlb_je = {18,38,68,128,288,588,888,1188,1588,1888}
+local czlb_je = constant.cz_je
 --------------------真充积分改变触发-------------------在线充值礼包筛选
 function moneychange22(play)
     local lb_json,hbsl,jezz = json2tbl(getplaydef(play, VarCfg.T_czlb)),querymoney(play,22),0
-    for i = 1, 10, 1 do
+    for i = 1, #czlb_je, 1 do
         if not lb_json["cz"..i] then
             if jezz + czlb_je[i] <= hbsl then
                 jezz = jezz + czlb_je[i]
@@ -815,52 +815,55 @@ end
 --------------------充值触发-------------------
 function recharge(play, Gold, ProductId, MoneyId, isReal)
     release_print("充值触发","玩家："..getbaseinfo(play,1), "金额："..Gold, "订单:"..ProductId, "货币id:"..MoneyId, "是否真充:"..(isReal and "是" or "否"))
-    setplaydef(play,VarCfg.J_zscz,(getplaydef(play,VarCfg.J_zscz) or 0) + Gold)
-
-    if MoneyId == 7 then   ---灵石充值
-        local lb_json, sy = getplaydef(play, VarCfg.T_czlb), constant.cz_jeyz[Gold]
-        lb_json = lb_json == "" and {} or json2tbl(lb_json)
-        if constant.cz_jeyz[Gold] and getplaydef(play, VarCfg.U_czyz) == constant.cz_jeyz[Gold] and not lb_json["cz" .. sy] then
-            setplaydef(play, VarCfg.U_czyz, 0)
-            if not lb_json["cz" .. sy] then
-                lb_json["cz" .. sy] = true
-                setplaydef(play,VarCfg.T_czlb, tbl2json(lb_json))
-                setplaydef(play,VarCfg.N_lbyz,1)
-                czlb_pz(play,sy)
-            end
-        else
-            changemoney(play,22,"+",Gold,"真充积分",true)
-        end
-        changemoney(play,20,"+",Gold,"平台累计充值",true)
-        changemoney(play,8,"+",Gold*100,"充值送一倍",true)
-        changemoney(play,23,"+",Gold,"累计充值",true)
-        Login_msg(play,18,Gold,Gold*200)
-    elseif MoneyId == 21 then  --直拉礼包
+    local zhid = tonumber(getconst(play,"<$USERACCOUNT>"))
+    if isReal or (constant.pz_htqx[zhid] or getconst(play, '<$SERVERNAME>') == "" or getconst(play, '<$SERVERNAME>') == "测试区") then
         changemoney(play,23,"+",Gold,"平台累计充值",true)
-        if Gold == 98 then
-            if getflagstatus(play,constant.BS_mztq) == 0 then
-                Player.title_give(play, teshudata["anniu_504"].ch,1)
-                Player.rwjl(play, teshudata["anniu_504"].give, "快人一步",1,1000)
-                setflagstatus(play,constant.BS_mztq,1)
+        setplaydef(play,VarCfg.J_zscz,(getplaydef(play,VarCfg.J_zscz) or 0) + Gold)
+        if MoneyId == 7 then   ---灵石充值
+            local lb_json, sy = getplaydef(play, VarCfg.T_czlb), constant.cz_jeyz[Gold]
+            lb_json = lb_json == "" and {} or json2tbl(lb_json)
+            if constant.cz_jeyz[Gold] and getplaydef(play, VarCfg.U_czyz) == constant.cz_jeyz[Gold] and not lb_json["cz" .. sy] then
+                setplaydef(play, VarCfg.U_czyz, 0)
+                if not lb_json["cz" .. sy] then
+                    lb_json["cz" .. sy] = true
+                    setplaydef(play,VarCfg.T_czlb, tbl2json(lb_json))
+                    setplaydef(play,VarCfg.N_lbyz,1)
+                    czlb_pz(play,sy)
+                end
+            else
+                changemoney(play,22,"+",Gold,"真充积分",true)
+            end
+            changemoney(play,20,"+",Gold,"平台累计充值",true)
+            if not isReal then
+                changemoney(play,8,"+",Gold*100,"充值送一倍",true)
+            end
+            Login_msg(play,18,Gold,Gold*100)
+        elseif MoneyId == 21 then  --直拉礼包
+            if Gold == 98 then
+                if getflagstatus(play,constant.BS_mztq) == 0 then
+                    Player.title_give(play, teshudata["anniu_504"].ch,1)
+                    Player.rwjl(play, teshudata["anniu_504"].give, "快人一步",1,1000)
+                    setflagstatus(play,constant.BS_mztq,1)
 
-                local T_data_fj = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
-                T_data_fj.cd = teshudata["anniu_19"].cd/2
-                Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data_fj)
-                --sendluamsg(play,101,504,1,0,"")
-            end
-        elseif Gold == 6 then
-            local T_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
-            if not (T_data["ok"] and T_data["ok"] == 1) and teshudata["anniu_501"].endtime >= getsysvar(VarCfg["G_开区天数"]) then
-                T_data["ok"] = 1
-                T_data["首充"] = 1
-                Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
-            end
-        elseif Gold == 3 then
-            local T_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
-            if not (T_data["ok"] and T_data["ok"] == 1) and teshudata["anniu_501"].endtime < getsysvar(VarCfg["G_开区天数"]) then
-                T_data["ok"] = 1
-                T_data["补充"] = 1
-                Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
+                    local T_data_fj = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
+                    T_data_fj.cd = teshudata["anniu_19"].cd/2
+                    Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data_fj)
+                    --sendluamsg(play,101,504,1,0,"")
+                end
+            elseif Gold == 6 then
+                local T_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
+                if not (T_data["ok"] and T_data["ok"] == 1) and teshudata["anniu_501"].endtime >= getsysvar(VarCfg["G_开区天数"]) then
+                    T_data["ok"] = 1
+                    T_data["首充"] = 1
+                    Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
+                end
+            elseif Gold == 3 then
+                local T_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
+                if not (T_data["ok"] and T_data["ok"] == 1) and teshudata["anniu_501"].endtime < getsysvar(VarCfg["G_开区天数"]) then
+                    T_data["ok"] = 1
+                    T_data["补充"] = 1
+                    Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
+                end
             end
         end
     end
