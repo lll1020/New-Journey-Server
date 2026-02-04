@@ -3,7 +3,7 @@ npc = {}
 
 
 function npc.main(play,npcid)
-    if getbaseinfo(play,48) or true then
+    if getbaseinfo(play,48) then
         local sj = os.time()
         if sj - getplaydef(play,"N$zls") > 10 then
             setplaydef(play,"N$zls",sj)

@@ -36,9 +36,17 @@ function npc.link(play,npcid,ew,aid,data)
         return
     end
 
-    local json_data = json2tbl(data)
+    local json_data = json2tbl(data) or {}
 
     if ew == 1 then -- 做酒水
+
+        local idx = tonumber(json_data.idx)
+        if not idx or not _config.cost or not _config.cost[idx] or not _config.weight or not _config.weight[idx] then
+            Player.sendmsgEx(play, "参数错误#57")
+            return
+        end
+        json_data.idx = idx
+
 
         local curzuiyi = getplaydef(play, VarCfg["J_醉意值"])
         if curzuiyi >= _config.max_zuiyi then
@@ -107,3 +115,4 @@ end
 
 
 return npc
+

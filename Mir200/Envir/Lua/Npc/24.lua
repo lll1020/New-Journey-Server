@@ -149,7 +149,12 @@ function npc.link(play,npcid,ew,aid,data)
                 randomNum = tonumber(randomNum)
             end
 
-            local idx = math.random(1,#cfg.details[randomNum])
+            local list_cfg = cfg.details and cfg.details[randomNum]
+            if not list_cfg or #list_cfg == 0 then
+                Player.sendmsgEx(play, "配置异常，请联系管理员#57")
+                return
+            end
+            local idx = math.random(1, #list_cfg)
             if T_data["caowei"][slot_key] then
                 xianfa_del(play, T_data["caowei"][slot_key][1], T_data["caowei"][slot_key][2])
             end
@@ -979,6 +984,7 @@ end
 GameEvent.add(EventCfg.onTakeOnEx, _onTakeOnEx, "天书初始化")
 
 return npc
+
 
 
 

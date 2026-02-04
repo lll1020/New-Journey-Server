@@ -30,7 +30,7 @@ function npc.link(play,npcid,ew,aid,data)
     if data == "" then
         return
     end
-    local json_data = json2tbl(data)
+    local json_data = json2tbl(data) or {}
     
 
     if ew == 1 then -- ¸£ÍÞ²ÂÈ­
@@ -95,10 +95,13 @@ function npc.link(play,npcid,ew,aid,data)
     elseif ew == 2 then -- ¶Ò»»½±Àø
 
         _config.shop = _config.shop or {}
-        if not json_data.idx or json_data.idx > #_config.shop then
+        local idx = tonumber(json_data.idx)
+        if not idx or idx < 1 or idx > #_config.shop then
+            Player.sendmsgEx(play, "²ÎÊý´íÎó#57")
             return
         end
-        local shopItem = _config.shop[json_data.idx]
+        json_data.idx = idx
+        local shopItem = _config.shop[idx]
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_¸£ÍÞ²ÂÈ­"])
         T_data.wins = T_data.wins or 0
         if T_data.wins < shopItem.win_num then

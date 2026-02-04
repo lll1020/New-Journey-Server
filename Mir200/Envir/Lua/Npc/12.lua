@@ -34,7 +34,12 @@ function npc.link(play, npcid, p2, p3, msgData)
             Player.sendmsgEx(play, "提示:#251|你今天的兑换次数已经用完了...")
             return
         end
-        local config = _config.sd[p3]
+        local idx = tonumber(p3)
+        if not idx or not _config.sd[idx] then
+            Player.sendmsgEx(play, "参数错误#57")
+            return
+        end
+        local config = _config.sd[idx]
         local name, num = Player.checkItemNumByTable(play, config.cost)
         if name then
             Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
@@ -56,3 +61,4 @@ end
 
 
 return npc
+

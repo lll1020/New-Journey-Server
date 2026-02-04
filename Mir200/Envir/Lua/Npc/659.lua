@@ -7,12 +7,18 @@ local _config = Guard.getConfig("npc_659")
 
 
 function npc.main(play,npcid)
+    if not _config then
+        return
+    end
     local data = {}
     data["T_dljq"] = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     sendluamsg(play,100,npcid,0,0,tbl2json(data))
 end
 
 function npc.link(play,npcid,ew,aid,data)
+    if not _config then
+        return
+    end
     -- npc_guard: 入参校验
     if not Guard.ensurePlayer(play, npcid) then
         return
@@ -35,20 +41,20 @@ function npc.link(play,npcid,ew,aid,data)
         local round = jq_data[round_key] or 0
 
         if jq_data[key] and jq_data[key] >= 2 then
-            Player.sendmsgEx(play, "你已经完成了该任务#57")
+            Player.sendmsgEx(play, "你已经完成【"..(_config.name or "该任务").."】#57")
             return
         end
         if round >= 5 then
             jq_data[key] = 2
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-            Player.sendmsgEx(play, "你已经完成了该任务#57")
+            Player.sendmsgEx(play, "你已经完成【"..(_config.name or "该任务").."】#57")
             return
         end
 
         local choice = tonumber(aid)
         if data and data ~= "" then
-            local json_data = json2tbl(data)
-            if json_data and json_data.choice then
+            local ok, json_data = pcall(json2tbl, data)
+            if ok and type(json_data) == "table" and json_data.choice then
                 choice = tonumber(json_data.choice)
             end
         end
@@ -110,7 +116,7 @@ function npc.link(play,npcid,ew,aid,data)
         sendluamsg(play,100,npcid,1,0,tbl2json(send_data))
 
         if jq_data[key] and jq_data[key] >= 2 then
-            Player.sendmsgEx(play, "任务完成#57")
+            Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成#57")
             if _config.ch then
                 Player.title_give(play, _config.ch)
             end
@@ -125,6 +131,9 @@ function npc.link(play,npcid,ew,aid,data)
 end
 
 return npc
+
+
+
 
 
 

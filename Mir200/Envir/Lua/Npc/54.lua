@@ -30,6 +30,12 @@ function npc.link(play, npcid, p2, p3, msgData)
 
     if p2 == 1 then
         local jsonData = json2tbl(msgData)
+        local idx = tonumber(jsonData and jsonData.idx)
+        if not idx or not _config.config[idx] then
+            Player.sendmsgEx(play, "参数错误#57")
+            return
+        end
+        jsonData.idx = idx
         --要求有前置称号
         if not checktitle(play, _config.del_title) then 
             Player.sendmsgEx(play,  "你还未获得称号：|".._config.del_title.."#249|，无法进行高级淬体#57")
@@ -101,7 +107,7 @@ function AllMaxLevel(play)
     local attrs = {}
     local attrsstr = ""
     for i=1,5 do
-        dj_data[""..i] = 10
+        dj_data[""..i] = _config.max_level
         attrs[_config.attrID[i]] = (dj_data[""..i] or 0) * _config.config[i].ratio
     end
     attrsstr = Player.getAttrTableToStr(attrs)

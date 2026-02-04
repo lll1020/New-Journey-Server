@@ -50,7 +50,11 @@ function npc.link(play,npcid,ew,aid,data)
         -- T_data["map_"..J_cs] = _config.details[level].map[math.random(1,#_config.details)]
         -- T_data["level_"..J_cs] = level
         local detail = _config.details[level]
-        local map = detail.map[math.random(1,#detail.map)]
+        if not detail or not detail.map or #detail.map == 0 then
+            Player.sendmsgEx(play, "配置异常，请联系管理员#57")
+            return
+        end
+        local map = detail.map[math.random(1, #detail.map)]
         release_print("藏宝图详情:", tbl2json(detail))
         release_print("藏宝图生成:", tbl2json(map))
 

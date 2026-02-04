@@ -30,6 +30,12 @@ function npc.link(play,npcid,ew,aid)
     end
 
     if ew == 1 then
+        local idx = tonumber(aid)
+        if not idx or not _config.details[idx] or not VarCfg.N_jnsh[idx] then
+            Player.sendmsgEx(play, "????#57")
+            return
+        end
+        aid = idx
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_¼¼ÄÜÉý¼¶"])
         T_data.level = T_data.level or {}
         local skill_level = T_data.level[""..aid] or 0

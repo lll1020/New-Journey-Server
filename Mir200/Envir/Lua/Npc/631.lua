@@ -7,6 +7,9 @@ local _config = Guard.getConfig("npc_631")
 
 
 function npc.main(play,npcid)
+    if not _config then
+        return
+    end
     local data = {}
     data["T_dljq"] = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     data["sg_data"] = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
@@ -14,6 +17,9 @@ function npc.main(play,npcid)
 end
 
 function npc.link(play,npcid,ew,aid)
+    if not _config then
+        return
+    end
     -- npc_guard: 入参校验
     if not Guard.ensurePlayer(play, npcid) then
         return
@@ -34,7 +40,7 @@ function npc.link(play,npcid,ew,aid)
         local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
         local key = "npc_631"
         if jq_data[key] and jq_data[key] >= 2 then
-            Player.sendmsgEx(play, "你已经完成了该任务#57")
+            Player.sendmsgEx(play, "你已经完成【"..(_config.name or "该任务").."】#57")
             return
         end
 
@@ -43,25 +49,26 @@ function npc.link(play,npcid,ew,aid)
         if not jq_data[key] or jq_data[key] == 0 then
             jq_data[key] = 1
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-            Player.sendmsgEx(play, "领取任务")
+            Player.sendmsgEx(play, "领取【"..(_config.name or "任务").."】")
             shaguai.jia(play, _config.shaguai_id or 631)
             sendluamsg(play,101,1005,0,0,"rwjs")
             npc.main(play,npcid)
             return
         end
 
-        local markKey = key.."_s"
-        jq_data[markKey] = jq_data[markKey] or {}
-        for i = 1, #jq_data[markKey] do
-            if jq_data[markKey][i] == aid then
-                Player.sendmsgEx(play, "这个水手已经确认身份了#57")
-                return
-            end
-        end
         local idx = tonumber(aid)
         if not idx or idx < 1 or idx > 4 then
             Player.sendmsgEx(play, "参数异常#57")
             return
+        end
+
+        local markKey = key.."_s"
+        jq_data[markKey] = jq_data[markKey] or {}
+        for i = 1, #jq_data[markKey] do
+            if jq_data[markKey][i] == idx then
+                Player.sendmsgEx(play, "这个水手已经确认身份了#57")
+                return
+            end
         end
 
         local need = (_config.jl_num or 0) * (#jq_data[markKey] + 1)
@@ -76,7 +83,7 @@ function npc.link(play,npcid,ew,aid)
         if #jq_data[markKey] >= 4 then
             jq_data[key] = 2
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-            Player.sendmsgEx(play, "任务完成，内鬼已经找到了#57")
+            Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成，内鬼已经找到了#57")
             if _config.ch then
                 Player.title_give(play, _config.ch)
             end
@@ -93,3 +100,7 @@ function npc.link(play,npcid,ew,aid)
 end
 
 return npc
+
+
+
+

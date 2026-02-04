@@ -27,11 +27,17 @@ function npc.link(play, npcid, p2, p3, msgData)
     if not Guard.ensureActionAllowed(play, npcid, p2, __guardAllowedActions) then
         return
     end
-    local json_data = json2tbl(msgData)
+    local json_data = json2tbl(msgData) or {}
     local T_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     T_data["npc_74"] = T_data["npc_74"] or {}
     T_data["npc_76"] = T_data["npc_76"] or {}
     if p2 == 1 then
+        local idx = tonumber(json_data.idx)
+        if not idx or not _config.details[idx] then
+            Player.sendmsgEx(play, "参数错误#57")
+            return
+        end
+        json_data.idx = idx
         if not (T_data["npc_74"][""..json_data.idx] and T_data["npc_74"][""..json_data.idx] == 1) then
             Player.sendmsgEx(play,  "你未完成前置任务#57")
             return
@@ -68,4 +74,5 @@ end
 
 
 return npc
+
 

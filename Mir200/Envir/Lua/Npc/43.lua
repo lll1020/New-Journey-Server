@@ -34,6 +34,10 @@ function npc.link(play,npcid,ew,aid,data)
             return
         end
         local nextLevel = dj_num + 1
+        if not (_config.cost and _config.cost[nextLevel] and _config.ch and _config.ch[nextLevel]) then
+            Player.sendmsgEx(play, "???????????#57")
+            return
+        end
         local name, num = Player.checkItemNumByTable(play, _config.cost[nextLevel])
         if name then
             Player.sendmsgEx(play, string.format("ÄãµÄ|%s#249|²»×ã|%d#249", name, num))

@@ -104,6 +104,10 @@ function npc.link(play,npcid,ew,aid)
             return
         end
         local config = aid < 6 and _config.main_updata.details.low[T_data.level[""..aid]] or _config.main_updata.details.up[T_data.level[""..aid]]
+        if not config then
+            Player.sendmsgEx(play, "???????????#57")
+            return
+        end
         local name, num = Player.checkItemNumByTable(play, config.cost)
         if name then
             Player.sendmsgEx(play, string.format("ÄãµÄ|%s#249|²»×ã#249", name))

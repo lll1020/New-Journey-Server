@@ -7,6 +7,9 @@ local _config = Guard.getConfig("npc_661")
 
 
 function npc.main(play,npcid)
+    if not _config then
+        return
+    end
     local data = {}
     data["T_dljq"] = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     data["sg_data"] = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
@@ -14,6 +17,9 @@ function npc.main(play,npcid)
 end
 
 function npc.link(play,npcid,ew,aid)
+    if not _config then
+        return
+    end
     -- npc_guard: 入参校验
     if not Guard.ensurePlayer(play, npcid) then
         return
@@ -37,7 +43,7 @@ function npc.link(play,npcid,ew,aid)
         local limit = _config.time or 0
 
         if jq_data[key] and jq_data[key] >= 2 then
-            Player.sendmsgEx(play, "你已经完成了该任务#57")
+            Player.sendmsgEx(play, "你已经完成【"..(_config.name or "该任务").."】#57")
             return
         end
 
@@ -48,7 +54,7 @@ function npc.link(play,npcid,ew,aid)
             sg_data[key] = 0
             Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-            Player.sendmsgEx(play, "领取任务")
+            Player.sendmsgEx(play, "领取【"..(_config.name or "任务").."】")
             if limit and limit > 0 then
                 senddelaymsg(play, "任务剩余时间：%s", limit, 250, 1, "@npc_661_timeout")
             end
@@ -62,7 +68,7 @@ function npc.link(play,npcid,ew,aid)
             if jq_data[key.."_ok"] == 1 then
                 jq_data[key] = 2
                 Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-                Player.sendmsgEx(play, "任务完成")
+                Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成")
                 if _config.ch then
                     Player.title_give(play, _config.ch)
                 end
@@ -85,7 +91,7 @@ function npc.link(play,npcid,ew,aid)
                 return
             end
 
-            Player.sendmsgEx(play, "你还没有完成任务#57")
+            Player.sendmsgEx(play, "你还没有完成【"..(_config.name or "该任务").."】#57")
         end
     end
 end
@@ -99,4 +105,6 @@ end
 
 
 return npc
+
+
 

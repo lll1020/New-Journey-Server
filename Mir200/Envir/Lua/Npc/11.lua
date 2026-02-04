@@ -31,6 +31,13 @@ function npc.link(play, npcid, p2, p3, msgData)
     if p2 == 1 then
         local jsonData = json2tbl(msgData)
 
+        local idx = tonumber(jsonData and jsonData.idx)
+        if not idx or not _config.config[idx] then
+            Player.sendmsgEx(play, "²ÎÊý´íÎó#57")
+            return
+        end
+        jsonData.idx = idx
+
         local dj_data = Player.getJsonTableByVar(play, VarCfg["T_Áé¸ùÐÞÁ¶"])
         dj_data[""..jsonData.idx] = dj_data[""..jsonData.idx] or 0
         if dj_data[""..jsonData.idx] >= _config.max_level then

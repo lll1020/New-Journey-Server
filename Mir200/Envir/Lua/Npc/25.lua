@@ -31,7 +31,7 @@ function npc.link(play,npcid,ew,aid)
     if ew == 1 then
         local level = getplaydef(play, VarCfg["U_幸运强化"])
         if level >= _config.max_level then
-            Player.sendmsgEx(play,  "你的境界已经达到了"..level.."级，无需再提升")
+            Player.sendmsgEx(play,  "你的幸运强化已经达到了"..level.."级，无需再提升")
             return
         end
         level = level + 1
@@ -52,12 +52,12 @@ function npc.link(play,npcid,ew,aid)
         Player.takeItemByTable(play, config.cost, ",幸运强化",nil)
 
         if FProbabilityHit(gl) then
-            Player.sendmsgEx(play,  "很遗憾，境界提升失败，请继续努力#57")
+            Player.sendmsgEx(play,  "很遗憾，幸运强化失败，请继续努力#57")
             return
         end
 
         setplaydef(play, VarCfg["U_幸运强化"], level)
-        Player.sendmsgEx(play,  "恭喜你，境界提升成功，当前境界等级为"..level.."级")
+        Player.sendmsgEx(play,  "恭喜你，幸运强化成功，当前等级为"..level.."级")
         sendluamsg(play,100,npcid,1,0,"")
         delattlist(play, "幸运强化")
         Login_xxqh(play)
@@ -85,5 +85,6 @@ GameEvent.add(EventCfg.onLogin, Login_xxqh, "Login_xxqh")
 
 
 return npc
+
 
 

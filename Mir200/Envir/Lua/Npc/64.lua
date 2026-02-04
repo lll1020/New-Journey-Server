@@ -30,8 +30,17 @@ function npc.link(play,npcid,ew,aid,data)
     if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
         return
     end
-    local json_data = json2tbl(data)
+    local json_data = json2tbl(data) or {}
     local T_data = Player.getJsonTableByVar(play, VarCfg["T_¡È ﬁ"])
+
+    if ew ~= 1 then
+        local idx = tonumber(json_data.idx)
+        if not idx or not _config.config or not _config.config.ls or not _config.config.ls[idx] then
+            Player.sendmsgEx(play, "????#57")
+            return
+        end
+        json_data.idx = idx
+    end
 
     if ew == 1 then -- ≥È»°¡È ﬁ
         local name, num = Player.checkItemNumByTable(play, _config.cost)

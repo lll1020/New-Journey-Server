@@ -27,6 +27,12 @@ function npc.link(play, npcid, p2, p3, msgData)
     end
 
     if p2 == 1 then
+        local idx = tonumber(p3)
+        if not idx or not _config.where[idx] or not _config.config[idx] then
+            Player.sendmsgEx(play, "参数错误#57")
+            return
+        end
+        p3 = idx
         local equipLevel = Player.getEquipFieldByPos(play, _config.where[p3], 1) or 0
         if equipLevel == 0 then
             Player.sendmsgEx(play,  "请先装备#57")

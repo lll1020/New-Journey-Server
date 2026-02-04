@@ -26,6 +26,10 @@ function npc.link(play,npcid,ew,aid,data)
     end
 
     if ew == 1 then --
+        if not (_config.now and _config.cost and _config.give) then
+            Player.sendmsgEx(play, "配置异常，请联系管理员#57")
+            return
+        end
         local equipname = Player.getEquipNameByPos(play, _config.where)
         if equipname ~= _config.now then
             Player.sendmsgEx(play, "请先装备".._config.now.."#249|进行升级#57")

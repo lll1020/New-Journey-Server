@@ -6,10 +6,16 @@ npc = {}
 local _config = Guard.getConfig("npc_601")
 
 function npc.main(play,npcid)
+    if not _config then
+        return
+    end
     sendluamsg(play,100,npcid,0,0,"")
 end
 
 function npc.link(play,npcid,ew,aid)
+    if not _config then
+        return
+    end
     -- npc_guard: 入参校验
     if not Guard.ensurePlayer(play, npcid) then
         return
@@ -26,6 +32,10 @@ function npc.link(play,npcid,ew,aid)
     end
 
     if ew == 1 then
+        if not (_config.cost and _config.details and _config.details.ch) then
+            Player.sendmsgEx(play, "配置缺失#57")
+            return
+        end
         if not checktitle(play, _config.details.ch) then
             local name, num = Player.checkItemNumByTable(play, _config.cost)
             if name then
@@ -46,3 +56,4 @@ function npc.link(play,npcid,ew,aid)
 end
 
 return npc
+

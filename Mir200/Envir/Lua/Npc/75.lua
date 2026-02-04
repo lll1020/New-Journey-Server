@@ -25,8 +25,14 @@ function npc.link(play, npcid, p2, p3, msgData)
     if not Guard.ensureActionAllowed(play, npcid, p2, __guardAllowedActions) then
         return
     end
-    local json_data = json2tbl(msgData)
+    local json_data = json2tbl(msgData) or {}
     if p2 == 1 then
+        local idx = tonumber(json_data.idx)
+        if not idx or not _config.details[idx] then
+            Player.sendmsgEx(play, "²ÎÊý´íÎó#57")
+            return
+        end
+        json_data.idx = idx
         if json_data.idx < 1 or json_data.idx > #_config.details then
             return
         end
@@ -56,4 +62,5 @@ end
 
 
 return npc
+
 

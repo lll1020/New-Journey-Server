@@ -101,11 +101,10 @@ local function _Castlewaract()
     end
     local player_list = getplayerlst(1)
     for i, actor in ipairs(player_list) do
-        if checkkuafu(actor) then --跨服中不使用这个
-            return
+        if not checkkuafu(actor) then --跨服中不使用这个
+            --没三秒执行一次
+            setontimer(actor, 2, 3, 0, 1)
         end
-        --没三秒执行一次
-        setontimer(actor, 2, 3, 0, 1)
     end
 end
 
@@ -113,10 +112,9 @@ end
 local function _Castlewarend()
     local player_list = getplayerlst()
     for i, actor in ipairs(player_list) do
-        if checkkuafu(actor) then  --跨服中不使用这个
-            return
+        if not checkkuafu(actor) then  --跨服中不使用这个
+            setofftimer(actor, 2)
         end
-        setofftimer(actor, 2)
     end
     if checkkuafuserver() then
         setofftimerex(2)

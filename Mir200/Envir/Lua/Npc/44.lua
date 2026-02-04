@@ -17,6 +17,7 @@ local DecorateplaceCfg = _config.DecorateplaceCfg or {}
 local TitleCfg = _config.TitleCfg or {}
 local PetCfg = _config.PetCfg or {}
 local ShopCfg = _config.ShopCfg or {}
+local maxShopBuy = _config.shopMaxBuy or 9999
 local RankCfg = _config.RankCfg or {}
 local visitorLimit = _config.visitorLogLimit or 20
 local gridSize = _config.gridSize or 9
@@ -317,6 +318,9 @@ local Planting = {}
 
 function Planting.plant(play, record, params, now)
     local gridId = tonumber(params.gridId)
+    if not gridId or gridId < 1 or gridId > gridSize then
+        return false, "?????"
+    end
     local seedId = params.seedId
     local cfg = PlantCfg[seedId]
     if not cfg then

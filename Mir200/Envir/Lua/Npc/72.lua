@@ -29,9 +29,16 @@ function npc.link(play, npcid, p2, p3, msgData)
     end
 
     if p2 == 1 then
-        local jsonData = json2tbl(msgData)
+        local jsonData = json2tbl(msgData) or {}
 
         
+        local idx = tonumber(jsonData.idx)
+        if not idx or not _config.config or not _config.config[idx] then
+            Player.sendmsgEx(play, "参数错误#57")
+            return
+        end
+        jsonData.idx = idx
+
         local equipLevel = Player.getEquipFieldByPos(play, _config.where, 1) or 0
         
         if equipLevel == 0 then
@@ -129,3 +136,4 @@ GameEvent.add(EventCfg.onTakeOnEx, _onTakeOnEx, "时光之杖附加属性")
 
 
 return npc
+

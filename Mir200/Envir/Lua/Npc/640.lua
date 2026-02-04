@@ -276,12 +276,18 @@ local function parseMove(aid, data)
 end
 
 function npc.main(play, npcid)
+    if not _config then
+        return
+    end
     local data = {}
     data["T_dljq"] = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     sendluamsg(play, 100, npcid, 0, 0, tbl2json(data))
 end
 
 function npc.link(play, npcid, ew, aid, data)
+    if not _config then
+        return
+    end
     -- npc_guard: 入参校验
     if not Guard.ensurePlayer(play, npcid) then
         return
@@ -409,5 +415,6 @@ function npc.link(play, npcid, ew, aid, data)
 end
 
 return npc
+
 
 

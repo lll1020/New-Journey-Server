@@ -7,6 +7,9 @@ local _config = Guard.getConfig("npc_647")
 
 
 function npc.main(play,npcid)
+    if not _config then
+        return
+    end
     local data = {}
     data["T_dljq"] = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
@@ -14,6 +17,9 @@ function npc.main(play,npcid)
 end
 
 function npc.link(play,npcid,ew,aid)
+    if not _config then
+        return
+    end
     -- npc_guard: 入参校验
     if not Guard.ensurePlayer(play, npcid) then
         return
@@ -33,7 +39,7 @@ function npc.link(play,npcid,ew,aid)
         local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
         local key = "npc_647"
         if jq_data[key] and jq_data[key] >= 2 then
-            Player.sendmsgEx(play, "你已经完成了该任务#57")
+            Player.sendmsgEx(play, "你已经完成【"..(_config.name or "该任务").."】#57")
             return
         end
 
@@ -55,14 +61,16 @@ function npc.link(play,npcid,ew,aid)
         end
         jq_data[key] = 2
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, "任务完成")
+        Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成")
         sendluamsg(play,101,1005,0,0,"rwwc")
         Player.rwjl(play, _config.rwjl or {{"元宝",1},{"金币",1}}, (_config.name or "剧情任务").."奖励", 1)
         local itemobj = linkbodyitem(play,where)
         local item_json = getitemcustomabil(play, itemobj)
         release_print(item_json)
-        item_json = json2tbl(item_json)
-        if item_json then
+        local ok, parsed = pcall(json2tbl, item_json)
+
+        item_json = ok and parsed or nil
+        if not item_json or not item_json.abil then
             item_json = json2tbl('{"abil":[{"i":0,"t":"[九九八十难]","c":251,"v":[]}],"name":""}')
         end
         item_json.abil[1].v[4] = {1,30,5,1,16,4,4}
@@ -73,5 +81,9 @@ function npc.link(play,npcid,ew,aid)
 end
 
 return npc
+
+
+
+
 
 

@@ -30,10 +30,13 @@ function npc.link(play,npcid,ew,aid,data)
         if data == "" then
             return
         end
-        local json_data = json2tbl(data)
-        if not json_data.idx or json_data.idx > #_config.config then
+        local json_data = json2tbl(data) or {}
+        local idx = tonumber(json_data.idx)
+        if not idx or idx < 1 or idx > #_config.config then
+            Player.sendmsgEx(play, "参数错误#57")
             return
         end
+        json_data.idx = idx
         local name, num = Player.checkItemNumByTable(play, _config.config[json_data.idx].cost or {})
         if name then
             Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))

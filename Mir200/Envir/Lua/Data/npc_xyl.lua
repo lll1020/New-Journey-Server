@@ -24,23 +24,42 @@ local function _xyl_build_name_map()
 end
 
 local function _xyl_get_npc_key(name)
-    if not _xyl_name_map then
-        _xyl_name_map = _xyl_build_name_map()
+    if not name then
+        return nil
     end
-    return _xyl_name_map[_xyl_norm_name(name)]
+    local v = tostring(name)
+    if v:match("^npc_%d+$") then
+        return v
+    end
+    return nil
 end
 
+-- 备注：通用剧情完成判定（读取 T_dljq，优先称号，其次次数/完成标记）
 local function _xyl_check_story(play, name)
     local key = _xyl_get_npc_key(name)
     if not key then
         return false
     end
+    local cfg = teshudata and teshudata[key]
+    local max_num = cfg and cfg.max_num
+    if cfg and cfg.ch and checktitle(play, cfg.ch) then
+        return true
+    end
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     local node = jq_data[key]
     if type(node) == "number" then
+        if max_num and max_num > 0 then
+            return node >= max_num
+        end
         return node >= 2
     end
     if type(node) == "table" then
+        if max_num and max_num > 0 then
+            local cnt = node.cnt or node.num
+            if tonumber(cnt) then
+                return tonumber(cnt) >= max_num
+            end
+        end
         if node.wc and node.wc >= 1 then
             return true
         end
@@ -57,6 +76,7 @@ local function _xyl_check_story(play, name)
     return false
 end
 
+-- 备注：是否已拥有指定称号
 local function _xyl_has_title(play, title)
     if not title or title == "" then
         return false
@@ -64,6 +84,7 @@ local function _xyl_has_title(play, title)
     return checktitle(play, title)
 end
 
+-- 备注：背包道具数量是否满足
 local function _xyl_has_item(play, name, count)
     if not name or name == "" then
         return false
@@ -72,6 +93,7 @@ local function _xyl_has_item(play, name, count)
     return not miss
 end
 
+-- 备注：列表内任意道具满足即可
 local function _xyl_has_any_item(play, list)
     if type(list) ~= "table" then
         return false
@@ -84,6 +106,7 @@ local function _xyl_has_any_item(play, list)
     return false
 end
 
+-- 备注：指定部位是否装备指定名称物品
 local function _xyl_has_equip_named(play, where, name)
     if not where or not name then
         return false
@@ -92,11 +115,13 @@ local function _xyl_has_equip_named(play, where, name)
     return equipName == name
 end
 
+-- 备注：天书等级是否达到 1 级
 local function _xyl_has_tianshu_level(play)
     local data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
     return (data.level or 0) >= 1
 end
 
+-- 备注：天书是否已配置任意仙法
 local function _xyl_has_any_xianfa(play)
     local data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
     local caowei = data.caowei or {}
@@ -113,6 +138,7 @@ local function _xyl_has_any_xianfa(play)
     return false
 end
 
+-- 备注：天书是否拥有红色仙法
 local function _xyl_has_red_xianfa(play)
     local data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
     local caowei = data.caowei or {}
@@ -124,6 +150,7 @@ local function _xyl_has_red_xianfa(play)
     return false
 end
 
+-- 备注：任意装备强化等级 > 0
 local function _xyl_has_equip_strength(play)
     local cfg = teshudata and teshudata["npc_28"]
     if not (cfg and cfg.where) then
@@ -141,6 +168,7 @@ local function _xyl_has_equip_strength(play)
     return false
 end
 
+-- 备注：灵根喂养任意等级 > 0
 local function _xyl_has_linggen_feed(play)
     local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
     local levels = data.level or {}
@@ -152,28 +180,59 @@ local function _xyl_has_linggen_feed(play)
     return false
 end
 
+-- 备注：幸运强化次数是否大于 0
 local function _xyl_has_lucky_upgrade(play)
     return (getplaydef(play, VarCfg["U_幸运强化"]) or 0) > 0
 end
 
+-- 备注：气运占卜次数是否大于 0
 local function _xyl_has_divination(play)
     return (getplaydef(play, VarCfg["U_占卜次数"]) or 0) > 0
 end
 
+-- 备注：转生等级是否达到指定等级
 local function _xyl_has_rebirth(play, level)
     return (getplaydef(play, VarCfg["U_转生等级"]) or 0) >= (level or 1)
 end
 
+-- 备注：判断斗笠低阶名称（低阶不算完成传说/更高）
+local function _xyl_is_lower_hat_name(name)
+    if not name or name == "" then
+        return false
+    end
+    if name == "江湖·斗笠" then
+        return true
+    end
+    return name:match("^斗笠%[lv%d+%]$") ~= nil
+end
+
+-- 备注：判断葫芦低阶名称（低阶不算完成神/更高）
+local function _xyl_is_lower_gourd_name(name)
+    if not name or name == "" then
+        return false
+    end
+    if name == "真·酒葫芦" then
+        return true
+    end
+    return name:match("^酒葫芦%[lv%d+%]$") ~= nil
+end
+
+-- 备注：是否拥有传说神石类道具
 local function _xyl_has_legendary_stone(play)
     local cfg = teshudata and teshudata["npc_53"]
     local list = cfg and cfg.cost and cfg.cost[3]
     return _xyl_has_any_item(play, list)
 end
 
+-- 备注：传说斗笠（装备或背包）是否拥有（上位斗笠也视为完成）
 local function _xyl_has_legendary_hat(play)
     local cfg = teshudata and teshudata["npc_51"]
     if cfg and cfg.where and cfg.give then
-        if _xyl_has_equip_named(play, cfg.where, cfg.give) then
+        local equipName = Player.getEquipNameByPos(play, cfg.where)
+        if equipName == cfg.give then
+            return true
+        end
+        if equipName and equipName:find("斗笠") and not _xyl_is_lower_hat_name(equipName) then
             return true
         end
         return _xyl_has_item(play, cfg.give, 1)
@@ -181,17 +240,22 @@ local function _xyl_has_legendary_hat(play)
     return false
 end
 
+-- 备注：神酒葫芦（装备或背包）是否拥有（上位葫芦也视为完成）
 local function _xyl_has_god_gourd(play)
     local cfg = teshudata and teshudata["npc_52"]
     if cfg and cfg.where and cfg.give then
-        if _xyl_has_equip_named(play, cfg.where, cfg.give) then
+        local equipName = Player.getEquipNameByPos(play, cfg.where)
+        if equipName == cfg.give then
+            return true
+        end
+        if equipName and equipName:find("葫芦") and not _xyl_is_lower_gourd_name(equipName) then
             return true
         end
         return _xyl_has_item(play, cfg.give, 1)
     end
     return false
 end
-
+-- 备注：高级淬体是否全完成（或已有称号）
 local function _xyl_has_advanced_quench(play)
     local cfg = teshudata and teshudata["npc_54"]
     if cfg and cfg.title and _xyl_has_title(play, cfg.title) then
@@ -210,11 +274,13 @@ local function _xyl_has_advanced_quench(play)
     return true
 end
 
+-- 备注：仙府是否已开启（有数据记录）
 local function _xyl_has_xianfu_open(play)
     local data = Player.getJsonTableByVar(play, VarCfg.T_XianFuData)
     return next(data or {}) ~= nil
 end
 
+-- 备注：仙府炼制是否有记录
 local function _xyl_has_xianfu_refine(play)
     local data = Player.getJsonTableByVar(play, VarCfg.T_XianFuData)
     local refine = data and data.refine and data.refine.collection
@@ -226,6 +292,7 @@ local function _xyl_has_xianfu_refine(play)
     return false
 end
 
+-- 备注：仙府种植或药草是否有记录
 local function _xyl_has_xianfu_plant(play)
     local data = Player.getJsonTableByVar(play, VarCfg.T_XianFuData)
     local fields = data and data.fields
@@ -247,15 +314,18 @@ local function _xyl_has_xianfu_plant(play)
     return false
 end
 
+-- 备注：砍树系统是否有数据记录
 local function _xyl_has_tree(play)
     local data = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
     return next(data or {}) ~= nil
 end
 
+-- 备注：藏宝图累计完成次数 > 0
 local function _xyl_has_treasure(play)
-    return (getplaydef(play, VarCfg["J_今日藏宝图次数"]) or 0) > 0
+    return (getplaydef(play, VarCfg["U_藏宝图次数"]) or 0) > 0
 end
 
+-- 备注：灵兽全星级是否达到指定等级
 local function _xyl_has_lingshou_star(play, star)
     local cfg = teshudata and teshudata["npc_64"]
     local count = 0
@@ -275,6 +345,7 @@ local function _xyl_has_lingshou_star(play, star)
     return true
 end
 
+-- 备注：是否拥有【唐代】古玩类道具
 local function _xyl_has_tang_antique(play)
     local cfg = teshudata and teshudata["npc_65"]
     if not (cfg and cfg.config) then
@@ -291,6 +362,7 @@ local function _xyl_has_tang_antique(play)
     return _xyl_has_any_item(play, list)
 end
 
+-- 备注：生肖守护是否全激活
 local function _xyl_has_shengxiao_guard(play)
     local data = Player.getJsonTableByVar(play, VarCfg["T_生肖守护"])
     if data["jl_all"] and data["jl_all"] == 1 then
@@ -304,6 +376,7 @@ local function _xyl_has_shengxiao_guard(play)
     return true
 end
 
+-- 备注：剧情点验证入口（优先特殊逻辑，其次剧情完成）
 local function _xyl_check_task(play, name)
     local key = _xyl_norm_name(name)
     local special = {
@@ -340,7 +413,7 @@ local function _xyl_check_task(play, name)
             return cfg and _xyl_has_title(play, cfg.ch)
         end,
         ["兵道之谜"] = function(play)
-            return _xyl_check_story(play, "古刹之谜")
+            return _xyl_check_story(play, "npc_609")
         end,
     }
     if special[key] then
@@ -349,34 +422,43 @@ local function _xyl_check_task(play, name)
     return _xyl_check_story(play, key)
 end
 local npc_xyl = {
+    {},
     {
         {
             jq = {
                 {
                     "扫荡野火帮（剧）",
+                    tk = "npc_603",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "扫荡野火帮（剧）")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "直面扫荡野火帮，化解其中隐患",
                 },
                 {
                     "剿灭恶徒（剧）",
+                    tk = "npc_604",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "剿灭恶徒（剧）")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏入剿灭恶徒，循迹而行",
                 },
                 {
                     "天书强化",
@@ -389,7 +471,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "直面天书强化，化解其中隐患",
                 },
                 {
                     "初识仙法",
@@ -402,7 +484,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "历经初识仙法，收获机缘",
                 },
             },
             name = "初入江湖",
@@ -415,42 +497,54 @@ local npc_xyl = {
             jq = {
                 {
                     "杀伐之路（剧）",
+                    tk = "npc_605",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "杀伐之路（剧）")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏入杀伐之路，循迹而行",
                 },
                 {
                     "讨伐夜魔（剧）",
+                    tk = "npc_606",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "讨伐夜魔（剧）")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "闯过讨伐夜魔，证我道途",
                 },
                 {
                     "装备强化",
+                    tk = "npc_28",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "装备强化")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "于装备强化中磨砺，道心更稳",
                 },
                 {
                     "喂养灵根",
@@ -463,7 +557,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "历经喂养灵根，收获机缘",
                 },
             },
             name = "小试牛刀",
@@ -476,42 +570,54 @@ local npc_xyl = {
             jq = {
                 {
                     "修复轩辕剑（剧）",
+                    tk = "npc_601",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "修复轩辕剑（剧）")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "于修复轩辕剑中磨砺，道心更稳",
                 },
                 {
                     "深入野火（剧）",
+                    tk = "npc_607",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "深入野火（剧）")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "探访深入野火，揭开真相",
                 },
                 {
                     "守护森林（剧）",
+                    tk = "npc_608",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "守护森林（剧）")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "行走守护森林，破除迷障",
                 },
                 {
                     "兵道之谜（剧）",
@@ -524,7 +630,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "前往兵道之谜，探寻其中机缘",
                 },
                 {
                     "幸运增幅",
@@ -537,7 +643,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "历经幸运增幅，收获机缘",
                 },
                 {
                     "气运占卜",
@@ -550,7 +656,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "闯过气运占卜，证我道途",
                 },
                 {
                     "转生·二",
@@ -563,7 +669,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏入转生·二，循迹而行",
                 },
             },
             name = "漫漫仙途",
@@ -587,7 +693,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "深入拥有1传说神石，寻回失落线索",
                 },
                 {
                     "转生·三",
@@ -600,7 +706,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "历经转生·三，收获机缘",
                 },
                 {
                     "传说·斗笠",
@@ -613,7 +719,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "深入传说·斗笠，寻回失落线索",
                 },
                 {
                     "神·酒葫芦",
@@ -626,20 +732,24 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏入神·酒葫芦，循迹而行",
                 },
                 {
                     "高级淬体",
+                    tk = "npc_53",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "高级淬体")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏入高级淬体，循迹而行",
                 },
             },
             name = "苍云秘闻",
@@ -661,7 +771,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏入开辟仙府（主城NPC，循迹而行",
                 },
                 {
                     "炼制丹药",
@@ -674,7 +784,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "闯过炼制丹药，证我道途",
                 },
                 {
                     "了解砍树",
@@ -687,7 +797,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "行走了解砍树，破除迷障",
                 },
                 {
                     "种植仙草",
@@ -700,7 +810,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "闯过种植仙草，证我道途",
                 },
                 {
                     "寻宝大师",
@@ -713,7 +823,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "行走寻宝大师，破除迷障",
                 },
             },
             name = "初入苍云",
@@ -726,55 +836,71 @@ local npc_xyl = {
             jq = {
                 {
                     "杀戮的欲望",
+                    tk = "npc_634",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "杀戮的欲望")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "直面杀戮的欲望，化解其中隐患",
                 },
                 {
                     "沉船之谜",
+                    tk = "npc_629",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "沉船之谜")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "直面沉船之谜，化解其中隐患",
                 },
                 {
                     "船长的宝藏",
+                    tk = "npc_630",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "船长的宝藏")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏破船长的宝藏，守护一方安宁",
                 },
                 {
                     "谁是内鬼",
+                    tk = "npc_631",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "谁是内鬼")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "历经谁是内鬼，收获机缘",
                 },
             },
             name = "外海之旅",
@@ -787,68 +913,88 @@ local npc_xyl = {
             jq = {
                 {
                     "送葬者",
+                    tk = "npc_635",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "送葬者")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "闯过送葬者，证我道途",
                 },
                 {
                     "热血的友情",
+                    tk = "npc_636",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "热血的友情")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "直面热血的友情，化解其中隐患",
                 },
                 {
                     "真正的海贼王",
+                    tk = "npc_637",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "真正的海贼王")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "深入真正的海贼王，寻回失落线索",
                 },
                 {
                     "海滩拾贝",
+                    tk = "npc_632",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "海滩拾贝")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "直面海滩拾贝，化解其中隐患",
                 },
                 {
                     "海盗宝藏",
+                    tk = "npc_633",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "海盗宝藏")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "深入海盗宝藏，寻回失落线索",
                 },
             },
             name = "内海探秘",
@@ -861,42 +1007,54 @@ local npc_xyl = {
             jq = {
                 {
                     "采仙草咯",
+                    tk = "npc_638",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "采仙草咯")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "于采仙草咯中磨砺，道心更稳",
                 },
                 {
                     "丹仙秘辛",
+                    tk = "npc_639",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "丹仙秘辛")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "行走丹仙秘辛，破除迷障",
                 },
                 {
                     "棋痴老王",
+                    tk = "npc_640",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "棋痴老王")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "前往棋痴老王，探寻其中机缘",
                 },
             },
             name = "平步青云",
@@ -909,120 +1067,156 @@ local npc_xyl = {
             jq = {
                 {
                     "灾厄入侵",
+                    tk = "npc_46",
                     id = 999,
                     jl = {},
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "灾厄入侵")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏入灾厄入侵，循迹而行",
                 },
                 {
                     "讨伐嘲灾",
+                    tk = "npc_625",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "讨伐嘲灾")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏破讨伐嘲灾，守护一方安宁",
                 },
                 {
                     "讨伐忌灾",
+                    tk = "npc_626",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "讨伐忌灾")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "深入讨伐忌灾，寻回失落线索",
                 },
                 {
                     "讨伐息灾",
+                    tk = "npc_627",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "讨伐息灾")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "探访讨伐息灾，揭开真相",
                 },
                 {
                     "讨伐妄灾",
+                    tk = "npc_628",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "讨伐妄灾")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏破讨伐妄灾，守护一方安宁",
                 },
                 {
                     "踏入·虚妄山脉",
+                    tk = "npc_621",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "踏入·虚妄山脉")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "行走踏入·虚妄山脉，破除迷障",
                 },
                 {
                     "踏入·叹息旷野",
+                    tk = "npc_622",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "踏入·叹息旷野")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏入踏入·叹息旷野，循迹而行",
                 },
                 {
                     "踏入·鬼嘲深渊",
+                    tk = "npc_623",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "踏入·鬼嘲深渊")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "闯过踏入·鬼嘲深渊，证我道途",
                 },
                 {
                     "踏入·禁忌之海",
+                    tk = "npc_624",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "踏入·禁忌之海")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "于踏入·禁忌之海中磨砺，道心更稳",
                 },
             },
             name = "灭世灾厄",
@@ -1046,7 +1240,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "前往灵兽全一星，探寻其中机缘",
                 },
                 {
                     "灵兽全二星",
@@ -1059,7 +1253,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "前往灵兽全二星，探寻其中机缘",
                 },
                 {
                     "灵兽全三星",
@@ -1072,7 +1266,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏入灵兽全三星，循迹而行",
                 },
                 {
                     "唐代古玩",
@@ -1085,7 +1279,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏破唐代古玩，守护一方安宁",
                 },
                 {
                     "红色仙法",
@@ -1098,7 +1292,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "闯过红色仙法，证我道途",
                 },
                 {
                     "转生·四",
@@ -1111,7 +1305,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "探访转生·四，揭开真相",
                 },
             },
             name = "若水秘闻",
@@ -1133,85 +1327,109 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "前往捉鬼人，探寻其中机缘",
                 },
                 {
                     "买路钱",
+                    tk = "npc_667",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "买路钱")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏入买路钱，循迹而行",
                 },
                 {
                     "思念之人",
+                    tk = "npc_668",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "思念之人")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "探访思念之人，揭开真相",
                 },
                 {
                     "忘却前生情",
+                    tk = "npc_669",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "忘却前生情")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "行走忘却前生情，破除迷障",
                 },
                 {
                     "讨伐六天宫",
+                    tk = "npc_670",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "讨伐六天宫")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "历经讨伐六天宫，收获机缘",
                 },
                 {
                     "地狱使者",
+                    tk = "npc_671",
                     id = 999,
                     jl = { { "剧情点", 3 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "地狱使者")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "历经地狱使者，收获机缘",
                 },
                 {
                     "轮回之路",
+                    tk = "npc_672",
                     id = 999,
                     jl = { { "剧情点", 3 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "轮回之路")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "深入轮回之路，寻回失落线索",
                 },
             },
             name = "地府探秘",
@@ -1224,120 +1442,156 @@ local npc_xyl = {
             jq = {
                 {
                     "资格考验",
+                    tk = "npc_642",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "资格考验")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "直面资格考验，化解其中隐患",
                 },
                 {
                     "龙王的噩梦",
+                    tk = "npc_643",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "龙王的噩梦")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "探访龙王的噩梦，揭开真相",
                 },
                 {
                     "我的袈裟！",
+                    tk = "npc_644",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "我的袈裟！")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "探访我的袈裟！，揭开真相",
                 },
                 {
                     "黄风大圣",
+                    tk = "npc_645",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "黄风大圣")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "于黄风大圣中磨砺，道心更稳",
                 },
                 {
                     "你竟是女王？",
+                    tk = "npc_646",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "你竟是女王？")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "直面你竟是女王？，化解其中隐患",
                 },
                 {
                     "驮我过河",
+                    tk = "npc_647",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "驮我过河")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "直面驮我过河，化解其中隐患",
                 },
                 {
                     "大闹狮驼岭",
+                    tk = "npc_648",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "大闹狮驼岭")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "前往大闹狮驼岭，探寻其中机缘",
                 },
                 {
                     "真假经书",
+                    tk = "npc_649",
                     id = 999,
                     jl = { { "剧情点", 3 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "真假经书")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "历经真假经书，收获机缘",
                 },
                 {
                     "重走西游路",
+                    tk = "npc_641",
                     id = 999,
                     jl = {},
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "重走西游路")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "直面重走西游路，化解其中隐患",
                 },
             },
             name = "重走西游",
@@ -1350,68 +1604,88 @@ local npc_xyl = {
             jq = {
                 {
                     "天鼠的游戏",
+                    tk = "npc_651",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "天鼠的游戏")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏入天鼠的游戏，循迹而行",
                 },
                 {
                     "天牛的游戏",
+                    tk = "npc_652",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "天牛的游戏")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "历经天牛的游戏，收获机缘",
                 },
                 {
                     "天虎的游戏",
+                    tk = "npc_653",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "天虎的游戏")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏破天虎的游戏，守护一方安宁",
                 },
                 {
                     "天兔的游戏",
+                    tk = "npc_654",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "天兔的游戏")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "深入天兔的游戏，寻回失落线索",
                 },
                 {
                     "灵域使者·一",
+                    tk = "npc_663",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "灵域使者·一")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "历经灵域使者·一，收获机缘",
                 },
             },
             name = "生肖守护[始]",
@@ -1424,68 +1698,88 @@ local npc_xyl = {
             jq = {
                 {
                     "天龙的游戏",
+                    tk = "npc_655",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "天龙的游戏")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "前往天龙的游戏，探寻其中机缘",
                 },
                 {
                     "天蛇的游戏",
+                    tk = "npc_656",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "天蛇的游戏")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "探访天蛇的游戏，揭开真相",
                 },
                 {
                     "天马的游戏",
+                    tk = "npc_657",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "天马的游戏")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏破天马的游戏，守护一方安宁",
                 },
                 {
                     "天羊的游戏",
+                    tk = "npc_658",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "天羊的游戏")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "深入天羊的游戏，寻回失落线索",
                 },
                 {
                     "灵域使者·二",
+                    tk = "npc_664",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "灵域使者·二")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "历经灵域使者·二，收获机缘",
                 },
             },
             name = "生肖守护[转]",
@@ -1498,81 +1792,105 @@ local npc_xyl = {
             jq = {
                 {
                     "天猴的游戏",
+                    tk = "npc_659",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "天猴的游戏")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏破天猴的游戏，守护一方安宁",
                 },
                 {
                     "天鸡的游戏",
+                    tk = "npc_660",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "天鸡的游戏")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "行走天鸡的游戏，破除迷障",
                 },
                 {
                     "天狗的游戏",
+                    tk = "npc_661",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "天狗的游戏")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "直面天狗的游戏，化解其中隐患",
                 },
                 {
                     "天猪的游戏",
+                    tk = "npc_662",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "天猪的游戏")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏破天猪的游戏，守护一方安宁",
                 },
                 {
                     "灵域使者·三",
+                    tk = "npc_665",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "灵域使者·三")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "闯过灵域使者·三，证我道途",
                 },
                 {
                     "生肖守护",
+                    tk = "npc_67",
                     id = 999,
                     jl = { { "剧情点", 5 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "生肖守护")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "行走生肖守护，破除迷障",
                 },
             },
             name = "生肖守护[终]",
@@ -1585,120 +1903,156 @@ local npc_xyl = {
             jq = {
                 {
                     "传说修复局",
+                    tk = "npc_673",
                     id = 999,
                     jl = {},
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "传说修复局")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "历经传说修复局，收获机缘",
                 },
                 {
                     "盘古开天",
+                    tk = "npc_674",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "盘古开天")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "行走盘古开天，破除迷障",
                 },
                 {
                     "羿射九日",
+                    tk = "npc_675",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "羿射九日")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "行走羿射九日，破除迷障",
                 },
                 {
                     "共公怒触不周山",
+                    tk = "npc_676",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "共公怒触不周山")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "直面共公怒触不周山，化解其中隐患",
                 },
                 {
                     "女娲补天",
+                    tk = "npc_677",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "女娲补天")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "前往女娲补天，探寻其中机缘",
                 },
                 {
                     "后土娘娘",
+                    tk = "npc_678",
                     id = 999,
                     jl = { { "剧情点", 3 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "后土娘娘")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "历经后土娘娘，收获机缘",
                 },
                 {
                     "黑白无常",
+                    tk = "npc_679",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "黑白无常")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏入黑白无常，循迹而行",
                 },
                 {
                     "真假玉帝",
+                    tk = "npc_680",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "真假玉帝")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏破真假玉帝，守护一方安宁",
                 },
                 {
                     "白蛇传说",
+                    tk = "npc_681",
                     id = 999,
                     jl = { { "剧情点", 2 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "白蛇传说")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 0 },
-                    desc = "",
+                    desc = "踏入白蛇传说，循迹而行",
                 },
             },
             name = "修复传说",
@@ -1748,6 +2102,24 @@ local npc_xyl = {
     },
 }
 return npc_xyl
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

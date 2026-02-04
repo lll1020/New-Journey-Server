@@ -30,12 +30,20 @@ function npc.link(play,npcid,ew,aid,data)
     if data == "" then
         return
     end
-    local json_data = json2tbl(data)
+    local json_data = json2tbl(data) or {}
     
 
     if ew == 1 then -- 
 
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_生肖守护"])
+
+        local idx = tonumber(json_data.idx)
+        if not idx or not _config.details[idx] then
+            Player.sendmsgEx(play, "参数错误#57")
+            return
+        end
+        json_data.idx = idx
+
 
 
         if T_data[""..json_data.idx] and T_data[""..json_data.idx] == 1 then
@@ -104,3 +112,4 @@ GameEvent.add(EventCfg.onLogin, Login_sxsh, "Login_生肖守护")
 
 
 return npc
+

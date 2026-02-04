@@ -40,6 +40,11 @@ function npc.link(play,npcid,ew,aid)
         level = level + 1
 
         local config = _config.details[level]
+        if not config then
+            Player.sendmsgEx(play, "配置异常，请联系管理员#57")
+            return
+        end
+
         if exp >= config.need_xxz then
             local name, num = Player.checkItemNumByTable(play, config.cost)
             if name then
@@ -78,6 +83,9 @@ function Login_jjxw(play)
         return
     end
     local config = _config.details[level]
+    if not config then
+        return
+    end
     for v,k in ipairs(config.attr) do
         attrs[k[1]] = k[2]
     end

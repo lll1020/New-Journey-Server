@@ -7,6 +7,9 @@ local _config = Guard.getConfig("npc_623")
 
 
 function npc.main(play,npcid)
+    if not _config then
+        return
+    end
     local data = {}
     data["T_dljq"] = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     data["sg_data"] = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
@@ -14,6 +17,9 @@ function npc.main(play,npcid)
 end
 
 function npc.link(play,npcid,ew,aid)
+    if not _config then
+        return
+    end
     -- npc_guard: 入参校验
     if not Guard.ensurePlayer(play, npcid) then
         return
@@ -45,7 +51,7 @@ function npc.link(play,npcid,ew,aid)
         if not jq_data[key] or jq_data[key] == 0 then
             jq_data[key] = 1
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-            Player.sendmsgEx(play, "领取任务")
+            Player.sendmsgEx(play, "领取【"..(_config.name or "任务").."】")
             shaguai.jia(play, _config.shaguai_id or 623)
             sendluamsg(play,101,1005,0,0,"rwjs")
             sendluamsg(play,100,npcid,1,1,"")
@@ -56,15 +62,16 @@ function npc.link(play,npcid,ew,aid)
             if sg_data[key] and sg_data[key] >= (_config.num or 0) then
                 jq_data[key] = 2
                 Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-                Player.sendmsgEx(play, "任务完成")
+                Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成")
                 sendluamsg(play,101,1005,0,0,"rwwc")
                 Player.rwjl(play, _config.rwjl or {{"元宝",1},{"金币",1}}, (_config.name or "剧情任务").."奖励", 1)
                 sendluamsg(play,100,npcid,1,2,"")
             else
-                Player.sendmsgEx(play, "你还没有完成任务#57")
+                Player.sendmsgEx(play, "你还没有完成【"..(_config.name or "该任务").."】#57")
             end
         end
     end
 end
 
 return npc
+

@@ -7,6 +7,9 @@ local _config = Guard.getConfig("npc_654")
 
 
 function npc.main(play,npcid)
+    if not _config then
+        return
+    end
     local data = {}
     data["T_dljq"] = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     sendluamsg(play,100,npcid,0,0,tbl2json(data))
@@ -31,7 +34,7 @@ local function npc_654_finish(play, dtm, win)
     if win then
         jq_data[key] = 2
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, "任务完成#57")
+        Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成#57")
         if _config.ch then
             Player.title_give(play, _config.ch)
         end
@@ -48,6 +51,9 @@ local function npc_654_finish(play, dtm, win)
 end
 
 function npc.link(play,npcid,ew,aid)
+    if not _config then
+        return
+    end
     -- npc_guard: 入参校验
     if not Guard.ensurePlayer(play, npcid) then
         return
@@ -67,7 +73,7 @@ function npc.link(play,npcid,ew,aid)
         local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
         local key = "npc_654"
         if jq_data[key] and jq_data[key] >= 2 then
-            Player.sendmsgEx(play, "你已经完成了该任务#57")
+            Player.sendmsgEx(play, "你已经完成【"..(_config.name or "该任务").."】#57")
             return
         end
 
@@ -157,5 +163,7 @@ function npc_654_timeout(play)
 end
 
 return npc
+
+
 
 

@@ -6,12 +6,18 @@ npc = {}
 local _config = Guard.getConfig("npc_620")
 
 function npc.main(play,npcid)
+    if not _config then
+        return
+    end
     local data = {}
     data["T_dljq"] = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     sendluamsg(play,100,npcid,0,0,tbl2json(data))
 end
 
 function npc.link(play,npcid,ew,aid)
+    if not _config then
+        return
+    end
     -- npc_guard: 入参校验
     if not Guard.ensurePlayer(play, npcid) then
         return
@@ -30,6 +36,10 @@ function npc.link(play,npcid,ew,aid)
     if ew == 1 then
         local T_dljq = Player.getJsonTableByVar(play, VarCfg.T_dljq)
         if not T_dljq["npc_620"] or T_dljq["npc_620"] < 2 then
+            if not _config.cost then
+                Player.sendmsgEx(play, "配置缺失#57")
+                return
+            end
             local name, num = Player.checkItemNumByTable(play, _config.cost)
             if name then
                 Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
@@ -50,3 +60,4 @@ function npc.link(play,npcid,ew,aid)
 end
 
 return npc
+

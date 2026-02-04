@@ -29,12 +29,16 @@ function npc.link(play,npcid,ew,aid)
 
     if ew == 1 then
         local level = getplaydef(play, VarCfg["U_转生等级"])
-        if level > _config.max_level then
-            Player.sendmsgEx(play,"已经满级")
+        if level >= _config.max_level then
+            Player.sendmsgEx(play, "已经满级")
             return
         end
         level = level + 1
         local config = _config.details[level]
+        if not config then
+            Player.sendmsgEx(play, "配置异常，请联系管理员#57")
+            return
+        end
         local name, num = Player.checkItemNumByTable(play, config.cost)
         if name then
             Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
@@ -48,7 +52,6 @@ function npc.link(play,npcid,ew,aid)
             renewlevel(play,1,0,0)
             Player.sendmsgEx(play, "转生成功")
             Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
-
         end
     end
 end
@@ -62,8 +65,10 @@ function Login_zsattr(play)
     end
     for i = 1, level do
         local config = _config.details[i]
-        for v,k in ipairs(config.attr) do
-            attrs[k[1]] = (attrs[k[1]] or 0) + k[2]
+        if config and config.attr then
+            for v,k in ipairs(config.attr) do
+                attrs[k[1]] = (attrs[k[1]] or 0) + k[2]
+            end
         end
     end
     attrsstr = Player.getAttrTableToStr(attrs)

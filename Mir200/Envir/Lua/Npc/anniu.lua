@@ -3,26 +3,7 @@ npc = {}
 npc[2] = function(play, p2, p3, msgData) --背包  面板
     if p2 == 0 then
         -- 回收面板
-        sendluamsg(
-            play,
-            101,
-            2,
-            2,
-            0,
-            '{"xz":'
-                .. getplaydef(play, VarCfg.T_hsdg)
-                .. ',"kg":['
-                .. getflagstatus(play, VarCfg.BS_huishou[1])
-                .. ","
-                .. getflagstatus(play, VarCfg.BS_huishou[2])
-                .. ","
-                .. getflagstatus(play, VarCfg.BS_huishou[3])
-                .. ","
-                .. getflagstatus(play, VarCfg.BS_huishou[4])
-                .. ","
-                .. getflagstatus(play, VarCfg.BS_huishou[5])
-                .. "]}"
-        )
+        sendluamsg(play, 101, 2, 2, 0, '{"xz":' .. getplaydef(play, VarCfg.T_hsdg) .. ',"kg":[' .. getflagstatus(play, VarCfg.BS_huishou[1]) .. "," .. getflagstatus(play, VarCfg.BS_huishou[2]) .. "," .. getflagstatus(play, VarCfg.BS_huishou[3]) .. "," .. getflagstatus(play, VarCfg.BS_huishou[4]) .. "," .. getflagstatus(play, VarCfg.BS_huishou[5]) .. "]}")
     elseif p2 == 1 then
         if p3 > 0 and p2 < 5 then
             msgData = tonumber(msgData)
@@ -194,20 +175,7 @@ end
 npc[11] = function(play, p2, p3, data) --异闻录
     -- sj.i 大陆  sj.j 章节  sj.k 暂时不用  sj.z 剧情
     if p2 == 0 then
-        sendluamsg(
-            play,
-            101,
-            11,
-            0,
-            0,
-            '{"dljq":'
-                .. getplaydef(play, VarCfg.T_dljq)
-                .. ',"zxrw":'
-                .. getplaydef(play, VarCfg.T_zxrw)
-                .. ',"ywl":'
-                .. getplaydef(play, VarCfg.T_ywl)
-                .. "}"
-        )
+        sendluamsg(play, 101, 11, 0, 0, '{"dljq":' .. getplaydef(play, VarCfg.T_dljq) .. ',"zxrw":' .. getplaydef(play, VarCfg.T_zxrw) .. ',"ywl":' .. getplaydef(play, VarCfg.T_ywl) .. "}")
     elseif p2 == 1 then
         --传送
         local sj = json2tbl(data)
@@ -229,29 +197,10 @@ npc[11] = function(play, p2, p3, data) --异闻录
                 elseif shuju.yd[1] == 1 then
                     if getplaydef(play, "N$战斗状态") < os.time() then
                         mapmove(play, shuju.yd[2], shuju.yd[4], shuju.yd[5], 2)
-                        sendluamsg(
-                            play,
-                            101,
-                            0,
-                            1,
-                            1,
-                            '{"lx":2,"npcdt":"'
-                                .. shuju.yd[2]
-                                .. '","npcid":'
-                                .. shuju.yd[3]
-                                .. ',"xx":'
-                                .. shuju.yd[4]
-                                .. ',"yy":'
-                                .. shuju.yd[5]
-                                .. "}"
-                        )
+                        sendluamsg(play, 101, 0, 1, 1, '{"lx":2,"npcdt":"' .. shuju.yd[2] .. '","npcid":' .. shuju.yd[3] .. ',"xx":' .. shuju.yd[4] .. ',"yy":' .. shuju.yd[5] .. "}")
                         sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
                     else
-                        Player.sendmsgEx(
-                            play,
-                            1,
-                            '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}'
-                        )
+                        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}')
                     end
                 elseif shuju.yd[1] == 2 then
                     sendluamsg(play, 101, 0, 1, 1, '{"lx":1,"fx":1,"an":' .. shuju.yd[3] .. ',"ms":"点击按钮"}')
@@ -283,13 +232,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
                 then
                     T_ywl["jl_" .. sj.i .. "_" .. sj.j .. "_" .. i] = nil
                 else
-                    Player.sendmsgEx(
-                        play,
-                        1,
-                        '{"Msg":"<font color=\'#ff0000\'>未完成['
-                            .. npc_xyl[sj.i][sj.j].jq[i][1]
-                            .. ']剧情...</font>","Type":9}'
-                    )
+                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>未完成[' .. npc_xyl[sj.i][sj.j].jq[i][1] .. ']剧情...</font>","Type":9}')
                     return
                 end
             end
@@ -299,22 +242,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
             if _jl and #_jl > 0 then
                 Player.rwjl(play, _jl, "剧情jl", 1)
             end
-            sendluamsg(
-                play,
-                101,
-                11,
-                3,
-                0,
-                '{"dljq":'
-                    .. getplaydef(play, VarCfg.T_dljq)
-                    .. ',"zxrw":'
-                    .. getplaydef(play, VarCfg.T_zxrw)
-                    .. ',"ywl":'
-                    .. getplaydef(play, VarCfg.T_ywl)
-                    .. ',"T_tj":'
-                    .. getplaydef(play, VarCfg.T_tj)
-                    .. "}"
-            )
+            sendluamsg(play, 101, 11, 3, 0, '{"dljq":' .. getplaydef(play, VarCfg.T_dljq) .. ',"zxrw":' .. getplaydef(play, VarCfg.T_zxrw) .. ',"ywl":' .. getplaydef(play, VarCfg.T_ywl) .. ',"T_tj":' .. getplaydef(play, VarCfg.T_tj) .. "}")
         end
     elseif p2 == 3 then --单个任务奖励
         local sj = json2tbl(data)
@@ -349,33 +277,16 @@ npc[11] = function(play, p2, p3, data) --异闻录
                 return
             end
             if shuju.id == 999 then
-                if shuju.fwdjy(play) then
+                if shuju.fwdjy(play, shuju.tk, shuju) then
                     --可以完成
                     T_ywl["jl_" .. sj.i .. "_" .. sj.j .. "_" .. sj.z] = 1
                     setplaydef(play, VarCfg.T_ywl, tbl2json(T_ywl))
                     if shuju.jl then
-                        Player.rwjl(play, shuju.jl, "剧情jl", 1)
+                        Player.rwjl(play, shuju.jl, "剧情jl", 1,0)
                     end
-                    sendluamsg(
-                        play,
-                        101,
-                        11,
-                        0,
-                        0,
-                        '{"dljq":'
-                            .. getplaydef(play, VarCfg.T_dljq)
-                            .. ',"zxrw":'
-                            .. getplaydef(play, VarCfg.T_zxrw)
-                            .. ',"ywl":'
-                            .. getplaydef(play, VarCfg.T_ywl)
-                            .. "}"
-                    )
+                    sendluamsg(play, 101, 11, 0, 0, '{"dljq":' .. getplaydef(play, VarCfg.T_dljq) .. ',"zxrw":' .. getplaydef(play, VarCfg.T_zxrw) .. ',"ywl":' .. getplaydef(play, VarCfg.T_ywl) .. "}")
                 else
-                    Player.sendmsgEx(
-                        play,
-                        1,
-                        '{"Msg":"<font color=\'#ff0000\'>未完成[' .. shuju[1] .. ']剧情...</font>","Type":9}'
-                    )
+                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>未完成[' .. shuju[1] .. ']剧情...</font>","Type":9}')
                     return
                 end
             end
@@ -420,11 +331,7 @@ npc[13] = function(play, p2, p3, data) -- 记录石
             if getplaydef(play, "N$战斗状态") < os.time() then
                 --是不是有足够的灵石
                 if getbindmoney(play, "灵石") < 100 then
-                    Player.sendmsgEx(
-                        play,
-                        1,
-                        '{"Msg":"<font color=\'#ff0500\'>灵石不足,无法传送...</font>","Type":9}'
-                    )
+                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>灵石不足,无法传送...</font>","Type":9}')
                     return
                 end
                 consumebindmoney(play, "仙玉", 100)
@@ -569,23 +476,7 @@ npc[19] = function(play, p2, p3, data) --飞剑系统
                 count["4"] = 1
             end
 
-            sendluamsg(
-                play,
-                101,
-                19,
-                1,
-                0,
-                tbl2json({
-                    count = count,
-                    psData = {
-                        cd = (
-                            T_data.cd
-                            or (hasbuff(play, 20002) and teshudata["anniu_19"].cd / 2)
-                            or teshudata["anniu_19"].cd
-                        ),
-                    },
-                })
-            )
+            sendluamsg(play, 101, 19, 1, 0, tbl2json({ count = count, psData = { cd = (T_data.cd or (hasbuff(play, 20002) and teshudata["anniu_19"].cd / 2) or teshudata["anniu_19"].cd), }, }))
             sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>飞剑已激活...</font>","Type":9}')
         end
     elseif p2 == 2 then --飞剑伤害计算
@@ -765,11 +656,7 @@ npc[501] = function(play, p2, p3, data) --首充礼包
                     Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
                     sendluamsg(play, 101, 1005, 0, 0, "lqcg")
                 else
-                    Player.sendmsgEx(
-                        play,
-                        1,
-                        '{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}'
-                    )
+                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
                 end
             elseif T_data["补充"] == 1 then
                 if not T_data["other_lb"] or T_data["other_lb"] ~= 1 then
@@ -778,11 +665,7 @@ npc[501] = function(play, p2, p3, data) --首充礼包
                     Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
                     sendluamsg(play, 101, 1005, 0, 0, "lqcg")
                 else
-                    Player.sendmsgEx(
-                        play,
-                        1,
-                        '{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}'
-                    )
+                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
                 end
             end
         else
@@ -929,22 +812,7 @@ end
 ---天选之人
 npc[506] = function(play, p2, p3, msgData) --天选之子
     if p2 == 0 then
-        sendluamsg(
-            play,
-            101,
-            506,
-            0,
-            0,
-            '{"A_txzz":'
-                .. (getsysvar(VarCfg["A_天选之人json"]) == "" and "{}" or getsysvar(VarCfg["A_天选之人json"]))
-                .. ',"T_txzr":'
-                .. getplaydef(play, VarCfg.T_txzr)
-                .. ',"kqsj":'
-                .. getsysvar(VarCfg["G_开区分钟"])
-                .. ',"G_txzz_2":'
-                .. getsysvar(VarCfg["G_天选之人"][2])
-                .. "}"
-        )
+        sendluamsg(play, 101, 506, 0, 0, '{"A_txzz":' .. (getsysvar(VarCfg["A_天选之人json"]) == "" and "{}" or getsysvar(VarCfg["A_天选之人json"])) .. ',"T_txzr":' .. getplaydef(play, VarCfg.T_txzr) .. ',"kqsj":' .. getsysvar(VarCfg["G_开区分钟"]) .. ',"G_txzz_2":' .. getsysvar(VarCfg["G_天选之人"][2]) .. "}")
     end
 end
 
@@ -952,14 +820,7 @@ local hd_dtmz = {}
 
 npc[507] = function(play, p2, p3, msgData) --游戏活动
     if p2 == 0 then
-        sendluamsg(
-            play,
-            101,
-            507,
-            0,
-            0,
-            '{"kqfz":' .. getsysvar(VarCfg["G_开区分钟"]) .. ',"hdjl":' .. getplaydef(play, VarCfg.T_hdjl) .. "}"
-        )
+        sendluamsg(play, 101, 507, 0, 0, '{"kqfz":' .. getsysvar(VarCfg["G_开区分钟"]) .. ',"hdjl":' .. getplaydef(play, VarCfg.T_hdjl) .. "}")
     elseif p2 == 1 then
         if p3 == 1 then
             Npclib["anniu"][506](play, 0, 0, "")
@@ -1389,11 +1250,7 @@ npc[516] = function(play, p2, p3, msgData) --免费赞助
         if not T_data["zzlb_" .. p3] then
             if p3 > 1 then
                 if not T_data["zzlb_" .. (p3 - 1)] then
-                    Player.sendmsgEx(
-                        play,
-                        1,
-                        '{"Msg":"<font color=\'#ff7700\'>[赞助礼包]</font><font color=\'#ff0500\'>请先领取前置礼包...</font>","Type":9}'
-                    )
+                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff7700\'>[赞助礼包]</font><font color=\'#ff0500\'>请先领取前置礼包...</font>","Type":9}')
                     return
                 end
             end
@@ -1507,38 +1364,18 @@ npc[998] = function(play, p2, p3, msg) --后台
         if p2 == 1 then
             if p3 == 0 then
                 if getplayerbyname(msg) then
-                    Player.sendmsgEx(
-                        play,
-                        1,
-                        '{"Msg":"<font color=\'#00ff00\'>[' .. msg .. ']玩家在线</font>","Type":9}'
-                    )
+                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>[' .. msg .. ']玩家在线</font>","Type":9}')
                 else
-                    Player.sendmsgEx(
-                        play,
-                        1,
-                        '{"Msg":"<font color=\'#ff0000\'>[' .. msg .. ']玩家不在线</font>","Type":9}'
-                    )
+                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>[' .. msg .. ']玩家不在线</font>","Type":9}')
                 end
             elseif p3 == 1 then
                 local data = json2tbl(msg)
                 if data and data.mz and data.hb and data.hb > 0 and data.hb < 9 then
                     local dx = getplayerbyname(data.mz)
                     if dx then
-                        Player.sendmsgEx(
-                            play,
-                            1,
-                            '{"Msg":"<font color=\'#00ff00\'>['
-                                .. data.mz
-                                .. "]货币剩余："
-                                .. querymoney(dx, xlxl[1][data.hb])
-                                .. '</font>","Type":9}'
-                        )
+                        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>[' .. data.mz .. "]货币剩余：" .. querymoney(dx, xlxl[1][data.hb]) .. '</font>","Type":9}')
                     else
-                        Player.sendmsgEx(
-                            play,
-                            1,
-                            '{"Msg":"<font color=\'#ff0000\'>[' .. data.mz .. ']玩家不在线</font>","Type":9}'
-                        )
+                        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>[' .. data.mz .. ']玩家不在线</font>","Type":9}')
                     end
                 end
             elseif p3 == 2 or p3 == 3 then
@@ -1549,35 +1386,13 @@ npc[998] = function(play, p2, p3, msg) --后台
                         local hbid = xlxl[1][data.hb]
                         if p3 == 2 then
                             changemoney(dx, hbid, "=", data.sl, "后台", true)
-                            Player.sendmsgEx(
-                                play,
-                                1,
-                                '{"Msg":"<font color=\'#00ff00\'>['
-                                    .. data.mz
-                                    .. "]货币数量修改为["
-                                    .. data.sl
-                                    .. ']</font>","Type":9}'
-                            )
+                            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>[' .. data.mz .. "]货币数量修改为[" .. data.sl .. ']</font>","Type":9}')
                         else
                             changemoney(dx, hbid, "+", data.sl, "后台", true)
-                            Player.sendmsgEx(
-                                play,
-                                1,
-                                '{"Msg":"<font color=\'#00ff00\'>['
-                                    .. data.mz
-                                    .. "]增加["
-                                    .. data.sl
-                                    .. "]当前货币剩余："
-                                    .. querymoney(dx, xlxl[1][data.hb])
-                                    .. '</font>","Type":9}'
-                            )
+                            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>[' .. data.mz .. "]增加[" .. data.sl .. "]当前货币剩余：" .. querymoney(dx, xlxl[1][data.hb]) .. '</font>","Type":9}')
                         end
                     else
-                        Player.sendmsgEx(
-                            play,
-                            1,
-                            '{"Msg":"<font color=\'#ff0000\'>[' .. data.mz .. ']玩家不在线</font>","Type":9}'
-                        )
+                        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>[' .. data.mz .. ']玩家不在线</font>","Type":9}')
                     end
                 end
             elseif p3 == 4 then
@@ -1588,17 +1403,9 @@ npc[998] = function(play, p2, p3, msg) --后台
                         setplaydef(dx, VarCfg.U_czyz, data.hb)
                         changemoney(dx, 7, "+", xlxl[2][data.hb] * 100, "", true)
                         recharge(dx, xlxl[2][data.hb], "gm", 7, false)
-                        Player.sendmsgEx(
-                            play,
-                            1,
-                            '{"Msg":"<font color=\'#28ef01\'>[' .. data.mz .. ']发送礼包成功</font>","Type":9}'
-                        )
+                        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#28ef01\'>[' .. data.mz .. ']发送礼包成功</font>","Type":9}')
                     else
-                        Player.sendmsgEx(
-                            play,
-                            1,
-                            '{"Msg":"<font color=\'#ff0000\'>[' .. data.mz .. ']玩家不在线</font>","Type":9}'
-                        )
+                        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>[' .. data.mz .. ']玩家不在线</font>","Type":9}')
                     end
                 end
             elseif p3 == 5 then
@@ -1607,17 +1414,9 @@ npc[998] = function(play, p2, p3, msg) --后台
                     local dx, sy = getplayerbyname(data.mz), data.hb
                     if dx then
                         recharge(dx, xlxl[3][data.hb], "gm", 21, false)
-                        Player.sendmsgEx(
-                            play,
-                            1,
-                            '{"Msg":"<font color=\'#28ef01\'>[' .. data.mz .. ']发送礼包成功</font>","Type":9}'
-                        )
+                        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#28ef01\'>[' .. data.mz .. ']发送礼包成功</font>","Type":9}')
                     else
-                        Player.sendmsgEx(
-                            play,
-                            1,
-                            '{"Msg":"<font color=\'#ff0000\'>[' .. data.mz .. ']玩家不在线</font>","Type":9}'
-                        )
+                        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>[' .. data.mz .. ']玩家不在线</font>","Type":9}')
                     end
                 end
             end
@@ -1634,19 +1433,11 @@ npc[998] = function(play, p2, p3, msg) --后台
                         if p3 == 1 then
                             if data.lx then
                                 giveitem(dx, data.wp, data.sl, data.lx == 1 and 850 or 0)
-                                Player.sendmsgEx(
-                                    play,
-                                    1,
-                                    '{"Msg":"<font color=\'#28ef01\'>[' .. data.wp .. ']增加完成</font>","Type":9}'
-                                )
+                                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#28ef01\'>[' .. data.wp .. ']增加完成</font>","Type":9}')
                             end
                         elseif p3 == 2 then
                             takeitem(dx, data.wp, data.sl)
-                            Player.sendmsgEx(
-                                play,
-                                1,
-                                '{"Msg":"<font color=\'#00ff00\'>[' .. data.wp .. ']扣除完成</font>","Type":9}'
-                            )
+                            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>[' .. data.wp .. ']扣除完成</font>","Type":9}')
                         elseif p3 == 4 then
                             if checktitle(dx, data.ch) then
                                 sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>拿...</font>","Type":9}')
@@ -1657,18 +1448,10 @@ npc[998] = function(play, p2, p3, msg) --后台
                             end
                         end
                     else
-                        Player.sendmsgEx(
-                            play,
-                            1,
-                            '{"Msg":"<font color=\'#ff0000\'>物品名字不正确</font>","Type":9}'
-                        )
+                        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>物品名字不正确</font>","Type":9}')
                     end
                 else
-                    Player.sendmsgEx(
-                        play,
-                        1,
-                        '{"Msg":"<font color=\'#ff0000\'>[' .. data.mz .. ']玩家不在线</font>","Type":9}'
-                    )
+                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>[' .. data.mz .. ']玩家不在线</font>","Type":9}')
                 end
             end
         elseif p2 == 3 then
@@ -1680,15 +1463,7 @@ npc[998] = function(play, p2, p3, msg) --后台
                         if p3 == 1 then
                             if data.lx == 1 then
                                 if data.bl == "积分" then
-                                    Player.sendmsgEx(
-                                        play,
-                                        1,
-                                        '{"Msg":"<font color=\'#00ff00\'>['
-                                            .. data.mz
-                                            .. "]礼包积分剩余："
-                                            .. querymoney(dx, 22)
-                                            .. '</font>","Type":9}'
-                                    )
+                                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>[' .. data.mz .. "]礼包积分剩余：" .. querymoney(dx, 22) .. '</font>","Type":9}')
                                 elseif
                                     string.find(data.bl, "t")
                                     or string.find(data.bl, "T")
@@ -1697,45 +1472,15 @@ npc[998] = function(play, p2, p3, msg) --后台
                                     mircopy(play, getplaydef(dx, data.bl))
                                     messagebox(play, "[" .. data.bl .. "]的值\\" .. getplaydef(dx, data.bl) .. "")
                                 else
-                                    Player.sendmsgEx(
-                                        play,
-                                        1,
-                                        '{"Msg":"<font color=\'#00ff00\'>['
-                                            .. data.bl
-                                            .. "]的值["
-                                            .. getplaydef(dx, data.bl)
-                                            .. ']</font>","Type":9}'
-                                    )
+                                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>[' .. data.bl .. "]的值[" .. getplaydef(dx, data.bl) .. ']</font>","Type":9}')
                                 end
                             elseif data.lx == 2 then
-                                Player.sendmsgEx(
-                                    play,
-                                    1,
-                                    '{"Msg":"<font color=\'#00ff00\'>标识：['
-                                        .. data.bl
-                                        .. "]的值["
-                                        .. getflagstatus(dx, data.bl)
-                                        .. ']</font>","Type":9}'
-                                )
+                                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>标识：[' .. data.bl .. "]的值[" .. getflagstatus(dx, data.bl) .. ']</font>","Type":9}')
                             elseif data.lx == 3 then
                                 if hasbuff(dx, data.bl) then
-                                    Player.sendmsgEx(
-                                        play,
-                                        1,
-                                        '{"Msg":"<font color=\'#00ff00\'>buff:['
-                                            .. data.bl
-                                            .. "]的值["
-                                            .. math.floor((getbuffinfo(dx, data.bl, 2) / 60))
-                                            .. '分钟]</font>","Type":9}'
-                                    )
+                                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>buff:[' .. data.bl .. "]的值[" .. math.floor((getbuffinfo(dx, data.bl, 2) / 60)) .. '分钟]</font>","Type":9}')
                                 else
-                                    Player.sendmsgEx(
-                                        play,
-                                        1,
-                                        '{"Msg":"<font color=\'#ff0000\'>['
-                                            .. data.mz
-                                            .. ']玩家没有这个BUFF</font>","Type":9}'
-                                    )
+                                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>[' .. data.mz .. ']玩家没有这个BUFF</font>","Type":9}')
                                 end
                             end
                         else
@@ -1743,83 +1488,33 @@ npc[998] = function(play, p2, p3, msg) --后台
                                 if data.lx == 1 then
                                     if data.bl == "积分" then
                                         changemoney(dx, 22, "+", data.zhi, "后台", true)
-                                        Player.sendmsgEx(
-                                            play,
-                                            1,
-                                            '{"Msg":"<font color=\'#00ff00\'>['
-                                                .. data.mz
-                                                .. "]增加["
-                                                .. data.zhi
-                                                .. "]当前礼包积分剩余："
-                                                .. querymoney(dx, 22)
-                                                .. '</font>","Type":9}'
-                                        )
+                                        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>[' .. data.mz .. "]增加[" .. data.zhi .. "]当前礼包积分剩余：" .. querymoney(dx, 22) .. '</font>","Type":9}')
                                     else
                                         setplaydef(dx, data.bl, data.zhi)
-                                        Player.sendmsgEx(
-                                            play,
-                                            1,
-                                            '{"Msg":"<font color=\'#00ff00\'>['
-                                                .. data.bl
-                                                .. "]的值["
-                                                .. getplaydef(dx, data.bl)
-                                                .. ']</font>","Type":9}'
-                                        )
+                                        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>[' .. data.bl .. "]的值[" .. getplaydef(dx, data.bl) .. ']</font>","Type":9}')
                                     end
                                 elseif data.lx == 2 then
                                     setflagstatus(dx, data.bl, data.zhi)
-                                    Player.sendmsgEx(
-                                        play,
-                                        1,
-                                        '{"Msg":"<font color=\'#00ff00\'>标识：['
-                                            .. data.bl
-                                            .. "]的值["
-                                            .. getflagstatus(dx, data.bl)
-                                            .. ']</font>","Type":9}'
-                                    )
+                                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>标识：[' .. data.bl .. "]的值[" .. getflagstatus(dx, data.bl) .. ']</font>","Type":9}')
                                 elseif data.lx == 3 then
-                                    Player.sendmsgEx(
-                                        play,
-                                        1,
-                                        '{"Msg":"<font color=\'#ff0500\'>BUFF只能查询</font>","Type":9}'
-                                    )
+                                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>BUFF只能查询</font>","Type":9}')
                                 end
                             end
                         end
                     else
-                        Player.sendmsgEx(
-                            play,
-                            1,
-                            '{"Msg":"<font color=\'#ff0000\'>[' .. data.mz .. ']玩家不在线</font>","Type":9}'
-                        )
+                        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>[' .. data.mz .. ']玩家不在线</font>","Type":9}')
                     end
                 elseif data.lx == 4 then
                     if p3 == 1 then
                         if string.find(data.bl, "A") or string.find(data.bl, "a") then
                             messagebox(play, "[" .. data.bl .. "]的值\\" .. getsysvar(data.bl) .. "")
                         else
-                            Player.sendmsgEx(
-                                play,
-                                1,
-                                '{"Msg":"<font color=\'#00ff00\'>['
-                                    .. data.bl
-                                    .. "]的值["
-                                    .. getsysvar(data.bl)
-                                    .. ']</font>","Type":9}'
-                            )
+                            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>[' .. data.bl .. "]的值[" .. getsysvar(data.bl) .. ']</font>","Type":9}')
                         end
                     elseif p3 == 2 then
                         if data.zhi then
                             setsysvar(data.bl, data.zhi)
-                            Player.sendmsgEx(
-                                play,
-                                1,
-                                '{"Msg":"<font color=\'#00ff00\'>['
-                                    .. data.bl
-                                    .. "]的值["
-                                    .. getsysvar(data.bl)
-                                    .. ']</font>","Type":9}'
-                            )
+                            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#00ff00\'>[' .. data.bl .. "]的值[" .. getsysvar(data.bl) .. ']</font>","Type":9}')
                         end
                     end
                 end
@@ -1830,37 +1525,21 @@ npc[998] = function(play, p2, p3, msg) --后台
                 if p3 == 1 then
                     if dx then
                         kick(dx)
-                        Player.sendmsgEx(
-                            play,
-                            1,
-                            '{"Msg":"<font color=\'#28ef01\'>[' .. msg .. ']踢下线</font>","Type":9}'
-                        )
+                        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#28ef01\'>[' .. msg .. ']踢下线</font>","Type":9}')
                     else
-                        Player.sendmsgEx(
-                            play,
-                            1,
-                            '{"Msg":"<font color=\'#ff0000\'>[' .. msg .. ']玩家不在线</font>","Type":9}'
-                        )
+                        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>[' .. msg .. ']玩家不在线</font>","Type":9}')
                     end
                 elseif p3 < 4 then
                     setgmlevel(play, 10)
                     if p3 == 2 then
                         gmexecute(play, "DenyCharNameLogon", msg, 1)
-                        Player.sendmsgEx(
-                            play,
-                            1,
-                            '{"Msg":"<font color=\'#28ef01\'>[' .. msg .. ']加入封禁列表</font>","Type":9}'
-                        )
+                        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#28ef01\'>[' .. msg .. ']加入封禁列表</font>","Type":9}')
                         if dx then
                             callscriptex(dx, "CHANGELEVEL", "=", 1)
                         end
                     elseif p3 == 3 then
                         gmexecute(play, "DelDenyCharNameLogon", msg)
-                        Player.sendmsgEx(
-                            play,
-                            1,
-                            '{"Msg":"<font color=\'#28ef01\'>[' .. msg .. ']去除封禁列表</font>","Type":9}'
-                        )
+                        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#28ef01\'>[' .. msg .. ']去除封禁列表</font>","Type":9}')
                     end
                     setgmlevel(play, 0)
                 end
@@ -1877,17 +1556,9 @@ npc[998] = function(play, p2, p3, msg) --后台
                 if dx then
                     changemoney(dx, 7, "+", data.hb * 100, "", true)
                     recharge(dx, data.hb, "gm", 7, false)
-                    Player.sendmsgEx(
-                        play,
-                        1,
-                        '{"Msg":"<font color=\'#28ef01\'>[' .. data.mz .. ']发送礼包成功</font>","Type":9}'
-                    )
+                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#28ef01\'>[' .. data.mz .. ']发送礼包成功</font>","Type":9}')
                 else
-                    Player.sendmsgEx(
-                        play,
-                        1,
-                        '{"Msg":"<font color=\'#ff0000\'>[' .. data.mz .. ']玩家不在线</font>","Type":9}'
-                    )
+                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>[' .. data.mz .. ']玩家不在线</font>","Type":9}')
                 end
             end
         end
@@ -1898,13 +1569,7 @@ npc[1004] = function(play, p2, p3, msg) --排行榜查询
     if p2 == 1 then
         local dx = getplayerbyid(msg)
         if dx then
-            Player.sendmsgEx(
-                dx,
-                1,
-                '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'></font>玩家<font color=\'#00ff00\'>['
-                    .. getbaseinfo(play, 1)
-                    .. ']</font>在偷偷打量你</outline>","Type":1}'
-            )
+            Player.sendmsgEx(dx, 1, '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'></font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>在偷偷打量你</outline>","Type":1}')
             sendluamsg(play, 101, 1004, 0, 0, '{"userid":"' .. msg .. '","zdl":' .. querymoney(dx, 29) .. "}")
         else
             sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>玩家不在线</font>","Type":9}')
@@ -1941,6 +1606,8 @@ for npcId, handler in pairs(npc) do
 end
 
 return npc
+
+
 
 
 
