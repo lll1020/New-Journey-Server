@@ -773,35 +773,113 @@ function sendability(play)
 end
 
 local czlb_je = constant.cz_je
---------------------真充积分改变触发-------------------在线充值礼包筛选
-function moneychange22(play)
-    local lb_json,hbsl,jezz = json2tbl(getplaydef(play, VarCfg.T_czlb)),querymoney(play,22),0
-    for i = 1, #czlb_je, 1 do
-        if not lb_json["cz"..i] then
-            if jezz + czlb_je[i] <= hbsl then
-                jezz = jezz + czlb_je[i]
-                lb_json["cz" .. i] = true
-                setplaydef(play, VarCfg.T_czlb, tbl2json(lb_json))
-                setplaydef(play,VarCfg.N_lbyz,1)
-                czlb_pz(play,i)
-            else
-                break
+function _cz502_apply_reward(play, amount, idx, lb_json)
+    local config = teshudata["anniu_502"]
+    if not config or not config.jl then
+        return lb_json
+    end
+    if not idx then
+        if amount and config.fj then
+            for i, v in ipairs(config.fj) do
+                if v == amount then
+                    idx = i
+                    break
+                end
             end
         end
     end
-    if jezz > 0 then
-        changemoney(play,22,"-",jezz,"礼包积分",true)
+    if not idx then
+        return lb_json
     end
+    if not amount then
+        if config.fj then
+            amount = config.fj[idx]
+        elseif constant.cz_je then
+            amount = constant.cz_je[idx]
+        end
+    end
+    if not amount then
+        return lb_json
+    end
+    if type(lb_json) ~= "table" then
+        lb_json = json2tbl(getplaydef(play, VarCfg.T_czlb))
+        lb_json = lb_json == "" and {} or lb_json
+        if type(lb_json) ~= "table" then
+            lb_json = {}
+        end
+    end
+    local key = "cz502_" .. tostring(amount)
+    if lb_json[key] and lb_json[key] == 1 then
+        return lb_json
+    end
+    lb_json[key] = 1
+
+    local reward = config.jl[idx]
+    if reward then
+        if reward.give then
+            Player.rwjl(play, reward.give, "充值档位奖励", 1)
+        end
+        if reward.ch then
+            if not checktitle(play, reward.ch) then
+                Player.title_give(play, reward.ch)
+            end
+        end
+        if reward.skill then
+            local skillId = getskillindex(reward.skill)
+            if skillId and skillId > 0 then
+                addskill(play, skillId, 3)
+            end
+        end
+    end
+
+    if config.fj then
+        local all = true
+        for _, v in ipairs(config.fj) do
+            if not lb_json["cz502_" .. tostring(v)] then
+                all = false
+                break
+            end
+        end
+        if all and config.ch then
+            lb_json.cz502_all = 1
+            if not checktitle(play, config.ch) then
+                Player.title_give(play, config.ch)
+            end
+        end
+    end
+    return lb_json
 end
+
+--------------------真充积分改变触发-------------------在线充值礼包筛选
+-- function moneychange22(play)
+--     local lb_json,hbsl,jezz = json2tbl(getplaydef(play, VarCfg.T_czlb)),querymoney(play,22),0
+--     for i = 1, #czlb_je, 1 do
+--         if not lb_json["cz"..i] then
+--             if jezz + czlb_je[i] <= hbsl then
+--                 jezz = jezz + czlb_je[i]
+--                 lb_json["cz" .. i] = true
+--                 setplaydef(play, VarCfg.T_czlb, tbl2json(lb_json))
+--                 setplaydef(play,VarCfg.N_lbyz,1)
+--                 czlb_pz(play,i)
+--             else
+--                 break
+--             end
+--         end
+--     end
+--     if jezz > 0 then
+--         changemoney(play,22,"-",jezz,"礼包积分",true)
+--     end
+-- end
 
 function czlb_pz(play,sy)
     sy = tonumber(sy)
     local lb_json = json2tbl(getplaydef(play, VarCfg.T_czlb))
+    lb_json = _cz502_apply_reward(play, nil, sy, lb_json)
+    setplaydef(play, VarCfg.T_czlb, tbl2json(lb_json))
     if getplaydef(play,VarCfg.N_lbyz) == 1 then
         setplaydef(play,VarCfg.N_lbyz,0)
     end
 end
-
 
 --------------------累计充值改变触发-------------------冠名称号
 function moneychange23(play)
@@ -1230,6 +1308,12 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
         end
 	end
 end
+
+
+
+
+
+
 
 
 

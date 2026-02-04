@@ -142,232 +142,55 @@ npc[6] = function(play, p2, p3, data) -- 屏蔽系统消息
 end
 
 ---异闻录
-local npc_xyl = {
-    --二大陆任务
-    {
-        --第一章
-        {
-            jq = {
-                {
-                    "扫荡野火帮（剧）",
-                    id = 999,
-                    jl = { { "剧情点", 100 } },
-                    fwdjy = function(play)
-                        return true
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "二大陆主城", 166, 109, 83 },
-                    desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)",
-                },
-                {
-                    "剿灭恶徒（剧）",
-                    id = 999,
-                    jl = { { "剧情点", 100 } },
-                    fwdjy = function(play)
-                        return true
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "二大陆主城", 166, 109, 83 },
-                    desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)",
-                },
-                {
-                    "天书强化",
-                    id = 999,
-                    jl = { { "剧情点", 100 } },
-                    fwdjy = function(play)
-                        local T_data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
-                        return (T_data.level or 0) >= 1 and true or false
-                    end,
-                    khdjy = function()
-                        local T_data = Player:JsonToTbl(Player:getServerVar("T42"))
-                        return (T_data.level or 0) >= 1 and true or false
-                    end,
-                    yd = { 1, "二大陆主城", 166, 109, 83 },
-                    desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)",
-                },
-                {
-                    "初识仙法",
-                    id = 999,
-                    jl = { { "剧情点", 100 } },
-                    fwdjy = function(play)
-                        local T_data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
-                        return T_data["tj"] and true or false
-                    end,
-                    khdjy = function()
-                        local T_data = Player:JsonToTbl(Player:getServerVar("T42"))
-                        return T_data["tj"] and true or false
-                    end,
-                    yd = { 1, "二大陆主城", 166, 109, 83 },
-                    desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)",
-                },
-            },
-            --需求
-            jqd = 0,
-            jl = { { "绑定元宝", 1000000 }, { "绑定元宝", 100000 } },
-        },
-        --第二章
-        {
-            jq = {
-                {
-                    "杀伐之路（剧）",
-                    id = 999,
-                    jl = { { "剧情点", 100 } },
-                    fwdjy = function(play)
-                        return true
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "二大陆主城", 166, 109, 83 },
-                    desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)",
-                },
-                {
-                    "讨伐夜魔（剧）",
-                    id = 999,
-                    jl = { { "剧情点", 100 } },
-                    fwdjy = function(play)
-                        return true
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "二大陆主城", 166, 109, 83 },
-                    desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)",
-                },
-                {
-                    "装备强化",
-                    id = 999,
-                    jl = { { "剧情点", 100 } },
-                    fwdjy = function(play)
-                        return true
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "二大陆主城", 166, 109, 83 },
-                    desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)",
-                },
-                {
-                    "喂养灵根",
-                    id = 999,
-                    jl = { { "剧情点", 100 } },
-                    fwdjy = function(play)
-                        return true
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "二大陆主城", 166, 109, 83 },
-                    desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)",
-                },
-            },
-            jqd = 400,
-            jl = { { "绑定元宝", 1000000 }, { "绑定元宝", 100000 } },
-        },
-        --第三章
-        {
-            jq = {
-                {
-                    "修复轩辕剑（剧）",
-                    id = 999,
-                    jl = { { "剧情点", 100 } },
-                    fwdjy = function(play)
-                        return true
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "二大陆主城", 166, 109, 83 },
-                    desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)",
-                },
-                {
-                    "深入野火（剧）",
-                    id = 999,
-                    jl = { { "剧情点", 100 } },
-                    fwdjy = function(play)
-                        return true
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "二大陆主城", 166, 109, 83 },
-                    desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)",
-                },
-                {
-                    "守护森林（剧）",
-                    id = 999,
-                    jl = { { "剧情点", 100 } },
-                    fwdjy = function(play)
-                        return true
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "二大陆主城", 166, 109, 83 },
-                    desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)",
-                },
-                {
-                    "兵道之谜（剧）",
-                    id = 999,
-                    jl = { { "剧情点", 100 } },
-                    fwdjy = function(play)
-                        return true
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "二大陆主城", 166, 109, 83 },
-                    desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)",
-                },
-                {
-                    "幸运增幅",
-                    id = 999,
-                    jl = { { "剧情点", 100 } },
-                    fwdjy = function(play)
-                        return true
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "二大陆主城", 166, 109, 83 },
-                    desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)",
-                },
-                {
-                    "气运占卜",
-                    id = 999,
-                    jl = { { "剧情点", 100 } },
-                    fwdjy = function(play)
-                        return true
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "二大陆主城", 166, 109, 83 },
-                    desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)",
-                },
-                {
-                    "转生·二",
-                    id = 999,
-                    jl = { { "剧情点", 100 } },
-                    fwdjy = function(play)
-                        return true
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "二大陆主城", 166, 109, 83 },
-                    desc = "<核心/FCOLOR=249>完成二大陆转职\\(<提升核心属性/FCOLOR=250>)",
-                },
-            },
-            jqd = 800,
-            jl = { { "绑定元宝", 1000000 }, { "绑定元宝", 100000 } },
-        },
-    },
-}
+local npc_xyl = dofile('Envir/Lua/Data/npc_xyl.lua')
+
+-- 
+local function _ywl_activate_linggen(play, idx)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
+    data.level = data.level or {}
+    local key = tostring(idx)
+    if data.level[key] then
+        return true
+    end
+    data.level[key] = 0
+    Player.setJsonVarByTable(play, VarCfg["T_灵根"], data)
+    -- 按 602 的激活逻辑，这里只做激活与提示，不走副本流程
+    Player.sendmsgEx(play, "恭喜你，成功激活了灵根#249")
+    return true
+end
+
+local function _ywl_apply_special_reward(play, name, count)
+    if name == "激活金灵根" then
+        return _ywl_activate_linggen(play, 1)
+    elseif name == "激活木灵根" then
+        return _ywl_activate_linggen(play, 2)
+    elseif name == "激活水灵根" then
+        return _ywl_activate_linggen(play, 3)
+    elseif name == "激活火灵根" then
+        return _ywl_activate_linggen(play, 4)
+    elseif name == "激活土灵根" then
+        return _ywl_activate_linggen(play, 5)
+    end
+    return false
+end
+
+local function _ywl_filter_rewards(play, list)
+    if type(list) ~= "table" then
+        return list
+    end
+    local out = {}
+    for _, v in ipairs(list) do
+        if type(v) == "table" and type(v[1]) == "string" then
+            if not _ywl_apply_special_reward(play, v[1], v[2]) then
+                out[#out + 1] = v
+            end
+        else
+            out[#out + 1] = v
+        end
+    end
+    return out
+end
+
 npc[11] = function(play, p2, p3, data) --异闻录
     -- sj.i 大陆  sj.j 章节  sj.k 暂时不用  sj.z 剧情
     if p2 == 0 then
@@ -472,7 +295,10 @@ npc[11] = function(play, p2, p3, data) --异闻录
             end
             T_ywl["jl_" .. sj.i .. "_" .. sj.j] = 1
             setplaydef(play, VarCfg.T_ywl, tbl2json(T_ywl))
-            Player.rwjl(play, npc_xyl[sj.i][sj.j].jl, "剧情jl", 1)
+            local _jl = _ywl_filter_rewards(play, npc_xyl[sj.i][sj.j].jl)
+            if _jl and #_jl > 0 then
+                Player.rwjl(play, _jl, "剧情jl", 1)
+            end
             sendluamsg(
                 play,
                 101,
@@ -975,8 +801,19 @@ npc[502] = function(play, p2, p3, data) --在线充值
     elseif p3 == 2 then
         local je = tonumber(data)
         if je and constant.cz_jeyz[je] then
-            setplaydef(play, VarCfg.U_czyz, constant.cz_jeyz[je])
-            sendluamsg(play, 101, 999, je, 7, "")
+            local czlb = json2tbl(getplaydef(play, VarCfg.T_czlb))
+            if type(czlb) ~= "table" then
+                czlb = {}
+            end
+            if not czlb["cz502_" .. tostring(je)] and querymoney(play, 22) >= je then
+                changemoney(play, 22, "-", je, "礼包积分", true)
+                czlb = _cz502_apply_reward(play, je, nil, czlb)
+                setplaydef(play, VarCfg.T_czlb, tbl2json(czlb))
+                sendluamsg(play, 101, 502, 0, 0, getplaydef(play, VarCfg.T_czlb))
+            else
+                setplaydef(play, VarCfg.U_czyz, constant.cz_jeyz[je])
+                sendluamsg(play, 101, 999, je, 7, "")
+            end
         end
     elseif p3 == 3 then
         local je = tonumber(data)
@@ -2104,5 +1941,20 @@ for npcId, handler in pairs(npc) do
 end
 
 return npc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

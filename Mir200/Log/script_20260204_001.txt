@@ -2,3 +2,5 @@
 
 [2026-02-04 02:05:40:498] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 37372, CurPlayThreadId: 37372
 
+[2026-02-04 04:40:33:915] LuaNPC:玩家名字 ID:999999999 执行 sendability player:玩家名字 耗时：31; NpcThreadId: 37372, CurPlayThreadId: 37372
+

@@ -285,11 +285,68 @@ function stdmodefunc35(play, item) --藏宝图
     -- changeitemname(play,-2,detail.item.."["..map.map_name..","..map.map_x..","..map.map_y.."]",itemobj)
 
 end
-function stdmodefunc36(play, item) --海盗宝箱
+function stdmodefunc36(play, item) --海盗宝箱  海盗眼罩  海盗眼罩 10%、90% 金币*1w  10抽必出也只能出一个海盗眼罩
+    local rec = json2tbl(getplaydef(play, VarCfg["T_物品使用记录"]))
+    if type(rec) ~= "table" then
+        rec = {}
+    end
+    rec.box36_count = (rec.box36_count or 0) + 1
+    local gotMask = rec.box36_mask == 1
+    local giveMask = false
+    if not gotMask then
+        if (rec.box36_count % 10) == 0 then
+            giveMask = true
+        else
+            giveMask = math.random(100) <= 10
+        end
+    end
+
+    if giveMask then
+        rec.box36_mask = 1
+        giveitem(play, "海盗眼罩", 1)
+        Player.sendmsgEx(play, "恭喜获得 海盗眼罩#57")
+    else
+        changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, "+", 10000, "海盗宝箱", true)
+    end
+
+    setplaydef(play, VarCfg["T_物品使用记录"], tbl2json(rec))
+    delitembymakeindex(play, getiteminfo(play, item, 1), 1)
 end
-function stdmodefunc37(play, item) --船长的宝藏
+function stdmodefunc37(play, item) --船长的宝藏  开启随机获得以下奖励之一：金币88w、元宝8w、五行石*5
+    local roll = math.random(3)
+    if roll == 1 then
+        changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, "+", 880000, "船长的宝藏", true)
+    elseif roll == 2 then
+        changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, "+", 80000, "船长的宝藏", true)
+    else
+        giveitem(play, "五行石", 5)
+    end
+    delitembymakeindex(play, getiteminfo(play, item, 1), 1)
 end
-function stdmodefunc38(play, item) --海贼王装备随机宝箱
+function stdmodefunc38(play, item) --海贼王装备随机宝箱  路飞的草帽 索隆的佩刀 乌索普的弹弓 每个开一个不会重复
+    local rec = json2tbl(getplaydef(play, VarCfg["T_物品使用记录"]))
+    if type(rec) ~= "table" then
+        rec = {}
+    end
+    rec.box38 = type(rec.box38) == "table" and rec.box38 or {}
+
+    local pool = {"路飞的草帽", "索隆的佩刀", "乌索普的弹弓"}
+    local missing = {}
+    for _, name in ipairs(pool) do
+        if not rec.box38[name] then
+            table.insert(missing, name)
+        end
+    end
+    if #missing == 0 then
+        Player.sendmsgEx(play, "已获得全部海贼王装备，无法再开启#57")
+        return false
+    end
+
+    local reward = missing[math.random(#missing)]
+    giveitem(play, reward, 1)
+    rec.box38[reward] = 1
+    setplaydef(play, VarCfg["T_物品使用记录"], tbl2json(rec))
+    delitembymakeindex(play, getiteminfo(play, item, 1), 1)
 end
 function stdmodefunc39(play, item) --特殊丹药
     local idx = getstditeminfo(getiteminfo(play, item, 2), 8)
@@ -303,19 +360,74 @@ function stdmodefunc39(play, item) --特殊丹药
         addbuff(play, 20113)
     end
 end
+local function _apply_dan40_attr(play, rec)
+    if type(rec) ~= "table" then
+        delattlist(play, "特殊丹药")
+        return
+    end
+    local attrs = {}
+    local v1 = rec["dan40_1"] or 0
+    local v2 = rec["dan40_2"] or 0
+    local v3 = rec["dan40_3"] or 0
+    local v4 = rec["dan40_4"] or 0
+    local v5 = rec["dan40_5"] or 0
+    local v6 = rec["dan40_6"] or 0
+    local v7 = rec["dan40_7"] or 0
+
+    if v1 > 0 then attrs[4] = v1 end                  --攻击
+    if v2 > 0 then attrs[36] = v2 end                 --防御
+    if v3 > 0 then attrs[1] = v3 * 10 end             --生命
+    if v4 > 0 then attrs[242] = v4 end                --打怪爆率
+    if v5 > 0 then attrs[22] = v5 end                 --暴击伤害
+    if v6 > 0 then
+        attrs[200] = v6                               --对怪攻速
+        attrs[201] = v6                               --对人攻速
+    end
+    if v7 > 0 then attrs[244] = v7 * 100 end          --切割
+
+    if next(attrs) then
+        local attrsstr = Player.getAttrTableToStr(attrs)
+        addattlist(play, "特殊丹药", "=", attrsstr, 1)
+    else
+        delattlist(play, "特殊丹药")
+    end
+end
+
+local function Login_dan40(play)
+    local rec = json2tbl(getplaydef(play, VarCfg["T_物品使用记录"]))
+    _apply_dan40_attr(play, rec)
+end
+GameEvent.add(EventCfg.onLogin, Login_dan40, "Login_dan40")
+
 function stdmodefunc40(play, item) --特殊丹药
     local idx = getstditeminfo(getiteminfo(play, item, 2), 8)
-    if idx == 1 then
-        
-    elseif idx == 2 then
-        
-    elseif idx == 3 then
-        
-    elseif idx == 4 then
-    elseif idx == 5 then
-    elseif idx == 6 then
-        
+    local rec = json2tbl(getplaydef(play, VarCfg["T_物品使用记录"]))
+    if type(rec) ~= "table" then
+        rec = {}
     end
-    
+
+    local max_map = { [1]=1000, [2]=300, [3]=1000, [4]=100, [5]=10, [6]=10, [7]=1000 }
+    local key = "dan40_" .. tostring(idx)
+    local max = max_map[idx]
+    if not max then
+        return
+    end
+    local cur = rec[key] or 0
+    if cur >= max then
+        Player.sendmsgEx(play, "已达到该丹药使用上限#57")
+        return true
+    end
+
+    rec[key] = cur + 1
+
+    _apply_dan40_attr(play, rec)
+    setplaydef(play, VarCfg["T_物品使用记录"], tbl2json(rec))
+    delitembymakeindex(play, getiteminfo(play, item, 1), 1)
 end
+
+    
+
+
+
+
 

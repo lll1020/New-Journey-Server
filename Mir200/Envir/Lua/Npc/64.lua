@@ -156,7 +156,10 @@ function Login_lszh(play)
             Player.updateSomeAddr(play,nil, _config.config.wy.det[T_data.ls[""..i]].attr)
         end
     end
-    Player.updateSomeAddr(play,nil, _config.config.ls[T_data.dqzh].attr_give)
+    if T_data.dqzh and _config.config.ls[T_data.dqzh] then
+        Player.updateSomeAddr(play,nil, _config.config.ls[T_data.dqzh].attr_give)
+    end
+    
     Buff[105](play,1)
 end
 GameEvent.add(EventCfg.onLogin, Login_lszh, "¡È ﬁ’ŸªΩ")
@@ -167,7 +170,7 @@ function npc.lscf(play,zt,Damage,Target)
     local T_data = Player.getJsonTableByVar(play, VarCfg["T_¡È ﬁ"])
     T_data.ls = T_data.ls or {}
     
-    if not T_data.dqzh then
+    if not T_data.dqzh or not _config.config.ls[T_data.dqzh] then
         return 0
     end
     local Tlg_data = Player.getJsonTableByVar(play, VarCfg["T_¡È∏˘"])

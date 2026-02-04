@@ -111,7 +111,19 @@ function npc.link(play,npcid,ew,aid,data)
                 Player.sendmsgEx(play, "首次解锁仙法槽位，不消耗材料#57")
             end
 
-            if not is_first then
+            local force_xianpin = false
+            if tonumber(aid) == 2 then
+                local need = {{"仙品仙法卷轴",1}}
+                local name, num = Player.checkItemNumByTable(play, need)
+                if name then
+                    Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+                    return
+                end
+                Player.takeItemByTable(play, need, ",天书仙法", nil)
+                force_xianpin = true
+            end
+
+            if not is_first and not force_xianpin then
                 local cost_cfg = cfg.cost
                 if cost_cfg then
                     local name, num = Player.checkItemNumByTable(play, cost_cfg[1])
@@ -129,8 +141,13 @@ function npc.link(play,npcid,ew,aid,data)
                 end
             end
 
-            local randomNum = ransjstr(cfg.weight, 1, 3)
-            randomNum = tonumber(randomNum)
+            local randomNum
+            if force_xianpin then
+                randomNum = 5
+            else
+                randomNum = ransjstr(cfg.weight, 1, 3)
+                randomNum = tonumber(randomNum)
+            end
 
             local idx = math.random(1,#cfg.details[randomNum])
             if T_data["caowei"][slot_key] then
@@ -962,6 +979,8 @@ end
 GameEvent.add(EventCfg.onTakeOnEx, _onTakeOnEx, "天书初始化")
 
 return npc
+
+
 
 
 

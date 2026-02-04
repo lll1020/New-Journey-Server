@@ -5,33 +5,33 @@ npc = {}
 function npc.main(play,npcid)
     local zhid = tonumber(getconst(play,"<$USERACCOUNT>"))
     if constant.pz_htqx[zhid] or getconst(play, '<$SERVERNAME>') == "" or getconst(play, '<$SERVERNAME>') == "²âÊÔÇø" then
-        release_print("-----------------------------")
-        release_print(getbaseinfo(play,3).." "..getbaseinfo(play,4).." "..getbaseinfo(play,5))
-        -- say(play,[[<Img|id=ui_1|x=0.0|y=-1.0|width=800|height=600|img=public/bg_npc_01.png|bg=1|esc=1|move=0|reset=1|show=0|scale9l=15|scale9r=15|scale9t=15|scale9b=15|loadDelay=1>
-        --     <Layout|id=ui_2|x=801.0|y=0.0|width=80|height=80|link=@exit>
-        --     <Button|id=ui_3|x=794|y=0.0|width=26|height=42|nimg=public/1900000510.png|pimg=public/1900000511.png|color=255|size=18|link=@exit>
-        --     <EquipShow|id=ui_27|x=0|y=500|index=71|showtips=1|link=@½Å±¾ÃüÁî>
-        --     <EquipShow|id=ui_28|x=50|y=500|index=72|showtips=1|link=@½Å±¾ÃüÁî>
-        --     <EquipShow|id=ui_29|x=100|y=500|index=73|showtips=1|link=@½Å±¾ÃüÁî>
-        --     <EquipShow|id=ui_30|x=150|y=500|index=17|showtips=1|link=@½Å±¾ÃüÁî>
-        --     <EquipShow|id=ui_300|x=200|y=500|index=87|showtips=1|link=@½Å±¾ÃüÁî>
-        --     <EquipShow|id=ui_301|x=250|y=500|index=104|showtips=1|link=@½Å±¾ÃüÁî>
+        -- release_print("-----------------------------")
+        -- release_print(getbaseinfo(play,3).." "..getbaseinfo(play,4).." "..getbaseinfo(play,5))
+        say(play,[[<Img|id=ui_1|x=0.0|y=-1.0|width=800|height=600|img=public/bg_npc_01.png|bg=1|esc=1|move=0|reset=1|show=0|scale9l=15|scale9r=15|scale9t=15|scale9b=15|loadDelay=1>
+            <Layout|id=ui_2|x=801.0|y=0.0|width=80|height=80|link=@exit>
+            <Button|id=ui_3|x=794|y=0.0|width=26|height=42|nimg=public/1900000510.png|pimg=public/1900000511.png|color=255|size=18|link=@exit>
+            <EquipShow|id=ui_27|x=0|y=500|index=71|showtips=1|link=@½Å±¾ÃüÁî>
+            <EquipShow|id=ui_28|x=50|y=500|index=72|showtips=1|link=@½Å±¾ÃüÁî>
+            <EquipShow|id=ui_29|x=100|y=500|index=73|showtips=1|link=@½Å±¾ÃüÁî>
+            <EquipShow|id=ui_30|x=150|y=500|index=17|showtips=1|link=@½Å±¾ÃüÁî>
+            <EquipShow|id=ui_300|x=200|y=500|index=87|showtips=1|link=@½Å±¾ÃüÁî>
+            <EquipShow|id=ui_301|x=250|y=500|index=104|showtips=1|link=@½Å±¾ÃüÁî>
 
-        --     <Button|id=ui_100|x=150|y=450|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=llxf²âÊÔ|link=@ggna,24>
-        --     <Button|id=ui_101|x=350|y=450|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=²âÊÔ×°±¸|link=@ggna,23>
+            <Button|id=ui_100|x=150|y=450|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=llxf²âÊÔ|link=@ggna,24>
+            <Button|id=ui_101|x=350|y=450|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=²âÊÔ×°±¸|link=@ggna,23>
 
-        --     <Button|id=ui_39|x=18|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=ÎäÁÖÃËÖ÷¿ªÊ¼|link=@jqr_ddzbks,20>
-        --     <Button|id=ui_40|x=100|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=ÎäÁÖÃËÖ÷½áÊø|link=@jqr_ddzbjs,21>
-        --     <Button|id=ui_41|x=200|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=Õæ¼Ù¼¦°®Ä½¿ªÊ¼|link=@jqr_yjxbks,22>
-        --     <Button|id=ui_42|x=300|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=Õæ¼Ù¼¦°®Ä½½áÊø|link=@jqr_yjxbjs,23>
-        --     <Button|id=ui_43|x=400|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=ÕóÓª¶Ô¿¹¿ªÊ¼|link=@jqr_zydkks,24>
-        --     <Button|id=ui_44|x=500|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=ÕóÓª¶Ô¿¹½áÊø|link=@jqr_zydkjs,25>
+            <Button|id=ui_39|x=18|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=ÎäÁÖÃËÖ÷¿ªÊ¼|link=@jqr_ddzbks,20>
+            <Button|id=ui_40|x=100|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=ÎäÁÖÃËÖ÷½áÊø|link=@jqr_ddzbjs,21>
+            <Button|id=ui_41|x=200|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=Õæ¼Ù¼¦°®Ä½¿ªÊ¼|link=@jqr_yjxbks,22>
+            <Button|id=ui_42|x=300|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=Õæ¼Ù¼¦°®Ä½½áÊø|link=@jqr_yjxbjs,23>
+            <Button|id=ui_43|x=400|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=ÕóÓª¶Ô¿¹¿ªÊ¼|link=@jqr_zydkks,24>
+            <Button|id=ui_44|x=500|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=ÕóÓª¶Ô¿¹½áÊø|link=@jqr_zydkjs,25>
 
 
-        --     <Button|id=ui_45|x=500|y=150|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=¹¥É³¿ªÊ¼|link=@ggna,21>
-        --     <Button|id=ui_46|x=700|y=150|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=Æ®×Ö²âÊÔ|link=@ggn,14>
+            <Button|id=ui_45|x=500|y=150|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=¹¥É³¿ªÊ¼|link=@ggna,21>
+            <Button|id=ui_46|x=700|y=150|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=Æ®×Ö²âÊÔ|link=@ggn,14>
 
-        --         ]])
+                ]])
     end
 
 end
@@ -498,7 +498,8 @@ function ggna(play,id)
         -- item_json = tbl2json(item_json)
         -- -- release_print(type(item_json))
         -- setitemcustomabil(play, itemobj, item_json)
-        Player.setJsonVarByTable(play, VarCfg["T_¿³Ê÷ÏµÍ³"], {})
+        -- Player.setJsonVarByTable(play, VarCfg["T_¿³Ê÷ÏµÍ³"], {})
+        setplaydef(play, VarCfg.T_czlb,"{}")
 
 
     end
