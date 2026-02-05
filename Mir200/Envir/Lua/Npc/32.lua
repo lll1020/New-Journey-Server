@@ -5,9 +5,111 @@ npc = {}
 
 local _config = Guard.getConfig("npc_32")
 
+-- 备注：获取境界修炼等级
+local function _zs_get_jingjie_level(play)
+    local cfg = VarCfg["U_境界修炼"]
+    if type(cfg) == "table" then
+        return getplaydef(play, cfg[1]) or 0
+    end
+    return 0
+end
+
+-- 备注：检查灵根是否激活（from~to）
+local function _zs_has_linggen(play, from, to)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
+    local levels = data.level or {}
+    for i = from, to do
+        if levels[tostring(i)] == nil then
+            return false
+        end
+    end
+    return true
+end
+
+-- 备注：检查灵根是否达到指定等级（from~to）
+local function _zs_has_linggen_level(play, from, to, minLevel)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
+    local levels = data.level or {}
+    for i = from, to do
+        if (levels[tostring(i)] or 0) < minLevel then
+            return false
+        end
+    end
+    return true
+end
+
+-- 备注：转生阶段前置条件
+local function _zs_check_stage_req(play, stage)
+    if stage == 1 then
+        if _zs_get_jingjie_level(play) < 9 then
+            Player.sendmsgEx(play, "需境界达到炼气大圆满")
+            return false
+        end
+    elseif stage == 2 then
+        if (getbaseinfo(play, 6) or 0) < 60 then
+            Player.sendmsgEx(play, "需等级达到60级")
+            return false
+        end
+        if _zs_get_jingjie_level(play) < 10 then
+            Player.sendmsgEx(play, "需境界达到筑基境")
+            return false
+        end
+    elseif stage == 3 then
+        local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
+        local levels = data.level or {}
+        if (levels["4"] or 0) < 5 then
+            Player.sendmsgEx(play, "需火灵根达到LV5")
+            return false
+        end
+        if _zs_get_jingjie_level(play) < 14 then
+            Player.sendmsgEx(play, "需境界达到金丹前期")
+            return false
+        end
+    elseif stage == 4 then
+        if not _zs_has_linggen(play, 1, 5) then
+            Player.sendmsgEx(play, "需激活五行灵根")
+            return false
+        end
+        if _zs_get_jingjie_level(play) < 17 then
+            Player.sendmsgEx(play, "需境界达到金丹大圆满")
+            return false
+        end
+    elseif stage == 5 then
+        if not _zs_has_linggen(play, 1, 10) then
+            Player.sendmsgEx(play, "需激活全部灵根")
+            return false
+        end
+        if _zs_get_jingjie_level(play) < 19 then
+            Player.sendmsgEx(play, "需境界达到元婴中期")
+            return false
+        end
+    elseif stage == 6 then
+        if not _zs_has_linggen_level(play, 1, 5, 10) then
+            Player.sendmsgEx(play, "需五行灵根全部满级")
+            return false
+        end
+        if _zs_get_jingjie_level(play) < 29 then
+            Player.sendmsgEx(play, "需境界达到渡劫大圆满")
+            return false
+        end
+    end
+    return true
+end
+
 function npc.main(play,npcid)
     local data = {}
-    data["level"] = getplaydef(play, VarCfg["U_转生等级"])
+    local level = getplaydef(play, VarCfg["U_转生等级"])
+    data["level"] = level
+    if level > 0 then
+        local config = _config.details[level]
+        if config then
+            data["stage"] = config.level
+            data["x_level"] = config.x_level
+        else
+            data["stage"] = math.floor((level - 1) / 10) + 1
+            data["x_level"] = ((level - 1) % 10) + 1
+        end
+    end
     sendluamsg(play,100,npcid,0,0,tbl2json(data))
 end
 
@@ -39,6 +141,13 @@ function npc.link(play,npcid,ew,aid)
             Player.sendmsgEx(play, "配置异常，请联系管理员#57")
             return
         end
+        local stage = config.level or math.floor((level - 1) / 10) + 1
+        local step = config.x_level or ((level - 1) % 10) + 1
+        if step == 1 then
+            if not _zs_check_stage_req(play, stage) then
+                return
+            end
+        end
         local name, num = Player.checkItemNumByTable(play, config.cost)
         if name then
             Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
@@ -46,11 +155,13 @@ function npc.link(play,npcid,ew,aid)
         end
         Player.takeItemByTable(play, config.cost, ",转生",nil)
         setplaydef(play, VarCfg["U_转生等级"], level)
-        Player.sendmsgEx(play, "升级成功，当前等级为"..config.x_level)
+        Player.sendmsgEx(play, "升级成功，当前转生为"..stage.."阶"..step.."级")
+        delattlist(play, "转生")
+        Login_zsattr(play)
         sendluamsg(play,100,npcid,1,0,"")
-        if config.x_level == 10 then
+        if step == 10 then
             renewlevel(play,1,0,0)
-            Player.sendmsgEx(play, "转生成功")
+            Player.sendmsgEx(play, "转生成功，当前转生为"..stage.."阶")
             Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
         end
     end

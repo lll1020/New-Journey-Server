@@ -917,7 +917,7 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
             end
             Login_msg(play,18,Gold,Gold*100)
         elseif MoneyId == 21 then  --直拉礼包
-            if Gold == 98 then
+            if Gold == 88 then
                 if getflagstatus(play,constant.BS_mztq) == 0 then
                     Player.title_give(play, teshudata["anniu_504"].ch,1)
                     Player.rwjl(play, teshudata["anniu_504"].give, "快人一步",1,1000)

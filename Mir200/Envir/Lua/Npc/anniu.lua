@@ -728,7 +728,7 @@ npc[504] = function(play, p2, p3, data) --快人一步
         sendluamsg(play, 101, 504, 0, 0, '{"mztq":' .. getflagstatus(play, VarCfg.BS_mztq) .. "}")
     elseif p2 == 1 then
         if getflagstatus(play, VarCfg.BS_mztq) == 0 then
-            sendluamsg(play, 101, 999, 98, 21, "")
+            sendluamsg(play, 101, 999, 88, 21, "")
         else
             sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>每人只能购买一次</font>","Type":9}')
         end

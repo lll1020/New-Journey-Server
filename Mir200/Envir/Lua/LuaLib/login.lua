@@ -66,6 +66,7 @@ function Login.main(play)
     end
     --天书  杀意值
     shaguai.jia(play,25)
+    shaguai.jia(play,32)
 
     
 

@@ -812,13 +812,73 @@ shaguai = {
 		Player.sendmsgEx(play,  (config.name or "任务").."击杀+"..1 .." ( "..sg_data[key].."/"..(config.num or 0).." )#57")
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
+	["32"] = function(play,mob)      --转生材料掉落（按大陆）
+		local map = getbaseinfo(play,3)
+		local dl = daluditu and daluditu[map] or 0
+		if not dl or dl <= 0 or dl > 6 then
+			return
+		end
+		local items = {"","二重转生石","三重转生石","四重转生石","五重转生石","六重转生石"}
+		local item = items[dl]
+		if not item or item == "" then
+			return
+		end
+		local data = json2tbl(getplaydef(play, VarCfg.T_zscl))
+		data.drop_cnt = data.drop_cnt or {}
+		local cnt = data.drop_cnt[item] or 0
+		local cz = getplaydef(play, VarCfg["U_真实充值"]) or 0
+		local rate = 0
+
+		if dl == 1 then
+			return
+		elseif dl == 2 then
+			-- 前10个 1/50，后10个 1/150
+			if cnt < 10 then
+				rate = 50
+			else
+				rate = 150
+			end
+		elseif dl == 3 then
+			if cz > 0 then
+				rate = math.random(50,100)
+			else
+				rate = math.random(150,200)
+			end
+		elseif dl == 4 or dl == 5 or dl == 6 then
+			if cz > 110 then
+				rate = math.random(80,100)
+			elseif cz >= 10 then
+				rate = math.random(100,150)
+			else
+				rate = math.random(500,600)
+			end
+		end
+
+		if rate > 0 and math.random(1, rate) == 1 then
+			if shaguai.temp_drop(play, mob, item) then
+				data.drop_cnt[item] = cnt + 1
+				setplaydef(play, VarCfg.T_zscl, tbl2json(data))
+			end
+		end
+	end,
 }
+
+-- 备注：临时掉落物品（封装 additemtodroplist）
+shaguai.temp_drop = function(play, mob, itemname)
+    if not (play and mob and itemname and itemname ~= "") then
+        return false
+    end
+    additemtodroplist(play, mob, itemname)
+    return true
+end
 
 shaguai.jia = function(play, id)
 	local chuli = json2tbl(getplaydef(play, VarCfg.T_sgcf))
 	chuli["" .. id] = true
 	setplaydef(play, VarCfg.T_sgcf, tbl2json(chuli))
 end
+
+
 
 shaguai.jian = function(play, id)
 	local chuli = json2tbl(getplaydef(play, VarCfg.T_sgcf))
