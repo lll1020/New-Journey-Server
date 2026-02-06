@@ -377,7 +377,7 @@ function Buff.login(play)
             count["1"] = 1
         end
         local T_data_cs = Player.getJsonTableByVar(play, VarCfg["T_Ê×³åÀñ°ü"])
-        if T_data["Ê×³ä"] == 1 or T_data["²¹³ä"] == 1 or hasbuff(play,20001) then
+        if T_data_cs["Ê×³ä"] == 1 or T_data_cs["²¹³ä"] == 1 or hasbuff(play,20001) then
             count["2"] = 1
         end
         if getflagstatus(play,VarCfg.BS_mztq) == 1 or hasbuff(play,20002) then

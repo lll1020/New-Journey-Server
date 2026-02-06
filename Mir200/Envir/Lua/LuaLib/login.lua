@@ -20,6 +20,7 @@ function Login.main(play)
         setplaydef(play,VarCfg.T_hsdg, '{"1_1_1":1,"1_1_2":1,"1_1_3":1,"1_2_1":1,"1_2_2":1,"1_3_1":1,"1_3_2":1,"1_3_3":1}')--回收打勾
         setplaydef(play,VarCfg.T_dljq,"{}")--各剧情JSON
         setplaydef(play,VarCfg.T_czlb,"{}")--各种礼包
+        setplaydef(play,VarCfg["T_首冲礼包"],"{}")--首冲礼包
         setplaydef(play,VarCfg.T_jls,"{}")--记录石
         setplaydef(play,VarCfg.T_zxrw,"{}")--支线任务序号
         setplaydef(play,VarCfg.T_rwjl,"{}")--任务领取记录

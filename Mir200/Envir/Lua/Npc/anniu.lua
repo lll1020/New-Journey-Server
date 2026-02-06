@@ -630,51 +630,86 @@ npc[501] = function(play, p2, p3, data) --首充礼包
         tmp_data["time_data"] = getsysvar(VarCfg["G_开区天数"])
         sendluamsg(play, 101, 501, 0, 0, tbl2json(tmp_data))
     elseif p2 == 1 then
+        local cfg = teshudata["anniu_501"]
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
         local time_data = getsysvar(VarCfg["G_开区天数"])
-        if T_data["ok"] and T_data["ok"] == 1 then
-            --时装
-            --半月弯刀
-            --天选之人
-            if T_data["首充"] == 1 then
-                if not T_data["other_lb"] then
-                    T_data["other_lb"] = 1
-                    T_data["jq_time"] = time_data
-                    addskill(play, 25, 3)
-                    Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
-                    sendluamsg(play, 101, 1005, 0, 0, "lqcg")
-
-                    local T_data_fj = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
-                    T_data_fj.ratio = 2
-                    Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data_fj)
-                elseif T_data["other_lb"] and T_data["other_lb"] == 1 and T_data["jq_time"] ~= time_data then
-                    T_data["other_lb"] = 2
-                    Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
-                    sendluamsg(play, 101, 1005, 0, 0, "lqcg")
-                elseif T_data["other_lb"] and T_data["other_lb"] == 2 and T_data["jq_time"] ~= time_data then
-                    T_data["other_lb"] = 3
-                    Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
-                    sendluamsg(play, 101, 1005, 0, 0, "lqcg")
-                else
-                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
-                end
-            elseif T_data["补充"] == 1 then
-                if not T_data["other_lb"] or T_data["other_lb"] ~= 1 then
-                    T_data["other_lb"] = 1
-                    addskill(play, 25, 3)
-                    Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
-                    sendluamsg(play, 101, 1005, 0, 0, "lqcg")
-                else
-                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
-                end
-            end
-        else
-            if teshudata["anniu_501"].endtime < time_data then
+        if not (T_data["ok"] and T_data["ok"] == 1) then
+            if cfg and cfg.endtime and cfg.endtime < time_data then
                 sendluamsg(play, 101, 999, 3, 21, "")
             else
                 sendluamsg(play, 101, 999, 6, 21, "")
             end
+            return
         end
+
+        local endtime = cfg and cfg.endtime or 0
+        if T_data["首充"] == 1 and time_data <= endtime then
+            local list = cfg and cfg.details and cfg.details["首充"] or {}
+            local max = #list
+            if max <= 0 then
+                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>礼包配置异常...</font>","Type":9}')
+                return
+            end
+            if not T_data["buy_day"] then
+                T_data["buy_day"] = time_data
+            end
+            local idx = (time_data - (T_data["buy_day"] or time_data)) + 1
+            if idx < 1 then idx = 1 end
+            if idx > max then
+                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
+                return
+            end
+            if T_data["jq_time"] and T_data["jq_time"] == time_data then
+                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>今日已领取...</font>","Type":9}')
+                return
+            end
+            T_data["other_lb"] = idx
+            T_data["jq_time"] = time_data
+            Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
+
+            local reward = list[idx]
+            if reward and #reward > 0 then
+                Player.rwjl(play, reward, "首充礼包", 1, 1000)
+            end
+            if idx == 1 then
+                addskill(play, 25, 3)
+                local T_data_fj = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
+                T_data_fj.ratio = 2
+                Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data_fj)
+            end
+
+            sendluamsg(play, 101, 1005, 0, 0, "lqcg")
+            return
+        end
+
+        if T_data["补充"] == 1 and time_data > endtime then
+            local list = cfg and cfg.details and cfg.details["补充"] or {}
+            if not list or #list <= 0 then
+                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>礼包配置异常...</font>","Type":9}')
+                return
+            end
+            if T_data["bc_ok"] == 1 then
+                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
+                return
+            end
+            T_data["bc_ok"] = 1
+            T_data["jq_time"] = time_data
+            Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
+
+            local reward = list[1]
+            if reward and #reward > 0 then
+                Player.rwjl(play, reward, "首充补充礼包", 1, 1000)
+            end
+            addskill(play, 25, 3)
+            local T_data_fj = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
+            T_data_fj.ratio = 2
+            Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data_fj)
+            
+            sendluamsg(play, 101, 1005, 0, 0, "lqcg")
+            return
+        end
+
+        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>未满足领取条件...</font>","Type":9}')
     end
 end
 ---在线充值
