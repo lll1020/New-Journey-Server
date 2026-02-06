@@ -171,6 +171,14 @@ local function _ywl_filter_rewards(play, list)
     end
     return out
 end
+--功能:检查章节是否解锁
+local function _ywl_is_chapter_open(play, i, j)
+    if not i or not j or j <= 1 then
+        return true
+    end
+    local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
+    return T_ywl["jl_" .. i .. "_" .. (j - 1)] == 1
+end
 
 npc[11] = function(play, p2, p3, data) --异闻录
     -- sj.i 大陆  sj.j 章节  sj.k 暂时不用  sj.z 剧情
@@ -190,6 +198,10 @@ npc[11] = function(play, p2, p3, data) --异闻录
             and sj.j <= #npc_xyl[sj.i]
             and sj.z <= #npc_xyl[sj.i][sj.j].jq
         then
+            if not _ywl_is_chapter_open(play, sj.i, sj.j) then
+                sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>章节未解锁...</font>","Type":9}')
+                return
+            end
             if Player.dl_sz_notip(play, sj.i) then
                 local shuju = npc_xyl[sj.i][sj.j].jq[sj.z]
                 if shuju.yd[1] == 0 then
@@ -220,6 +232,10 @@ npc[11] = function(play, p2, p3, data) --异闻录
     elseif p2 == 2 then --一页任务奖励
         local sj = json2tbl(data)
         if sj.i and sj.j and sj.i > 0 and sj.j > 0 and sj.i <= #npc_xyl and sj.j <= #npc_xyl[sj.i] then
+            if not _ywl_is_chapter_open(play, sj.i, sj.j) then
+                sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>章节未解锁...</font>","Type":9}')
+                return
+            end
             local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
             if T_ywl["jl_" .. sj.i .. "_" .. sj.j] and T_ywl["jl_" .. sj.i .. "_" .. sj.j] == 1 then
                 sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>已领取过了...</font>","Type":9}')
@@ -257,6 +273,10 @@ npc[11] = function(play, p2, p3, data) --异闻录
             and sj.j <= #npc_xyl[sj.i]
             and sj.z <= #npc_xyl[sj.i][sj.j].jq
         then
+            if not _ywl_is_chapter_open(play, sj.i, sj.j) then
+                sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>章节未解锁...</font>","Type":9}')
+                return
+            end
             local shuju = npc_xyl[sj.i][sj.j].jq[sj.z]
             local T_dljq = json2tbl(getplaydef(play, VarCfg.T_dljq))
             local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
@@ -1641,6 +1661,18 @@ for npcId, handler in pairs(npc) do
 end
 
 return npc
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
