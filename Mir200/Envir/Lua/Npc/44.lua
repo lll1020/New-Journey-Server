@@ -343,7 +343,15 @@ function Planting.plant(play, record, params, now)
     plot.seedId = seedId
     plot.state = "growing"
     plot.plantedAt = startAt
-    plot.finishAt = startAt + (cfg.matureTime or 0)
+    local mature = (cfg.matureTime or 0)
+    if mature > 0 and getplaydef(play,"N$buff306") == 1 then
+        -- 黑化肥会挥发：仙草成熟时间加快30%
+        mature = math.ceil(mature * 0.7)
+        if mature < 1 then
+            mature = 1
+        end
+    end
+    plot.finishAt = startAt + mature
     plot.canSteal = cfg.canSteal and true or false
     plot.product = cloneRewardList(cfg.product)
     return true, {plot = plot}
@@ -596,6 +604,24 @@ end
 
 local Refine = {}
 
+local function refineCostWithBuff(play, cost)
+    if getplaydef(play,"N$buff306") ~= 1 then
+        return cost
+    end
+    -- 黑化肥会挥发：炼丹消耗-50%
+    local out = {}
+    for _, info in ipairs(cost or {}) do
+        local name, num = info[1], info[2] or 0
+        local n = math.ceil(num * 0.5)
+        if num > 0 and n < 1 then
+            n = 1
+        end
+        out[#out + 1] = {name, n}
+    end
+    return out
+end
+
+
 local function hasAllRecipes(record)
     for name in pairs(RefineCfg.recipes or {}) do
         if not record.refine.collection[name] then
@@ -614,11 +640,12 @@ function Refine.start(play, record, params, now)
     if (record.refine.lastTime or 0) + cd > now then
         return false, "炼丹炉冷却中"
     end
-    local ok, lack = Common.checkCost(play, recipe.cost or recipe.costCurrency)
+    local cost = refineCostWithBuff(play, recipe.cost or recipe.costCurrency)
+    local ok, lack = Common.checkCost(play, cost)
     if not ok then
         return false, string.format("%s不足", lack or "cost")
     end
-    Common.payCost(play, recipe.cost or recipe.costCurrency, "xianfu_refine")
+    Common.payCost(play, cost, "xianfu_refine")
     record.refine.lastTime = now
     record.refine.collection[params.recipeId] = true
     local reward = cloneRewardList(recipe.product or {{params.recipeId, 1}})
@@ -1078,6 +1105,10 @@ function npc.link(play, npcid, p2, p3, msgData)
 end
 
 return npc
+
+
+
+
 
 
 

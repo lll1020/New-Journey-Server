@@ -236,6 +236,166 @@ Buff = {
             setplaydef(play,VarCfg.S_bufffuhuo,tbl2json(data))
         end
     end,
+    [303] = function(play,zt,Damage,Target) --诅咒傀儡：攻击怪物触发(zt=3)，10%概率上绿毒，10秒内置CD
+        if zt == 3 then
+            local now = os.time()
+            if now - (getplaydef(play,"N$buff303cd") or 0) < 10 then
+                return 0
+            end
+            if Target and math.random(100) <= 10 then
+                setplaydef(play,"N$buff303cd",now)
+                makeposion(Target,0,2,10)
+            end
+        else
+            local bl = getplaydef(play,VarCfg.S_buffgwh)
+            local data = json2tbl(bl == "" and {} or bl)
+            if zt == 1 then
+                data["303"] = true
+            elseif zt == 2 then
+                data["303"] = nil
+            end
+            setplaydef(play,VarCfg.S_buffgwh,tbl2json(data))
+        end
+    end,
+    [304] = function(play,zt,Damage,Target) --已取真经：攻击怪物触发(zt=3)，1%概率按目标最大HP的10%切割，10秒内置CD
+        if zt == 3 then
+            local now = os.time()
+            if now - (getplaydef(play,"N$buff304cd") or 0) < 10 then
+                return 0
+            end
+            if Target and math.random(100) <= 1 then
+                if not getbaseinfo(Target,ConstCfg.gbase.isplayer) then
+                    setplaydef(play,"N$buff304cd",now)
+                    humanhp(Target,"-",math.floor(getbaseinfo(Target,11)*0.1))
+                end
+            end
+        else
+            local bl = getplaydef(play,VarCfg.S_buffgjh)
+            local data = json2tbl(bl == "" and {} or bl)
+            if zt == 1 then
+                data["304"] = true
+            elseif zt == 2 then
+                data["304"] = nil
+            end
+            setplaydef(play,VarCfg.S_buffgjh,tbl2json(data))
+        end
+    end,
+    [305] = function(play,zt) --天蛇的认可：隐身效果占位，仅记录开关，具体隐身逻辑待接入
+        if zt == 1 then
+            setplaydef(play,"N$buff305",1)
+        elseif zt == 2 then
+            setplaydef(play,"N$buff305",0)
+        end
+    end,
+    [306] = function(play,zt) --黑化肥会挥发：仙草成熟/炼丹加成；仅记录开关，逻辑由炼丹/种植处读取
+        if zt == 1 then
+            setplaydef(play,"N$buff306",1)
+        elseif zt == 2 then
+            setplaydef(play,"N$buff306",0)
+        end
+    end,
+    [307] = function(play,zt) --定风珠：黄风谷/风灵珠试炼通行占位，仅记录开关
+        if zt == 1 then
+            setplaydef(play,"N$buff307",1)
+        elseif zt == 2 then
+            setplaydef(play,"N$buff307",0)
+        end
+    end,
+    [308] = function(play,zt) --金箍棒：击杀附魔记录占位，仅记录开关
+        if zt == 1 then
+            setplaydef(play,"N$buff308",1)
+        elseif zt == 2 then
+            setplaydef(play,"N$buff308",0)
+        end
+    end,
+    [309] = function(play,zt) --我是许仙：复活触发(zt=4) 1%概率不消耗复活次数，10秒内置CD
+        if zt == 4 then
+            local now = os.time()
+            if now - (getplaydef(play,"N$buff309cd") or 0) < 10 then
+                return 0
+            end
+            if math.random(100) <= 1 then
+                setplaydef(play,"N$buff309cd",now)
+                -- 标记本次复活不消耗次数（由下方立即处理一次）
+                setplaydef(play,"N$buff309_free",1)
+            end
+            if getplaydef(play,"N$buff309_free") == 1 then
+                -- 直接补回一次复活次数（避免本次消耗）
+                setplaydef(play,"N$buff309_free",0)
+                local cur = querymoney(play,15)
+                local max = querymoney(play,14)
+                if cur < max then
+                    changemoney(play,15,"+",1,"BUFF309",true)
+                end
+                changemode(play,23,999999999,querymoney(play,15))
+            end
+            return 0
+        end
+        if zt == 1 then
+            setplaydef(play,"N$buff309",1)
+        elseif zt == 2 then
+            setplaydef(play,"N$buff309",0)
+        end
+    end,
+    [310] = function(play,zt) --来去自如：传送冷却-5秒；仅记录开关，传送逻辑读取该标记
+        if zt == 1 then
+            setplaydef(play,"N$buff310",1)
+        elseif zt == 2 then
+            setplaydef(play,"N$buff310",0)
+        end
+    end,
+    [311] = function(play,zt) --头号玩家：红色仙法概率+20%；仅记录开关，抽取逻辑读取该标记
+        if zt == 1 then
+            setplaydef(play,"N$buff311",1)
+        elseif zt == 2 then
+            setplaydef(play,"N$buff311",0)
+        end
+    end,
+    [312] = function(play,zt) --丹仙秘辛：丹药持续+50%/炼丹消耗-50%；仅记录开关，丹药/炼丹逻辑读取
+        if zt == 1 then
+            setplaydef(play,"N$buff312",1)
+        elseif zt == 2 then
+            setplaydef(play,"N$buff312",0)
+        end
+    end,
+    [313] = function(play,zt) --阴阳玉佩：按时间切换属性（06-18阳：对怪攻速+10%，18-06阴：打怪爆率+10%）
+        local function _apply(mode)
+            if mode == 1 then
+                addattlist(play, "阴阳玉佩_阳", "=", "3#200#1000", 1)
+                delattlist(play, "阴阳玉佩_阴")
+            else
+                addattlist(play, "阴阳玉佩_阴", "=", "3#242#1000", 1)
+                delattlist(play, "阴阳玉佩_阳")
+            end
+        end
+        if zt == 1 then
+            local h = tonumber(os.date("%H")) or 0
+            local mode = (h >= 6 and h < 18) and 1 or 2
+            setplaydef(play,"N$buff313",1)
+            setplaydef(play,"N$buff313mode",mode)
+            _apply(mode)
+        elseif zt == 2 then
+            setplaydef(play,"N$buff313",0)
+            delattlist(play, "阴阳玉佩_阳")
+            delattlist(play, "阴阳玉佩_阴")
+        elseif zt == 3 then
+            if getplaydef(play,"N$buff313") == 1 then
+                local h = tonumber(os.date("%H")) or 0
+                local mode = (h >= 6 and h < 18) and 1 or 2
+                if getplaydef(play,"N$buff313mode") ~= mode then
+                    setplaydef(play,"N$buff313mode",mode)
+                    _apply(mode)
+                end
+            end
+        end
+    end,
+    [314] = function(play,zt) --胖娃的肚兜：奇遇概率+10%占位，仅记录开关
+        if zt == 1 then
+            setplaydef(play,"N$buff314",1)
+        elseif zt == 2 then
+            setplaydef(play,"N$buff314",0)
+        end
+    end,
     [101] = function(play,zt) --仙食坊全满
         if zt == 1 then
             addattlist(play, "仙食坊全满", "=", "3#1#8888|3#4#588|3#242#3800|3#244#4888", 1)
@@ -436,4 +596,29 @@ function Buff.tuo(play,item)
     end
 end
 return Buff
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

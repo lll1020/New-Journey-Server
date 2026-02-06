@@ -142,10 +142,31 @@ function npc.link(play,npcid,ew,aid,data)
             end
 
             local randomNum
+            local weight = cfg.weight
+            if getplaydef(play, "N$buff311") == 1 then
+                local wmap = {}
+                for token in string.gmatch(weight or "", "[^|]+") do
+                    local k, v = token:match("(%d+)#(%d+)")
+                    if k and v then
+                        wmap[tonumber(k)] = tonumber(v)
+                    end
+                end
+                if next(wmap) ~= nil then
+                    wmap[5] = (wmap[5] or 0) + 20 -- 红色仙法概率+20%
+                    local parts = {}
+                    for i = 1, 5 do
+                        if wmap[i] then
+                            table.insert(parts, i .. "#" .. wmap[i])
+                        end
+                    end
+                    weight = table.concat(parts, "|")
+                end
+            end
             if force_xianpin then
                 randomNum = 5
             else
-                randomNum = ransjstr(cfg.weight, 1, 3)
+                local max_group = (getplaydef(play, "N$buff311") == 1) and 5 or 3
+                randomNum = ransjstr(weight, 1, max_group)
                 randomNum = tonumber(randomNum)
             end
 
@@ -984,6 +1005,11 @@ end
 GameEvent.add(EventCfg.onTakeOnEx, _onTakeOnEx, "天书初始化")
 
 return npc
+
+
+
+
+
 
 
 

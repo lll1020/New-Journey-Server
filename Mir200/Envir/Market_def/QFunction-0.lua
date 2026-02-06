@@ -77,10 +77,16 @@ end
 function beginteleport(play)
     setplaydef(play,"S$dtm",getbaseinfo(play, 3))
     local sj  = os.time()
-    local bl = sj - getplaydef(play,"N$传送功能CD")
-    if bl < 5 then
-        sendmsg(play,1,'{"Msg":"请等待'..(5-bl)..'秒后在使用","FColor":56,"BColor":255,"Type":1}')
-        return false
+    local cd = 5
+    if getplaydef(play,"N$buff310") == 1 then
+        cd = math.max(0, cd - 5) -- 来去自如：传送冷却-5秒
+    end
+    if cd > 0 then
+        local bl = sj - getplaydef(play,"N$传送功能CD")
+        if bl < cd then
+            sendmsg(play,1,'{"Msg":"请等待'..(cd-bl)..'秒后在使用","FColor":56,"BColor":255,"Type":1}')
+            return false
+        end
     end
     local du = getbaseinfo(play, 3)
     if (daluditu[du] and daluditu[du] < 3) or (getplaydef(play,"N$战斗状态") < os.time()) then
@@ -1308,6 +1314,7 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
         end
 	end
 end
+
 
 
 

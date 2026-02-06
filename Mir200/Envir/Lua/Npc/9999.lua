@@ -499,7 +499,8 @@ function ggna(play,id)
         -- -- release_print(type(item_json))
         -- setitemcustomabil(play, itemobj, item_json)
         -- Player.setJsonVarByTable(play, VarCfg["T_¿³Ê÷ÏµÍ³"], {})
-        setplaydef(play, VarCfg.T_czlb,"{}")
+        -- setplaydef(play, VarCfg.T_czlb,"{}")
+        setplaydef(play,VarCfg.U_zxrw[1],21)
 
 
     end
