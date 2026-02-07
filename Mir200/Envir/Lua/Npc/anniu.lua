@@ -258,7 +258,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
             if _jl and #_jl > 0 then
                 Player.rwjl(play, _jl, "剧情jl", 1)
             end
-            sendluamsg(play, 101, 11, 3, 0, '{"dljq":' .. getplaydef(play, VarCfg.T_dljq) .. ',"zxrw":' .. getplaydef(play, VarCfg.T_zxrw) .. ',"ywl":' .. getplaydef(play, VarCfg.T_ywl) .. ',"T_tj":' .. getplaydef(play, VarCfg.T_tj) .. "}")
+            sendluamsg(play, 101, 11, 2, 2, tbl2json(sj) )
         end
     elseif p2 == 3 then --单个任务奖励
         local sj = json2tbl(data)
@@ -304,7 +304,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
                     if shuju.jl then
                         Player.rwjl(play, shuju.jl, "剧情jl", 1,0)
                     end
-                    sendluamsg(play, 101, 11, 0, 0, '{"dljq":' .. getplaydef(play, VarCfg.T_dljq) .. ',"zxrw":' .. getplaydef(play, VarCfg.T_zxrw) .. ',"ywl":' .. getplaydef(play, VarCfg.T_ywl) .. "}")
+                    sendluamsg(play, 101, 11, 2, 3, tbl2json(sj) )
                 else
                     Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>未完成[' .. shuju[1] .. ']剧情...</font>","Type":9}')
                     return
