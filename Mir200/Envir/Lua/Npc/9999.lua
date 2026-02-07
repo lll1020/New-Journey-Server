@@ -47,7 +47,7 @@ function ggn(play,id)
             else
                 confertitle(play,"狂暴之力")
                 changecustomitemvalue(play,linkbodyitem(play,73),0,"=",20,1)
-                sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+                sendmsg(play,1,'{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
             end
         end
     elseif id == "2" then
@@ -465,6 +465,218 @@ function ggna(play,id)
             giveitem(play,v,1)
         end
     elseif id == "24" then
+        -- 测试脚本：调整地图怪物密度（逐图刷小怪，9x9检测饱和）
+--         local map_list = {
+--             -- "山庄",
+--             -- "幽谷",
+--             -- "洞穴",
+--             -- "古殿",
+--             -- "山庄一",
+--             -- "幽谷一",
+--             -- "洞穴一",
+--             -- "古殿一",
+--             -- "隐藏地图二",
+--             -- "野火帮",
+--             -- "野火帮大营",
+--             -- "极光城郊",
+--             -- "神秘森林",
+--             -- "兵道古藏",
+--             -- "乱葬岗",
+--             -- "夜魔洞",
+--             -- "洞穴深处",
+--             -- "洞穴秘境",
+
+-- --             "灰界",
+-- -- "灰界南部",
+-- -- "灰界北部",
+-- -- "灰界东部",
+-- -- "灰界西部",
+-- -- "虚妄山脉",
+-- -- "鬼嘲深渊",
+-- -- "叹息旷野",
+-- -- "禁忌之海",
+-- -- "藏星海",
+-- -- "藏星外海",
+-- -- "神秘岛屿",
+-- -- "黑暗洞窟",
+-- -- "千年沉船",
+-- -- "船长室",
+-- -- "水手舱",
+-- -- "藏星内海",
+-- -- "七星岛",
+-- -- "葬星城",
+-- -- "葬星海滩",
+-- -- "葬星海滩1",
+-- -- "苍云城",
+-- -- "苍云城郊外",
+-- -- "苍云内城",
+-- -- "苍云客栈",
+-- -- "草药谷",
+-- -- "仙草田",
+-- -- "草药古深处",
+-- -- "丹道古藏",
+-- -- "酆都鬼城",
+-- -- "鬼门关",
+-- -- "黄泉路",
+-- -- "奈何桥",
+-- -- "罗酆六天",
+-- -- "十八层地狱",
+-- -- "六道轮回",
+-- -- "大唐·长安城",
+-- -- "东海龙宫",
+-- -- "黑风山",
+-- -- "黄风岭",
+-- -- "女儿国",
+-- -- "通天河",
+-- -- "狮驼岭",
+-- -- "天竺山",
+-- -- "火焰山",
+-- -- "生肖灵域",
+-- -- "灵域·一层",
+-- -- "子鼠灵域",
+-- -- "丑牛灵域",
+-- -- "寅虎灵域",
+-- -- "卯兔灵域",
+-- -- "灵域·二层",
+-- -- "辰龙灵域",
+-- -- "巳蛇灵域",
+-- -- "午马灵域",
+-- -- "未羊灵域",
+-- -- "灵域·三层",
+-- -- "申猴灵域",
+-- -- "酉鸡灵域",
+-- -- "戌狗灵域",
+-- -- "亥猪灵域",
+-- -- "灵域·秘境",
+-- -- "传说之地",
+-- -- "盘古开天",
+-- -- "羿射九日",
+-- -- "不周山",
+-- -- "女娲补天",
+-- -- "黑白无常",
+-- -- "后土娘娘",
+-- -- "真假玉帝",
+-- -- "白蛇传说",
+-- -- "灵兽谷",
+-- -- "青龙之境",
+-- -- "朱雀之境",
+-- -- "玄武之境",
+-- -- "白虎之境",
+-- -- "麒麟之境",
+-- -- "时空裂隙",
+-- -- "倚天江湖",
+-- -- "冰火岛",
+-- -- "光明顶",
+-- -- "三国乱世",
+-- -- "虎牢关",
+-- -- "赤壁",
+-- -- "水浒再临",
+-- -- "景阳冈",
+-- -- "狮子楼",
+-- -- "生命边界",
+-- -- "白骨神庙",
+-- -- "神庙暗廊",
+-- -- "诡冥墨河",
+-- -- "河神寝宫",
+-- -- "赤焰焚殿",
+-- -- "赤焰焚殿二层",
+-- -- "赤焰焚殿三层",
+-- -- "葬天旧土",
+-- -- "聊斋志异",
+-- "兰若寺",
+-- "画壁",
+-- "崂山",
+-- "罗刹海市",
+-- "敦煌遗梦",
+-- "莫高窟",
+-- "月牙泉",
+-- "玉门关",
+-- "阳关道",
+-- "世界禁墟",
+-- "大地禁墟一层",
+-- "大地禁墟二层",
+-- "大地禁墟三层",
+-- "天空禁墟一层",
+-- "天空禁墟二层",
+-- "天空禁墟三层",
+-- "海洋禁墟一层",
+-- "海洋禁墟二层",
+-- "海洋禁墟三层",
+-- "青铜禁墟一层",
+-- "青铜禁墟二层",
+-- "青铜禁墟三层",
+--         } -- TODO: 填入要调整的地图名
+--         local normal_mobs = {"枯灯客"} -- TODO: 普通怪列表
+
+--         local range = 3 -- 刷怪点随机半径
+--         local check_range = 6 -- 9x9检测半径(2*4+1)
+--         local max_fail = 40 -- 连续失败上限(饱和)
+--         local tries_per_spawn = 10 -- 每次刷怪找点尝试次数
+--         local spawn_limit = 5000 -- 每张地图单次补怪上限
+
+--         for _, map in ipairs(map_list) do
+--             local w = getmapinfo(map, 0) or 0
+--             local h = getmapinfo(map, 1) or 0
+--             if w > 0 and h > 0 then
+--                 -- 检测前先清空地图怪物
+--                 killmonsters(map, "*", 0, false)
+
+--                 local counter = {n = 0}
+--                 local added_normal = 0
+--                 local sample_count = 0
+--                 local total_ncnt = 0
+
+--                 local fail_streak = 0
+--                 local used_points = {}
+
+--                 while fail_streak < max_fail do
+--                     local rx = math.random(1, w)
+--                     local ry = math.random(1, h)
+
+--                     local key = rx.."_"..ry
+--                     if used_points[key] then
+--                         fail_streak = fail_streak + 1
+--                     else
+--                         local ok = true
+--                         for k, _ in pairs(used_points) do
+--                             local sx, sy = k:match("(%d+)_([%d]+)")
+--                             if sx and sy then
+--                                 sx = tonumber(sx)
+--                                 sy = tonumber(sy)
+--                                 if math.abs(rx - sx) <= check_range and math.abs(ry - sy) <= check_range then
+--                                     ok = false
+--                                     break
+--                                 end
+--                             end
+--                         end
+
+--                         if ok then
+--                             genmonex(map, rx, ry, normal_mobs[math.random(1, #normal_mobs)], 1, 1, 0, 54, "", 0)
+--                             used_points[key] = true
+--                             counter.n = counter.n + 1
+--                             added_normal = added_normal + 1
+--                             fail_streak = 0
+--                         else
+--                             fail_streak = fail_streak + 1
+--                         end
+--                     end
+
+--                     sample_count = sample_count + 1
+--                     total_ncnt = total_ncnt + (used_points[key] and 1 or 0)
+
+--                     if counter.n >= spawn_limit then
+--                         break
+--                     end
+--                 end
+--                     local avg_n = math.floor(total_ncnt / math.max(1, sample_count) + 0.5)
+--                     sendmsg(play, 1, "{\"Msg\":\"<font color=\\\"#00ff00\\\">地图["..map.."] 小怪补："..added_normal.." 当前平均："..avg_n.."</font>\",\"Type\":9}")
+--                     release_print("地图["..map.."] 小怪补："..added_normal)
+--                     release_print("当前平均 小怪："..avg_n)
+--             else
+--                 sendmsg(play, 1, '{"Msg":"<font color=\"#ff0000\">地图['..map..']尺寸获取失败</font>","Type":9}')
+--             end
+--         end
+--         return
         -- local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
         -- jq_data["npc_625"] = 0
         -- jq_data["npc_626"] = 0
@@ -508,3 +720,17 @@ function ggna(play,id)
 end
 
 return npc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
