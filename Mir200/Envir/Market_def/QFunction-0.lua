@@ -762,7 +762,6 @@ function playlevelup(play, level, oldlevel)
     end
     GameEvent.push(EventCfg.onPlayLevelUp, play, level, oldlevel)
 end
-
 --------------------属性改变触发-------------------
 function sendability(play)
     local sd = math.floor(getbaseinfo(play,51,243) / 4)
@@ -1235,6 +1234,14 @@ end
 
 
 function showfashion(actor)
+    local T_data = Player.getJsonTableByVar(actor, VarCfg.T_szjl)
+    T_data.dqzb = T_data.dqzb or 0
+    if T_data.dqzb > 0 then
+    else
+        Player.sendmsgEx(actor, '当前没有时装可以展示哦~')
+        setbaseinfo(actor,57,0)
+        return false
+    end
     GameEvent.push(EventCfg.onShowFashion, actor)
 end
 

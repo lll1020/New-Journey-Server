@@ -57,6 +57,7 @@ function Login.main(play)
         --TODO  初始化任务
         setplaydef(play,VarCfg.U_zxrw[1],1)
         mapmove(play,"xtc",137,138,7)
+        setbaseinfo(play,57,0)
     end
 
 

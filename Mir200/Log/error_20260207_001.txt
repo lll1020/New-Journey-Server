@@ -42,3 +42,139 @@
 [2026-02-07 03:48:49:175] NewHttpPost(0-0-0)-----------------------------------
 
 
+[2026-02-07 08:57:15:498] ---------------------线程耗时监控
+[2026-02-07 08:57:19:311] Frame-----------------------------------
+
+[2026-02-07 08:57:19:961] MainRunThread(0)-----------------------------------
+
+[2026-02-07 08:57:23:975] DbThread(6469-0)-----------------------------------
+
+[2026-02-07 08:57:28:934] BoxSellDbThread(0)-----------------------------------
+
+[2026-02-07 08:57:28:957] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-02-07 08:57:29:050] ---------------------线程耗时监控
+[2026-02-07 08:57:29:068] Frame-----------------------------------
+
+[2026-02-07 08:57:29:086] MainRunThread(13204)-----------------------------------
+
+[2026-02-07 08:57:29:106] DbThread(15594-1)-----------------------------------
+
+[2026-02-07 08:57:29:128] BoxSellDbThread(0)-----------------------------------
+
+[2026-02-07 08:57:29:147] NewHttpPost(0-0-0)-----------------------------------
+
+[2026-02-07 08:57:28:234] TSocketThread Run Error ->  Except：Out of memory[0000000001218281] JclDebug.TJclStackInfoList.Create (Line 5509, "JclDebug.pas" + 34)
+[0000000001217AD2] JclDebug.JclCreateStackList (Line 5351, "JclDebug.pas" + 1)
+[00000000012179B2] JclDebug.DoExceptionStackTrace (Line 5292, "JclDebug.pas" + 20)
+[000000000121AAA5] JclDebug.DoExceptNotify (Line 6741, "JclDebug.pas" + 7)
+[0000000001209702] JclHookExcept.TNotifierItem.DoNotify (Line 272, "JclHookExcept.pas" + 5)
+[000000000120996B] JclHookExcept.DoExceptNotify (Line 339, "JclHookExcept.pas" + 13)
+[0000000001209AD0] JclHookExcept.HookedRaiseException (Line 381, "JclHookExcept.pas" + 14)
+[00000000002423B3] System.@RaiseAtExcept (Line 22402, "System.pas" + 32)
+[000000000027D7D2] System.SysUtils.ErrorHandler (Line 24275, "System.SysUtils.pas" + 12)
+[0000000000239733] System.ErrorAt (Line 5897, "System.pas" + 4)
+[0000000000239781] System.Error (Line 5908, "System.pas" + 2)
+[0000000000239423] System.@GetMem (Line 4926, "System.pas" + 6)
+[0000000000248654] System.DynArraySetLength (Line 36797, "System.pas" + 84)
+[0000000000248891] System.@DynArraySetLength (Line 36876, "System.pas" + 12)
+[00000000006D05A4] Grobal2.TDataCache.Init (Line 5445, "Grobal2.pas" + 3)
+[0000000000C98AF0] RunSock.TSocketThread.SendGateBuffers (Line 249, "RunSock.pas" + 6)
+[0000000000C985D4] RunSock.TSocketThread.OnRun (Line 132, "RunSock.pas" + 5)
+[00000000006621D6] uThreadPools.TThreadPool.ThreadProc (Line 174, "uThreadPools.pas" + 18)
+[0000000000661D8F] uThreadPools.TMyThread.Execute (Line 74, "uThreadPools.pas" + 4)
+[0000000000362963] System.Classes.ThreadProc (Line 15845, "System.Classes.pas" + 18)
+[0000000000242F8D] System.ThreadWrapper (Line 25726, "System.pas" + 9)
+[00007FF86883E8D7] BaseThreadInitThunk
+[00007FF86A08C53C] RtlUserThreadStart
+
+[2026-02-07 08:57:20:382] [Exception]TMainRunThread.LoadKuaFuConfig Error  Except：[FireDAC][Phys][ODBC][Microsoft][ODBC SQL Server Driver][SQL Server]资源池 'default' 没有足够的系统内存来运行此查询。[0000000001218281] JclDebug.TJclStackInfoList.Create (Line 5509, "JclDebug.pas" + 34)
+[0000000001217AD2] JclDebug.JclCreateStackList (Line 5351, "JclDebug.pas" + 1)
+[00000000012179B2] JclDebug.DoExceptionStackTrace (Line 5292, "JclDebug.pas" + 20)
+[000000000121AAA5] JclDebug.DoExceptNotify (Line 6741, "JclDebug.pas" + 7)
+[0000000001209702] JclHookExcept.TNotifierItem.DoNotify (Line 272, "JclHookExcept.pas" + 5)
+[000000000120996B] JclHookExcept.DoExceptNotify (Line 339, "JclHookExcept.pas" + 13)
+[0000000001209AD0] JclHookExcept.HookedRaiseException (Line 381, "JclHookExcept.pas" + 14)
+[00000000002423B3] System.@RaiseAtExcept (Line 22402, "System.pas" + 32)
+[000000000027D7D2] System.SysUtils.ErrorHandler (Line 24275, "System.SysUtils.pas" + 12)
+[0000000000239733] System.ErrorAt (Line 5897, "System.pas" + 4)
+[0000000000239781] System.Error (Line 5908, "System.pas" + 2)
+[0000000000239423] System.@GetMem (Line 4926, "System.pas" + 6)
+[0000000000248654] System.DynArraySetLength (Line 36797, "System.pas" + 84)
+[0000000000248891] System.@DynArraySetLength (Line 36876, "System.pas" + 12)
+[00000000006D05A4] Grobal2.TDataCache.Init (Line 5445, "Grobal2.pas" + 3)
+[0000000000C98AF0] RunSock.TSocketThread.SendGateBuffers (Line 249, "RunSock.pas" + 6)
+[0000000000C985D4] RunSock.TSocketThread.OnRun (Line 132, "RunSock.pas" + 5)
+[00000000006621D6] uThreadPools.TThreadPool.ThreadProc (Line 174, "uThreadPools.pas" + 18)
+[0000000000661D8F] uThreadPools.TMyThread.Execute (Line 74, "uThreadPools.pas" + 4)
+[0000000000362963] System.Classes.ThreadProc (Line 15845, "System.Classes.pas" + 18)
+[0000000000242F8D] System.ThreadWrapper (Line 25726, "System.pas" + 9)
+[00007FF86883E8D7] BaseThreadInitThunk
+
+[2026-02-07 08:57:20:559] 执行SQL异常 TDbThread.ExecSql,Sql:MERGE INTO dbo.TBL_VAR A
+USING ( SELECT 'system' AS FLD_USERID,'ITEMNUMBER' AS FLD_VAR_NAME,0 AS FLD_TYPE,'10826' AS FLD_VAR_VALUE,'2026-02-07 08:57:12.892' AS tUpdateTime,0 AS FLD_JOINTYPE 
+) B
+ON (A.FLD_USERID=B.FLD_USERID AND A.FLD_VAR_NAME=B.FLD_VAR_NAME )
+WHEN MATCHED THEN
+	UPDATE SET A.FLD_VAR_VALUE=B.FLD_VAR_VALUE,A.tUpdateTime=B.tUpdateTime,A.FLD_JOINTYPE=B.FLD_JOINTYPE
+WHEN NOT MATCHED THEN
+	INSERT(FLD_USERID,FLD_VAR_NAME,FLD_TYPE,FLD_VAR_VALUE,tUpdateTime,FLD_JOINTYPE)
+	VALUES(B.FLD_USERID,B.FLD_VAR_NAME,B.FLD_TYPE,B.FLD_VAR_VALUE,B.tUpdateTime,B.FLD_JOINTYPE);  Except：[FireDAC][Phys][ODBC][Microsoft][ODBC SQL Server Driver][SQL Server]资源池 'default' 没有足够的系统内存来运行此查询。[0000000001218281] JclDebug.TJclStackInfoList.Create (Line 5509, "JclDebug.pas" + 34)
+[0000000001217AD2] JclDebug.JclCreateStackList (Line 5351, "JclDebug.pas" + 1)
+[00000000012179B2] JclDebug.DoExceptionStackTrace (Line 5292, "JclDebug.pas" + 20)
+[000000000121AAA5] JclDebug.DoExceptNotify (Line 6741, "JclDebug.pas" + 7)
+[0000000001209702] JclHookExcept.TNotifierItem.DoNotify (Line 272, "JclHookExcept.pas" + 5)
+[000000000120996B] JclHookExcept.DoExceptNotify (Line 339, "JclHookExcept.pas" + 13)
+[0000000001209AD0] JclHookExcept.HookedRaiseException (Line 381, "JclHookExcept.pas" + 14)
+[00000000002423B3] System.@RaiseAtExcept (Line 22402, "System.pas" + 32)
+[0000000000242418] System.@RaiseAgain (Line 23481, "System.pas" + 9)
+[0000000000877E84] FireDAC.Comp.Client.TFDCustomCommand.InternalExecute (Line 6853, "FireDAC.Comp.Client.pas" + 16)
+[000000000087828F] FireDAC.Comp.Client.TFDCustomCommand.Execute (Line 6871, "FireDAC.Comp.Client.pas" + 4)
+[0000000000881D25] FireDAC.Comp.Client.TFDAdaptedDataSet.DoExecuteSource (Line 10127, "FireDAC.Comp.Client.pas" + 5)
+[0000000000830701] FireDAC.Comp.DataSet.TFDDataSet.Execute (Line 3189, "FireDAC.Comp.DataSet.pas" + 9)
+[0000000000885089] FireDAC.Comp.Client.TFDCustomQuery.ExecSQL (Line 11583, "FireDAC.Comp.Client.pas" + 2)
+[0000000000E580D6] uThread_Db.TDbThread.ExecSql (Line 3935, "uThread_Db.pas" + 11)
+[0000000000E57C8F] uThread_Db.TDbThread.ExecSql (Line 3861, "uThread_Db.pas" + 1)
+[0000000000E4EE0A] uThread_Db.TDbThread.UpdateBatchVar (Line 2687, "uThread_Db.pas" + 29)
+[0000000000E3F016] uThread_Db.TDbThread.OnRun (Line 458, "uThread_Db.pas" + 66)
+[00000000006621D6] uThreadPools.TThreadPool.ThreadProc (Line 174, "uThreadPools.pas" + 18)
+[0000000000661D8F] uThreadPools.TMyThread.Execute (Line 74, "uThreadPools.pas" + 4)
+[0000000000362963] System.Classes.ThreadProc (Line 15845, "System.Classes.pas" + 18)
+[0000000000242F8D] System.ThreadWrapper (Line 25726, "System.pas" + 9)
+[00007FF86883E8D7] BaseThreadInitThunk
+[00007FF86A08C53C] RtlUserThreadStart
+
+
+[2026-02-07 09:22:04:602] lua.GetBaseInfo Except：Access violation at address 0000000000F15216 in module 'M2Server.exe'. Read of address 000000000000027C[0000000000F15216] uMyLua.TMyLua.GetBaseInfo (Line 13008, "uMyLua.pas" + 433)
+[0000000001217AD2] JclDebug.JclCreateStackList (Line 5351, "JclDebug.pas" + 1)
+[00000000012179B2] JclDebug.DoExceptionStackTrace (Line 5292, "JclDebug.pas" + 20)
+[000000000121AAA5] JclDebug.DoExceptNotify (Line 6741, "JclDebug.pas" + 7)
+[0000000001209702] JclHookExcept.TNotifierItem.DoNotify (Line 272, "JclHookExcept.pas" + 5)
+[000000000120996B] JclHookExcept.DoExceptNotify (Line 339, "JclHookExcept.pas" + 13)
+[0000000001209B31] JclHookExcept.HookedExceptObjProc (Line 395, "JclHookExcept.pas" + 5)
+[0000000000241B17] System.@DelphiExceptionHandler (Line 21118, "System.pas" + 53)
+[00007FF86A1662FF] Unknown function at __chkstk
+[00007FF86A012327] Unknown function at RtlLocateExtendedFeature
+[00007FF86A165C3E] KiUserExceptionDispatcher
+[0000000000F15216] uMyLua.TMyLua.GetBaseInfo (Line 13008, "uMyLua.pas" + 433)
+[0000000000B31E46] Lua.LuaCallBack (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FF84EC42C36]
+[00007FF84EC489EA] lua_pcall
+[0000000000F2B2B5] uMyLua.TMyLua.CallFunction (Line 16337, "uMyLua.pas" + 29)
+[0000000000F29256] uMyLua.TMyLua.Call (Line 16169, "uMyLua.pas" + 46)
+[0000000000FE3E5A] ObjNpc.TNormNpc.GotoLable (Line 20543, "ObjNpc.pas" + 58)
+[0000000000FE3C79] ObjNpc.TNormNpc.GotoLable (Line 20521, "ObjNpc.pas" + 36)
+[00000000013631CB] ObjPlay.TPlayObject.UserLogon (Line 22293, "ObjPlay.pas" + 107)
+[00000000010D2049] PlayManage.TPlayManager.RunPlayer (Line 140, "playManage.pas" + 30)
+[00000000010D1D2A] PlayManage.TPlayManager.Run (Line 80, "playManage.pas" + 2)
+[00000000010ED71A] Envir.TEnvirnoment.Run (Line 898, "Envir.pas" + 24)
+[0000000000E1B12F] uThread_Envir.TEnvirThread.OnRun (Line 660, "uThread_Envir.pas" + 130)
+[00000000006621D6] uThreadPools.TThreadPool.ThreadProc (Line 174, "uThreadPools.pas" + 18)
+[0000000000661D8F] uThreadPools.TMyThread.Execute (Line 74, "uThreadPools.pas" + 4)
+[0000000000362963] System.Classes.ThreadProc (Line 15845, "System.Classes.pas" + 18)
+[0000000000242F8D] System.ThreadWrapper (Line 25726, "System.pas" + 9)
+[00007FF86883E8D7] BaseThreadInitThunk
+[00007FF86A08C53C] RtlUserThreadStart
+
+
