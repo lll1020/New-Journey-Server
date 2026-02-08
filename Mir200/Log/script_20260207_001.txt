@@ -42,3 +42,118 @@
 	[C]: in function 'setbaseinfo'
 	.\Envir\Market_Def\QFunction-0.lua:1243: in function <.\Envir\Market_Def\QFunction-0.lua:1236>
 
+[2026-02-07 12:53:34:552] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：172; NpcThreadId: 122860, CurPlayThreadId: 122860
+
+[2026-02-07 12:56:27:141] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：125; NpcThreadId: 128824, CurPlayThreadId: 128824
+
+[2026-02-07 13:03:39:011] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：141; NpcThreadId: 128824, CurPlayThreadId: 128824
+
+[2026-02-07 13:04:16:742] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：156; NpcThreadId: 128824, CurPlayThreadId: 128824
+
+[2026-02-07 13:04:49:089] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：234; NpcThreadId: 128824, CurPlayThreadId: 128824
+[2026-02-07 13:04:53:985] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：204; NpcThreadId: 128824, CurPlayThreadId: 128824
+
+[2026-02-07 13:04:56:402] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：218; NpcThreadId: 128824, CurPlayThreadId: 128824
+[2026-02-07 13:04:57:381] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：219; NpcThreadId: 128824, CurPlayThreadId: 128824
+
+[2026-02-07 13:04:59:229] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：1063; NpcThreadId: 128824, CurPlayThreadId: 128824
+[2026-02-07 13:04:59:447] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：218; NpcThreadId: 128824, CurPlayThreadId: 128824
+[2026-02-07 13:04:59:942] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：234; NpcThreadId: 128824, CurPlayThreadId: 128824
+[2026-02-07 13:05:01:802] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：1860; NpcThreadId: 128824, CurPlayThreadId: 128824
+[2026-02-07 13:05:02:381] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：281; NpcThreadId: 128824, CurPlayThreadId: 128824
+[2026-02-07 13:05:02:639] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：250; NpcThreadId: 128824, CurPlayThreadId: 128824
+[2026-02-07 13:05:03:181] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：235; NpcThreadId: 128824, CurPlayThreadId: 128824
+[2026-02-07 13:05:03:445] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：265; NpcThreadId: 128824, CurPlayThreadId: 128824
+
+[2026-02-07 13:05:04:032] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：250; NpcThreadId: 128824, CurPlayThreadId: 128824
+[2026-02-07 13:05:06:395] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：2375; NpcThreadId: 128824, CurPlayThreadId: 128824
+[2026-02-07 13:05:07:065] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：250; NpcThreadId: 128824, CurPlayThreadId: 128824
+[2026-02-07 13:05:07:349] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：297; NpcThreadId: 128824, CurPlayThreadId: 128824
+[2026-02-07 13:05:08:032] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：250; NpcThreadId: 128824, CurPlayThreadId: 128824
+
+[2026-02-07 13:05:09:933] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：1907; NpcThreadId: 128824, CurPlayThreadId: 128824
+[2026-02-07 13:05:10:687] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：266; NpcThreadId: 128824, CurPlayThreadId: 128824
+[2026-02-07 13:05:10:992] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：312; NpcThreadId: 128824, CurPlayThreadId: 128824
+[2026-02-07 13:05:11:766] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：266; NpcThreadId: 128824, CurPlayThreadId: 128824
+[2026-02-07 13:05:12:052] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：297; NpcThreadId: 128824, CurPlayThreadId: 128824
+
+[2026-02-07 13:05:14:546] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：1937; NpcThreadId: 128824, CurPlayThreadId: 128824
+[2026-02-07 13:05:14:820] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：281; NpcThreadId: 128824, CurPlayThreadId: 128824
+[2026-02-07 13:05:15:693] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：297; NpcThreadId: 128824, CurPlayThreadId: 128824
+
+[2026-02-07 13:06:35:840] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：203; NpcThreadId: 128824, CurPlayThreadId: 128824
+
+[2026-02-07 13:08:40:642] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：156; NpcThreadId: 128824, CurPlayThreadId: 128824
+
+[2026-02-07 13:11:13:838] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：63; NpcThreadId: 128824, CurPlayThreadId: 128824
+
+[2026-02-07 13:11:16:591] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：63; NpcThreadId: 128824, CurPlayThreadId: 128824
+[2026-02-07 13:11:17:810] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：78; NpcThreadId: 128824, CurPlayThreadId: 128824
+
+[2026-02-07 13:11:48:528] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：31; NpcThreadId: 128824, CurPlayThreadId: 128824
+
+[2026-02-07 13:20:28:870] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：156; NpcThreadId: 128824, CurPlayThreadId: 128824
+
+[2026-02-07 13:26:40:620] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：344; NpcThreadId: 128824, CurPlayThreadId: 128824
+
+[2026-02-07 13:27:04:412] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：203; NpcThreadId: 128824, CurPlayThreadId: 128824
+
+[2026-02-07 13:27:20:431] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：781; NpcThreadId: 128824, CurPlayThreadId: 128824
+
+[2026-02-07 13:28:25:502] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：3391; NpcThreadId: 128824, CurPlayThreadId: 128824
+
+[2026-02-07 13:29:24:342] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：3422; NpcThreadId: 128824, CurPlayThreadId: 128824
+
+[2026-02-07 13:30:13:543] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：1985; NpcThreadId: 128824, CurPlayThreadId: 128824
+
+[2026-02-07 13:38:37:093] lua执行卡死,lab:ggna strack dump:stack traceback:
+	[C]: in function 'getmapmon'20B6000006FDE020060023A521B020000
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/9999.lua:521: in function <E:\新起航\服务端\Mir200\Envir/lua/Npc/9999.lua:231>
+
+[2026-02-07 13:38:40:094] lua执行卡死,lab:ggna strack dump:stack traceback:
+	[C]: in function 'getmapmon'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/9999.lua:521: in function <E:\新起航\服务端\Mir200\Envir/lua/Npc/9999.lua:231>
+[2026-02-07 13:38:43:089] lua执行卡死,lab:ggna strack dump:stack traceback:
+	[C]: in function 'getmapmon'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/9999.lua:521: in function <E:\新起航\服务端\Mir200\Envir/lua/Npc/9999.lua:231>
+
+[2026-02-07 13:39:24:058] lua执行卡死,lab:ggna strack dump:stack traceback:
+	[C]: in function 'getmapmon'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/9999.lua:521: in function <E:\新起航\服务端\Mir200\Envir/lua/Npc/9999.lua:231>
+[2026-02-07 13:39:27:053] lua执行卡死,lab:ggna strack dump:stack traceback:
+	[C]: in function 'getmapmon'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/9999.lua:521: in function <E:\新起航\服务端\Mir200\Envir/lua/Npc/9999.lua:231>
+
+[2026-02-07 13:40:08:566] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：3765; NpcThreadId: 125172, CurPlayThreadId: 125172
+
+[2026-02-07 13:42:21:212] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：5438; NpcThreadId: 125172, CurPlayThreadId: 125172
+
+[2026-02-07 13:45:29:493] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：7438; NpcThreadId: 125172, CurPlayThreadId: 125172
+
+[2026-02-07 13:46:53:787] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：47; NpcThreadId: 123080, CurPlayThreadId: 123080
+
+[2026-02-07 13:47:18:711] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：2438; NpcThreadId: 123080, CurPlayThreadId: 123080
+
+[2026-02-07 13:47:57:964] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：7188; NpcThreadId: 123080, CurPlayThreadId: 123080
+
+[2026-02-07 13:48:25:519] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：3547; NpcThreadId: 123080, CurPlayThreadId: 123080
+
+[2026-02-07 13:48:57:995] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：2078; NpcThreadId: 123080, CurPlayThreadId: 123080
+
+[2026-02-07 13:53:20:408] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：3110; NpcThreadId: 123676, CurPlayThreadId: 123676
+
+[2026-02-07 13:56:30:021] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：3234; NpcThreadId: 123676, CurPlayThreadId: 123676
+
+[2026-02-07 13:59:15:045] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：1485; NpcThreadId: 123676, CurPlayThreadId: 123676
+
+[2026-02-07 14:00:22:774] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：1984; NpcThreadId: 123676, CurPlayThreadId: 123676
+
+[2026-02-07 14:00:30:583] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：1782; NpcThreadId: 123676, CurPlayThreadId: 123676
+
+[2026-02-07 14:01:48:035] lua执行卡死,lab:ggna strack dump:stack traceback:
+	[C]: in function 'genmonex'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/9999.lua:654: in function <E:\新起航\服务端\Mir200\Envir/lua/Npc/9999.lua:231>
+[2026-02-07 14:01:48:516] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：8375; NpcThreadId: 99268, CurPlayThreadId: 99268
+
+[2026-02-07 14:02:23:669] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：1125; NpcThreadId: 99268, CurPlayThreadId: 99268
+

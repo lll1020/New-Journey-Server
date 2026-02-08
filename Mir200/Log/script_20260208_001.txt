@@ -1,0 +1,15 @@
+[2026-02-08 00:41:00:940] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：32; NpcThreadId: 121880, CurPlayThreadId: 121880
+
+[2026-02-08 01:00:00:086] LuaNPC:系统控制 ID:999999999 执行 jqr_zxht_change player:系统控制 耗时：47; NpcThreadId: 121880, CurPlayThreadId: 121880
+
+[2026-02-08 02:16:18:177] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：63; NpcThreadId: 121880, CurPlayThreadId: 121880
+[2026-02-08 02:16:18:177] [玩家名字]Lua执行耗时过高:63ms msgid:101 501 1 0 
+
+[2026-02-08 02:18:44:972] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 121880, CurPlayThreadId: 121880
+
+[2026-02-08 04:03:32:093] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：32; NpcThreadId: 131544, CurPlayThreadId: 131544
+
+[2026-02-08 04:41:45:592] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：32; NpcThreadId: 131544, CurPlayThreadId: 131544
+
+[2026-02-08 09:02:32:084] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 132892, CurPlayThreadId: 132892
+
