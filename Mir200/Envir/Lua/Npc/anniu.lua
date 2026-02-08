@@ -687,7 +687,7 @@ npc[501] = function(play, p2, p3, data) --首充礼包
             T_data["jq_time"] = time_data
             Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
 
-            local reward = list[idx]
+            local reward = list[idx].jl
             if reward and #reward > 0 then
                 Player.rwjl(play, reward, "首充礼包", 1, 1000)
             end
@@ -716,7 +716,7 @@ npc[501] = function(play, p2, p3, data) --首充礼包
             T_data["jq_time"] = time_data
             Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
 
-            local reward = list[1]
+            local reward = list[1].jl
             if reward and #reward > 0 then
                 Player.rwjl(play, reward, "首充补充礼包", 1, 1000)
             end

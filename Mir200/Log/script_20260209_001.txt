@@ -1,0 +1,5 @@
+[2026-02-09 07:06:05:368] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 21568, CurPlayThreadId: 21568
+[2026-02-09 07:06:05:368] [玩家名字]Lua执行耗时过高:31ms msgid:101 2 5 1 [2432200]
+[2026-02-09 07:06:07:560] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：235; NpcThreadId: 21568, CurPlayThreadId: 21568
+[2026-02-09 07:06:07:560] [玩家名字]Lua执行耗时过高:235ms msgid:101 2 5 1 [2432200]
+

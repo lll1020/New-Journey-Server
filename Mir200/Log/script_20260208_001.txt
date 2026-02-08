@@ -13,3 +13,8 @@
 
 [2026-02-08 09:02:32:084] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 132892, CurPlayThreadId: 132892
 
+[2026-02-08 11:57:22:030] LuaNPC:玩家名字 ID:999999999 执行 groupitemonex player:玩家名字 耗时：32; NpcThreadId: 131712, CurPlayThreadId: 131712
+[2026-02-08 11:57:22:154] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：125; NpcThreadId: 131712, CurPlayThreadId: 131712
+
+[2026-02-08 12:17:31:233] LuaNPC:玩家名字 ID:999999999 执行 stdmodefunc10 player:玩家名字 耗时：32; NpcThreadId: 131712, CurPlayThreadId: 131712
+

@@ -672,21 +672,186 @@ end
 --回收
 local fd_sjyb = {[10053] = {500,2000},[10054] = {1000,5000},[10055] = {5000,50000},[10056] = {10000,1000000}}
 
+local hs_name_hlsj = "幻灵水晶"
+local hs_name_lingshi = "灵石"
+
+-- Auto recycle key matching: distinguish by group, keep legacy compatibility.
+local hs_group_prefix = {
+    zzhs = "1",
+    zsfj = "2",
+    sqhs = "3",
+    gwfj = "4",
+    ssfj = "5",
+    clfj = "6",
+    teshuhuihsou = "7",
+}
+
+local hs_group_prefix_compat = {
+    zzhs = "1",
+    sqhs = "1",
+    zsfj = "2",
+    gwfj = "5|2",
+    ssfj = "6|2",
+    clfj = "7|1",
+    teshuhuihsou = "8|1",
+}
+
+
+local function hs_pick_cfg(idx)
+    local cfg = huishou.zzhs[idx]
+    if cfg then return "zzhs", cfg end
+    cfg = huishou.sqhs[idx]
+    if cfg then return "sqhs", cfg end
+    cfg = huishou.zsfj[idx]
+    if cfg then return "zsfj", cfg end
+    cfg = huishou.ssfj[idx]
+    if cfg then return "ssfj", cfg end
+    cfg = huishou.gwfj[idx]
+    if cfg then return "gwfj", cfg end
+    cfg = huishou.clfj[idx]
+    if cfg then return "clfj", cfg end
+    cfg = huishou.teshuhuihsou[idx]
+    if cfg then return "teshuhuihsou", cfg end
+    return nil, nil
+end
+
+local function hs_match_pz(pz, idx, group_name, cfg)
+    if pz["" .. idx] then
+        return true
+    end
+    if not cfg then
+        return false
+    end
+
+    local g1 = cfg[1]
+    local g2 = cfg[2]
+    if not g1 then
+        return false
+    end
+
+    -- New rule: group_name + [1]/[2] keys for precise auto-recycle filtering.
+    local key_group_1 = group_name .. "_" .. g1
+    local key_group_2 = key_group_1 .. "_" .. g2
+    if pz[key_group_1] or pz[key_group_2] then
+        return true
+    end
+
+    -- Current numeric-prefix rule.
+    local prefix = hs_group_prefix[group_name]
+    if prefix then
+        if pz[prefix .. "_" .. g1] or pz[prefix .. "_" .. g1 .. "_" .. g2] then
+            return true
+        end
+    end
+
+    -- Legacy-prefix compatibility fallback (supports multiple prefixes: "5|2").
+    local old_prefix = hs_group_prefix_compat[group_name]
+    if old_prefix then
+        for legacy_prefix in string.gmatch(old_prefix, "[^|]+") do
+            if legacy_prefix ~= prefix then
+                if pz[legacy_prefix .. "_" .. g1] or pz[legacy_prefix .. "_" .. g1 .. "_" .. g2] then
+                    return true
+                end
+            end
+        end
+    end
+
+    return false
+end
+
+local function hs_add_item_reward(reward, item_name, item_num)
+    item_num = tonumber(item_num) or 0
+    if item_num <= 0 or type(item_name) ~= "string" or item_name == "" then
+        return
+    end
+    if item_name == hs_name_lingshi then
+        reward.lingshi = reward.lingshi + item_num
+    elseif item_name == hs_name_hlsj then
+        reward.hlsj = reward.hlsj + item_num
+    else
+        reward.items[item_name] = (reward.items[item_name] or 0) + item_num
+    end
+end
+
+
+local function hs_get_zsfj_material_name(cfg)
+    local direct_name = type(cfg[6]) == "string" and cfg[6] or nil
+    if direct_name and direct_name ~= "" then
+        return direct_name
+    end
+
+    -- zsfj marker flags: field5 = huanling crystal, field6 = lingshi.
+    local flag_hlsj = tonumber(cfg[5]) or 0
+    local flag_lingshi = tonumber(cfg[6]) or 0
+    if flag_hlsj > 0 then
+        return hs_name_hlsj
+    end
+    if flag_lingshi > 0 then
+        return hs_name_lingshi
+    end
+
+    return nil
+end
+
+local function hs_collect_reward(reward, group_name, idx, cfg)
+    if not cfg then
+        return
+    end
+    local v4 = tonumber(cfg[4]) or 0
+    local v5 = tonumber(cfg[5]) or 0
+    if group_name == "zzhs" or group_name == "sqhs" or group_name == "clfj" or group_name == "teshuhuihsou" then
+        reward.coin = reward.coin + v4
+        reward.yb = reward.yb + v5
+    elseif group_name == "zsfj" then
+        local material_name = hs_get_zsfj_material_name(cfg)
+        if material_name then
+            hs_add_item_reward(reward, material_name, v4)
+        end
+    elseif group_name == "ssfj" or group_name == "gwfj" then
+        local material_name = type(cfg[6]) == "string" and cfg[6] or hs_name_lingshi
+        hs_add_item_reward(reward, material_name, v4)
+    end
+end
+
+local function hs_apply_reward(play, reward, gz)
+    if reward.coin > 0 then
+        local coin = reward.coin + math.floor(reward.coin * getbaseinfo(play, 51, 204) / 10000)
+        changemoney(play, getflagstatus(play, VarCfg.BS_mztq) == 1 and 1 or 3, '+', coin, '回收获得', true)
+    end
+    if reward.yb > 0 then
+        local yb = reward.yb + math.floor(reward.yb * getbaseinfo(play, 51, 205) / 10000)
+        changemoney(play, getflagstatus(play, VarCfg.BS_mztq) == 1 and 2 or 4, '+', yb, '回收获得', true)
+    end
+    if reward.lingshi > 0 then
+        changemoney(play, getflagstatus(play, VarCfg.BS_mztq) == 1 and 7 or 8, '+', reward.lingshi, '回收获得', true)
+    end
+    if reward.hlsj > 0 then
+        giveitem(play, hs_name_hlsj, reward.hlsj, gz)
+    end
+    for item_name, item_num in pairs(reward.items) do
+        if item_num > 0 then
+            giveitem(play, item_name, item_num, gz)
+        end
+    end
+end
+
 function Player.huishou(play, hs_constant)
     if hs_constant == nil then
-        local kg1, kg2, kg3, kg4, kg5, pz, cl, sq = getflagstatus(play, VarCfg.BS_huishou[1]), getflagstatus(play, VarCfg.BS_huishou[2]), getflagstatus(play, VarCfg.BS_huishou[3]),getflagstatus(play, VarCfg.BS_huishou[4]),getflagstatus(play, VarCfg.BS_huishou[5]), json2tbl(getplaydef(play, VarCfg.T_hsdg)), {0,0,0,0,0,0,0,0,0}, ''
-        local T_tshs = json2tbl(getplaydef(play, VarCfg.T_tshs))
+        local kg1, kg2, kg3, kg4, kg5 = getflagstatus(play, VarCfg.BS_huishou[1]), getflagstatus(play, VarCfg.BS_huishou[2]), getflagstatus(play, VarCfg.BS_huishou[3]), getflagstatus(play, VarCfg.BS_huishou[4]), getflagstatus(play, VarCfg.BS_huishou[5])
+        local pz = json2tbl(getplaydef(play, VarCfg.T_hsdg)) or {}
+        local reward = {coin = 0, yb = 0, lingshi = 0, hlsj = 0, items = {}}
+        local sq = ''
         local item = getbagitems(play)
 
         for i, v in pairs(item or {}) do
             local idx = getiteminfo(play, v, 2)
-            if idx > 10022 and idx < 10034 then    --元宝
+            if idx > 10022 and idx < 10034 then    --yuanbao
                 if kg1 == 1 then
                     local sl = getiteminfo(play, v, 5)
                     changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', getstditeminfo(idx, 8) * sl, '机器人吃', true)
                     delitembymakeindex(play, getiteminfo(play, v, 1), sl)
                 end
-            elseif idx > 10018 and idx < 10023 then    --金币
+            elseif idx > 10018 and idx < 10023 then    --jinbi
                 if kg2 == 1 then
                     if fd_sjyb[idx] then
                         local sl = getiteminfo(play, v, 5)
@@ -696,7 +861,7 @@ function Player.huishou(play, hs_constant)
                         end
                     end
                 end
-            elseif idx > 10010 and idx < 10019 then    --经验丹
+            elseif idx > 10010 and idx < 10019 then    --exp
                 if kg3 == 3 then
                     local sl = getiteminfo(play, v, 5)
                     changeexp(play, '+', getstditeminfo(idx, 8) * sl, false)
@@ -704,105 +869,44 @@ function Player.huishou(play, hs_constant)
                 end
             else
                 if kg4 == 1 then
-                    if not huishou.teshuhuihsou[idx] or (huishou.teshuhuihsou[idx] and T_tshs[""..idx]) then
-                        if huishou.zzhs[idx] then
-                            if pz['1_'..huishou.zzhs[idx][1]] or pz['1_'..huishou.zzhs[idx][1].."_"..huishou.zzhs[idx][2]] or pz[""..idx] then
-                                sq = sq .. getiteminfo(play, v, 1) .. ','
-                                cl[1] = cl[1] + huishou.zzhs[idx][4]
-                                cl[2] = cl[2] + huishou.zzhs[idx][5]
-                            end
-                        elseif huishou.zsfj[idx] then
-                            if pz['2_'..huishou.zsfj[idx][1]] or pz['2_'..huishou.zsfj[idx][1].."_"..huishou.zsfj[idx][2]] or pz[""..idx] then
-                                sq = sq .. getiteminfo(play, v, 1) .. ','
-                                cl[3] = cl[3] + huishou.zsfj[idx][4]
-                                cl[4] = cl[4] + huishou.zsfj[idx][5]
-                                cl[5] = cl[5] + huishou.zsfj[idx][6]
-                            end
-                        elseif huishou.clfj[idx] then
-                            if pz['3_'..huishou.clfj[idx][1]] or pz['3_'..huishou.clfj[idx][1].."_"..huishou.clfj[idx][2]] or pz[""..idx] then
-                                sq = sq .. getiteminfo(play, v, 1) .. ','
-                                cl[1] = cl[1] + huishou.clfj[idx][4]
-                                cl[2] = cl[2] + huishou.clfj[idx][5]
-                            end
-                        end
+                    local group_name, cfg = hs_pick_cfg(idx)
+                    if cfg and hs_match_pz(pz, idx, group_name, cfg) then
+                        sq = sq .. getiteminfo(play, v, 1) .. ','
+                        hs_collect_reward(reward, group_name, idx, cfg)
                     end
                 end
             end
         end
         if sq ~= '' then
             delitembymakeindex(play, sq)
-            if cl[1] > 0 then
-                changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', cl[1] + math.floor(cl[1] * getbaseinfo(play,51,204) / 10000), '回收获得', true)
-            end
-            if cl[2] > 0 then
-                changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', cl[2] + math.floor(cl[2] * getbaseinfo(play,51,205) / 10000), '回收获得', true)
-            end
             local gz = getflagstatus(play,VarCfg.BS_mztq) == 1 and 0 or 850
-            if cl[9] > 0 then
-                giveitem(play,"副装碎片",cl[9],gz)
-            end
-            Login_msg(play,10,cl[1],cl[2])
+            hs_apply_reward(play, reward, gz)
+            Login_msg(play,10,reward.coin,reward.yb)
         end
     else
         local hs = hs_constant
-        local cl = {0,0,0,0,0}--材料
-        local yb,jb = 0,0 --金币元宝
-        local xy = 0  --灵石
-        local jc = 0 --副装
-        local T_tshs = json2tbl(getplaydef(play, VarCfg.T_tshs))
+        local reward = {coin = 0, yb = 0, lingshi = 0, hlsj = 0, items = {}}
         local gz = getflagstatus(play,VarCfg.BS_mztq) == 1 and 0 or 850
         for k, v in pairs(hs) do
             local wp = getitembymakeindex(play,v)
             if wp then
                 local idx = getiteminfo(play,wp,2)
-                if not huishou.teshuhuihsou[idx] or (huishou.teshuhuihsou[idx] and T_tshs[""..idx]) then
-                    if huishou.kexiaohui[idx] then
-                        delitembymakeindex(play,v,1)
-                    elseif huishou.zzhs[idx] then
-                        if delitembymakeindex(play,v,1) then
-                            yb = yb + huishou.zzhs[idx][4]
-                            jb = jb + huishou.zzhs[idx][5]
-                        end
-                    elseif huishou.clfj[idx] then
-                        if delitembymakeindex(play,v,1) then
-                            yb = yb + huishou.clfj[idx][4]
-                            jb = jb + huishou.clfj[idx][5]
-                        end
-                    elseif huishou.zsfj[idx] then
-                        if huishou.zsfj[idx][1] == 9 then
-                            if delitembymakeindex(play,v,1) then
-                                xy = xy + huishou.zsfj[idx][4]
-                            end
-                        else
-                            if delitembymakeindex(play,v,1) then
-                                yb = yb + huishou.zsfj[idx][4]
-                                jb = jb + huishou.zsfj[idx][5]
-                            end
-                        end
-                    elseif huishou.fzfj[idx] then
-                        if delitembymakeindex(play,v,1) then
-                            jc = jc + huishou.fzfj[idx][4]
-                        end
+                if huishou.kexiaohui and huishou.kexiaohui[idx] then
+                    delitembymakeindex(play,v,1)
+                else
+                    local group_name, cfg = hs_pick_cfg(idx)
+                    if cfg and delitembymakeindex(play,v,1) then
+                        hs_collect_reward(reward, group_name, idx, cfg)
                     end
                 end
             end
         end
-        if yb > 0 then
-            changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', yb + math.floor(yb * getbaseinfo(play,51,204) / 10000), '回收获得', true)
-        end
-        if jb > 0 then
-            changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', jb + math.floor(jb * getbaseinfo(play,51,205) / 10000), '回收获得', true)
-        end
-        if xy > 0 then
-            changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 7 or 8, '+', xy, '回收获得', true)
-        end
-        if jc > 0 then
-            giveitem(play,"副装碎片",jc,gz)
-        end
-        Login_msg(play,10,yb,jb)
+        hs_apply_reward(play, reward, gz)
+        Login_msg(play,10,reward.coin,reward.yb)
     end
 
 end
+
 function Player.addteshuhuihsou(play, t)
     local T_tshs = json2tbl(getplaydef(play, VarCfg.T_tshs))
     local hspz = json2tbl(getplaydef(play,VarCfg.T_hsdg))
