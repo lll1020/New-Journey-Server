@@ -440,7 +440,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "野火帮", 603, 100, 223 },
                     desc = "直面扫荡野火帮，化解其中隐患",
                 },
                 {
@@ -457,7 +457,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "极光城郊", 604, 83, 166 },
                     desc = "踏入剿灭恶徒，循迹而行",
                 },
                 {
@@ -470,7 +470,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "二大陆主城", 24, 101, 113 },
                     desc = "直面天书强化，化解其中隐患",
                 },
                 {
@@ -483,7 +483,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "二大陆主城", 24, 101, 113 },
                     desc = "历经初识仙法，收获机缘",
                 },
             },
@@ -509,7 +509,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "兵道古藏", 605, 103, 53 },
                     desc = "踏入杀伐之路，循迹而行",
                 },
                 {
@@ -526,7 +526,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "夜魔洞", 606, 98, 95 },
                     desc = "闯过讨伐夜魔，证我道途",
                 },
                 {
@@ -543,7 +543,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "二大陆主城", 28, 117, 113 },
                     desc = "于装备强化中磨砺，道心更稳",
                 },
                 {
@@ -556,7 +556,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "二大陆主城", 22, 97, 113 },
                     desc = "历经喂养灵根，收获机缘",
                 },
             },
@@ -582,7 +582,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "二大陆主城", 601, 99, 123 },
                     desc = "于修复轩辕剑中磨砺，道心更稳",
                 },
                 {
@@ -599,7 +599,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "野火帮大营", 607, 60, 279 },
                     desc = "探访深入野火，揭开真相",
                 },
                 {
@@ -616,7 +616,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "神秘森林", 608, 52, 53 },
                     desc = "行走守护森林，破除迷障",
                 },
                 {
@@ -629,7 +629,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "兵道古藏", 605, 103, 53 },
                     desc = "前往兵道之谜，探寻其中机缘",
                 },
                 {
@@ -642,7 +642,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "二大陆主城", 25, 105, 113 },
                     desc = "历经幸运增幅，收获机缘",
                 },
                 {
@@ -655,7 +655,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "二大陆主城", 26, 109, 113 },
                     desc = "闯过气运占卜，证我道途",
                 },
                 {
@@ -668,7 +668,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "xtc", 33, 132, 121 },
                     desc = "踏入转生·二，循迹而行",
                 },
             },
@@ -692,7 +692,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "三大陆主城", 53, 161, 230 },
                     desc = "深入拥有1传说神石，寻回失落线索",
                 },
                 {
@@ -705,7 +705,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "xtc", 34, 136, 121 },
                     desc = "历经转生·三，收获机缘",
                 },
                 {
@@ -718,7 +718,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "三大陆主城", 51, 153, 230 },
                     desc = "深入传说·斗笠，寻回失落线索",
                 },
                 {
@@ -731,7 +731,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "三大陆主城", 52, 157, 230 },
                     desc = "踏入神·酒葫芦，循迹而行",
                 },
                 {
@@ -748,7 +748,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "三大陆主城", 53, 161, 230 },
                     desc = "踏入高级淬体，循迹而行",
                 },
             },
@@ -770,7 +770,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "三大陆主城", 55, 169, 230 },
                     desc = "踏入开辟仙府（主城NPC，循迹而行",
                 },
                 {
@@ -783,7 +783,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "三大陆主城", 44, 149, 225 },
                     desc = "闯过炼制丹药，证我道途",
                 },
                 {
@@ -796,7 +796,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "三大陆主城", 44, 149, 225 },
                     desc = "行走了解砍树，破除迷障",
                 },
                 {
@@ -809,7 +809,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "三大陆主城", 44, 149, 225 },
                     desc = "闯过种植仙草，证我道途",
                 },
                 {
@@ -822,7 +822,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "三大陆主城", 47, 161, 225 },
                     desc = "行走寻宝大师，破除迷障",
                 },
             },
@@ -848,7 +848,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "三大陆主城", 47, 161, 225 },
                     desc = "直面杀戮的欲望，化解其中隐患",
                 },
                 {
@@ -865,7 +865,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "千年沉船", 629, 44, 34 },
                     desc = "直面沉船之谜，化解其中隐患",
                 },
                 {
@@ -882,7 +882,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "千年沉船", 305, 24, 23 },
                     desc = "踏破船长的宝藏，守护一方安宁",
                 },
                 {
@@ -899,7 +899,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "千年沉船", 306, 18, 15 },
                     desc = "历经谁是内鬼，收获机缘",
                 },
             },
@@ -925,7 +925,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "藏星内海", 635, 81, 166 },
                     desc = "闯过送葬者，证我道途",
                 },
                 {
@@ -942,7 +942,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "七星岛", 636, 159, 408 },
                     desc = "直面热血的友情，化解其中隐患",
                 },
                 {
@@ -959,7 +959,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "葬星城", 637, 110, 96 },
                     desc = "深入真正的海贼王，寻回失落线索",
                 },
                 {
@@ -1019,7 +1019,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "草药古深处", 638, 31, 51 },
                     desc = "于采仙草咯中磨砺，道心更稳",
                 },
                 {
@@ -1036,7 +1036,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "丹道古藏", 639, 243, 97 },
                     desc = "行走丹仙秘辛，破除迷障",
                 },
                 {
@@ -1053,7 +1053,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "苍云客栈", 640, 26, 58 },
                     desc = "前往棋痴老王，探寻其中机缘",
                 },
             },
@@ -1079,7 +1079,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "三大陆主城", 46, 157, 225 },
                     desc = "踏入灾厄入侵，循迹而行",
                 },
                 {
@@ -1096,7 +1096,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "灰界", 621, 200, 378 },
                     desc = "踏破讨伐嘲灾，守护一方安宁",
                 },
                 {
@@ -1113,7 +1113,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "灰界", 622, 204, 25 },
                     desc = "深入讨伐忌灾，寻回失落线索",
                 },
                 {
@@ -1130,7 +1130,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "灰界", 623, 379, 209 },
                     desc = "探访讨伐息灾，揭开真相",
                 },
                 {
@@ -1147,7 +1147,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "灰界", 624, 24, 194 },
                     desc = "踏破讨伐妄灾，守护一方安宁",
                 },
                 {
@@ -1164,7 +1164,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "灰界", 621, 200, 378 },
                     desc = "行走踏入·虚妄山脉，破除迷障",
                 },
                 {
@@ -1181,7 +1181,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "灰界", 622, 204, 25 },
                     desc = "踏入踏入·叹息旷野，循迹而行",
                 },
                 {
@@ -1198,7 +1198,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "灰界", 623, 379, 209 },
                     desc = "闯过踏入·鬼嘲深渊，证我道途",
                 },
                 {
@@ -1215,7 +1215,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "灰界", 624, 24, 194 },
                     desc = "于踏入·禁忌之海中磨砺，道心更稳",
                 },
             },
@@ -1239,7 +1239,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "四大陆主城", 64, 38, 27 },
                     desc = "前往灵兽全一星，探寻其中机缘",
                 },
                 {
@@ -1252,7 +1252,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "四大陆主城", 64, 38, 27 },
                     desc = "前往灵兽全二星，探寻其中机缘",
                 },
                 {
@@ -1265,7 +1265,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "四大陆主城", 64, 38, 27 },
                     desc = "踏入灵兽全三星，循迹而行",
                 },
                 {
@@ -1278,7 +1278,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "四大陆主城", 65, 41, 27 },
                     desc = "踏破唐代古玩，守护一方安宁",
                 },
                 {
@@ -1291,7 +1291,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "二大陆主城", 24, 101, 113 },
                     desc = "闯过红色仙法，证我道途",
                 },
                 {
@@ -1304,7 +1304,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "xtc", 35, 140, 121 },
                     desc = "探访转生·四，揭开真相",
                 },
             },
@@ -1326,7 +1326,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "酆都鬼城", 666, 84, 50 },
                     desc = "前往捉鬼人，探寻其中机缘",
                 },
                 {
@@ -1343,7 +1343,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "鬼门关", 667, 83, 95 },
                     desc = "踏入买路钱，循迹而行",
                 },
                 {
@@ -1454,7 +1454,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "大唐·长安城", 642, 35, 57 },
                     desc = "直面资格考验，化解其中隐患",
                 },
                 {
@@ -1590,7 +1590,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "四大陆主城", 641, 37, 42 },
                     desc = "直面重走西游路，化解其中隐患",
                 },
             },
@@ -1889,7 +1889,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "四大陆主城", 67, 47, 27 },
                     desc = "行走生肖守护，破除迷障",
                 },
             },
@@ -1915,7 +1915,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "盘古开天", 673, 67, 48 },
                     desc = "历经传说修复局，收获机缘",
                 },
                 {
@@ -1932,7 +1932,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "羿射九日", 674, 355, 119 },
                     desc = "行走盘古开天，破除迷障",
                 },
                 {
@@ -1949,7 +1949,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "不周山", 675, 75, 77 },
                     desc = "行走羿射九日，破除迷障",
                 },
                 {
@@ -1966,7 +1966,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "女娲补天", 676, 110, 58 },
                     desc = "直面共公怒触不周山，化解其中隐患",
                 },
                 {
@@ -1983,7 +1983,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "女娲补天", 677, 102, 58 },
                     desc = "前往女娲补天，探寻其中机缘",
                 },
                 {
@@ -2000,7 +2000,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "黑白无常", 678, 101, 57 },
                     desc = "历经后土娘娘，收获机缘",
                 },
                 {
@@ -2017,7 +2017,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "后土娘娘", 679, 152, 171 },
                     desc = "踏入黑白无常，循迹而行",
                 },
                 {
@@ -2034,7 +2034,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "真假玉帝", 680, 84, 93 },
                     desc = "踏破真假玉帝，守护一方安宁",
                 },
                 {
@@ -2051,7 +2051,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 0 },
+                    yd = { 1, "白蛇传说", 681, 216, 167 },
                     desc = "踏入白蛇传说，循迹而行",
                 },
             },
