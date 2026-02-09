@@ -441,11 +441,11 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 1, "野火帮", 603, 100, 223 },
-                    desc = "直面扫荡野火帮，化解其中隐患",
+                    desc = "直面扫荡野火帮，破局前行",
                 },
                 {
-                    "剿灭恶徒（剧）",
-                    tk = "npc_604",
+                    "深入野火（剧）",
+                    tk = "npc_607",
                     id = 999,
                     jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
@@ -457,8 +457,8 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "极光城郊", 604, 83, 166 },
-                    desc = "踏入剿灭恶徒，循迹而行",
+                    yd = { 1, "野火帮大营", 607, 60, 279 },
+                    desc = "探入敌营深处，摸清野火脉络",
                 },
                 {
                     "天书强化",
@@ -471,7 +471,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 1, "二大陆主城", 24, 101, 113 },
-                    desc = "直面天书强化，化解其中隐患",
+                    desc = "直面天书强化，破局前行",
                 },
                 {
                     "初识仙法",
@@ -491,13 +491,13 @@ local npc_xyl = {
 
             jqd = 0,
 
-            jl = { { "1元真实充值", 1 }, { "激活金灵根", 1 } },
+            jl = { { "1元真实充值", 1 }, { "激活火灵根", 1 } },
         },
         {
             jq = {
                 {
-                    "杀伐之路（剧）",
-                    tk = "npc_605",
+                    "剿灭恶徒（剧）",
+                    tk = "npc_604",
                     id = 999,
                     jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
@@ -509,98 +509,8 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "兵道古藏", 605, 103, 53 },
-                    desc = "踏入杀伐之路，循迹而行",
-                },
-                {
-                    "讨伐夜魔（剧）",
-                    tk = "npc_606",
-                    id = 999,
-                    jl = { { "剧情点", 1 } },
-                    fwdjy = function(play, tk)
-                        if tk then
-                            return _xyl_check_task(play, tk)
-                        end
-                        return false
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "夜魔洞", 606, 98, 95 },
-                    desc = "闯过讨伐夜魔，证我道途",
-                },
-                {
-                    "装备强化",
-                    tk = "npc_28",
-                    id = 999,
-                    jl = { { "剧情点", 1 } },
-                    fwdjy = function(play, tk)
-                        if tk then
-                            return _xyl_check_task(play, tk)
-                        end
-                        return false
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "二大陆主城", 28, 117, 113 },
-                    desc = "于装备强化中磨砺，道心更稳",
-                },
-                {
-                    "喂养灵根",
-                    id = 999,
-                    jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "喂养灵根")
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "二大陆主城", 22, 97, 113 },
-                    desc = "历经喂养灵根，收获机缘",
-                },
-            },
-            name = "小试牛刀",
-
-            jqd = 4,
-
-            jl = { { "1元真实充值", 1 }, { "激活木灵根", 1 } },
-        },
-        {
-            jq = {
-                {
-                    "修复轩辕剑（剧）",
-                    tk = "npc_601",
-                    id = 999,
-                    jl = { { "剧情点", 1 } },
-                    fwdjy = function(play, tk)
-                        if tk then
-                            return _xyl_check_task(play, tk)
-                        end
-                        return false
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "二大陆主城", 601, 99, 123 },
-                    desc = "于修复轩辕剑中磨砺，道心更稳",
-                },
-                {
-                    "深入野火（剧）",
-                    tk = "npc_607",
-                    id = 999,
-                    jl = { { "剧情点", 1 } },
-                    fwdjy = function(play, tk)
-                        if tk then
-                            return _xyl_check_task(play, tk)
-                        end
-                        return false
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "野火帮大营", 607, 60, 279 },
-                    desc = "探访深入野火，揭开真相",
+                    yd = { 1, "极光城郊", 604, 83, 166 },
+                    desc = "踏入剿灭恶徒，循迹而行",
                 },
                 {
                     "守护森林（剧）",
@@ -617,20 +527,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 1, "神秘森林", 608, 52, 53 },
-                    desc = "行走守护森林，破除迷障",
-                },
-                {
-                    "兵道之谜（剧）",
-                    id = 999,
-                    jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "兵道之谜（剧）")
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "兵道古藏", 605, 103, 53 },
-                    desc = "前往兵道之谜，探寻其中机缘",
+                    desc = "前往守护森林，探寻其中机缘",
                 },
                 {
                     "幸运增幅",
@@ -658,6 +555,135 @@ local npc_xyl = {
                     yd = { 1, "二大陆主城", 26, 109, 113 },
                     desc = "闯过气运占卜，证我道途",
                 },
+            },
+            name = "小试牛刀",
+
+            jqd = 4,
+
+            jl = { { "1元真实充值", 1 }, { "激活木灵根", 1 } },
+        },
+        {
+            jq = {
+                {
+                    "杀伐之路（剧）",
+                    tk = "npc_605",
+                    id = 999,
+                    jl = { { "剧情点", 1 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "兵道古藏", 605, 103, 53 },
+                    desc = "踏入杀伐之路，循迹而行",
+                },
+                {
+                    "掘墓人（剧）",
+                    tk = "npc_610",
+                    id = 999,
+                    jl = { { "剧情点", 1 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "乱葬岗", 610, 170, 212 },
+                    desc = "踏入掘墓人，循迹而行",
+                },
+                {
+                    "装备强化",
+                    tk = "npc_28",
+                    id = 999,
+                    jl = { { "剧情点", 1 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "二大陆主城", 28, 117, 113 },
+                    desc = "于装备强化中磨砺，道心更稳",
+                },
+            },
+            name = "漫漫仙途",
+
+            jqd = 8,
+
+            jl = { { "1元真实充值", 1 }, { "激活水灵根", 1 } },
+        },
+        {
+            jq = {
+                {
+                    "讨伐夜魔（剧）",
+                    tk = "npc_606",
+                    id = 999,
+                    jl = { { "剧情点", 1 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "夜魔洞", 606, 98, 95 },
+                    desc = "闯过讨伐夜魔，证我道途",
+                },
+                {
+                    "兵道之谜（剧）",
+                    id = 999,
+                    jl = { { "剧情点", 1 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "兵道之谜（剧）")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "兵道古藏", 605, 103, 53 },
+                    desc = "前往兵道之谜，探寻其中机缘",
+                },
+                {
+                    "修复轩辕剑（剧）",
+                    tk = "npc_601",
+                    id = 999,
+                    jl = { { "剧情点", 1 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "二大陆主城", 601, 99, 123 },
+                    desc = "于修复轩辕剑中磨砺，道心更稳",
+                },
+                {
+                    "喂养灵根",
+                    id = 999,
+                    jl = { { "剧情点", 1 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "喂养灵根")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "二大陆主城", 22, 97, 113 },
+                    desc = "历经喂养灵根，收获机缘",
+                },
                 {
                     "转生·二",
                     id = 999,
@@ -672,11 +698,11 @@ local npc_xyl = {
                     desc = "踏入转生·二，循迹而行",
                 },
             },
-            name = "漫漫仙途",
+            name = "融会贯通",
 
-            jqd = 8,
+            jqd = 11,
 
-            jl = { { "1元真实充值", 1 }, { "激活水灵根", 1 } },
+            jl = { { "1元真实充值", 1 }, { "仙品仙法卷轴", 1 } },
         },
     },
     {

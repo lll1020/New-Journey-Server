@@ -1,5 +1,33 @@
 npc = {}
 
+local _fashionConfig1002 = Guard.getConfig("npc_1002")
+local _fashionAttrListName = "时装属性"
+
+local function _refreshFashionAttr(play, T_data)
+    T_data = T_data or Player.getJsonTableByVar(play, VarCfg.T_szjl)
+    T_data.yjs = T_data.yjs or {}
+
+    local attrs = {}
+    for idx, cfg in ipairs(((_fashionConfig1002 and _fashionConfig1002.details and _fashionConfig1002.details.sz) or {})) do
+        if T_data.yjs[tostring(idx)] == 1 then
+            for _, attr in ipairs(cfg.attr or {}) do
+                local attrId = tonumber(attr[1])
+                local attrValue = tonumber(attr[2]) or 0
+                if attrId and attrValue > 0 then
+                    attrs[attrId] = (attrs[attrId] or 0) + attrValue
+                end
+            end
+        end
+    end
+
+    local attrsstr = Player.getAttrTableToStr(attrs)
+    if attrsstr and attrsstr ~= "" then
+        addattlist(play, _fashionAttrListName, "=", attrsstr, 1)
+    else
+        delattlist(play, _fashionAttrListName)
+    end
+end
+
 npc[2] = function(play, p2, p3, msgData) --背包  面板
     if p2 == 0 then
         -- 回收面板
@@ -208,7 +236,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
                     sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>无法传送...</font>","Type":9}')
                 elseif shuju.yd[1] == 1 then
                     if getplaydef(play, "N$战斗状态") < os.time() then
-                        mapmove(play, shuju.yd[2], shuju.yd[4], shuju.yd[5], 2)
+                        mapmove(play, shuju.yd[2], shuju.yd[4], shuju.yd[5], 5)
                         sendluamsg(play, 101, 0, 1, 1, '{"lx":2,"npcdt":"' .. shuju.yd[2] .. '","npcid":' .. shuju.yd[3] .. ',"xx":' .. shuju.yd[4] .. ',"yy":' .. shuju.yd[5] .. "}")
                         sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
                     else
@@ -696,6 +724,11 @@ npc[501] = function(play, p2, p3, data) --首充礼包
                 local T_data_fj = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
                 T_data_fj.ratio = 2
                 Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data_fj)
+                local T_data = Player.getJsonTableByVar(play, VarCfg.T_szjl)
+                T_data.yjs = T_data.yjs or {}
+                T_data.yjs[""..1] = 1
+                Player.setJsonVarByTable(play, VarCfg.T_szjl, T_data)
+                _refreshFashionAttr(play, T_data)
             end
 
             sendluamsg(play, 101, 1005, 0, 0, "lqcg")
@@ -724,6 +757,11 @@ npc[501] = function(play, p2, p3, data) --首充礼包
             local T_data_fj = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
             T_data_fj.ratio = 2
             Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data_fj)
+            local T_data = Player.getJsonTableByVar(play, VarCfg.T_szjl)
+            T_data.yjs = T_data.yjs or {}
+            T_data.yjs[""..1] = 1
+            Player.setJsonVarByTable(play, VarCfg.T_szjl, T_data)
+            _refreshFashionAttr(play, T_data)
             
             sendluamsg(play, 101, 1005, 0, 0, "lqcg")
             return

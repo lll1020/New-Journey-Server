@@ -3,3 +3,51 @@
 [2026-02-09 07:06:07:560] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：235; NpcThreadId: 21568, CurPlayThreadId: 21568
 [2026-02-09 07:06:07:560] [玩家名字]Lua执行耗时过高:235ms msgid:101 2 5 1 [2432200]
 
+[2026-02-09 09:33:32:058] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：94; NpcThreadId: 37732, CurPlayThreadId: 37732
+
+[2026-02-09 09:38:35:555] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 37732, CurPlayThreadId: 37732
+[2026-02-09 09:38:35:555] [玩家名字]Lua执行耗时过高:31ms msgid:100 6 1 0 
+
+[2026-02-09 09:52:25:224] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 37732, CurPlayThreadId: 37732
+[2026-02-09 09:52:25:224] [玩家名字]Lua执行耗时过高:31ms msgid:100 24 1 0 
+
+[2026-02-09 09:54:48:550] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：406; NpcThreadId: 37732, CurPlayThreadId: 37732
+
+[2026-02-09 09:57:30:449] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：93; NpcThreadId: 37732, CurPlayThreadId: 37732
+[2026-02-09 09:57:30:449] [玩家名字]Lua执行耗时过高:93ms msgid:100 8 1 0 
+[2026-02-09 09:57:34:473] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 37732, CurPlayThreadId: 37732
+[2026-02-09 09:57:34:473] [玩家名字]Lua执行耗时过高:31ms msgid:100 9 1 1 
+
+[2026-02-09 09:57:48:453] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：78; NpcThreadId: 37732, CurPlayThreadId: 37732
+[2026-02-09 09:57:48:453] [玩家名字]Lua执行耗时过高:78ms msgid:100 14 1 0 {"idx":2}
+
+[2026-02-09 09:57:50:537] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：172; NpcThreadId: 37732, CurPlayThreadId: 37732
+[2026-02-09 09:57:50:537] [玩家名字]Lua执行耗时过高:172ms msgid:100 14 1 0 {"idx":3}
+[2026-02-09 09:57:52:409] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：94; NpcThreadId: 37732, CurPlayThreadId: 37732
+[2026-02-09 09:57:52:409] [玩家名字]Lua执行耗时过高:94ms msgid:100 14 1 0 {"idx":4}
+
+[2026-02-09 11:21:41:507] Func Fail, obj is nil: GetItemInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getiteminfo'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:80: in function <E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:79>
+
+[2026-02-09 11:21:42:131] Func Fail, obj is nil: GetItemInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getiteminfo'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:80: in function <E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:79>
+[2026-02-09 11:21:42:630] Func Fail, obj is nil: GetItemInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getiteminfo'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:80: in function <E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:79>
+[2026-02-09 11:21:43:501] Func Fail, obj is nil: GetItemInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getiteminfo'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:80: in function <E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:79>
+
+[2026-02-09 11:22:05:239] Func Fail, obj is nil: GetItemInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getiteminfo'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:80: in function <E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:79>
+
+[2026-02-09 12:02:03:187] Func Fail, obj is nil: GetItemInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getiteminfo'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:80: in function <E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:79>
+[2026-02-09 12:02:04:055] Func Fail, obj is nil: GetItemInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getiteminfo'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:80: in function <E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/useitme.lua:79>
+

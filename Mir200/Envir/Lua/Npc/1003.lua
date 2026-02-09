@@ -2,11 +2,34 @@
 npc = {}
 
 
---
 
+local _fashionConfig = Guard.getConfig("npc_1002")
+local _fashionAttrListName = "时装属性"
 
+local function _refreshFashionAttr(play, T_data)
+    T_data = T_data or Player.getJsonTableByVar(play, VarCfg.T_szjl)
+    T_data.yjs = T_data.yjs or {}
 
+    local attrs = {}
+    for idx, cfg in ipairs(((_fashionConfig and _fashionConfig.details and _fashionConfig.details.sz) or {})) do
+        if T_data.yjs[tostring(idx)] == 1 then
+            for _, attr in ipairs(cfg.attr or {}) do
+                local attrId = tonumber(attr[1])
+                local attrValue = tonumber(attr[2]) or 0
+                if attrId and attrValue > 0 then
+                    attrs[attrId] = (attrs[attrId] or 0) + attrValue
+                end
+            end
+        end
+    end
 
+    local attrsstr = Player.getAttrTableToStr(attrs)
+    if attrsstr and attrsstr ~= "" then
+        addattlist(play, _fashionAttrListName, "=", attrsstr, 1)
+    else
+        delattlist(play, _fashionAttrListName)
+    end
+end
 function npc.main(play,npcid)
     local data = {}
     data["T_data"] = Player.getJsonTableByVar(play, VarCfg.T_szjl)
@@ -45,6 +68,7 @@ function npc.link(play,npcid,ew,aid,data)
         Player.takeItemByTable(play, _config.cost, ",时装解锁",nil)
         T_data.yjs["".._config.idx] = 1
         Player.setJsonVarByTable(play, VarCfg.T_szjl, T_data)
+        _refreshFashionAttr(play, T_data)
         Player.sendmsgEx(play, "恭喜你，时装解锁成功")
         local data = {}
         data["T_data"] = T_data

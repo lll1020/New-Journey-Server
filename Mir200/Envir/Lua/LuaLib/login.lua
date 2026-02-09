@@ -17,7 +17,7 @@ function Login.main(play)
         setflagstatus(play,VarCfg.BS_huishou[5],1)
 
         setplaydef(play,VarCfg.T_sgcf,"{}")--杀怪触发
-        setplaydef(play,VarCfg.T_hsdg, '{"1_1_1":1,"1_1_2":1,"1_1_3":1,"1_1_4":1,"1_1_5":1,"1_1_6":1,"1_1_7":1,"1_1_8":1,"1_1_9":1,"1_1_10":1,"1_1_11":1,"1_1_12":1,}')--回收打勾
+        setplaydef(play,VarCfg.T_hsdg, '{"1_1_1":1,"1_1_2":1,"1_1_3":1,"1_1_4":1,"1_1_5":1,"1_1_6":1,"1_1_7":1,"1_1_8":1,"1_1_9":1,"1_1_10":1,"1_1_11":1,"1_1_12":1}')--回收打勾
         setplaydef(play,VarCfg.T_dljq,"{}")--各剧情JSON
         setplaydef(play,VarCfg.T_czlb,"{}")--各种礼包
         setplaydef(play,VarCfg["T_首冲礼包"],"{}")--首冲礼包
