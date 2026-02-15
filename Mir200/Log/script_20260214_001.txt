@@ -1,0 +1,21 @@
+[2026-02-14 09:46:25:862] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：47; NpcThreadId: 33872, CurPlayThreadId: 33872
+[2026-02-14 09:46:25:862] [玩家名字]Lua执行耗时过高:47ms msgid:100 9 1 2 
+
+[2026-02-14 09:46:39:914] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：47; NpcThreadId: 33872, CurPlayThreadId: 33872
+[2026-02-14 09:46:39:914] [玩家名字]Lua执行耗时过高:47ms msgid:100 14 1 0 {"idx":1}
+[2026-02-14 09:46:42:440] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：219; NpcThreadId: 33872, CurPlayThreadId: 33872
+[2026-02-14 09:46:42:440] [玩家名字]Lua执行耗时过高:219ms msgid:100 14 1 0 {"idx":2}
+
+[2026-02-14 09:46:52:419] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：516; NpcThreadId: 33872, CurPlayThreadId: 33872
+[2026-02-14 09:46:52:419] [玩家名字]Lua执行耗时过高:516ms msgid:100 14 1 0 {"idx":4}
+
+[2026-02-14 09:46:54:157] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：235; NpcThreadId: 33872, CurPlayThreadId: 33872
+[2026-02-14 09:46:54:157] [玩家名字]Lua执行耗时过高:235ms msgid:100 14 1 0 {"idx":5}
+[2026-02-14 09:46:56:420] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：500; NpcThreadId: 33872, CurPlayThreadId: 33872
+[2026-02-14 09:46:56:420] [玩家名字]Lua执行耗时过高:500ms msgid:100 14 1 0 {"idx":5}
+
+[2026-02-14 09:48:13:886] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：47; NpcThreadId: 33872, CurPlayThreadId: 33872
+[2026-02-14 09:48:13:886] [玩家名字]Lua执行耗时过高:47ms msgid:100 21 1 0 
+
+[2026-02-14 09:50:48:281] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 33872, CurPlayThreadId: 33872
+

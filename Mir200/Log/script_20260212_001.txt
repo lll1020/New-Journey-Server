@@ -1,0 +1,55 @@
+[2026-02-12 12:21:23:961] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 28104, CurPlayThreadId: 28104
+
+[2026-02-12 12:21:48:063] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 28104, CurPlayThreadId: 28104
+
+[2026-02-12 12:25:48:045] Func Fail, obj is nil: GetItemInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getiteminfo'
+	...d\New-Journey-Server\Mir200\Envir/Lua/LuaLib/useitme.lua:80: in function <...d\New-Journey-Server\Mir200\Envir/Lua/LuaLib/useitme.lua:79>
+[2026-02-12 12:25:48:789] Func Fail, obj is nil: GetItemInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getiteminfo'
+	...d\New-Journey-Server\Mir200\Envir/Lua/LuaLib/useitme.lua:80: in function <...d\New-Journey-Server\Mir200\Envir/Lua/LuaLib/useitme.lua:79>
+[2026-02-12 12:25:49:285] Func Fail, obj is nil: GetItemInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getiteminfo'
+	...d\New-Journey-Server\Mir200\Envir/Lua/LuaLib/useitme.lua:80: in function <...d\New-Journey-Server\Mir200\Envir/Lua/LuaLib/useitme.lua:79>
+[2026-02-12 12:25:49:908] Func Fail, obj is nil: GetItemInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getiteminfo'
+	...d\New-Journey-Server\Mir200\Envir/Lua/LuaLib/useitme.lua:80: in function <...d\New-Journey-Server\Mir200\Envir/Lua/LuaLib/useitme.lua:79>
+
+[2026-02-12 12:25:50:654] Func Fail, obj is nil: GetItemInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getiteminfo'
+	...d\New-Journey-Server\Mir200\Envir/Lua/LuaLib/useitme.lua:80: in function <...d\New-Journey-Server\Mir200\Envir/Lua/LuaLib/useitme.lua:79>
+
+[2026-02-12 14:09:17:891] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 28104, CurPlayThreadId: 28104
+
+[2026-02-12 14:11:05:934] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：78; NpcThreadId: 28104, CurPlayThreadId: 28104
+[2026-02-12 14:11:05:934] [玩家名字]Lua执行耗时过高:78ms msgid:101 516 1 5 
+
+[2026-02-12 14:11:53:072] Func Fail, obj is nil: GetItemInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getiteminfo'
+	...d\New-Journey-Server\Mir200\Envir/Lua/LuaLib/useitme.lua:80: in function <...d\New-Journey-Server\Mir200\Envir/Lua/LuaLib/useitme.lua:79>
+[2026-02-12 14:11:53:571] Func Fail, obj is nil: GetItemInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getiteminfo'
+	...d\New-Journey-Server\Mir200\Envir/Lua/LuaLib/useitme.lua:80: in function <...d\New-Journey-Server\Mir200\Envir/Lua/LuaLib/useitme.lua:79>
+[2026-02-12 14:11:54:194] Func Fail, obj is nil: GetItemInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getiteminfo'
+	...d\New-Journey-Server\Mir200\Envir/Lua/LuaLib/useitme.lua:80: in function <...d\New-Journey-Server\Mir200\Envir/Lua/LuaLib/useitme.lua:79>
+[2026-02-12 14:11:54:691] Func Fail, obj is nil: GetItemInfo Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getiteminfo'
+	...d\New-Journey-Server\Mir200\Envir/Lua/LuaLib/useitme.lua:80: in function <...d\New-Journey-Server\Mir200\Envir/Lua/LuaLib/useitme.lua:79>
+
+[2026-02-12 14:14:24:625] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 28104, CurPlayThreadId: 28104
+
+[2026-02-12 14:39:31:907] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 28104, CurPlayThreadId: 28104
+
+[2026-02-12 14:42:04:594] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 28104, CurPlayThreadId: 28104
+
+[2026-02-12 15:08:16:079] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 28104, CurPlayThreadId: 28104
+
+[2026-02-12 15:10:36:172] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 28104, CurPlayThreadId: 28104
+
+[2026-02-12 15:20:37:204] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 28104, CurPlayThreadId: 28104
+
+[2026-02-12 15:27:15:017] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 28104, CurPlayThreadId: 28104
+
+[2026-02-12 19:19:16:985] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 28104, CurPlayThreadId: 28104
+

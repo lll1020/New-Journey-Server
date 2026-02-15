@@ -1,0 +1,92 @@
+[2026-02-13 20:52:56:949] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-13 20:56:51:933] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-13 20:59:37:121] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-13 21:10:45:707] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：78; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-13 21:11:13:942] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：265; NpcThreadId: 6544, CurPlayThreadId: 6544
+[2026-02-13 21:11:13:942] [玩家名字]Lua执行耗时过高:265ms msgid:100 14 1 0 {"idx":2}
+
+[2026-02-13 21:11:16:144] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：421; NpcThreadId: 6544, CurPlayThreadId: 6544
+[2026-02-13 21:11:16:144] [玩家名字]Lua执行耗时过高:421ms msgid:100 14 1 0 {"idx":3}
+[2026-02-13 21:11:20:234] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：62; NpcThreadId: 6544, CurPlayThreadId: 6544
+[2026-02-13 21:11:20:234] [玩家名字]Lua执行耗时过高:62ms msgid:100 14 1 0 {"idx":4}
+
+[2026-02-13 21:11:22:084] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：453; NpcThreadId: 6544, CurPlayThreadId: 6544
+[2026-02-13 21:11:22:084] [玩家名字]Lua执行耗时过高:453ms msgid:100 14 1 0 {"idx":4}
+[2026-02-13 21:11:25:959] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：359; NpcThreadId: 6544, CurPlayThreadId: 6544
+[2026-02-13 21:11:25:959] [玩家名字]Lua执行耗时过高:359ms msgid:100 14 1 0 {"idx":5}
+
+[2026-02-13 21:18:01:719] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：32; NpcThreadId: 6544, CurPlayThreadId: 6544
+[2026-02-13 21:18:01:719] [玩家名字]Lua执行耗时过高:32ms msgid:100 21 1 0 
+
+[2026-02-13 21:24:55:800] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：78; NpcThreadId: 6544, CurPlayThreadId: 6544
+[2026-02-13 21:24:55:800] [玩家名字]Lua执行耗时过高:78ms msgid:100 8 1 0 
+
+[2026-02-13 21:36:24:418] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-13 23:33:10:066] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：109; NpcThreadId: 6544, CurPlayThreadId: 6544
+[2026-02-13 23:33:10:066] [玩家名字]Lua执行耗时过高:109ms msgid:100 11 1 0 {"idx":3}
+
+[2026-02-13 23:42:56:746] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-13 23:47:36:386] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-13 23:49:22:590] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 00:08:40:636] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 00:13:59:418] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 00:28:47:106] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 00:58:29:886] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 01:23:52:558] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 02:06:50:449] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 02:17:50:324] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 02:47:09:371] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 03:31:49:371] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 03:57:30:355] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 04:07:10:527] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 04:34:49:328] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 05:14:31:343] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 05:32:56:031] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 05:44:09:015] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 05:57:40:890] LuaNPC:玩家名字 ID:999999999 执行 attack player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 06:23:02:188] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 06:49:31:984] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 07:00:47:750] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 07:15:37:734] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 07:19:29:797] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 08:07:10:140] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 08:24:25:734] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 08:32:19:734] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 08:37:30:297] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 08:55:10:203] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 6544, CurPlayThreadId: 6544
+
+[2026-02-14 09:28:01:406] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 6544, CurPlayThreadId: 6544
+

@@ -379,6 +379,7 @@ end
 -- 备注：剧情点验证入口（优先特殊逻辑，其次剧情完成）
 local function _xyl_check_task(play, name)
     local key = _xyl_norm_name(name)
+    release_print(name)
     local special = {
         ["天书强化"] = _xyl_has_tianshu_level,
         ["初识仙法"] = _xyl_has_any_xianfa,
@@ -411,9 +412,6 @@ local function _xyl_check_task(play, name)
         ["灾厄入侵"] = function(play)
             local cfg = teshudata and teshudata["npc_46"]
             return cfg and _xyl_has_title(play, cfg.ch)
-        end,
-        ["兵道之谜"] = function(play)
-            return _xyl_check_story(play, "npc_609")
         end,
     }
     if special[key] then
@@ -603,11 +601,8 @@ local npc_xyl = {
                     tk = "npc_28",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play, tk)
-                        if tk then
-                            return _xyl_check_task(play, tk)
-                        end
-                        return false
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "装备强化")
                     end,
                     khdjy = function()
                         return true
@@ -642,17 +637,21 @@ local npc_xyl = {
                     desc = "闯过讨伐夜魔，证我道途",
                 },
                 {
-                    "兵道之谜（剧）",
+                    "古刹之谜（剧）",
+                    tk = "npc_609",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "兵道之谜（剧）")
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
                     end,
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "兵道古藏", 605, 103, 53 },
-                    desc = "前往兵道之谜，探寻其中机缘",
+                    yd = { 1, "洞穴秘境", 609, 143, 153 },
+                    desc = "前往古刹，探寻其中机缘",
                 },
                 {
                     "修复轩辕剑（剧）",

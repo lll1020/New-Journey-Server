@@ -162,7 +162,9 @@ function npc.link(play,npcid,ew,aid)
         if step == 10 then
             renewlevel(play,1,0,0)
             Player.sendmsgEx(play, "转生成功，当前转生为"..stage.."阶")
-            Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
+            if rwcf[npcid] then
+                Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
+            end
         end
     end
 end

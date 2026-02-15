@@ -199,13 +199,20 @@ local function _ywl_filter_rewards(play, list)
     end
     return out
 end
---功能:检查章节是否解锁
+--功能:检查章节是否解锁（仅校验剧情点）
 local function _ywl_is_chapter_open(play, i, j)
-    if not i or not j or j <= 1 then
+    if not i or not j or i <= 0 or j <= 0 then
+        return false
+    end
+    if not npc_xyl[i] or not npc_xyl[i][j] then
+        return false
+    end
+    local need_jqd = tonumber(npc_xyl[i][j].jqd) or 0
+    if need_jqd <= 0 then
         return true
     end
-    local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
-    return T_ywl["jl_" .. i .. "_" .. (j - 1)] == 1
+    local cur_jqd = querymoney(play, getstditeminfo("剧情点", 0))
+    return cur_jqd >= need_jqd
 end
 
 npc[11] = function(play, p2, p3, data) --异闻录
@@ -227,7 +234,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
             and sj.z <= #npc_xyl[sj.i][sj.j].jq
         then
             if not _ywl_is_chapter_open(play, sj.i, sj.j) then
-                sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>章节未解锁...</font>","Type":9}')
+                sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>剧情点不足...</font>","Type":9}')
                 return
             end
             if Player.dl_sz_notip(play, sj.i) then
@@ -261,7 +268,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
         local sj = json2tbl(data)
         if sj.i and sj.j and sj.i > 0 and sj.j > 0 and sj.i <= #npc_xyl and sj.j <= #npc_xyl[sj.i] then
             if not _ywl_is_chapter_open(play, sj.i, sj.j) then
-                sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>章节未解锁...</font>","Type":9}')
+                sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>剧情点不足...</font>","Type":9}')
                 return
             end
             local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
@@ -302,18 +309,12 @@ npc[11] = function(play, p2, p3, data) --异闻录
             and sj.z <= #npc_xyl[sj.i][sj.j].jq
         then
             if not _ywl_is_chapter_open(play, sj.i, sj.j) then
-                sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>章节未解锁...</font>","Type":9}')
+                sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>剧情点不足...</font>","Type":9}')
                 return
             end
             local shuju = npc_xyl[sj.i][sj.j].jq[sj.z]
             local T_dljq = json2tbl(getplaydef(play, VarCfg.T_dljq))
             local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
-            -- 查这个货币的数量（只查这一种，不合并绑/非绑）
-            local num = querymoney(play, getstditeminfo("剧情点", 0))
-            if num < npc_xyl[sj.i][sj.j].jqd then
-                sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>剧情点不足...</font>","Type":9}')
-                return
-            end
             if
                 (T_ywl["jl_" .. sj.i .. "_" .. sj.j] and T_ywl["jl_" .. sj.i .. "_" .. sj.j] == 1)
                 or (

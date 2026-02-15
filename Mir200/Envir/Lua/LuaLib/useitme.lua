@@ -42,31 +42,83 @@ function stdmodefunc10(play, item)
     return false
 end
 --------------------双击物品触发-------------------经验通用
+local function _get_use_all_info(play, item)
+    local itemName = getiteminfo(play, item, ConstCfg.iteminfo.name)
+    local sl = 0
+    if itemName and itemName ~= "" then
+        sl = getbagitemcount(play, itemName)
+    end
+    if sl < 1 then
+        sl = getiteminfo(play, item, 5)
+    end
+    return sl, itemName
+end
+
+local function _take_use_all_item(play, item, sl, itemName)
+    if sl < 1 then
+        return
+    end
+    if itemName and itemName ~= "" then
+        takeitem(play, itemName, sl)
+    else
+        delitembymakeindex(play, getiteminfo(play, item, 1), sl)
+    end
+end
+
 function stdmodefunc12(play, item)
-    changeexp(play, '+', getstditeminfo(getiteminfo(play, item, 2), 8), false)
+    local sl, itemName = _get_use_all_info(play, item)
+    if sl < 1 then
+        return
+    end
+    local wpid = getiteminfo(play, item, 2)
+    local wpjg = getstditeminfo(wpid, 8)
+    changeexp(play, '+', wpjg * sl, false)
+    _take_use_all_item(play, item, sl, itemName)
 end
 --------------------双击物品触发-------------------红名清洗卷
 function stdmodefunc20(play, item)
-    setbaseinfo(play,46,getbaseinfo(play,46)-100)
+    local sl, itemName = _get_use_all_info(play, item)
+    if sl < 1 then
+        return
+    end
+    local pk = getbaseinfo(play,46) - 100 * sl
+    if pk < 0 then
+        pk = 0
+    end
+    setbaseinfo(play,46,pk)
     sendmsg(play,1,'{"Msg":"pk值下降100了...","FColor":219,"BColor":255,"Type":1}')
     sendmsg(play,1,'{"Msg":"剩余'..getbaseinfo(play,46)..'...","FColor":219,"BColor":255,"Type":1}')
+    _take_use_all_item(play, item, sl, itemName)
 end
 --------------------双击物品触发-------------------灵石通用
 function stdmodefunc21(play, item)
-    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 7 or 8, '+', getstditeminfo(getiteminfo(play, item, 2), 8), '双击获得', true)
+    local sl, itemName = _get_use_all_info(play, item)
+    if sl < 1 then
+        return
+    end
+    local wpid = getiteminfo(play, item, 2)
+    local wpjg = getstditeminfo(wpid, 8)
+    changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 7 or 8, '+', wpjg * sl, '双击获得', true)
+    _take_use_all_item(play, item, sl, itemName)
 end
 
 --------------------双击物品触发-------------------元宝通用
 function stdmodefunc11(play, item)
-    local sl = getiteminfo(play, item, 5)
+    local sl, itemName = _get_use_all_info(play, item)
+    if sl < 1 then
+        return
+    end
     changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', getstditeminfo(getiteminfo(play, item, 2), 8) * sl, '双击获得', true)
-    delitembymakeindex(play, getiteminfo(play, item, 1), sl)
+    _take_use_all_item(play, item, sl, itemName)
 end
 --------------------双击物品触发-------------------元宝通用
 function stdmodefunc18(play, item)
-    local sl = getiteminfo(play, item, 5)
+    local sl, itemName = _get_use_all_info(play, item)
+    if sl < 1 then
+        return
+    end
     changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', getstditeminfo(getiteminfo(play, item, 2), 8) * sl, '双击获得', true)
-    delitembymakeindex(play, getiteminfo(play, item, 1), sl)
+    _take_use_all_item(play, item, sl, itemName)
 end
 
 --------------------双击物品触发-------------------元宝红包
@@ -77,12 +129,19 @@ local itme_13 = {
     ["金币(超级)"] = {100000,1000000},
 }
 function stdmodefunc13(play, item)
-    local itemName = getiteminfo(actor, item, ConstCfg.iteminfo.name)
+    local sl, itemName = _get_use_all_info(play, item)
+    release_print(itemName)
+    if sl < 1 then
+        return
+    end
     local min = itme_13[itemName][1]
     local max = itme_13[itemName][2]
-    local num = math.random(min, max)
+    local num = 0
+    for i = 1, sl do
+        num = num + math.random(min, max)
+    end
     changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', num, '双击获得元宝红包', true)
-    delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+    _take_use_all_item(play, item, sl, itemName)
 end
 
 --------------------双击物品触发-------------------元宝红包
@@ -92,22 +151,31 @@ local itme_14 = {
     ["元宝红包(大)"] = {100,200},
 }
 function stdmodefunc14(play, item)
-    local itemName = getiteminfo(actor, item, ConstCfg.iteminfo.name)
+    local sl, itemName = _get_use_all_info(play, item)
+    if sl < 1 then
+        return
+    end
     local min = itme_14[itemName][1]
     local max = itme_14[itemName][2]
-    local num = math.random(min, max)
+    local num = 0
+    for i = 1, sl do
+        num = num + math.random(min, max)
+    end
     changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', num, '双击获得元宝红包', true)
-    delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+    _take_use_all_item(play, item, sl, itemName)
 end
 function stdmodefunc48(play, item) -- 真实充值卷
+    local sl, itemName = _get_use_all_info(play, item)
+    if sl < 1 then
+        return
+    end
     local wpid = getiteminfo(play,item,2)
-    local sl = getiteminfo(play, item, 5)
     local wpjg = getstditeminfo(wpid,8)
     changemoney(play,23,"+",wpjg*sl,"真实充值卷",true)
     changemoney(play,8,"+",wpjg*100*sl,"真实充值卷",true)
     --changemoney(play,23,"+",wpjg*sl,"真实充值卷",true)  --累计充值
     --sendmsg(play, 1, '{"Msg":"真实充值增加:'..wpjg*sl..'","FColor":253,"BColor":255,"Type":1}')
-    delitembymakeindex(play, getiteminfo(play, item, 1), sl)
+    _take_use_all_item(play, item, sl, itemName)
     --release_print(getiteminfo(play,item,2))
 end
 

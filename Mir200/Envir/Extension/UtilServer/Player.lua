@@ -845,13 +845,13 @@ function Player.huishou(play, hs_constant)
 
         for i, v in pairs(item or {}) do
             local idx = getiteminfo(play, v, 2)
-            if idx > 10022 and idx < 10034 then    --yuanbao
+            if idx > 10045 and idx <= 10063 then    --yuanbao
                 if kg1 == 1 then
                     local sl = getiteminfo(play, v, 5)
                     changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', getstditeminfo(idx, 8) * sl, '»úÆ÷ÈË³Ô', true)
                     delitembymakeindex(play, getiteminfo(play, v, 1), sl)
                 end
-            elseif idx > 10018 and idx < 10023 then    --jinbi
+            elseif idx > 10022 and idx <= 10035 then    --jinbi
                 if kg2 == 1 then
                     if fd_sjyb[idx] then
                         local sl = getiteminfo(play, v, 5)
@@ -861,7 +861,7 @@ function Player.huishou(play, hs_constant)
                         end
                     end
                 end
-            elseif idx > 10010 and idx < 10019 then    --exp
+            elseif idx > 10006 and idx <= 10021 then    --exp
                 if kg3 == 3 then
                     local sl = getiteminfo(play, v, 5)
                     changeexp(play, '+', getstditeminfo(idx, 8) * sl, false)
