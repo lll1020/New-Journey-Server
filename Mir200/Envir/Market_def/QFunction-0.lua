@@ -567,7 +567,7 @@ function struckdamage(play, Hiter, Target, MagicId, Damage)
 		end
         local gd = getbaseinfo(play, 51, 255)
         if gd > 0 then
-            ew = ew - gd
+            ew = ew + gd
         end
 	end
     if ew > 0 then
@@ -1265,6 +1265,7 @@ local qf_teshunpc = {
     [70] = 70, -- 狂魔乱舞
     [1003] = 1003,[1004] = 1003,[1005] = 1003,[1006] = 1003,[1007] = 1003, -- 各大陆时装兑换
     [69] = 64, -- 神兽圣遗物 --这个是特殊的 前端不要的
+    [6] = 6,[7] = 7,[8] = 8,[9] = 9,[10] = 10,[11] = 11,[13] = 13,[24] = 24,[22] = 22,[43] = 43,[26] = 26,[28] = 28,[25] = 25,[54] = 54,[27] = 27,[44] = 44,[64] = 64,[65] = 65,[70] = 70,--小提升
 }
 function clicknpc(play, npcid)
     --打印

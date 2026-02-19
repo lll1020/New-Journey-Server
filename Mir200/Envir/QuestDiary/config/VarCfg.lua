@@ -188,7 +188,6 @@ VarCfg["T_技能升级"]           = "T46"                                          
 VarCfg.T_XianFuData           = "T47"                                                                         --T_仙府
 VarCfg["T_藏宝图"]           = "T48"                                                                         --T_藏宝图
 VarCfg["T_八卦"]           = "T49"                                                                         --T_八卦
-VarCfg["T_杀伐神石"]           = "T57"                                                                         --T_杀伐神石
 VarCfg["T_灵兽"]           = "T50"                                                                         --T_灵兽
 VarCfg["T_锁妖塔"]           = "T51"                                                                         --T_锁妖塔
 VarCfg["T_福娃猜拳"]           = "T52"                                                                         --T_福娃猜拳
@@ -196,6 +195,7 @@ VarCfg["T_生肖守护"]           = "T53"                                          
 VarCfg["T_时光之杖"]           = "T54"                                                                         --T_时光之杖
 VarCfg["T_砍树系统"]           = "T55"                                                                         --T_砍树系统
 VarCfg["T_物品使用记录"]           = "T56"                                                                         --T_物品使用记录
+VarCfg["T_物品掉落记录"]           = "T58"                                                                         --T_物品掉落记录
 
 
 

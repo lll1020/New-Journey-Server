@@ -832,7 +832,7 @@ shaguai = {
 		if dl == 1 then
 			return
 		elseif dl == 2 then
-			-- 前10个 1/50，后10个 1/150
+			-- 前10个 1/50，后续 1/150
 			if cnt < 10 then
 				rate = 50
 			else

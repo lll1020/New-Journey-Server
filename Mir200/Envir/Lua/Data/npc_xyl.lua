@@ -655,14 +655,11 @@ local npc_xyl = {
                 },
                 {
                     "ÐÞ¸´ÐùÔ¯½££¨¾ç£©",
-                    tk = "npc_601",
+                    -- tk = "npc_601",
                     id = 999,
                     jl = { { "¾çÇéµã", 1 } },
                     fwdjy = function(play, tk)
-                        if tk then
-                            return _xyl_check_task(play, tk)
-                        end
-                        return false
+                        return _xyl_check_task(play, "ÐÞ¸´ÐùÔ¯½££¨¾ç£©")
                     end,
                     khdjy = function()
                         return true

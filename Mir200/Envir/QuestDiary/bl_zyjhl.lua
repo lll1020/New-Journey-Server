@@ -25,13 +25,27 @@ function bl_zyjhl3(play,mingzi)
 end
 --------------------爆率监听触发-------------------八卦卷轴计数
 function bl_zyjhl4(play,mingzi)
-    local data = Player.getJsonTableByVar(play, VarCfg["T_八卦"])
+    local data = Player.getJsonTableByVar(play, VarCfg["T_物品掉落记录"])
     if not data then
         data = {}
     end
-    data[mingzi] = (data[mingzi] or 0) + 1
-    Player.setJsonVarByTable(play, VarCfg["T_八卦"], data)
-    return true
+
+    local cnt = tonumber(data[mingzi]) or 0
+
+    -- 前4个正常给；第5个起 50% 放行（表内命中后再二次判定）
+    if cnt < 4 then
+        data[mingzi] = cnt + 1
+        Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
+        return true
+    end
+
+    if math.random(100) > 50 then
+        data[mingzi] = cnt + 1
+        Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
+        return true
+    end
+
+    return false
 end
 --------------------爆率监听触发-------------------杀伐神石
 function bl_zyjhl5(play,mingzi)
@@ -52,7 +66,7 @@ function bl_zyjhl5(play,mingzi)
 
     if level < 10 then
         -- 10级前最多给2颗（表内爆率 1/200）
-        local data = Player.getJsonTableByVar(play, VarCfg["T_杀伐神石"])
+        local data = Player.getJsonTableByVar(play, VarCfg["T_物品掉落记录"])
         if not data then
             data = {}
         end
@@ -61,12 +75,40 @@ function bl_zyjhl5(play,mingzi)
             return false
         end
         data[mingzi] = cnt + 1
-        Player.setJsonVarByTable(play, VarCfg["T_杀伐神石"], data)
+        Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
         return true
     end
 
     -- 10级后爆率 1/888（表内为 1/200，按比例过滤）
     if math.random(888) <= 200 then
+        return true
+    end
+
+    return false
+end
+
+--------------------爆率监听触发-------------------五行石（前5个增强）
+function bl_zyjhl6(play,mingzi)
+    if mingzi ~= "五行石" then
+        return true
+    end
+
+    local data = Player.getJsonTableByVar(play, VarCfg["T_物品掉落记录"])
+    if not data then
+        data = {}
+    end
+    local cnt = tonumber(data[mingzi]) or 0
+
+    -- 表内配置 1/10：前5个直接放行；第6个起按比例过滤到等效 1/50
+    if cnt < 13 then
+        data[mingzi] = cnt + 1
+        Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
+        return true
+    end
+
+    if math.random(5) == 1 then
+        data[mingzi] = cnt + 1
+        Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
         return true
     end
 

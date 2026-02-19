@@ -48,6 +48,7 @@ function npc.link(play,npcid,ew,aid)
             Player.title_give(play, _config.details.ch)
             Player.sendmsgEx(play, "轩辕剑修复成功，获得称号【".._config.details.ch.."】")
             sendluamsg(play,101,1005,0,0,"rwwc")
+            sendluamsg(play,100,npcid,1,0,"")
         else
             Player.sendmsgEx(play, "你已经拥有轩辕剑称号，无需修复#249")
             return

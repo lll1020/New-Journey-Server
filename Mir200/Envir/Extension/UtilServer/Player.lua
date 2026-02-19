@@ -640,17 +640,58 @@ function Player.jl_mail(table) --奖励转邮件
     -- release_print("jl_mail",str)
     return str
 end
-function Player.dl_sz_notip(actor, dl) --大陆限制 -- 无提示
+local function _dl_get_jqd(actor)
+    local jqd_idx = getstditeminfo("剧情点", 0)
+    if not jqd_idx or jqd_idx <= 0 then
+        return 0
+    end
+    return querymoney(actor, jqd_idx) or 0
+end
+
+local function _dl_check(actor, dl)
     if dl == 1 then
         return true
     end
+
+    local zxrw = getplaydef(actor, VarCfg.U_zxrw[1]) or 0
+    local zslv = getplaydef(actor, VarCfg["U_转生等级"]) or 0
+    local jqd = _dl_get_jqd(actor)
+
+    if dl == 2 then
+        if zxrw >= 22 then
+            return true
+        end
+        return false, "需完成主线引导后才可进入二大陆"
+    elseif dl == 3 then
+        if zslv >= 20 and jqd >= 15 then
+            return true
+        end
+        return false, "需完成二大陆转生且剧情点达到15后才可进入三大陆"
+    elseif dl == 4 then
+        if zslv >= 30 and jqd >= 50 then
+            return true
+        end
+        return false, "需完成三大陆转生且剧情点达到50后才可进入四大陆"
+    elseif dl == 5 then
+        if zslv >= 40 and jqd >= 100 then
+            return true
+        end
+        return false, "需完成四大陆转生且剧情点达到100后才可进入五大陆"
+    end
+
     return true
 end
+
+function Player.dl_sz_notip(actor, dl) --大陆限制 -- 无提示
+    local ok = _dl_check(actor, dl)
+    return ok
+end
 function Player.dl_sz(actor, dl) --大陆限制 -- 有提示
-    if dl == 1 then
-        return true
+    local ok, tip = _dl_check(actor, dl)
+    if not ok and tip then
+        Player.sendmsgEx(actor, tip .. "#57")
     end
-    return true
+    return ok
 end
 --检查 物品 货币 装备是否满足数量(数量不足返回不足物品的名字)
 function Player.checkItemNum(actor, t, multiple)
