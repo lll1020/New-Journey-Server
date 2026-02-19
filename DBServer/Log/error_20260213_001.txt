@@ -1,0 +1,34 @@
+[2026-02-13 20:42:37:290] GM 0 nType 0 sLoginID qcclllll IP 127.0.0.1 sToken 123456789 sChannel 1
+[2026-02-13 20:42:37:290] Login stp 1
+[2026-02-13 20:42:37:290] Login stp 2
+[2026-02-13 20:42:37:290] Login stp 3
+[2026-02-13 20:42:37:368] QueryChr 1 qcclllll/1/3/1/1/843IT8R8IPIVIBJMU8FCY75T8CL8H2UZ
+[2026-02-13 20:42:37:368] QueryChr 2 qcclllll
+[2026-02-13 20:42:37:368] QueryChr 3 qcclllll
+[2026-02-13 20:42:37:368] QueryChr 4 qcclllll
+
+[2026-02-13 20:42:44:130] SelectChr 1 qcclllll/玩家名字
+[2026-02-13 20:42:44:144] SelectChr 2 qcclllll
+[2026-02-13 20:42:44:144] SelectChr 3 qcclllll 127.0.0.1/7001
+
+[2026-02-13 20:45:01:738] GM 0 nType 0 sLoginID qcclllll IP 127.0.0.1 sToken 123456789 sChannel 1
+[2026-02-13 20:45:01:738] Login stp 1
+[2026-02-13 20:45:01:738] Login stp 2
+[2026-02-13 20:45:01:738] Login stp 3
+[2026-02-13 20:45:01:813] QueryChr 1 qcclllll/2/3/1/1/MG8WAIG6CZD4EZKK0ZNBEE31RVVQLFCI
+[2026-02-13 20:45:01:813] QueryChr 2 qcclllll
+[2026-02-13 20:45:01:813] QueryChr 3 qcclllll
+[2026-02-13 20:45:01:813] QueryChr 4 qcclllll
+
+[2026-02-13 20:45:10:677] SelectChr 1 qcclllll/玩家名字
+[2026-02-13 20:45:10:681] SelectChr 2 qcclllll
+[2026-02-13 20:45:10:681] SelectChr 3 qcclllll 127.0.0.1/7001
+
+[2026-02-13 23:20:17:333] QueryChr 1 qcclllll/2/3/1/1/MG8WAIG6CZD4EZKK0ZNBEE31RVVQLFCI
+[2026-02-13 23:20:17:333] QueryChr 2 qcclllll
+[2026-02-13 23:20:17:333] QueryChr 3 qcclllll
+[2026-02-13 23:20:17:333] QueryChr 4 qcclllll
+[2026-02-13 23:20:18:050] SelectChr 1 qcclllll/玩家名字
+[2026-02-13 23:20:18:063] SelectChr 2 qcclllll
+[2026-02-13 23:20:18:063] SelectChr 3 qcclllll 127.0.0.1/7001
+

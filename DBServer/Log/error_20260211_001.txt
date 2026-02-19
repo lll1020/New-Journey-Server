@@ -1,0 +1,16 @@
+[2026-02-11 07:57:13:927] GM 0 nType 0 sLoginID qcclllll IP 127.0.0.1 sToken 123456789 sChannel 1
+[2026-02-11 07:57:13:927] Login stp 1
+[2026-02-11 07:57:13:927] Login stp 2
+[2026-02-11 07:57:13:927] Login stp 3
+[2026-02-11 07:57:14:035] QueryChr 1 qcclllll/1/3/1/1/3KB0J67RFMY9C58BVYRM3P0FM79T15IL
+[2026-02-11 07:57:14:035] QueryChr 2 qcclllll
+[2026-02-11 07:57:14:035] QueryChr 3 qcclllll
+[2026-02-11 07:57:14:035] QueryChr 4 qcclllll
+
+[2026-02-11 07:57:21:970] New Char stp 1 {"secsdk":"0","sdkid":"1","job":0,"chr":"玩家名字","account":"qcclllll","server_name":"3","sex":0}
+[2026-02-11 07:57:21:970] New Char stp 2
+[2026-02-11 07:57:23:039] New Char stp 3
+[2026-02-11 07:57:23:072] SelectChr 1 qcclllll/玩家名字
+[2026-02-11 07:57:23:078] SelectChr 2 qcclllll
+[2026-02-11 07:57:23:078] SelectChr 3 qcclllll 127.0.0.1/7001
+

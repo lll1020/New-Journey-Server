@@ -1,0 +1,5 @@
+2026-02-11 07:37:27 ReloadRegistWhiteList:
+2026-02-11 07:37:27 加载缓存数据：0
+Load(库):[3] [0] 2026-02-11 07:57:23 玩家名字 Level:0  --  --  -- 
+2026-02-11 07:57:26 存储耗时：SaveHum:47,HumBodyItems:31,HumBagItems:0,UpdateHumStorageItems:0
+Save:[4] [0] 2026-02-11 07:57:26 玩家名字 Level:2 Body[17]: MakeIndex:10002 Index:19996 btValue:49(-2141869483)  --  --  -- 
