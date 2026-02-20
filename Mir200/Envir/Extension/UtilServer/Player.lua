@@ -658,7 +658,7 @@ local function _dl_check(actor, dl)
     local jqd = _dl_get_jqd(actor)
 
     if dl == 2 then
-        if zxrw >= 22 then
+        if zxrw >= 21 then
             return true
         end
         return false, "需完成主线引导后才可进入二大陆"

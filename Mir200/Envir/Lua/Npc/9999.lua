@@ -713,8 +713,8 @@ function ggna(play,id)
         -- Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], {})
         -- setplaydef(play, VarCfg.T_czlb,"{}")
         -- setplaydef(play,VarCfg.U_zxrw[1],21)
-        setplaydef(play,VarCfg.T_hsdg, '{"1_1_1":1,"1_1_2":1,"1_1_3":1,"1_1_4":1,"1_1_5":1,"1_1_6":1,"1_1_7":1,"1_1_8":1,"1_1_9":1,"1_1_10":1,"1_1_11":1,"1_1_12":1}')--回收打勾
-        
+        -- setplaydef(play,VarCfg.T_hsdg, '{"1_1_1":1,"1_1_2":1,"1_1_3":1,"1_1_4":1,"1_1_5":1,"1_1_6":1,"1_1_7":1,"1_1_8":1,"1_1_9":1,"1_1_10":1,"1_1_11":1,"1_1_12":1}')--回收打勾
+        sendluamsg(play, 101, 0, 1, 1, '{"lx":2,"npcdt":"' .. "二大陆主城" .. '","npcid":' .. 601 .. ',"xx":' .. 99 .. ',"yy":' .. 123 .. "}")
 
     end
 

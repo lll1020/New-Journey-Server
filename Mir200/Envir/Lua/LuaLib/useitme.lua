@@ -2,6 +2,7 @@ release_print("useitme.lua")
 --------------------双击物品触发-------------------随机石
 function stdmodefunc9(play, item)
     setplaydef(play,"S$dtm",getbaseinfo(play, 3))
+    release_print("随机石")
     if getplaydef(play,"N$战斗状态") < os.time() then
         map(play,getbaseinfo(play,3))
         -- if getflagstatus(play, 300) == 1 then
