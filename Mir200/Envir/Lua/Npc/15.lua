@@ -29,7 +29,8 @@ function npc.link(play,npcid,ew,aid)
         if checktitle(play,_config.give.ch) then
             sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[狂暴之力]</font><font color=\'#ff0000\'>您已经开启过狂暴之力了</font>","Type":9}')
         else
-            if changemoney(play,7,"-",100,"开启狂暴",true) then
+            local cost = (_config.cost or 100)
+            if changemoney(play,7,"-",cost,"开启狂暴",true) then
                 Player.title_give(play,_config.give.ch)
                 seticon(play,0,1,10294,0,0,0,0,0)
                 messagebox(play,"恭喜您获得称号：【".._config.give.ch.."】")
@@ -41,7 +42,7 @@ function npc.link(play,npcid,ew,aid)
                 GameEvent.push(EventCfg.goKuangBao, play)
                 GameEvent.push(EventCfg.OpenKuangBao, play)
             else
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[狂暴之力]</font><font color=\'#ff0000\'>您没有100灵石，无法开启</font>","Type":9}')
+                sendmsg(play,1,string.format('{"Msg":"<font color=\'#ff7700\'>[狂暴之力]</font><font color=\'#ff0000\'>您没有%d灵石，无法开启</font>","Type":9}', cost))
             end
         end
     end
@@ -72,7 +73,8 @@ local function _playerkillplay(play, actor)
         else
             deprivetitle(play, "狂暴之力")
         end
-        changemoney(actor, 7, '+', 688, '击杀狂暴', true)
+        local killReward = ((_config.death and _config.death.hb) or 688)
+        changemoney(actor, 7, '+', killReward, '击杀狂暴', true)
 
         --删技能
         local skillId = getskillindex(_config.give.skill)
@@ -88,3 +90,4 @@ GameEvent.add(EventCfg.onPlaydie, _playerkillplay, "狂暴之力")
 
 
 return npc
+

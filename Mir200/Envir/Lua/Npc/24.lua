@@ -5,6 +5,23 @@ npc = {}
 
 local _config = Guard.getConfig("npc_24")
 
+local function _get_jf_need_kill_text(jf)
+    jf = tonumber(jf) or 0
+    if jf > 130000 then
+        return "已达上限"
+    elseif jf >= 36001 then
+        return "需击杀五大陆及以上怪物"
+    elseif jf >= 16001 then
+        return "需击杀四大陆及以上怪物"
+    elseif jf >= 6001 then
+        return "需击杀三大陆及以上怪物"
+    elseif jf >= 1001 then
+        return "需击杀二大陆及以上怪物"
+    else
+        return "需击杀一大陆及以上怪物"
+    end
+end
+
 function npc.main(play,npcid)
     local data = {}
     data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_天书"])
@@ -50,7 +67,7 @@ function npc.link(play,npcid,ew,aid,data)
 
             local tbl = {
                 ["open"] = 1,
-                ["show"] = 2,
+                ["show"] = 0,
                 ["name"] = string.format("天书等级：%d级", T_data.level),
                 ["color"] = 223,
                 ["imgcount"] = 1,
@@ -70,6 +87,17 @@ function npc.link(play,npcid,ew,aid,data)
                 ["level"] = T_data.level,
             }
             setcustomitemprogressbar(play, itemobj, 1, tbl2json(tbl))
+            tbl = {
+                ["open"] = 1,
+                ["show"] = 0,
+                ["name"] = string.format("杀意提示：%s", _get_jf_need_kill_text(T_data.jf or 0)),
+                ["color"] = 251,
+                ["imgcount"] = 1,
+                -- ["cur"] = 0,
+                -- ["max"] = 1,
+                -- ["level"] = 0,
+            }
+            setcustomitemprogressbar(play, itemobj, 2, tbl2json(tbl))
             --强化属性
             local attrs = {}
             local attrsstr = ""
@@ -165,7 +193,8 @@ function npc.link(play,npcid,ew,aid,data)
             if force_xianpin then
                 randomNum = 5
             else
-                local max_group = (getplaydef(play, "N$buff311") == 1) and 5 or 3
+                local max_group = (getplaydef(play, "N$buff311") == 1) and 5 or 3
+
                 randomNum = ransjstr(weight, 1, max_group)
                 randomNum = tonumber(randomNum)
             end
@@ -978,7 +1007,7 @@ local function _onTakeOnEx(actor, itemobj, where, itemname, makeid)
         local T_data = Player.getJsonTableByVar(actor, VarCfg["T_天书"])
         local tbl = {
             ["open"] = 1,
-            ["show"] = 2,
+            ["show"] = 0,
             ["name"] = string.format("天书等级：%d级", T_data.level or 0),
             ["color"] = 223,
             ["imgcount"] = 1,
@@ -998,6 +1027,17 @@ local function _onTakeOnEx(actor, itemobj, where, itemname, makeid)
             ["level"] = T_data.level or 0,
         }
         setcustomitemprogressbar(actor, itemobj, 1, tbl2json(tbl))
+        tbl = {
+            ["open"] = 1,
+            ["show"] = 0,
+            ["name"] = string.format("提示：%s", _get_jf_need_kill_text(T_data.jf or 0)),
+            ["color"] = 251,
+            ["imgcount"] = 1,
+            -- ["cur"] = 0,
+            -- ["max"] = 1,
+            -- ["level"] = 0,
+        }
+        setcustomitemprogressbar(actor, itemobj, 2, tbl2json(tbl))
         refreshitem(actor, itemobj)
     end
 end

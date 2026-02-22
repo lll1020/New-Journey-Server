@@ -61,7 +61,7 @@ shaguai = {
 		if ts_cfg then
 			local ts_data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
 			local ts_lv = ts_data and (ts_data.level or 0) or 0
-			local jf = (ts_data.jf or 0) + 1
+			local jf = (ts_data.jf or 0)
 
 			if ts_lv >= 0 then
 				local allow = false
@@ -812,54 +812,94 @@ shaguai = {
 		Player.sendmsgEx(play,  (config.name or "任务").."击杀+"..1 .." ( "..sg_data[key].."/"..(config.num or 0).." )#57")
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
-	["32"] = function(play,mob)      --转生材料掉落（按大陆）
+			["32"] = function(play,mob)      --转生材料掉落（按大陆，固定击杀区间，越接近越容易掉）
 		local map = getbaseinfo(play,3)
 		local dl = daluditu and daluditu[map] or 0
 		if not dl or dl <= 0 or dl > 6 then
 			return
 		end
+
 		local items = {"","二重转生石","三重转生石","四重转生石","五重转生石","六重转生石"}
 		local item = items[dl]
 		if not item or item == "" then
 			return
 		end
-		local data = json2tbl(getplaydef(play, VarCfg.T_zscl))
+
+		local data = json2tbl(getplaydef(play, VarCfg.T_zscl)) or {}
 		data.drop_cnt = data.drop_cnt or {}
-		local cnt = data.drop_cnt[item] or 0
-		local cz = getplaydef(play, VarCfg["U_真实充值"]) or 0
-		local rate = 0
+		data.kill_prog = data.kill_prog or {}
+		data.kill_goal = data.kill_goal or {}
 
-		if dl == 1 then
+		local cnt = tonumber(data.drop_cnt[item]) or 0
+		local prog = tonumber(data.kill_prog[item]) or 0
+		local goal = tonumber(data.kill_goal[item]) or 0
+		local cz = tonumber(getplaydef(play, VarCfg["U_真实充值"])) or 0
+
+		local function _base_by_old_rule(_dl, _cnt, _cz)
+			if _dl == 2 then
+				if _cnt < 10 then
+					return 30
+				end
+				return 60
+			elseif _dl == 3 then
+				if _cz > 0 then
+					return math.random(50,100)
+				end
+				return math.random(150,200)
+			elseif _dl == 4 or _dl == 5 or _dl == 6 then
+				if _cz > 110 then
+					return math.random(80,100)
+				elseif _cz >= 10 then
+					return math.random(100,150)
+				end
+				return math.random(500,600)
+			end
+			return nil
+		end
+
+		local base = _base_by_old_rule(dl, cnt, cz)
+		if not base then
 			return
-		elseif dl == 2 then
-			-- 前10个 1/50，后续 1/150
-			if cnt < 10 then
-				rate = 50
-			else
-				rate = 150
+		end
+
+		if goal <= 0 then
+			goal = base + math.random(-20,20)
+			if goal < 1 then
+				goal = 1
 			end
-		elseif dl == 3 then
-			if cz > 0 then
-				rate = math.random(50,100)
-			else
-				rate = math.random(150,200)
-			end
-		elseif dl == 4 or dl == 5 or dl == 6 then
-			if cz > 110 then
-				rate = math.random(80,100)
-			elseif cz >= 10 then
-				rate = math.random(100,150)
-			else
-				rate = math.random(500,600)
+			data.kill_goal[item] = goal
+		end
+
+		prog = prog + 1
+		data.kill_prog[item] = prog
+
+		local can_drop = false
+		if prog >= goal then
+			can_drop = true
+		else
+			local left = goal - prog
+			if left <= 20 then
+				local p = 21 - left
+				if math.random(20) <= p then
+					can_drop = true
+				end
 			end
 		end
 
-		if rate > 0 and math.random(1, rate) == 1 then
-			if shaguai.temp_drop(play, mob, item) then
-				data.drop_cnt[item] = cnt + 1
-				setplaydef(play, VarCfg.T_zscl, tbl2json(data))
+		if can_drop and shaguai.temp_drop(play, mob, item) then
+			local next_cnt = cnt + 1
+			data.drop_cnt[item] = next_cnt
+			data.kill_prog[item] = 0
+
+			local next_base = _base_by_old_rule(dl, next_cnt, cz) or base
+			local next_goal = next_base + math.random(-20,20)
+			if next_goal < 1 then
+				next_goal = 1
 			end
+			data.kill_goal[item] = next_goal
 		end
+
+		setplaydef(play, VarCfg.T_zscl, tbl2json(data))
 	end,
 }
 
@@ -887,6 +927,8 @@ shaguai.jian = function(play, id)
 end
 
 return shaguai
+
+
 
 
 

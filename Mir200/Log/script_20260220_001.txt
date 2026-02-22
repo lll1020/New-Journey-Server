@@ -19,3 +19,94 @@
 
 [2026-02-21 00:58:37:106] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 37832, CurPlayThreadId: 37832
 
+[2026-02-21 01:52:40:057] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：47; NpcThreadId: 37832, CurPlayThreadId: 37832
+[2026-02-21 01:52:40:057] [玩家名字]Lua执行耗时过高:47ms msgid:100 8 1 0 
+
+[2026-02-21 02:12:57:319] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 02:18:44:784] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 02:23:42:873] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 03:00:56:934] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 03:04:08:189] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 03:33:06:256] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 03:51:09:144] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 03:54:48:291] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 04:08:14:975] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 04:23:40:491] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 05:38:35:252] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 05:44:27:452] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 07:41:45:924] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 07:42:53:395] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 07:58:48:802] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 08:01:08:994] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 08:18:03:169] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 08:25:29:059] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 09:14:11:112] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 09:22:12:107] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 09:38:19:611] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 09:39:36:709] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 10:07:04:848] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 10:14:31:720] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 11:27:32:227] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 11:41:54:150] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 12:33:18:789] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 12:39:12:028] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 13:13:42:796] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 13:21:51:210] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 14:10:03:981] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 14:19:01:320] LuaNPC:玩家名字 ID:999999999 执行 attack player:玩家名字 耗时：32; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 14:33:29:493] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 15:01:33:212] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 15:15:15:853] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 15:24:20:223] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 15:48:05:203] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 16:08:24:039] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 16:13:03:826] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 16:29:17:814] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 16:38:45:012] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 16:47:44:382] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 17:48:02:531] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+
+[2026-02-21 19:08:55:328] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37832, CurPlayThreadId: 37832
+

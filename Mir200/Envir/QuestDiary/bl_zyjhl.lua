@@ -114,3 +114,24 @@ function bl_zyjhl6(play,mingzi)
 
     return false
 end
+
+--------------------爆率监听触发-------------------限量掉落（超过20次失效）
+function bl_zyjhl7(play,mingzi)
+    if not mingzi or mingzi == "" then
+        return false
+    end
+
+    local data = Player.getJsonTableByVar(play, VarCfg["T_物品掉落记录"])
+    if not data then
+        data = {}
+    end
+
+    local cnt = tonumber(data[mingzi]) or 0
+    if cnt >= 20 then
+        return false
+    end
+
+    data[mingzi] = cnt + 1
+    Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
+    return true
+end
