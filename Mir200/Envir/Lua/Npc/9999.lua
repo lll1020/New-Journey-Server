@@ -5,8 +5,9 @@ npc = {}
 function npc.main(play,npcid)
     local zhid = tonumber(getconst(play,"<$USERACCOUNT>"))
     if constant.pz_htqx[zhid] or getconst(play, '<$SERVERNAME>') == "" or getconst(play, '<$SERVERNAME>') == "²âÊÔÇø" then
-        -- release_print("-----------------------------")
-        -- release_print(getbaseinfo(play,3).." "..getbaseinfo(play,4).." "..getbaseinfo(play,5))
+        release_print("-----------------------------")
+        release_print(getbaseinfo(play,3).." "..getbaseinfo(play,4).." "..getbaseinfo(play,5))
+        return
         say(play,[[<Img|id=ui_1|x=0.0|y=-1.0|width=800|height=600|img=public/bg_npc_01.png|bg=1|esc=1|move=0|reset=1|show=0|scale9l=15|scale9r=15|scale9t=15|scale9b=15|loadDelay=1>
             <Layout|id=ui_2|x=801.0|y=0.0|width=80|height=80|link=@exit>
             <Button|id=ui_3|x=794|y=0.0|width=26|height=42|nimg=public/1900000510.png|pimg=public/1900000511.png|color=255|size=18|link=@exit>

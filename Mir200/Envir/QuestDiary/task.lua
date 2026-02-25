@@ -1,4 +1,34 @@
 --------------------领取任务触发-------------------
+local function _zxrw_get_equip_level(play, pos)
+    local lv = Player.getEquipFieldByPos(play, pos, 1) or 0
+    return tonumber(lv) or 0
+end
+
+-- handle pre-completed mainline tasks
+local function _zxrw_is_precompleted(play, rwid)
+    if rwid == 2 then
+        local t = Player.getJsonTableByVar(play, VarCfg["T_免费赞助"])
+        return t and (tonumber(t["zzlb_1"] or 0) or 0) >= 1
+    elseif rwid == 7 then
+        return _zxrw_get_equip_level(play, 9) >= 2
+    elseif rwid == 9 then
+        return _zxrw_get_equip_level(play, 15) >= 2
+    elseif rwid == 11 then
+        return _zxrw_get_equip_level(play, 13) >= 2
+    elseif rwid == 13 then
+        return _zxrw_get_equip_level(play, 12) >= 2 or _zxrw_get_equip_level(play, 14) >= 2
+    elseif rwid == 15 then
+        return _zxrw_get_equip_level(play, 16) >= 2
+    elseif rwid == 17 then
+        return (tonumber(getplaydef(play, VarCfg["U_兰姐好感度"]) or 0) or 0) >= 1
+    elseif rwid == 19 then
+        return (tonumber(getplaydef(play, VarCfg["U_境界修炼"][1]) or 0) or 0) >= 9
+    elseif rwid == 20 then
+        return (tonumber(getplaydef(play, VarCfg["U_转生等级"]) or 0) or 0) >= 10
+    end
+    return false
+end
+
 function task_login(play)
     ---------------------------------------------------任务初始化
     local rwid = getplaydef(play,VarCfg.U_zxrw[1])
@@ -65,6 +95,10 @@ function task_login(play)
                 shaguai.jia(play,24)
                 setplaydef(play,VarCfg.N_znpc,1)
             end
+        end
+        if _zxrw_is_precompleted(play, rwid) then
+            newdeletetask(play,rwid)
+            return
         end
         Player.zxrw_teshushuaxin(play, rwid, nil)
     elseif rwid == 51 then
@@ -153,6 +187,11 @@ function clicknewtask(play,rwid)
     end
      ---------------------------------------------------任务逻辑处理
     if constant.rw_syb[rwid] then
+        if _zxrw_is_precompleted(play, rwid) then
+            newdeletetask(play,rwid)
+            playeffect(play,4011,25,-50,1,0,0)
+            return
+        end
         if not constant.rw_syb[rwid].sg then
             if constant.rw_syb[rwid].ktg and constant.rw_syb[rwid].ktg == 1 then
                 if getplaydef(play,VarCfg.N_rwlg) >= 1 then

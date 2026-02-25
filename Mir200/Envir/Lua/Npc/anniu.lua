@@ -239,6 +239,11 @@ npc[11] = function(play, p2, p3, data) --异闻录
             end
             if Player.dl_sz_notip(play, sj.i) then
                 local shuju = npc_xyl[sj.i][sj.j].jq[sj.z]
+                if shuju.ydtk and shuju.fwdjy and not shuju.fwdjy(play, shuju.ydtk, shuju) then
+                    local ydtip = shuju.ydtip or "进入地图前置任务"
+                    Player.sendmsgEx(play, 1, "{\"Msg\":\"<font color='#ff0000'>请先完成[" .. ydtip .. "]...</font>\",\"Type\":9}")
+                    return
+                end
                 if shuju.yd[1] == 0 then
                     sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>无法传送...</font>","Type":9}')
                 elseif shuju.yd[1] == 1 then

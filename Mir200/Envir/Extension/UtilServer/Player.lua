@@ -792,7 +792,7 @@ local fd_sjyb = {[10053] = {500,2000},[10054] = {1000,5000},[10055] = {5000,5000
 local hs_name_hlsj = "幻灵水晶"
 local hs_name_lingshi = "灵石"
 
--- Auto recycle key matching: distinguish by group, keep legacy compatibility.
+-- 自动回收键匹配：按分组区分，并兼容旧前缀。
 local hs_group_prefix = {
     zzhs = "1",
     zsfj = "2",
@@ -814,6 +814,7 @@ local hs_group_prefix_compat = {
 }
 
 
+-- 统一按配置优先级查找物品所属回收组，返回组名和配置。
 local function hs_pick_cfg(idx)
     local cfg = huishou.zzhs[idx]
     if cfg then return "zzhs", cfg end
@@ -832,6 +833,8 @@ local function hs_pick_cfg(idx)
     return nil, nil
 end
 
+-- 判定该物品是否命中玩家的自动回收勾选配置。
+-- 兼容顺序：精确 idx -> 新分组键 -> 新数字前缀 -> 旧前缀。
 local function hs_match_pz(pz, idx, group_name, cfg)
     if pz["" .. idx] then
         return true
@@ -846,14 +849,14 @@ local function hs_match_pz(pz, idx, group_name, cfg)
         return false
     end
 
-    -- New rule: group_name + [1]/[2] keys for precise auto-recycle filtering.
+    -- 新规则：支持 group_name + [1]/[2] 键，精确匹配自动回收配置。
     local key_group_1 = group_name .. "_" .. g1
     local key_group_2 = key_group_1 .. "_" .. g2
     if pz[key_group_1] or pz[key_group_2] then
         return true
     end
 
-    -- Current numeric-prefix rule.
+    -- 当前数字前缀规则。
     local prefix = hs_group_prefix[group_name]
     if prefix then
         if pz[prefix .. "_" .. g1] or pz[prefix .. "_" .. g1 .. "_" .. g2] then
@@ -861,7 +864,7 @@ local function hs_match_pz(pz, idx, group_name, cfg)
         end
     end
 
-    -- Legacy-prefix compatibility fallback (supports multiple prefixes: "5|2").
+    -- 旧前缀兼容兜底（支持多个前缀，例如 "5|2"）。
     local old_prefix = hs_group_prefix_compat[group_name]
     if old_prefix then
         for legacy_prefix in string.gmatch(old_prefix, "[^|]+") do
@@ -897,7 +900,7 @@ local function hs_get_zsfj_material_name(cfg)
         return direct_name
     end
 
-    -- zsfj marker flags: field5 = huanling crystal, field6 = lingshi.
+    -- zsfj 标记位：field5 表示幻灵水晶，field6 表示灵石。
     local flag_hlsj = tonumber(cfg[5]) or 0
     local flag_lingshi = tonumber(cfg[6]) or 0
     if flag_hlsj > 0 then
@@ -910,6 +913,7 @@ local function hs_get_zsfj_material_name(cfg)
     return nil
 end
 
+-- 按分组把回收产出累计到 reward，最后一次性发放。
 local function hs_collect_reward(reward, group_name, idx, cfg)
     if not cfg then
         return
@@ -930,6 +934,7 @@ local function hs_collect_reward(reward, group_name, idx, cfg)
     end
 end
 
+-- 将累计奖励统一结算到玩家，减少重复调用和提示。
 local function hs_apply_reward(play, reward, gz)
     if reward.coin > 0 then
         local coin = reward.coin + math.floor(reward.coin * getbaseinfo(play, 51, 204) / 10000)
@@ -954,6 +959,7 @@ end
 
 function Player.huishou(play, hs_constant)
     if hs_constant == nil then
+        -- 模式1：全背包自动回收（由开关控制）。
         local kg1, kg2, kg3, kg4, kg5 = getflagstatus(play, VarCfg.BS_huishou[1]), getflagstatus(play, VarCfg.BS_huishou[2]), getflagstatus(play, VarCfg.BS_huishou[3]), getflagstatus(play, VarCfg.BS_huishou[4]), getflagstatus(play, VarCfg.BS_huishou[5])
         local pz = json2tbl(getplaydef(play, VarCfg.T_hsdg)) or {}
         local reward = {coin = 0, yb = 0, lingshi = 0, hlsj = 0, items = {}}
@@ -979,12 +985,14 @@ function Player.huishou(play, hs_constant)
                     end
                 end
             elseif idx > 10006 and idx <= 10021 then    --exp
+                -- 注意：当前代码仅在 kg3 == 3 时生效（保持现有行为）。
                 if kg3 == 3 then
                     local sl = getiteminfo(play, v, 5)
                     changeexp(play, '+', getstditeminfo(idx, 8) * sl, false)
                     delitembymakeindex(play, getiteminfo(play, v, 1), sl)
                 end
             else
+                -- 普通回收：命中开关+配置后，先记录 makeindex，最后批量删除。
                 if kg4 == 1 then
                     local group_name, cfg = hs_pick_cfg(idx)
                     if cfg and hs_match_pz(pz, idx, group_name, cfg) then
@@ -996,11 +1004,13 @@ function Player.huishou(play, hs_constant)
         end
         if sq ~= '' then
             delitembymakeindex(play, sq)
+            -- 魔族特权开启时使用非绑定渠道；否则走绑定奖励渠道。
             local gz = getflagstatus(play,VarCfg.BS_mztq) == 1 and 0 or 850
             hs_apply_reward(play, reward, gz)
             Login_msg(play,10,reward.coin,reward.yb)
         end
     else
+        -- 模式2：按传入 makeindex 列表进行定向回收/销毁。
         local hs = hs_constant
         local reward = {coin = 0, yb = 0, lingshi = 0, hlsj = 0, items = {}}
         local gz = getflagstatus(play,VarCfg.BS_mztq) == 1 and 0 or 850
@@ -1009,8 +1019,10 @@ function Player.huishou(play, hs_constant)
             if wp then
                 local idx = getiteminfo(play,wp,2)
                 if huishou.kexiaohui and huishou.kexiaohui[idx] then
+                    -- 可销毁物品：直接删除，不产生回收奖励。
                     delitembymakeindex(play,v,1)
                 else
+                    -- 可回收物品：删除成功后累计奖励。
                     local group_name, cfg = hs_pick_cfg(idx)
                     if cfg and delitembymakeindex(play,v,1) then
                         hs_collect_reward(reward, group_name, idx, cfg)
