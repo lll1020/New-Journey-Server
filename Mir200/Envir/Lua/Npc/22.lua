@@ -149,7 +149,7 @@ function Login_lg(play)
 end
 GameEvent.add(EventCfg.onLogin, Login_lg, "Login_lg")
 
-function npc.lgcf(play,zt,Damage,Target)
+function npc.lgcf(play,zt,Damage,Target,triggerType)
     --灵根效果触发
     local sj = os.time()
     local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
@@ -163,12 +163,33 @@ function npc.lgcf(play,zt,Damage,Target)
     end
     local level = T_data.level[""..T_data.main]
     local config = _config.main_r[T_data.main]
+    -- 木灵根护盾吸收逻辑：仅在受击触发时生效
+    if triggerType == 2 and T_data.main == 2 then
+        local shieldEnd = getplaydef(play,"N$buff_lg_mhd_end")
+        local shieldVal = getplaydef(play,"N$buff_lg_mhd")
+        if shieldEnd and shieldEnd < sj and shieldVal and shieldVal > 0 then
+            setplaydef(play,"N$buff_lg_mhd",0)
+            setplaydef(play,"N$buff_lg_mhd_end",0)
+            shieldVal = 0
+        end
+        if shieldVal and shieldVal > 0 and shieldEnd and shieldEnd >= sj and Damage and Damage > 0 then
+            local absorb = math.min(shieldVal, Damage)
+            if absorb > 0 then
+                setplaydef(play,"N$buff_lg_mhd",shieldVal - absorb)
+                -- 通过同值回血抵消本次伤害，实现护盾吸收
+                humanhp(play,"+",absorb,0,0,play)
+            end
+        end
+    end
     if sj - getplaydef(play,"N$buff_lg") >= 30 then
         if T_data.main == 1 then--金
             addbuff(play,20104)
         elseif T_data.main == 2 then--木
-            release_print("木灵根触发")
-            Player.updateSomeAddr_time(play, nil, {{1, math.floor(level*config.value1*getbaseinfo(play, 20))}},10)
+            if triggerType == 2 then
+                local shield = math.floor(level*config.value1*getbaseinfo(play, 20))
+                setplaydef(play,"N$buff_lg_mhd",shield)
+                setplaydef(play,"N$buff_lg_mhd_end",sj + 10)
+            end
         elseif T_data.main == 3 then--水
             addbuff(play,20105)
         elseif T_data.main == 4 then--火

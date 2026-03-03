@@ -1,0 +1,5200 @@
+{
+  "remark_total": 549,
+  "remark_missing": 262,
+  "attr_remark_total": 544,
+  "attr_remark_missing": 257,
+  "missing": [
+    {
+      "idx": 19996,
+      "name": "时装衣服",
+      "desc": "<ID=0|TXT:<nan/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 52003,
+      "name": "诅咒傀儡",
+      "desc": "<ID=0|TXT:<诅咒傀儡：攻击怪物 10% 绿毒/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 52004,
+      "name": "定风珠",
+      "desc": "<ID=0|TXT:<定风珠：黄风谷/风灵珠试炼通行/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 52006,
+      "name": "阴阳玉佩",
+      "desc": "<ID=0|TXT:<阴阳玉佩：昼夜切换对怪攻速/打怪爆率/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 52007,
+      "name": "胖娃的肚兜",
+      "desc": "<ID=0|TXT:<胖娃肚兜：奇遇概率 + 10%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 52013,
+      "name": "金箍棒",
+      "desc": "<ID=0|TXT:<金箍棒：击杀附魔记录/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50185,
+      "name": "龙魂吊坠",
+      "desc": "<ID=0|TXT:<人物攻击 + 5%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50186,
+      "name": "王权圣戒",
+      "desc": "<ID=0|TXT:<人物生命 + 10%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50187,
+      "name": "烈焰指环",
+      "desc": "<ID=0|TXT:<人物攻击 + 7%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50188,
+      "name": "炽焰护腕",
+      "desc": "<ID=0|TXT:<人物攻击 + 10%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50189,
+      "name": "傲霜孤",
+      "desc": "<ID=0|TXT:<人物攻击 + 6%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50190,
+      "name": "月华流影",
+      "desc": "<ID=0|TXT:<人物攻击 + 7%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50191,
+      "name": "苍穹寂灭",
+      "desc": "<ID=0|TXT:<人物生命 + 10%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50192,
+      "name": "烬海残光",
+      "desc": "<ID=0|TXT:<人物攻击 + 9%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50193,
+      "name": "惊雷震世",
+      "desc": "<ID=0|TXT:<人物生命 + 10%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50194,
+      "name": "雪隐残锋",
+      "desc": "<ID=0|TXT:<人物生命 + 10%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50195,
+      "name": "啸风逐电",
+      "desc": "<ID=0|TXT:<人物攻击 + 11%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 11%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 11%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50196,
+      "name": "龙鳞震岳",
+      "desc": "<ID=0|TXT:<人物攻击 + 11%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 11%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 11%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50197,
+      "name": "雷霆幻",
+      "desc": "<ID=0|TXT:<人物攻击 + 11%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 11%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 11%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50198,
+      "name": "永恒星辰",
+      "desc": "<ID=0|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50199,
+      "name": "霜雪之间",
+      "desc": "<ID=0|TXT:<人物生命 + 20%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50200,
+      "name": "烈焰焚天",
+      "desc": "<ID=0|TXT:<人物防御 + 10%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物生命 + 20%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50201,
+      "name": "天罚雷击",
+      "desc": "<ID=0|TXT:<人物防御 + 10%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物生命 + 20%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50202,
+      "name": "炽焰灰烬",
+      "desc": "<ID=0|TXT:<人物防御 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50203,
+      "name": "深渊游行",
+      "desc": "<ID=0|TXT:<人物攻击 + 12%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50204,
+      "name": "龙骨战魂",
+      "desc": "<ID=0|TXT:<人物攻击 + 14%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50205,
+      "name": "★★寒鸦★★",
+      "desc": "<ID=0|TXT:<人物攻击 + 16%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50206,
+      "name": "紫琅",
+      "desc": "<ID=0|TXT:<人物攻击 + 18%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50207,
+      "name": "烬痕",
+      "desc": "<ID=0|TXT:<人物攻击 + 12%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50208,
+      "name": "长夜メ",
+      "desc": "<ID=0|TXT:<人物攻击 + 12%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50209,
+      "name": "无尘",
+      "desc": "<ID=0|TXT:<人物攻击 + 12%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50210,
+      "name": "逐浪",
+      "desc": "<ID=0|TXT:<人物攻击 + 12%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50211,
+      "name": "追云",
+      "desc": "<ID=0|TXT:<人物攻击 + 12%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50212,
+      "name": "苍狼",
+      "desc": "<ID=0|TXT:<人物攻击 + 12%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50213,
+      "name": "メ孤鸿",
+      "desc": "<ID=0|TXT:<人物生命 + 15%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50214,
+      "name": "焚息",
+      "desc": "<ID=0|TXT:<人物生命 + 15%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50215,
+      "name": "归墟",
+      "desc": "<ID=0|TXT:<人物攻击 + 12%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50216,
+      "name": "映月",
+      "desc": "<ID=0|TXT:<人物攻击 + 12%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50217,
+      "name": "霜魄",
+      "desc": "<ID=0|TXT:<人物生命 + 15%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50218,
+      "name": "风吟",
+      "desc": "<ID=0|TXT:<人物攻击 + 12%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50219,
+      "name": "墨影",
+      "desc": "<ID=0|TXT:<人物生命 + 15%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50234,
+      "name": "锁鳞",
+      "desc": "<ID=0|TXT:<人物攻击 + 38%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 38%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 38%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50235,
+      "name": "裂天",
+      "desc": "<ID=0|TXT:<人物防御 + 20%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔防 + 20%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物生命 + 43%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔法 + 43%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50236,
+      "name": "星陨",
+      "desc": "<ID=0|TXT:<人物攻击 + 66%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 66%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 66%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50237,
+      "name": "寂照",
+      "desc": "<ID=0|TXT:<人物防御 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔防 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物生命 + 108%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔法 + 108%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50239,
+      "name": "天痕",
+      "desc": "<ID=0|TXT:<人物攻击 + 25%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 25%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 25%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50244,
+      "name": "飞霞",
+      "desc": "<ID=0|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50245,
+      "name": "雷渊",
+      "desc": "<ID=0|TXT:<人物生命 + 25%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 25%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50246,
+      "name": "玄冥",
+      "desc": "<ID=0|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50247,
+      "name": "月痕",
+      "desc": "<ID=0|TXT:<人物生命 + 25%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 25%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50248,
+      "name": "青衿",
+      "desc": "<ID=0|TXT:<人物生命 + 56%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物防御 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔防 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50250,
+      "name": "烛阴",
+      "desc": "<ID=0|TXT:<人物生命 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50251,
+      "name": "流岚",
+      "desc": "<ID=0|TXT:<人物魔法 + 24%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 24%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 24%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50253,
+      "name": "云渡履",
+      "desc": "<ID=0|TXT:<人物魔法 + 28%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 28%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50255,
+      "name": "笑傲天",
+      "desc": "<ID=0|TXT:<人物生命 + 5%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 5%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50261,
+      "name": "踏风追电",
+      "desc": "<ID=0|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击上限 + 25%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击下限 + 22%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50263,
+      "name": "流光仙索",
+      "desc": "<ID=0|TXT:<人物生命 + 28%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 25%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50264,
+      "name": "断情遗世",
+      "desc": "<ID=0|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50267,
+      "name": "清君侧",
+      "desc": "<ID=0|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 50%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 50%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50268,
+      "name": "鸿蒙初启",
+      "desc": "<ID=0|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 50%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 50%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50271,
+      "name": "青冥幻影",
+      "desc": "<ID=0|TXT:<人物生命 + 15%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 15%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击 + 15%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物防御下限 + 15%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物魔防下限 + 15%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50272,
+      "name": "玄羽乘风",
+      "desc": "<ID=0|TXT:<人物生命 + 15%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 15%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击 + 15%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物防御下限 + 15%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物魔防下限 + 15%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50273,
+      "name": "锁天紫绦",
+      "desc": "<ID=0|TXT:<人物生命 + 38%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 38%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击 + 38%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物防御下限 + 38%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物魔防下限 + 38%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50286,
+      "name": "封魔镇狱",
+      "desc": "<ID=0|TXT:<人物生命 + 58%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 58%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 30%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50288,
+      "name": "炽焰珠链",
+      "desc": "<ID=0|TXT:<人物生命 + 28%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50289,
+      "name": "火种之戒",
+      "desc": "<ID=0|TXT:<人物生命 + 26%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 26%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50291,
+      "name": "赤焰戒",
+      "desc": "<ID=0|TXT:<人物魔法 + 53%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 53%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 53%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50295,
+      "name": "火龙束带",
+      "desc": "<ID=0|TXT:<人物魔法 + 25%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 25%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 25%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50298,
+      "name": "冥火",
+      "desc": "<ID=0|TXT:<人物生命 + 63%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 63%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 40%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 40%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50299,
+      "name": "鬼影",
+      "desc": "<ID=0|TXT:<人物魔法 + 28%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 28%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50316,
+      "name": "幽灵步履",
+      "desc": "<ID=0|TXT:<人物攻击 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50317,
+      "name": "惊雷踏云",
+      "desc": "<ID=0|TXT:<人物攻击 + 27%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50319,
+      "name": "九重苍带",
+      "desc": "<ID=0|TXT:<人物攻击 + 27%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50320,
+      "name": "紫电",
+      "desc": "<ID=0|TXT:<人物生命 + 65%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 65%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 40%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 40%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50322,
+      "name": "幻梦池",
+      "desc": "<ID=0|TXT:<人物生命 + 29%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 29%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50324,
+      "name": "血焰",
+      "desc": "<ID=0|TXT:<人物生命 + 29%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 29%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50325,
+      "name": "赤焰狂歌1",
+      "desc": "<ID=0|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 35%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50326,
+      "name": "青霄剑舞",
+      "desc": "<ID=0|TXT:<人物生命 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50331,
+      "name": "天冠",
+      "desc": "<ID=0|TXT:<人物生命 + 20%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 20%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 20%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 20%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 20%/FCOLOR=251>#0#0&0><ID=5|TXT:<人物防御上限 + 20%/FCOLOR=251>#0#0&0><ID=6|TXT:<人物魔防 + 20%/FCOLOR=251>#0#0&0><ID=7|TXT:<人物魔防上限 + 20%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50332,
+      "name": "出世",
+      "desc": "<ID=0|TXT:<人物生命 + 28%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50333,
+      "name": "宿命",
+      "desc": "<ID=0|TXT:<人物生命 + 29%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 29%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御上限 + 29%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50334,
+      "name": "清风",
+      "desc": "<ID=0|TXT:<人物生命 + 18%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 18%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50339,
+      "name": "归一",
+      "desc": "<ID=0|TXT:<人物魔法 + 28%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 28%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 28%/FCOLOR=251>#0#0&0><ID=3|TXT:<其他:167#5 168#5 169#5 170#5/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50341,
+      "name": "破界",
+      "desc": "<ID=0|TXT:<人物魔法 + 57%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 57%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 57%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50347,
+      "name": "若",
+      "desc": "<ID=0|TXT:<人物魔法 + 28%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 28%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50348,
+      "name": "道",
+      "desc": "<ID=0|TXT:<人物魔法 + 29%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 29%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 29%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50349,
+      "name": "色",
+      "desc": "<ID=0|TXT:<人物魔法 + 27%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 27%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 27%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50356,
+      "name": "天",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50357,
+      "name": "月上影",
+      "desc": "<ID=0|TXT:<人物生命 + 66%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 66%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 40%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 40%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50362,
+      "name": "锁九天",
+      "desc": "<ID=0|TXT:<人物攻击 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50363,
+      "name": "春不语",
+      "desc": "<ID=0|TXT:<人物生命 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50364,
+      "name": "叶知秋",
+      "desc": "<ID=0|TXT:<人物魔法 + 59%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 59%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 59%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50365,
+      "name": "浅吟唱",
+      "desc": "<ID=0|TXT:<人物生命 + 28%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50366,
+      "name": "烟醉雨",
+      "desc": "<ID=0|TXT:<人物生命 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物防御 + 22%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物魔防 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50367,
+      "name": "洛情弃",
+      "desc": "<ID=0|TXT:<人物生命 + 10%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 36%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击 + 36%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物道术 + 36%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50368,
+      "name": "仙人跪",
+      "desc": "<ID=0|TXT:<人物攻击 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50370,
+      "name": "囚魍魉",
+      "desc": "<ID=0|TXT:<人物生命 + 37%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 32%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 32%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击下限 + 32%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物攻击上限 + 35%/FCOLOR=251>#0#0&0><ID=5|TXT:<人物道术 + 32%/FCOLOR=251>#0#0&0><ID=6|TXT:<人物防御 + 32%/FCOLOR=251>#0#0&0><ID=7|TXT:<人物魔防 + 32%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50380,
+      "name": "暗影囚笼",
+      "desc": "<ID=0|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50381,
+      "name": "噬魂之镰影",
+      "desc": "<ID=0|TXT:<人物生命 + 32%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 32%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50382,
+      "name": "霸天震九州",
+      "desc": "<ID=0|TXT:<人物魔法 + 13%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 13%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 13%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50383,
+      "name": "永夜诅咒",
+      "desc": "<ID=0|TXT:<人物攻击 + 29%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50384,
+      "name": "狂风之力",
+      "desc": "<ID=0|TXT:<人物生命 + 18%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 18%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50386,
+      "name": "虚空回响",
+      "desc": "<ID=0|TXT:<人物生命 + 75%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 75%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 40%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 40%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50387,
+      "name": "堕落圣歌",
+      "desc": "<ID=0|TXT:<人物魔法 + 29%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 29%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 29%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50391,
+      "name": "诛仙箓",
+      "desc": "<ID=0|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50392,
+      "name": "万法归宗卷",
+      "desc": "<ID=0|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50393,
+      "name": "九霄龙吟印",
+      "desc": "<ID=0|TXT:<人物生命 + 32%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 32%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50401,
+      "name": "天罚之威",
+      "desc": "<ID=0|TXT:<人物生命 + 33%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 33%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50402,
+      "name": "诸神黄昏令",
+      "desc": "<ID=0|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50406,
+      "name": "灵犀一点",
+      "desc": "<ID=0|TXT:<人物魔法 + 64%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 64%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 64%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50407,
+      "name": "碎穹裂宇",
+      "desc": "<ID=0|TXT:<人物魔法 + 29%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 29%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 29%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50410,
+      "name": "破界诛邪",
+      "desc": "<ID=0|TXT:<人物生命 + 32%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 32%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50412,
+      "name": "镇狱封魔",
+      "desc": "<ID=0|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50416,
+      "name": "三生石影",
+      "desc": "<ID=0|TXT:<人物生命 + 77%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 77%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 40%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 40%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50417,
+      "name": "忘川渡魂",
+      "desc": "<ID=0|TXT:<人物生命 + 32%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 32%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50421,
+      "name": "因果天锁",
+      "desc": "<ID=0|TXT:<人物生命 + 34%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 34%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50422,
+      "name": "命数天盘",
+      "desc": "<ID=0|TXT:<人物魔法 + 29%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 29%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 29%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50423,
+      "name": "尘缘劫火",
+      "desc": "<ID=0|TXT:<人物攻击 + 31%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50424,
+      "name": "渡世莲华",
+      "desc": "<ID=0|TXT:<人物魔法 + 66%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 66%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 66%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50426,
+      "name": "鸿蒙初判",
+      "desc": "<ID=0|TXT:<0/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50434,
+      "name": "轩辕镇世符",
+      "desc": "<ID=0|TXT:<人物攻击 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50440,
+      "name": "月下听松",
+      "desc": "<ID=0|TXT:<人物魔法 + 20%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 20%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 20%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50441,
+      "name": "风吟鹤唳",
+      "desc": "<ID=0|TXT:<人物生命 + 28%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50442,
+      "name": "云深不知处",
+      "desc": "<ID=0|TXT:<人物生命 + 32%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 32%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50444,
+      "name": "流霞醉客",
+      "desc": "<ID=0|TXT:<人物魔法 + 33%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 33%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 33%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50445,
+      "name": "星垂平野",
+      "desc": "<ID=0|TXT:<人物生命 + 36%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 36%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50446,
+      "name": "月落乌啼",
+      "desc": "<ID=0|TXT:<人物魔法 + 33%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 33%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 33%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50449,
+      "name": "浮生若梦",
+      "desc": "<ID=0|TXT:<人物生命 + 36%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 36%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50451,
+      "name": "血煞魔心",
+      "desc": "<ID=0|TXT:<人物魔法 + 33%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 33%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 33%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50452,
+      "name": "万魔归宗",
+      "desc": "<ID=0|TXT:<人物魔法 + 33%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 33%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 33%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50453,
+      "name": "幽狱炼魂",
+      "desc": "<ID=0|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 35%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50454,
+      "name": "蚀道魔印",
+      "desc": "<ID=0|TXT:<人物生命 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50455,
+      "name": "血河浮屠",
+      "desc": "<ID=0|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 35%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50457,
+      "name": "噬魂夺魄",
+      "desc": "<ID=0|TXT:<人物魔法 + 70%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 70%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 70%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50460,
+      "name": "焚霄",
+      "desc": "<ID=0|TXT:<人物生命 + 85%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 85%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 40%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 40%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50461,
+      "name": "镇渊",
+      "desc": "<ID=0|TXT:<人物生命 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50462,
+      "name": "逆命",
+      "desc": "<ID=0|TXT:<人物魔法 + 33%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 33%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 33%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50463,
+      "name": "斩尘",
+      "desc": "<ID=0|TXT:<人物生命 + 66%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 66%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击 + 66%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物防御 + 66%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物魔防 + 66%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50464,
+      "name": "斩仙令",
+      "desc": "<ID=0|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 35%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50466,
+      "name": "渡魂舟",
+      "desc": "<ID=0|TXT:<人物生命 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50467,
+      "name": "碎星刃",
+      "desc": "<ID=0|TXT:<人物生命 + 85%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 85%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50470,
+      "name": "天罚",
+      "desc": "<ID=0|TXT:<人物生命 + 36%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 36%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50471,
+      "name": "神寂",
+      "desc": "<ID=0|TXT:<人物攻击 + 73%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50472,
+      "name": "劫烬",
+      "desc": "<ID=0|TXT:<人物生命 + 73%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 73%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50473,
+      "name": "道陨",
+      "desc": "<ID=0|TXT:<人物生命 + 89%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 89%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 60%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 60%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50474,
+      "name": "无情铁御",
+      "desc": "<ID=0|TXT:<人物生命 + 18%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 18%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50475,
+      "name": "褪色者",
+      "desc": "<ID=0|TXT:<人物生命 + 18%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 18%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50476,
+      "name": "七日杀",
+      "desc": "<ID=0|TXT:<人物生命 + 19%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 19%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50477,
+      "name": "长生",
+      "desc": "<ID=0|TXT:<人物魔法 + 14%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 14%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 14%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50480,
+      "name": "嵌合暗翳庭",
+      "desc": "<ID=0|TXT:<人物生命 + 44%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 44%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击 + 44%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物防御 + 44%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物魔防 + 44%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50490,
+      "name": "圣光誓约",
+      "desc": "<ID=0|TXT:<人物魔法 + 36%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 36%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 36%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50492,
+      "name": "天恩圣符",
+      "desc": "<ID=0|TXT:<人物魔法 + 37%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 37%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 37%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50493,
+      "name": "净世真言",
+      "desc": "<ID=0|TXT:<人物生命 + 98%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 98%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 70%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 70%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50494,
+      "name": "荣耀之证",
+      "desc": "<ID=0|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 35%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50496,
+      "name": "深渊凝视",
+      "desc": "<ID=0|TXT:<人物魔法 + 78%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 78%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 78%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50497,
+      "name": "亡语回响",
+      "desc": "<ID=0|TXT:<人物魔法 + 39%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 39%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 39%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50498,
+      "name": "血祭残章",
+      "desc": "<ID=0|TXT:<人物魔法 + 38%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 38%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 38%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50499,
+      "name": "混沌余烬",
+      "desc": "<ID=0|TXT:<人物魔法 + 39%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 39%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 39%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50501,
+      "name": "虚空裂隙",
+      "desc": "<ID=0|TXT:<人物生命 + 39%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 39%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50502,
+      "name": "禁忌之书",
+      "desc": "<ID=0|TXT:<人物生命 + 37%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 37%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50504,
+      "name": "幻梦之钥",
+      "desc": "<ID=0|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 35%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 35%/FCOLOR=251>#0#0&0><ID=3|TXT:<其他:167#30 168#30 169#30 170#30/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50506,
+      "name": "残响",
+      "desc": "<ID=0|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击上限 + 35%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击下限 + 5%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物道术 + 35%/FCOLOR=251>#0#0&0><ID=4|TXT:<其他:167#15 168#15 169#15 170#15/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50510,
+      "name": "蚀骨",
+      "desc": "<ID=0|TXT:<人物生命 + 38%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 38%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50512,
+      "name": "罪印",
+      "desc": "<ID=0|TXT:<人物生命 + 38%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 38%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50513,
+      "name": "魂锁",
+      "desc": "<ID=0|TXT:<人物生命 + 102%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 102%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 80%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 80%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50514,
+      "name": "暗核",
+      "desc": "<ID=0|TXT:<人物生命 + 38%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 38%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50517,
+      "name": "虚空之光",
+      "desc": "<ID=0|TXT:<人物魔法 + 32%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 32%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 32%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50518,
+      "name": "界域之核",
+      "desc": "<ID=0|TXT:<人物生命 + 39%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 39%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50521,
+      "name": "空界之芯",
+      "desc": "<ID=0|TXT:<人物魔法 + 82%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 82%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 82%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50523,
+      "name": "封龙劍メ驱逐之刃",
+      "desc": "<ID=0|TXT:<人物魔法 + 96%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 96%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 96%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50524,
+      "name": "安晓的右眼",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50525,
+      "name": "安晓的左眼",
+      "desc": "<ID=0|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50526,
+      "name": "异空：千年之光",
+      "desc": "<ID=0|TXT:<人物生命 + 128%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 128%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 100%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 100%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50529,
+      "name": "狂怒护手",
+      "desc": "<ID=0|TXT:<人物魔法 + 41%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 41%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 41%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50531,
+      "name": "魔渊面具",
+      "desc": "<ID=0|TXT:<人物魔法 + 43%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 43%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 43%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50532,
+      "name": "「无情」",
+      "desc": "<ID=0|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 35%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50533,
+      "name": "咆哮之意",
+      "desc": "<ID=0|TXT:<人物魔法 + 43%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 43%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 43%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50534,
+      "name": "抉择",
+      "desc": "<ID=0|TXT:<人物魔法 + 44%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 44%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 44%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50535,
+      "name": "啸之戒指",
+      "desc": "<ID=0|TXT:<人物生命 + 42%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 42%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50538,
+      "name": "时间锁",
+      "desc": "<ID=0|TXT:<人物生命 + 42%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 42%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50539,
+      "name": "轮回沙漏",
+      "desc": "<ID=0|TXT:<人物魔法 + 42%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 42%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 42%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50543,
+      "name": "天启星魂",
+      "desc": "<ID=0|TXT:<人物生命 + 43%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 43%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50545,
+      "name": "戰場之靴",
+      "desc": "<ID=0|TXT:<人物生命 + 46%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 46%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50546,
+      "name": "禁言",
+      "desc": "<ID=0|TXT:<人物魔法 + 36%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 36%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 36%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50547,
+      "name": "无面恐惧",
+      "desc": "<ID=0|TXT:<人物生命 + 60%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 60%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 15%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 15%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 15%/FCOLOR=251>#0#0&0><ID=5|TXT:<人物防御 + 15%/FCOLOR=251>#0#0&0><ID=6|TXT:<人物魔防 + 15%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50549,
+      "name": "命运的轮转",
+      "desc": "<ID=0|TXT:<人物魔法 + 40%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 40%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 40%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50550,
+      "name": "起源·无尽幻境",
+      "desc": "<ID=0|TXT:<人物生命 + 42%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 42%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50551,
+      "name": "厄运代言人",
+      "desc": "<ID=0|TXT:<人物魔法 + 40%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 40%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 40%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50553,
+      "name": "龙之力·不灭光剑!",
+      "desc": "<ID=0|TXT:<人物魔法 + 88%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 88%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 88%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50554,
+      "name": "黄昏落幕ぁ",
+      "desc": "<ID=0|TXT:<人物生命 + 110%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 110%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 90%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 90%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50556,
+      "name": "群星之怒★★★",
+      "desc": "<ID=0|TXT:<人物魔法 + 94%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 94%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 94%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50557,
+      "name": "夜风·不败剑意",
+      "desc": "<ID=0|TXT:<人物魔法 + 96%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 96%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 96%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50558,
+      "name": "星辉的祷告乀",
+      "desc": "<ID=0|TXT:<人物生命 + 115%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 115%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 95%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50559,
+      "name": "御天机",
+      "desc": "<ID=0|TXT:<人物生命 + 125%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 125%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 100%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50560,
+      "name": "哨兵之首",
+      "desc": "<ID=0|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 55%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50561,
+      "name": "无序战盔",
+      "desc": "<ID=0|TXT:<人物生命 + 70%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 70%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 15%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 15%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 15%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50562,
+      "name": "生灵·屠杀",
+      "desc": "<ID=0|TXT:<人物魔法 + 45%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 45%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 45%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50563,
+      "name": "星神之坠",
+      "desc": "<ID=0|TXT:<人物魔法 + 45%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 45%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 45%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50564,
+      "name": "新月领域△核心",
+      "desc": "<ID=0|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 55%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50565,
+      "name": "幕轮",
+      "desc": "<ID=0|TXT:<人物魔法 + 46%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 46%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 46%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50566,
+      "name": "狂魔·永夜",
+      "desc": "<ID=0|TXT:<人物生命 + 46%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 46%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50567,
+      "name": "贪婪之噬",
+      "desc": "<ID=0|TXT:<人物生命 + 38%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 38%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 38%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 38%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 38%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50568,
+      "name": "影幕之指",
+      "desc": "<ID=0|TXT:<人物魔法 + 46%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 46%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 46%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50569,
+      "name": "★★星魂永燃★★",
+      "desc": "<ID=0|TXT:<人物生命 + 45%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 45%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50570,
+      "name": "无序的邪力",
+      "desc": "<ID=0|TXT:<人物生命 + 45%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 45%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 45%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 45%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 45%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50571,
+      "name": "无序的凝视",
+      "desc": "<ID=0|TXT:<人物生命 + 42%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 42%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 42%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 42%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 42%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50572,
+      "name": "刺·束缚之隐",
+      "desc": "<ID=0|TXT:<人物魔法 + 45%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 45%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 45%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50573,
+      "name": "无序◎奥秘",
+      "desc": "<ID=0|TXT:<人物生命 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 45%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50574,
+      "name": "『神耀』",
+      "desc": "<ID=0|TXT:<人物魔法 + 48%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 48%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 48%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50575,
+      "name": "悟道神带",
+      "desc": "<ID=0|TXT:<人物生命 + 45%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 45%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50576,
+      "name": "原初■混乱■",
+      "desc": "<ID=0|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 55%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50577,
+      "name": "〝回魂〞",
+      "desc": "<ID=0|TXT:<人物生命 + 48%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 48%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 48%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 48%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 48%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50578,
+      "name": "心有琉璃",
+      "desc": "<ID=0|TXT:<人物生命 + 58%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 48%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 48%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 48%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 48%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50579,
+      "name": "無上生霊″魂灭生",
+      "desc": "<ID=0|TXT:<人物生命 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 55%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50580,
+      "name": "『畸变』",
+      "desc": "<ID=0|TXT:<人物生命 + 70%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 70%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 50%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 50%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50581,
+      "name": "光辉之怒·鸩",
+      "desc": "<ID=0|TXT:<人物生命 + 50%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 50%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 50%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50582,
+      "name": "星辉·猎杀狩命",
+      "desc": "<ID=0|TXT:<人物生命 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 55%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50583,
+      "name": "◆黑洞◆1",
+      "desc": "<ID=0|TXT:<人物生命 + 50%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 50%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 50%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50584,
+      "name": "万法面具1",
+      "desc": "<ID=0|TXT:<人物生命 + 50%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 50%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 50%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50585,
+      "name": "·天魔之冠·破天·1",
+      "desc": "<ID=0|TXT:<人物生命 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 55%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50586,
+      "name": "血奴印记",
+      "desc": "<ID=0|TXT:<人物生命 + 50%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 50%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 50%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50587,
+      "name": "混乱制造者",
+      "desc": "<ID=0|TXT:<人物生命 + 50%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 50%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 50%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50588,
+      "name": "诛伏赐死",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50589,
+      "name": "新月头盔[月灵]",
+      "desc": "<ID=0|TXT:<人物生命 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50590,
+      "name": "新月项链[月灵]",
+      "desc": "<ID=0|TXT:<人物生命 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50591,
+      "name": "醉月手镯[魂灭]",
+      "desc": "<ID=0|TXT:<人物生命 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50592,
+      "name": "醉月戒指[魂灭]",
+      "desc": "<ID=0|TXT:<人物生命 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50593,
+      "name": "风月腰带[魂生]",
+      "desc": "<ID=0|TXT:<人物生命 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50594,
+      "name": "风月鞋子[魂生]",
+      "desc": "<ID=0|TXT:<人物生命 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50596,
+      "name": "巨象之环",
+      "desc": "<ID=0|TXT:<人物生命 + 15%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击 + 70%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50598,
+      "name": "悸动★飞沙",
+      "desc": "<ID=0|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击下限 + 70%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击上限 + 55%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50599,
+      "name": "天魁＂湮灭",
+      "desc": "<ID=0|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击下限 + 70%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击上限 + 55%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50600,
+      "name": "地苍·岩落",
+      "desc": "<ID=0|TXT:<人物生命 + 135%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 135%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 110%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50601,
+      "name": "水泽·魂之护",
+      "desc": "<ID=0|TXT:<人物生命 + 120%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 120%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 100%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50603,
+      "name": "「恆古·碧波」",
+      "desc": "<ID=0|TXT:<人物生命 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50604,
+      "name": "自作·无铭",
+      "desc": "<ID=0|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击下限 + 70%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击上限 + 55%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50606,
+      "name": "奇迹之金刃圣剑",
+      "desc": "<ID=0|TXT:<人物魔法 + 100%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 100%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 100%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50607,
+      "name": "咒怨劫·镜铁戒",
+      "desc": "<ID=0|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击下限 + 70%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击上限 + 55%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50610,
+      "name": "统御之灵「融合」",
+      "desc": "<ID=0|TXT:<人物魔法 + 72%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 72%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 72%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50611,
+      "name": "暴怒の罪",
+      "desc": "<ID=0|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50612,
+      "name": "风息ぺ漩涡",
+      "desc": "<ID=0|TXT:<人物生命 + 70%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50613,
+      "name": "★天之苍·碧落★",
+      "desc": "<ID=0|TXT:<人物生命 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50615,
+      "name": "风暴之心·穹霄",
+      "desc": "<ID=0|TXT:<人物魔法 + 108%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 108%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 108%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50616,
+      "name": "べ雷王之冠★",
+      "desc": "<ID=0|TXT:<人物生命 + 65%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 65%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50617,
+      "name": "极乐之界",
+      "desc": "<ID=0|TXT:<人物魔法 + 52%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 52%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 52%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50619,
+      "name": "色欲の罪",
+      "desc": "<ID=0|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50620,
+      "name": "九霄雷动·氤氲之行",
+      "desc": "<ID=0|TXT:<人物魔法 + 58%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 58%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 58%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50621,
+      "name": "巨岩之殇1",
+      "desc": "<ID=0|TXT:<人物生命 + 70%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 55%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0><ID=5|TXT:<人物防御 + 55%/FCOLOR=251>#0#0&0><ID=6|TXT:<人物魔防 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50622,
+      "name": "山岳の指环",
+      "desc": "<ID=0|TXT:<人物生命 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50623,
+      "name": "靈-末日浮屠",
+      "desc": "<ID=0|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 55%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51524,
+      "name": "卐卐正道鏡卐卐",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51525,
+      "name": "卐卐提魂锁卐卐",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51526,
+      "name": "△△雷道天卷△△",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51527,
+      "name": "△△玄天令△△",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51528,
+      "name": "▲▲火雲真經▲▲",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51529,
+      "name": "▲▲水鏡太極▲▲",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51530,
+      "name": "‖「谣影神靴」‖",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51531,
+      "name": "‖「太清流珠」‖",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51616,
+      "name": "天命·复活",
+      "desc": "<ID=0|TXT:<人物攻击 + 10%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51617,
+      "name": "天命·麻痹",
+      "desc": "<ID=0|TXT:<人物攻击 + 10%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51618,
+      "name": "天命·神镰",
+      "desc": "<ID=0|TXT:<全属性 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51619,
+      "name": "天命·神斧",
+      "desc": "<ID=0|TXT:<全属性 + 60%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    }
+  ],
+  "attr_missing": [
+    {
+      "idx": 52003,
+      "name": "诅咒傀儡",
+      "desc": "<ID=0|TXT:<诅咒傀儡：攻击怪物 10% 绿毒/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 52007,
+      "name": "胖娃的肚兜",
+      "desc": "<ID=0|TXT:<胖娃肚兜：奇遇概率 + 10%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50185,
+      "name": "龙魂吊坠",
+      "desc": "<ID=0|TXT:<人物攻击 + 5%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50186,
+      "name": "王权圣戒",
+      "desc": "<ID=0|TXT:<人物生命 + 10%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50187,
+      "name": "烈焰指环",
+      "desc": "<ID=0|TXT:<人物攻击 + 7%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50188,
+      "name": "炽焰护腕",
+      "desc": "<ID=0|TXT:<人物攻击 + 10%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50189,
+      "name": "傲霜孤",
+      "desc": "<ID=0|TXT:<人物攻击 + 6%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50190,
+      "name": "月华流影",
+      "desc": "<ID=0|TXT:<人物攻击 + 7%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50191,
+      "name": "苍穹寂灭",
+      "desc": "<ID=0|TXT:<人物生命 + 10%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50192,
+      "name": "烬海残光",
+      "desc": "<ID=0|TXT:<人物攻击 + 9%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50193,
+      "name": "惊雷震世",
+      "desc": "<ID=0|TXT:<人物生命 + 10%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50194,
+      "name": "雪隐残锋",
+      "desc": "<ID=0|TXT:<人物生命 + 10%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50195,
+      "name": "啸风逐电",
+      "desc": "<ID=0|TXT:<人物攻击 + 11%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 11%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 11%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50196,
+      "name": "龙鳞震岳",
+      "desc": "<ID=0|TXT:<人物攻击 + 11%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 11%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 11%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50197,
+      "name": "雷霆幻",
+      "desc": "<ID=0|TXT:<人物攻击 + 11%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 11%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 11%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50198,
+      "name": "永恒星辰",
+      "desc": "<ID=0|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50199,
+      "name": "霜雪之间",
+      "desc": "<ID=0|TXT:<人物生命 + 20%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50200,
+      "name": "烈焰焚天",
+      "desc": "<ID=0|TXT:<人物防御 + 10%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物生命 + 20%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50201,
+      "name": "天罚雷击",
+      "desc": "<ID=0|TXT:<人物防御 + 10%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物生命 + 20%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50202,
+      "name": "炽焰灰烬",
+      "desc": "<ID=0|TXT:<人物防御 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50203,
+      "name": "深渊游行",
+      "desc": "<ID=0|TXT:<人物攻击 + 12%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50204,
+      "name": "龙骨战魂",
+      "desc": "<ID=0|TXT:<人物攻击 + 14%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50205,
+      "name": "★★寒鸦★★",
+      "desc": "<ID=0|TXT:<人物攻击 + 16%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50206,
+      "name": "紫琅",
+      "desc": "<ID=0|TXT:<人物攻击 + 18%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50207,
+      "name": "烬痕",
+      "desc": "<ID=0|TXT:<人物攻击 + 12%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50208,
+      "name": "长夜メ",
+      "desc": "<ID=0|TXT:<人物攻击 + 12%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50209,
+      "name": "无尘",
+      "desc": "<ID=0|TXT:<人物攻击 + 12%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50210,
+      "name": "逐浪",
+      "desc": "<ID=0|TXT:<人物攻击 + 12%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50211,
+      "name": "追云",
+      "desc": "<ID=0|TXT:<人物攻击 + 12%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50212,
+      "name": "苍狼",
+      "desc": "<ID=0|TXT:<人物攻击 + 12%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50213,
+      "name": "メ孤鸿",
+      "desc": "<ID=0|TXT:<人物生命 + 15%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50214,
+      "name": "焚息",
+      "desc": "<ID=0|TXT:<人物生命 + 15%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50215,
+      "name": "归墟",
+      "desc": "<ID=0|TXT:<人物攻击 + 12%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50216,
+      "name": "映月",
+      "desc": "<ID=0|TXT:<人物攻击 + 12%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50217,
+      "name": "霜魄",
+      "desc": "<ID=0|TXT:<人物生命 + 15%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50218,
+      "name": "风吟",
+      "desc": "<ID=0|TXT:<人物攻击 + 12%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50219,
+      "name": "墨影",
+      "desc": "<ID=0|TXT:<人物生命 + 15%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50234,
+      "name": "锁鳞",
+      "desc": "<ID=0|TXT:<人物攻击 + 38%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 38%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 38%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50235,
+      "name": "裂天",
+      "desc": "<ID=0|TXT:<人物防御 + 20%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔防 + 20%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物生命 + 43%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔法 + 43%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50236,
+      "name": "星陨",
+      "desc": "<ID=0|TXT:<人物攻击 + 66%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 66%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 66%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50237,
+      "name": "寂照",
+      "desc": "<ID=0|TXT:<人物防御 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔防 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物生命 + 108%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔法 + 108%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50239,
+      "name": "天痕",
+      "desc": "<ID=0|TXT:<人物攻击 + 25%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 25%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 25%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50244,
+      "name": "飞霞",
+      "desc": "<ID=0|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50245,
+      "name": "雷渊",
+      "desc": "<ID=0|TXT:<人物生命 + 25%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 25%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50246,
+      "name": "玄冥",
+      "desc": "<ID=0|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50247,
+      "name": "月痕",
+      "desc": "<ID=0|TXT:<人物生命 + 25%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 25%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50248,
+      "name": "青衿",
+      "desc": "<ID=0|TXT:<人物生命 + 56%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物防御 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔防 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50250,
+      "name": "烛阴",
+      "desc": "<ID=0|TXT:<人物生命 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50251,
+      "name": "流岚",
+      "desc": "<ID=0|TXT:<人物魔法 + 24%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 24%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 24%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50253,
+      "name": "云渡履",
+      "desc": "<ID=0|TXT:<人物魔法 + 28%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 28%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50255,
+      "name": "笑傲天",
+      "desc": "<ID=0|TXT:<人物生命 + 5%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 5%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50261,
+      "name": "踏风追电",
+      "desc": "<ID=0|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击上限 + 25%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击下限 + 22%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50263,
+      "name": "流光仙索",
+      "desc": "<ID=0|TXT:<人物生命 + 28%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 25%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50264,
+      "name": "断情遗世",
+      "desc": "<ID=0|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50267,
+      "name": "清君侧",
+      "desc": "<ID=0|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 50%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 50%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50268,
+      "name": "鸿蒙初启",
+      "desc": "<ID=0|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 50%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 50%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50271,
+      "name": "青冥幻影",
+      "desc": "<ID=0|TXT:<人物生命 + 15%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 15%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击 + 15%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物防御下限 + 15%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物魔防下限 + 15%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50272,
+      "name": "玄羽乘风",
+      "desc": "<ID=0|TXT:<人物生命 + 15%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 15%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击 + 15%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物防御下限 + 15%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物魔防下限 + 15%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50273,
+      "name": "锁天紫绦",
+      "desc": "<ID=0|TXT:<人物生命 + 38%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 38%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击 + 38%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物防御下限 + 38%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物魔防下限 + 38%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50286,
+      "name": "封魔镇狱",
+      "desc": "<ID=0|TXT:<人物生命 + 58%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 58%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 30%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50288,
+      "name": "炽焰珠链",
+      "desc": "<ID=0|TXT:<人物生命 + 28%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50289,
+      "name": "火种之戒",
+      "desc": "<ID=0|TXT:<人物生命 + 26%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 26%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50291,
+      "name": "赤焰戒",
+      "desc": "<ID=0|TXT:<人物魔法 + 53%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 53%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 53%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50295,
+      "name": "火龙束带",
+      "desc": "<ID=0|TXT:<人物魔法 + 25%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 25%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 25%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50298,
+      "name": "冥火",
+      "desc": "<ID=0|TXT:<人物生命 + 63%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 63%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 40%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 40%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50299,
+      "name": "鬼影",
+      "desc": "<ID=0|TXT:<人物魔法 + 28%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 28%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50316,
+      "name": "幽灵步履",
+      "desc": "<ID=0|TXT:<人物攻击 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50317,
+      "name": "惊雷踏云",
+      "desc": "<ID=0|TXT:<人物攻击 + 27%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50319,
+      "name": "九重苍带",
+      "desc": "<ID=0|TXT:<人物攻击 + 27%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50320,
+      "name": "紫电",
+      "desc": "<ID=0|TXT:<人物生命 + 65%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 65%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 40%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 40%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50322,
+      "name": "幻梦池",
+      "desc": "<ID=0|TXT:<人物生命 + 29%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 29%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50324,
+      "name": "血焰",
+      "desc": "<ID=0|TXT:<人物生命 + 29%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 29%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50325,
+      "name": "赤焰狂歌1",
+      "desc": "<ID=0|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 35%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50326,
+      "name": "青霄剑舞",
+      "desc": "<ID=0|TXT:<人物生命 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50331,
+      "name": "天冠",
+      "desc": "<ID=0|TXT:<人物生命 + 20%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 20%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 20%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 20%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 20%/FCOLOR=251>#0#0&0><ID=5|TXT:<人物防御上限 + 20%/FCOLOR=251>#0#0&0><ID=6|TXT:<人物魔防 + 20%/FCOLOR=251>#0#0&0><ID=7|TXT:<人物魔防上限 + 20%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50332,
+      "name": "出世",
+      "desc": "<ID=0|TXT:<人物生命 + 28%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50333,
+      "name": "宿命",
+      "desc": "<ID=0|TXT:<人物生命 + 29%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 29%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御上限 + 29%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50334,
+      "name": "清风",
+      "desc": "<ID=0|TXT:<人物生命 + 18%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 18%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50339,
+      "name": "归一",
+      "desc": "<ID=0|TXT:<人物魔法 + 28%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 28%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 28%/FCOLOR=251>#0#0&0><ID=3|TXT:<其他:167#5 168#5 169#5 170#5/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50341,
+      "name": "破界",
+      "desc": "<ID=0|TXT:<人物魔法 + 57%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 57%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 57%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50347,
+      "name": "若",
+      "desc": "<ID=0|TXT:<人物魔法 + 28%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 28%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50348,
+      "name": "道",
+      "desc": "<ID=0|TXT:<人物魔法 + 29%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 29%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 29%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50349,
+      "name": "色",
+      "desc": "<ID=0|TXT:<人物魔法 + 27%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 27%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 27%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50356,
+      "name": "天",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50357,
+      "name": "月上影",
+      "desc": "<ID=0|TXT:<人物生命 + 66%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 66%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 40%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 40%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50362,
+      "name": "锁九天",
+      "desc": "<ID=0|TXT:<人物攻击 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50363,
+      "name": "春不语",
+      "desc": "<ID=0|TXT:<人物生命 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50364,
+      "name": "叶知秋",
+      "desc": "<ID=0|TXT:<人物魔法 + 59%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 59%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 59%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50365,
+      "name": "浅吟唱",
+      "desc": "<ID=0|TXT:<人物生命 + 28%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50366,
+      "name": "烟醉雨",
+      "desc": "<ID=0|TXT:<人物生命 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物防御 + 22%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物魔防 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50367,
+      "name": "洛情弃",
+      "desc": "<ID=0|TXT:<人物生命 + 10%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 36%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击 + 36%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物道术 + 36%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50368,
+      "name": "仙人跪",
+      "desc": "<ID=0|TXT:<人物攻击 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50370,
+      "name": "囚魍魉",
+      "desc": "<ID=0|TXT:<人物生命 + 37%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 32%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 32%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击下限 + 32%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物攻击上限 + 35%/FCOLOR=251>#0#0&0><ID=5|TXT:<人物道术 + 32%/FCOLOR=251>#0#0&0><ID=6|TXT:<人物防御 + 32%/FCOLOR=251>#0#0&0><ID=7|TXT:<人物魔防 + 32%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50380,
+      "name": "暗影囚笼",
+      "desc": "<ID=0|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50381,
+      "name": "噬魂之镰影",
+      "desc": "<ID=0|TXT:<人物生命 + 32%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 32%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50382,
+      "name": "霸天震九州",
+      "desc": "<ID=0|TXT:<人物魔法 + 13%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 13%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 13%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50383,
+      "name": "永夜诅咒",
+      "desc": "<ID=0|TXT:<人物攻击 + 29%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50384,
+      "name": "狂风之力",
+      "desc": "<ID=0|TXT:<人物生命 + 18%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 18%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50386,
+      "name": "虚空回响",
+      "desc": "<ID=0|TXT:<人物生命 + 75%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 75%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 40%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 40%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50387,
+      "name": "堕落圣歌",
+      "desc": "<ID=0|TXT:<人物魔法 + 29%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 29%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 29%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50391,
+      "name": "诛仙箓",
+      "desc": "<ID=0|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50392,
+      "name": "万法归宗卷",
+      "desc": "<ID=0|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50393,
+      "name": "九霄龙吟印",
+      "desc": "<ID=0|TXT:<人物生命 + 32%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 32%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50401,
+      "name": "天罚之威",
+      "desc": "<ID=0|TXT:<人物生命 + 33%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 33%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50402,
+      "name": "诸神黄昏令",
+      "desc": "<ID=0|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50406,
+      "name": "灵犀一点",
+      "desc": "<ID=0|TXT:<人物魔法 + 64%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 64%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 64%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50407,
+      "name": "碎穹裂宇",
+      "desc": "<ID=0|TXT:<人物魔法 + 29%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 29%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 29%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50410,
+      "name": "破界诛邪",
+      "desc": "<ID=0|TXT:<人物生命 + 32%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 32%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50412,
+      "name": "镇狱封魔",
+      "desc": "<ID=0|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50416,
+      "name": "三生石影",
+      "desc": "<ID=0|TXT:<人物生命 + 77%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 77%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 40%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 40%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50417,
+      "name": "忘川渡魂",
+      "desc": "<ID=0|TXT:<人物生命 + 32%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 32%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50421,
+      "name": "因果天锁",
+      "desc": "<ID=0|TXT:<人物生命 + 34%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 34%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50422,
+      "name": "命数天盘",
+      "desc": "<ID=0|TXT:<人物魔法 + 29%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 29%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 29%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50423,
+      "name": "尘缘劫火",
+      "desc": "<ID=0|TXT:<人物攻击 + 31%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50424,
+      "name": "渡世莲华",
+      "desc": "<ID=0|TXT:<人物魔法 + 66%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 66%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 66%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50434,
+      "name": "轩辕镇世符",
+      "desc": "<ID=0|TXT:<人物攻击 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50440,
+      "name": "月下听松",
+      "desc": "<ID=0|TXT:<人物魔法 + 20%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 20%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 20%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50441,
+      "name": "风吟鹤唳",
+      "desc": "<ID=0|TXT:<人物生命 + 28%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 28%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50442,
+      "name": "云深不知处",
+      "desc": "<ID=0|TXT:<人物生命 + 32%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 32%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50444,
+      "name": "流霞醉客",
+      "desc": "<ID=0|TXT:<人物魔法 + 33%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 33%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 33%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50445,
+      "name": "星垂平野",
+      "desc": "<ID=0|TXT:<人物生命 + 36%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 36%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50446,
+      "name": "月落乌啼",
+      "desc": "<ID=0|TXT:<人物魔法 + 33%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 33%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 33%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50449,
+      "name": "浮生若梦",
+      "desc": "<ID=0|TXT:<人物生命 + 36%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 36%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50451,
+      "name": "血煞魔心",
+      "desc": "<ID=0|TXT:<人物魔法 + 33%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 33%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 33%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50452,
+      "name": "万魔归宗",
+      "desc": "<ID=0|TXT:<人物魔法 + 33%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 33%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 33%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50453,
+      "name": "幽狱炼魂",
+      "desc": "<ID=0|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 35%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50454,
+      "name": "蚀道魔印",
+      "desc": "<ID=0|TXT:<人物生命 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50455,
+      "name": "血河浮屠",
+      "desc": "<ID=0|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 35%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50457,
+      "name": "噬魂夺魄",
+      "desc": "<ID=0|TXT:<人物魔法 + 70%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 70%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 70%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50460,
+      "name": "焚霄",
+      "desc": "<ID=0|TXT:<人物生命 + 85%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 85%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 40%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 40%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50461,
+      "name": "镇渊",
+      "desc": "<ID=0|TXT:<人物生命 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50462,
+      "name": "逆命",
+      "desc": "<ID=0|TXT:<人物魔法 + 33%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 33%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 33%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50463,
+      "name": "斩尘",
+      "desc": "<ID=0|TXT:<人物生命 + 66%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 66%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击 + 66%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物防御 + 66%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物魔防 + 66%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50464,
+      "name": "斩仙令",
+      "desc": "<ID=0|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 35%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50466,
+      "name": "渡魂舟",
+      "desc": "<ID=0|TXT:<人物生命 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50467,
+      "name": "碎星刃",
+      "desc": "<ID=0|TXT:<人物生命 + 85%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 85%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50470,
+      "name": "天罚",
+      "desc": "<ID=0|TXT:<人物生命 + 36%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 36%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50471,
+      "name": "神寂",
+      "desc": "<ID=0|TXT:<人物攻击 + 73%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50472,
+      "name": "劫烬",
+      "desc": "<ID=0|TXT:<人物生命 + 73%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 73%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50473,
+      "name": "道陨",
+      "desc": "<ID=0|TXT:<人物生命 + 89%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 89%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 60%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 60%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50474,
+      "name": "无情铁御",
+      "desc": "<ID=0|TXT:<人物生命 + 18%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 18%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50475,
+      "name": "褪色者",
+      "desc": "<ID=0|TXT:<人物生命 + 18%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 18%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50476,
+      "name": "七日杀",
+      "desc": "<ID=0|TXT:<人物生命 + 19%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 19%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50477,
+      "name": "长生",
+      "desc": "<ID=0|TXT:<人物魔法 + 14%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 14%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 14%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50480,
+      "name": "嵌合暗翳庭",
+      "desc": "<ID=0|TXT:<人物生命 + 44%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 44%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击 + 44%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物防御 + 44%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物魔防 + 44%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50490,
+      "name": "圣光誓约",
+      "desc": "<ID=0|TXT:<人物魔法 + 36%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 36%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 36%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50492,
+      "name": "天恩圣符",
+      "desc": "<ID=0|TXT:<人物魔法 + 37%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 37%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 37%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50493,
+      "name": "净世真言",
+      "desc": "<ID=0|TXT:<人物生命 + 98%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 98%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 70%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 70%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50494,
+      "name": "荣耀之证",
+      "desc": "<ID=0|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 35%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50496,
+      "name": "深渊凝视",
+      "desc": "<ID=0|TXT:<人物魔法 + 78%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 78%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 78%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50497,
+      "name": "亡语回响",
+      "desc": "<ID=0|TXT:<人物魔法 + 39%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 39%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 39%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50498,
+      "name": "血祭残章",
+      "desc": "<ID=0|TXT:<人物魔法 + 38%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 38%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 38%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50499,
+      "name": "混沌余烬",
+      "desc": "<ID=0|TXT:<人物魔法 + 39%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 39%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 39%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50501,
+      "name": "虚空裂隙",
+      "desc": "<ID=0|TXT:<人物生命 + 39%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 39%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50502,
+      "name": "禁忌之书",
+      "desc": "<ID=0|TXT:<人物生命 + 37%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 37%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50504,
+      "name": "幻梦之钥",
+      "desc": "<ID=0|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 35%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 35%/FCOLOR=251>#0#0&0><ID=3|TXT:<其他:167#30 168#30 169#30 170#30/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50506,
+      "name": "残响",
+      "desc": "<ID=0|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击上限 + 35%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击下限 + 5%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物道术 + 35%/FCOLOR=251>#0#0&0><ID=4|TXT:<其他:167#15 168#15 169#15 170#15/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50510,
+      "name": "蚀骨",
+      "desc": "<ID=0|TXT:<人物生命 + 38%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 38%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50512,
+      "name": "罪印",
+      "desc": "<ID=0|TXT:<人物生命 + 38%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 38%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50513,
+      "name": "魂锁",
+      "desc": "<ID=0|TXT:<人物生命 + 102%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 102%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 80%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 80%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50514,
+      "name": "暗核",
+      "desc": "<ID=0|TXT:<人物生命 + 38%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 38%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50517,
+      "name": "虚空之光",
+      "desc": "<ID=0|TXT:<人物魔法 + 32%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 32%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 32%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50518,
+      "name": "界域之核",
+      "desc": "<ID=0|TXT:<人物生命 + 39%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 39%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50521,
+      "name": "空界之芯",
+      "desc": "<ID=0|TXT:<人物魔法 + 82%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 82%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 82%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50523,
+      "name": "封龙劍メ驱逐之刃",
+      "desc": "<ID=0|TXT:<人物魔法 + 96%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 96%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 96%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50524,
+      "name": "安晓的右眼",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50525,
+      "name": "安晓的左眼",
+      "desc": "<ID=0|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50526,
+      "name": "异空：千年之光",
+      "desc": "<ID=0|TXT:<人物生命 + 128%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 128%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 100%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 100%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50529,
+      "name": "狂怒护手",
+      "desc": "<ID=0|TXT:<人物魔法 + 41%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 41%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 41%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50531,
+      "name": "魔渊面具",
+      "desc": "<ID=0|TXT:<人物魔法 + 43%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 43%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 43%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50532,
+      "name": "「无情」",
+      "desc": "<ID=0|TXT:<人物魔法 + 35%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 35%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50533,
+      "name": "咆哮之意",
+      "desc": "<ID=0|TXT:<人物魔法 + 43%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 43%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 43%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50534,
+      "name": "抉择",
+      "desc": "<ID=0|TXT:<人物魔法 + 44%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 44%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 44%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50535,
+      "name": "啸之戒指",
+      "desc": "<ID=0|TXT:<人物生命 + 42%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 42%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50538,
+      "name": "时间锁",
+      "desc": "<ID=0|TXT:<人物生命 + 42%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 42%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50539,
+      "name": "轮回沙漏",
+      "desc": "<ID=0|TXT:<人物魔法 + 42%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 42%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 42%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50543,
+      "name": "天启星魂",
+      "desc": "<ID=0|TXT:<人物生命 + 43%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 43%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50545,
+      "name": "戰場之靴",
+      "desc": "<ID=0|TXT:<人物生命 + 46%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 46%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50546,
+      "name": "禁言",
+      "desc": "<ID=0|TXT:<人物魔法 + 36%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 36%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 36%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50547,
+      "name": "无面恐惧",
+      "desc": "<ID=0|TXT:<人物生命 + 60%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 60%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 15%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 15%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 15%/FCOLOR=251>#0#0&0><ID=5|TXT:<人物防御 + 15%/FCOLOR=251>#0#0&0><ID=6|TXT:<人物魔防 + 15%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50549,
+      "name": "命运的轮转",
+      "desc": "<ID=0|TXT:<人物魔法 + 40%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 40%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 40%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50550,
+      "name": "起源·无尽幻境",
+      "desc": "<ID=0|TXT:<人物生命 + 42%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 42%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50551,
+      "name": "厄运代言人",
+      "desc": "<ID=0|TXT:<人物魔法 + 40%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 40%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 40%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50553,
+      "name": "龙之力·不灭光剑!",
+      "desc": "<ID=0|TXT:<人物魔法 + 88%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 88%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 88%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50554,
+      "name": "黄昏落幕ぁ",
+      "desc": "<ID=0|TXT:<人物生命 + 110%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 110%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 90%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物魔防 + 90%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50556,
+      "name": "群星之怒★★★",
+      "desc": "<ID=0|TXT:<人物魔法 + 94%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 94%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 94%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50557,
+      "name": "夜风·不败剑意",
+      "desc": "<ID=0|TXT:<人物魔法 + 96%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 96%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 96%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50558,
+      "name": "星辉的祷告乀",
+      "desc": "<ID=0|TXT:<人物生命 + 115%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 115%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 95%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50559,
+      "name": "御天机",
+      "desc": "<ID=0|TXT:<人物生命 + 125%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 125%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 100%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50560,
+      "name": "哨兵之首",
+      "desc": "<ID=0|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 55%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50561,
+      "name": "无序战盔",
+      "desc": "<ID=0|TXT:<人物生命 + 70%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 70%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 15%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 15%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 15%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50562,
+      "name": "生灵·屠杀",
+      "desc": "<ID=0|TXT:<人物魔法 + 45%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 45%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 45%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50563,
+      "name": "星神之坠",
+      "desc": "<ID=0|TXT:<人物魔法 + 45%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 45%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 45%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50564,
+      "name": "新月领域△核心",
+      "desc": "<ID=0|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 55%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50565,
+      "name": "幕轮",
+      "desc": "<ID=0|TXT:<人物魔法 + 46%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 46%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 46%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50566,
+      "name": "狂魔·永夜",
+      "desc": "<ID=0|TXT:<人物生命 + 46%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 46%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50567,
+      "name": "贪婪之噬",
+      "desc": "<ID=0|TXT:<人物生命 + 38%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 38%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 38%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 38%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 38%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50568,
+      "name": "影幕之指",
+      "desc": "<ID=0|TXT:<人物魔法 + 46%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 46%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 46%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50569,
+      "name": "★★星魂永燃★★",
+      "desc": "<ID=0|TXT:<人物生命 + 45%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 45%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50570,
+      "name": "无序的邪力",
+      "desc": "<ID=0|TXT:<人物生命 + 45%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 45%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 45%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 45%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 45%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50571,
+      "name": "无序的凝视",
+      "desc": "<ID=0|TXT:<人物生命 + 42%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 42%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 42%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 42%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 42%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50572,
+      "name": "刺·束缚之隐",
+      "desc": "<ID=0|TXT:<人物魔法 + 45%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 45%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 45%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50573,
+      "name": "无序◎奥秘",
+      "desc": "<ID=0|TXT:<人物生命 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 45%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50574,
+      "name": "『神耀』",
+      "desc": "<ID=0|TXT:<人物魔法 + 48%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 48%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 48%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50575,
+      "name": "悟道神带",
+      "desc": "<ID=0|TXT:<人物生命 + 45%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 45%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50576,
+      "name": "原初■混乱■",
+      "desc": "<ID=0|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 55%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50577,
+      "name": "〝回魂〞",
+      "desc": "<ID=0|TXT:<人物生命 + 48%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 48%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 48%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 48%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 48%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50578,
+      "name": "心有琉璃",
+      "desc": "<ID=0|TXT:<人物生命 + 58%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 48%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 48%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 48%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 48%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50579,
+      "name": "無上生霊″魂灭生",
+      "desc": "<ID=0|TXT:<人物生命 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 55%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50580,
+      "name": "『畸变』",
+      "desc": "<ID=0|TXT:<人物生命 + 70%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 70%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 50%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 50%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50581,
+      "name": "光辉之怒·鸩",
+      "desc": "<ID=0|TXT:<人物生命 + 50%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 50%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 50%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50582,
+      "name": "星辉·猎杀狩命",
+      "desc": "<ID=0|TXT:<人物生命 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 55%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50583,
+      "name": "◆黑洞◆1",
+      "desc": "<ID=0|TXT:<人物生命 + 50%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 50%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 50%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50584,
+      "name": "万法面具1",
+      "desc": "<ID=0|TXT:<人物生命 + 50%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 50%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 50%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50585,
+      "name": "·天魔之冠·破天·1",
+      "desc": "<ID=0|TXT:<人物生命 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 55%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50586,
+      "name": "血奴印记",
+      "desc": "<ID=0|TXT:<人物生命 + 50%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 50%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 50%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50587,
+      "name": "混乱制造者",
+      "desc": "<ID=0|TXT:<人物生命 + 50%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 50%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 50%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 50%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50588,
+      "name": "诛伏赐死",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50589,
+      "name": "新月头盔[月灵]",
+      "desc": "<ID=0|TXT:<人物生命 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50590,
+      "name": "新月项链[月灵]",
+      "desc": "<ID=0|TXT:<人物生命 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50591,
+      "name": "醉月手镯[魂灭]",
+      "desc": "<ID=0|TXT:<人物生命 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50592,
+      "name": "醉月戒指[魂灭]",
+      "desc": "<ID=0|TXT:<人物生命 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50593,
+      "name": "风月腰带[魂生]",
+      "desc": "<ID=0|TXT:<人物生命 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50594,
+      "name": "风月鞋子[魂生]",
+      "desc": "<ID=0|TXT:<人物生命 + 22%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 22%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 22%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 22%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50596,
+      "name": "巨象之环",
+      "desc": "<ID=0|TXT:<人物生命 + 15%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击 + 70%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50598,
+      "name": "悸动★飞沙",
+      "desc": "<ID=0|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击下限 + 70%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击上限 + 55%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50599,
+      "name": "天魁＂湮灭",
+      "desc": "<ID=0|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击下限 + 70%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击上限 + 55%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50600,
+      "name": "地苍·岩落",
+      "desc": "<ID=0|TXT:<人物生命 + 135%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 135%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 110%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50601,
+      "name": "水泽·魂之护",
+      "desc": "<ID=0|TXT:<人物生命 + 120%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 120%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物防御 + 100%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50603,
+      "name": "「恆古·碧波」",
+      "desc": "<ID=0|TXT:<人物生命 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50604,
+      "name": "自作·无铭",
+      "desc": "<ID=0|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击下限 + 70%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击上限 + 55%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50606,
+      "name": "奇迹之金刃圣剑",
+      "desc": "<ID=0|TXT:<人物魔法 + 100%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 100%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 100%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50607,
+      "name": "咒怨劫·镜铁戒",
+      "desc": "<ID=0|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击下限 + 70%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物攻击上限 + 55%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50610,
+      "name": "统御之灵「融合」",
+      "desc": "<ID=0|TXT:<人物魔法 + 72%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 72%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 72%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50611,
+      "name": "暴怒の罪",
+      "desc": "<ID=0|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50612,
+      "name": "风息ぺ漩涡",
+      "desc": "<ID=0|TXT:<人物生命 + 70%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50613,
+      "name": "★天之苍·碧落★",
+      "desc": "<ID=0|TXT:<人物生命 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50615,
+      "name": "风暴之心·穹霄",
+      "desc": "<ID=0|TXT:<人物魔法 + 108%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 108%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 108%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50616,
+      "name": "べ雷王之冠★",
+      "desc": "<ID=0|TXT:<人物生命 + 65%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 65%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50617,
+      "name": "极乐之界",
+      "desc": "<ID=0|TXT:<人物魔法 + 52%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 52%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 52%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50619,
+      "name": "色欲の罪",
+      "desc": "<ID=0|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50620,
+      "name": "九霄雷动·氤氲之行",
+      "desc": "<ID=0|TXT:<人物魔法 + 58%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 58%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 58%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50621,
+      "name": "巨岩之殇1",
+      "desc": "<ID=0|TXT:<人物生命 + 70%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 55%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0><ID=5|TXT:<人物防御 + 55%/FCOLOR=251>#0#0&0><ID=6|TXT:<人物魔防 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50622,
+      "name": "山岳の指环",
+      "desc": "<ID=0|TXT:<人物生命 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 50623,
+      "name": "靈-末日浮屠",
+      "desc": "<ID=0|TXT:<人物魔法 + 55%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物攻击 + 55%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物道术 + 55%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51524,
+      "name": "卐卐正道鏡卐卐",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51525,
+      "name": "卐卐提魂锁卐卐",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51526,
+      "name": "△△雷道天卷△△",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51527,
+      "name": "△△玄天令△△",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51528,
+      "name": "▲▲火雲真經▲▲",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51529,
+      "name": "▲▲水鏡太極▲▲",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51530,
+      "name": "‖「谣影神靴」‖",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51531,
+      "name": "‖「太清流珠」‖",
+      "desc": "<ID=0|TXT:<人物生命 + 30%/FCOLOR=251>#0#0&0><ID=1|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=2|TXT:<人物魔法 + 30%/FCOLOR=251>#0#0&0><ID=3|TXT:<人物攻击 + 30%/FCOLOR=251>#0#0&0><ID=4|TXT:<人物道术 + 30%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51616,
+      "name": "天命·复活",
+      "desc": "<ID=0|TXT:<人物攻击 + 10%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51617,
+      "name": "天命·麻痹",
+      "desc": "<ID=0|TXT:<人物攻击 + 10%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51618,
+      "name": "天命·神镰",
+      "desc": "<ID=0|TXT:<全属性 + 35%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    },
+    {
+      "idx": 51619,
+      "name": "天命·神斧",
+      "desc": "<ID=0|TXT:<全属性 + 60%/FCOLOR=251>#0#0&0>",
+      "desc_type": "remark",
+      "suit_field": null,
+      "match_by_id": false,
+      "match_by_name": false,
+      "matched": false
+    }
+  ]
+}

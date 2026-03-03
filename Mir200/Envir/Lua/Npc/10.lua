@@ -6,6 +6,11 @@ npc = {}
 local _config = Guard.getConfig("npc_10")
 
 function npc.main(play,npcid)
+    local equipLevel = Player.getEquipFieldByPos(play, _config.where, 1) or 0
+    if equipLevel == 0 then
+        Player.sendmsgEx(play,  "ÇëÏÈ×°±¸#57")
+        return
+    end
     sendluamsg(play,100,npcid,0,0,"")
 end
 

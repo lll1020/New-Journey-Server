@@ -428,7 +428,7 @@ Buff = {
     end,
     [103] = function(play,zt,Damage,Target) --触发攻击系的灵根
         if zt == 3 then
-            Npclib[22].lgcf(play,zt,Damage,Target)
+            Npclib[22].lgcf(play,zt,Damage,Target,1)
         else
             local bl = getplaydef(play,VarCfg.S_buffgjh)
             local data = json2tbl(bl == "" and {} or bl)
@@ -443,7 +443,7 @@ Buff = {
     end,
     [104] = function(play,zt,Damage,Target) --触发被攻击系的灵根
         if zt == 3 then
-            Npclib[22].lgcf(play,zt,Damage,Target)
+            Npclib[22].lgcf(play,zt,Damage,Target,2)
             return 0
         else
             local bl = getplaydef(play,VarCfg.S_buffbgjq)
