@@ -5,9 +5,9 @@ npc = {}
 function npc.main(play,npcid)
     local zhid = tonumber(getconst(play,"<$USERACCOUNT>"))
     if constant.pz_htqx[zhid] or getconst(play, '<$SERVERNAME>') == "" or getconst(play, '<$SERVERNAME>') == "测试区" then
-        release_print("-----------------------------")
-        release_print(getbaseinfo(play,3).." "..getbaseinfo(play,4).." "..getbaseinfo(play,5))
-        return
+        -- release_print("-----------------------------")
+        -- release_print(getbaseinfo(play,3).." "..getbaseinfo(play,4).." "..getbaseinfo(play,5))
+        -- return
         say(play,[[<Img|id=ui_1|x=0.0|y=-1.0|width=800|height=600|img=public/bg_npc_01.png|bg=1|esc=1|move=0|reset=1|show=0|scale9l=15|scale9r=15|scale9t=15|scale9b=15|loadDelay=1>
             <Layout|id=ui_2|x=801.0|y=0.0|width=80|height=80|link=@exit>
             <Button|id=ui_3|x=794|y=0.0|width=26|height=42|nimg=public/1900000510.png|pimg=public/1900000511.png|color=255|size=18|link=@exit>
@@ -20,6 +20,7 @@ function npc.main(play,npcid)
 
             <Button|id=ui_100|x=150|y=450|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=llxf测试|link=@ggna,24>
             <Button|id=ui_101|x=350|y=450|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=测试装备|link=@ggna,23>
+            <Button|id=ui_102|x=550|y=450|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=大陆全解锁|link=@ggna,25>
 
             <Button|id=ui_39|x=18|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=武林盟主开始|link=@jqr_ddzbks,20>
             <Button|id=ui_40|x=100|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=武林盟主结束|link=@jqr_ddzbjs,21>
@@ -27,7 +28,6 @@ function npc.main(play,npcid)
             <Button|id=ui_42|x=300|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=真假鸡爱慕结束|link=@jqr_yjxbjs,23>
             <Button|id=ui_43|x=400|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=阵营对抗开始|link=@jqr_zydkks,24>
             <Button|id=ui_44|x=500|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=阵营对抗结束|link=@jqr_zydkjs,25>
-
 
             <Button|id=ui_45|x=500|y=150|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=攻沙开始|link=@ggna,21>
             <Button|id=ui_46|x=700|y=150|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=飘字测试|link=@ggn,14>
@@ -437,6 +437,36 @@ function ggna(play,id)
         repaircastle()
         addattacksabakall()
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>攻沙开始</font>","Type":9}')
+    elseif id == "25" then
+        -- 大陆进入条件一键达成：主线进度、转生等级、剧情点
+        local target_task = 21
+        local target_zs = 40
+        local target_jqd = 100
+
+        local cur_task = tonumber(getplaydef(play, VarCfg.U_zxrw[1])) or 0
+        if cur_task < target_task then
+            setplaydef(play, VarCfg.U_zxrw[1], target_task)
+        end
+
+        local cur_zs_var = tonumber(getplaydef(play, VarCfg["U_转生等级"])) or 0
+        if cur_zs_var < target_zs then
+            setplaydef(play, VarCfg["U_转生等级"], target_zs)
+        end
+
+        local cur_zs_base = tonumber(getbaseinfo(play, 39)) or 0
+        if cur_zs_base < target_zs then
+            setbaseinfo(play, 39, target_zs)
+        end
+
+        local jqd_idx = tonumber(getstditeminfo("剧情点", 0)) or 0
+        if jqd_idx > 0 then
+            local cur_jqd = tonumber(querymoney(play, jqd_idx)) or 0
+            if cur_jqd < target_jqd then
+                changemoney(play, jqd_idx, "+", target_jqd - cur_jqd, "测试-大陆全解锁", true)
+            end
+        end
+
+        sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>大陆条件已一键解锁（主线>=21,转生>=40,剧情点>=100）</font>","Type":9}')
     elseif id == "23" then
         local cailiao = {
 "山川神石【稀有】",

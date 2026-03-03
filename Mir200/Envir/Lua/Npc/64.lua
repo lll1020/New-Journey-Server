@@ -7,7 +7,7 @@ local _config = Guard.getConfig("npc_64")
 
 function npc.main(play,npcid)
     if not Player.dl_sz(play, 4) then
-        Player.sendMsg(play,1,'{"Msg":"<font color=\'#ff0000\'>灵兽系统需要达到四大陆后开启！</font>","Type":1}')
+        Player.sendMsg(play,'{"Msg":"<font color=\'#ff0000\'>灵兽系统需要达到四大陆后开启！</font>","Type":1}')
         return
     end
     local data = {}
