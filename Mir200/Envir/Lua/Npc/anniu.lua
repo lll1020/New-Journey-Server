@@ -911,15 +911,117 @@ end
 ---天选之人
 npc[506] = function(play, p2, p3, msgData) --天选之子
     if p2 == 0 then
-        sendluamsg(play, 101, 506, 0, 0, '{"A_txzz":' .. (getsysvar(VarCfg["A_天选之人json"]) == "" and "{}" or getsysvar(VarCfg["A_天选之人json"])) .. ',"T_txzr":' .. getplaydef(play, VarCfg.T_txzr) .. ',"kqsj":' .. getsysvar(VarCfg["G_开区分钟"]) .. ',"G_txzz_2":' .. getsysvar(VarCfg["G_天选之人"][2]) .. "}")
+        local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
+        local tx_cfg = teshudata["anniu_506"] or {}
+        setflagstatus(play, VarCfg.BS_sckg, (sc_data["ok"] and sc_data["ok"] == 1) and 1 or 0)
+        sendluamsg(play, 101, 506, 0, 0, '{"A_txzz":' .. (getsysvar(VarCfg["A_天选之人json"]) == "" and "{}" or getsysvar(VarCfg["A_天选之人json"])) .. ',"T_txzr":' .. getplaydef(play, VarCfg.T_txzr) .. ',"kqsj":' .. getsysvar(VarCfg["G_开区分钟"]) .. ',"G_txzz_2":' .. getsysvar(VarCfg["G_天选之人"][2]) .. ',"bmkg":' .. getflagstatus(play, VarCfg.BS_sckg) .. ',"cfg_sq":' .. tbl2json(tx_cfg.shenqi or {}) .. ',"cfg_notice":' .. tbl2json(tx_cfg.notice or {}) .. "}")
+    elseif p2 == 1 then
+        -- 天选报名改为“首充礼包后自动报名”，此处仅回传当前状态
+        if getflagstatus(play, VarCfg.BS_sckg) == 1 then
+            sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>天选之人：已达成首充礼包，自动报名成功...</font>","Type":9}')
+        else
+            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>天选之人：完成首充礼包后将自动报名...</font>","Type":9}')
+        end
+        sendluamsg(play, 101, 506, 1, getflagstatus(play, VarCfg.BS_sckg), "")
     end
 end
 
 local hd_dtmz = {}
 
+-- 读取全民答题配置（提交入口固定走 npc[507]）
+local function _qmdt_get_cfg_507()
+    local cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].qmdt or nil
+    if type(cfg) ~= "table" then
+        return nil
+    end
+    if type(cfg.questions) ~= "table" or #cfg.questions <= 0 then
+        return nil
+    end
+    cfg.question_count = math.min(tonumber(cfg.question_count) or 5, #cfg.questions)
+    return cfg
+end
+
+-- 读取全民答题运行态
+local function _qmdt_get_state_507()
+    local raw = getsysvar(VarCfg["A_全民答题json"])
+    if raw == "" then
+        return {}
+    end
+    local tb = json2tbl(raw)
+    return type(tb) == "table" and tb or {}
+end
+
+-- 保存全民答题运行态
+local function _qmdt_save_state_507(state)
+    setsysvar(VarCfg["A_全民答题json"], tbl2json(state or {}))
+end
+
+-- 提交全民答题答案（唯一提交入口：npc[507]）
+local function _qmdt_submit_answer_507(play, answer)
+    local cfg = _qmdt_get_cfg_507()
+    if not cfg then
+        Player.sendmsgEx(play, "全民答题配置缺失#57")
+        return
+    end
+    if getsysvar(VarCfg["G_全民答题状态"]) ~= 1 then
+        Player.sendmsgEx(play, "全民答题未开启#57")
+        return
+    end
+    local state = _qmdt_get_state_507()
+    if tonumber(state.open) ~= 1 then
+        Player.sendmsgEx(play, "全民答题未开启#57")
+        return
+    end
+    local qidx = tonumber(state.current_idx) or 0
+    if qidx <= 0 or qidx > cfg.question_count then
+        Player.sendmsgEx(play, "当前暂无可答题目#57")
+        return
+    end
+    local q = cfg.questions[qidx]
+    local answerNum = tonumber(answer)
+    if not q or not answerNum then
+        Player.sendmsgEx(play, "答案参数错误#57")
+        return
+    end
+    local playerName = getbaseinfo(play, 1)
+    state.players = state.players or {}
+    local rec = state.players[playerName] or {score = 0, right = 0, total = 0, answers = {}}
+    rec.answers = rec.answers or {}
+    local ansKey = tostring(qidx)
+    if rec.answers[ansKey] ~= nil then
+        sendluamsg(play, 101, 507, 2, 2, "{\"ok\":0,\"reason\":\"already\",\"idx\":" .. qidx .. ",\"score\":" .. (tonumber(rec.score) or 0) .. "}")
+        Player.sendmsgEx(play, "本题已作答#57")
+        return
+    end
+    rec.total = (tonumber(rec.total) or 0) + 1
+    rec.answers[ansKey] = answerNum
+    local isRight = 0
+    if tonumber(q.answer) == answerNum then
+        isRight = 1
+        rec.right = (tonumber(rec.right) or 0) + 1
+        rec.score = (tonumber(rec.score) or 0) + (tonumber(q.score) or 10)
+    end
+    state.players[playerName] = rec
+    _qmdt_save_state_507(state)
+    sendluamsg(play, 101, 507, 2, 2, "{\"ok\":1,\"idx\":" .. qidx .. ",\"right\":" .. isRight .. ",\"score\":" .. (tonumber(rec.score) or 0) .. ",\"right_count\":" .. (tonumber(rec.right) or 0) .. ",\"total\":" .. (tonumber(rec.total) or 0) .. "}")
+    if isRight == 1 then
+        Player.sendmsgEx(play, "回答正确，当前积分+" .. tostring(tonumber(q.score) or 10) .. "#249")
+    else
+        Player.sendmsgEx(play, "回答错误，再接再厉#57")
+    end
+end
+
 npc[507] = function(play, p2, p3, msgData) --游戏活动
     if p2 == 0 then
-        sendluamsg(play, 101, 507, 0, 0, '{"kqfz":' .. getsysvar(VarCfg["G_开区分钟"]) .. ',"hdjl":' .. getplaydef(play, VarCfg.T_hdjl) .. "}")
+        local qmdt_state = getsysvar(VarCfg["A_全民答题json"])
+        if qmdt_state == "" then
+            qmdt_state = "{}"
+        end
+        local qmdk_state = getsysvar(VarCfg["A_全民夺矿json"])
+        if qmdk_state == "" then
+            qmdk_state = "{}"
+        end
+        sendluamsg(play, 101, 507, 0, 0, "{\"kqfz\":" .. getsysvar(VarCfg["G_开区分钟"]) .. ",\"hdjl\":" .. getplaydef(play, VarCfg.T_hdjl) .. ",\"qmdt\":" .. qmdt_state .. ",\"qmdk\":" .. qmdk_state .. "}")
     elseif p2 == 1 then
         if p3 == 1 then
             Npclib["anniu"][506](play, 0, 0, "")
@@ -929,6 +1031,24 @@ npc[507] = function(play, p2, p3, msgData) --游戏活动
             map(play, "天降财宝")
         elseif p3 == 4 then
             map(play, "比武大会")
+        elseif p3 == 5 then
+            local qmdk_cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].qmdk or {}
+            local qmdk_map = qmdk_cfg.map or "xtc"
+            map(play, qmdk_map)
+        end
+    elseif p2 == 2 then
+        local data = json2tbl(msgData or "{}") or {}
+        local answer = tonumber(data.answer) or tonumber(data.ans) or tonumber(p3)
+        _qmdt_submit_answer_507(play, answer)
+    elseif p2 == 3 then
+        local cfg = _qmdt_get_cfg_507()
+        local state = _qmdt_get_state_507()
+        local idx = tonumber(state.current_idx) or 0
+        if cfg and idx > 0 and cfg.questions[idx] then
+            local q = cfg.questions[idx]
+            sendluamsg(play, 101, 507, 2, 1, tbl2json({open = tonumber(state.open) or 0, idx = idx, total = cfg.question_count, title = q.title, options = q.options or {}}))
+        else
+            sendluamsg(play, 101, 507, 2, 1, "{\"open\":0}")
         end
     end
 end
@@ -1705,34 +1825,4 @@ for npcId, handler in pairs(npc) do
 end
 
 return npc
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

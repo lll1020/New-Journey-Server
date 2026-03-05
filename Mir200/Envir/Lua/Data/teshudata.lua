@@ -2162,7 +2162,117 @@ teshudata = {
         ch = "头号玩家"
     },
     ["anniu_506"] = {
-        "128元真实充值","98元真实充值","88元真实充值","68元真实充值","58元真实充值","38元真实充值","28元真实充值","18元真实充值","10元真实充值","5元真实充值"
+        "128元真实充值","98元真实充值","88元真实充值","68元真实充值","58元真实充值","38元真实充值","28元真实充值","18元真实充值","10元真实充值","5元真实充值",
+        shenqi = {
+            {name = "天选之子", effect = "全属性+1%"},
+            {name = "光速起步", effect = "杀怪经验+3%、杀怪爆率+5%"},
+            {name = "策划的手机", effect = "篡改自身数值：攻魔道+30-30"},
+            {name = "技术的电脑", effect = "找到了奇妙BUG：专属爆率+5%"},
+            {name = "美术的画笔", effect = "艺术拯救世界：时装碎片爆率+5%"},
+        },
+        notice = {
+            "30分钟一轮、共四轮",
+            "每轮roll点，显示",
+            "如果同一名玩家连续多轮第一：不会获得重复背包神器",
+            "每轮第一额外随机获得5个背包神器之一",
+            "开服的时候开始计时",
+            "单次活动",
+        },
+    },
+    -- 活动
+    ["anniu_507"] = {
+        id = 507,
+        name = "活动",
+        details = {
+            {idx = 1, name = "保卫村庄"},
+            {idx = 2, name = "全民夺矿"},
+            {idx = 3, name = "全民答题"},
+            {idx = 4, name = "勇夺镖车"},
+            {idx = 5, name = "土城跑酷"},
+            {idx = 6, name = "天才地宝"},
+            {idx = 7, name = "天选之人"},
+            {idx = 8, name = "正邪大战"},
+            {idx = 9, name = "武林盟主"},
+            {idx = 11, name = "沙巴克"},
+            {idx = 12, name = "讨伐BOSS"},
+            {idx = 13, name = "随机夺宝"},
+            {idx = 14, name = "黑暗禁地"},
+        },
+        -- 全民答题（答题提交走 npc[507]）
+        qmdt = {
+            start_minute = 33,
+            duration_min = 5,
+            question_count = 5,
+            per_question_sec = 60,
+            mail_title = "全民答题",
+            rank_rewards = {
+                {rank = 1, items = {{"元宝", 50000}, {"5元真实充值", 1}}},
+                {rank = 2, items = {{"元宝", 30000}, {"2元真实充值", 1}}},
+                {rank = 3, items = {{"元宝", 20000}, {"1元真实充值", 1}}},
+            },
+            join_reward = {{"金币", 500000}},
+            questions = {
+                {title = "传奇里通常用于补给血量的药品是?", options = {"魔法药", "太阳水", "毒药", "随机石"}, answer = 2, score = 10},
+                {title = "下列哪个更偏向提升打怪效率?", options = {"打怪爆率", "回城石", "聊天字体", "交易税"}, answer = 1, score = 10},
+                {title = "行会战中最关键的是?", options = {"个人单挑", "团队配合", "挂机观战", "只看战力"}, answer = 2, score = 10},
+                {title = "以下哪项通常属于货币类奖励?", options = {"元宝", "称号", "时装外观", "地图特效"}, answer = 1, score = 10},
+                {title = "活动期间提交答案应通过哪个入口?", options = {"npc[506]", "npc[507]", "npc[511]", "npc[9999]"}, answer = 2, score = 10},
+                {title = "随机夺宝投放的核心是?", options = {"固定单点", "三圈投放", "只发邮件", "只开传送"}, answer = 2, score = 10},
+                {title = "武林盟主活动当前使用的地图键是?", options = {"武林盟主", "比武大会", "阵营对抗", "天降财宝"}, answer = 2, score = 10},
+            },
+        },
+        -- 全民夺矿（每日定时活动，支持 bot 触发）
+        qmdk = {
+            start_minute = 26,
+            duration_min = 8,
+            map = "全民夺矿",
+            score_tick_sec = 10,
+            score_per_tick = 1,
+            score_var_prefix = "全民夺矿",
+            panel_idx = 3,
+            mail_title = "全民夺矿",
+            rank_rewards = {
+                {rank = 1, items = {{"元宝", 50000}, {"5元真实充值", 1}}},
+                {rank = 2, items = {{"元宝", 30000}, {"2元真实充值", 1}}},
+                {rank = 3, items = {{"元宝", 20000}, {"1元真实充值", 1}}},
+            },
+            join_reward = {{"金币", 500000}},
+        },
+        -- 土城跑酷（开服20分钟开启，持续3分钟）        -- 随机夺宝（三圈投放）
+        sjdb = {
+            map = "天降财宝",
+            center = {x = 215, y = 53},
+            keep_sec = 300,
+            circles = {
+                {
+                    name = "outer",
+                    range = 200,
+                    drops = {
+                        {item = "金币[10000]", count = 30},
+                        {item = "元宝[2000]", count = 30},
+                        {item = "1元真实充值", count = 30},
+                    },
+                },
+                {
+                    name = "middle",
+                    range = 130,
+                    drops = {
+                        {item = "金币[50000]", count = 15},
+                        {item = "元宝[5000]", count = 15},
+                        {item = "5元真实充值", count = 15},
+                    },
+                },
+                {
+                    name = "inner",
+                    range = 70,
+                    drops = {
+                        {item = "金币[100000]", count = 5},
+                        {item = "元宝[10000]", count = 5},
+                        {item = "10元真实充值", count = 5},
+                    },
+                },
+            },
+        },
     },
     ["anniu_515"] = {
         id = "anniu_515",
@@ -2254,22 +2364,3 @@ teshudata = {
     },   
 }
 return teshudata
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

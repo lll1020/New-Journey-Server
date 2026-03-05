@@ -901,6 +901,9 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
     local zhid = tonumber(getconst(play,"<$USERACCOUNT>"))
     if isReal or (constant.pz_htqx[zhid] or getconst(play, '<$SERVERNAME>') == "" or getconst(play, '<$SERVERNAME>') == "测试区") then
         changemoney(play,23,"+",Gold,"平台累计充值",true)
+        if getflagstatus(play, VarCfg["F_是否首充"]) == 0 then
+            setflagstatus(play, VarCfg["F_是否首充"], 1)
+        end
         setplaydef(play,VarCfg.J_zscz,(getplaydef(play,VarCfg.J_zscz) or 0) + Gold)
         if MoneyId == 7 then   ---灵石充值
             local lb_json, sy = getplaydef(play, VarCfg.T_czlb), constant.cz_jeyz[Gold]
@@ -939,6 +942,8 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
                     T_data["ok"] = 1
                     T_data["首充"] = 1
                     Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
+                    setflagstatus(play, VarCfg.BS_sckg, 1)
+                    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>天选之人：已达成首充礼包，自动报名成功...</font>","Type":9}')
                 end
             elseif Gold == 3 then
                 local T_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
@@ -946,6 +951,8 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
                     T_data["ok"] = 1
                     T_data["补充"] = 1
                     Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
+                    setflagstatus(play, VarCfg.BS_sckg, 1)
+                    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>天选之人：已达成首充礼包，自动报名成功...</font>","Type":9}')
                 end
             end
         end
@@ -986,6 +993,30 @@ function jqr_qingli() -- 每日0点清理
         return
     end
 	setsysvar(VarCfg["G_开区天数"],getsysvar(VarCfg["G_开区天数"])+1)
+    -- 每日重置全民夺矿状态，防止异常跨天残留
+    setsysvar(VarCfg["G_全民夺矿状态"], 0)
+    setsysvar(VarCfg["A_全民夺矿json"], "")
+end
+
+
+--------------------机器人触发脚本-------------------全民夺矿开始
+function jqr_qmdk_start()
+    local state = getsysvar(VarCfg["A_全民夺矿json"])
+    state = state == "" and {} or json2tbl(state)
+    state["force_start"] = 1
+    state["force_end"] = nil
+    setsysvar(VarCfg["A_全民夺矿json"], tbl2json(state))
+    release_print("机器人触发：全民夺矿开始")
+end
+
+--------------------机器人触发脚本-------------------全民夺矿结束
+function jqr_qmdk_end()
+    local state = getsysvar(VarCfg["A_全民夺矿json"])
+    state = state == "" and {} or json2tbl(state)
+    state["force_end"] = 1
+    state["force_start"] = nil
+    setsysvar(VarCfg["A_全民夺矿json"], tbl2json(state))
+    release_print("机器人触发：全民夺矿结束")
 end
 --------------------机器人触发脚本-------------------沙巴克
 function jqr_shabake()
@@ -1323,16 +1354,3 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
         end
 	end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-

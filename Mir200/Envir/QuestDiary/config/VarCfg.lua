@@ -7,6 +7,8 @@ VarCfg["G_新区验证"]           = "G2"                                           
 VarCfg["G_天选之人"]           = {"G3","G4"}                                                                   --天选之人时间,次数
 VarCfg["G_跑酷提示"]           = "G5"                                                                          --跑酷提示
 VarCfg["G_合区次数对比"]           = "G6"                                                                          --合区次数对比
+VarCfg["G_全民答题状态"]           = "G7"                                                                          --全民答题状态(0关闭/1开启)
+VarCfg["G_全民夺矿状态"]           = "G8"                                                                          --全民夺矿状态(0关闭/1开启)
 
 --引擎A变量
 VarCfg["A_天选之人json"]           = "A0"                                                                          --天选之人json
@@ -16,6 +18,8 @@ VarCfg["A_行会积分记录"]           = "A4"                                       
 VarCfg["A_行会积分记录跨服"]                  = "A5"                    --A_行会积分记录跨服
 VarCfg.A_XianFuRank =                   "A6"
 VarCfg["A_全服孤品"]          = "A7"                                                                          --A_全服孤品
+VarCfg["A_全民答题json"]          = "A8"                                                                          --全民答题json
+VarCfg["A_全民夺矿json"]          = "A9"                                                                          --全民夺矿json
 
 VarCfg["A_违规人员名单"]          = "A300"                                                                          --违规人员名单
 
@@ -109,6 +113,7 @@ VarCfg.BS_ngkg          =  121                                                  
 VarCfg.BS_dtcs          =  122                                                                          --地图参数，挂机用
 VarCfg.BS_zcjfb         =  123                                                                          --真充积分
 VarCfg.BS_tyrc         =  124                                                                          --奖励开关  --武林盟主
+VarCfg.BS_sckg         =  125                                                                          --天选之人报名开关
 
 VarCfg.BS_zzchxf          =  402                                                                          --赞助称号--修复用
 
@@ -280,5 +285,8 @@ VarCfg["S$_追杀标记"]                        = "S$追杀标记"                 --标
 
 
 return VarCfg
+
+
+
 
 

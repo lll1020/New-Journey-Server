@@ -61,6 +61,10 @@ function Login.main(play)
     end
 
 
+    -- 兼容老号：按首充礼包状态同步天选报名资格
+    local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
+    setflagstatus(play,VarCfg.BS_sckg,(sc_data["ok"] and sc_data["ok"] == 1) and 1 or 0)
+
     iniplayvar(play, "integer","HUMAN","比武大会")
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     if jq_data["npc55"] and jq_data["npc55"] >= 2 then
