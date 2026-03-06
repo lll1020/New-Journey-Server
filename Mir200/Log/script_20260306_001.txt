@@ -2,3 +2,20 @@
 
 [2026-03-06 13:35:18:154] LuaNPC:玩家名字 ID:999999999 执行 ontimer6 player:玩家名字 耗时：266; NpcThreadId: 27408, CurPlayThreadId: 27408
 
+[2026-03-06 16:34:57:080] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：4593; NpcThreadId: 27408, CurPlayThreadId: 27408
+[2026-03-06 16:34:57:080] [玩家名字]Lua执行耗时过高:4593ms msgid:101 2 2 0 50121
+
+[2026-03-06 16:35:05:533] LuaNPC:玩家名字 ID:999999999 执行 ontimer6 player:玩家名字 耗时：813; NpcThreadId: 27408, CurPlayThreadId: 27408
+
+[2026-03-06 17:05:44:765] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：265; NpcThreadId: 27408, CurPlayThreadId: 27408
+[2026-03-06 17:05:44:765] [玩家名字]Lua执行耗时过高:265ms msgid:101 2 2 0 1_1_3
+
+[2026-03-06 17:05:50:839] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：218; NpcThreadId: 27408, CurPlayThreadId: 27408
+[2026-03-06 17:05:50:839] [玩家名字]Lua执行耗时过高:218ms msgid:101 2 2 0 1_1_20
+
+[2026-03-06 17:07:30:573] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：93; NpcThreadId: 27408, CurPlayThreadId: 27408
+[2026-03-06 17:07:30:573] [玩家名字]Lua执行耗时过高:93ms msgid:101 2 2 0 1_1_11
+
+[2026-03-06 17:07:36:402] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：125; NpcThreadId: 27408, CurPlayThreadId: 27408
+[2026-03-06 17:07:36:402] [玩家名字]Lua执行耗时过高:125ms msgid:101 2 2 0 1_1_12
+
