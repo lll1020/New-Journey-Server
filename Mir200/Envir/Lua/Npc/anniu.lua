@@ -420,7 +420,7 @@ npc[18] = function(play, p2, p3, data) --新手礼包
         --领取礼包
         local rwid = getplaydef(play, VarCfg.U_zxrw[1])
         if rwid == 1 then
-            Player.zxrw_wancheng(play, getplaydef(play, VarCfg.U_zxrw[1]), "新手礼包") --完成任务
+            
 
             Player.rwjl(
                 play,
@@ -433,12 +433,15 @@ npc[18] = function(play, p2, p3, data) --新手礼包
             addbuff(play, 20002)
             Npclib["anniu"][19](play, 1, 0, "")
 
+            
             --新手技能
             for _, v in pairs(constant.pz_xrjn) do
                 addskill(play,v[1],v[2])
             end
+            Player.zxrw_wancheng(play, getplaydef(play, VarCfg.U_zxrw[1]), "新手礼包") --完成任务
 
             sendluamsg(play, 101, 1005, 0, 0, "lqcg")
+            sendluamsg(play, 101, 9999, 0, 0, "npc_xslb")
             sendluamsg(play, 101, 18, 1, 0, "")
         else --已完成
             sendmsg(play, 1, '{"Msg":"<font color=\'#ff0500\'>已经领取过礼包了...</font>","Type":9}')
@@ -1504,7 +1507,10 @@ npc[516] = function(play, p2, p3, msgData) --免费赞助
             if getplaydef(play, VarCfg.U_fldt[2]) >= config.sgsl then
                 T_data["zzlb_" .. p3] = 1
                 Player.setJsonVarByTable(play, VarCfg["T_免费赞助"], T_data)
-                Player.zxrw_wancheng(play, rwcf[516][1], "任务") --完成任务
+                if rwcf[516][1] == getplaydef(play,VarCfg.U_zxrw[1]) then 
+                    Player.zxrw_wancheng(play, rwcf[516][1], "任务") --完成任务
+                    sendluamsg(play, 101, 9999, 0, 0, "npc_anniu_516")
+                end
                 DeleteAllTitle(play)
                 Player.title_give(play, config.ch)
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[赞助礼包]</font><font color=\'#28ef01\'>领取成功...</font>","Type":9}' )

@@ -65,6 +65,7 @@ function npc.link(play,npcid,ew,aid)
             Login_jjxw(play)
             if level == 9 then
                 Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
+                sendluamsg(play, 101, 9999, 0, 0, "npc_"..npcid)
             end
 
             sendluamsg(play,101,1005,0,0,"tpcg")

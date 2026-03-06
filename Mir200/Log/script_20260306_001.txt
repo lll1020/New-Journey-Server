@@ -19,3 +19,25 @@
 [2026-03-06 17:07:36:402] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：125; NpcThreadId: 27408, CurPlayThreadId: 27408
 [2026-03-06 17:07:36:402] [玩家名字]Lua执行耗时过高:125ms msgid:101 2 2 0 1_1_12
 
+[2026-03-06 18:32:22:461] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：32; NpcThreadId: 33464, CurPlayThreadId: 33464
+[2026-03-06 18:32:22:461] [玩家名字k]Lua执行耗时过高:32ms msgid:101 18 1 0 
+
+[2026-03-06 20:41:51:860] Func Fail, obj is nil: GetPlayDef Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getplaydef'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/anniu.lua:1510: in function <E:\新起航\服务端\Mir200\Envir/lua/Npc/anniu.lua:1485>
+	.\Envir\Market_Def\QFunction-0.lua:1347: in function <.\Envir\Market_Def\QFunction-0.lua:1323>
+
+[2026-03-06 20:46:30:220] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：31; NpcThreadId: 33464, CurPlayThreadId: 33464
+[2026-03-06 20:46:30:220] [玩家名字k]Lua执行耗时过高:31ms msgid:100 6 1 0 
+
+[2026-03-06 20:55:36:433] Func Fail, obj is nil: GetPlayDef Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getplaydef'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/anniu.lua:1510: in function <E:\新起航\服务端\Mir200\Envir/lua/Npc/anniu.lua:1485>
+	.\Envir\Market_Def\QFunction-0.lua:1347: in function <.\Envir\Market_Def\QFunction-0.lua:1323>
+[2026-03-06 20:55:37:687] Func Fail, obj is nil: GetPlayDef Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'getplaydef'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/anniu.lua:1510: in function <E:\新起航\服务端\Mir200\Envir/lua/Npc/anniu.lua:1485>
+	.\Envir\Market_Def\QFunction-0.lua:1347: in function <.\Envir\Market_Def\QFunction-0.lua:1323>
+
+[2026-03-07 00:03:03:259] LuaNPC:玩家名字k ID:999999999 执行 mondropitemex player:玩家名字k 耗时：31; NpcThreadId: 33464, CurPlayThreadId: 33464
+

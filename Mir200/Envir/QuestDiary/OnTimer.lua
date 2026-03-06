@@ -693,7 +693,7 @@ function ontimer5(play)
 end
 -----------------个人6号定时器---------------红点系统--60s
 function ontimer6(play)
-    release_print("红点系统")
+    -- release_print("红点系统")
 
     -- 红点发送：客户端 npc[500] p2=10，p3 对应顶部 iconpx 槽位
     local function _send_top_red(icon_idx)

@@ -58,6 +58,7 @@ function Login.main(play)
         setplaydef(play,VarCfg.U_zxrw[1],1)
         mapmove(play,"xtc",137,138,7)
         setbaseinfo(play,57,0)
+        sendluamsg(play, 101, 18, 0, 0, "")
     end
 
 
