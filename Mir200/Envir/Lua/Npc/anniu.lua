@@ -1151,6 +1151,34 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
         data["U_dlts"] = getplaydef(play, VarCfg["U_登录天数"])
         data["J_zxsj"] = getplaydef(play, VarCfg.J_zxsj)
         data["U_sgsl"] = getplaydef(play, VarCfg.J_jsgw[1]) + getplaydef(play, VarCfg.J_jsgw[2])
+
+        local T_grss = Player.getJsonTableByVar(play, VarCfg.T_grss) or {}
+        local T_grsb = Player.getJsonTableByVar(play, VarCfg.T_grsb) or {}
+        local grss_can_claim = false
+        local grsb_can_claim = false
+        for _, status in pairs(T_grss) do
+            if tonumber(status or 0) == 1 then
+                grss_can_claim = true
+                break
+            end
+        end
+        for _, status in pairs(T_grsb) do
+            if tonumber(status or 0) == 1 then
+                grsb_can_claim = true
+                break
+            end
+        end
+        local T_qqsb = Player.getJsonTableByVar(nil, VarCfg["A_全区首曝json"]) or {}
+        local qqsb_can_claim = false
+        for _, status in pairs(T_qqsb) do
+            if tonumber(status or 0) == 1 then
+                qqsb_can_claim = true
+                break
+            end
+        end
+        data["grss_can_claim"] = grss_can_claim
+        data["grsb_can_claim"] = grsb_can_claim
+        data["qqsb_can_claim"] = qqsb_can_claim
         sendluamsg(play, 101, 511, 0, 0, tbl2json(data))
     elseif p2 == 1 then
         -- 福利大厅任务进度存放在玩家 T_qrbq 变量中，包含七日登录/在线/杀怪等字段

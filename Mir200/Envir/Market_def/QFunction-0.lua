@@ -56,7 +56,7 @@ function login(play)
         Login.main(play)
         setontimer(play, 1, 3, 0, 1)
         --红点系统定时器
-        setontimer(play,6,60,0,1)
+        setontimer(play,6,3,0,1)
     end
 end
 --------------------跨天登录触发--------------------

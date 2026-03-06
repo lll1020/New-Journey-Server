@@ -1,0 +1,37 @@
+{
+    "project":  {
+                    "name":  "Mir200 服务端",
+                    "language":  [
+                                     "lua",
+                                     "powershell",
+                                     "markdown"
+                                 ]
+                },
+    "defaults":  {
+                     "encoding_policy":  "遵循原文件编码",
+                     "change_style":  "最小化补丁",
+                     "allow_unrelated_file_changes":  false,
+                     "comment_policy":  {
+                                            "new_method":  "必须有注解",
+                                            "long_code_block":  "超过20行需块级注解",
+                                            "long_code_line_threshold":  20
+                                        }
+                 },
+    "paths":  {
+                  "天选结算逻辑":  "Mir200/Envir/QuestDiary/OnTimer.lua",
+                  "活动数据源":  "Mir200/Envir/Lua/Data/teshudata.lua",
+                  "活动NPC逻辑":  "Mir200/Envir/Lua/Npc/anniu.lua",
+                  "充值触发逻辑":  "Mir200/Envir/Market_def/QFunction-0.lua",
+                  "登录逻辑":  "Mir200/Envir/Lua/LuaLib/login.lua",
+                  "变量配置":  "Mir200/Envir/QuestDiary/config/VarCfg.lua"
+              },
+    "business_rules":  {
+                           "天选报名条件":  "T_首冲礼包.ok == 1",
+                           "天选配置来源":  "teshudata.anniu_506",
+                           "天选总轮次":  4,
+                           "每轮分钟数":  30
+                       },
+    "docs":  {
+                 "官方引擎文档":  "https://engine-doc.996m2.com/web/#/9/154"
+             }
+}

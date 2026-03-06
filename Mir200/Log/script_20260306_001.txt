@@ -1,0 +1,4 @@
+[2026-03-06 13:11:59:689] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：63; NpcThreadId: 27408, CurPlayThreadId: 27408
+
+[2026-03-06 13:35:18:154] LuaNPC:玩家名字 ID:999999999 执行 ontimer6 player:玩家名字 耗时：266; NpcThreadId: 27408, CurPlayThreadId: 27408
+

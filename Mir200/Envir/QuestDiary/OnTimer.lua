@@ -693,8 +693,145 @@ function ontimer5(play)
 end
 -----------------个人6号定时器---------------红点系统--60s
 function ontimer6(play)
-    --release_print("红点系统")
-    local ists = false
+    release_print("红点系统")
+
+    -- 红点发送：客户端 npc[500] p2=10，p3 对应顶部 iconpx 槽位
+    local function _send_top_red(icon_idx)
+        sendluamsg(play, 101, 1, 10, icon_idx, "")
+    end
+
+    -- 首充礼包（p3=5）可领取判定
+    local can_sc = false
+    local sc_cfg = teshudata["anniu_501"] or {}
+    local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
+    local open_day = tonumber(getsysvar(VarCfg["G_开区天数"]) or 0) or 0
+    if tonumber(sc_data["ok"] or 0) == 1 then
+        local endtime = tonumber(sc_cfg.endtime or 0) or 0
+        if tonumber(sc_data["首充"] or 0) == 1 and open_day <= endtime then
+            local day_list = (sc_cfg.details and sc_cfg.details["首充"]) or {}
+            local max_day = #day_list
+            if max_day > 0 then
+                local buy_day = tonumber(sc_data["buy_day"] or open_day) or open_day
+                local idx = (open_day - buy_day) + 1
+                if idx < 1 then
+                    idx = 1
+                end
+                if idx <= max_day and tonumber(sc_data["jq_time"] or 0) ~= open_day then
+                    can_sc = true
+                end
+            end
+        elseif tonumber(sc_data["补充"] or 0) == 1 and open_day > endtime then
+            local extra_list = (sc_cfg.details and sc_cfg.details["补充"]) or {}
+            if #extra_list > 0 and tonumber(sc_data["bc_ok"] or 0) ~= 1 then
+                can_sc = true
+            end
+        end
+    end
+
+    -- 福利大厅（p3=2）可领取判定：七日登录/在线/杀怪/首杀首爆任一可领则亮
+    local can_fldt = false
+    local fldt = teshudata["fldt"] or {}
+    local fldt_data = Player.getJsonTableByVar(play, VarCfg.T_qrbq) or {}
+    local login_days = tonumber(getplaydef(play, VarCfg["U_登录天数"]) or 0) or 0
+    local online_min = tonumber(getplaydef(play, VarCfg.J_zxsj) or 0) or 0
+    local kill_num = (tonumber(getplaydef(play, VarCfg.J_jsgw[1]) or 0) or 0) + (tonumber(getplaydef(play, VarCfg.J_jsgw[2]) or 0) or 0)
+    local fldt_cfg = (fldt.fldt_cfg and fldt.fldt_cfg.seven_login) or {}
+    local online_limit = tonumber(fldt_cfg.online_limit or 10) or 10
+
+    local claimed_day = tonumber(fldt_data["7rqd"] or 0) or 0
+    local next_day = claimed_day + 1
+    if next_day <= 7 and next_day <= login_days and online_min >= online_limit then
+        can_fldt = true
+    end
+    if not can_fldt then
+        local zx_cfg = fldt["zxjl"] or {}
+        local zx_claimed = tonumber(fldt_data["zxjl"] or 0) or 0
+        local zx_next = zx_claimed + 1
+        if zx_cfg[zx_next] and online_min >= (tonumber(zx_cfg[zx_next].time or 999999999) or 999999999) then
+            can_fldt = true
+        end
+    end
+    if not can_fldt then
+        local sg_cfg = fldt["sgjl"] or {}
+        local sg_claimed = tonumber(fldt_data["sgjl"] or 0) or 0
+        local sg_next = sg_claimed + 1
+        if sg_cfg[sg_next] and kill_num >= (tonumber(sg_cfg[sg_next].num or 999999999) or 999999999) then
+            can_fldt = true
+        end
+    end
+    if not can_fldt then
+        local t_grss = Player.getJsonTableByVar(play, VarCfg.T_grss) or {}
+        for _, st in pairs(t_grss) do
+            if tonumber(st or 0) == 1 then
+                can_fldt = true
+                break
+            end
+        end
+    end
+    if not can_fldt then
+        local t_grsb = Player.getJsonTableByVar(play, VarCfg.T_grsb) or {}
+        for _, st in pairs(t_grsb) do
+            if tonumber(st or 0) == 1 then
+                can_fldt = true
+                break
+            end
+        end
+    end
+    if not can_fldt then
+        local qqsb = Player.getJsonTableByVar(nil, VarCfg["A_全区首曝json"]) or {}
+        for _, st in pairs(qqsb) do
+            if tonumber(st or 0) == 1 then
+                can_fldt = true
+                break
+            end
+        end
+    end
+
+    -- 免费赞助（p3=16）可领取判定：顺序礼包中存在“前置已领 + 当前未领 + 杀怪达标”
+    local can_zz = false
+    local zz_data = Player.getJsonTableByVar(play, VarCfg["T_免费赞助"]) or {}
+    local zz_cfg = (teshudata["anniu_516"] and teshudata["anniu_516"].details) or {}
+    local zz_kill = tonumber(getplaydef(play, VarCfg.U_fldt[2]) or 0) or 0
+    for i = 1, #zz_cfg do
+        local cur_key = "zzlb_" .. i
+        local pre_key = "zzlb_" .. (i - 1)
+        local cur_claimed = tonumber(zz_data[cur_key] or 0) == 1
+        local pre_ok = (i == 1) or (tonumber(zz_data[pre_key] or 0) == 1)
+        local need_kill = tonumber(zz_cfg[i].sgsl or 0) or 0
+        if (not cur_claimed) and pre_ok and zz_kill >= need_kill then
+            can_zz = true
+            break
+        end
+    end
+
+    -- 聚宝盆（p3=17）可领取判定：当前等级次数未满 + 积分达标
+    local can_jbp = false
+    local jbp_data = Player.getJsonTableByVar(play, VarCfg["T_聚宝盆"]) or {}
+    local jbp_level = tonumber(jbp_data.level or 1) or 1
+    local jbp_cfg_all = (teshudata["anniu_517"] and teshudata["anniu_517"].details) or {}
+    local jbp_cfg = jbp_cfg_all[jbp_level]
+    if jbp_cfg then
+        local jbp_jf = tonumber(getplaydef(play, VarCfg["U_聚宝盆积分"]) or 0) or 0
+        local jbp_cs = tonumber(getplaydef(play, VarCfg["J_聚宝盆领取次数"]) or 0) or 0
+        local need_jf = tonumber(jbp_cfg.jf or 999999999) or 999999999
+        local max_cs = tonumber(jbp_cfg.maxcs or 0) or 0
+        if jbp_cs < max_cs and jbp_jf >= need_jf then
+            can_jbp = true
+        end
+    end
+
+    if can_fldt then
+        _send_top_red(2)
+    end
+    if can_sc then
+        _send_top_red(5)
+    end
+    if can_zz then
+        _send_top_red(16)
+    end
+    if can_jbp then
+        _send_top_red(17)
+    end
 end
 
 -----------------定时器----------------清空除魔  每天五点
