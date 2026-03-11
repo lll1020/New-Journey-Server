@@ -6,6 +6,8 @@ npc = {}
 local _config = Guard.getConfig("npc_659")
 
 
+
+
 function npc.main(play,npcid)
     if not _config then
         return
@@ -46,6 +48,10 @@ function npc.link(play,npcid,ew,aid,data)
         end
         if round >= 5 then
             jq_data[key] = 2
+            if (jq_data[key] or 0) >= 2 then
+                Guard.clearTaskTemp(jq_data, key)
+                jq_data[key] = 2
+            end
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
             Player.sendmsgEx(play, "你已经完成【"..(_config.name or "该任务").."】#57")
             return
@@ -95,6 +101,10 @@ function npc.link(play,npcid,ew,aid,data)
         if round >= 5 then
             jq_data[key] = 2
         end
+            if (jq_data[key] or 0) >= 2 then
+                Guard.clearTaskTemp(jq_data, key)
+                jq_data[key] = 2
+            end
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
 
         local name_map = {[1] = "布", [2] = "剪刀", [3] = "石头"}

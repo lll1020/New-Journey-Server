@@ -41,3 +41,27 @@
 
 [2026-03-07 00:03:03:259] LuaNPC:玩家名字k ID:999999999 执行 mondropitemex player:玩家名字k 耗时：31; NpcThreadId: 33464, CurPlayThreadId: 33464
 
+[2026-03-07 01:38:32:823] LuaNPC:玩家名字k ID:999999999 执行 sendability player:玩家名字k 耗时：32; NpcThreadId: 33464, CurPlayThreadId: 33464
+[2026-03-07 01:38:32:826] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：1391; NpcThreadId: 33464, CurPlayThreadId: 33464
+
+[2026-03-07 01:44:23:044] LuaNPC:玩家名字k ID:999999999 执行 ontimer1 player:玩家名字k 耗时：62; NpcThreadId: 33464, CurPlayThreadId: 33464
+
+[2026-03-07 01:45:25:720] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：62; NpcThreadId: 33464, CurPlayThreadId: 33464
+
+[2026-03-07 01:59:33:449] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：32; NpcThreadId: 33464, CurPlayThreadId: 33464
+
+[2026-03-07 02:07:58:996] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：32; NpcThreadId: 33464, CurPlayThreadId: 33464
+
+[2026-03-07 02:09:10:011] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：62; NpcThreadId: 33464, CurPlayThreadId: 33464
+
+[2026-03-07 15:14:37:332] LuaNPC:玩家名字k ID:999999999 执行 killmon player:玩家名字k 耗时：31; NpcThreadId: 33464, CurPlayThreadId: 33464
+[2026-03-07 15:14:38:275] LuaNPC:玩家名字k ID:999999999 执行 pickupitemex player:玩家名字k 耗时：31; NpcThreadId: 33464, CurPlayThreadId: 33464
+
+[2026-03-08 01:58:26:512] >>>>>>HumTime id:0  onTimer1-16 
+
+[2026-03-08 05:00:00:170] LuaNPC:系统控制 ID:999999999 执行 jqr_zxht_change player:系统控制 耗时：63; NpcThreadId: 33464, CurPlayThreadId: 33464
+
+[2026-03-08 06:30:46:003] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：31; NpcThreadId: 33464, CurPlayThreadId: 33464
+
+[2026-03-08 06:31:35:475] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：32; NpcThreadId: 33464, CurPlayThreadId: 33464
+

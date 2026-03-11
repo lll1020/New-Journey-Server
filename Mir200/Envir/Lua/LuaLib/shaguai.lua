@@ -1,3 +1,66 @@
+-- 第五章击杀任务：计算当前轮次目标
+local function _story5_kill_need(task_cfg, done_cnt)
+	local step_need = tonumber(task_cfg.kill_per_step or 0) or 0
+	if step_need > 0 then
+		return step_need * (done_cnt + 1)
+	end
+	return tonumber(task_cfg.kill_count or 0) or 0
+end
+
+-- 第五章击杀任务：统一累计、达标提示、注销监听
+local function _story5_kill_progress(play, mob, task_id)
+	local key = "npc_" .. tostring(task_id)
+	local wrap = teshudata[key]
+	local task_cfg = wrap and wrap.task_cfg or nil
+	if type(task_cfg) ~= "table" then
+		return
+	end
+	local cur_map = getbaseinfo(play,3)
+	if task_cfg.map and task_cfg.map ~= "" and task_cfg.map ~= cur_map then
+		return
+	end
+
+	local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+	local state = tonumber(jq_data[key] or 0) or 0
+	local done_cnt = tonumber(jq_data[key .. "_a"] or 0) or 0
+	local max_num = tonumber(task_cfg.max_submit_times or task_cfg.max_reward_round or wrap.max_num or 1) or 1
+	if max_num < 1 then
+		max_num = 1
+	end
+
+	-- 只在任务已领取且未完成时累计击杀
+	if state < 1 then
+		return
+	end
+	if state >= 2 or done_cnt >= max_num then
+		shaguai.jian(play, task_id)
+		return
+	end
+
+	local need = _story5_kill_need(task_cfg, done_cnt)
+	if need <= 0 then
+		return
+	end
+
+	local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+	local cur = tonumber(sg_data[key] or 0) or 0
+	if cur >= need then
+		return
+	end
+
+	cur = cur + 1
+	if cur > need then
+		cur = need
+	end
+	sg_data[key] = cur
+	Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+	Player.sendmsgEx(play, (wrap.name or key).."击杀+"..1 .." ( "..cur.."/"..need.." )#57")
+
+	if cur >= need then
+		shaguai.jian(play, task_id)
+		messagebox(play,"任务完成,立即前往提交")
+	end
+end
 shaguai = {
 	["1"] = function(play,mob)      --任务1：杀怪任务
 		if getbaseinfo(mob,1) == "恶狼" or true then
@@ -65,7 +128,7 @@ shaguai = {
 
 			if ts_lv >= 0 then
 				local allow = false
-				local dl = daluditu[getbaseinfo(play,3)]
+				local dl = daluditu[getbaseinfo(play,3)] or 0
 				if jf >= 0 and jf <= 1000 then
 					allow = true
 				elseif jf >= 1001 and jf <= 6000 then
@@ -812,7 +875,518 @@ shaguai = {
 		Player.sendmsgEx(play,  (config.name or "任务").."击杀+"..1 .." ( "..sg_data[key].."/"..(config.num or 0).." )#57")
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
-			["32"] = function(play,mob)      --转生材料掉落（按大陆，固定击杀区间，越接近越容易掉）
+	["682"] = function(play,mob)      --第五章：灵兽奥秘
+		_story5_kill_progress(play, mob, 682)
+	end,
+	["688"] = function(play,mob)      --第五章：时空之门（累计击杀，支持一次刷满600）
+		local key = "npc_688"
+		local wrap = teshudata[key]
+		local task_cfg = wrap and wrap.task_cfg or nil
+		if type(task_cfg) ~= "table" then
+			return
+		end
+		local cur_map = getbaseinfo(play,3)
+		if task_cfg.map and task_cfg.map ~= "" and task_cfg.map ~= cur_map then
+			return
+		end
+		local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+		local state = tonumber(jq_data[key] or 0) or 0
+		if state < 1 then
+			return
+		end
+		if state >= 2 then
+			shaguai.jian(play,688)
+			return
+		end
+		local stage_cnt = 3
+		if type(task_cfg.unlock_maps) == "table" and #task_cfg.unlock_maps > 0 then
+			stage_cnt = #task_cfg.unlock_maps
+		end
+		local step_need = tonumber(task_cfg.kill_count or 0) or 0
+		local need = step_need * stage_cnt
+		if need <= 0 then
+			return
+		end
+		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+		local cur = tonumber(sg_data[key] or 0) or 0
+		if cur >= need then
+			shaguai.jian(play,688)
+			return
+		end
+		cur = cur + 1
+		if cur > need then
+			cur = need
+		end
+		sg_data[key] = cur
+		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+		Player.sendmsgEx(play, (wrap.name or key).."击杀+"..1 .." ( "..cur.."/"..need.." )#57")
+		if cur >= need then
+			shaguai.jian(play,688)
+			messagebox(play,"累计击杀已达上限,可连续提交解锁地图")
+		end
+	end,
+	["689"] = function(play,mob)      --第五章：禁墟之门（累计击杀，支持一次刷满800）
+		local key = "npc_689"
+		local wrap = teshudata[key]
+		local task_cfg = wrap and wrap.task_cfg or nil
+		if type(task_cfg) ~= "table" then
+			return
+		end
+		local cur_map = getbaseinfo(play,3)
+		if task_cfg.map and task_cfg.map ~= "" and task_cfg.map ~= cur_map then
+			return
+		end
+		local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+		local state = tonumber(jq_data[key] or 0) or 0
+		if state < 1 then
+			return
+		end
+		if state >= 2 then
+			shaguai.jian(play,689)
+			return
+		end
+		local stage_cnt = 4
+		if type(task_cfg.unlock_maps) == "table" and #task_cfg.unlock_maps > 0 then
+			stage_cnt = #task_cfg.unlock_maps
+		end
+		local step_need = tonumber(task_cfg.kill_count or 0) or 0
+		local need = step_need * stage_cnt
+		if need <= 0 then
+			return
+		end
+		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+		local cur = tonumber(sg_data[key] or 0) or 0
+		if cur >= need then
+			shaguai.jian(play,689)
+			return
+		end
+		cur = cur + 1
+		if cur > need then
+			cur = need
+		end
+		sg_data[key] = cur
+		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+		Player.sendmsgEx(play, (wrap.name or key).."击杀+"..1 .." ( "..cur.."/"..need.." )#57")
+		if cur >= need then
+			shaguai.jian(play,689)
+			messagebox(play,"累计击杀已达上限,可连续提交解锁地图")
+		end
+	end,
+	["696"] = function(play,mob)      --第五章：神庙逃亡（每100杀推进一次）
+		local key = "npc_696"
+		local wrap = teshudata[key]
+		local task_cfg = wrap and wrap.task_cfg or nil
+		if type(task_cfg) ~= "table" then
+			return
+		end
+
+		local req_map = task_cfg.map or "白骨神庙"
+		if req_map ~= "" and getbaseinfo(play,3) ~= req_map then
+			return
+		end
+
+		local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+		local state = tonumber(jq_data[key] or 0) or 0
+		if state < 1 then
+			return
+		end
+		if state >= 2 then
+			shaguai.jian(play,696)
+			return
+		end
+
+		local max_moves = tonumber(task_cfg.max_moves or task_cfg.max_reward_round or 4) or 4
+		if max_moves < 1 then
+			max_moves = 1
+		end
+		local moves = tonumber(jq_data["npc696_move"] or 0) or 0
+		if moves >= max_moves then
+			shaguai.jian(play,696)
+			return
+		end
+
+		local kill_per = tonumber(task_cfg.kill_per_step or 100) or 100
+		if kill_per < 1 then
+			kill_per = 1
+		end
+		local total_need = kill_per * max_moves
+
+		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+		local cur = tonumber(sg_data[key] or 0) or 0
+		if cur >= total_need then
+			return
+		end
+
+		local prev = cur
+		cur = cur + 1
+		if cur > total_need then
+			cur = total_need
+		end
+		sg_data[key] = cur
+		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+
+		local next_need = (moves + 1) * kill_per
+		Player.sendmsgEx(play, (wrap.name or key).."击杀+"..1 .." ( 累计"..cur.."，下一步"..next_need.." )#57")
+		if prev < next_need and cur >= next_need then
+			messagebox(play,"神庙逃亡：可前进一次，请前往NPC操作")
+		end
+	end,
+		["700"] = function(play,mob)      --第五章：赤焰试炼（三段：小怪/精英/BOSS）
+		local key = "npc_700"
+		local wrap = teshudata[key]
+		local task_cfg = wrap and wrap.task_cfg or nil
+		if type(task_cfg) ~= "table" then
+			return
+		end
+
+		local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+		local state = tonumber(jq_data[key] or 0) or 0
+		if state < 1 then
+			return
+		end
+		if state >= 2 then
+			shaguai.jian(play,700)
+			return
+		end
+
+		local stages = task_cfg.trial_stages
+		if type(stages) ~= "table" or #stages < 3 then
+			stages = {
+				{name = "一层试炼", map = "赤焰焚殿", mob_type = 0, need = 200},
+				{name = "二层试炼", map = "赤焰焚殿二层", mob_type = 1, need = 50},
+				{name = "三层试炼", map = "赤焰焚殿三层", mob_type = 2, need = 5},
+			}
+		end
+
+		local function _k(i)
+			local s = (i == 1 and "a") or (i == 2 and "b") or (i == 3 and "c") or tostring(i)
+			return key .. "_" .. s
+		end
+		local function _need(st)
+			local n = tonumber(st and st.need or 0) or 0
+			if n < 1 then n = 1 end
+			return n
+		end
+
+		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+		local function _done(i)
+			return (tonumber(sg_data[_k(i)] or 0) or 0) >= _need(stages[i])
+		end
+
+		local idx = 0
+		for i = 1, #stages do
+			if not _done(i) then
+				idx = i
+				break
+			end
+		end
+		if idx <= 0 then
+			shaguai.jian(play,700)
+			messagebox(play,"三重试炼已完成，可前往NPC领取奖励")
+			return
+		end
+
+		local st = stages[idx]
+		local cur_map = getbaseinfo(play,3)
+		if st.map and st.map ~= "" and st.map ~= cur_map then
+			return
+		end
+
+		local mob_name = getbaseinfo(mob,1)
+		local guaitype = (guaiwutype[mob_name] or 0)
+		local need_type = tonumber(st.mob_type or 0) or 0
+		if guaitype ~= need_type then
+			return
+		end
+
+		local k = _k(idx)
+		local need = _need(st)
+		local cur = tonumber(sg_data[k] or 0) or 0
+		if cur >= need then
+			return
+		end
+
+		cur = cur + 1
+		if cur > need then
+			cur = need
+		end
+		sg_data[k] = cur
+		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+		Player.sendmsgEx(play, (st.name or ("试炼"..idx)).."击杀+"..1 .." ( "..cur.."/"..need.." )#57")
+
+		if cur >= need then
+			if idx < #stages then
+				local nx = stages[idx + 1]
+				messagebox(play,(st.name or ("试炼"..idx)).."已完成，已开启"..(nx.name or ("试炼"..(idx+1))))
+			else
+				shaguai.jian(play,700)
+				messagebox(play,"三重试炼已全部完成，可前往NPC领取奖励")
+			end
+		end
+	end,
+	["701"] = function(play,mob)      --第五章：葬天试炼
+		_story5_kill_progress(play, mob, 701)
+	end,
+	["705"] = function(play,mob)      --第五章：是非难辨（领取时按A/B记录分支，指定怪击杀）
+		local wrap = teshudata["npc_705"]
+		local task_cfg = wrap and wrap.task_cfg or nil
+		if type(task_cfg) ~= "table" then
+			return
+		end
+		local cur_map = getbaseinfo(play,3)
+		if task_cfg.map and task_cfg.map ~= "" and task_cfg.map ~= cur_map then
+			return
+		end
+
+		local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+		local state = tonumber(jq_data["npc_705"] or 0) or 0
+		if state < 1 then
+			return
+		end
+		if state >= 2 then
+			shaguai.jian(play,705)
+			return
+		end
+
+		local choice = tonumber(jq_data["npc_705_b"] or 0) or 0
+		local target = task_cfg.mob
+		if choice == 1 and task_cfg.mob_a and task_cfg.mob_a ~= "" then
+			target = task_cfg.mob_a
+		elseif choice == 2 and task_cfg.mob_b and task_cfg.mob_b ~= "" then
+			target = task_cfg.mob_b
+		end
+		if not target or target == "" then
+			return
+		end
+
+		local mob_name = getbaseinfo(mob,1)
+		if mob_name ~= target then
+			return
+		end
+
+		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+		local key = "npc_705"
+		local need = tonumber(task_cfg.kill_count or 1) or 1
+		if need < 1 then
+			need = 1
+		end
+		local cur = tonumber(sg_data[key] or 0) or 0
+		if cur >= need then
+			shaguai.jian(play,705)
+			return
+		end
+		cur = cur + 1
+		if cur > need then
+			cur = need
+		end
+		sg_data[key] = cur
+		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+		Player.sendmsgEx(play, (wrap.name or key).."击杀["..target.."]+"..1 .." ( "..cur.."/"..need.." )#57")
+
+		if cur >= need then
+			shaguai.jian(play,705)
+			messagebox(play,"任务完成,立即前往提交")
+		end
+	end,
+	["709"] = function(play,mob)      --第五章：故人远行（使用酒壶召唤指定BOSS后击杀）
+		local wrap = teshudata["npc_709"]
+		local task_cfg = wrap and wrap.task_cfg or nil
+		if type(task_cfg) ~= "table" then
+			return
+		end
+		local req_map = task_cfg.map or "阳关道"
+		if req_map ~= "" and getbaseinfo(play,3) ~= req_map then
+			return
+		end
+
+		local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+		local state = tonumber(jq_data["npc_709"] or 0) or 0
+		if state < 1 then
+			return
+		end
+		if state >= 2 then
+			shaguai.jian(play,709)
+			return
+		end
+
+		if tonumber(jq_data["npc_709_b"] or 0) ~= 1 then
+			return
+		end
+
+		local boss = task_cfg.boss
+		if not boss or boss == "" or boss == "请配置709任务BOSS名" then
+			return
+		end
+		if getbaseinfo(mob,1) ~= boss then
+			return
+		end
+
+		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+		local key = "npc_709"
+		local need = tonumber(task_cfg.kill_count or 1) or 1
+		if need < 1 then
+			need = 1
+		end
+		local cur = tonumber(sg_data[key] or 0) or 0
+		if cur >= need then
+			shaguai.jian(play,709)
+			return
+		end
+
+		cur = cur + 1
+		if cur > need then
+			cur = need
+		end
+		sg_data[key] = cur
+		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+
+		jq_data["npc_709_b"] = nil
+		Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+
+		Player.sendmsgEx(play, (wrap.name or key).."击杀["..boss.."]+"..1 .." ( "..cur.."/"..need.." )#57")
+		if cur >= need then
+			shaguai.jian(play,709)
+			messagebox(play,"任务完成,立即前往提交")
+		end
+	end,
+	["714"] = function(play,mob)      --第五章：屠龙宝刀（击杀进度+地图掉落冰火龙鳞）
+		local key = "npc_714"
+		local wrap = teshudata[key]
+		local task_cfg = wrap and wrap.task_cfg or nil
+		if type(task_cfg) ~= "table" then
+			return
+		end
+
+		local req_map = task_cfg.map or "冰火岛"
+		if req_map ~= "" and getbaseinfo(play,3) ~= req_map then
+			return
+		end
+
+		local mob_name = getbaseinfo(mob,1)
+
+		-- 本地图打怪掉落冰火龙鳞（默认 1/1000）
+		local drop_item = task_cfg.scale_item or "冰火龙鳞"
+		local drop_rate = tonumber(task_cfg.scale_drop_rate or 1000) or 1000
+		if drop_item ~= "" and drop_rate > 0 then
+			if math.random(drop_rate) == 1 then
+				shaguai.temp_drop(play, mob, drop_item)
+			end
+		end
+
+		-- 任务击杀进度：可选只统计指定BOSS击杀（kill_boss）
+		local need_boss = task_cfg.kill_boss or task_cfg.boss_mob
+		if type(need_boss) == "string" and need_boss ~= "" then
+			if need_boss == "BOSS" then
+				if not string.find(mob_name or "", "BOSS", 1, true) then
+					return
+				end
+			elseif mob_name ~= need_boss then
+				return
+			end
+		elseif type(need_boss) == "table" then
+			local _match = false
+			for _, _name in ipairs(need_boss) do
+				if mob_name == _name then
+					_match = true
+					break
+				end
+			end
+			if not _match then
+				return
+			end
+		end
+
+		local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+		local state = tonumber(jq_data[key] or 0) or 0
+		if state < 1 then
+			return
+		end
+		if state >= 2 then
+			return
+		end
+
+		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+		local need = tonumber(task_cfg.kill_count or 10) or 10
+		if need < 1 then
+			need = 1
+		end
+		local cur = tonumber(sg_data[key] or 0) or 0
+		if cur >= need then
+			return
+		end
+		cur = cur + 1
+		if cur > need then
+			cur = need
+		end
+		sg_data[key] = cur
+		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+		Player.sendmsgEx(play, (wrap.name or key).."击杀+"..1 .." ( "..cur.."/"..need.." )#57")
+
+		if cur >= need then
+			messagebox(play,"任务完成,立即前往提交")
+		end
+	end,
+	["718"] = function(play,mob)      --第五章：景阳冈打虎（打怪掉落武松的酒）
+		local key = "npc_718"
+		local wrap = teshudata[key]
+		local task_cfg = wrap and wrap.task_cfg or nil
+		if type(task_cfg) ~= "table" then
+			return
+		end
+
+		local req_map = task_cfg.map or "景阳冈"
+		if req_map ~= "" and getbaseinfo(play,3) ~= req_map then
+			return
+		end
+
+		local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+		local state = tonumber(jq_data[key] or 0) or 0
+		if state < 1 then
+			return
+		end
+		if state >= 2 then
+			shaguai.jian(play,718)
+			return
+		end
+
+		local drop_item = task_cfg.drop_item or "武松的酒"
+		local drop_rate = tonumber(task_cfg.drop_rate or 2500) or 2500
+		if drop_item ~= "" and drop_rate > 0 and math.random(drop_rate) == 1 then
+			shaguai.temp_drop(play, mob, drop_item)
+			Player.sendmsgEx(play, "打怪掉落【"..drop_item.."】#57")
+		end
+	end,
+	["719"] = function(play,mob)      --第五章：血溅狮子楼（本图掉落净化水晶）
+		local key = "npc_719"
+		local wrap = teshudata[key]
+		local task_cfg = wrap and wrap.task_cfg or nil
+		if type(task_cfg) ~= "table" then
+			return
+		end
+
+		local req_map = task_cfg.map or "狮子楼"
+		if req_map ~= "" and getbaseinfo(play,3) ~= req_map then
+			return
+		end
+
+		local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+		local state = tonumber(jq_data[key] or 0) or 0
+		if state < 1 then
+			return
+		end
+		if state >= 2 then
+			shaguai.jian(play,719)
+			return
+		end
+
+		local drop_item = task_cfg.drop_item or "净化水晶"
+		local drop_rate = tonumber(task_cfg.drop_rate or 3000) or 3000
+		if drop_item ~= "" and drop_rate > 0 and math.random(drop_rate) == 1 then
+			shaguai.temp_drop(play, mob, drop_item)
+			Player.sendmsgEx(play, "打怪掉落【"..drop_item.."】#57")
+		end
+	end,
+	["32"] = function(play,mob)      --转生材料掉落（按大陆，固定击杀区间，越接近越容易掉）
 		local map = getbaseinfo(play,3)
 		local dl = daluditu and daluditu[map] or 0
 		if not dl or dl <= 0 or dl > 6 then
@@ -927,21 +1501,3 @@ shaguai.jian = function(play, id)
 end
 
 return shaguai
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

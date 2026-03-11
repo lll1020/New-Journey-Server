@@ -6,6 +6,8 @@ npc = {}
 local _config = Guard.getConfig("npc_642")
 
 
+
+
 function npc.main(play,npcid)
     if not _config then
         return
@@ -63,6 +65,10 @@ function npc.link(play,npcid,ew,aid)
             local b = sg_data[key.."_b"] or 0
             if a >= (_config.num_a or 0) and b >= (_config.num_b or 0) then
                 jq_data[key] = 2
+                if (jq_data[key] or 0) >= 2 then
+                    Guard.clearTaskTemp(jq_data, key)
+                    jq_data[key] = 2
+                end
                 Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
                 Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成")
                 sendluamsg(play,101,1005,0,0,"rwwc")

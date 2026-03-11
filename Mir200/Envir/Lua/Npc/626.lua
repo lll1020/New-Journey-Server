@@ -5,6 +5,8 @@ npc = {}
 
 local _config = Guard.getConfig("npc_626")
 
+
+
 function npc.main(play,npcid)
     if not _config then
         return
@@ -140,6 +142,10 @@ function npc_626_finish(play)
         return
     end
     jq_data[key] = 2
+    if (jq_data[key] or 0) >= 2 then
+        Guard.clearTaskTemp(jq_data, key)
+        jq_data[key] = 2
+    end
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
     Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成#57")
     sendluamsg(play,101,1005,0,0,"rwwc")

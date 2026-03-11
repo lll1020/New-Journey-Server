@@ -6,6 +6,8 @@ npc = {}
 local _config = Guard.getConfig("npc_676")
 
 
+
+
 function npc.main(play,npcid)
     if not _config then
         return
@@ -68,6 +70,10 @@ function npc.link(play,npcid,ew,aid)
 
         if cnt >= 5 then
             jq_data[key] = 2
+            if (jq_data[key] or 0) >= 2 then
+                Guard.clearTaskTemp(jq_data, key)
+                jq_data[key] = 2
+            end
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
             local jl_c = _config.jl_c
             if jl_c and #jl_c > 0 then

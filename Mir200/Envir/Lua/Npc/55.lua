@@ -10,6 +10,8 @@ local _config = {
 }
 
 
+
+
 function npc.main(play,npcid)
     local data = {}
     data["sg_data"] = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
@@ -55,6 +57,10 @@ function npc.link(play, npcid, p2, p3, msgData)
         if jq_data["npc55"] and jq_data["npc55"] == 1 then --已领取
             if sg_data["npc55"] and sg_data["npc55"] >= _config.num then
                 jq_data["npc55"] = 2
+                if (jq_data["npc55"] or 0) >= 2 then
+                    Guard.clearTaskTemp(jq_data, "npc55")
+                    jq_data["npc55"] = 2
+                end
                 Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
                 Player.sendmsgEx(play,  "任务完成")
                 sendluamsg(play,101,1005,0,0,"rwwc")

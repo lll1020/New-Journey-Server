@@ -6,6 +6,8 @@ npc = {}
 local _config = Guard.getConfig("npc_636")
 
 
+
+
 function npc.main(play,npcid)
     if not _config then
         return
@@ -58,6 +60,11 @@ function npc.link(play,npcid,ew,aid)
         end
 
         if cnt >= max_num then
+            if (jq_data[key] or 0) >= max_num then
+                Guard.clearTaskTemp(jq_data, key)
+                jq_data[key] = cnt
+                Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+            end
             Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成#57")
             sendluamsg(play,101,1005,0,0,"rwwc")
             sendluamsg(play,100,npcid,1,2,"")

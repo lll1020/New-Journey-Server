@@ -615,6 +615,56 @@ function killmon(play, mob)
             shaguai[k](play, mob)
         end
 	end
+    -- 第五章任务杀怪进度：按任务类型处理 kill_count / kill_per_step
+    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+    local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+    local sg_changed = false
+    local cur_map = getbaseinfo(play,3)
+    for task_id = 682, 719 do
+        local task_key = "npc_"..tostring(task_id)
+        local task_cfg_wrap = teshudata[task_key]
+        local task_cfg = task_cfg_wrap and task_cfg_wrap.task_cfg or nil
+        local has_shaguai = shaguai and shaguai[tostring(task_id)] ~= nil
+        if type(task_cfg) == "table" and not has_shaguai then
+            local map_ok = (not task_cfg.map or task_cfg.map == "" or task_cfg.map == cur_map)
+            if map_ok then
+                local task_state = tonumber(jq_data[task_key] or 0) or 0
+                local done_cnt = tonumber(jq_data[task_key .. "_a"] or 0) or 0
+                local max_num = tonumber(task_cfg.max_submit_times or task_cfg.max_reward_round or task_cfg_wrap.max_num or 1) or 1
+                if max_num < 1 then
+                    max_num = 1
+                end
+                if task_state < 2 and done_cnt < max_num then
+                    local target_need = 0
+                    local step_need = tonumber(task_cfg.kill_per_step or 0) or 0
+                    if step_need > 0 then
+                        target_need = step_need * (done_cnt + 1)
+                    else
+                        target_need = tonumber(task_cfg.kill_count or 0) or 0
+                    end
+                    if target_need > 0 then
+                        if task_state >= 1 then
+                            local cur_kill = tonumber(sg_data[task_key] or 0) or 0
+                            if cur_kill < target_need then
+                                cur_kill = cur_kill + 1
+                                if cur_kill > target_need then
+                                    cur_kill = target_need
+                                end
+                                sg_data[task_key] = cur_kill
+                                sg_changed = true
+                                if cur_kill == target_need then
+                                    Player.sendmsgEx(play, string.format("%s击杀目标已达成(%d/%d)，可提交任务#57", (task_cfg_wrap.name or task_key), cur_kill, target_need))
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+    if sg_changed then
+        Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+    end
     ---每日杀怪数量
     local gw_name = getbaseinfo(mob,1)
     if guaiwutype[gw_name] and guaiwutype[gw_name] >= 1 then

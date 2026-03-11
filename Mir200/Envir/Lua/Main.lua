@@ -90,6 +90,14 @@ local preloadModules = {
     671,
     675,
     678,
+    691,
+    696,
+    702,
+    709,
+    716,
+    717,
+    718,
+    719,
     1002,
 }
 
@@ -116,3 +124,6 @@ Npclib = setmetatable(npcliby, {
         end
     end
 })
+
+
+

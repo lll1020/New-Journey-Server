@@ -497,10 +497,29 @@ function stdmodefunc40(play, item) --特殊丹药
 end
 
     
+-- 倩女幽魂召唤道具（预留）：仅副本中可用
+-- 后续将对应道具 StdMode 指向 49 即可生效
+function stdmodefunc49(play, item)
+    local curMap = getbaseinfo(play, 3)
+    local dtm = getplaydef(play, "S$npc702_map")
+    if not dtm or dtm == "" or curMap ~= dtm then
+        Player.sendmsgEx(play, "该道具仅可在倩女幽魂副本中使用#57")
+        return false
+    end
 
+    if type(_G.npc_702_use_item) ~= "function" then
+        Player.sendmsgEx(play, "倩女幽魂逻辑未加载#57")
+        return false
+    end
 
-
-
-
-
-
+    return _G.npc_702_use_item(play, item)
+end
+-- 故人远行召唤道具（预留）：仅任务进行中并在指定坐标可用
+-- 后续将“完好的酒壶”StdMode 指向 50 即可生效
+function stdmodefunc50(play, item)
+    if type(_G.npc_709_use_item) ~= "function" then
+        Player.sendmsgEx(play, "故人远行逻辑未加载#57")
+        return false
+    end
+    return _G.npc_709_use_item(play, item)
+end

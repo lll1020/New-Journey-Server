@@ -127,7 +127,7 @@ function npc.link(play,npcid,ew,aid)
         return
     end
 
-    
+
     if ew == 3 then
         local total_get = 0
         local details = _config.details or {}
@@ -157,6 +157,7 @@ function npc.link(play,npcid,ew,aid)
         end
         local npc_671_token = jq_data["npc_671_token"] or 0
         if total > 0 and npc_671_token >= total then
+            -- 本NPC不清理临时字段，保留层数和回收进度
             jq_data[key] = 2
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
             Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成#57")
@@ -193,14 +194,3 @@ function npc_671_dsq(xt,play,dtm,data)
 end
 
 return npc
-
-
-
-
-
-
-
-
-
-
-

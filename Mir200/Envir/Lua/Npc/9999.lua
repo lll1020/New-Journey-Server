@@ -708,13 +708,13 @@ function ggna(play,id)
 --             end
 --         end
 --         return
-        -- local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
-        -- jq_data["npc_625"] = 0
-        -- jq_data["npc_626"] = 0
-        -- jq_data["npc_627"] = 0
-        -- jq_data["npc_628"] = 0
-        -- Player.setJsonTableByVar(play, VarCfg.T_dljq, jq_data)
-        -- release_print("测试LLXF")
+        local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+        jq_data["npc_714"] = nil
+        Player.setJsonTableByVar(play, VarCfg.T_dljq, jq_data)
+        -- local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+        -- sg_data["npc_696"] = sg_data["npc_696"] + 100
+        -- Player.setJsonTableByVar(play, VarCfg["T_各剧情杀怪"], sg_data)
+
 
         -- Npclib[654].link(play, 654, 1, 0, "")
 
@@ -745,7 +745,6 @@ function ggna(play,id)
         -- setplaydef(play, VarCfg.T_czlb,"{}")
         -- setplaydef(play,VarCfg.U_zxrw[1],21)
         -- setplaydef(play,VarCfg.T_hsdg, '{"1_1_1":1,"1_1_2":1,"1_1_3":1,"1_1_4":1,"1_1_5":1,"1_1_6":1,"1_1_7":1,"1_1_8":1,"1_1_9":1,"1_1_10":1,"1_1_11":1,"1_1_12":1}')--回收打勾
-        sendluamsg(play, 101, 0, 1, 1, '{"lx":2,"npcdt":"' .. "二大陆主城" .. '","npcid":' .. 601 .. ',"xx":' .. 99 .. ',"yy":' .. 123 .. "}")
 
     end
 

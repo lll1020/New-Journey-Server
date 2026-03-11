@@ -130,6 +130,76 @@ function Guard.consumeCost(play, cost, reason)
     Player.takeItemByTable(play, cost, reason or ",npc_guard", nil)
 end
 
+-- 任务完成后清理临时字段（如 key_a/key_b/key_c）。
+-- stateVal 可选：传入后会同步写回主状态（例如 2=完成）。
+function Guard.clearTaskTemp(tbl, key, stateVal)
+    if type(tbl) ~= "table" then
+        return
+    end
+    if type(key) ~= "string" or key == "" then
+        return
+    end
+    local prefix = key .. "_"
+    for k, _ in pairs(tbl) do
+        if type(k) == "string" and string.sub(k, 1, #prefix) == prefix then
+            tbl[k] = nil
+        end
+    end
+    if stateVal ~= nil then
+        tbl[key] = stateVal
+    end
+end
+
+-- 统一任务奖励发放：支持单称号/多称号，支持单组奖励/多组奖励。
+function Guard.giveTaskReward(play, config, rewardReason)
+    if type(config) ~= "table" then
+        return
+    end
+    local reason = rewardReason or ((config.name or "剧情任务") .. "奖励")
+    local taskCfg = type(config.task_cfg) == "table" and config.task_cfg or {}
+
+    local titleSet = {}
+    local function collectTitle(src)
+        if type(src) == "string" and src ~= "" then
+            titleSet[src] = true
+            return
+        end
+        if type(src) == "table" then
+            for _, t in ipairs(src) do
+                if type(t) == "string" and t ~= "" then
+                    titleSet[t] = true
+                end
+            end
+        end
+    end
+
+    collectTitle(config.ch)
+    collectTitle(config.chs)
+    collectTitle(taskCfg.ch)
+    collectTitle(taskCfg.chs)
+
+    for t, _ in pairs(titleSet) do
+        Player.title_give(play, t)
+    end
+
+    local reward = config.jl or config.rwjl or taskCfg.jl or taskCfg.rwjl or taskCfg.reward or taskCfg.rewards
+    if type(reward) ~= "table" or #reward == 0 then
+        return
+    end
+
+    if type(reward[1]) == "table" and type(reward[1][1]) == "string" then
+        Player.rwjl(play, reward, reason, 1)
+        return
+    end
+
+    if type(reward[1]) == "table" and type(reward[1][1]) == "table" then
+        for _, pack in ipairs(reward) do
+            if type(pack) == "table" and #pack > 0 then
+                Player.rwjl(play, pack, reason, 1)
+            end
+        end
+    end
+end
 -- JSON 解码增加长度限制与异常提示，防止卡死。
 function Guard.safeJsonDecode(play, raw, maxLength, fallback)
     fallback = fallback or {}
