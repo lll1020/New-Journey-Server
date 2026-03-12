@@ -789,7 +789,7 @@ end
 --回收
 local fd_sjyb = {[10053] = {500,2000},[10054] = {1000,5000},[10055] = {5000,50000},[10056] = {10000,1000000}}
 
-local hs_name_hlsj = "幻灵水晶"
+local hs_name_hlsj = "辉耀水晶"
 local hs_name_lingshi = "灵石"
 
 -- 自动回收键匹配：按分组区分，并兼容旧前缀。
@@ -900,7 +900,7 @@ local function hs_get_zsfj_material_name(cfg)
         return direct_name
     end
 
-    -- zsfj 标记位：field5 表示幻灵水晶，field6 表示灵石。
+    -- zsfj 标记位：field5 表示辉耀水晶，field6 表示灵石。
     local flag_hlsj = tonumber(cfg[5]) or 0
     local flag_lingshi = tonumber(cfg[6]) or 0
     if flag_hlsj > 0 then
@@ -1219,3 +1219,4 @@ end
 
 
 return Player
+

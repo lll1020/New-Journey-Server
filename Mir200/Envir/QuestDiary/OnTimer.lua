@@ -22,6 +22,19 @@ local function _txzr_get_reward_list()
     end
     return rewards
 end
+-- 读取天选参与奖励配置（未进前十）
+local function _txzr_get_join_reward_cfg()
+    local cfg = _txzr_get_base_cfg()
+    local join = cfg.join_reward
+    if type(join) == "table" and join.item and join.item ~= "" then
+        return {
+            item = join.item,
+            count = tonumber(join.count) or 1,
+            desc = join.desc or "",
+        }
+    end
+    return nil
+end
 
 -- 读取天选第一名额外神器配置
 local function _txzr_get_shenqi_cfg()
@@ -517,6 +530,11 @@ function ontimerex1()
                     end
                 end
                 local rewardList = _txzr_get_reward_list()
+                local joinReward = _txzr_get_join_reward_cfg()
+                local top10_name_map = {}
+                for _, one in ipairs(txzz_data["md" .. djl]) do
+                    top10_name_map[one[1]] = true
+                end
                 for i, v in ipairs(txzz_data["md" .. djl]) do
                     local rewardName = rewardList[i]
                     if rewardName and rewardName ~= "" then
@@ -541,6 +559,16 @@ function ontimerex1()
                     end
                     local playerObj = getplayerbyname(v[1])
                     _txzr_save_player_history(playerObj, djl, i, v[2], rewardName, shenqiName)
+                end
+                if joinReward and (joinReward.count or 0) > 0 then
+                    local joinRewardName = joinReward.desc ~= "" and joinReward.desc or (joinReward.item .. "*" .. tostring(joinReward.count))
+                    for _, one in ipairs(lins) do
+                        if one and one[1] and not top10_name_map[one[1]] then
+                            sendmail("#" .. one[1], 1, "天选之人", "恭喜您,获得天选之人参与奖励！", joinReward.item .. "#" .. tostring(joinReward.count) .. "#850")
+                            local joinPlayerObj = getplayerbyname(one[1])
+                            _txzr_save_player_history(joinPlayerObj, djl, 0, one[2], joinRewardName, nil)
+                        end
+                    end
                 end
                 _txzr_broadcast_roll(djl, txzz_data["md" .. djl])
                 txzz_data["notice"] = _txzr_get_notice_cfg()

@@ -66,7 +66,7 @@ function npc.link(play,npcid,ew,aid,data)
         -- 最大星级4
             if T_data.ls_sp[""..randomNum] >= _config.max_star then
                 Player.sendmsgEx(play, string.format("你抽取到的灵兽|%s#249|已达最大星级,转换为材料", _config.config.ls[randomNum].name))
-                Player.rwjl(play, {{"灵兽丹",3},{"灵石",500},{"妖怪精魄",10}}, "灵兽抽取",1,1000)
+                Player.rwjl(play, {{"若水宝玉",3},{"灵石",500},{"妖怪精魄",10}}, "灵兽抽取",1,1000)
                 return
             end
             T_data.ls_sp[""..randomNum] = T_data.ls_sp[""..randomNum] + 1
@@ -196,3 +196,4 @@ end
 
 
 return npc
+
