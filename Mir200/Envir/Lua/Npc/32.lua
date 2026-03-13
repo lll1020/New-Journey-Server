@@ -158,6 +158,9 @@ function npc.link(play,npcid,ew,aid)
         Player.sendmsgEx(play, "升级成功，当前转生为"..stage.."阶"..step.."级")
         delattlist(play, "转生")
         Login_zsattr(play)
+        if Buff and Buff.refreshHuTiGuangHuan then
+            Buff.refreshHuTiGuangHuan(play)
+        end
         sendluamsg(play,100,npcid,1,0,"")
         if step == 10 then
             renewlevel(play,1,0,0)

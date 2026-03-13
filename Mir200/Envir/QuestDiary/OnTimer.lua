@@ -732,26 +732,17 @@ function ontimer6(play)
     local can_sc = false
     local sc_cfg = teshudata["anniu_501"] or {}
     local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
-    local open_day = tonumber(getsysvar(VarCfg["G_开区天数"]) or 0) or 0
+
     if tonumber(sc_data["ok"] or 0) == 1 then
-        local endtime = tonumber(sc_cfg.endtime or 0) or 0
-        if tonumber(sc_data["首充"] or 0) == 1 and open_day <= endtime then
+        if tonumber(sc_data["首充"] or 0) == 1 then
             local day_list = (sc_cfg.details and sc_cfg.details["首充"]) or {}
             local max_day = #day_list
             if max_day > 0 then
-                local buy_day = tonumber(sc_data["buy_day"] or open_day) or open_day
-                local idx = (open_day - buy_day) + 1
-                if idx < 1 then
-                    idx = 1
-                end
-                if idx <= max_day and tonumber(sc_data["jq_time"] or 0) ~= open_day then
+                local claimed = tonumber(sc_data["other_lb"] or 0) or 0
+                local next_idx = claimed + 1
+                if next_idx <= max_day and Player.dl_sz_notip(play, next_idx) then
                     can_sc = true
                 end
-            end
-        elseif tonumber(sc_data["补充"] or 0) == 1 and open_day > endtime then
-            local extra_list = (sc_cfg.details and sc_cfg.details["补充"]) or {}
-            if #extra_list > 0 and tonumber(sc_data["bc_ok"] or 0) ~= 1 then
-                can_sc = true
             end
         end
     end
@@ -761,21 +752,18 @@ function ontimer6(play)
     local fldt = teshudata["fldt"] or {}
     local fldt_data = Player.getJsonTableByVar(play, VarCfg.T_qrbq) or {}
     local login_days = tonumber(getplaydef(play, VarCfg["U_登录天数"]) or 0) or 0
-    local online_min = tonumber(getplaydef(play, VarCfg.J_zxsj) or 0) or 0
     local kill_num = (tonumber(getplaydef(play, VarCfg.J_jsgw[1]) or 0) or 0) + (tonumber(getplaydef(play, VarCfg.J_jsgw[2]) or 0) or 0)
-    local fldt_cfg = (fldt.fldt_cfg and fldt.fldt_cfg.seven_login) or {}
-    local online_limit = tonumber(fldt_cfg.online_limit or 10) or 10
 
     local claimed_day = tonumber(fldt_data["7rqd"] or 0) or 0
     local next_day = claimed_day + 1
-    if next_day <= 7 and next_day <= login_days and online_min >= online_limit then
+    if next_day <= 7 and next_day <= login_days then
         can_fldt = true
     end
     if not can_fldt then
         local zx_cfg = fldt["zxjl"] or {}
         local zx_claimed = tonumber(fldt_data["zxjl"] or 0) or 0
         local zx_next = zx_claimed + 1
-        if zx_cfg[zx_next] and online_min >= (tonumber(zx_cfg[zx_next].time or 999999999) or 999999999) then
+        if zx_cfg[zx_next] and (tonumber(getplaydef(play, VarCfg.J_zxsj) or 0) or 0) >= (tonumber(zx_cfg[zx_next].time or 999999999) or 999999999) then
             can_fldt = true
         end
     end

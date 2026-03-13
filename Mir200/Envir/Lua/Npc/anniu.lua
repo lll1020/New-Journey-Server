@@ -431,7 +431,8 @@ npc[18] = function(play, p2, p3, data) --新手礼包
             addbuff(play, 20000)
             addbuff(play, 20001)
             addbuff(play, 20002)
-            Npclib["anniu"][19](play, 1, 0, "")
+            -- 飞剑功能临时下线：关闭新手礼包自动激活飞剑
+            -- Npclib["anniu"][19](play, 1, 0, "")
 
             
             --新手技能
@@ -450,110 +451,27 @@ npc[18] = function(play, p2, p3, data) --新手礼包
     end
 end
 function feijian(play, msgData) ---飞剑
-    local msgdata = json2tbl(msgData)
-    local mapid = getbaseinfo(play, 3)
-    local monobj = getmonbyuserid(mapid, msgdata.paramList[1])
-    local nvalue = 0
-    local T_data = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
-    if monobj then
-        if msgdata.paramList[2] == 1 then
-            if getbaseinfo(play, 39) >= 1 or hasbuff(play, 20000) then
-                nvalue = (nvalue + 500)
-                    * (
-                        1
-                        + ((T_data.cd or hasbuff(play, 20002)) and 1 or 0)
-                        + ((T_data.ratio or hasbuff(play, 20001)) and 1 or 0)
-                    )
-            else
-                return
-            end
-        elseif msgdata.paramList[2] == 2 then
-            if T_data.ratio or hasbuff(play, 20001) then
-                nvalue = (nvalue + 1000)
-            else
-                return
-            end
-        elseif msgdata.paramList[2] == 3 then
-            if T_data.cd or hasbuff(play, 20002) then
-                nvalue = (nvalue + 5000)
-            else
-                return
-            end
-        elseif msgdata.paramList[2] == 4 then
-            if T_data.num and T_data.num >= teshudata["anniu_19"].num then
-                nvalue = (nvalue + 1000)
-            else
-                return
-            end
-        end
-        nvalue = nvalue + ((T_data.num and T_data.num >= teshudata["anniu_19"].num) and 10000 or 0)
-
-        local cd = (T_data.cd or (hasbuff(play, 20002) and teshudata["anniu_19"].cd / 2) or teshudata["anniu_19"].cd) - 0.1
-        local time = os.time()
-        if getplaydef(play, "N$飞剑_" .. msgdata.paramList[2]) + cd < time then
-            setplaydef(play, "N$飞剑_" .. msgdata.paramList[2], time)
-            humanhp(monobj, "-", nvalue, 107, 0, play, 1)
-            healthspellchanged(monobj)
-            T_data.num = (T_data.num or 0) + 1
-            Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data)
-        else
-            --sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>飞剑冷却中...</font>","FColor":219,"BColor":255,"Type":1}')
-            return
-        end
-    end
+    -- 飞剑功能临时下线
+    return
 end
 
 npc[19] = function(play, p2, p3, data) --飞剑系统
+    -- 飞剑功能临时下线
+    return
+end
+
+npc[23] = function(play, p2, p3, data) --护体光环
     if p2 == 0 then
-        --飞剑系统  --初始化页面
-        local tmp_data = {}
-        tmp_data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
-        sendluamsg(play, 101, 19, 0, 0, tbl2json(tmp_data))
-    elseif p2 == 1 then
-        --飞剑系统激活飞剑--取消激活
-        local T_data = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
-        if T_data["open"] and T_data["open"] == 1 then
-            Player.sendmsgEx(play, "飞剑已激活，无需重复激活...")
-        else
-            T_data["open"] = 1
-            Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data)
-
-            local count = {}
-            if getbaseinfo(play, 39) >= 1 or hasbuff(play, 20000) then
-                count["1"] = 1
-            end
-            local T_data_cs = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
-            if T_data_cs["首充"] == 1 or T_data_cs["补充"] == 1 or hasbuff(play, 20001) then
-                count["2"] = 1
-            end
-            if getflagstatus(play, VarCfg.BS_mztq) == 1 or hasbuff(play, 20002) then
-                count["3"] = 1
-            end
-            if T_data.num and T_data.num >= teshudata["anniu_19"].num then
-                count["4"] = 1
-            end
-
-            sendluamsg(play, 101, 19, 1, 0, tbl2json({ count = count, psData = { cd = (T_data.cd or (hasbuff(play, 20002) and teshudata["anniu_19"].cd / 2) or teshudata["anniu_19"].cd), }, }))
-            sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>飞剑已激活...</font>","Type":9}')
-        end
-    elseif p2 == 2 then --飞剑伤害计算
-        feijian(play, data)
-    elseif p2 == 3 then --飞剑取消
-        local T_data = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
-        if T_data["open"] and T_data["open"] == 1 then
-            T_data["open"] = 0
-            Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data)
-            sendluamsg(play, 101, 19, 1, 1, "")
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>飞剑已取消激活...</font>","Type":9}')
-        end
-    elseif p2 == 4 then --飞剑开关
-        local T_data = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
-        if T_data["open"] and T_data["open"] == 1 then
-            Npclib['anniu'][19](play, 3, 0, "")
-        else
-            Npclib['anniu'][19](play, 1, 0, "")
-        end
-
+        local zs_level = tonumber(getplaydef(play, VarCfg["U_转生等级"]) or 0) or 0
+        local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
+        local tmp_data = {
+            aura = {
+                [1] = {open = zs_level >= 10 and 1 or 0},
+                [2] = {open = tonumber(sc_data["首充"] or 0) == 1 and 1 or 0},
+                [3] = {open = getflagstatus(play, VarCfg.BS_mztq) == 1 and 1 or 0},
+            }
+        }
+        sendluamsg(play, 101, 23, 0, 0, tbl2json(tmp_data))
     end
 end
 
@@ -684,40 +602,42 @@ npc[501] = function(play, p2, p3, data) --首充礼包
     if p2 == 0 then
         local tmp_data = {}
         tmp_data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
-        tmp_data["time_data"] = getsysvar(VarCfg["G_开区天数"])
+        local list = ((teshudata["anniu_501"] or {}).details or {})["首充"] or {}
+        local dl_progress = 1
+        for i = 2, #list do
+            if Player.dl_sz_notip(play, i) then
+                dl_progress = i
+            else
+                break
+            end
+        end
+        tmp_data["dl_progress"] = dl_progress
+        tmp_data["time_data"] = dl_progress
         sendluamsg(play, 101, 501, 0, 0, tbl2json(tmp_data))
     elseif p2 == 1 then
         local cfg = teshudata["anniu_501"]
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
         local time_data = getsysvar(VarCfg["G_开区天数"])
         if not (T_data["ok"] and T_data["ok"] == 1) then
-            if cfg and cfg.endtime and cfg.endtime < time_data then
-                sendluamsg(play, 101, 999, 3, 21, "")
-            else
-                sendluamsg(play, 101, 999, 6, 21, "")
-            end
+            sendluamsg(play, 101, 999, 6, 21, "")
             return
         end
 
-        local endtime = cfg and cfg.endtime or 0
-        if T_data["首充"] == 1 and time_data <= endtime then
+        if T_data["首充"] == 1 then
             local list = cfg and cfg.details and cfg.details["首充"] or {}
             local max = #list
             if max <= 0 then
                 Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>礼包配置异常...</font>","Type":9}')
                 return
             end
-            if not T_data["buy_day"] then
-                T_data["buy_day"] = time_data
-            end
-            local idx = (time_data - (T_data["buy_day"] or time_data)) + 1
-            if idx < 1 then idx = 1 end
+
+            local claimed = tonumber(T_data["other_lb"] or 0) or 0
+            local idx = claimed + 1
             if idx > max then
                 Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
                 return
             end
-            if T_data["jq_time"] and T_data["jq_time"] == time_data then
-                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>今日已领取...</font>","Type":9}')
+            if not Player.dl_sz(play, idx) then
                 return
             end
             T_data["other_lb"] = idx
@@ -730,52 +650,22 @@ npc[501] = function(play, p2, p3, data) --首充礼包
             end
             if idx == 1 then
                 addskill(play, 25, 3)
-                local T_data_fj = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
-                T_data_fj.ratio = 2
-                Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data_fj)
+                -- 飞剑功能临时下线：首充不再改动飞剑参数
+                -- local T_data_fj = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
+                -- T_data_fj.ratio = 2
+                -- Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data_fj)
                 local T_data = Player.getJsonTableByVar(play, VarCfg.T_szjl)
                 T_data.yjs = T_data.yjs or {}
                 T_data.yjs[""..1] = 1
                 Player.setJsonVarByTable(play, VarCfg.T_szjl, T_data)
                 _refreshFashionAttr(play, T_data)
+            elseif idx == 2 then
+                addskill(play, 51, 3)
             end
 
             sendluamsg(play, 101, 1005, 0, 0, "lqcg")
             return
         end
-
-        if T_data["补充"] == 1 and time_data > endtime then
-            local list = cfg and cfg.details and cfg.details["补充"] or {}
-            if not list or #list <= 0 then
-                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>礼包配置异常...</font>","Type":9}')
-                return
-            end
-            if T_data["bc_ok"] == 1 then
-                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
-                return
-            end
-            T_data["bc_ok"] = 1
-            T_data["jq_time"] = time_data
-            Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
-
-            local reward = list[1].jl
-            if reward and #reward > 0 then
-                Player.rwjl(play, reward, "首充补充礼包", 1, 1000)
-            end
-            addskill(play, 25, 3)
-            local T_data_fj = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
-            T_data_fj.ratio = 2
-            Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data_fj)
-            local T_data = Player.getJsonTableByVar(play, VarCfg.T_szjl)
-            T_data.yjs = T_data.yjs or {}
-            T_data.yjs[""..1] = 1
-            Player.setJsonVarByTable(play, VarCfg.T_szjl, T_data)
-            _refreshFashionAttr(play, T_data)
-            
-            sendluamsg(play, 101, 1005, 0, 0, "lqcg")
-            return
-        end
-
         Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>未满足领取条件...</font>","Type":9}')
     end
 end
@@ -1066,12 +956,19 @@ npc[510] = function(play, p2, p3, msgData)
 end
 
 -- 福利大厅七日登录读取配置
+-- 福利大厅七日登录读取配置
 local fldt_cfg_table = teshudata["fldt"] and teshudata["fldt"]["fldt_cfg"]
 local fldt_seven_login_cfg = (fldt_cfg_table and fldt_cfg_table["seven_login"]) or {}
-local fldt_online_minutes_limit = fldt_seven_login_cfg.online_limit or 10
-local fldt_digit_cfg = fldt_seven_login_cfg.digit or {}
-local fldt_privilege_no_zero = fldt_seven_login_cfg.privilege_no_zero ~= false
-local fldt_privilege_final_multiple = fldt_seven_login_cfg.privilege_final_multiple or 2
+local fldt_online_minutes_limit = tonumber(fldt_seven_login_cfg.online_limit or 0) or 0
+local fldt_number_days = tonumber(fldt_seven_login_cfg.number_days or 4) or 4
+if fldt_number_days < 1 then fldt_number_days = 1 end
+if fldt_number_days > 7 then fldt_number_days = 7 end
+local fldt_digit_prob = fldt_seven_login_cfg.digit_prob or {}
+local fldt_material_pool = fldt_seven_login_cfg.material_pool or {}
+local fldt_privilege_final_multiple = tonumber(fldt_seven_login_cfg.privilege_final_multiple or 2) or 2
+local fldt_final_reward_multiplier = tonumber(fldt_seven_login_cfg.final_reward_multiplier or 100) or 100
+local fldt_final_reward_cap = tonumber(fldt_seven_login_cfg.final_reward_cap or 1000000) or 1000000
+local fldt_final_reward_cap_privilege = tonumber(fldt_seven_login_cfg.final_reward_cap_privilege or 2000000) or 2000000
 
 -- 是否拥有麦尊特权（用于所有特权判断）
 local function fldt_is_privilege(play)
@@ -1079,47 +976,113 @@ local function fldt_is_privilege(play)
 end
 
 -- 根据配置生成当日翻牌数字，并处理特权玩家的避零逻辑
-local function fldt_pick_seven_login_digit(day, privilege)
-    local cfg = fldt_digit_cfg[day] or {}
-    local minv = cfg.min or 0
-    local maxv = cfg.max or 9
-    local pool = cfg.pool
-    local digit
-    if pool and #pool > 0 then
-        digit = pool[math.random(1, #pool)]
-    else
-        digit = math.random(minv, maxv)
+-- 权重随机工具
+local function fldt_pick_weighted_entry(entries)
+    if type(entries) ~= "table" or #entries <= 0 then
+        return nil
     end
-    if privilege and fldt_privilege_no_zero and digit == 0 then
-        if pool and #pool > 0 then
-            local filtered = {}
-            for _, v in ipairs(pool) do
-                if v ~= 0 then
-                    table.insert(filtered, v)
-                end
-            end
-            if #filtered > 0 then
-                digit = filtered[math.random(1, #filtered)]
-            else
-                digit = 1
-            end
-        else
-            if maxv == minv then
-                digit = (minv == 0) and 1 or minv
-            else
-                local attempts = 0
-                repeat
-                    digit = math.random(minv, maxv)
-                    attempts = attempts + 1
-                    if attempts > 20 then
-                        digit = (minv == 0) and 1 or minv
-                        break
-                    end
-                until digit ~= 0
-            end
+    local total = 0
+    for _, e in ipairs(entries) do
+        total = total + (tonumber(e.weight or 0) or 0)
+    end
+    if total <= 0 then
+        return entries[math.random(1, #entries)]
+    end
+    local roll = math.random(1, total)
+    local acc = 0
+    for _, e in ipairs(entries) do
+        acc = acc + (tonumber(e.weight or 0) or 0)
+        if roll <= acc then
+            return e
         end
     end
-    return digit
+    return entries[#entries]
+end
+
+-- 根据新版概率生成当日翻牌数字（绝不出现0）
+local function fldt_pick_seven_login_digit(day)
+    local probKey = (day <= 3) and "front3" or "tail"
+    local probEntries = fldt_digit_prob[probKey] or {}
+    local pick = fldt_pick_weighted_entry(probEntries)
+    if not pick then
+        return math.random(1, 9)
+    end
+    local minv = tonumber(pick.min or 1) or 1
+    local maxv = tonumber(pick.max or 9) or 9
+    if minv < 1 then minv = 1 end
+    if maxv < minv then maxv = minv end
+    if minv == maxv then
+        return minv
+    end
+    return math.random(minv, maxv)
+end
+
+-- 后三天神秘奖励（占位版）；PlanB可在此按玩家缺口动态替换 give
+local function fldt_pick_material_reward(day, play, privilege)
+    local pool = fldt_material_pool[day] or fldt_material_pool["default"] or {}
+    local pick = fldt_pick_weighted_entry(pool)
+    if not pick then
+        return nil, nil
+    end
+    local tag = pick.tag or pick.name or ("神秘奖励_" .. tostring(day))
+    local give = pick.give or {}
+    return give, tag
+end
+-- 深拷贝奖励列表，避免后续修改原配置表
+local function fldt_clone_reward_list(give)
+    local out = {}
+    if type(give) ~= "table" then
+        return out
+    end
+    for _, one in ipairs(give) do
+        if type(one) == "table" then
+            local row = {}
+            for i, v in ipairs(one) do
+                row[i] = v
+            end
+            out[#out + 1] = row
+        end
+    end
+    return out
+end
+
+-- 统一七日材料奖励记录结构，兼容旧版本字符串记录
+local function fldt_prepare_material_table(T_qrbq)
+    local changed = false
+    local matData = T_qrbq["7rqd_mat"]
+    if type(matData) ~= "table" then
+        matData = {}
+        T_qrbq["7rqd_mat"] = matData
+        changed = true
+    end
+    for day, record in pairs(matData) do
+        local dayNum = tonumber(day) or day
+        if type(record) == "string" then
+            matData[day] = {day = dayNum, tag = record, give = {}, ts = 0}
+            changed = true
+        elseif type(record) == "table" then
+            if record.day == nil then
+                record.day = dayNum
+                changed = true
+            end
+            if record.tag == nil then
+                record.tag = record.name or "神秘奖励"
+                changed = true
+            end
+            if type(record.give) ~= "table" then
+                record.give = {}
+                changed = true
+            end
+            if record.ts == nil then
+                record.ts = 0
+                changed = true
+            end
+        else
+            matData[day] = {day = dayNum, tag = "神秘奖励", give = {}, ts = 0}
+            changed = true
+        end
+    end
+    return matData, changed
 end
 
 -- 获取/初始化翻牌记录表，用于保存七天的各位数
@@ -1131,12 +1094,16 @@ local function fldt_prepare_flip_table(T_qrbq)
 end
 
 -- 将记录表中个位~百万位拼成最终元宝数
-local function fldt_calculate_flip_reward(fp)
+-- 将记录表中前N天数字拼成最终数字（默认前4天，最高9999）
+local function fldt_calculate_flip_reward(fp, maxDays)
     local total = 0
     if type(fp) ~= "table" then
         return total
     end
-    for i = 1, 7 do
+    local n = tonumber(maxDays or fldt_number_days) or fldt_number_days
+    if n < 1 then n = 1 end
+    if n > 7 then n = 7 end
+    for i = 1, n do
         local value = fp[i]
         if value == nil then
             value = fp[tostring(i)]
@@ -1150,7 +1117,12 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
     -- p3 则在 p2==1/2 时作为具体子功能编号（1=七日登录、2=在线奖励、3=杀怪等）
     if p2 == 0 then
         local data = {}
-        data["T_qrbq"] = Player.getJsonTableByVar(play, VarCfg.T_qrbq)
+        local T_qrbq = Player.getJsonTableByVar(play, VarCfg.T_qrbq)
+        local _, matChanged = fldt_prepare_material_table(T_qrbq)
+        if matChanged then
+            Player.setJsonVarByTable(play, VarCfg.T_qrbq, T_qrbq)
+        end
+        data["T_qrbq"] = T_qrbq
         data["U_dlts"] = getplaydef(play, VarCfg["U_登录天数"])
         data["J_zxsj"] = getplaydef(play, VarCfg.J_zxsj)
         data["U_sgsl"] = getplaydef(play, VarCfg.J_jsgw[1]) + getplaydef(play, VarCfg.J_jsgw[2])
@@ -1208,11 +1180,6 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
                 Player.sendmsgEx(play, "七日登录奖励已经全部领取完毕#57")
                 return
             end
-            local onlineMinutes = tonumber(getplaydef(play, VarCfg.J_zxsj)) or 0
-            if onlineMinutes < fldt_online_minutes_limit then
-                Player.sendmsgEx(play, "在线满" .. fldt_online_minutes_limit .. "分钟后可领取#57")
-                return
-            end
             local dayReward = teshudata["fldt"]["7rqd"][targetDay]
             if not dayReward then
                 Player.sendmsgEx(play, "奖励配置缺失#57")
@@ -1220,16 +1187,56 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
             end
             local privilege = fldt_is_privilege(play)
             local flipDigits = fldt_prepare_flip_table(T_qrbq)
-            local digit = fldt_pick_seven_login_digit(targetDay, privilege)
-            flipDigits[targetDay] = digit
-            T_qrbq["7rqd"] = targetDay
             local finalAwardToGive = 0
-            if targetDay == 7 then
-                local finalSum = fldt_calculate_flip_reward(flipDigits)
+
+            if targetDay <= fldt_number_days then
+                local digit = fldt_pick_seven_login_digit(targetDay)
+                flipDigits[targetDay] = digit
+            else
+                local matData = fldt_prepare_material_table(T_qrbq)
+                local matRecord = matData[targetDay]
+                if matRecord == nil then
+                    local oldKey = tostring(targetDay)
+                    matRecord = matData[oldKey]
+                    if matRecord ~= nil then
+                        matData[oldKey] = nil
+                    end
+                end
+                if type(matRecord) ~= "table" then
+                    local matReward, matTag = fldt_pick_material_reward(targetDay, play, privilege)
+                    matRecord = {
+                        day = targetDay,
+                        tag = matTag or "神秘奖励",
+                        give = fldt_clone_reward_list(matReward),
+                        ts = os.time(),
+                    }
+                else
+                    matRecord.day = tonumber(matRecord.day) or targetDay
+                    matRecord.tag = matRecord.tag or matRecord.name or "神秘奖励"
+                    if type(matRecord.give) ~= "table" then
+                        matRecord.give = {}
+                    end
+                    if matRecord.ts == nil then
+                        matRecord.ts = os.time()
+                    end
+                end
+                matData[targetDay] = matRecord
+                if type(matRecord.give) == "table" and #matRecord.give > 0 then
+                    Player.rwjl(play, matRecord.give, "七日翻牌神秘奖励", 1)
+                end
+            end
+
+            T_qrbq["7rqd"] = targetDay
+            if targetDay == fldt_number_days then
+                local finalSum = fldt_calculate_flip_reward(flipDigits, fldt_number_days)
                 T_qrbq["7rqd_final_yb"] = finalSum
                 local finalMultiple = privilege and fldt_privilege_final_multiple or 1
                 T_qrbq["7rqd_final_mul"] = finalMultiple
-                local awardValue = math.floor((finalSum or 0) * finalMultiple)
+                local awardValue = math.floor((finalSum or 0) * fldt_final_reward_multiplier * finalMultiple)
+                local cap = privilege and fldt_final_reward_cap_privilege or fldt_final_reward_cap
+                if cap > 0 and awardValue > cap then
+                    awardValue = cap
+                end
                 if awardValue < 0 then
                     awardValue = 0
                 end
@@ -1239,10 +1246,9 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
                     finalAwardToGive = awardValue
                 end
             end
+
             Player.setJsonVarByTable(play, VarCfg.T_qrbq, T_qrbq)
             sendmail(getbaseinfo(play,2),0,"七日登录奖励","七日登录奖励,奖励已下发!",Player.jl_mail(dayReward.jl))
-
-
             if finalAwardToGive > 0 then
                 Player.rwjl(play, { { "绑定元宝", finalAwardToGive } }, "七日翻牌幸运奖励", 1)
             end
@@ -1539,13 +1545,13 @@ npc[517] = function(play, p2, p3, msgData) --聚宝盆
         T_data.level = T_data.level or 1
         if T_data.level == 1 then
             local T_sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
-            if T_sc_data["首充"] == 1 or T_sc_data["补充"] == 1 then
+            if T_sc_data["首充"] == 1 then
                 T_data.level = 2
                 Player.setJsonVarByTable(play, VarCfg["T_聚宝盆"], T_data)
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#28ef01\'>升级成功...</font>","Type":9}' )
                 sendluamsg(play, 101, 517, 1, 2, "")
             else
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#ff0500\'>只有首充或补充过首充才可升级聚宝盆...</font>","Type":9}' )
+                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#ff0500\'>只有首充后才可升级聚宝盆...</font>","Type":9}' )
                 return
             end
         elseif T_data.level == 2 then

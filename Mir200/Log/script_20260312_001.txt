@@ -1,0 +1,5 @@
+[2026-03-12 14:40:34:893] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：32; NpcThreadId: 73576, CurPlayThreadId: 73576
+[2026-03-12 14:40:34:893] [玩家名字k]Lua执行耗时过高:32ms msgid:100 502 1 0 
+
+[2026-03-13 10:14:28:841] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：31; NpcThreadId: 73576, CurPlayThreadId: 73576
+

@@ -1,0 +1,18 @@
+[2026-03-13 15:03:33:554] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：125; NpcThreadId: 30388, CurPlayThreadId: 30388
+
+[2026-03-13 16:38:38:494] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：156; NpcThreadId: 30388, CurPlayThreadId: 30388
+
+[2026-03-13 16:38:44:061] LuaNPC:玩家名字 ID:999999999 执行 usercmd1003 player:玩家名字 耗时：188; NpcThreadId: 30388, CurPlayThreadId: 30388
+
+[2026-03-13 16:39:09:862] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：282; NpcThreadId: 30388, CurPlayThreadId: 30388
+[2026-03-13 16:39:09:862] [玩家名字]Lua执行耗时过高:282ms msgid:101 998 3 1 {"mz":"玩家名字","bl":"S$攻击怪物前buff","lx":1}
+
+[2026-03-13 16:40:02:241] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：469; NpcThreadId: 30388, CurPlayThreadId: 30388
+[2026-03-13 16:40:02:241] [玩家名字]Lua执行耗时过高:469ms msgid:100 203 1 0 
+
+[2026-03-13 16:40:05:187] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：328; NpcThreadId: 30388, CurPlayThreadId: 30388
+
+[2026-03-13 16:40:12:388] LuaNPC:玩家名字 ID:999999999 执行 attack player:玩家名字 耗时：375; NpcThreadId: 30388, CurPlayThreadId: 30388
+
+[2026-03-13 16:42:05:950] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 30388, CurPlayThreadId: 30388
+

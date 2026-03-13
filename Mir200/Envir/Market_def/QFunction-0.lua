@@ -940,7 +940,7 @@ end
 --------------------累计充值改变触发-------------------冠名称号
 function moneychange23(play)
     setplaydef(play,VarCfg["U_真实充值"],querymoney(play,23))
-    if querymoney(play,23) >= 998 and not checktitle(play,"踏月主宰") then
+    if querymoney(play,23) >= teshudata["npc_20"].cost and not checktitle(play,"冠名") then
         messagebox(play,"累计充值数量已达到,可以去领取冠名奖励了")
     end
 end
@@ -981,28 +981,25 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
                     Player.title_give(play, teshudata["anniu_504"].ch,1)
                     Player.rwjl(play, teshudata["anniu_504"].give, "快人一步",1,1000)
                     setflagstatus(play,constant.BS_mztq,1)
-
-                    local T_data_fj = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
-                    T_data_fj.cd = teshudata["anniu_19"].cd/2
-                    Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data_fj)
+                    if Buff and Buff.refreshHuTiGuangHuan then
+                        Buff.refreshHuTiGuangHuan(play)
+                    end
+                    -- 飞剑功能临时下线：不再改动飞剑冷却参数
+                    -- local T_data_fj = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
+                    -- T_data_fj.cd = teshudata["anniu_19"].cd/2
+                    -- Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data_fj)
                     --sendluamsg(play,101,504,1,0,"")
                 end
             elseif Gold == 6 then
                 local T_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
-                if not (T_data["ok"] and T_data["ok"] == 1) and teshudata["anniu_501"].endtime >= getsysvar(VarCfg["G_开区天数"]) then
+                if not (T_data["ok"] and T_data["ok"] == 1) then
                     T_data["ok"] = 1
                     T_data["首充"] = 1
                     Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
                     setflagstatus(play, VarCfg.BS_sckg, 1)
-                    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>天选之人：已达成首充礼包，自动报名成功...</font>","Type":9}')
-                end
-            elseif Gold == 3 then
-                local T_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
-                if not (T_data["ok"] and T_data["ok"] == 1) and teshudata["anniu_501"].endtime < getsysvar(VarCfg["G_开区天数"]) then
-                    T_data["ok"] = 1
-                    T_data["补充"] = 1
-                    Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
-                    setflagstatus(play, VarCfg.BS_sckg, 1)
+                    if Buff and Buff.refreshHuTiGuangHuan then
+                        Buff.refreshHuTiGuangHuan(play)
+                    end
                     sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>天选之人：已达成首充礼包，自动报名成功...</font>","Type":9}')
                 end
             end

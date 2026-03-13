@@ -40,9 +40,8 @@ function buffchange(play, buffid, zid, lx)
                 addbuff(play,20078,180)
             end
         end
-    elseif buffid == 20000 then if lx == 4 then Npclib['anniu'][19](play, 3, 0, "") Npclib['anniu'][19](play, 1, 0, "") end
-    elseif buffid == 20001 then if lx == 4 then Npclib['anniu'][19](play, 3, 0, "") Npclib['anniu'][19](play, 1, 0, "") end
-    elseif buffid == 20002 then if lx == 4 then Npclib['anniu'][19](play, 3, 0, "") Npclib['anniu'][19](play, 1, 0, "") end
+    elseif buffid == 20000 or buffid == 20001 or buffid == 20002 then
+        -- 飞剑功能临时下线
     elseif buffid == 20103 then 
         if getbaseinfo(play,1) == "酒仙秘境" then
             mapmove(play, "xtc",137,138,5)
