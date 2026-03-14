@@ -461,17 +461,42 @@ npc[19] = function(play, p2, p3, data) --飞剑系统
 end
 
 npc[23] = function(play, p2, p3, data) --护体光环
+    local zs_level = tonumber(getplaydef(play, VarCfg["U_转生等级"]) or 0) or 0
+    local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
+    local active = tonumber(getplaydef(play, VarCfg["U_护体光环激活"]) or 0) or 0
+    local aura = {
+        [1] = {open = zs_level >= 10 and 1 or 0},
+        [2] = {open = tonumber(sc_data["首充"] or 0) == 1 and 1 or 0},
+        [3] = {open = getflagstatus(play, VarCfg.BS_mztq) == 1 and 1 or 0},
+    }
+
+    if active < 1 or active > 3 or aura[active].open ~= 1 then
+        active = 0
+    end
+
     if p2 == 0 then
-        local zs_level = tonumber(getplaydef(play, VarCfg["U_转生等级"]) or 0) or 0
-        local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
-        local tmp_data = {
-            aura = {
-                [1] = {open = zs_level >= 10 and 1 or 0},
-                [2] = {open = tonumber(sc_data["首充"] or 0) == 1 and 1 or 0},
-                [3] = {open = getflagstatus(play, VarCfg.BS_mztq) == 1 and 1 or 0},
-            }
-        }
-        sendluamsg(play, 101, 23, 0, 0, tbl2json(tmp_data))
+        for i = 1, 3 do
+            aura[i].active = active == i and 1 or 0
+        end
+        sendluamsg(play, 101, 23, 0, 0, tbl2json({aura = aura, active = active}))
+    elseif p2 == 1 then
+        local idx = tonumber(data) or tonumber(p3) or 0
+        if idx < 0 or idx > 3 then
+            Player.sendmsgEx(play, "参数错误#57")
+            return
+        end
+        if idx > 0 and aura[idx].open ~= 1 then
+            Player.sendmsgEx(play, "该光环尚未解锁#57")
+            return
+        end
+        setplaydef(play, VarCfg["U_护体光环激活"], idx)
+        if Buff and Buff.refreshHuTiGuangHuan then
+            Buff.refreshHuTiGuangHuan(play)
+        end
+        for i = 1, 3 do
+            aura[i].active = idx == i and 1 or 0
+        end
+        sendluamsg(play, 101, 23, 1, idx, tbl2json({aura = aura, active = idx}))
     end
 end
 

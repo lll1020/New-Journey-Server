@@ -16,3 +16,22 @@
 
 [2026-03-13 16:42:05:950] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 30388, CurPlayThreadId: 30388
 
+[2026-03-14 04:19:05:735] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 30388, CurPlayThreadId: 30388
+
+[2026-03-14 06:09:07:240] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：47; NpcThreadId: 30388, CurPlayThreadId: 30388
+[2026-03-14 06:09:07:240] [玩家名字]Lua执行耗时过高:47ms msgid:101 2 2 0 1_1_16
+
+[2026-03-14 06:09:09:126] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：204; NpcThreadId: 30388, CurPlayThreadId: 30388
+[2026-03-14 06:09:09:126] [玩家名字]Lua执行耗时过高:204ms msgid:101 2 2 0 50001
+
+[2026-03-14 06:09:35:753] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：94; NpcThreadId: 30388, CurPlayThreadId: 30388
+
+[2026-03-14 06:09:42:321] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：328; NpcThreadId: 30388, CurPlayThreadId: 30388
+[2026-03-14 06:09:42:321] [玩家名字k]Lua执行耗时过高:328ms msgid:100 503 1 0 
+[2026-03-14 06:09:42:879] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：32; NpcThreadId: 30388, CurPlayThreadId: 30388
+
+[2026-03-14 06:25:18:803] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：1594; NpcThreadId: 30388, CurPlayThreadId: 30388
+[2026-03-14 06:25:18:803] [玩家名字k]Lua执行耗时过高:1594ms msgid:101 2 2 0 1_1_16
+[2026-03-14 06:25:21:183] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：2328; NpcThreadId: 30388, CurPlayThreadId: 30388
+[2026-03-14 06:25:21:183] [玩家名字k]Lua执行耗时过高:2328ms msgid:101 2 2 0 1_1_18
+

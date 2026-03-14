@@ -790,7 +790,7 @@ end
 local fd_sjyb = {[10053] = {500,2000},[10054] = {1000,5000},[10055] = {5000,50000},[10056] = {10000,1000000}}
 
 local hs_name_hlsj = "辉耀水晶"
-local hs_name_lingshi = "灵石"
+local hs_name_lingshi = "幻灵石"
 
 -- 自动回收键匹配：按分组区分，并兼容旧前缀。
 local hs_group_prefix = {

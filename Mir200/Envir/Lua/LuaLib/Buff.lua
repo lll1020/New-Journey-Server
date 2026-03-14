@@ -579,25 +579,37 @@ function Buff.refreshHuTiGuangHuan(play)
     Buff[108](play, 2)
     Buff[109](play, 2)
     Buff[110](play, 2)
+    clearplayeffect(play,11502)
+    clearplayeffect(play,11503)
+    clearplayeffect(play,11504)
 
     local zs_level = tonumber(getplaydef(play, VarCfg["U_转生等级"]) or 0) or 0
     local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
-    local aura1 = zs_level >= 10
-    local aura2 = tonumber(sc_data["首充"] or 0) == 1
-    local aura3 = getflagstatus(play, VarCfg.BS_mztq) == 1
+    local unlocked = {
+        [1] = zs_level >= 10,
+        [2] = tonumber(sc_data["首充"] or 0) == 1,
+        [3] = getflagstatus(play, VarCfg.BS_mztq) == 1,
+    }
+    local active = tonumber(getplaydef(play, VarCfg["U_护体光环激活"]) or 0) or 0
 
-    if aura1 then
-        Buff[107](play, 1)
+    if active < 1 or active > 3 or not unlocked[active] then
+        active = 0
+        setplaydef(play, VarCfg["U_护体光环激活"], 0)
     end
-    if aura2 then
+
+    if active == 1 then
+        Buff[107](play, 1)
+        playeffect(play,11502,0,0,0,1,0)
+    elseif active == 2 then
         Buff[108](play, 1)
         Buff[109](play, 1)
-    end
-    if aura3 then
+        playeffect(play,11503,0,0,0,1,0)
+    elseif active == 3 then
         Buff[110](play, 1)
+        playeffect(play,11504,0,0,0,1,0)
     end
 
-    if aura1 or aura2 or aura3 then
+    if active > 0 then
         if FSetGuangHuan then
             FSetGuangHuan(play, 20)
         else
