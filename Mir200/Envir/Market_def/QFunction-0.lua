@@ -973,9 +973,9 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
             end
             changemoney(play,20,"+",Gold,"平台累计充值",true)
             if not isReal then
-                changemoney(play,8,"+",Gold*100,"充值送一倍",true)
+                changemoney(play,8,"+",Gold*10,"充值送一倍",true)
             end
-            Login_msg(play,18,Gold,Gold*100)
+            Login_msg(play,18,Gold,Gold*10)
         elseif MoneyId == 21 then  --直拉礼包
             if Gold == 88 then
                 if getflagstatus(play,constant.BS_mztq) == 0 then

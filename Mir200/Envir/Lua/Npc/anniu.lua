@@ -152,6 +152,7 @@ end
 
 ---异闻录
 local npc_xyl = dofile('Envir/Lua/Data/npc_xyl.lua')
+local daluditu = dofile('Envir/Lua/Data/daluditu.lua')
 
 -- 
 local function _ywl_activate_linggen(play, idx)
@@ -215,6 +216,86 @@ local function _ywl_is_chapter_open(play, i, j)
     return cur_jqd >= need_jqd
 end
 
+local function _ywl_get_target_dl(sj, shuju)
+    if type(shuju) == "table" and type(shuju.yd) == "table" then
+        local target_map = shuju.yd[2]
+        local dl = target_map and daluditu[target_map] or nil
+        if dl and dl > 0 then
+            return dl
+        end
+    end
+    return tonumber(sj and sj.i) or 0
+end
+
+local _ywl_map_gate = {
+    ["虚妄山脉"] = {mode = "ge", key = "npc_621", value = 2, tip = "踏入·虚妄山脉"},
+    ["鬼嘲深渊"] = {mode = "ge", key = "npc_623", value = 2, tip = "踏入·鬼嘲深渊"},
+    ["叹息旷野"] = {mode = "ge", key = "npc_622", value = 2, tip = "踏入·叹息旷野"},
+    ["禁忌之海"] = {mode = "ge", key = "npc_624", value = 2, tip = "踏入·禁忌之海"},
+    ["船长室"] = {mode = "eq", key = "npc_629_a", value = 1, tip = "沉船之谜·船长室提交"},
+    ["水手舱"] = {mode = "eq", key = "npc_629_b", value = 1, tip = "沉船之谜·水手舱提交"},
+    ["黄泉路"] = {mode = "ge", key = "npc_667", value = 2, tip = "买路钱"},
+    ["罗酆六天"] = {mode = "ge", key = "npc_669", value = 2, tip = "忘却前生情"},
+    ["东海龙宫"] = {mode = "ge", key = "npc_642", value = 2, tip = "资格考验"},
+    ["黑风山"] = {mode = "ge", key = "npc_643", value = 2, tip = "龙王的噩梦"},
+    ["黄风岭"] = {mode = "ge", key = "npc_644", value = 2, tip = "我的袈裟！"},
+    ["女儿国"] = {mode = "ge", key = "npc_645", value = 2, tip = "黄风大圣"},
+    ["通天河"] = {mode = "ge", key = "npc_646", value = 2, tip = "你竟是女王？"},
+    ["狮驼岭"] = {mode = "ge", key = "npc_647", value = 2, tip = "驮我过河"},
+    ["天竺山"] = {mode = "ge", key = "npc_648", value = 2, tip = "大闹狮驼岭"},
+    ["辰龙灵域"] = {mode = "ge", key = "npc_663", value = 2, tip = "灵域使者·一"},
+    ["巳蛇灵域"] = {mode = "ge", key = "npc_663", value = 2, tip = "灵域使者·一"},
+    ["午马灵域"] = {mode = "ge", key = "npc_663", value = 2, tip = "灵域使者·一"},
+    ["未羊灵域"] = {mode = "ge", key = "npc_663", value = 2, tip = "灵域使者·一"},
+    ["灵域·二层"] = {mode = "ge", key = "npc_663", value = 2, tip = "灵域使者·一"},
+    ["申猴灵域"] = {mode = "ge", key = "npc_664", value = 2, tip = "灵域使者·二"},
+    ["酉鸡灵域"] = {mode = "ge", key = "npc_664", value = 2, tip = "灵域使者·二"},
+    ["戌狗灵域"] = {mode = "ge", key = "npc_664", value = 2, tip = "灵域使者·二"},
+    ["亥猪灵域"] = {mode = "ge", key = "npc_664", value = 2, tip = "灵域使者·二"},
+    ["灵域·三层"] = {mode = "ge", key = "npc_664", value = 2, tip = "灵域使者·二"},
+    ["灵域·秘境"] = {mode = "ge", key = "npc_665", value = 2, tip = "灵域使者·三"},
+}
+
+local function _ywl_check_map_gate(play, shuju)
+    if type(shuju) ~= "table" or type(shuju.yd) ~= "table" then
+        return true
+    end
+    local target_map = shuju.yd[2]
+    local cfg = target_map and _ywl_map_gate[target_map] or nil
+    if not cfg then
+        return true
+    end
+    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+    local cur = jq_data[cfg.key]
+    local ok = false
+    if cfg.mode == "eq" then
+        ok = cur == cfg.value
+    else
+        ok = (tonumber(cur) or 0) >= (cfg.value or 0)
+    end
+    if ok then
+        return true
+    end
+    Player.sendmsgEx(play, "请先完成[" .. cfg.tip .. "]#57")
+    return false
+end
+
+local function _ywl_can_transfer(play, sj, shuju)
+    local need_dl = _ywl_get_target_dl(sj, shuju)
+    if need_dl > 0 and not Player.dl_sz(play, need_dl) then
+        return false
+    end
+    if not _ywl_check_map_gate(play, shuju) then
+        return false
+    end
+    if shuju.ydtk and shuju.fwdjy and not shuju.fwdjy(play, shuju.ydtk, shuju) then
+        local ydtip = shuju.ydtip or "进入地图前置任务"
+        Player.sendmsgEx(play, "请先完成[" .. ydtip .. "]#57")
+        return false
+    end
+    return true
+end
+
 npc[11] = function(play, p2, p3, data) --异闻录
     -- sj.i 大陆  sj.j 章节  sj.k 暂时不用  sj.z 剧情
     if p2 == 0 then
@@ -237,19 +318,14 @@ npc[11] = function(play, p2, p3, data) --异闻录
                 sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>剧情点不足...</font>","Type":9}')
                 return
             end
-            if Player.dl_sz_notip(play, sj.i) then
-                local shuju = npc_xyl[sj.i][sj.j].jq[sj.z]
-                if shuju.ydtk and shuju.fwdjy and not shuju.fwdjy(play, shuju.ydtk, shuju) then
-                    local ydtip = shuju.ydtip or "进入地图前置任务"
-                    Player.sendmsgEx(play, 1, "{\"Msg\":\"<font color='#ff0000'>请先完成[" .. ydtip .. "]...</font>\",\"Type\":9}")
-                    return
-                end
+            local shuju = npc_xyl[sj.i][sj.j].jq[sj.z]
+            if _ywl_can_transfer(play, sj, shuju) then
                 if shuju.yd[1] == 0 then
-                    sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>无法传送...</font>","Type":9}')
+                    sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>当前剧情未配置传送坐标...</font>","Type":9}')
                 elseif shuju.yd[1] == 1 then
                     if getplaydef(play, "N$战斗状态") < os.time() then
                         mapmove(play, shuju.yd[2], shuju.yd[4], shuju.yd[5], 5)
-                        sendluamsg(play, 101, 0, 1, 1, '{"lx":2,"npcdt":"' .. shuju.yd[2] .. '","npcid":' .. shuju.yd[3] .. ',"xx":' .. shuju.yd[4] .. ',"yy":' .. shuju.yd[5] .. "}")
+                        sendluamsg(play, 101, 0, 1, 1, '{"lx":2,"npcdt":"' .. shuju.yd[2] .. '","npcid":' .. shuju.yd[3] .. ',"xx":' .. shuju.yd[4] .. ',"yy":' .. shuju.yd[5] .. '}')
                         sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
                     else
                         Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}')
@@ -259,14 +335,12 @@ npc[11] = function(play, p2, p3, data) --异闻录
                     sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
                     sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
                 elseif shuju.yd[1] == 3 then
-                    sendluamsg(play, 101, 0, 1, 1, '{"lx":' .. shuju.yd[2] .. "}")
+                    sendluamsg(play, 101, 0, 1, 1, '{"lx":' .. shuju.yd[2] .. '}')
                     sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
                 elseif shuju.yd[1] == 4 then
                     sendluamsg(play, shuju.yd[2], shuju.yd[3], shuju.yd[4], 0, "")
                     sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
                 end
-            else
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>条件不足,无法传送...</font>","Type":9}' )
             end
         end
     elseif p2 == 2 then --一页任务奖励
@@ -1685,7 +1759,7 @@ npc[998] = function(play, p2, p3, msg) --后台
                     local dx, sy = getplayerbyname(data.mz), data.hb
                     if dx then
                         setplaydef(dx, VarCfg.U_czyz, data.hb)
-                        changemoney(dx, 7, "+", xlxl[2][data.hb] * 100, "", true)
+                        changemoney(dx, 7, "+", xlxl[2][data.hb] * 10, "", true)
                         recharge(dx, xlxl[2][data.hb], "gm", 7, false)
                         Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#28ef01\'>[' .. data.mz .. ']发送礼包成功</font>","Type":9}')
                     else
@@ -1838,7 +1912,7 @@ npc[998] = function(play, p2, p3, msg) --后台
             if data and data.mz and data.hb and data.hb > 0 then
                 local dx, sy = getplayerbyname(data.mz), data.hb
                 if dx then
-                    changemoney(dx, 7, "+", data.hb * 100, "", true)
+                    changemoney(dx, 7, "+", data.hb * 10, "", true)
                     recharge(dx, data.hb, "gm", 7, false)
                     Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#28ef01\'>[' .. data.mz .. ']发送礼包成功</font>","Type":9}')
                 else

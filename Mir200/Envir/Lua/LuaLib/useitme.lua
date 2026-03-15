@@ -173,7 +173,7 @@ function stdmodefunc48(play, item) -- 真实充值卷
     local wpid = getiteminfo(play,item,2)
     local wpjg = getstditeminfo(wpid,8)
     changemoney(play,23,"+",wpjg*sl,"真实充值卷",true)
-    changemoney(play,8,"+",wpjg*100*sl,"真实充值卷",true)
+    changemoney(play,8,"+",wpjg*10*sl,"真实充值卷",true)
     --changemoney(play,23,"+",wpjg*sl,"真实充值卷",true)  --累计充值
     --sendmsg(play, 1, '{"Msg":"真实充值增加:'..wpjg*sl..'","FColor":253,"BColor":255,"Type":1}')
     _take_use_all_item(play, item, sl, itemName)
