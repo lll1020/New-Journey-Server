@@ -942,6 +942,7 @@ function moneychange23(play)
     setplaydef(play,VarCfg["U_真实充值"],querymoney(play,23))
     if querymoney(play,23) >= teshudata["npc_20"].cost and not checktitle(play,"冠名") then
         messagebox(play,"累计充值数量已达到,可以去领取冠名奖励了")
+        Npclib[20].link(play, 20, 1)
     end
 end
 

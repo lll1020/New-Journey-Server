@@ -73,7 +73,7 @@ local function _playerkillplay(play, actor)
         else
             deprivetitle(play, "¿ñ±©Ö®Á¦")
         end
-        local killReward = ((_config.death and _config.death.hb) or 688)
+        local killReward = ((_config.death and _config.death.hb) or 50)
         changemoney(actor, 7, '+', killReward, '»÷É±¿ñ±©', true)
 
         --É¾¼¼ÄÜ

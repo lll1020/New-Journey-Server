@@ -390,7 +390,7 @@ function Player.sendmsg(actor, msg)
     elseif type(msg) == "table" then
         local MsgStr = ""
         for _, v in ipairs(msg) do
-            MsgStr = MsgStr .. "<font color='" .. v[1] .. "'>" .. v[2] .. "</font>"
+            MsgStr = MsgStr .. "<font color='" .. v[1] .. "' size='14'>" .. v[2] .. "</font>"
         end
         Player.sendmsgEx(actor, ConstCfg.notice.own, '{"Msg":"' .. MsgStr .. '","Type":9}')
     end
@@ -423,7 +423,7 @@ function Player.sendmsgEx(actor, arg2, arg3)
         local colorNum = tonumber(text[2])
         colorNum = colorNum or defaultColor
         local hexColor = ColorCfg[colorNum] ~= nil and ColorCfg[colorNum].hexColor or ColorCfg[defaultColor].hexColor
-        content = content .. "<font color='" .. hexColor .. "'>" .. text[1] .. "</font>"
+        content = content .. "<font color='" .. hexColor .. "' size='14' >" .. text[1] .. "</font>"
     end
     if content ~= "" then
         sendmsg(actor, ConstCfg.notice.own, '{"Msg":"' .. content .. '","Type":9}')

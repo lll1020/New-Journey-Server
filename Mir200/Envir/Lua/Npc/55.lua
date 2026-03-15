@@ -37,16 +37,16 @@ function npc.link(play, npcid, p2, p3, msgData)
 
     local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
-    if jq_data["npc55"] and jq_data["npc55"] >= 2 then
+    if jq_data["npc_55"] and jq_data["npc_55"] >= 2 then
         Player.sendmsgEx(play,  "你已经完成了该任务#57")
         return
     end
     if p2 == 1 then
-        if jq_data["npc55"] and jq_data["npc55"] == 1 then --已领取
+        if jq_data["npc_55"] and jq_data["npc_55"] == 1 then --已领取
             Player.sendmsgEx(play,  "你已经领取了该任务#57")
             return
         else
-            jq_data["npc55"] = 1
+            jq_data["npc_55"] = 1
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
             Player.sendmsgEx(play,  "领取任务")
             shaguai.jia(play,_config.shaguai_id)
@@ -54,18 +54,20 @@ function npc.link(play, npcid, p2, p3, msgData)
             sendluamsg(play,100,npcid,1,1,"")
         end
     elseif p2 == 2 then
-        if jq_data["npc55"] and jq_data["npc55"] == 1 then --已领取
-            if sg_data["npc55"] and sg_data["npc55"] >= _config.num then
-                jq_data["npc55"] = 2
-                if (jq_data["npc55"] or 0) >= 2 then
-                    Guard.clearTaskTemp(jq_data, "npc55")
-                    jq_data["npc55"] = 2
+        if jq_data["npc_55"] and jq_data["npc_55"] == 1 then --已领取
+            if sg_data["npc_55"] and sg_data["npc_55"] >= _config.num then
+                jq_data["npc_55"] = 2
+                if (jq_data["npc_55"] or 0) >= 2 then
+                    Guard.clearTaskTemp(jq_data, "npc_55")
+                    jq_data["npc_55"] = 2
                 end
                 Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
                 Player.sendmsgEx(play,  "任务完成")
                 sendluamsg(play,101,1005,0,0,"rwwc")
                 Player.rwjl(play, _config.rwjl, "开辟仙府任务奖励",1)
                 sendluamsg(play,100,npcid,1,2,"")
+                sendluamsg(play, 101, 9999, 0, 0, "npc_"..npcid)
+                Npclib[44].main(play, 44)
             else
                 Player.sendmsgEx(play,  "你还没有完成任务#57")
                 return

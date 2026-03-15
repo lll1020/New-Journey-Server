@@ -75,6 +75,9 @@ function npc.link(play, npcid, p2, p3, msgData)
             end
         else
             Player.sendmsgEx(play,  "修炼失败，灵根没有提升#57")
+            local data = {}
+            data["dj_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根修炼"])
+            sendluamsg(play,100,npcid,0,0,tbl2json(data))
             return
         end
     elseif p2 == 2 then

@@ -92,7 +92,7 @@ npc[2] = function(play, p2, p3, msgData) --背包  面板
             local hs = json2tbl(msgData)
             Player.huishou(play, hs)
         end
-        Player.zxrw_wancheng(play, 4, "")
+        Player.zxrw_wancheng(play, 5, "")
     elseif p2 == 6 then --销毁
         local hs = json2tbl(msgData)
         Player.huishou(play, hs)
@@ -502,7 +502,7 @@ end
 
 npc[30] = function(play, p2, p3, data) --砍树系统
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
-    if not (jq_data["npc55"] and jq_data["npc55"] >= 2) then
+    if not (jq_data["npc_55"] and jq_data["npc_55"] >= 2) then
         Player.sendmsgEx(play, "你还未开启相关剧情，暂无法使用#57")
         return
     end

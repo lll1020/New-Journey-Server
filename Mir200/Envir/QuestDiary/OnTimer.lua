@@ -379,6 +379,12 @@ local function _qmdk_get_score_var(cfg, state)
     return prefix .. "_" .. os.date("%Y%m%d")
 end
 
+-- getplayvar ???????????????????? tonumber?
+local function _safe_getplayvar_num(play, objType, key)
+    local raw = getplayvar(play, objType, key)
+    return tonumber(raw) or 0
+end
+
 -- 开启全民夺矿活动
 local function _qmdk_start(dqfz, cfg, fromBot)
     if getsysvar(VarCfg["G_全民夺矿状态"]) == 1 then
@@ -444,7 +450,7 @@ local function _qmdk_finish(cfg, fromBot)
 
     if type(cfg.join_reward) == "table" and #cfg.join_reward > 0 then
         for _, player in ipairs(getplayerlst() or {}) do
-            local score = tonumber(getplayvar(player, "HUMAN", scoreVar)) or 0
+            local score = _safe_getplayvar_num(player, "HUMAN", scoreVar)
             local name = getbaseinfo(player, 1)
             if score > 0 and not topNames[name] then
                 sendmail(getbaseinfo(player, 2), 0, mailTitle, "恭喜你参与全民夺矿,参与奖励已下发!", Player.jl_mail(cfg.join_reward))
@@ -651,7 +657,8 @@ function ontimerex1()
                 local wanjia = getobjectinmap(_WLMZ_MAP_NAME,25,29,65,1)
                 for k, v in pairs(wanjia) do
                     local hsmy_px = sorthumvar(_WLMZ_SCORE_VAR,1,1,5)
-                    sendluamsg(v,101,498,1,0,'{"pmsj":'..tbl2json(hsmy_px)..',"grjf":'..getplayvar(v, "HUMAN", _WLMZ_SCORE_VAR)..'}')
+                    local grjf = _safe_getplayvar_num(v, "HUMAN", _WLMZ_SCORE_VAR)
+                    sendluamsg(v,101,498,1,0,'{"pmsj":'..tbl2json(hsmy_px)..',"grjf":'..grjf..'}')
                 end
                 local hsmy_px = sorthumvar(_WLMZ_SCORE_VAR,1,1,3)
                 local index = 0
@@ -670,7 +677,7 @@ function ontimerex1()
                 local player_list = getplayerlst()
                 for i, player  in ipairs(player_list or {}) do
                     if getflagstatus(player,VarCfg.BS_tyrc) == 0 then
-                        if getplayvar(player, "HUMAN", _WLMZ_SCORE_VAR) > 0 then
+                        if _safe_getplayvar_num(player, "HUMAN", _WLMZ_SCORE_VAR) > 0 then
                             setflagstatus(player,VarCfg.BS_tyrc,1)
                             sendmail(getbaseinfo(player,2),0,_WLMZ_EVENT_NAME,"恭喜你获得".._WLMZ_EVENT_NAME.."安慰奖,奖励已下发!","恭喜你获得,奖励已下发!",Player.jl_mail(constant.pz_wlmz[4]))
                         end
@@ -931,17 +938,17 @@ function hd_tcppk(xx,ditu)
             local addScore = tonumber(qmdkCfg.score_per_tick) or 1
             local wanjia = getobjectinmap(qmdkMap, 0, 0, 999, 1)
             for _, v in pairs(wanjia or {}) do
-                local jf = (tonumber(getplayvar(v, "HUMAN", scoreVar)) or 0) + addScore
+                local jf = _safe_getplayvar_num(v, "HUMAN", scoreVar) + addScore
                 setplayvar(v, "HUMAN", scoreVar, jf, 1)
             end
         end
     elseif ditu == _WLMZ_MAP_NAME then
         local wanjia = getobjectinmap(_WLMZ_MAP_NAME,25,29,65,1)
         for k, v in pairs(wanjia) do
-            local jf = getplayvar(v, "HUMAN", _WLMZ_SCORE_VAR) + 1
+            local jf = _safe_getplayvar_num(v, "HUMAN", _WLMZ_SCORE_VAR) + 1
             setplayvar(v, "HUMAN", _WLMZ_SCORE_VAR, jf, 1)
             local hsmy_px = sorthumvar(_WLMZ_SCORE_VAR,1,1,5)
-            sendluamsg(v,101,498,1,0,'{"pmsj":'..tbl2json(hsmy_px)..',"grjf":'..getplayvar(v, "HUMAN", _WLMZ_SCORE_VAR)..'}')
+            sendluamsg(v,101,498,1,0,'{"pmsj":'..tbl2json(hsmy_px)..',"grjf":'..jf..'}')
         end
 
     end
