@@ -296,10 +296,28 @@ local function _ywl_can_transfer(play, sj, shuju)
     return true
 end
 
+local function _ywl_send_current_task(play)
+    local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
+    local dq = T_ywl.dq or ""
+    sendluamsg(play, 101, 11, 9, 0, '{"dq":"' .. dq .. '"}')
+end
+
+local function _ywl_set_current_task(play, sj)
+    local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
+    T_ywl.dq = sj.i .. "_" .. sj.j .. "_" .. sj.z
+    T_ywl.dq_i = nil
+    T_ywl.dq_j = nil
+    T_ywl.dq_z = nil
+    T_ywl.dq_id = nil
+    setplaydef(play, VarCfg.T_ywl, tbl2json(T_ywl))
+    _ywl_send_current_task(play)
+end
+
 npc[11] = function(play, p2, p3, data) --异闻录
     -- sj.i 大陆  sj.j 章节  sj.k 暂时不用  sj.z 剧情
     if p2 == 0 then
         sendluamsg(play, 101, 11, 0, 0, '{"dljq":' .. getplaydef(play, VarCfg.T_dljq) .. ',"zxrw":' .. getplaydef(play, VarCfg.T_zxrw) .. ',"ywl":' .. getplaydef(play, VarCfg.T_ywl) .. "}")
+        _ywl_send_current_task(play)
     elseif p2 == 1 then
         --传送
         local sj = json2tbl(data)
@@ -320,6 +338,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
             end
             local shuju = npc_xyl[sj.i][sj.j].jq[sj.z]
             if _ywl_can_transfer(play, sj, shuju) then
+                local is_transfer_ok = false
                 if shuju.yd[1] == 0 then
                     sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>当前剧情未配置传送坐标...</font>","Type":9}')
                 elseif shuju.yd[1] == 1 then
@@ -327,6 +346,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
                         mapmove(play, shuju.yd[2], shuju.yd[4], shuju.yd[5], 5)
                         sendluamsg(play, 101, 0, 1, 1, '{"lx":2,"npcdt":"' .. shuju.yd[2] .. '","npcid":' .. shuju.yd[3] .. ',"xx":' .. shuju.yd[4] .. ',"yy":' .. shuju.yd[5] .. '}')
                         sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
+                        is_transfer_ok = true
                     else
                         Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}')
                     end
@@ -334,12 +354,18 @@ npc[11] = function(play, p2, p3, data) --异闻录
                     sendluamsg(play, 101, 0, 1, 1, '{"lx":1,"fx":1,"an":' .. shuju.yd[3] .. ',"ms":"点击按钮"}')
                     sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
                     sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
+                    is_transfer_ok = true
                 elseif shuju.yd[1] == 3 then
                     sendluamsg(play, 101, 0, 1, 1, '{"lx":' .. shuju.yd[2] .. '}')
                     sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
+                    is_transfer_ok = true
                 elseif shuju.yd[1] == 4 then
                     sendluamsg(play, shuju.yd[2], shuju.yd[3], shuju.yd[4], 0, "")
                     sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
+                    is_transfer_ok = true
+                end
+                if is_transfer_ok then
+                    _ywl_set_current_task(play, sj)
                 end
             end
         end
@@ -373,6 +399,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
                 Player.rwjl(play, _jl, "剧情jl", 1)
             end
             sendluamsg(play, 101, 11, 2, 2, tbl2json(sj) )
+            _ywl_send_current_task(play)
         end
     elseif p2 == 3 then --单个任务奖励
         local sj = json2tbl(data)
@@ -413,6 +440,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
                         Player.rwjl(play, shuju.jl, "剧情jl", 1,0)
                     end
                     sendluamsg(play, 101, 11, 2, 3, tbl2json(sj) )
+                    _ywl_send_current_task(play)
                 else
                     Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>未完成[' .. shuju[1] .. ']剧情...</font>","Type":9}')
                     return
