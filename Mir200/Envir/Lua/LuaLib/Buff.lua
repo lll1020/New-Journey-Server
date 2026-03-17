@@ -674,6 +674,13 @@ function Buff.login(play)
     if getplaydef(play, VarCfg["U_¿ºΩ„∫√∏–∂»"]) > 0 then
         addattlist(play, "¿ºΩ„∫√∏–∂»", "=", "3#"..teshudata["npc_13"].attrID.."#"..teshudata["npc_13"].config[getplaydef(play, VarCfg["U_¿ºΩ„∫√∏–∂»"])].ratio, 1)
     end
+    --∏£Õﬁ≤¬»≠«–∏Ó
+    data = Player.getJsonTableByVar(play, VarCfg["T_∏£Õﬁ≤¬»≠"] )
+    local fuwa_cut = tonumber(data.cut) or 0
+    delattlist(play, "∏£Õﬁ≤¬»≠«–∏Ó")
+    if fuwa_cut > 0 then
+        addattlist(play, "∏£Õﬁ≤¬»≠«–∏Ó", "=", "3#" .. (teshudata["npc_66"].cut_attr or 244) .. "#" .. fuwa_cut, 1)
+    end
    
     ------------------------------------------------------------Õ®”√ Ù–‘
     local attr = {}

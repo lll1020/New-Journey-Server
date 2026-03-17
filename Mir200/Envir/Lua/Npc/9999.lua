@@ -83,7 +83,7 @@ function ggn(play,id)
             changecustomitemvalue(play,item,2,"=",4000,0)
             changecustomitemvalue(play,item,3,"=",20000,0)
             changecustomitemvalue(play,item,9,"=",5000,0)
-            confertitle(play,"人物淬体200级")
+            confertitle(play,teshudata["npc_54"].del_title)
             changecustomitemvalue(play,item,4,"=",200,0)
             changecustomitemvalue(play,item,5,"=",10,0)
             changecustomitemvalue(play,item,6,"=",20,0)
@@ -708,12 +708,14 @@ function ggna(play,id)
 --             end
 --         end
 --         return
-        local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
-        jq_data["npc_714"] = nil
-        Player.setJsonTableByVar(play, VarCfg.T_dljq, jq_data)
+        -- local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+        -- jq_data["npc_714"] = nil
+        -- Player.setJsonTableByVar(play, VarCfg.T_dljq, jq_data)
         -- local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
         -- sg_data["npc_696"] = sg_data["npc_696"] + 100
         -- Player.setJsonTableByVar(play, VarCfg["T_各剧情杀怪"], sg_data)
+        		sendmsgnew(play, 255, 0, '狂暴之力：玩家{《' .. getbaseinfo(play, 1) .. '》/FCOLOR=251}成功开启{[狂暴之力]/FCOLOR=250},击杀此人可获得额外奖励...', 1, 3)
+
 
 
         -- Npclib[654].link(play, 654, 1, 0, "")

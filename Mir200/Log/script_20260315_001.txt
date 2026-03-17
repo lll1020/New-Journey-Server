@@ -23,3 +23,5 @@
 
 [2026-03-16 13:46:32:113] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 5748, CurPlayThreadId: 5748
 
+[2026-03-16 13:55:35:266] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：32; NpcThreadId: 5748, CurPlayThreadId: 5748
+

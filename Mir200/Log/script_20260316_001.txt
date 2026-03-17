@@ -1,0 +1,23 @@
+[2026-03-16 14:11:33:592] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：94; NpcThreadId: 35784, CurPlayThreadId: 35784
+
+[2026-03-16 14:22:23:120] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 35784, CurPlayThreadId: 35784
+[2026-03-16 14:22:23:120] [玩家名字]Lua执行耗时过高:31ms msgid:101 11 1 0 {"i":2,"j":3,"k":0,"z":2}
+[2026-03-16 14:22:24:705] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 35784, CurPlayThreadId: 35784
+
+[2026-03-16 14:22:36:033] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 35784, CurPlayThreadId: 35784
+[2026-03-16 14:22:36:612] LuaNPC:玩家名字 ID:999999999 执行 attack player:玩家名字 耗时：31; NpcThreadId: 35784, CurPlayThreadId: 35784
+
+[2026-03-16 14:40:31:456] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 35784, CurPlayThreadId: 35784
+
+[2026-03-17 10:28:40:337] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 35784, CurPlayThreadId: 35784
+
+[2026-03-17 16:18:41:131] LuaNPC:玩家名字 ID:999999999 执行 moneychange16 player:玩家名字 耗时：31; NpcThreadId: 35784, CurPlayThreadId: 35784
+[2026-03-17 16:18:41:133] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 35784, CurPlayThreadId: 35784
+
+[2026-03-18 07:47:53:718] LuaNPC:玩家名字 ID:999999999 执行 ontimer6 player:玩家名字 耗时：78; NpcThreadId: 35784, CurPlayThreadId: 35784
+
+[2026-03-18 07:49:16:063] LuaNPC:玩家名字 ID:999999999 执行 groupitemonex player:玩家名字 耗时：32; NpcThreadId: 35784, CurPlayThreadId: 35784
+[2026-03-18 07:49:16:142] LuaNPC:玩家名字 ID:999999999 执行 groupitemonex player:玩家名字 耗时：78; NpcThreadId: 35784, CurPlayThreadId: 35784
+
+[2026-03-18 07:50:53:808] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：32; NpcThreadId: 35784, CurPlayThreadId: 35784
+

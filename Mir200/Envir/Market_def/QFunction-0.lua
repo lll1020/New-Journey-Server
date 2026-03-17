@@ -300,6 +300,7 @@ function pickupitemex(play, item)
             Player.setJsonVarByTable(nil, VarCfg["A_全区首曝json"], qqsb)
             local mz = getbaseinfo(play,1)
             sendmovemsg(play,1,253,0,185,1,'【全区首曝】: <恭喜玩家/FCOLOR=250><【'..mz..'】/FCOLOR=243><成功捡取/FCOLOR=250><【'..name..'】/FCOLOR=243>')
+            Player.sendmsgEx(play, "恭喜获得#215|【"..name.."】#191|首爆奖励,请到福利大厅领取#215")
         end
     end
 end

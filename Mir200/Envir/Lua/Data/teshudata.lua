@@ -148,7 +148,7 @@ teshudata = {
         cost =  { {"赤焰石",5},{"千年玄铁",5},{"金币",50000} },
         --5*赤焰石|5*千年玄铁|50000*金币
         max_cost =  { {"元宝",1000000} },
-        title = "灵根修炼一",
+        title = "基础淬体",
         config = {
             --配置
             [1] = {name = "头部",attr_desc = "暴击几率增加",ratio = 1},
@@ -178,16 +178,16 @@ teshudata = {
         config = {
             --配置
             [0] = {ratio = 0},
-            [1] = {ratio = 100,cost =  { {"好感度道具",20} },gl = 100},
-            [2] = {ratio = 200,cost =  { {"好感度道具",40} },gl = 100},
-            [3] = {ratio = 300,cost =  { {"好感度道具",60} },gl = 100},
-            [4] = {ratio = 400,cost =  { {"好感度道具",80} },gl = 100},
-            [5] = {ratio = 500,cost =  { {"好感度道具",100} },gl = 100},
-            [6] = {ratio = 1111,cost =  { {"好感度道具",200} },gl = 70},
-            [7] = {ratio = 1777,cost =  { {"好感度道具",250} },gl = 60},
-            [8] = {ratio = 2333,cost =  { {"好感度道具",300} },gl = 50},
-            [9] = {ratio = 3333,cost =  { {"好感度道具",488} },gl = 30},
-            [10] = {ratio = 5555,cost =  { {"好感度道具",588} },gl = 30},
+            [1] = {ratio = 100,cost =  { {"玫瑰花",20} },gl = 100},
+            [2] = {ratio = 200,cost =  { {"玫瑰花",40} },gl = 100},
+            [3] = {ratio = 300,cost =  { {"玫瑰花",60} },gl = 100},
+            [4] = {ratio = 400,cost =  { {"玫瑰花",80} },gl = 100},
+            [5] = {ratio = 500,cost =  { {"玫瑰花",100} },gl = 100},
+            [6] = {ratio = 1111,cost =  { {"玫瑰花",200} },gl = 70},
+            [7] = {ratio = 1777,cost =  { {"玫瑰花",250} },gl = 60},
+            [8] = {ratio = 2333,cost =  { {"玫瑰花",300} },gl = 50},
+            [9] = {ratio = 3333,cost =  { {"玫瑰花",488} },gl = 30},
+            [10] = {ratio = 5555,cost =  { {"玫瑰花",588} },gl = 30},
         },
     },
     ["npc_14"] = {
@@ -575,7 +575,7 @@ teshudata = {
         id = 26,
         name = "占卜",
         max_level = 5,
-        details = { "初窥天机", "通灵神眼", "天机尊者", "命运掌控", "玄秘宗师" },
+        details = { "凡尘微运","灵机初显","鸿运当头","先天洪福","帝王之姿",},
         cost = { { "灵石", 100 } }
     },
     ["npc_27"] = {
@@ -992,8 +992,8 @@ teshudata = {
         attrID = {21,25,26,28,30},
         cost =  { {"赤焰石",35},{"千年玄铁",35} },
         max_cost =  { {"灵石",2888} },
-        del_title = "灵根修炼一",
-        title = "灵根修炼二",
+        del_title = "基础淬体",
+        title = "高级淬体",
         config = {
             --配置
             [1] = {name = "头部",attr_desc = "暴击几率增加",ratio = 1},
@@ -1120,6 +1120,9 @@ teshudata = {
     ["npc_66"] = {
         id = 66,
         name = "福娃猜拳",
+        cost = {{"金币",1000000}},
+        cut_attr = 244,
+        cut_range = {300,1000},
         shop = {
             {item = "胖娃的朋友",win_num = 1,ch = "胖娃的朋友"},
             {item = "胖娃的肚兜",win_num = 5,give = {{"胖娃的肚兜",1}}},
@@ -1153,11 +1156,11 @@ teshudata = {
     },
     ["npc_68"] = {
         details = {
-            {mob_name= "雷灵根守护兽",mob_shape = 12034,scale = 0.7,time = 300,nandu = "ss",yq = "无",jl = "激活雷灵根", itme = "御雷丹",},
+            {mob_name= "雷灵根守护兽",mob_shape = 12034,scale = 0.7,time = 300,nandu = "ss",yq = "无",jl = "激活雷灵根", itme = nil,},
             {mob_name= "风灵根守护兽",mob_shape = 12035,time = 300,nandu = "ss",yq = "无",jl = "激活风灵根", itme = "定风珠",},
-            {mob_name= "冰灵根守护兽",mob_shape = 12036,time = 300,nandu = "ss",yq = "无",jl = "激活冰灵根", itme = "深情的家伙[称号]",},
+            {mob_name= "冰灵根守护兽",mob_shape = 12036,time = 300,nandu = "ss",yq = "无",jl = "激活冰灵根", itme = "深情的家伙",},
             {mob_name= "焚灵根守护兽",mob_shape = 12037,time = 300,nandu = "ss",yq = "无",jl = "激活焚灵根", itme = "芭蕉扇",},
-            {mob_name= "岩灵根守护兽",mob_shape = 12038,time = 300,nandu = "ss",yq = "无",jl = "激活岩灵根", itme = "后土之力[称号]",},
+            {mob_name= "岩灵根守护兽",mob_shape = 12038,time = 300,nandu = "ss",yq = "无",jl = "激活岩灵根", itme = "后土之力",},
         },
     },
     ["npc_70"] = {

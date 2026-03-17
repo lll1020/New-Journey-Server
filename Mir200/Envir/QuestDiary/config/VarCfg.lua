@@ -20,6 +20,7 @@ VarCfg.A_XianFuRank =                   "A6"
 VarCfg["A_全服孤品"]          = "A7"                                                                          --A_全服孤品
 VarCfg["A_全民答题json"]          = "A8"                                                                          --全民答题json
 VarCfg["A_全民夺矿json"]          = "A9"                                                                          --全民夺矿json
+VarCfg["A_首个冠名json"]          = "A10"                                                                          --首个达到冠名的玩家
 
 VarCfg["A_违规人员名单"]          = "A300"                                                                          --违规人员名单
 
