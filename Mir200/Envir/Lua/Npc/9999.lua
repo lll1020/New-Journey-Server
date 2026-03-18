@@ -22,15 +22,33 @@ function npc.main(play,npcid)
             <Button|id=ui_101|x=350|y=450|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=测试装备|link=@ggna,23>
             <Button|id=ui_102|x=550|y=450|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=大陆全解锁|link=@ggna,25>
 
-            <Button|id=ui_39|x=18|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=武林盟主开始|link=@jqr_ddzbks,20>
-            <Button|id=ui_40|x=100|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=武林盟主结束|link=@jqr_ddzbjs,21>
-            <Button|id=ui_41|x=200|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=真假鸡爱慕开始|link=@jqr_yjxbks,22>
-            <Button|id=ui_42|x=300|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=真假鸡爱慕结束|link=@jqr_yjxbjs,23>
-            <Button|id=ui_43|x=400|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=阵营对抗开始|link=@jqr_zydkks,24>
-            <Button|id=ui_44|x=500|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=阵营对抗结束|link=@jqr_zydkjs,25>
-
-            <Button|id=ui_45|x=500|y=150|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=攻沙开始|link=@ggna,21>
-            <Button|id=ui_46|x=700|y=150|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=飘字测试|link=@ggn,14>
+            <Button|id=ui_39|x=18|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=村庄开始|link=@ggna,32>
+            <Button|id=ui_40|x=130|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=村庄结束|link=@ggna,33>
+            <Button|id=ui_41|x=242|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=夺矿开始|link=@ggna,26>
+            <Button|id=ui_42|x=354|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=夺矿结束|link=@ggna,27>
+            <Button|id=ui_43|x=466|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=答题开始|link=@ggna,28>
+            <Button|id=ui_44|x=578|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=答题结束|link=@ggna,29>
+            <Button|id=ui_45|x=18|y=150|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=镖车开始|link=@ggna,34>
+            <Button|id=ui_46|x=130|y=150|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=镖车结束|link=@ggna,35>
+            <Button|id=ui_47|x=242|y=150|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=跑酷开始|link=@ggna,36>
+            <Button|id=ui_48|x=354|y=150|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=跑酷结束|link=@ggna,37>
+            <Button|id=ui_49|x=466|y=150|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=地宝开始|link=@ggna,38>
+            <Button|id=ui_50|x=578|y=150|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=地宝结束|link=@ggna,39>
+            <Button|id=ui_51|x=18|y=200|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=天选开始|link=@ggna,40>
+            <Button|id=ui_52|x=130|y=200|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=天选结束|link=@ggna,41>
+            <Button|id=ui_53|x=242|y=200|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=正邪开始|link=@ggna,42>
+            <Button|id=ui_54|x=354|y=200|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=正邪结束|link=@ggna,43>
+            <Button|id=ui_55|x=466|y=200|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=盟主开始|link=@ggna,30>
+            <Button|id=ui_56|x=578|y=200|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=盟主结束|link=@ggna,31>
+            <Button|id=ui_57|x=18|y=250|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=沙城开始|link=@ggna,44>
+            <Button|id=ui_58|x=130|y=250|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=沙城结束|link=@ggna,45>
+            <Button|id=ui_59|x=242|y=250|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=BOSS开始|link=@ggna,46>
+            <Button|id=ui_60|x=354|y=250|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=BOSS结束|link=@ggna,47>
+            <Button|id=ui_61|x=466|y=250|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=夺宝开始|link=@ggna,48>
+            <Button|id=ui_62|x=578|y=250|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=夺宝结束|link=@ggna,49>
+            <Button|id=ui_63|x=18|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=禁地开始|link=@ggna,50>
+            <Button|id=ui_64|x=130|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=禁地结束|link=@ggna,51>
+            <Button|id=ui_65|x=578|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=飘字测试|link=@ggn,14>
 
                 ]])
     end
@@ -229,6 +247,398 @@ function ggn(play,id)
     end
 end
 
+local function _admin_tbl(raw)
+    if raw == nil or raw == "" then
+        return {}
+    end
+    local tb = json2tbl(raw)
+    return type(tb) == "table" and tb or {}
+end
+
+local function _admin_qmdk_cfg()
+    local cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].qmdk or nil
+    if type(cfg) ~= "table" then
+        return nil
+    end
+    cfg.map = cfg.map or "全民夺矿"
+    cfg.duration_min = tonumber(cfg.duration_min) or 8
+    cfg.score_tick_sec = tonumber(cfg.score_tick_sec) or 10
+    cfg.score_var_prefix = cfg.score_var_prefix or "全民夺矿"
+    cfg.panel_idx = tonumber(cfg.panel_idx) or 3
+    return cfg
+end
+
+local function _admin_qmdk_score_var(cfg, state)
+    return "全民夺矿"
+end
+
+local function _admin_qmdk_start(play)
+    local cfg = _admin_qmdk_cfg()
+    if not cfg then
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>全民夺矿配置缺失</font>","Type":9}')
+        return
+    end
+    if getsysvar(VarCfg["G_全民夺矿状态"]) == 1 then
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>全民夺矿已开启</font>","Type":9}')
+        return
+    end
+    if QmdkApi and QmdkApi.reset_online_scores then
+        QmdkApi.reset_online_scores()
+    end
+    local state = {
+        open = 1,
+        start_minute = getsysvar(VarCfg["G_开区分钟"]),
+        map = cfg.map,
+        score_var = _admin_qmdk_score_var(cfg, nil),
+        from_bot = 1,
+        prepare_end_ts = os.time() + (tonumber(cfg.prepare_sec) or 10),
+    }
+    setsysvar(VarCfg["G_全民夺矿状态"], 1)
+    setsysvar(VarCfg["A_全民夺矿json"], tbl2json(state))
+    if QmdkApi and QmdkApi.tick_runtime then
+        state = QmdkApi.tick_runtime(cfg, state) or state
+    end
+    setenvirontimer(cfg.map, 3, cfg.score_tick_sec, "@hd_tcppk," .. cfg.map)
+    sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《全民夺矿》已开启，请尽快前往矿区争夺积分...")
+    sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《全民夺矿》已开启，请尽快前往矿区争夺积分...")
+    for _, player in ipairs(getplayerlst() or {}) do
+        if QmdkApi and QmdkApi.refresh_actor then
+            QmdkApi.refresh_actor(player)
+        end
+        sendluamsg(player, 101, 12, 1, 2, '{"sk":' .. cfg.duration_min .. ',"kf":2,"idx":2}')
+    end
+    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>全民夺矿已手动开启</font>","Type":9}')
+end
+
+local function _admin_qmdk_finish(play)
+    local cfg = _admin_qmdk_cfg()
+    if not cfg then
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>全民夺矿配置缺失</font>","Type":9}')
+        return
+    end
+    if getsysvar(VarCfg["G_全民夺矿状态"]) ~= 1 then
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>全民夺矿未开启</font>","Type":9}')
+        return
+    end
+    local state = _admin_tbl(getsysvar(VarCfg["A_全民夺矿json"]))
+    local mapName = (state.map and state.map ~= "") and state.map or cfg.map
+    setenvirofftimer(mapName, 3)
+    if cfg.ore_mob and cfg.ore_mob ~= "" then
+        killmonsters(mapName, cfg.ore_mob, 0, false)
+    end
+    if QmdkApi and QmdkApi.clear_all_online then
+        QmdkApi.clear_all_online(cfg, false)
+    end
+    local scoreVar = _admin_qmdk_score_var(cfg, state)
+    local rankRaw = sorthumvar(scoreVar, 1, 1, 10)
+    local rankData = {}
+    for i = 1, #rankRaw, 2 do
+        local name = rankRaw[i]
+        local score = tonumber(rankRaw[i + 1]) or 0
+        if name and score > 0 then
+            table.insert(rankData, {name = name, score = score})
+        end
+    end
+    local topNames = {}
+    for i, one in ipairs(rankData) do
+        local reward = cfg.rank_rewards and cfg.rank_rewards[i]
+        if reward and type(reward.items) == "table" and #reward.items > 0 then
+            sendmail("#" .. one.name, 0, cfg.mail_title or "全民夺矿", "恭喜你获得全民夺矿第[" .. tostring(i) .. "]名,奖励已下发!", Player.jl_mail(reward.items))
+            topNames[one.name] = 1
+        end
+    end
+    if type(cfg.join_reward) == "table" and #cfg.join_reward > 0 then
+        for _, player in ipairs(getplayerlst() or {}) do
+            local rawScore = getplayvar(player, "HUMAN", scoreVar)
+            local score = tonumber(rawScore or 0) or 0
+            local name = getbaseinfo(player, 1)
+            if score > 0 and not topNames[name] then
+                sendmail(getbaseinfo(player, 2), 0, cfg.mail_title or "全民夺矿", "恭喜你参与全民夺矿,参与奖励已下发!", Player.jl_mail(cfg.join_reward))
+            end
+        end
+    end
+    local topName = rankData[1] and rankData[1].name or "无人上榜"
+    sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《全民夺矿》已结束,本次第一名为【" .. topName .. "】...")
+    sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《全民夺矿》已结束,本次第一名为【" .. topName .. "】...")
+    state.open = 0
+    state.finished = 1
+    state.rank = rankData
+    setsysvar(VarCfg["A_全民夺矿json"], tbl2json(state))
+    setsysvar(VarCfg["G_全民夺矿状态"], 0)
+    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>全民夺矿已手动结束</font>","Type":9}')
+end
+
+local function _admin_qmdt_cfg()
+    local cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].qmdt or nil
+    if type(cfg) ~= "table" then
+        return nil
+    end
+    if type(cfg.questions) ~= "table" or #cfg.questions <= 0 then
+        return nil
+    end
+    cfg.question_count = math.min(tonumber(cfg.question_count) or 5, #cfg.questions)
+    cfg.per_question_sec = tonumber(cfg.per_question_sec) or 120
+    cfg.question_span_min = math.max(1, math.ceil(cfg.per_question_sec / 60))
+    cfg.duration_min = math.max(tonumber(cfg.duration_min) or (cfg.question_count * cfg.question_span_min), cfg.question_count * cfg.question_span_min)
+    return cfg
+end
+
+local function _admin_qmdt_build_prompt(cfg, qidx)
+    local q = cfg.questions[qidx]
+    local lines = {"第" .. tostring(qidx) .. "/" .. tostring(cfg.question_count) .. "题：" .. tostring(q.title or "")}
+    for i, one in ipairs(q.options or {}) do
+        lines[#lines + 1] = tostring(i) .. "." .. tostring(one)
+    end
+    lines[#lines + 1] = "请输入答案序号或完整答案"
+    return table.concat(lines, "\n")
+end
+
+local function _admin_qmdt_push_first(cfg, state)
+    local q = cfg.questions[1]
+    if not q then
+        return
+    end
+    state.current_idx = 1
+    state.question_start_minute = getsysvar(VarCfg["G_开区分钟"])
+    state.question_end_ts = os.time() + cfg.per_question_sec
+    setsysvar(VarCfg["A_全民答题json"], tbl2json(state))
+    for _, player in ipairs(getplayerlst() or {}) do
+        sendluamsg(player,101,12,1,3,'{"sk":2,"kf":2,"idx":3}')
+    end
+end
+
+local function _admin_qmdt_start(play)
+    local cfg = _admin_qmdt_cfg()
+    if not cfg then
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>全民答题配置缺失</font>","Type":9}')
+        return
+    end
+    if getsysvar(VarCfg["G_全民答题状态"]) == 1 then
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>全民答题已开启</font>","Type":9}')
+        return
+    end
+    local state = {
+        open = 1,
+        start_minute = getsysvar(VarCfg["G_开区分钟"]),
+        current_idx = 0,
+        question_start_minute = getsysvar(VarCfg["G_开区分钟"]),
+        question_end_ts = 0,
+        players = {},
+    }
+    setsysvar(VarCfg["G_全民答题状态"], 1)
+    setsysvar(VarCfg["A_全民答题json"], tbl2json(state))
+    sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《全民答题》已开启，请通过活动面板输入答案...")
+    sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《全民答题》已开启，请通过活动面板输入答案...")
+    _admin_qmdt_push_first(cfg, state)
+    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>全民答题已手动开启</font>","Type":9}')
+end
+
+local function _admin_qmdt_finish(play)
+    local cfg = _admin_qmdt_cfg()
+    if not cfg then
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>全民答题配置缺失</font>","Type":9}')
+        return
+    end
+    if getsysvar(VarCfg["G_全民答题状态"]) ~= 1 then
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>全民答题未开启</font>","Type":9}')
+        return
+    end
+    local state = _admin_tbl(getsysvar(VarCfg["A_全民答题json"]))
+    local rankData = {}
+    for name, rec in pairs(state.players or {}) do
+        local total = tonumber(rec.total) or 0
+        if total > 0 then
+            table.insert(rankData, {
+                name = name,
+                score = tonumber(rec.score) or 0,
+                right = tonumber(rec.right) or 0,
+                total = total,
+            })
+        end
+    end
+    table.sort(rankData, function(a, b)
+        if a.score ~= b.score then
+            return a.score > b.score
+        end
+        if a.right ~= b.right then
+            return a.right > b.right
+        end
+        return a.name < b.name
+    end)
+    local rankedTop = {}
+    for i, one in ipairs(rankData) do
+        local rewardCfg = cfg.rank_rewards and cfg.rank_rewards[i]
+        if rewardCfg and type(rewardCfg.items) == "table" then
+            rankedTop[one.name] = 1
+            sendmail("#" .. one.name, 0, cfg.mail_title or "全民答题", "恭喜你获得全民答题第[" .. tostring(i) .. "]名,奖励已下发!", Player.jl_mail(rewardCfg.items))
+        end
+    end
+    if type(cfg.join_reward) == "table" and #cfg.join_reward > 0 then
+        for _, one in ipairs(rankData) do
+            if not rankedTop[one.name] then
+                sendmail("#" .. one.name, 0, cfg.mail_title or "全民答题", "恭喜你参与全民答题,参与奖励已下发!", Player.jl_mail(cfg.join_reward))
+            end
+        end
+    end
+    local topName = rankData[1] and rankData[1].name or "无人上榜"
+    sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《全民答题》已结束,本次第一名为【" .. topName .. "】...")
+    sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《全民答题》已结束,本次第一名为【" .. topName .. "】...")
+    state.open = 0
+    state.finished = 1
+    state.rank = rankData
+    setsysvar(VarCfg["A_全民答题json"], tbl2json(state))
+    setsysvar(VarCfg["G_全民答题状态"], 0)
+    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>全民答题已手动结束</font>","Type":9}')
+end
+
+local function _admin_wlmz_start(play)
+    setenvirontimer("比武大会", 2, 10, "@hd_tcppk,比武大会")
+    sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《武林盟主》已开启奖励丰厚,请尽快参加活动...")
+    sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《武林盟主》已开启奖励丰厚,请尽快参加活动...")
+    for _, player in ipairs(getplayerlst() or {}) do
+        sendluamsg(player,101,12,1,9,'{"sk":10,"kf":2,"idx":9}')
+    end
+    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>武林盟主已手动开启</font>","Type":9}')
+end
+
+local function _admin_wlmz_finish(play)
+    setenvirofftimer("比武大会", 2)
+    local wanjia = getobjectinmap("比武大会",25,29,65,1)
+    for _, v in pairs(wanjia or {}) do
+        local hsmy_px = sorthumvar("比武大会",1,1,5)
+        local rawGrjf = getplayvar(v, "HUMAN", "比武大会")
+        local grjf = tonumber(rawGrjf or 0) or 0
+        sendluamsg(v,101,498,1,0,'{"pmsj":'..tbl2json(hsmy_px)..',"grjf":'..grjf..'}')
+    end
+    local hsmy_px = sorthumvar("比武大会",1,1,3)
+    local index = 0
+    for i = 1, #hsmy_px, 2 do
+        index = index + 1
+        if hsmy_px[i+1] and hsmy_px[i+1] > 0 then
+            local dx = getplayerbyname(hsmy_px[i])
+            if dx then
+                setflagstatus(dx,VarCfg.BS_tyrc,1)
+            end
+            sendmail("#"..hsmy_px[i],0,"武林盟主","恭喜你获得武林盟主第["..constant.pz_hanzi[index].."]名,奖励已下发!",Player.jl_mail(constant.pz_wlmz[index]))
+            if i == 1 and dx then
+                sendmovemsg("0", 1, 254, 0, 300, 1,"活动：活动《武林盟主》已关闭,本次活动第一名为【"..hsmy_px[i].."】...")
+                sendmovemsg("0", 1, 254, 0, 270, 1,"活动：活动《武林盟主》已关闭,本次活动第一名为【"..hsmy_px[i].."】...")
+                Player.title_give(dx, "武林盟主")
+            end
+        end
+    end
+    for _, player in ipairs(getplayerlst() or {}) do
+        if getflagstatus(player,VarCfg.BS_tyrc) == 0 then
+            local rawScore = getplayvar(player, "HUMAN", "比武大会")
+            if (tonumber(rawScore or 0) or 0) > 0 then
+                setflagstatus(player,VarCfg.BS_tyrc,1)
+                sendmail(getbaseinfo(player,2),0,"武林盟主","恭喜你获得武林盟主安慰奖,奖励已下发!","恭喜你获得,奖励已下发!",Player.jl_mail(constant.pz_wlmz[4]))
+            end
+        end
+    end
+    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>武林盟主已手动结束</font>","Type":9}')
+end
+local function _admin_not_ready(play, name)
+    sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[' .. name .. '] 暂未接入手动控制</font>","Type":9}')
+end
+
+local function _admin_tcppk_start(play)
+    setenvirontimer("xtc",1,3,"@hd_tcppk,xtc")
+    for _, v in pairs(getplayerlst() or {}) do
+        sendluamsg(v, 101, 1000, 1, 0, "")
+        setplaydef(v, "N$上次坐标x", 0)
+        setplaydef(v, "N$上次坐标y", 0)
+        sendluamsg(v,101,12,1,5,'{"sk":3,"kf":2,"idx":5}')
+    end
+    sendmovemsg("0", 1, 254, 0, 300, 1,"活动：活动《土城跑酷》已开启奖励丰厚,请尽快参加活动...")
+    sendmovemsg("0", 1, 254, 0, 270, 1,"活动：活动《土城跑酷》已开启奖励丰厚,请尽快参加活动...")
+    sendmovemsg("0", 1, 254, 0, 240, 1,"活动：活动《土城跑酷》已开启奖励丰厚,请尽快参加活动...")
+    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>土城跑酷已手动开启</font>","Type":9}')
+end
+
+local function _admin_tcppk_finish(play)
+    setenvirofftimer("xtc",1)
+    for _, v in pairs(getplayerlst() or {}) do
+        sendluamsg(v, 101, 1000, 2, 0, "")
+        sendluamsg(v, 101, 12, 4, 3, "")
+        setplaydef(v, "N$上次坐标x", 0)
+        setplaydef(v, "N$上次坐标y", 0)
+    end
+    sendmovemsg("0", 1, 254, 0, 300, 1,"活动：活动《土城跑酷》已关闭...")
+    sendmovemsg("0", 1, 254, 0, 270, 1,"活动：活动《土城跑酷》已关闭...")
+    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>土城跑酷已手动结束</font>","Type":9}')
+end
+
+local function _admin_sjdb_start(play)
+    local cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].sjdb or {}
+    local keepMin = math.max(1, math.floor((tonumber(cfg.keep_sec) or 300) / 60))
+    for _, player in ipairs(getplayerlst() or {}) do
+        sendluamsg(player,101,1,13,0,"")
+        sendluamsg(player,101,12,1,13,'{"sk":' .. keepMin .. ',"kf":2,"idx":13}')
+    end
+    sendmovemsg("0", 1, 254, 0, 300, 1,"活动：活动《随机夺宝》已开启奖励丰厚,请尽快参加活动...")
+    sendmovemsg("0", 1, 254, 0, 270, 1,"活动：活动《随机夺宝》已开启奖励丰厚,请尽快参加活动...")
+    sendmovemsg("0", 1, 254, 0, 240, 1,"活动：活动《随机夺宝》已开启奖励丰厚,请尽快参加活动...")
+    if teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].sjdb then
+        local sjdbCfg = teshudata["anniu_507"].sjdb
+        if sjdbCfg.map and sjdbCfg.center and sjdbCfg.circles then
+            local cx = tonumber(sjdbCfg.center.x) or 215
+            local cy = tonumber(sjdbCfg.center.y) or 53
+            local keepSec = tonumber(sjdbCfg.keep_sec) or 300
+            for _, circle in ipairs(sjdbCfg.circles or {}) do
+                local range = tonumber(circle.range) or 200
+                for _, drop in ipairs(circle.drops or {}) do
+                    if drop.item and tonumber(drop.count) and tonumber(drop.count) > 0 then
+                        throwitem("0", sjdbCfg.map, cx, cy, range, drop.item, tonumber(drop.count), keepSec, false, true, false, false)
+                    end
+                end
+            end
+        end
+    end
+    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>随机夺宝已手动开启</font>","Type":9}')
+end
+
+local function _admin_sjdb_finish(play)
+    sendmovemsg("0", 1, 254, 0, 300, 1,"活动：活动《随机夺宝》已关闭...")
+    sendmovemsg("0", 1, 254, 0, 270, 1,"活动：活动《随机夺宝》已关闭...")
+    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>随机夺宝已手动结束</font>","Type":9}')
+end
+
+local function _admin_txzr_start(play)
+    local round = tonumber(getsysvar(VarCfg["G_天选之人"][2])) or 0
+    if round >= 4 then
+        setsysvar(VarCfg["G_天选之人"][2], 0)
+        setsysvar(VarCfg["A_天选之人json"], "{}")
+    end
+    setsysvar(VarCfg["G_天选之人"][1], 27)
+    sendmovemsg("0", 1, 253, 0, 300, 1,"天选之人：活动《天选之人》即将开启,请玩家做好准备...")
+    sendmovemsg("0", 1, 249, 0, 250, 1,"天选之人：活动《天选之人》即将开启,请玩家做好准备...")
+    for _, player in ipairs(getplayerlst() or {}) do
+        sendluamsg(player,101,1,13,0,"")
+        sendluamsg(player,101,12,1,7,'{"sk":3,"kf":2,"idx":7}')
+    end
+    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>天选之人已手动预开启</font>","Type":9}')
+end
+
+local function _admin_txzr_finish(play)
+    setsysvar(VarCfg["G_天选之人"][1], 0)
+    setsysvar(VarCfg["G_天选之人"][2], 4)
+    sendmovemsg("0", 1, 253, 0, 300, 1,"天选之人：活动《天选之人》已手动结束...")
+    sendmovemsg("0", 1, 249, 0, 250, 1,"天选之人：活动《天选之人》已手动结束...")
+    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>天选之人已手动结束</font>","Type":9}')
+end
+
+local function _admin_sbk_start(play)
+    repaircastle()
+    addattacksabakall()
+    sendmovemsg("0", 1, 254, 0, 300, 1,"活动：活动《沙巴克》已手动开启...")
+    sendmovemsg("0", 1, 254, 0, 270, 1,"活动：活动《沙巴克》已手动开启...")
+    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>沙巴克已手动开启</font>","Type":9}')
+end
+
+local function _admin_sbk_finish(play)
+    _admin_not_ready(play, "沙巴克结束")
+end
 function ggna(play,id)
     if id == "1" then
         local item = linkbodyitem(play,73)
@@ -437,6 +847,58 @@ function ggna(play,id)
         repaircastle()
         addattacksabakall()
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>攻沙开始</font>","Type":9}')
+    elseif id == "26" then
+        _admin_qmdk_start(play)
+    elseif id == "27" then
+        _admin_qmdk_finish(play)
+    elseif id == "28" then
+        _admin_qmdt_start(play)
+    elseif id == "29" then
+        _admin_qmdt_finish(play)
+    elseif id == "30" then
+        _admin_wlmz_start(play)
+    elseif id == "31" then
+        _admin_wlmz_finish(play)
+    elseif id == "32" then
+        _admin_not_ready(play, "保卫村庄开始")
+    elseif id == "33" then
+        _admin_not_ready(play, "保卫村庄结束")
+    elseif id == "34" then
+        _admin_not_ready(play, "勇夺镖车开始")
+    elseif id == "35" then
+        _admin_not_ready(play, "勇夺镖车结束")
+    elseif id == "36" then
+        _admin_tcppk_start(play)
+    elseif id == "37" then
+        _admin_tcppk_finish(play)
+    elseif id == "38" then
+        _admin_not_ready(play, "天才地宝开始")
+    elseif id == "39" then
+        _admin_not_ready(play, "天才地宝结束")
+    elseif id == "40" then
+        _admin_txzr_start(play)
+    elseif id == "41" then
+        _admin_txzr_finish(play)
+    elseif id == "42" then
+        _admin_not_ready(play, "正邪大战开始")
+    elseif id == "43" then
+        _admin_not_ready(play, "正邪大战结束")
+    elseif id == "44" then
+        _admin_sbk_start(play)
+    elseif id == "45" then
+        _admin_sbk_finish(play)
+    elseif id == "46" then
+        _admin_not_ready(play, "讨伐BOSS开始")
+    elseif id == "47" then
+        _admin_not_ready(play, "讨伐BOSS结束")
+    elseif id == "48" then
+        _admin_sjdb_start(play)
+    elseif id == "49" then
+        _admin_sjdb_finish(play)
+    elseif id == "50" then
+        _admin_not_ready(play, "黑暗禁地开始")
+    elseif id == "51" then
+        _admin_not_ready(play, "黑暗禁地结束")
     elseif id == "25" then
         -- 大陆进入条件一键达成：主线进度、转生等级、剧情点
         local target_task = 21

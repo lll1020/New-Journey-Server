@@ -67,6 +67,7 @@ function Login.main(play)
     setflagstatus(play,VarCfg.BS_sckg,(sc_data["ok"] and sc_data["ok"] == 1) and 1 or 0)
 
     iniplayvar(play, "integer","HUMAN","比武大会")
+    iniplayvar(play, "integer","HUMAN","全民夺矿")
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     if jq_data["npc_55"] and jq_data["npc_55"] >= 2 then
         Npclib['anniu'][30](play, 3, 0, "") --初始化砍树系统
@@ -74,6 +75,8 @@ function Login.main(play)
     --天书  杀意值
     shaguai.jia(play,25)
     shaguai.jia(play,32)
+
+    sendluamsg(play, 101, 12, 1, 3, '{"sk":2,"kf":2,"idx":3}')
 
     
 

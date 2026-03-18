@@ -2264,10 +2264,10 @@ teshudata = {
         },
         -- 全民答题（答题提交走 npc[507]）
         qmdt = {
-            start_minute = 33,
-            duration_min = 5,
-            question_count = 5,
-            per_question_sec = 60,
+            start_minute = 33,           -- 活动开启分钟（开服后第几分钟）
+            duration_min = 8,            -- 活动总时长（分钟），至少覆盖全部题目
+            question_count = 4,          -- 题目数量，当前共 4 轮
+            per_question_sec = 120,      -- 每题答题时长（秒）
             mail_title = "全民答题",
             rank_rewards = {
                 {rank = 1, items = {{"元宝", 50000}, {"5元真实充值", 1}}},
@@ -2280,9 +2280,6 @@ teshudata = {
                 {title = "下列哪个更偏向提升打怪效率?", options = {"打怪爆率", "回城石", "聊天字体", "交易税"}, answer = 1, score = 10},
                 {title = "行会战中最关键的是?", options = {"个人单挑", "团队配合", "挂机观战", "只看战力"}, answer = 2, score = 10},
                 {title = "以下哪项通常属于货币类奖励?", options = {"元宝", "称号", "时装外观", "地图特效"}, answer = 1, score = 10},
-                {title = "活动期间提交答案应通过哪个入口?", options = {"npc[506]", "npc[507]", "npc[511]", "npc[9999]"}, answer = 2, score = 10},
-                {title = "随机夺宝投放的核心是?", options = {"固定单点", "三圈投放", "只发邮件", "只开传送"}, answer = 2, score = 10},
-                {title = "武林盟主活动当前使用的地图键是?", options = {"武林盟主", "比武大会", "阵营对抗", "天降财宝"}, answer = 2, score = 10},
             },
         },
         -- 全民夺矿（每日定时活动，支持 bot 触发）
@@ -2290,10 +2287,20 @@ teshudata = {
             start_minute = 26,
             duration_min = 8,
             map = "全民夺矿",
-            score_tick_sec = 10,
-            score_per_tick = 1,
+            score_tick_sec = 1,
             score_var_prefix = "全民夺矿",
-            panel_idx = 3,
+            prepare_sec = 10,
+            collect_sec = 3,
+            collect_range = 3,
+            ore_mob = "大矿石",
+            initial_ore_count = 20,
+            respawn_sec = 10,
+            spawn_try_count = 30,
+            spawn_radius = 20,
+            carry_buff = 20115,
+            deliver_pos = {21, 20},
+            deliver_range = 3,
+            deliver_score = 50,
             mail_title = "全民夺矿",
             rank_rewards = {
                 {rank = 1, items = {{"元宝", 50000}, {"5元真实充值", 1}}},

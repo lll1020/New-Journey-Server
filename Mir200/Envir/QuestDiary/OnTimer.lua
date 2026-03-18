@@ -186,13 +186,13 @@ local function _qmdt_get_cfg()
         return nil
     end
     cfg.start_minute = tonumber(cfg.start_minute) or 33
-    cfg.duration_min = tonumber(cfg.duration_min) or 5
     cfg.question_count = math.min(tonumber(cfg.question_count) or 5, #cfg.questions)
-    cfg.per_question_sec = tonumber(cfg.per_question_sec) or 60
+    cfg.per_question_sec = tonumber(cfg.per_question_sec) or 120
+    cfg.question_span_min = math.max(1, math.ceil(cfg.per_question_sec / 60))
+    cfg.duration_min = math.max(tonumber(cfg.duration_min) or (cfg.question_count * cfg.question_span_min), cfg.question_count * cfg.question_span_min)
     return cfg
 end
 
--- 读取全民答题运行态
 local function _qmdt_get_state()
     local raw = getsysvar(VarCfg["A_全民答题json"])
     if raw == "" then
@@ -202,50 +202,71 @@ local function _qmdt_get_state()
     return type(tb) == "table" and tb or {}
 end
 
--- 保存全民答题运行态
 local function _qmdt_save_state(state)
     setsysvar(VarCfg["A_全民答题json"], tbl2json(state or {}))
 end
 
--- 推送题目到所有在线玩家（客户端答题提交走 npc[507]）
-local function _qmdt_push_question(state, cfg, qidx)
+local function _qmdt_build_prompt(q, qidx, total)
+    local lines = {"第" .. tostring(qidx) .. "/" .. tostring(total) .. "题：" .. tostring(q.title or "")}
+    for i, one in ipairs(q.options or {}) do
+        lines[#lines + 1] = tostring(i) .. "." .. tostring(one)
+    end
+    lines[#lines + 1] = "请输入答案序号或完整答案"
+    return table.concat(lines, "\n")
+end
+
+local function _qmdt_make_payload(state, cfg, qidx)
+    local q = cfg.questions[qidx]
+    if not q then
+        return {open = 0}
+    end
+    local remain = math.max(0, (tonumber(state.question_end_ts) or 0) - os.time())
+    return {
+        open = 1,
+        idx = qidx,
+        total = cfg.question_count,
+        title = _qmdt_build_prompt(q, qidx, cfg.question_count),
+        question_title = q.title,
+        options = q.options or {},
+        input_mode = 1,
+        placeholder = "请输入答案序号或完整答案",
+        limit_sec = remain,
+        end_ts = tonumber(state.question_end_ts) or 0,
+    }
+end
+
+local function _qmdt_push_question(state, cfg, qidx, dqfz)
     local q = cfg.questions[qidx]
     if not q then
         return false
     end
     state.current_idx = qidx
+    state.question_start_minute = dqfz or tonumber(state.question_start_minute) or tonumber(state.start_minute) or getsysvar(VarCfg["G_开区分钟"])
+    state.question_end_ts = os.time() + cfg.per_question_sec
     _qmdt_save_state(state)
-    local payload = {
-        open = 1,
-        idx = qidx,
-        total = cfg.question_count,
-        title = q.title,
-        options = q.options or {},
-        limit_sec = cfg.per_question_sec,
-    }
     for _, player in ipairs(getplayerlst() or {}) do
-        sendluamsg(player, 101, 507, 2, 1, tbl2json(payload))
+        sendluamsg(player, 101, 12, 1, 3, '{"sk":2,"kf":2,"idx":3}')
     end
-    sendmovemsg("0", 1, 254, 0, 300, 1, "活动：全民答题第" .. tostring(qidx) .. "题已发布，请在活动面板作答...")
+    sendmovemsg("0", 1, 254, 0, 300, 1, "活动：全民答题第" .. tostring(qidx) .. "题已发布，请点击活动面板输入答案...")
     return true
 end
 
--- 开启全民答题
 local function _qmdt_start(dqfz, cfg)
     local state = {
         open = 1,
         start_minute = dqfz,
         current_idx = 0,
+        question_start_minute = dqfz,
+        question_end_ts = 0,
         players = {},
     }
     setsysvar(VarCfg["G_全民答题状态"], 1)
     _qmdt_save_state(state)
-    sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《全民答题》已开启，请通过活动面板参与答题...")
-    sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《全民答题》已开启，请通过活动面板参与答题...")
-    _qmdt_push_question(state, cfg, 1)
+    sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《全民答题》已开启，请通过活动面板输入答案...")
+    sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《全民答题》已开启，请通过活动面板输入答案...")
+    _qmdt_push_question(state, cfg, 1, dqfz)
 end
 
--- 结算全民答题奖励（名次奖励 + 参与奖励）
 local function _qmdt_finish(cfg)
     if getsysvar(VarCfg["G_全民答题状态"]) ~= 1 then
         return
@@ -308,13 +329,8 @@ local function _qmdt_finish(cfg)
     _qmdt_save_state(state)
     setsysvar(VarCfg["G_全民答题状态"], 0)
 
-    local payload = {open = 0, rank = rankData}
-    for _, player in ipairs(getplayerlst() or {}) do
-        sendluamsg(player, 101, 507, 2, 3, tbl2json(payload))
-    end
 end
 
--- 全民答题分钟驱动（每分钟推进到下一题）
 local function _qmdt_tick(dqfz, cfg)
     if getsysvar(VarCfg["G_全民答题状态"]) ~= 1 then
         return
@@ -323,21 +339,37 @@ local function _qmdt_tick(dqfz, cfg)
     if tonumber(state.open) ~= 1 then
         return
     end
-    local startMinute = tonumber(state.start_minute) or dqfz
-    local elapsed = dqfz - startMinute
-    if elapsed >= cfg.duration_min then
+    local currentIdx = tonumber(state.current_idx) or 0
+    if currentIdx <= 0 then
+        _qmdt_push_question(state, cfg, 1, dqfz)
+        return
+    end
+    local nowTs = os.time()
+    local questionEndTs = tonumber(state.question_end_ts) or 0
+    if questionEndTs > 0 then
+        if nowTs < questionEndTs then
+            return
+        end
+    else
+        local questionStartMinute = tonumber(state.question_start_minute) or tonumber(state.start_minute) or dqfz
+        if dqfz - questionStartMinute < cfg.question_span_min then
+            return
+        end
+    end
+    if currentIdx >= cfg.question_count then
         _qmdt_finish(cfg)
         return
     end
-    local shouldIdx = math.min(cfg.question_count, elapsed + 1)
-    local currentIdx = tonumber(state.current_idx) or 0
-    if shouldIdx > currentIdx then
-        _qmdt_push_question(state, cfg, shouldIdx)
-    end
+    _qmdt_push_question(state, cfg, currentIdx + 1, dqfz)
 end
 
+QmdkApi = QmdkApi or {}
+local _QMDK_PREP_NOTICE_VAR = "N$qmdk_prep_notice"
+local _QMDK_PANEL_FLAG_VAR = "N$qmdk_panel"
+local _QMDK_CARRY_VAR = "N$qmdk_carry"
+local _QMDK_COLLECT_CANCEL_VAR = "N$qmdk_collect_cancel"
+local _QMDK_SCORE_VAR = "全民夺矿"
 
--- 获取全民夺矿配置（单源：teshudata.anniu_507.qmdk）
 local function _qmdk_get_cfg()
     local cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].qmdk or nil
     if type(cfg) ~= "table" then
@@ -348,14 +380,23 @@ local function _qmdk_get_cfg()
     end
     cfg.start_minute = tonumber(cfg.start_minute) or 26
     cfg.duration_min = tonumber(cfg.duration_min) or 8
-    cfg.score_tick_sec = tonumber(cfg.score_tick_sec) or 10
-    cfg.score_per_tick = tonumber(cfg.score_per_tick) or 1
+    cfg.score_tick_sec = tonumber(cfg.score_tick_sec) or 1
     cfg.score_var_prefix = cfg.score_var_prefix or "全民夺矿"
-    cfg.panel_idx = tonumber(cfg.panel_idx) or 3
+    cfg.prepare_sec = tonumber(cfg.prepare_sec) or 10
+    cfg.collect_sec = tonumber(cfg.collect_sec) or 3
+    cfg.collect_range = tonumber(cfg.collect_range) or 3
+    cfg.initial_ore_count = tonumber(cfg.initial_ore_count) or 20
+    cfg.respawn_sec = tonumber(cfg.respawn_sec) or 10
+    cfg.spawn_try_count = tonumber(cfg.spawn_try_count) or 30
+    cfg.spawn_radius = tonumber(cfg.spawn_radius) or 20
+    cfg.deliver_score = tonumber(cfg.deliver_score) or 50
+    cfg.deliver_range = tonumber(cfg.deliver_range) or 3
+    cfg.deliver_pos = cfg.deliver_pos or {21, 20}
+    cfg.ore_mob = cfg.ore_mob or "大矿石"
+    cfg.carry_buff = tonumber(cfg.carry_buff) or 20115
     return cfg
 end
 
--- 读取全民夺矿运行态
 local function _qmdk_get_state()
     local raw = getsysvar(VarCfg["A_全民夺矿json"])
     if raw == "" then
@@ -365,53 +406,411 @@ local function _qmdk_get_state()
     return type(tb) == "table" and tb or {}
 end
 
--- 保存全民夺矿运行态
 local function _qmdk_save_state(state)
     setsysvar(VarCfg["A_全民夺矿json"], tbl2json(state or {}))
 end
 
--- 根据配置和运行态计算当前积分变量名（按天隔离）
 local function _qmdk_get_score_var(cfg, state)
-    if state and type(state.score_var) == "string" and state.score_var ~= "" then
-        return state.score_var
-    end
-    local prefix = (cfg and cfg.score_var_prefix) or "全民夺矿"
-    return prefix .. "_" .. os.date("%Y%m%d")
+    return _QMDK_SCORE_VAR
 end
 
--- getplayvar ???????????????????? tonumber?
+local function _qmdk_reset_online_scores()
+    for _, player in ipairs(getplayerlst() or {}) do
+        setplayvar(player, "HUMAN", _QMDK_SCORE_VAR, 0, 1)
+    end
+end
+
+
 local function _safe_getplayvar_num(play, objType, key)
     local raw = getplayvar(play, objType, key)
-    return tonumber(raw) or 0
+    return tonumber(raw or 0) or 0
 end
 
--- 开启全民夺矿活动
+local function _qmdk_is_active_map(play, cfg, state)
+    if not play or not cfg then
+        return false
+    end
+    local mapName = (state and state.map and state.map ~= "") and state.map or cfg.map
+    return getbaseinfo(play, 3) == mapName
+end
+
+local function _qmdk_rank_payload(play, cfg, state)
+    local scoreVar = _qmdk_get_score_var(cfg, state)
+    return '{"pmsj":' .. tbl2json(sorthumvar(scoreVar, 1, 1, 5)) .. ',"grjf":' .. _safe_getplayvar_num(play, "HUMAN", scoreVar) .. '}'
+end
+
+local function _qmdk_send_rank(play, cfg, state)
+    if not play or not cfg then
+        return
+    end
+    sendluamsg(play, 101, 498, 0, 0, _qmdk_rank_payload(play, cfg, state))
+    setplaydef(play, _QMDK_PANEL_FLAG_VAR, 1)
+end
+
+local function _qmdk_close_rank(play)
+    if getplaydef(play, _QMDK_PANEL_FLAG_VAR) == 1 then
+        sendluamsg(play, 101, 498, 2, 0, "")
+        setplaydef(play, _QMDK_PANEL_FLAG_VAR, 0)
+    end
+end
+
+local function _qmdk_send_rank_to_map(cfg, state)
+    local mapName = (state and state.map and state.map ~= "") and state.map or (cfg and cfg.map)
+    if not mapName or mapName == "" then
+        return
+    end
+    local players = getobjectinmap(mapName, 0, 0, 999, 1)
+    for _, v in pairs(players or {}) do
+        sendluamsg(v, 101, 498, 1, 0, _qmdk_rank_payload(v, cfg, state))
+    end
+end
+
+local function _qmdk_map_name(cfg, state)
+    return (state and state.map and state.map ~= "") and state.map or (cfg and cfg.map) or ""
+end
+
+local function _qmdk_clear_map_ores(cfg, state)
+    local mapName = _qmdk_map_name(cfg, state)
+    if mapName == "" or not cfg or not cfg.ore_mob or cfg.ore_mob == "" then
+        return
+    end
+    killmonsters(mapName, cfg.ore_mob, 0, false)
+end
+
+local function _qmdk_spawn_one_ore(cfg, state)
+    local mapName = _qmdk_map_name(cfg, state)
+    if mapName == "" or not cfg or not cfg.ore_mob or cfg.ore_mob == "" then
+        return false
+    end
+    local mapW = tonumber(getmapinfo(mapName, 0) or 0) or 0
+    local mapH = tonumber(getmapinfo(mapName, 1) or 0) or 0
+    if mapW <= 0 or mapH <= 0 then
+        return false
+    end
+    local cx = tonumber((cfg.deliver_pos and cfg.deliver_pos[1]) or 21) or 21
+    local cy = tonumber((cfg.deliver_pos and cfg.deliver_pos[2]) or 20) or 20
+    local radius = math.max(1, tonumber(cfg.spawn_radius) or 20)
+    local tryCount = math.max(1, tonumber(cfg.spawn_try_count) or 30)
+    for _ = 1, tryCount do
+        local dx = math.random(-radius, radius)
+        local dy = math.random(-radius, radius)
+        if dx * dx + dy * dy <= radius * radius then
+            local rx = math.max(1, math.min(mapW, cx + dx))
+            local ry = math.max(1, math.min(mapH, cy + dy))
+            if isemptyinmap(mapName, rx, ry) then
+                local mob = genmonex(mapName, rx, ry, cfg.ore_mob, 1, 1, 0, 54, "", 0)
+                if mob then
+                    return true
+                end
+            end
+        end
+    end
+    return false
+end
+
+local function _qmdk_spawn_ores(cfg, state, count)
+    local need = math.max(0, tonumber(count) or 0)
+    local spawned = 0
+    for _ = 1, need do
+        if _qmdk_spawn_one_ore(cfg, state) then
+            spawned = spawned + 1
+        end
+    end
+    return spawned
+end
+
+local function _qmdk_tick_runtime(cfg, state)
+    if not cfg or type(state) ~= "table" or getsysvar(VarCfg["G_全民夺矿状态"]) ~= 1 or tonumber(state.open) ~= 1 then
+        return state
+    end
+    local nowTs = os.time()
+    local changed = false
+    if tonumber(state.init_ore_spawned) ~= 1 then
+        _qmdk_clear_map_ores(cfg, state)
+        _qmdk_spawn_ores(cfg, state, cfg.initial_ore_count)
+        state.init_ore_spawned = 1
+        state.last_spawn_ts = nowTs
+        changed = true
+    else
+        local respawnSec = math.max(1, tonumber(cfg.respawn_sec) or 10)
+        local lastSpawnTs = tonumber(state.last_spawn_ts) or nowTs
+        if nowTs - lastSpawnTs >= respawnSec then
+            local need = math.max(1, math.floor((nowTs - lastSpawnTs) / respawnSec))
+            _qmdk_spawn_ores(cfg, state, need)
+            state.last_spawn_ts = nowTs
+            changed = true
+        end
+    end
+    if changed then
+        _qmdk_save_state(state)
+    end
+    return state
+end
+
+local function _qmdk_is_collecting_ore(play, cfg)
+    if not play or not cfg then
+        return false
+    end
+    return tonumber(getplaydef(play, "N$iscaiji") or 0) == 1 and getplaydef(play, "S$采集目标名字") == cfg.ore_mob
+end
+
+local function _qmdk_clear_collect(play, reason)
+    local cfg = _qmdk_get_cfg()
+    local isCollectingOre = _qmdk_is_collecting_ore(play, cfg)
+    setplaydef(play, _QMDK_COLLECT_CANCEL_VAR, 0)
+    if cfg and (isCollectingOre or getplaydef(play, "S$采集目标名字") == cfg.ore_mob) then
+        setplaydef(play, "N$iscaiji", 0)
+        setplaydef(play, "S$采集目标", "")
+        setplaydef(play, "S$采集目标名字", "")
+        if isCollectingOre and reason and reason ~= "" then
+            Player.sendmsgEx(play, reason .. "#57")
+        end
+    end
+end
+
+local function _qmdk_drop_ore(play, cfg)
+    if not cfg or not cfg.ore_mob or cfg.ore_mob == "" then
+        return
+    end
+    local mapName = getbaseinfo(play, 3)
+    local x = getbaseinfo(play, 4)
+    local y = getbaseinfo(play, 5)
+    if mapName and mapName ~= "" and x > 0 and y > 0 then
+        genmonex(mapName, x, y, cfg.ore_mob, 1, 1, 0, 54, "", 0)
+    end
+end
+
+local function _qmdk_clear_carry(play, cfg, dropOre, reason)
+    if tonumber(getplaydef(play, _QMDK_CARRY_VAR) or 0) ~= 1 then
+        return
+    end
+    if cfg and tonumber(cfg.carry_buff or 0) > 0 and hasbuff(play, cfg.carry_buff) then
+        delbuff(play, cfg.carry_buff)
+    end
+    setplaydef(play, _QMDK_CARRY_VAR, 0)
+    if dropOre then
+        _qmdk_drop_ore(play, cfg)
+    end
+    if reason and reason ~= "" then
+        Player.sendmsgEx(play, reason .. "#57")
+    end
+end
+
+local function _qmdk_clear_actor_state(play, cfg, dropOre)
+    _qmdk_clear_collect(play)
+    _qmdk_clear_carry(play, cfg, dropOre)
+    setplaydef(play, _QMDK_PREP_NOTICE_VAR, 0)
+end
+
+local function _qmdk_try_deliver(play, cfg, state)
+    if tonumber(getplaydef(play, _QMDK_CARRY_VAR) or 0) ~= 1 then
+        return false
+    end
+    local dx = tonumber(cfg.deliver_pos[1] or 21) or 21
+    local dy = tonumber(cfg.deliver_pos[2] or 20) or 20
+    local px = getbaseinfo(play, 4)
+    local py = getbaseinfo(play, 5)
+    if math.abs(px - dx) > cfg.deliver_range or math.abs(py - dy) > cfg.deliver_range then
+        return false
+    end
+    local scoreVar = _qmdk_get_score_var(cfg, state)
+    local jf = _safe_getplayvar_num(play, "HUMAN", scoreVar) + cfg.deliver_score
+    setplayvar(play, "HUMAN", scoreVar, jf, 1)
+    _qmdk_clear_carry(play, cfg, false)
+    Player.sendmsgEx(play, "成功运回一块矿石，积分+" .. cfg.deliver_score .. "#249")
+    _qmdk_send_rank_to_map(cfg, state)
+    return true
+end
+
+local function _qmdk_tick_player(play, cfg, state)
+    if not _qmdk_is_active_map(play, cfg, state) then
+        _qmdk_clear_actor_state(play, cfg, false)
+        _qmdk_close_rank(play)
+        return
+    end
+
+    _qmdk_send_rank(play, cfg, state)
+
+    local nowTs = os.time()
+    local prepLeft = math.max(0, (tonumber(state.prepare_end_ts) or 0) - nowTs)
+    if prepLeft > 0 then
+        local lastNotice = tonumber(getplaydef(play, _QMDK_PREP_NOTICE_VAR) or 0) or 0
+        if lastNotice ~= prepLeft then
+            setplaydef(play, _QMDK_PREP_NOTICE_VAR, prepLeft)
+            if prepLeft == tonumber(cfg.prepare_sec) or prepLeft <= 5 then
+                Player.sendmsgEx(play, "全民夺矿准备阶段，" .. prepLeft .. "秒后开始采矿#57")
+            end
+        end
+        _qmdk_clear_collect(play)
+        return
+    end
+    setplaydef(play, _QMDK_PREP_NOTICE_VAR, 0)
+
+    _qmdk_try_deliver(play, cfg, state)
+end
+
+local function _qmdk_refresh_actor(play)
+    local cfg = _qmdk_get_cfg()
+    if not cfg then
+        return
+    end
+    local state = _qmdk_get_state()
+    if getsysvar(VarCfg["G_全民夺矿状态"]) == 1 and tonumber(state.open) == 1 and _qmdk_is_active_map(play, cfg, state) then
+        if tonumber(getplaydef(play, _QMDK_CARRY_VAR) or 0) == 1 and tonumber(cfg.carry_buff or 0) > 0 and not hasbuff(play, cfg.carry_buff) then
+            addbuff(play, cfg.carry_buff)
+        end
+        _qmdk_send_rank(play, cfg, state)
+    else
+        _qmdk_clear_actor_state(play, cfg, false)
+        _qmdk_close_rank(play)
+    end
+end
+
+local function _qmdk_interrupt_collect(play, reason)
+    local cfg = _qmdk_get_cfg()
+    if _qmdk_is_collecting_ore(play, cfg) then
+        setplaydef(play, _QMDK_COLLECT_CANCEL_VAR, 1)
+        setplaydef(play, "N$iscaiji", 0)
+        setplaydef(play, "S$采集目标", "")
+        setplaydef(play, "S$采集目标名字", "")
+        Player.sendmsgEx(play, (reason or "采集中断") .. "#57")
+    end
+end
+
+local function _qmdk_on_die(play)
+    local cfg = _qmdk_get_cfg()
+    if not cfg then
+        return
+    end
+    local state = _qmdk_get_state()
+    if _qmdk_is_active_map(play, cfg, state) then
+        _qmdk_clear_collect(play, "你已死亡，采集中断")
+        _qmdk_clear_carry(play, cfg, true, "你已死亡，矿石掉落")
+        _qmdk_send_rank_to_map(cfg, state)
+    else
+        _qmdk_clear_actor_state(play, cfg, false)
+    end
+end
+
+local function _qmdk_clear_all_online(cfg, dropOre)
+    for _, player in ipairs(getplayerlst() or {}) do
+        _qmdk_clear_actor_state(player, cfg, dropOre)
+    end
+end
+
+QmdkApi.get_cfg = _qmdk_get_cfg
+QmdkApi.get_state = _qmdk_get_state
+QmdkApi.save_state = _qmdk_save_state
+QmdkApi.get_score_var = _qmdk_get_score_var
+QmdkApi.reset_online_scores = _qmdk_reset_online_scores
+QmdkApi.send_rank = _qmdk_send_rank
+QmdkApi.send_rank_to_map = _qmdk_send_rank_to_map
+QmdkApi.refresh_actor = _qmdk_refresh_actor
+QmdkApi.interrupt_collect = _qmdk_interrupt_collect
+QmdkApi.on_actor_hurt = _qmdk_interrupt_collect
+QmdkApi.on_actor_move = function(play) _qmdk_interrupt_collect(play, "你移动了，采集中断") end
+QmdkApi.on_actor_die = _qmdk_on_die
+QmdkApi.clear_actor_state = _qmdk_clear_actor_state
+QmdkApi.clear_all_online = _qmdk_clear_all_online
+QmdkApi.tick_runtime = _qmdk_tick_runtime
+QmdkApi.before_collect = function(play, monName)
+    local cfg = _qmdk_get_cfg()
+    if not cfg or monName ~= cfg.ore_mob then
+        return "pass"
+    end
+    local state = _qmdk_get_state()
+    if getsysvar(VarCfg["G_全民夺矿状态"]) ~= 1 or tonumber(state.open) ~= 1 or not _qmdk_is_active_map(play, cfg, state) then
+        Player.sendmsgEx(play, "全民夺矿当前未开启#57")
+        return "blocked"
+    end
+    if (tonumber(state.prepare_end_ts) or 0) > os.time() then
+        Player.sendmsgEx(play, "准备阶段中，暂时不能采集矿石#57")
+        return "blocked"
+    end
+    if tonumber(getplaydef(play, _QMDK_CARRY_VAR) or 0) == 1 then
+        Player.sendmsgEx(play, "每次只能携带一块矿石#57")
+        return "blocked"
+    end
+    setplaydef(play, _QMDK_COLLECT_CANCEL_VAR, 0)
+    return "start", cfg.collect_sec or 3
+end
+QmdkApi.on_collect_success = function(play, monName, monMakeIndex)
+    local cfg = _qmdk_get_cfg()
+    if not cfg or monName ~= cfg.ore_mob then
+        return false
+    end
+    local state = _qmdk_get_state()
+    local cancelled = tonumber(getplaydef(play, _QMDK_COLLECT_CANCEL_VAR) or 0) == 1
+    setplaydef(play, _QMDK_COLLECT_CANCEL_VAR, 0)
+    if cancelled then
+        return true
+    end
+    if getsysvar(VarCfg["G_全民夺矿状态"]) ~= 1 or tonumber(state.open) ~= 1 or not _qmdk_is_active_map(play, cfg, state) then
+        Player.sendmsgEx(play, "全民夺矿当前未开启#57")
+        return true
+    end
+    if (tonumber(state.prepare_end_ts) or 0) > os.time() then
+        Player.sendmsgEx(play, "准备阶段中，暂时不能采集矿石#57")
+        return true
+    end
+    if tonumber(getplaydef(play, _QMDK_CARRY_VAR) or 0) == 1 then
+        Player.sendmsgEx(play, "每次只能携带一块矿石#57")
+        return true
+    end
+    local mapid = getbaseinfo(play, ConstCfg.gbase.mapid)
+    local monobj = (monMakeIndex ~= nil and monMakeIndex ~= "") and getmonbyuserid(mapid, monMakeIndex) or nil
+    if not monobj then
+        Player.sendmsgEx(play, "矿石已被他人采走#57")
+        return true
+    end
+    killmonbyobj(play, monobj, false, false, false)
+    setplaydef(play, _QMDK_CARRY_VAR, 1)
+    if tonumber(cfg.carry_buff or 0) > 0 and not hasbuff(play, cfg.carry_buff) then
+        addbuff(play, cfg.carry_buff)
+    end
+    Player.sendmsgEx(play, "采集成功，运回矿石可获得" .. cfg.deliver_score .. "积分#249")
+    _qmdk_send_rank(play, cfg, state)
+    return true
+end
+QmdkApi.on_collect_fail = function(play, monName)
+    local cfg = _qmdk_get_cfg()
+    if not cfg or monName ~= cfg.ore_mob then
+        return false
+    end
+    setplaydef(play, _QMDK_COLLECT_CANCEL_VAR, 0)
+    return true
+end
+
 local function _qmdk_start(dqfz, cfg, fromBot)
+
+
     if getsysvar(VarCfg["G_全民夺矿状态"]) == 1 then
         return false
     end
+    _qmdk_reset_online_scores()
     local state = {
         open = 1,
         start_minute = dqfz,
         map = cfg.map,
-        score_var = _qmdk_get_score_var(cfg, nil),
+        score_var = _QMDK_SCORE_VAR,
         from_bot = fromBot and 1 or 0,
+        prepare_end_ts = os.time() + cfg.prepare_sec,
     }
     setsysvar(VarCfg["G_全民夺矿状态"], 1)
     _qmdk_save_state(state)
+    state = _qmdk_tick_runtime(cfg, state) or state
 
     setenvirontimer(cfg.map, 3, cfg.score_tick_sec, "@hd_tcppk," .. cfg.map)
-    sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《全民夺矿》已开启，请尽快前往矿区争夺积分...")
-    sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《全民夺矿》已开启，请尽快前往矿区争夺积分...")
+    sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《全民夺矿》已开启，10秒后开始采矿搬运...")
+    sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《全民夺矿》已开启，10秒后开始采矿搬运...")
 
-    local player_list = getplayerlst()
-    for _, player in ipairs(player_list or {}) do
-        sendluamsg(player, 101, 12, 1, cfg.panel_idx, '{"sk":' .. cfg.duration_min .. ',"kf":2,"idx":' .. cfg.panel_idx .. '}')
+    for _, player in ipairs(getplayerlst() or {}) do
+        sendluamsg(player, 101, 12, 1, 2, '{"sk":' .. cfg.duration_min .. ',"kf":2,"idx":2}')
+        _qmdk_refresh_actor(player)
     end
     return true
 end
 
--- 结束全民夺矿活动并发放奖励
 local function _qmdk_finish(cfg, fromBot)
     if getsysvar(VarCfg["G_全民夺矿状态"]) ~= 1 then
         return false
@@ -419,6 +818,9 @@ local function _qmdk_finish(cfg, fromBot)
     local state = _qmdk_get_state()
     local mapName = (state.map and state.map ~= "") and state.map or cfg.map
     setenvirofftimer(mapName, 3)
+
+    _qmdk_clear_map_ores(cfg, state)
+    _qmdk_clear_all_online(cfg, false)
 
     local scoreVar = _qmdk_get_score_var(cfg, state)
     local rankRaw = sorthumvar(scoreVar, 1, 1, 10)
@@ -468,10 +870,10 @@ local function _qmdk_finish(cfg, fromBot)
     state.rank = rankData
     _qmdk_save_state(state)
     setsysvar(VarCfg["G_全民夺矿状态"], 0)
+    _qmdk_send_rank_to_map(cfg, state)
     return true
 end
 
--- 全民夺矿分钟驱动（支持 bot 强制开始/结束）
 local function _qmdk_tick(dqfz, cfg)
     local state = _qmdk_get_state()
     if tonumber(state.force_end) == 1 then
@@ -605,7 +1007,7 @@ function ontimerex1()
                 sendmovemsg("0", 1, 254, 0, 240, 1,"活动：活动《土城跑酷》已开启奖励丰厚,请尽快参加活动...")
                 local player_list = getplayerlst()
                 for i, player  in ipairs(player_list or {}) do
-                    sendluamsg(player,101,12,1,5,'{"sk":'..3 ..',"kf":'..2 ..',"idx":'..1 ..'}')
+                    sendluamsg(player,101,12,1,5,'{"sk":'..3 ..',"kf":'..2 ..',"idx":'..5 ..'}')
                 end
             elseif dqfz == 23 then
                 setenvirofftimer("xtc",1)
@@ -623,11 +1025,13 @@ function ontimerex1()
                 sendmovemsg("0", 1, 254, 0, 300, 1,"活动：活动《随机夺宝》已开启奖励丰厚,请尽快参加活动...")
                 sendmovemsg("0", 1, 254, 0, 270, 1,"活动：活动《随机夺宝》已开启奖励丰厚,请尽快参加活动...")
                 sendmovemsg("0", 1, 254, 0, 240, 1,"活动：活动《随机夺宝》已开启奖励丰厚,请尽快参加活动...")
+                local sjdbCfg = _sjdb_get_cfg()
+                local sjdbKeepMin = math.max(1, math.floor(((sjdbCfg and sjdbCfg.keep_sec) or 300) / 60))
                 local player_list = getplayerlst()
                 for i, player  in ipairs(player_list or {}) do
                     sendluamsg(player,101,1,13,0,"")
+                    sendluamsg(player,101,12,1,13,'{"sk":' .. sjdbKeepMin .. ',"kf":2,"idx":13}')
                 end
-                local sjdbCfg = _sjdb_get_cfg()
                 local ok = _sjdb_throw_by_cfg(sjdbCfg)
                 if not ok then
                     _sjdb_throw_fallback()
@@ -650,7 +1054,7 @@ function ontimerex1()
                 sendmovemsg("0", 1, 254, 0, 270, 1,"活动：活动《".._WLMZ_EVENT_NAME.."》已开启奖励丰厚,请尽快参加活动...")
                 local player_list = getplayerlst()
                 for i, player  in ipairs(player_list or {}) do
-                    sendluamsg(player,101,12,1,2,'{"sk":'..10 ..',"kf":'..2 ..',"idx":'..2 ..'}')
+                    sendluamsg(player,101,12,1,9,'{"sk":'..10 ..',"kf":'..2 ..',"idx":'..9 ..'}')
                 end
             elseif dqfz == 50 then
                 setenvirofftimer(_WLMZ_MAP_NAME,2)
@@ -934,12 +1338,10 @@ function hd_tcppk(xx,ditu)
         local qmdkState = _qmdk_get_state()
         local qmdkMap = (qmdkState.map and qmdkState.map ~= "") and qmdkState.map or (qmdkCfg and qmdkCfg.map)
         if qmdkCfg and qmdkMap == ditu then
-            local scoreVar = _qmdk_get_score_var(qmdkCfg, qmdkState)
-            local addScore = tonumber(qmdkCfg.score_per_tick) or 1
+            qmdkState = _qmdk_tick_runtime(qmdkCfg, qmdkState)
             local wanjia = getobjectinmap(qmdkMap, 0, 0, 999, 1)
             for _, v in pairs(wanjia or {}) do
-                local jf = _safe_getplayvar_num(v, "HUMAN", scoreVar) + addScore
-                setplayvar(v, "HUMAN", scoreVar, jf, 1)
+                _qmdk_tick_player(v, qmdkCfg, qmdkState)
             end
         end
     elseif ditu == _WLMZ_MAP_NAME then

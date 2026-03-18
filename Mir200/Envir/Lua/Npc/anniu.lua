@@ -958,10 +958,10 @@ local function _qmdt_get_cfg_507()
         return nil
     end
     cfg.question_count = math.min(tonumber(cfg.question_count) or 5, #cfg.questions)
+    cfg.per_question_sec = tonumber(cfg.per_question_sec) or 120
     return cfg
 end
 
--- 读取全民答题运行态
 local function _qmdt_get_state_507()
     local raw = getsysvar(VarCfg["A_全民答题json"])
     if raw == "" then
@@ -971,13 +971,119 @@ local function _qmdt_get_state_507()
     return type(tb) == "table" and tb or {}
 end
 
--- 保存全民答题运行态
 local function _qmdt_save_state_507(state)
     setsysvar(VarCfg["A_全民答题json"], tbl2json(state or {}))
 end
 
--- 提交全民答题答案（唯一提交入口：npc[507]）
-local function _qmdt_submit_answer_507(play, answer)
+local function _qmdt_build_prompt_507(q, qidx, total)
+    local lines = {"第" .. tostring(qidx) .. "/" .. tostring(total) .. "题：" .. tostring(q.title or "")}
+    for i, one in ipairs(q.options or {}) do
+        lines[#lines + 1] = tostring(i) .. "." .. tostring(one)
+    end
+    lines[#lines + 1] = "请输入答案序号或完整答案"
+    return table.concat(lines, "\n")
+end
+
+local function _qmdt_make_payload_507(state, cfg, qidx)
+    local q = cfg and cfg.questions and cfg.questions[qidx]
+    if not q then
+        return {open = 0}
+    end
+    local remain = math.max(0, (tonumber(state.question_end_ts) or 0) - os.time())
+    return {
+        open = tonumber(state.open) or 0,
+        idx = qidx,
+        total = cfg.question_count,
+        title = _qmdt_build_prompt_507(q, qidx, cfg.question_count),
+        question_title = q.title,
+        options = q.options or {},
+        input_mode = 1,
+        placeholder = "请输入答案序号或完整答案",
+        limit_sec = remain,
+        end_ts = tonumber(state.question_end_ts) or 0,
+    }
+end
+
+local function _qmdt_build_say_507(state, cfg, qidx)
+    local q = cfg and cfg.questions and cfg.questions[qidx]
+    if not q then
+        return nil
+    end
+    local remain = math.max(0, (tonumber(state.question_end_ts) or 0) - os.time())
+    local lines = {
+        '第' .. tostring(qidx) .. '/' .. tostring(cfg.question_count) .. '题：' .. tostring(q.title or ''),
+    }
+    for i, one in ipairs(q.options or {}) do
+        lines[#lines + 1] = tostring(i) .. '.' .. tostring(one)
+    end
+    -- lines[#lines + 1] = '剩余时间：' .. tostring(remain) .. '秒'
+    lines[#lines + 1] = '<发送/@@InputString24(请输入答案序号或完整答案：)>'
+    return table.concat(lines, '\\') .. '\\'
+end
+
+local function _qmdt_is_active_507(state, cfg, qidx)
+    if not cfg or tonumber(state.open) ~= 1 then
+        return false
+    end
+    if not qidx or qidx <= 0 or not cfg.questions[qidx] then
+        return false
+    end
+    local endTs = tonumber(state.question_end_ts) or 0
+    if endTs > 0 and os.time() > endTs then
+        return false
+    end
+    return true
+end
+
+local function _qmdt_parse_answer_507(q, answerRaw, p3)
+    local raw = tostring(answerRaw or "")
+    raw = string.gsub(raw, "^%s+", "")
+    raw = string.gsub(raw, "%s+$", "")
+    raw = string.gsub(raw, "１", "1")
+    raw = string.gsub(raw, "２", "2")
+    raw = string.gsub(raw, "３", "3")
+    raw = string.gsub(raw, "４", "4")
+    raw = string.gsub(raw, "５", "5")
+    raw = string.gsub(raw, "６", "6")
+    raw = string.gsub(raw, "７", "7")
+    raw = string.gsub(raw, "８", "8")
+    raw = string.gsub(raw, "９", "9")
+    raw = string.gsub(raw, "０", "0")
+    if raw == "" and tonumber(p3) and tonumber(p3) > 0 then
+        raw = tostring(p3)
+    end
+    if raw == "" then
+        return nil
+    end
+    local num = tonumber(raw)
+    if num and q.options and q.options[num] then
+        return num
+    end
+    local firstNum = string.match(raw, "^(%d+)")
+    if firstNum then
+        num = tonumber(firstNum)
+        if num and q.options and q.options[num] then
+            return num
+        end
+    end
+    local letterMap = {A = 1, B = 2, C = 3, D = 4, E = 5, F = 6}
+    local upper = string.upper(raw)
+    if letterMap[upper] and q.options and q.options[letterMap[upper]] then
+        return letterMap[upper]
+    end
+    local firstLetter = string.match(upper, "^([A-F])")
+    if firstLetter and letterMap[firstLetter] and q.options and q.options[letterMap[firstLetter]] then
+        return letterMap[firstLetter]
+    end
+    for i, one in ipairs(q.options or {}) do
+        if tostring(one) == raw then
+            return i
+        end
+    end
+    return nil
+end
+
+local function _qmdt_submit_answer_507(play, answerRaw, p3)
     local cfg = _qmdt_get_cfg_507()
     if not cfg then
         Player.sendmsgEx(play, "全民答题配置缺失#57")
@@ -997,38 +1103,60 @@ local function _qmdt_submit_answer_507(play, answer)
         Player.sendmsgEx(play, "当前暂无可答题目#57")
         return
     end
+    if (tonumber(state.question_end_ts) or 0) > 0 and os.time() > tonumber(state.question_end_ts) then
+        Player.sendmsgEx(play, "本题答题时间已结束#57")
+        return
+    end
     local q = cfg.questions[qidx]
-    local answerNum = tonumber(answer)
+    local answerNum = _qmdt_parse_answer_507(q, answerRaw, p3)
     if not q or not answerNum then
-        Player.sendmsgEx(play, "答案参数错误#57")
+        Player.sendmsgEx(play, "请输入答案序号或完整答案#57")
         return
     end
     local playerName = getbaseinfo(play, 1)
     state.players = state.players or {}
-    local rec = state.players[playerName] or {score = 0, right = 0, total = 0, answers = {}}
-    rec.answers = rec.answers or {}
+    local rec = state.players[playerName] or {score = 0, right = 0, total = 0, questions = {}}
+    rec.questions = rec.questions or {}
     local ansKey = tostring(qidx)
-    if rec.answers[ansKey] ~= nil then
-        sendluamsg(play, 101, 507, 2, 2, "{\"ok\":0,\"reason\":\"already\",\"idx\":" .. qidx .. ",\"score\":" .. (tonumber(rec.score) or 0) .. "}")
-        Player.sendmsgEx(play, "本题已作答#57")
+    local qrec = rec.questions[ansKey] or {tries = 0, done = 0, joined = 0}
+    if tonumber(qrec.done) == 1 then
+        Player.sendmsgEx(play, "本题你已经答对了#57")
         return
     end
-    rec.total = (tonumber(rec.total) or 0) + 1
-    rec.answers[ansKey] = answerNum
+    if tonumber(qrec.joined) ~= 1 then
+        qrec.joined = 1
+        rec.total = (tonumber(rec.total) or 0) + 1
+    end
+    qrec.tries = (tonumber(qrec.tries) or 0) + 1
+    qrec.answer = answerNum
     local isRight = 0
     if tonumber(q.answer) == answerNum then
         isRight = 1
+        qrec.done = 1
         rec.right = (tonumber(rec.right) or 0) + 1
         rec.score = (tonumber(rec.score) or 0) + (tonumber(q.score) or 10)
     end
+    rec.questions[ansKey] = qrec
     state.players[playerName] = rec
     _qmdt_save_state_507(state)
-    sendluamsg(play, 101, 507, 2, 2, "{\"ok\":1,\"idx\":" .. qidx .. ",\"right\":" .. isRight .. ",\"score\":" .. (tonumber(rec.score) or 0) .. ",\"right_count\":" .. (tonumber(rec.right) or 0) .. ",\"total\":" .. (tonumber(rec.total) or 0) .. "}")
     if isRight == 1 then
         Player.sendmsgEx(play, "回答正确，当前积分+" .. tostring(tonumber(q.score) or 10) .. "#249")
     else
-        Player.sendmsgEx(play, "回答错误，再接再厉#57")
+        Player.sendmsgEx(play, "回答错误，可继续作答直到本题结束#57")
     end
+end
+
+function inputstring24(play)
+-- release_print("inputstring24:", getplaydef(play, "S24"))
+-- release_print("inputstring24:", getconst(play, "<$NPCPARAMS(1,S24)>"))
+    local answerRaw = getconst(play, "<$NPCPARAMS(1,S24)>")
+    if answerRaw == nil then
+        answerRaw = ""
+    end
+    answerRaw = tostring(answerRaw)
+    answerRaw = string.gsub(answerRaw, "^%s+", "")
+    answerRaw = string.gsub(answerRaw, "%s+$", "")
+    _qmdt_submit_answer_507(play, answerRaw, 0)
 end
 
 npc[507] = function(play, p2, p3, msgData) --游戏活动
@@ -1038,40 +1166,113 @@ npc[507] = function(play, p2, p3, msgData) --游戏活动
             qmdt_state = "{}"
         end
         local qmdk_state = getsysvar(VarCfg["A_全民夺矿json"])
-        if qmdk_state == "" then
-            qmdk_state = "{}"
+        local qmdk_tb = qmdk_state ~= "" and json2tbl(qmdk_state) or {}
+        if type(qmdk_tb) ~= "table" then
+            qmdk_tb = {}
         end
-        sendluamsg(play, 101, 507, 0, 0, "{\"kqfz\":" .. getsysvar(VarCfg["G_开区分钟"]) .. ",\"hdjl\":" .. getplaydef(play, VarCfg.T_hdjl) .. ",\"qmdt\":" .. qmdt_state .. ",\"qmdk\":" .. qmdk_state .. "}")
+        local qmdk_cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].qmdk or {}
+        local qmdk_score_var = nil
+        if QmdkApi and QmdkApi.get_score_var then
+            qmdk_score_var = QmdkApi.get_score_var(qmdk_cfg, qmdk_tb)
+        end
+        if qmdk_score_var and qmdk_score_var ~= "" then
+            qmdk_tb.grjf = tonumber(getplayvar(play, "HUMAN", qmdk_score_var) or 0) or 0
+            qmdk_tb.pmsj = sorthumvar(qmdk_score_var, 1, 1, 5)
+        else
+            qmdk_tb.grjf = 0
+            qmdk_tb.pmsj = {}
+        end
+        qmdk_state = tbl2json(qmdk_tb)
+        sendluamsg(play, 101, 507, 0, 0, '{"kqfz":' .. getsysvar(VarCfg["G_开区分钟"]) .. ',"hdjl":' .. getplaydef(play, VarCfg.T_hdjl) .. ',"qmdt":' .. qmdt_state .. ',"qmdk":' .. qmdk_state .. "}")
     elseif p2 == 1 then
         if p3 == 1 then
-            Npclib["anniu"][506](play, 0, 0, "")
+            Player.sendmsgEx(play, "保卫村庄暂未接入活动入口#57")
         elseif p3 == 2 then
-            map(play, "xtc")
-        elseif p3 == 3 then
-            map(play, "天降财宝")
-        elseif p3 == 4 then
-            map(play, "比武大会")
-        elseif p3 == 5 then
             local qmdk_cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].qmdk or {}
-            local qmdk_map = qmdk_cfg.map or "xtc"
+            local qmdk_map = qmdk_cfg.map or "全民夺矿"
             map(play, qmdk_map)
+        elseif p3 == 3 then
+            local cfg = _qmdt_get_cfg_507()
+            local state = _qmdt_get_state_507()
+            local idx = tonumber(state.current_idx) or 0
+            if _qmdt_is_active_507(state, cfg, idx) then
+                local sayText = _qmdt_build_say_507(state, cfg, idx)
+                if sayText and sayText ~= "" then
+                    say(play, sayText)
+                end
+            elseif cfg and tonumber(state.open) == 1 and idx > 0 and cfg.questions[idx] then
+                Player.sendmsgEx(play, "本题答题时间已结束，请等待下一题#57")
+            else
+                Player.sendmsgEx(play, "全民答题当前未开启#57")
+            end
+        elseif p3 == 4 then
+            Player.sendmsgEx(play, "勇夺镖车暂未接入活动入口#57")
+        elseif p3 == 5 then
+            map(play, "xtc")
+        elseif p3 == 6 then
+            Player.sendmsgEx(play, "天才地宝暂未接入活动入口#57")
+        elseif p3 == 7 then
+            Npclib["anniu"][506](play, 0, 0, "")
+        elseif p3 == 8 then
+            Player.sendmsgEx(play, "正邪大战暂未接入活动入口#57")
+        elseif p3 == 9 then
+            map(play, "比武大会")
+        elseif p3 == 10 then
+            Player.sendmsgEx(play, "该活动入口暂未开放#57")
+        elseif p3 == 11 then
+            Player.sendmsgEx(play, "沙巴克请通过专用入口参与#57")
+        elseif p3 == 12 then
+            Player.sendmsgEx(play, "讨伐BOSS暂未接入活动入口#57")
+        elseif p3 == 13 then
+            map(play, "天降财宝")
+        elseif p3 == 14 then
+            Player.sendmsgEx(play, "黑暗禁地暂未接入活动入口#57")
         end
     elseif p2 == 2 then
-        local data = json2tbl(msgData or "{}") or {}
-        local answer = tonumber(data.answer) or tonumber(data.ans) or tonumber(p3)
-        _qmdt_submit_answer_507(play, answer)
-    elseif p2 == 3 then
-        local cfg = _qmdt_get_cfg_507()
-        local state = _qmdt_get_state_507()
-        local idx = tonumber(state.current_idx) or 0
-        if cfg and idx > 0 and cfg.questions[idx] then
-            local q = cfg.questions[idx]
-            sendluamsg(play, 101, 507, 2, 1, tbl2json({open = tonumber(state.open) or 0, idx = idx, total = cfg.question_count, title = q.title, options = q.options or {}}))
-        else
-            sendluamsg(play, 101, 507, 2, 1, "{\"open\":0}")
+        local data = json2tbl(msgData or "") or {}
+        local answerRaw = nil
+        if type(data) == "table" then
+            answerRaw = data.answer or data.ans or data.text or data.msg or data.input
         end
+        if answerRaw == nil or answerRaw == "" then
+            answerRaw = msgData
+        end
+        _qmdt_submit_answer_507(play, answerRaw, p3)
+    elseif p2 == 3 then
+        return
     end
 end
+
+local function _qmdk_event_refresh(play)
+    if QmdkApi and QmdkApi.refresh_actor then
+        QmdkApi.refresh_actor(play)
+    end
+end
+
+local function _qmdk_event_hurt(play)
+    if QmdkApi and QmdkApi.on_actor_hurt then
+        QmdkApi.on_actor_hurt(play, "你受到攻击，采集中断")
+    end
+end
+
+local function _qmdk_event_move(play)
+    if QmdkApi and QmdkApi.on_actor_move then
+        QmdkApi.on_actor_move(play)
+    end
+end
+
+local function _qmdk_event_die(play)
+    if QmdkApi and QmdkApi.on_actor_die then
+        QmdkApi.on_actor_die(play)
+    end
+end
+
+GameEvent.add(EventCfg.onLogin, _qmdk_event_refresh, "全民夺矿")
+GameEvent.add(EventCfg.onKFLogin, _qmdk_event_refresh, "全民夺矿")
+GameEvent.add(EventCfg.goSwitchMap, _qmdk_event_refresh, "全民夺矿")
+GameEvent.add(EventCfg.onProHarm, _qmdk_event_hurt, "全民夺矿")
+GameEvent.add(EventCfg.onMove, _qmdk_event_move, "全民夺矿")
+GameEvent.add(EventCfg.onPlaydie, _qmdk_event_die, "全民夺矿")
 
 ---天天省钱
 npc[509] = function(play, p2, p3, msgData)

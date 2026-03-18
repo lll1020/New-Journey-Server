@@ -34,6 +34,8 @@ function startup()
         end
     end
     setontimerex(1, 60) ---全区定时器
+
+    
 end
 
 --------------------人物初始化--------------------
@@ -137,7 +139,7 @@ function entermap(play)
             setplaydef(play,VarCfg.N_tyecmb,1)
             sendluamsg(play,101,498,0,0,'{"pmsj":'..tbl2json(hsmy_px)..',"grjf":'..getplayvar(play, "HUMAN", "比武大会")..'}')
         end
-    elseif getplaydef(play,VarCfg.N_tyecmb) == 1 then
+    else
         sendluamsg(play,101,498,2,0,"")
         setplaydef(play,VarCfg.N_tyecmb,0)
     end
@@ -1127,6 +1129,20 @@ function updateguildnotice(play)
 end
 --点击采集
 function collectmonex(play,monIDX,monName,monMakeIndex)
+    local qmdkStatus, qmdkCollectSec = "pass", 0
+    if QmdkApi and QmdkApi.before_collect then
+        qmdkStatus, qmdkCollectSec = QmdkApi.before_collect(play, monName)
+    end
+    if qmdkStatus == "blocked" then
+        return
+    end
+    if qmdkStatus == "start" then
+        showprogressbardlg(play, qmdkCollectSec, "@func_cjcg", "采集中%s..", 1, "@func_cjsb")
+        setplaydef(play,"S$采集目标",monMakeIndex)
+        setplaydef(play,"S$采集目标名字",monName)
+        setplaydef(play,"N$iscaiji",1)
+        return
+    end
     if not Bag.checkBagEmptyNum(play, 5) then
         Player.sendmsgEx(play, "采集失败,你的背包格子不足!")
         return
@@ -1141,8 +1157,23 @@ function func_cjcg(play)
 
     local monName = getplaydef(play, "S$采集目标名字")
     local monMakeIndex = getplaydef(play, "S$采集目标")
+    if monName == nil or monName == "" or monMakeIndex == nil or monMakeIndex == "" then
+        setplaydef(play, "S$采集目标", "")
+        setplaydef(play, "S$采集目标名字", "")
+        return
+    end
+    if QmdkApi and QmdkApi.on_collect_success and QmdkApi.on_collect_success(play, monName, monMakeIndex) then
+        setplaydef(play, "S$采集目标", "")
+        setplaydef(play, "S$采集目标名字", "")
+        return
+    end
     local mapid = getbaseinfo(play, ConstCfg.gbase.mapid)
     local monobj = getmonbyuserid(mapid, monMakeIndex)
+    if not monobj then
+        setplaydef(play, "S$采集目标", "")
+        setplaydef(play, "S$采集目标名字", "")
+        return
+    end
     killmonbyobj(play, monobj, false, false, false)
     if monName == "采集任务一" then
         local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
@@ -1178,6 +1209,11 @@ function func_cjcg(play)
 
 end
 function func_cjsb(play)
+    setplaydef(play,"N$iscaiji",0)
+    local monName = getplaydef(play,"S$采集目标名字")
+    if QmdkApi and QmdkApi.on_collect_fail then
+        QmdkApi.on_collect_fail(play, monName)
+    end
     setplaydef(play,"S$采集目标","")
     setplaydef(play,"S$采集目标名字","")
 end

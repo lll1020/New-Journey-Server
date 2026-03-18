@@ -1,7 +1,11 @@
 ;==============================================城市地图==============================
 ;[新手地图|12       新手地图] day NOALLOWUSEITEMS(盟重回城石) safe RUNMON(1) NEEDSET_OFF(300)
 [比武大会|D3804_2 比武大会]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) SECRET(47|神秘人|2|21) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[天降财宝|xtc	天降财宝] noreconnect(0159) RUNHUMAN(1) NOTALLOWUSEMAGIC(擒龙手|十步一杀|野蛮冲撞)
+[天降财宝|xbsl	天降财宝] noreconnect(0159) RUNHUMAN(1) NOTALLOWUSEMAGIC(擒龙手|十步一杀|野蛮冲撞)
+[全民夺矿|cymj	全民夺矿] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
+[讨伐boss|dhzj	讨伐boss] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
+[天材地宝|PVP002	天材地宝] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
+[黑暗禁地|zzmj	黑暗禁地] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
 
 [gm|q004 GM地图] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 

@@ -1,0 +1,32 @@
+[2026-03-18 12:39:50:761] [Exception]>>>>>>TBaseObject.MapRandomMove[玩家名字-30000000001773555302000018517] 不存在此地图[全民夺矿]，以传回应急地图[xtc]
+
+[2026-03-18 12:39:53:106] [Exception]>>>>>>TBaseObject.MapRandomMove[玩家名字-30000000001773555302000018517] 不存在此地图[全民夺矿]，以传回应急地图[xtc]
+[2026-03-18 12:39:53:600] [Exception]>>>>>>TBaseObject.MapRandomMove[玩家名字-30000000001773555302000018517] 不存在此地图[全民夺矿]，以传回应急地图[xtc]
+[2026-03-18 12:39:53:724] [Exception]>>>>>>TBaseObject.MapRandomMove[玩家名字-30000000001773555302000018517] 不存在此地图[全民夺矿]，以传回应急地图[xtc]
+[2026-03-18 12:39:53:972] [Exception]>>>>>>TBaseObject.MapRandomMove[玩家名字-30000000001773555302000018517] 不存在此地图[全民夺矿]，以传回应急地图[xtc]
+[2026-03-18 12:39:54:219] [Exception]>>>>>>TBaseObject.MapRandomMove[玩家名字-30000000001773555302000018517] 不存在此地图[全民夺矿]，以传回应急地图[xtc]
+[2026-03-18 12:39:54:219] [Exception]>>>>>>TBaseObject.MapRandomMove[玩家名字-30000000001773555302000018517] 不存在此地图[全民夺矿]，以传回应急地图[xtc]
+
+[2026-03-18 12:59:57:979] [Exception]>>>>>>TBaseObject.MapRandomMove[玩家名字-30000000001773555302000018517] 不存在此地图[全民夺矿]，以传回应急地图[xtc]
+
+[2026-03-18 13:00:00:449] [Exception]>>>>>>TBaseObject.MapRandomMove[玩家名字-30000000001773555302000018517] 不存在此地图[全民夺矿]，以传回应急地图[xtc]
+
+[2026-03-18 13:00:22:274] [Exception]>>>>>>TBaseObject.MapRandomMove[玩家名字-30000000001773555302000018517] 不存在此地图[全民夺矿]，以传回应急地图[xtc]
+[2026-03-18 13:00:24:005] [Exception]>>>>>>TBaseObject.MapRandomMove[玩家名字-30000000001773555302000018517] 不存在此地图[全民夺矿]，以传回应急地图[xtc]
+
+[2026-03-18 13:00:24:742] [Exception]>>>>>>TBaseObject.MapRandomMove[玩家名字-30000000001773555302000018517] 不存在此地图[全民夺矿]，以传回应急地图[xtc]
+[2026-03-18 13:00:25:362] [Exception]>>>>>>TBaseObject.MapRandomMove[玩家名字-30000000001773555302000018517] 不存在此地图[全民夺矿]，以传回应急地图[xtc]
+[2026-03-18 13:00:25:981] [Exception]>>>>>>TBaseObject.MapRandomMove[玩家名字-30000000001773555302000018517] 不存在此地图[全民夺矿]，以传回应急地图[xtc]
+
+[2026-03-18 17:17:44:186] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：141; NpcThreadId: 41304, CurPlayThreadId: 41304
+
+[2026-03-18 19:09:29:479] Func Fail, obj is nil: SendLuaMsg Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'sendluamsg'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/login.lua:79: in function 'main'
+	.\Envir\Market_Def\QFunction-0.lua:58: in function <.\Envir\Market_Def\QFunction-0.lua:42>
+
+[2026-03-18 19:09:41:176] Func Fail, obj is nil: SendLuaMsg Chrid:  Npc: QFunction tc:stack traceback:
+	[C]: in function 'sendluamsg'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/login.lua:79: in function 'main'
+	.\Envir\Market_Def\QFunction-0.lua:58: in function <.\Envir\Market_Def\QFunction-0.lua:42>
+
