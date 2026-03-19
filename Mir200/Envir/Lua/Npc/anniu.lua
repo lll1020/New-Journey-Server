@@ -959,6 +959,8 @@ local function _qmdt_get_cfg_507()
     end
     cfg.question_count = math.min(tonumber(cfg.question_count) or 5, #cfg.questions)
     cfg.per_question_sec = tonumber(cfg.per_question_sec) or 120
+    cfg.base_score = tonumber(cfg.base_score) or 100
+    cfg.time_bonus_per_sec = tonumber(cfg.time_bonus_per_sec) or 1
     return cfg
 end
 
@@ -1130,17 +1132,23 @@ local function _qmdt_submit_answer_507(play, answerRaw, p3)
     qrec.tries = (tonumber(qrec.tries) or 0) + 1
     qrec.answer = answerNum
     local isRight = 0
+    local gainScore = 0
+    local timeBonus = 0
+    local baseScore = tonumber(cfg.base_score) or tonumber(q.score) or 100
     if tonumber(q.answer) == answerNum then
         isRight = 1
         qrec.done = 1
         rec.right = (tonumber(rec.right) or 0) + 1
-        rec.score = (tonumber(rec.score) or 0) + (tonumber(q.score) or 10)
+        timeBonus = math.max(0, math.floor(math.max(0, (tonumber(state.question_end_ts) or 0) - os.time()) * (tonumber(cfg.time_bonus_per_sec) or 1)))
+        gainScore = baseScore + timeBonus
+        rec.score = (tonumber(rec.score) or 0) + gainScore
     end
     rec.questions[ansKey] = qrec
     state.players[playerName] = rec
     _qmdt_save_state_507(state)
     if isRight == 1 then
-        Player.sendmsgEx(play, "回答正确，当前积分+" .. tostring(tonumber(q.score) or 10) .. "#249")
+        sendluamsg(play, 101, 12, 4, 3, "")
+        Player.sendmsgEx(play, "回答正确，当前积分+" .. tostring(gainScore) .. "（基础" .. tostring(baseScore) .. "+时间奖励" .. tostring(timeBonus) .. "）#249")
     else
         Player.sendmsgEx(play, "回答错误，可继续作答直到本题结束#57")
     end
@@ -1158,6 +1166,57 @@ function inputstring24(play)
     answerRaw = string.gsub(answerRaw, "%s+$", "")
     _qmdt_submit_answer_507(play, answerRaw, 0)
 end
+
+local function _activity507_enter_notice(play, actIdx, actName)
+    if not play or not actName or actName == "" then
+        return
+    end
+    local idx = tonumber(actIdx) or 0
+    local rowVar = "N$507NoticeRow_" .. tostring(idx)
+    local row = tonumber(getsysvar(rowVar) or 0) or 0
+    local x = 100
+    local y = 700 - (row % 30) * 18
+    local payload = getbaseinfo(play, 1) .. "参与了[" .. actName .. "]活动"
+    for _, player in ipairs(getplayerlst() or {}) do
+        sendcustommsg(player, 1, payload, 251, 0, x, y)
+    end
+    setsysvar(rowVar, (row + 1) % 30)
+end
+
+
+local function _activity507_is_open(p3)
+    local dqfz = tonumber(getsysvar(VarCfg["G_开区分钟"]) or 0) or 0
+    if p3 == 2 then
+        local state = getsysvar(VarCfg["A_全民夺矿json"])
+        local tb = state ~= "" and json2tbl(state) or {}
+        return getsysvar(VarCfg["G_全民夺矿状态"]) == 1 and type(tb) == "table" and tonumber(tb.open) == 1
+    elseif p3 == 3 then
+        local cfg = _qmdt_get_cfg_507()
+        local state = _qmdt_get_state_507()
+        local idx = tonumber(state.current_idx) or 0
+        return cfg and tonumber(state.open) == 1 and idx > 0 and _qmdt_is_active_507(state, cfg, idx)
+    elseif p3 == 5 then
+        return dqfz >= 20 and dqfz < 23
+    elseif p3 == 9 then
+        return dqfz >= 40 and dqfz < 50
+    elseif p3 == 13 then
+        local cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].sjdb or {}
+        local keepMin = math.max(1, math.ceil((tonumber(cfg.keep_sec) or 300) / 60))
+        return dqfz >= 15 and dqfz < (15 + keepMin)
+    end
+    return false
+end
+
+local function _activity507_open_state_payload()
+    return tbl2json({
+        [2] = _activity507_is_open(2) and 1 or 0,
+        [3] = _activity507_is_open(3) and 1 or 0,
+        [5] = _activity507_is_open(5) and 1 or 0,
+        [9] = _activity507_is_open(9) and 1 or 0,
+        [13] = _activity507_is_open(13) and 1 or 0,
+    })
+end
+
 
 npc[507] = function(play, p2, p3, msgData) --游戏活动
     if p2 == 0 then
@@ -1183,15 +1242,24 @@ npc[507] = function(play, p2, p3, msgData) --游戏活动
             qmdk_tb.pmsj = {}
         end
         qmdk_state = tbl2json(qmdk_tb)
-        sendluamsg(play, 101, 507, 0, 0, '{"kqfz":' .. getsysvar(VarCfg["G_开区分钟"]) .. ',"hdjl":' .. getplaydef(play, VarCfg.T_hdjl) .. ',"qmdt":' .. qmdt_state .. ',"qmdk":' .. qmdk_state .. "}")
+        sendluamsg(play, 101, 507, 0, 0, '{"kqfz":' .. getsysvar(VarCfg["G_开区分钟"]) .. ',"hdjl":' .. getplaydef(play, VarCfg.T_hdjl) .. ',"qmdt":' .. qmdt_state .. ',"qmdk":' .. qmdk_state .. ',"open_state":' .. _activity507_open_state_payload() .. "}")
     elseif p2 == 1 then
         if p3 == 1 then
             Player.sendmsgEx(play, "保卫村庄暂未接入活动入口#57")
         elseif p3 == 2 then
+            if not _activity507_is_open(p3) then
+                Player.sendmsgEx(play, "不是活动时间，无法进入#57")
+                return
+            end
             local qmdk_cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].qmdk or {}
             local qmdk_map = qmdk_cfg.map or "全民夺矿"
             map(play, qmdk_map)
+            _activity507_enter_notice(play, 2, "全民夺矿")
         elseif p3 == 3 then
+            if not _activity507_is_open(p3) then
+                Player.sendmsgEx(play, "不是活动时间，无法进入#57")
+                return
+            end
             local cfg = _qmdt_get_cfg_507()
             local state = _qmdt_get_state_507()
             local idx = tonumber(state.current_idx) or 0
@@ -1208,7 +1276,12 @@ npc[507] = function(play, p2, p3, msgData) --游戏活动
         elseif p3 == 4 then
             Player.sendmsgEx(play, "勇夺镖车暂未接入活动入口#57")
         elseif p3 == 5 then
+            if not _activity507_is_open(p3) then
+                Player.sendmsgEx(play, "不是活动时间，无法进入#57")
+                return
+            end
             map(play, "xtc")
+            _activity507_enter_notice(play, 5, "土城跑酷")
         elseif p3 == 6 then
             Player.sendmsgEx(play, "天才地宝暂未接入活动入口#57")
         elseif p3 == 7 then
@@ -1216,7 +1289,12 @@ npc[507] = function(play, p2, p3, msgData) --游戏活动
         elseif p3 == 8 then
             Player.sendmsgEx(play, "正邪大战暂未接入活动入口#57")
         elseif p3 == 9 then
+            if not _activity507_is_open(p3) then
+                Player.sendmsgEx(play, "不是活动时间，无法进入#57")
+                return
+            end
             map(play, "比武大会")
+            _activity507_enter_notice(play, 9, "武林盟主")
         elseif p3 == 10 then
             Player.sendmsgEx(play, "该活动入口暂未开放#57")
         elseif p3 == 11 then
@@ -1224,7 +1302,12 @@ npc[507] = function(play, p2, p3, msgData) --游戏活动
         elseif p3 == 12 then
             Player.sendmsgEx(play, "讨伐BOSS暂未接入活动入口#57")
         elseif p3 == 13 then
+            if not _activity507_is_open(p3) then
+                Player.sendmsgEx(play, "不是活动时间，无法进入#57")
+                return
+            end
             map(play, "天降财宝")
+            _activity507_enter_notice(play, 13, "随机夺宝")
         elseif p3 == 14 then
             Player.sendmsgEx(play, "黑暗禁地暂未接入活动入口#57")
         end

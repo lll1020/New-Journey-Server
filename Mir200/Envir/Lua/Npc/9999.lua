@@ -378,6 +378,8 @@ local function _admin_qmdt_cfg()
     end
     cfg.question_count = math.min(tonumber(cfg.question_count) or 5, #cfg.questions)
     cfg.per_question_sec = tonumber(cfg.per_question_sec) or 120
+    cfg.base_score = tonumber(cfg.base_score) or 100
+    cfg.time_bonus_per_sec = tonumber(cfg.time_bonus_per_sec) or 1
     cfg.question_span_min = math.max(1, math.ceil(cfg.per_question_sec / 60))
     cfg.duration_min = math.max(tonumber(cfg.duration_min) or (cfg.question_count * cfg.question_span_min), cfg.question_count * cfg.question_span_min)
     return cfg
@@ -1177,7 +1179,24 @@ function ggna(play,id)
         -- sg_data["npc_696"] = sg_data["npc_696"] + 100
         -- Player.setJsonTableByVar(play, VarCfg["T_各剧情杀怪"], sg_data)
         		-- sendmsgnew(play, 255, 0, '狂暴之力：玩家{《' .. getbaseinfo(play, 1) .. '》/FCOLOR=251}成功开启{[狂暴之力]/FCOLOR=250},击杀此人可获得额外奖励...', 1, 3)
-                Npclib["anniu"][506](play, 0, 0, "")
+
+                local function _activity507_enter_notice(play, actIdx, actName)
+    if not play or not actName or actName == "" then
+        return
+    end
+    local idx = tonumber(actIdx) or 0
+    local rowVar = "N$507NoticeRow_" .. tostring(idx)
+    local row = tonumber(getsysvar(rowVar) or 0) or 0
+    local x = 100
+    local y = 700 - (row % 30) * 18
+    local payload = getbaseinfo(play, 1) .. "参与了[" .. actName .. "]活动"
+    for _, player in ipairs(getplayerlst() or {}) do
+        sendcustommsg(player, 1, payload, 251, 0, x, y)
+    end
+    setsysvar(rowVar, (row + 1) % 30)
+end
+
+                _activity507_enter_notice(play, 5, "土城跑酷")
 
 
 

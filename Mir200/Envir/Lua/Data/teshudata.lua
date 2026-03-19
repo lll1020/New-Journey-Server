@@ -1443,7 +1443,7 @@ teshudata = {
         name = "装扮",
         details = {
             sz = {
-                {name = "时装：首充", sEffect = 60037, shape = 1301,attr = {{244,18888}}},
+                {name = "时装：首充", sEffect = 60048, shape = 1312,attr = {{244,18888}}},
                 {name = "时装：虫豸", sEffect = 60038, shape = 1302,attr = {{244,18888}}},
                 {name = "时装：骷髅", sEffect = 60039, shape = 1303,attr = {{244,18888}}},
                 {name = "时装：4大陆", sEffect = 60040, shape = 1304,attr = {{244,18888}}},
@@ -2268,6 +2268,8 @@ teshudata = {
             duration_min = 8,            -- 活动总时长（分钟），至少覆盖全部题目
             question_count = 4,          -- 题目数量，当前共 4 轮
             per_question_sec = 120,      -- 每题答题时长（秒）
+            base_score = 100,            -- 每题答对基础积分
+            time_bonus_per_sec = 1,      -- 时间奖励系数（每剩余 1 秒额外奖励多少积分）
             mail_title = "全民答题",
             rank_rewards = {
                 {rank = 1, items = {{"元宝", 50000}, {"5元真实充值", 1}}},
@@ -2276,10 +2278,10 @@ teshudata = {
             },
             join_reward = {{"金币", 500000}},
             questions = {
-                {title = "传奇里通常用于补给血量的药品是?", options = {"魔法药", "太阳水", "毒药", "随机石"}, answer = 2, score = 10},
-                {title = "下列哪个更偏向提升打怪效率?", options = {"打怪爆率", "回城石", "聊天字体", "交易税"}, answer = 1, score = 10},
-                {title = "行会战中最关键的是?", options = {"个人单挑", "团队配合", "挂机观战", "只看战力"}, answer = 2, score = 10},
-                {title = "以下哪项通常属于货币类奖励?", options = {"元宝", "称号", "时装外观", "地图特效"}, answer = 1, score = 10},
+                {title = "传奇里通常用于补给血量的药品是?", options = {"魔法药", "太阳水", "毒药", "随机石"}, answer = 2, score = 100},
+                {title = "下列哪个更偏向提升打怪效率?", options = {"打怪爆率", "回城石", "聊天字体", "交易税"}, answer = 1, score = 100},
+                {title = "行会战中最关键的是?", options = {"个人单挑", "团队配合", "挂机观战", "只看战力"}, answer = 2, score = 100},
+                {title = "以下哪项通常属于货币类奖励?", options = {"元宝", "称号", "时装外观", "地图特效"}, answer = 1, score = 100},
             },
         },
         -- 全民夺矿（每日定时活动，支持 bot 触发）

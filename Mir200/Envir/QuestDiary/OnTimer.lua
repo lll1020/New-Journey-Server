@@ -117,6 +117,30 @@ local function _txzr_broadcast_roll(roundIdx, rankData)
     sendmovemsg("0", 1, 249, 0, 250, 1, msg)
 end
 
+local function _txzr_broadcast_reward_rollscreen(roundIdx, rankData, rewardList, txzz_data)
+    if type(rankData) ~= "table" or #rankData <= 0 then
+        return
+    end
+    local players = getplayerlst() or {}
+    if #players <= 0 then
+        return
+    end
+    local maxCount = math.min(10, #rankData)
+    local roundText = constant.pz_hanzi[roundIdx] or tostring(roundIdx)
+    for i = 1, maxCount do
+        local one = rankData[i]
+        local playerName = tostring(one[1] or "")
+        local rewardName = tostring((rewardList and rewardList[i]) or "")
+        local rankText = constant.pz_hanzi[i] or tostring(i)
+        local msg = string.format("<outline size='1'><font color='#ff3030'>天选之人第%s轮开奖：%s获得第%s名，奖励[%s]</font></outline>", roundText, playerName, rankText, rewardName)
+        if i == 1 and type(txzz_data) == "table" and type(txzz_data["sq" .. roundIdx]) == "table" and txzz_data["sq" .. roundIdx].item and txzz_data["sq" .. roundIdx].item ~= "" then
+            msg = string.format("<outline size='1'><font color='#ff3030'>天选之人第%s轮开奖：%s获得第%s名，奖励[%s]，额外获得[%s]</font></outline>", roundText, playerName, rankText, rewardName, tostring(txzz_data["sq" .. roundIdx].item))
+        end
+        sendmovemsg("0", 1, 253, 0, 300, 1, msg)
+        sendmovemsg("0", 1, 249, 0, 250, 1, msg)
+    end
+end
+
 -- 获取随机夺宝配置（单源：teshudata.anniu_507.sjdb）
 local function _sjdb_get_cfg()
     local cfg = teshudata and teshudata["anniu_507"] or {}
@@ -188,6 +212,8 @@ local function _qmdt_get_cfg()
     cfg.start_minute = tonumber(cfg.start_minute) or 33
     cfg.question_count = math.min(tonumber(cfg.question_count) or 5, #cfg.questions)
     cfg.per_question_sec = tonumber(cfg.per_question_sec) or 120
+    cfg.base_score = tonumber(cfg.base_score) or 100
+    cfg.time_bonus_per_sec = tonumber(cfg.time_bonus_per_sec) or 1
     cfg.question_span_min = math.max(1, math.ceil(cfg.per_question_sec / 60))
     cfg.duration_min = math.max(tonumber(cfg.duration_min) or (cfg.question_count * cfg.question_span_min), cfg.question_count * cfg.question_span_min)
     return cfg
@@ -979,6 +1005,7 @@ function ontimerex1()
                     end
                 end
                 _txzr_broadcast_roll(djl, txzz_data["md" .. djl])
+                _txzr_broadcast_reward_rollscreen(djl, txzz_data["md" .. djl], rewardList, txzz_data)
                 txzz_data["notice"] = _txzr_get_notice_cfg()
                 txzz_data["shenqi"] = _txzr_get_shenqi_cfg()
                 setsysvar(VarCfg["A_天选之人json"], tbl2json(txzz_data))

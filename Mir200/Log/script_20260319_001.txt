@@ -1,2 +1,7 @@
 [2026-03-19 10:02:30:904] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：79; NpcThreadId: 36904, CurPlayThreadId: 36904
 
+[2026-03-19 15:09:19:675] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：31; NpcThreadId: 36904, CurPlayThreadId: 36904
+
+[2026-03-19 15:09:42:241] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 36904, CurPlayThreadId: 36904
+[2026-03-19 15:09:42:241] [玩家名字]Lua执行耗时过高:31ms msgid:100 24 1 0 
+

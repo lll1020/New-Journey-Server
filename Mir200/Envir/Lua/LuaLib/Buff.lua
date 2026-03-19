@@ -56,7 +56,7 @@ Buff = {
                     for i, v in ipairs(mons) do
                         if i < 20 then
                             if Target ~= v then
-                                humanhp(v,"-",500,111,0,play)
+                                humanhp(v,"-",500,108,0,play)
                                 monmission(v,getbaseinfo(play,4)-3,getbaseinfo(play,5)-3,0)
                             end
                         end
@@ -171,9 +171,9 @@ Buff = {
     [77] = function(play,zt,Damage,Target,MagicId)      --烈火剑法点燃被击中的目标3秒，没秒减少等同于释放者攻击上限20%的生命
         if zt == 3 then
             if MagicId == 26 then
-                humanhp(Target,"-",math.floor(getbaseinfo(play, 20)*0.2),0,1,play)
-                humanhp(Target,"-",math.floor(getbaseinfo(play, 20)*0.2),0,2,play)
-                humanhp(Target,"-",math.floor(getbaseinfo(play, 20)*0.2),0,3,play)
+                humanhp(Target,"-",math.floor(getbaseinfo(play, 20)*0.2),112,1,play)
+                humanhp(Target,"-",math.floor(getbaseinfo(play, 20)*0.2),112,2,play)
+                humanhp(Target,"-",math.floor(getbaseinfo(play, 20)*0.2),112,3,play)
             end
         else
             local bl = getplaydef(play,VarCfg.S_buffgjh)

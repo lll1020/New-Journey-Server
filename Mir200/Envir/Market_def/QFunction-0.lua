@@ -369,7 +369,7 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
 			end
 		end
 		if ew > 0 then
-			humanhp(Target, '-', ew, 107, 0, play, 1)
+			humanhp(Target, '-', ew, 110, 0, play, 1)
 		end
         local play_dfdj = getbaseinfo(play, 51, 252)
         local Target_dfdj = getbaseinfo(Target, 51, 252)
@@ -388,11 +388,11 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
 		if zd == 0 or true then
 			local zhi = getbaseinfo(play, 51, 244)
 			if zhi > 0 then
-				humanhp(Target, '-', zhi, math.random(100) > 10 and 101 or 112, 0, play, 1)
+				humanhp(Target, '-', zhi, 106, 0, play, 1)
 			end
 			zhi = getbaseinfo(play, 51, 245)
 			if zhi > 0 then
-				humanhp(Target, '-', Damage / 10000 * zhi, 102, 0, play, 1)
+				humanhp(Target, '-', Damage / 10000 * zhi, 108, 0, play, 1)
 			end
 		else
 			if zd > Damage then
@@ -401,25 +401,20 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
 				if sy > qie then
                     if qie > 0 then
                         sy = sy - qie
-                        local qiebjjl = getbaseinfo(play, 51, 250)
-                        if math.random(100) <= qiebjjl then
-                            humanhp(Target, '-', math.floor(qie * (getbaseinfo(play, 51, 251)/100 + 1)), 101, 0, play, 1)
-                        else
-                            humanhp(Target, '-', qie, math.random(100) > 10 and 101 or 112, 0, play, 1)
-                        end
+                        humanhp(Target, '-', math.floor(qie * (getbaseinfo(play, 51, 251)/100 + 1)), 106, 0, play, 1)
                     end
 					local zeng = Damage / 10000 * getbaseinfo(play, 51, 245)
 					if zeng > 0 then
 						if sy > zeng then
 							sy = sy - zeng
-							humanhp(Target, '-', zeng, 102, 0, play, 1)
+							humanhp(Target, '-', zeng, 110, 0, play, 1)
 						else
-							humanhp(Target, '-', sy, 102, 0, play, 1)
+							humanhp(Target, '-', sy, 110, 0, play, 1)
 							return Damage
 						end
 					end
 				else
-					humanhp(Target, '-', sy, math.random(100) > 10 and 101 or 112, 0, play, 1)
+					humanhp(Target, '-', sy, 106, 0, play, 1)
 					return Damage
 				end
 			else
@@ -441,7 +436,7 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
 						sy = sy - ew
 						buffsh = buffsh + ew
 					else
-						humanhp(Target, '-', sy, 107, 0, play, 1)
+						humanhp(Target, '-', sy, 110, 0, play, 1)
 						return Damage
 					end
 				end
@@ -460,14 +455,14 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
 						sy = sy - ew
 						buffsh = buffsh + ew
 					else
-						humanhp(Target, '-', sy, 107, 0, play, 1)
+						humanhp(Target, '-', sy, 110, 0, play, 1)
 						return Damage
 					end
 				end
 			end
 		end
 		if buffsh > 0 then
-			humanhp(Target, '-', buffsh, 107, 0, play, 1)
+			humanhp(Target, '-', buffsh, 110, 0, play, 1)
 		end
 		return Damage
 	end

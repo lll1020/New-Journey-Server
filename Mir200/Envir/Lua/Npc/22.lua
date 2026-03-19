@@ -177,7 +177,7 @@ function npc.lgcf(play,zt,Damage,Target,triggerType)
             if absorb > 0 then
                 setplaydef(play,"N$buff_lg_mhd",shieldVal - absorb)
                 -- 通过同值回血抵消本次伤害，实现护盾吸收
-                humanhp(play,"+",absorb,0,0,play)
+                humanhp(play,"+",absorb,5,0,play)
             end
         end
     end
@@ -233,7 +233,7 @@ function npc.lgcf(play,zt,Damage,Target,triggerType)
         level = T_data.level[""..T_data.other]
         config = _config.main_r[T_data.other]
         if T_data.other == 1 then--金
-            humanhp(Target,"-",math.floor(level*config.value2),0,1,play)
+            humanhp(Target,"-",math.floor(level*config.value2),110,1,play)
         elseif T_data.other == 2 then--木
             Player.updateSomeAddr_time(play, nil, {{71, math.floor(level*config.value1*(getbaseinfo(play, 20) - getbaseinfo(play, 19))/10)}},10)
         elseif T_data.other == 3 then--水

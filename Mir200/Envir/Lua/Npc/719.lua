@@ -235,7 +235,7 @@ local function _explode_minions(play, dtm, minion_name, effect_id, hurt_pct)
     for _, m in ipairs(mobs) do
         if getbaseinfo(m,1) == minion_name then
             boom_cnt = boom_cnt + 1
-            humanhp(m, "-", 999999999, 0, 0, play)
+            humanhp(m, "-", 999999999, 107, 0, play)
         end
     end
 
@@ -251,7 +251,7 @@ local function _explode_minions(play, dtm, minion_name, effect_id, hurt_pct)
         if hurt < 1 then
             hurt = 1
         end
-        humanhp(v, "-", hurt, 0, 0, play)
+        humanhp(v, "-", hurt, 110, 0, play)
     end
 
     Player.sendmsgEx(play, "随从自爆，引发大范围伤害！#57")

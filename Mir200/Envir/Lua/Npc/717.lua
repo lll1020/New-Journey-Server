@@ -121,7 +121,7 @@ local function _fire_attack_map(play, dtm, effect_id, hurt_pct)
         if hurt < 1 then
             hurt = 1
         end
-        humanhp(v, "-", hurt, 0, 0, play)
+        humanhp(v, "-", hurt, 112, 0, play)
     end
 end
 
