@@ -1176,7 +1176,8 @@ function ggna(play,id)
         -- local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
         -- sg_data["npc_696"] = sg_data["npc_696"] + 100
         -- Player.setJsonTableByVar(play, VarCfg["T_各剧情杀怪"], sg_data)
-        		sendmsgnew(play, 255, 0, '狂暴之力：玩家{《' .. getbaseinfo(play, 1) .. '》/FCOLOR=251}成功开启{[狂暴之力]/FCOLOR=250},击杀此人可获得额外奖励...', 1, 3)
+        		-- sendmsgnew(play, 255, 0, '狂暴之力：玩家{《' .. getbaseinfo(play, 1) .. '》/FCOLOR=251}成功开启{[狂暴之力]/FCOLOR=250},击杀此人可获得额外奖励...', 1, 3)
+                Npclib["anniu"][506](play, 0, 0, "")
 
 
 

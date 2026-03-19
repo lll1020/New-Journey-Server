@@ -76,7 +76,6 @@ function Login.main(play)
     shaguai.jia(play,25)
     shaguai.jia(play,32)
 
-    sendluamsg(play, 101, 12, 1, 3, '{"sk":2,"kf":2,"idx":3}')
 
     
 

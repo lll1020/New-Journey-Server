@@ -1,0 +1,2 @@
+[2026-03-19 10:02:30:904] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：79; NpcThreadId: 36904, CurPlayThreadId: 36904
+
