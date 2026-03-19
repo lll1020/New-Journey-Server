@@ -313,6 +313,24 @@ local function _ywl_set_current_task(play, sj)
     _ywl_send_current_task(play)
 end
 
+local function _ywl_try_clear_current_task(play, T_ywl, sj)
+    T_ywl = T_ywl or json2tbl(getplaydef(play, VarCfg.T_ywl))
+    if not sj or not sj.i or not sj.j or not sj.z then
+        return T_ywl, false
+    end
+    local cur = T_ywl.dq or ""
+    local taskKey = tostring(sj.i) .. "_" .. tostring(sj.j) .. "_" .. tostring(sj.z)
+    if cur == taskKey then
+        T_ywl.dq = ""
+        T_ywl.dq_i = nil
+        T_ywl.dq_j = nil
+        T_ywl.dq_z = nil
+        T_ywl.dq_id = nil
+        return T_ywl, true
+    end
+    return T_ywl, false
+end
+
 npc[11] = function(play, p2, p3, data) --异闻录
     -- sj.i 大陆  sj.j 章节  sj.k 暂时不用  sj.z 剧情
     if p2 == 0 then
@@ -435,6 +453,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
                 if shuju.fwdjy(play, shuju.tk, shuju) then
                     --可以完成
                     T_ywl["jl_" .. sj.i .. "_" .. sj.j .. "_" .. sj.z] = 1
+                    T_ywl = select(1, _ywl_try_clear_current_task(play, T_ywl, sj))
                     setplaydef(play, VarCfg.T_ywl, tbl2json(T_ywl))
                     if shuju.jl then
                         Player.rwjl(play, shuju.jl, "剧情jl", 1,0)
