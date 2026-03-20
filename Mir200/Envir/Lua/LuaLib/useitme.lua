@@ -600,6 +600,7 @@ function stdmodefunc41(play, item) --仙法卷轴残页  -- 10合一  仙法卷轴
     takeitem(play, itemName, 10)
     Player.rwjl(play, {{"仙法卷轴",1}}, "仙法卷轴残页合成", 1)
     Player.sendmsgEx(play, "合成成功，获得|仙法卷轴*1#249")
+    return false
 end
 function stdmodefunc42(play, item) --低级材料自选箱  --5个基础材料  
     _msfc_open_box_say(play, "低级材料自选箱", "low")
