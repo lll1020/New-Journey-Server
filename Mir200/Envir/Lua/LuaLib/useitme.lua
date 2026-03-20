@@ -495,7 +495,127 @@ function stdmodefunc40(play, item) --特殊丹药
     setplaydef(play, VarCfg["T_物品使用记录"], tbl2json(rec))
     delitembymakeindex(play, getiteminfo(play, item, 1), 1)
 end
+local function _msfc_get_box_pool(poolKey)
+    local cfg = teshudata and teshudata["npc_101"] or {}
+    local boxPool = cfg.box_pool or {}
+    return boxPool[poolKey] or {}
+end
 
+local function _msfc_reward_label(reward)
+    if not reward then
+        return ""
+    end
+    if reward.label and reward.label ~= "" then
+        return reward.label
+    end
+    if reward.give and reward.give[1] then
+        return tostring(reward.give[1][1]) .. "*" .. tostring(reward.give[1][2] or 1)
+    end
+    return tostring(reward.name or "")
+end
+
+local function _msfc_box_code(poolKey, idx)
+    local map = {low = 100, high = 200, super = 300}
+    return (map[poolKey] or 0) + (tonumber(idx) or 0)
+end
+
+local function _msfc_parse_box_code(code)
+    code = tonumber(code) or 0
+    local poolKey = nil
+    if code >= 300 then
+        poolKey = "super"
+        code = code - 300
+    elseif code >= 200 then
+        poolKey = "high"
+        code = code - 200
+    elseif code >= 100 then
+        poolKey = "low"
+        code = code - 100
+    end
+    return poolKey, code
+end
+
+local function _msfc_open_box_say(play, boxName, poolKey)
+    local pool = _msfc_get_box_pool(poolKey)
+    if not pool or #pool < 1 then
+        Player.sendmsgEx(play, "材料自选箱配置不存在#57")
+        return
+    end
+    local height = 150 + #pool * 48
+    local lines = {
+        '<Img|id=ui_msfc_bg|x=0|y=0|width=640|height=' .. tostring(height) .. '|img=public/bg_npc_01.png|bg=1|esc=1|move=0|reset=1|show=0|scale9l=15|scale9r=15|scale9t=15|scale9b=15>',
+        '    <Layout|id=ui_msfc_close_area|x=610|y=0|width=30|height=40|link=@exit>',
+        '    <Button|id=ui_msfc_close|x=604|y=0|width=26|height=40|nimg=public/1900000510.png|pimg=public/1900000511.png|link=@exit>',
+        '    <Text|id=ui_msfc_title|x=24|y=18|width=560|height=24|color=251|size=18|text=' .. tostring(boxName) .. '：点击奖励直接领取>',
+    }
+    for i, reward in ipairs(pool) do
+        local y = 58 + (i - 1) * 44
+        lines[#lines + 1] = '    <Button|id=ui_msfc_btn_' .. tostring(i) .. '|x=24|y=' .. tostring(y) .. '|width=560|height=36|nimg=public/1900000660.png|pimg=public/1900000660.png|color=251|size=16|text=' .. _msfc_reward_label(reward) .. '|link=@msfcbox,' .. tostring(_msfc_box_code(poolKey, i)) .. '>'
+    end
+    lines[#lines + 1] = '</Img>'
+    say(play, table.concat(lines, "\r\n"))
+end
+
+local function _msfc_submit_box_choice(play, boxName, poolKey, choiceIdx)
+    local pool = _msfc_get_box_pool(poolKey)
+    local reward = tonumber(choiceIdx) and pool[tonumber(choiceIdx)] or nil
+    if not reward then
+        Player.sendmsgEx(play, "选择的奖励无效#57")
+        return
+    end
+    if getbagitemcount(play, boxName) < 1 then
+        Player.sendmsgEx(play, tostring(boxName) .. "不足#57")
+        return
+    end
+    if reward.kind ~= "item" or type(reward.give) ~= "table" then
+        Player.sendmsgEx(play, "该奖励暂不支持通过自选箱领取#57")
+        return
+    end
+    takeitem(play, boxName, 1)
+    Player.rwjl(play, reward.give, tostring(boxName), 1)
+    Player.sendmsgEx(play, "开启成功，获得|" .. _msfc_reward_label(reward) .. "#249")
+end
+
+function msfcbox(play, code)
+    local poolKey, choiceIdx = _msfc_parse_box_code(code)
+    local boxMap = {
+        low = "低级材料自选箱",
+        high = "高级材料自选箱",
+        super = "特级材料自选箱",
+    }
+    local boxName = boxMap[poolKey]
+    if not boxName or not choiceIdx or choiceIdx <= 0 then
+        Player.sendmsgEx(play, "选择的奖励无效#57")
+        return
+    end
+    _msfc_submit_box_choice(play, boxName, poolKey, choiceIdx)
+end
+
+function stdmodefunc41(play, item) --仙法卷轴残页  -- 10合一  仙法卷轴
+    local itemName = getiteminfo(play, item, ConstCfg.iteminfo.name) or "仙法卷轴残页"
+    if getbagitemcount(play, itemName) < 10 then
+        Player.sendmsgEx(play, itemName .. "不足10个#57")
+        return
+    end
+    takeitem(play, itemName, 10)
+    Player.rwjl(play, {{"仙法卷轴",1}}, "仙法卷轴残页合成", 1)
+    Player.sendmsgEx(play, "合成成功，获得|仙法卷轴*1#249")
+end
+function stdmodefunc42(play, item) --低级材料自选箱  --5个基础材料  
+    _msfc_open_box_say(play, "低级材料自选箱", "low")
+    return false
+
+end
+function stdmodefunc43(play, item) --高级材料自选箱  --5个基础材料  
+    _msfc_open_box_say(play, "高级材料自选箱", "high")
+    return false
+
+end
+function stdmodefunc44(play, item) --特级材料自选箱  --5个基础材料  
+    _msfc_open_box_say(play, "特级材料自选箱", "super")
+    return false
+
+end
     
 -- 倩女幽魂召唤道具（预留）：仅副本中可用
 -- 后续将对应道具 StdMode 指向 49 即可生效
