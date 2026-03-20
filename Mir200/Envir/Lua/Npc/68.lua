@@ -73,13 +73,13 @@ function npc.link(play,npcid,ew,aid)
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
         local T_dljq = Player.getJsonTableByVar(play, VarCfg.T_dljq)
         T_data.level = T_data.level or {}
-        if T_data.level[""..aid] then
+        if T_data.level[""..aid + 5] then
             Player.sendmsgEx(play, "你已经激活了该灵根#57")
             return
         end
         T_dljq["npc_68"] = T_dljq["npc_68"] or {}
         if T_dljq["npc_68"][""..aid] and T_dljq["npc_68"][""..aid] == 1 then
-            T_data.level[""..aid] = 0
+            T_data.level[""..aid + 5] = 0
             Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
             Player.sendmsgEx(play, "恭喜你，成功激活了#249|灵根")
             sendluamsg(play,100,npcid,2,aid,"")

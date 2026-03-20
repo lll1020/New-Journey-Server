@@ -226,27 +226,27 @@ shaguai = {
 				Player.sendmsgEx(play,  "成功击杀灵根守护兽#57")
 				Npclib[602].link(play, 602, 2, 5, "")
 			elseif getbaseinfo(mob,1) == "雷灵根守护兽" and T_dljq["npc_68"][""..1] and T_dljq["npc_68"][""..1] == 0 then
-				T_dljq["npc_68"][""..6] = 1
+				T_dljq["npc_68"][""..1] = 1
 				Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
 				Player.sendmsgEx(play,  "成功击杀灵根守护兽#57")
 				Npclib[68].link(play, 68, 2, 1, "")
 			elseif getbaseinfo(mob,1) == "风灵根守护兽" and T_dljq["npc_68"][""..2] and T_dljq["npc_68"][""..2] == 0 then
-				T_dljq["npc_68"][""..7] = 1
+				T_dljq["npc_68"][""..2] = 1
 				Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
 				Player.sendmsgEx(play,  "成功击杀灵根守护兽#57")
 				Npclib[68].link(play, 68, 2, 2, "")
 			elseif getbaseinfo(mob,1) == "冰灵根守护兽" and T_dljq["npc_68"][""..3] and T_dljq["npc_68"][""..3] == 0 then
-				T_dljq["npc_68"][""..8] = 1
+				T_dljq["npc_68"][""..3] = 1
 				Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
 				Player.sendmsgEx(play,  "成功击杀灵根守护兽#57")
 				Npclib[68].link(play, 68, 2, 3, "")
 			elseif getbaseinfo(mob,1) == "焚灵根守护兽" and T_dljq["npc_68"][""..4] and T_dljq["npc_68"][""..4] == 0 then
-				T_dljq["npc_68"][""..9] = 1
+				T_dljq["npc_68"][""..4] = 1
 				Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
 				Player.sendmsgEx(play,  "成功击杀灵根守护兽#57")
 				Npclib[68].link(play, 68, 2, 4, "")
 			elseif getbaseinfo(mob,1) == "岩灵根守护兽" and T_dljq["npc_68"][""..5] and T_dljq["npc_68"][""..5] == 0 then
-				T_dljq["npc_68"][""..10] = 1
+				T_dljq["npc_68"][""..5] = 1
 				Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
 				Player.sendmsgEx(play,  "成功击杀灵根守护兽#57")
 				Npclib[68].link(play, 68, 2, 5, "")

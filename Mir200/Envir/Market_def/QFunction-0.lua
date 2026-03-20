@@ -1340,7 +1340,7 @@ end
 
 
 function kuafuend(play)--	ÍË³ö¿ç·þ
-    GameEvent.push(EventCfg.onKuaFuEnd, actor)
+    GameEvent.push(EventCfg.onKuaFuEnd, play)
     -- local szjl = json2tbl(getplaydef(play,VarCfg.T_szjl))
 end
 

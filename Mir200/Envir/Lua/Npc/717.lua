@@ -267,10 +267,10 @@ function npc.link(play,npcid,ew,aid)
         return
     end
 
-    if not _is_night_open() then
-        Player.sendmsgEx(play, "该副本仅夜晚可进入（默认18:00-06:00）#57")
-        return
-    end
+    -- if not _is_night_open() then
+    --     Player.sendmsgEx(play, "该副本仅夜晚可进入（默认18:00-06:00）#57")
+    --     return
+    -- end
 
     if state < 1 then
         jq_data[_cfg_key] = 1

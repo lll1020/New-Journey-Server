@@ -465,6 +465,39 @@ Buff = {
             setplaydef(play,"N$buff314",0)
         end
     end,
+    [315] = function(play,zt,Damage,Target) --打怪，单体目标 BUFF：攻击有5%的概率附带[打怪切割+攻击力]x Y%的真实伤害  切割之斧的buff
+        if zt == 3 then
+            if not Target or getbaseinfo(Target,ConstCfg.gbase.isplayer) then
+                return 0
+            end
+            if math.random(100) > 5 then
+                return 0
+            end
+
+            local cutDamage = tonumber(getbaseinfo(play, 51, 244) or 0) or 0
+            local atkDamage = tonumber(getbaseinfo(play, 20) or 0) or 0
+            local axeLevel = tonumber(Player.getEquipFieldByPos(play, 9, 1) or 0) or 0
+            local axeRatio = axeLevel > 0 and (10 + (axeLevel - 1) * 5) or 0
+            local extraDamage = math.floor((cutDamage + atkDamage) * axeRatio / 100)
+            if extraDamage < 0 then
+                extraDamage = 0
+            end
+            if extraDamage > 0 then
+                Player.sendmsgEx(play,"【毁灭】#253|切割之斧触发，额外造成"..extraDamage.."点真实伤害")
+                playeffect(Target,60456,0,0,1,0,0)
+            end
+            return extraDamage
+        else
+            local bl = getplaydef(play,VarCfg.S_buffgjq)
+            local data = json2tbl(bl == "" and {} or bl)
+            if zt == 1 then
+                data["315"] = true
+            elseif zt == 2 then
+                data["315"] = nil
+            end
+            setplaydef(play,VarCfg.S_buffgjq,tbl2json(data))
+        end
+    end,
     [101] = function(play,zt) --仙食坊全满
         if zt == 1 then
             addattlist(play, "仙食坊全满", "=", "3#1#8888|3#4#588|3#242#3800|3#244#4888", 1)
@@ -704,6 +737,9 @@ function Buff.tuo(play,item)
     end
 end
 return Buff
+
+
+
 
 
 

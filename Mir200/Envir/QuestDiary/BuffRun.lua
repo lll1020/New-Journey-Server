@@ -1,4 +1,4 @@
---------------------buff自定义监听触发-------------------
+--------------------buff触发逻辑-------------------
 function buffchufa(play, buffid, zid)
     if buffid == 19999 then
         if getbaseinfo(play, 6) < 30 then
@@ -8,24 +8,72 @@ function buffchufa(play, buffid, zid)
             delbuff(play, 19999)
         end
     elseif buffid == 20103 then
-
         local curzuiyi = getplaydef(play, VarCfg["J_醉意值"])
         if curzuiyi < 100 then
-            Player.sendmsgEx(play, string.format("你的醉意值未达上限|%d#249|，无法开启|醉酒狂魔舞#57", _config.max_zuiyi))
+            Player.sendmsgEx(play, string.format("你的醉意值未达上限|%d#249|，无法维持|醉酒狂魔舞#57", _config.max_zuiyi))
             delbuff(play, 20103)
             return
         end
-
-
         local name, num = Player.checkItemNumByTable(play, {{"元宝",200}})
         if name then
             delbuff(play, 20103)
             return
         end
         Player.takeItemByTable(play, {{"元宝",200}}, ",醉酒狂魔舞",nil)
+    elseif buffid == 20104 then --金
+        local level = tonumber(getobjintvar(play,22041) or 0) or 0
+        local xx,yy,dqdt = getbaseinfo(play,4),getbaseinfo(play,5),getbaseinfo(play,3)
+        local mons = getobjectinmap(dqdt, xx, yy, 3, 2) or {}
+        local damage = math.floor(level * 10000)
+        if damage > 0 then
+            for _, v in ipairs(mons) do
+                humanhp(v,"-",damage,106,0,play,1)
+            end
+        end
+        rangeharm(play,xx,yy,3,0,0,0,0,2,20310)
+        playeffect(play,20301,0,0,1,1,0)
+    elseif buffid == 20105 then --水/火
+        local waterLevel = tonumber(getobjintvar(play,22042) or 0) or 0
+        if waterLevel > 0 and getbaseinfo(play,ConstCfg.gbase.isplayer) then
+            local xx,yy,dqdt = getbaseinfo(play,4),getbaseinfo(play,5),getbaseinfo(play,3)
+            local mons = getobjectinmap(dqdt, xx, yy, 5, 2) or {}
+            local damage = math.floor(waterLevel * 500)
+            for _, v in ipairs(mons) do
+                if damage > 0 then
+                    humanhp(v,"-",damage,112,0,play,1)
+                end
+                monmission(v,xx,yy,0)
+            end
+            playeffect(play,60454,0,0,1,1,0)
+        else
+            local fireDamage = tonumber(getobjintvar(play,22045) or 0) or 0
+            if fireDamage > 0 then
+                local ownerName = getobjstrvar(play,22045) or ""
+                local owner = ownerName ~= "" and getplayerbyname(ownerName) or nil
+                if owner == 0 then
+                    owner = nil
+                end
+                humanhp(play,"-",fireDamage,112,0,owner)
+                playeffect(play,60463,0,0,1,1,0)
+            end
+        end
+    elseif buffid == 20107 then --雷
+        local level = tonumber(getobjintvar(play,22043) or 0) or 0
+        if level > 0 then
+            local maxHp = tonumber(getbaseinfo(play,10) or 0) or 0
+            local damage = math.floor(maxHp * (level * 0.5) / 100)
+            local ownerName = getobjstrvar(play,22043) or ""
+            local owner = ownerName ~= "" and getplayerbyname(ownerName) or nil
+            if owner == 0 then
+                owner = nil
+            end
+            if damage > 0 then
+                humanhp(play,"-",damage,112,0,owner)
+            end
+        end
     end
 end
---------------------buff监听触发-------------------
+--------------------buff结束逻辑-------------------
 function buffchange(play, buffid, zid, lx)
     if buffid == 20060 then
         if lx == 4 then
@@ -34,18 +82,27 @@ function buffchange(play, buffid, zid, lx)
     elseif buffid == 20078 then
         if lx == 4 then
             if querymoney(play,15) < querymoney(play,14) then
-                changemoney(play,15,"+",1,"倒计时结束",true)
+                changemoney(play,15,"+",1,"复活",true)
             end
             if querymoney(play,15) < querymoney(play,14) then
                 addbuff(play,20078,180)
             end
         end
     elseif buffid == 20000 or buffid == 20001 or buffid == 20002 then
-        -- 飞剑功能临时下线
-    elseif buffid == 20103 then 
+        -- 预留buff逻辑
+    elseif buffid == 20103 then
         if getbaseinfo(play,1) == "酒仙秘境" then
             mapmove(play, "xtc",137,138,5)
-            Player.sendmsgEx(play, "醉酒狂魔舞效果消失#57|,你离开了|酒仙秘境#249")
+            Player.sendmsgEx(play, "醉酒狂魔舞已失效#57|,已离开|酒仙秘境#249")
         end
+    elseif buffid == 20104 and lx == 4 then
+        setobjintvar(play,22041,0)
+    elseif buffid == 20105 and lx == 4 then
+        setobjintvar(play,22042,0)
+        setobjintvar(play,22045,0)
+        setobjstrvar(play,22045,"")
+    elseif buffid == 20107 and lx == 4 then
+        setobjintvar(play,22043,0)
+        setobjstrvar(play,22043,"")
     end
 end

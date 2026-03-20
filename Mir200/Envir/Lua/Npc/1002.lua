@@ -115,6 +115,7 @@ local function _onShowFashion(play)
     end
 end
 GameEvent.add(EventCfg.onShowFashion, _onShowFashion, "装扮")
+GameEvent.add(EventCfg.onLogin, _onShowFashion, "装扮")
 
 --取消显示时装触发
 local function _onNotShowFashion(actor)
