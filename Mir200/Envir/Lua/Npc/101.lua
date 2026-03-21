@@ -282,6 +282,7 @@ local function _claim_day_card(play, T_data)
     local cfg = _config.day_card or {}
     local needCharge = tonumber(cfg.need_charge) or 28
     local titleName = tostring(cfg.title or "日卡")
+    local tokenCount = tonumber(cfg.token_count) or 0
     if _is_day_card_claimed(T_data) then
         return false, "今日日卡礼包已领取#57"
     end
@@ -293,6 +294,9 @@ local function _claim_day_card(play, T_data)
     end
     if type(cfg.rewards) == "table" and #cfg.rewards > 0 then
         Player.rwjl(play, cfg.rewards, ",msfc_day_card", 1, 0)
+    end
+    if tokenCount > 0 then
+        T_data.token_count = (tonumber(T_data.token_count) or 0) + tokenCount
     end
     T_data.day_card_claim_date = _today()
     return true, titleName
@@ -467,7 +471,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         if not ok then Player.sendmsgEx(play, msg) return end
         _save_data(play, T_data)
         _refresh_bonus(play, T_data)
-        Player.sendmsgEx(play, "领取成功：|" .. tostring((_config.day_card or {}).title or "日卡") .. "#249、|元宝*100000#249、|锄子*10#249")
+        Player.sendmsgEx(play, "领取成功：|" .. tostring((_config.day_card or {}).title or "日卡") .. "#249、|元宝*100000#249、|" .. _token_name .. "次数*" .. tostring(tonumber(((_config.day_card or {}).token_count) or 0) or 0) .. "#249")
         _refresh_panel(play, npcid, p2)
     elseif p2 == 7 then -- 打开材料箱
         local boxType = tostring(json_data.box_type or json_data.box or "")

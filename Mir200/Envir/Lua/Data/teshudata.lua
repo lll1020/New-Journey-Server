@@ -2257,7 +2257,7 @@ teshudata = {
         draw_once_cost = 1, -- 单抽消耗次数
         draw_ten_cost = 10, -- 十连消耗次数
         crown_cost = 2666, -- 冠名充值门槛
-        day_card = {need_charge = 28, title = "日卡", rewards = {{"元宝",100000},{"锄子",10}}}, -- 日卡礼包：今日累计充值达到金额后可领取
+        day_card = {need_charge = 28, title = "日卡", rewards = {{"元宝",100000}}, token_count = 10}, -- 日卡礼包：今日累计充值达到金额后可领取
         duplicate_fashion_reward = {{"元宝",660000}}, -- 时装重复补偿
         title_reward = {
             name = "马上发财",
