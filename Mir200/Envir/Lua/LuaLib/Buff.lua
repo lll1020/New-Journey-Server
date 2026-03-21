@@ -21,6 +21,31 @@ local function _huti_monster_type(obj)
     end
     return guaiwutype and guaiwutype[name] or nil
 end
+local function _tianshu_buff_splash(play, Target)
+    if not play or not Target or getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+        return
+    end
+    local cfg = teshudata and teshudata["npc_24"] or nil
+    if not cfg then
+        return
+    end
+    local T_data = Player.getJsonTableByVar(play, VarCfg["T_天书"]) or {}
+    local level = tonumber(T_data.level) or 0
+    if level <= 0 then
+        return
+    end
+    local rate = (tonumber(cfg.splash_base_rate) or 10) + math.max(0, level - 1) * (tonumber(cfg.splash_add_rate) or 2)
+    local maxRate = tonumber(cfg.splash_max_rate) or 110
+    if rate > maxRate then
+        rate = maxRate
+    end
+    local damage = math.floor((tonumber(getbaseinfo(play, ConstCfg.gbase.dc2) or 0) or 0) * rate / 100)
+    if damage <= 0 then
+        return
+    end
+    rangeharm(play, getbaseinfo(Target, ConstCfg.gbase.x), getbaseinfo(Target, ConstCfg.gbase.y), tonumber(cfg.splash_range) or 2, damage, 0, 0, 0, 2, tonumber(cfg.splash_effect) or 20310, tonumber(cfg.splash_max_targets) or 12)
+    playeffect(Target, tonumber(cfg.splash_hit_effect) or 60463, 0, 0, 1, 1, 0)
+end
 
 Buff = {
 
@@ -272,6 +297,7 @@ Buff = {
         -- zt=1/2：注册或移除攻击触发；zt=3：攻击回调并返回额外伤害
 
         if zt == 3 then
+            _tianshu_buff_splash(play, Target)
             if xianfa_attack_trigger then
                 return xianfa_attack_trigger(play, Damage, Target, MagicId, Model) or 0
             end

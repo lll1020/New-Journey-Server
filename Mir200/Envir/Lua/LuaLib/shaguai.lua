@@ -160,14 +160,32 @@ shaguai = {
 				-- end
 
 				if allow then
-					ts_data = ts_data or {}
+					ts_data = type(ts_data) == "table" and ts_data or {}
+					ts_data.level = tonumber(ts_data.level) or 0
 					ts_data.jf = jf + 1
+					ts_data.shaqi = tonumber(ts_data.shaqi) or 0
+					local shaqiRate = tonumber(ts_cfg.shaqi_gain_rate) or 10
+					local shaqiMax = tonumber(ts_cfg.shaqi_max) or 1000
+					local changedShaqi = false
+					if ts_data.shaqi < shaqiMax and math.random(100) <= shaqiRate then
+						ts_data.shaqi = ts_data.shaqi + 1
+						if ts_data.shaqi > shaqiMax then
+							ts_data.shaqi = shaqiMax
+						end
+						changedShaqi = true
+					end
 					Player.setJsonVarByTable(play, VarCfg["T_ÃÏ È"], ts_data)
-
-					local itemobj = linkbodyitem(play, ts_cfg.where)
-					if itemobj and itemobj ~= "0" then
-						setcustomitemprogressbar(play, itemobj, 1, tbl2json({["cur"] = ts_data.jf}))
-						refreshitem(play, itemobj)
+					if changedShaqi and xianfa_refresh then
+						xianfa_refresh(play)
+					end
+					if tianshu_refresh_item then
+						tianshu_refresh_item(play, ts_data)
+					else
+						local itemobj = linkbodyitem(play, ts_cfg.where)
+						if itemobj and itemobj ~= "0" then
+							setcustomitemprogressbar(play, itemobj, 1, tbl2json({["cur"] = ts_data.jf}))
+							refreshitem(play, itemobj)
+						end
 					end
 				end
 			end

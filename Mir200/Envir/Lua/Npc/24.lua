@@ -21,10 +21,107 @@ local function _get_jf_need_kill_text(jf)
         return "需击杀一大陆及以上怪物"
     end
 end
+local function _tianshu_fix_data(T_data)
+    T_data = type(T_data) == "table" and T_data or {}
+    T_data.level = tonumber(T_data.level) or 0
+    T_data.jf = tonumber(T_data.jf) or 0
+    T_data.shaqi = tonumber(T_data.shaqi) or 0
+    T_data.caowei = T_data.caowei or {}
+    return T_data
+end
+local function _get_tianshu_jf_max(level)
+    level = tonumber(level) or 0
+    local details = _config.details and _config.details[1] and _config.details[1].details or {}
+    local cfg = details[level + 1] or details[level] or details[1] or {}
+    return tonumber(cfg.jf) or 0
+end
+local function _get_tianshu_prompt_text(T_data)
+    T_data = _tianshu_fix_data(T_data)
+    return string.format("提示：%s 杀气：%d/%d", _get_jf_need_kill_text(T_data.jf), T_data.shaqi, tonumber(_config.shaqi_max) or 1000)
+end
+local function _set_tianshu_shaqi_customabil(play, itemobj, T_data)
+    itemobj = itemobj or linkbodyitem(play, _config.where)
+    if not itemobj or itemobj == "0" then
+        return
+    end
+    T_data = _tianshu_fix_data(T_data)
+    local ok, item_json = pcall(json2tbl, getitemcustomabil(play, itemobj))
+    item_json = ok and type(item_json) == "table" and item_json or nil
+    if not item_json or type(item_json.abil) ~= "table" then
+        item_json = json2tbl('{"abil":[{"i":0,"t":"杀气属性","c":251,"v":[]}],"name":""}')
+    end
+    item_json.name = tostring(item_json.name or "")
+    local idx = nil
+    local abil_i = nil
+    for i, v in ipairs(item_json.abil) do
+        if type(v) == "table" and tostring(v.t or "") == "[杀气属性]" then
+            idx = i
+            abil_i = tonumber(v.i) or (i - 1)
+            break
+        end
+    end
+    if not idx then
+        for i, v in ipairs(item_json.abil) do
+            if type(v) == "table" and tostring(v.t or "") == "" and next(v.v or {}) == nil then
+                idx = i
+                abil_i = tonumber(v.i) or (i - 1)
+                break
+            end
+        end
+    end
+    if not idx then
+        idx = #item_json.abil + 1
+        abil_i = idx - 1
+    end
+    local attr_list = {}
+    local attack_value = T_data.shaqi * (tonumber(_config.shaqi_attack_per) or 1)
+    local hp_value = T_data.shaqi * (tonumber(_config.shaqi_hp_per) or 20)
+    if attack_value > 0 then
+        table.insert(attr_list, {1, tonumber(_config.shaqi_attack_attr) or 4, attack_value, 0, 20, 1, 1})
+    end
+    if hp_value > 0 then
+        table.insert(attr_list, {1, tonumber(_config.shaqi_hp_attr) or 1, hp_value, 0, 21, 2, 2})
+    end
+    item_json.abil[idx] = {i = abil_i or (idx - 1), t = "[杀气属性]", c = 251, v = attr_list}
+    setitemcustomabil(play, itemobj, tbl2json(item_json))
+end
+function tianshu_refresh_item(play, T_data, itemobj)
+    itemobj = itemobj or linkbodyitem(play, _config.where)
+    if not itemobj or itemobj == "0" then
+        return
+    end
+    T_data = _tianshu_fix_data(T_data)
+    setcustomitemprogressbar(play, itemobj, 0, tbl2json({
+        ["open"] = 1,
+        ["show"] = 0,
+        ["name"] = string.format("天书等级：%d级", T_data.level),
+        ["color"] = 223,
+        ["imgcount"] = 1,
+    }))
+    setcustomitemprogressbar(play, itemobj, 1, tbl2json({
+        ["open"] = 1,
+        ["show"] = 2,
+        ["name"] = "杀意值",
+        ["color"] = 249,
+        ["imgcount"] = 1,
+        ["cur"] = T_data.jf,
+        ["max"] = _get_tianshu_jf_max(T_data.level),
+        ["level"] = T_data.level,
+    }))
+    setcustomitemprogressbar(play, itemobj, 2, tbl2json({
+        ["open"] = 1,
+        ["show"] = 0,
+        ["name"] = _get_tianshu_prompt_text(T_data),
+        ["color"] = 251,
+        ["imgcount"] = 1,
+    }))
+    _set_tianshu_shaqi_customabil(play, itemobj, T_data)
+    refreshitem(play, itemobj)
+end
 
 function npc.main(play,npcid)
     local data = {}
-    data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_天书"])
+    data["T_data"] = _tianshu_fix_data(Player.getJsonTableByVar(play, VarCfg["T_天书"]))
     sendluamsg(play,100,npcid,0,0,tbl2json(data))
 end
 
@@ -44,7 +141,7 @@ function npc.link(play,npcid,ew,aid,data)
         return
     end
 
-    local T_data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
+    local T_data = _tianshu_fix_data(Player.getJsonTableByVar(play, VarCfg["T_天书"]))
     local json_data = json2tbl(data)
     if ew == 1 then -- 强化
         local itemobj = linkbodyitem(play, _config.where)
@@ -64,40 +161,7 @@ function npc.link(play,npcid,ew,aid,data)
             Player.sendmsgEx(play, "恭喜你，天书强化成功，当前天书等级为|"..T_data.level.."级#249|")
             Player.setJsonVarByTable(play, VarCfg["T_天书"], T_data)
             xianfa_refresh(play)
-
-            local tbl = {
-                ["open"] = 1,
-                ["show"] = 0,
-                ["name"] = string.format("天书等级：%d级", T_data.level),
-                ["color"] = 223,
-                ["imgcount"] = 1,
-                --["cur"] = 1,
-                --["max"] = 1,
-                --["level"] = 1,
-            }
-            setcustomitemprogressbar(play, itemobj, 0, tbl2json(tbl))
-            tbl = {
-                ["open"] = 1,
-                ["show"] = 2,
-                ["name"] = "杀意值",
-                ["color"] = 249,
-                ["imgcount"] = 1,
-                ["cur"] = (T_data.jf or 0),
-                ["max"] = _config.details[1].details[T_data.level + 1] and _config.details[1].details[T_data.level + 1].jf or _config.details[1].details[T_data.level].jf,
-                ["level"] = T_data.level,
-            }
-            setcustomitemprogressbar(play, itemobj, 1, tbl2json(tbl))
-            tbl = {
-                ["open"] = 1,
-                ["show"] = 0,
-                ["name"] = string.format("杀意提示：%s", _get_jf_need_kill_text(T_data.jf or 0)),
-                ["color"] = 251,
-                ["imgcount"] = 1,
-                -- ["cur"] = 0,
-                -- ["max"] = 1,
-                -- ["level"] = 0,
-            }
-            setcustomitemprogressbar(play, itemobj, 2, tbl2json(tbl))
+            tianshu_refresh_item(play, T_data, itemobj)
             --强化属性
             local attrs = {}
             local attrsstr = ""
@@ -252,8 +316,7 @@ local XIANFA_YUANSHEN_CD = "N$天书元神CD"
 
 -- 收集玩家已激活的仙法列表（group/idx/cfg），并返回天书数据
 local function _xianfa_iter(actor)
-    local T_data = Player.getJsonTableByVar(actor, VarCfg["T_天书"])
-    T_data["caowei"] = T_data["caowei"] or {}
+    local T_data = _tianshu_fix_data(Player.getJsonTableByVar(actor, VarCfg["T_天书"]))
     local list = {}
     for _, v in pairs(T_data["caowei"]) do
         if type(v) == "table" then
@@ -484,6 +547,7 @@ end
 -- new_group/new_idx 用于判断本次新选择的仙法
 function xianfa_refresh(actor, new_group, new_idx)
     local list, T_data = _xianfa_iter(actor)
+    T_data = _tianshu_fix_data(T_data)
     delattlist(actor, XIANFA_ATTR_NAME)
 
     local attrs = {}
@@ -694,6 +758,7 @@ function xianfa_refresh(actor, new_group, new_idx)
     if Buff and Buff[XIANFA_REVIVE_BUFF] then
         Buff[XIANFA_REVIVE_BUFF](actor, need_revive_buff and 1 or 2)
     end
+    tianshu_refresh_item(actor, T_data)
 end
 
 
@@ -1004,88 +1069,11 @@ end
 -- 穿戴天书时刷新进度条显示（等级/杀意值）
 local function _onTakeOnEx(actor, itemobj, where, itemname, makeid)
     if where == _config.where then
-        local T_data = Player.getJsonTableByVar(actor, VarCfg["T_天书"])
-        local tbl = {
-            ["open"] = 1,
-            ["show"] = 0,
-            ["name"] = string.format("天书等级：%d级", T_data.level or 0),
-            ["color"] = 223,
-            ["imgcount"] = 1,
-            --["cur"] = 1,
-            --["max"] = 1,
-            --["level"] = 1,
-        }
-        setcustomitemprogressbar(actor, itemobj, 0, tbl2json(tbl))
-        tbl = {
-            ["open"] = 1,
-            ["show"] = 2,
-            ["name"] = "杀意值",
-            ["color"] = 249,
-            ["imgcount"] = 1,
-            ["cur"] = (T_data.jf or 0),
-            ["max"] = _config.details[1].details[(T_data.level or 0) + 1] and _config.details[1].details[(T_data.level or 0) + 1].jf or _config.details[1].details[(T_data.level or 0)].jf,
-            ["level"] = T_data.level or 0,
-        }
-        setcustomitemprogressbar(actor, itemobj, 1, tbl2json(tbl))
-        tbl = {
-            ["open"] = 1,
-            ["show"] = 0,
-            ["name"] = string.format("提示：%s", _get_jf_need_kill_text(T_data.jf or 0)),
-            ["color"] = 251,
-            ["imgcount"] = 1,
-            -- ["cur"] = 0,
-            -- ["max"] = 1,
-            -- ["level"] = 0,
-        }
-        setcustomitemprogressbar(actor, itemobj, 2, tbl2json(tbl))
-        refreshitem(actor, itemobj)
+        local T_data = _tianshu_fix_data(Player.getJsonTableByVar(actor, VarCfg["T_天书"]))
+        tianshu_refresh_item(actor, T_data, itemobj)
     end
 end
 --穿装备触发
 GameEvent.add(EventCfg.onTakeOnEx, _onTakeOnEx, "天书初始化")
 
 return npc
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
