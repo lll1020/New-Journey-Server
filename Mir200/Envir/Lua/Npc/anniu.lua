@@ -1,6 +1,7 @@
 npc = {}
 
 local _fashionConfig1002 = Guard.getConfig("npc_1002")
+local FairyFate = include("lua/LuaLib/fairy_fate.lua")
 local _fashionAttrListName = "时装属性"
 
 local function _refreshFashionAttr(play, T_data)
@@ -685,6 +686,7 @@ npc[30] = function(play, p2, p3, data) --砍树系统
                 setplaydef(play,"N$自动砍树",os.time())
                 T_data.num = T_data.num + 1
                 Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
+                if FairyFate and FairyFate.touch then FairyFate.touch(play, "woodcut", 1) end
                 sendluamsg(play, 101, 30, 1, 0, tbl2json({T_data = T_data}))
                 Player.rwjl(play, {{jl,1}}, "砍树系统自动奖励", 1,0)
                 sendluamsg(play, 101, 30, 3, 0, tbl2json({{jl,1}}))   
@@ -701,6 +703,7 @@ npc[30] = function(play, p2, p3, data) --砍树系统
 
             T_data.num = T_data.num + 1
             Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
+            if FairyFate and FairyFate.touch then FairyFate.touch(play, "woodcut", 1) end
             sendluamsg(play, 101, 30, 1, 0, tbl2json({T_data = T_data}))
 
             local jl = ransjstr(config.updata[1].details[T_data.axe].jl, 1, 3)
@@ -804,6 +807,7 @@ npc[501] = function(play, p2, p3, data) --首充礼包
                 T_data.yjs = T_data.yjs or {}
                 T_data.yjs[""..1] = 1
                 Player.setJsonVarByTable(play, VarCfg.T_szjl, T_data)
+                GameEvent.push(EventCfg.onUPSkin, play, 1)
                 _refreshFashionAttr(play, T_data)
             elseif idx == 2 then
                 addskill(play, 51, 3)
@@ -1910,12 +1914,8 @@ npc[514] = function(play, p2, p3, msgData) --世界地图
         sendluamsg(play, 101, 514, 0, 0, "")
     end
 end
-npc[515] = function(play, p2, p3, msgData) --仙途奇缘（成就）
-    if p2 == 0 then
-        local data = {}
-        data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_仙途奇缘"])
-        sendluamsg(play, 101, 515, 0, 0, tbl2json(data))
-    end
+npc[515] = function(play, p2, p3, msgData)
+    FairyFate.handle(play, p2, p3, msgData)
 end
 --免费赞助
 npc[516] = function(play, p2, p3, msgData) --免费赞助
@@ -2295,4 +2295,5 @@ for npcId, handler in pairs(npc) do
 end
 
 return npc
+
 

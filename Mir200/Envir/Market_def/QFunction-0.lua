@@ -185,6 +185,7 @@ function checkdropuseitems(play,item_wz,item_id,bool)
     if xianfa_check_drop and xianfa_check_drop(play) == false then
         return false
     end
+    GameEvent.push(EventCfg.onCheckDropUseItems, play, item_wz, item_id, bool)
     if getitemaddvalue(play,zb_dx,2,1) ~= 0 then
         delitembymakeindex(play,getiteminfo(play,zb_dx,1))
     end
@@ -350,7 +351,9 @@ end
 
 --------------------攻击前触发-------------------
 function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
+    GameEvent.push(EventCfg.onAttackDamage, play, Target, Hiter, MagicId, Damage, Model)
 	if getbaseinfo(Target, -1) then
+        GameEvent.push(EventCfg.onAttackDamagePlayer, play, Target, Damage, MagicId, Model)
 		local bl = getplaydef(play, VarCfg.S_buffgjq)
 		local data = json2tbl(bl == '' and {} or bl)
 		local ew = 0
@@ -382,6 +385,7 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
         end
 		return Damage
 	else
+        GameEvent.push(EventCfg.onAttackDamageMonster, play, Target, Damage, MagicId, Model)
         ---------------------------------------------对怪切割计算
 		local zd = getbaseinfo(Target, 12)
 		local sy = -1
@@ -587,7 +591,9 @@ function struckdamage(play, Hiter, Target, MagicId, Damage)
             final = adj
         end
     end
-    return final > 0 and final or 1
+    local realDamage = final > 0 and final or 1
+    GameEvent.push(EventCfg.onProHarm, play, realDamage, Hiter, Target, MagicId)
+    return realDamage
 end
 --------------------被攻击后触发-------------------
 function struck(play, Hiter, Target, MagicId)
@@ -598,6 +604,7 @@ end
 
 --------------------杀怪触发-------------------
 function killmon(play, mob)
+    GameEvent.push(EventCfg.onKillMon, play, mob, getbaseinfo(mob, ConstCfg.gbase.idx))
     local bl = getplaydef(play, VarCfg.S_buffsgcf)
 	local data = json2tbl(bl == "" and {} or bl)
 	for k, v in pairs(data) do
@@ -813,6 +820,7 @@ function playlevelup(play, level, oldlevel)
 end
 --------------------属性改变触发-------------------
 function sendability(play)
+    GameEvent.push(EventCfg.onSendAbility, play)
     local sd = math.floor(getbaseinfo(play,51,243) / 4)
     if getplaydef(play,"N$移动速度加成") ~= sd then
         setplaydef(play,"N$移动速度加成",sd)
@@ -1003,6 +1011,7 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
                 end
             end
         end
+        GameEvent.push(EventCfg.onRechargeEnd, play, Gold, ProductId, MoneyId, isReal)
     end
 end
 -------------------开始挂机触发--------------------
@@ -1113,6 +1122,8 @@ end
 
 --------------------加入行会后触发-------------------
 function guildaddmemberafter(play,guild,name)
+    GameEvent.push(EventCfg.goGuild, play, guild, name)
+    GameEvent.push(EventCfg.onGuildAddMemberAfter, play, guild, name)
 end
 --------------------退出行会后触发-------------------
 function guilddelmember(play)
@@ -1299,6 +1310,7 @@ function untitled_30405(play) seticon(play,1,-1) end
 
 --------------------聊天触发前置接口--------------------
 function triggerchat(play,sMsg,chat,msgType)
+    GameEvent.push(EventCfg.onTriggerChat, play, sMsg, chat, msgType)
     return true
 end
 

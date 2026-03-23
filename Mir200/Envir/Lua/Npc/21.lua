@@ -4,6 +4,7 @@ npc = {}
 --境界提升
 
 local _config = Guard.getConfig("npc_21")
+local FairyFate = include("lua/LuaLib/fairy_fate.lua")
 
 function npc.main(play,npcid)
 
@@ -60,6 +61,7 @@ function npc.link(play,npcid,ew,aid)
 
             setplaydef(play, VarCfg["U_境界修炼"][1], level)
             Player.sendmsgEx(play,  "恭喜你，境界提升成功，当前境界等级为|【"..level.."级】#249|")
+            if FairyFate and FairyFate.touch then FairyFate.touch(play, "realm_up") end
             sendluamsg(play,100,npcid,1,0,"")
             delattlist(play, "境界修为")
             Login_jjxw(play)

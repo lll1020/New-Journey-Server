@@ -682,6 +682,7 @@ function Player.title_give(actor, title_name) --???
     if not checktitle(actor, title_name) then
         release_print("???",title_name,getbaseinfo(actor,1))
         confertitle(actor, title_name)
+        GameEvent.push(EventCfg.onGetTaskTitle, actor, title_name)
         local raw_idx = getstditeminfo(title_name,8)
         local idx = tonumber(raw_idx or 0) or 0
         if idx > 0 then

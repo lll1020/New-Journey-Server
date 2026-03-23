@@ -5,6 +5,7 @@ npc = {}
 --装备强化
 
 local _config = Guard.getConfig("npc_28")
+local FairyFate = include("lua/LuaLib/fairy_fate.lua")
 
 
 function npc.main(play,npcid)
@@ -43,12 +44,16 @@ function npc.link(play,npcid,ew,aid)
                 end
                 local nextLevel = level + 1
                 local cfg = _config.details[nextLevel]
-                local name, num = Player.checkItemNumByTable(play, cfg.cost)
-                if name then
-                    Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
-                    return
+                local freeChance = FairyFate and FairyFate.getStrengthFreeChance and FairyFate.getStrengthFreeChance(play) or 0
+                local isFree = freeChance > 0 and math.random(10000) <= tonumber(freeChance)
+                if not isFree then
+                    local name, num = Player.checkItemNumByTable(play, cfg.cost)
+                    if name then
+                        Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
+                        return
+                    end
+                    Player.takeItemByTable(play, cfg.cost, ",装备强化",nil)
                 end
-                Player.takeItemByTable(play, cfg.cost, ",装备强化",nil)
                 setplaydef(play, VarCfg["U_装备强化_".._config.where[aid][1]], nextLevel)
                 setitemaddvalue(play, itemobj, 2, 3, nextLevel) --星星
                 --强化属性
@@ -61,6 +66,7 @@ function npc.link(play,npcid,ew,aid)
                 setaddnewabil(play, -2, "=",attrsstr, itemobj)
                 refreshitem(play, itemobj)
                 recalcabilitys(play)
+                if FairyFate and FairyFate.touch then FairyFate.touch(play, "strength_success") end
                 sendluamsg(play,100,npcid,1,aid,"")
 
                 if nextLevel == 10 or nextLevel == 20 or nextLevel == 30 then

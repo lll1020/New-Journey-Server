@@ -1,0 +1,19 @@
+[2026-03-23 19:57:34:694] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 44164, CurPlayThreadId: 44164
+
+[2026-03-23 19:58:34:529] LuaNPC:玩家名字 ID:999999999 执行 sendability player:玩家名字 耗时：31; NpcThreadId: 44164, CurPlayThreadId: 44164
+[2026-03-23 19:58:34:531] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 44164, CurPlayThreadId: 44164
+
+[2026-03-23 20:40:36:055] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：32; NpcThreadId: 44164, CurPlayThreadId: 44164
+
+[2026-03-23 21:25:03:148] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 44164, CurPlayThreadId: 44164
+
+[2026-03-23 23:00:00:590] LuaNPC:系统控制 ID:999999999 执行 jqr_zxht_change player:系统控制 耗时：78; NpcThreadId: 44164, CurPlayThreadId: 44164
+
+[2026-03-23 23:32:29:129] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：94; NpcThreadId: 44164, CurPlayThreadId: 44164
+[2026-03-23 23:32:29:129] [玩家名字]Lua执行耗时过高:94ms msgid:101 515 0 0 
+
+[2026-03-23 23:32:53:465] LuaNPC:玩家名字 ID:999999999 执行 playreconnection player:玩家名字 耗时：109; NpcThreadId: 44164, CurPlayThreadId: 44164
+[2026-03-23 23:32:56:256] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：63; NpcThreadId: 44164, CurPlayThreadId: 44164
+
+[2026-03-23 23:43:29:014] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：31; NpcThreadId: 44164, CurPlayThreadId: 44164
+

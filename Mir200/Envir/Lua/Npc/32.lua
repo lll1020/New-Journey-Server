@@ -4,6 +4,7 @@ npc = {}
 --转生
 
 local _config = Guard.getConfig("npc_32")
+local FairyFate = include("lua/LuaLib/fairy_fate.lua")
 
 -- 备注：获取境界修炼等级
 local function _zs_get_jingjie_level(play)
@@ -156,6 +157,7 @@ function npc.link(play,npcid,ew,aid)
         Player.takeItemByTable(play, config.cost, ",转生",nil)
         setplaydef(play, VarCfg["U_转生等级"], level)
         Player.sendmsgEx(play, "升级成功，当前转生为|【"..stage.."阶"..step.."级】#249|")
+        if FairyFate and FairyFate.touch then FairyFate.touch(play) end
         delattlist(play, "转生")
         Login_zsattr(play)
         if Buff and Buff.refreshHuTiGuangHuan then
@@ -164,6 +166,7 @@ function npc.link(play,npcid,ew,aid)
         sendluamsg(play,100,npcid,1,0,"")
         if step == 10 then
             renewlevel(play,1,0,0)
+            GameEvent.push(EventCfg.onRenewlevelUP, play, 1)
             Player.sendmsgEx(play, "转生成功，当前转生为|【"..stage.."阶】#249|")
             if rwcf[npcid] then
                 Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务

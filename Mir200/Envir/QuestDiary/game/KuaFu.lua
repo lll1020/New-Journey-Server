@@ -1,4 +1,44 @@
 
+local BenFutoKuaFuRunScript = {} --本服请求转发到跨服执行的脚本表
+--本服攻沙地图名转换为跨服对应地图
+local function _to_kf_sbk_map_name(mapName)
+    if mapName == "hjsbk" then
+        return "kfhjsbk"
+    end
+    if mapName == "hg" then
+        return "kfhg"
+    end
+    return mapName
+end
+--1：本服点传送后，转到跨服沙巴克地图
+BenFutoKuaFuRunScript[1] = function(actor, arg1)
+    arg1 = tonumber(arg1) or 1
+    if not checkkuafu(actor) then
+        return
+    end
+    if not castleinfo(5) then
+        Player.sendmsgEx(actor, "非攻沙时间,禁止传送#57")
+        return
+    end
+    local cfg = Guard.getConfig("sbk") or {}
+    local maps = cfg.map or {}
+    local targetMap = maps[arg1] or maps[1]
+    if not targetMap then
+        Player.sendmsgEx(actor, "跨服沙巴克传送点配置缺失#57")
+        return
+    end
+    mapmove(actor, _to_kf_sbk_map_name(tostring(targetMap.mpa_name or "")), tonumber(targetMap.x or 0) or 0, tonumber(targetMap.y or 0) or 0)
+    local name = getbaseinfo(actor, ConstCfg.gbase.name)
+    guildnoticemsg(actor, 251, 249, "勇士【" .. name .. "】开始征战沙城！")
+end
+--2：本服请求跨服返回奖励预览数据
+BenFutoKuaFuRunScript[2] = function(actor, arg1)
+    GameEvent.push(EventCfg.onKFGongShaRewardSync, actor)
+end
+--3：本服请求跨服执行领奖
+BenFutoKuaFuRunScript[3] = function(actor, arg1)
+    GameEvent.push(EventCfg.onKFGongShaLinQu, actor)
+end
 --进入跨服触发
 function kflogin(actor)
 
@@ -326,7 +366,18 @@ end
 function kfsyscall53(actor, arg1, arg2)
 
 end
+--跨服通知本服发放攻沙奖励邮件
 function kfsyscall54(actor, arg1, arg2)
+    local title = tostring(arg1 or "沙巴克奖励")
+    local reward = tostring(arg2 or "")
+    if reward == "" then
+        return
+    end
+    local userid = getbaseinfo(actor, ConstCfg.gbase.id)
+    sendmail(userid, 1, title, "请领取您的沙巴克奖励", reward)
+    if title == "沙巴克胜利方奖励" then
+        GameEvent.push(EventCfg.GetCastleRewards, actor)
+    end
 end
 
 --跨服到本服执行事件派发 

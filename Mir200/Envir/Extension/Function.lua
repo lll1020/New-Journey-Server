@@ -256,3 +256,15 @@ function FKuaFuToBenFuDelTitle(actor, arg1, arg2)
     local userID = getbaseinfo(actor, ConstCfg.gbase.id)
     kfbackcall(52, userID, tostring(arg1), tostring(arg2)) --通知本服
 end
+--跨服到本服发放攻沙奖励
+--跨服服回本服发奖，保证邮件和成就落在本服
+function FKuaFuToBenFuGongShaReward(actor, arg1, arg2)
+    local userID = getbaseinfo(actor, ConstCfg.gbase.id)
+    kfbackcall(54, userID, tostring(arg1), tostring(arg2)) --通知本服
+end
+--本服到跨服执行脚本
+--本服调用跨服执行脚本表
+function FBenFuToKuaFuRunScript(actor, arg1, arg2)
+    local userID = getbaseinfo(actor, ConstCfg.gbase.id)
+    bfbackcall(33, userID, tostring(arg1), tostring(arg2))
+end

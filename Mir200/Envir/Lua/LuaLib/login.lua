@@ -148,6 +148,9 @@ function Login.main(play)
     end
 
     GameEvent.push(EventCfg.onLogin, play)
+    if getbaseinfo(play, ConstCfg.gbase.isnewhuman) then
+        GameEvent.push(EventCfg.onNewHuman, play)
+    end
     GameEvent.push(EventCfg.onLoginEnd, play)
 
 end

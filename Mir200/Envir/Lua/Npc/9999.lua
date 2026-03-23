@@ -1,7 +1,50 @@
 npc = {}
-
-
-
+local function _ff9999_parse_reward(text) -- 9999测试：解析成就奖励中的物品/称号/修为
+    local ret = {items = {}, title = "", realm_exp = 0}
+    text = tostring(text or ""):gsub("固定生命、固定魔法%+(%d+)", "固定生命+%1、固定魔法+%1"):gsub("，", "、"):gsub(",", "、")
+    for part in string.gmatch(text, "[^、]+") do
+        part = tostring(part):gsub("^%s+", ""):gsub("%s+$", "")
+        if part ~= "" then
+            local itemName, itemNum = string.match(part, "^(.-)%*(%d+)$")
+            if itemName and itemNum then
+                ret.items[#ret.items + 1] = {itemName, tonumber(itemNum) or 0}
+            elseif string.find(part, "^称号：") then
+                ret.title = string.gsub(part, "^称号：", "")
+            else
+                local n = string.match(part, "^修为%+(%d+)$")
+                if n then ret.realm_exp = tonumber(n) or 0 end
+            end
+        end
+    end
+    return ret
+end
+local function _ff9999_random_finish(play) -- 9999测试：随机完成一个未完成成就
+    local cfg = include("lua/Data/fairy_fate_cfg.lua") or {}
+    local state = Player.getJsonTableByVar(play, VarCfg["T_仙途奇缘"])
+    state.done = type(state.done) == "table" and state.done or {}
+    local pending = {}
+    for _, detail in ipairs(cfg.details or {}) do
+        if tonumber(state.done[tostring(detail.id)] or 0) < 1 then
+            pending[#pending + 1] = detail
+        end
+    end
+    if #pending <= 0 then
+        Player.sendmsgEx(play, "已无未完成成就#57")
+        return
+    end
+    local detail = pending[math.random(1, #pending)]
+    local reward = _ff9999_parse_reward(detail.reward)
+    state.done[tostring(detail.id)] = 1
+    Player.setJsonVarByTable(play, VarCfg["T_仙途奇缘"], state)
+    if #reward.items > 0 then Player.rwjl(play, reward.items, "9999成就测试", 1, 0) end
+    if reward.title ~= "" then Player.title_give(play, reward.title) end
+    if reward.realm_exp > 0 then
+        setplaydef(play, VarCfg["U_境界修炼"][2], (tonumber(getplaydef(play, VarCfg["U_境界修炼"][2])) or 0) + reward.realm_exp)
+    end
+    if FairyFate and FairyFate.touch then FairyFate.touch(play, "title") end
+    sendluamsg(play, 101, 515, 2, tonumber(detail.id) or 0, tbl2json({tp = "cjdc", id = detail.id, name = detail.name, tip = "达成成就[" .. tostring(detail.name or detail.id) .. "]"}))
+    Player.sendmsgEx(play, "已随机完成|【" .. tostring(detail.name or detail.id) .. "】#249|成就")
+end
 function npc.main(play,npcid)
     local zhid = tonumber(getconst(play,"<$USERACCOUNT>"))
     if constant.pz_htqx[zhid] or getconst(play, '<$SERVERNAME>') == "" or getconst(play, '<$SERVERNAME>') == "测试区" then
@@ -48,6 +91,7 @@ function npc.main(play,npcid)
             <Button|id=ui_62|x=578|y=250|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=夺宝结束|link=@ggna,49>
             <Button|id=ui_63|x=18|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=禁地开始|link=@ggna,50>
             <Button|id=ui_64|x=130|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=禁地结束|link=@ggna,51>
+            <Button|id=ui_66|x=242|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=成就测试|link=@ggna,52>
             <Button|id=ui_65|x=578|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=飘字测试|link=@ggn,14>
 
                 ]])
@@ -326,6 +370,8 @@ function ggna(play,id)
         _admin_not_ready(play, "黑暗禁地开始")
     elseif id == "51" then
         _admin_not_ready(play, "黑暗禁地结束")
+    elseif id == "52" then
+        _ff9999_random_finish(play)
     elseif id == "25" then
         -- 大陆进入条件一键达成：主线进度、转生等级、剧情点
         local target_task = 21

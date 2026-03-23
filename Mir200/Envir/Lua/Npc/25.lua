@@ -4,6 +4,7 @@ npc = {}
 --幸运强化
 
 local _config = Guard.getConfig("npc_25")
+local FairyFate = include("lua/LuaLib/fairy_fate.lua")
 
 function npc.main(play,npcid)
 
@@ -52,11 +53,13 @@ function npc.link(play,npcid,ew,aid)
         Player.takeItemByTable(play, config.cost, ",幸运强化",nil)
 
         if FProbabilityHit(gl) then
+            if FairyFate and FairyFate.touch then FairyFate.touch(play, "strength_fail") end
             Player.sendmsgEx(play,  "很遗憾，幸运强化失败，请继续努力#57")
             return
         end
 
         setplaydef(play, VarCfg["U_幸运强化"], level)
+        if FairyFate and FairyFate.touch then FairyFate.touch(play, "strength_success") end
         Player.sendmsgEx(play,  "恭喜你，幸运强化成功，当前等级为|【"..level.."级】#249|")
         sendluamsg(play,100,npcid,1,0,"")
         delattlist(play, "幸运强化")

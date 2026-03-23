@@ -95,6 +95,7 @@ function buff(play)
     Player.zxrw_wancheng(play, 18, "")
 
     renewlevel(play,5,0,0)
+    GameEvent.push(EventCfg.onRenewlevelUP, play, 5)
 
 
     local item = linkbodyitem(play, 71)

@@ -4,6 +4,7 @@ npc = {}
 --灵兽
 
 local _config = Guard.getConfig("npc_64")
+local FairyFate = include("lua/LuaLib/fairy_fate.lua")
 
 function npc.main(play,npcid)
     if not Player.dl_sz(play, 4) then
@@ -36,7 +37,7 @@ function npc.link(play,npcid,ew,aid,data)
     if ew ~= 1 then
         local idx = tonumber(json_data.idx)
         if not idx or not _config.config or not _config.config.ls or not _config.config.ls[idx] then
-            Player.sendmsgEx(play, "????#57")
+            Player.sendmsgEx(play, "参数错误#57")
             return
         end
         json_data.idx = idx
@@ -59,6 +60,7 @@ function npc.link(play,npcid,ew,aid,data)
             Player.sendmsgEx(play, string.format("你成功抽取到灵兽|【%s】#249|x1", _config.config.ls[randomNum].name))
             Player.sendmsgEx(play, "你已获得该灵兽的|【初始星级】#249|，快去召唤它吧")
             Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
+            if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
             sendluamsg(play,100,npcid,1,0,tbl2json({T_data = T_data}))
             Player.updateSomeAddr(play,nil, _config.config.ls[randomNum].attr_give)
             Player.updateSomeAddr(play,nil, _config.config.wy.det[T_data.ls[""..randomNum]].attr)
@@ -72,6 +74,7 @@ function npc.link(play,npcid,ew,aid,data)
             T_data.ls_sp[""..randomNum] = T_data.ls_sp[""..randomNum] + 1
             Player.sendmsgEx(play, string.format("你成功抽取到灵兽|【%s】#249|x1已自动转换为星级", _config.config.ls[randomNum].name))
             Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
+            if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
             sendluamsg(play,100,npcid,1,0,tbl2json({T_data = T_data}))
         end
         -- T_data.ls_sp[randomNum] = (T_data.ls_sp[randomNum] or 0) + 1
@@ -88,6 +91,7 @@ function npc.link(play,npcid,ew,aid,data)
         local Tlg_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
         T_data.dqzh = json_data.idx
         Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
+        if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
         Login_lszh(play)
         if Tlg_data.main and (Tlg_data.main == _config.config.ls[json_data.idx].yq[1] or Tlg_data.main == _config.config.ls[json_data.idx].yq[2]) then
             Player.sendmsgEx(play, string.format("你成功出战了灵兽|【%s】#249|，快去战斗吧！", _config.config.ls[json_data.idx].name))
@@ -116,6 +120,7 @@ function npc.link(play,npcid,ew,aid,data)
         Player.takeItemByTable(play, _config.config.wy.cost[T_data.ls[""..json_data.idx] + 1] or {}, ",灵兽喂养",nil)
         T_data.ls[""..json_data.idx] = T_data.ls[""..json_data.idx] + 1
         Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
+        if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
         Player.updateSomeAddr(play,_config.config.wy.det[T_data.ls[""..json_data.idx] - 1] and _config.config.wy.det[T_data.ls[""..json_data.idx] - 1].attr or nil, _config.config.wy.det[T_data.ls[""..json_data.idx]].attr)
         sendluamsg(play,100,npcid,3,0,tbl2json({T_data = T_data}))
         Player.sendmsgEx(play, string.format("你成功喂养灵兽|【%s】#249|，当前喂养次数|【%d】#249", _config.config.ls[json_data.idx].name, T_data.ls[""..json_data.idx]))
@@ -140,12 +145,14 @@ function npc.link(play,npcid,ew,aid,data)
         Player.takeItemByTable(play, {{_config.config.ls[json_data.idx].syw,1},{"元宝",1880000}}, ",灵兽圣遗物",nil)
         T_data.syw[""..json_data.idx] = 1
         Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
+        if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
         sendluamsg(play, 100, npcid, 1, 0, tbl2json({T_data = T_data}))
         Player.sendmsgEx(play, string.format("你成功为灵兽|【%s】#249|装备了圣遗物|【%s】#249", _config.config.ls[json_data.idx].name, _config.config.ls[json_data.idx].syw))
 
         if T_data.syw["1"] and T_data.syw["2"] and T_data.syw["3"] and T_data.syw["4"] and T_data.syw["5"] and not T_data.syw_all then
             T_data.syw_all = 1
             Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
+            if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
             Player.title_give(play, _config.syw_ch)
             Player.sendmsgEx(play, "恭喜你为所有灵兽装备了圣遗物，获得称号：|【上古神兽掌控者】#249|")
             sendluamsg(play,100,npcid,1,0,"")
@@ -196,4 +203,5 @@ end
 
 
 return npc
+
 

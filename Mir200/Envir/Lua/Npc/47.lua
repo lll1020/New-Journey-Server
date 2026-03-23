@@ -4,6 +4,7 @@ npc = {}
 --
 
 local _config = Guard.getConfig("npc_47")
+local FairyFate = include("lua/LuaLib/fairy_fate.lua")
 
 function npc.main(play,npcid)
     local data = {}
@@ -65,6 +66,7 @@ function npc.link(play,npcid,ew,aid,data)
         Player.setJsonVarByTable(play, VarCfg["T_藏宝图"], T_data)
         setplaydef(play, VarCfg["J_今日藏宝图次数"], J_cs)
 
+        if FairyFate and FairyFate.touch then FairyFate.touch(play, "treasure", 1) end
         npc.main(play,npcid)
         
     end

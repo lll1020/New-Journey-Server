@@ -1,6 +1,7 @@
 npc = {}
 --灵根
 local _config = Guard.getConfig("npc_22")
+local FairyFate = include("lua/LuaLib/fairy_fate.lua")
 function npc.main(play,npcid)
     local data = {}
     data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
@@ -104,6 +105,7 @@ function npc.link(play,npcid,ew,aid)
         Player.takeItemByTable(play, config.cost, ",灵根升级",nil)
         Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
         Player.sendmsgEx(play, "提示：你的|【灵根】#249|升级成功")
+        if FairyFate and FairyFate.touch then FairyFate.touch(play, "linggen") end
         Player.updateSomeAddr(play,nil, _config.main_r[aid].attr)
         sendluamsg(play,101,1005,0,0,"tpcg")
         sendluamsg(play,100,npcid,2,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))

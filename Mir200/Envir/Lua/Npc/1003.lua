@@ -4,6 +4,7 @@ npc = {}
 
 
 local _fashionConfig = Guard.getConfig("npc_1002")
+local FairyFate = include("lua/LuaLib/fairy_fate.lua")
 local _fashionAttrListName = "时装属性"
 
 local function _refreshFashionAttr(play, T_data)
@@ -68,6 +69,8 @@ function npc.link(play,npcid,ew,aid,data)
         Player.takeItemByTable(play, _config.cost, ",时装解锁",nil)
         T_data.yjs["".._config.idx] = 1
         Player.setJsonVarByTable(play, VarCfg.T_szjl, T_data)
+        GameEvent.push(EventCfg.onUPSkin, play, _config.idx)
+        if FairyFate and FairyFate.touch then FairyFate.touch(play, "fashion_unlock", _config.idx) end
         _refreshFashionAttr(play, T_data)
         Player.sendmsgEx(play, "恭喜你，时装解锁成功，已解锁|【对应时装】#249|")
         local data = {}
