@@ -878,7 +878,7 @@ function ActionHandler.plant(play, npcid, state, params)
         Player.sendmsgEx(play, res or "播种失败#57")
         return
     end
-    Player.sendmsgEx(play, "播种成功#57")
+    Player.sendmsgEx(play, "播种成功")
     pushAction(play, npcid, "plant", true, "播种成功", state, res)
 end
 
@@ -902,7 +902,7 @@ function ActionHandler.buySeed(play, npcid, state, params)
         Player.sendmsgEx(play, res or "购买失败#57")
         return
     end
-    Player.sendmsgEx(play, "购买成功#57")
+    Player.sendmsgEx(play, "购买成功")
     pushAction(play, npcid, "buySeed", true, "购买成功", state, res)
 end
 
@@ -914,7 +914,7 @@ function ActionHandler.buyEgg(play, npcid, state, params)
         Player.sendmsgEx(play, res or "购买失败#57")
         return
     end
-    Player.sendmsgEx(play, "购买成功#57")
+    Player.sendmsgEx(play, "购买成功")
     pushAction(play, npcid, "buyEgg", true, "购买成功", state, res)
 end
 
@@ -925,7 +925,7 @@ function ActionHandler.buyMaterial(play, npcid, state, params)
         Player.sendmsgEx(play, res or "购买失败#57")
         return
     end
-    Player.sendmsgEx(play, "购买成功#57")
+    Player.sendmsgEx(play, "购买成功")
     pushAction(play, npcid, "buyMaterial", true, "购买成功", state, res)
 end
 
@@ -949,7 +949,7 @@ function ActionHandler.buyDecoration(play, npcid, state, params)
         Player.sendmsgEx(play, res or "购买失败#57")
         return
     end
-    Player.sendmsgEx(play, "购买成功#57")
+    Player.sendmsgEx(play, "购买成功")
     pushAction(play, npcid, "buyDecoration", true, "购买成功", state, res)
 end
 
@@ -972,7 +972,7 @@ function ActionHandler.hatch(play, npcid, state, params)
         Player.sendmsgEx(play, res or "孵化失败#57")
         return
     end
-    Player.sendmsgEx(play, "孵化成功#57")
+    Player.sendmsgEx(play, "孵化成功")
     pushAction(play, npcid, "hatch", true, "孵化成功", state, res)
 end
 
@@ -1029,7 +1029,7 @@ function ActionHandler.like(play, npcid, state, params)
             Player.sendmsgEx(play, res or "点赞失败#57")
             return
         end
-        Player.sendmsgEx(play, "点赞成功#57")
+        Player.sendmsgEx(play, "点赞成功")
         pushAction(play, npcid, "like", true, "点赞成功", state, res)
     end)
 end
@@ -1048,7 +1048,7 @@ function ActionHandler.steal(play, npcid, state, params)
             Player.sendmsgEx(play, res or "偷取失败#57")
             return
         end
-        Player.sendmsgEx(play, "偷取成功#57")
+        Player.sendmsgEx(play, "偷取成功")
         pushAction(play, npcid, "steal", true, "偷取成功", state, res)
     end)
 end

@@ -91,7 +91,7 @@ function npc.link(play,npcid,ew,aid,data)
 
         local totalItems = #jsondata.itemlist
         if totalItems ~= _config.needitemnum then
-            Player.sendmsgEx(play,"合成失败：请放入正确物品数量")
+            Player.sendmsgEx(play,"合成失败：请放入正确物品数量#57")
             return
         end
 
@@ -167,7 +167,7 @@ function npc.link(play,npcid,ew,aid,data)
 
         -- 反馈提示：100% 或显示权重占比（X/10）
         local weightDesc = guaranteed and " (100%)" or string.format(" (%d/%d)", slotWeight or 0, _config.needitemnum)
-        Player.sendmsgEx(play, string.format("合成成功#250|获得：%s%s#57", rewardName, weightDesc))
+        Player.sendmsgEx(play, string.format("合成成功，获得：|【%s%s】#249|", rewardName, weightDesc))
         sendluamsg(play,100,npcid,1,0,"")
     end
 end

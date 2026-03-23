@@ -39,18 +39,18 @@ function npc.link(play,npcid,ew,aid)
         if not checktitle(play, _config.details.ch) then
             local name, num = Player.checkItemNumByTable(play, _config.cost)
             if name then
-                Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+                Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
                 return
             end
             Player.takeItemByTable(play, _config.cost, ",修复轩辕剑",nil)
 
 
             Player.title_give(play, _config.details.ch)
-            Player.sendmsgEx(play, "轩辕剑修复成功，获得称号【".._config.details.ch.."】")
+            Player.sendmsgEx(play, "轩辕剑修复成功，获得称号|【".._config.details.ch.."】#249|")
             sendluamsg(play,101,1005,0,0,"rwwc")
             sendluamsg(play,100,npcid,1,0,"")
         else
-            Player.sendmsgEx(play, "你已经拥有轩辕剑称号，无需修复#249")
+            Player.sendmsgEx(play, "你已经拥有轩辕剑称号，无需修复#57")
             return
         end
     end

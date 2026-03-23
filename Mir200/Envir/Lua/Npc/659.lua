@@ -43,7 +43,7 @@ function npc.link(play,npcid,ew,aid,data)
         local round = jq_data[round_key] or 0
 
         if jq_data[key] and jq_data[key] >= 2 then
-            Player.sendmsgEx(play, "你已经完成【"..(_config.name or "该任务").."】#57")
+            Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
             return
         end
         if round >= 5 then
@@ -53,7 +53,7 @@ function npc.link(play,npcid,ew,aid,data)
                 jq_data[key] = 2
             end
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-            Player.sendmsgEx(play, "你已经完成【"..(_config.name or "该任务").."】#57")
+            Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
             return
         end
 
@@ -110,12 +110,12 @@ function npc.link(play,npcid,ew,aid,data)
         local name_map = {[1] = "布", [2] = "剪刀", [3] = "石头"}
         local npc_name = name_map[npc_choice] or tostring(npc_choice or "?")
         if result == 1 then
-            Player.sendmsgEx(play, "本轮你获胜，系统出："..npc_name.."#57")
+            Player.sendmsgEx(play, "本轮你获胜，系统出：|【"..npc_name.."】#249|")
         else
-            Player.sendmsgEx(play, "本轮你失败，系统出："..npc_name.."#57")
+            Player.sendmsgEx(play, "本轮你失败，系统出：#57|【"..npc_name.."】#249|")
         end
         local win_count = jq_data[key.."_win"] or 0
-        Player.sendmsgEx(play, string.format("当前胜利：%d/3#57", win_count))
+        Player.sendmsgEx(play, string.format("当前胜利：|【%d/3】#249|", win_count))
 
         local send_data = {}
         send_data["T_dljq"] = jq_data
@@ -126,7 +126,7 @@ function npc.link(play,npcid,ew,aid,data)
         sendluamsg(play,100,npcid,1,0,tbl2json(send_data))
 
         if jq_data[key] and jq_data[key] >= 2 then
-            Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成#57")
+            Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
             if _config.ch then
                 Player.title_give(play, _config.ch)
             end

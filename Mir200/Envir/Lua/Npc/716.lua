@@ -104,7 +104,7 @@ local function _on_pass(play)
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
 
         sendluamsg(play,101,1005,0,0,"rwwc")
-        Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成#57")
+        Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
         Guard.giveTaskReward(play, _config, (_config.name or "剧情任务").."奖励")
     end
 end
@@ -142,7 +142,7 @@ function npc_716_enter(play)
     startautoattack(play)
     setenvirontimer(dtm, 1, 1, "@npc_716_dsq,"..play..","..dtm)
     senddelaymsg(play, "距离副本结束剩余%s", cfg.fb_time, 250, 1, "@npc_716_timeout")
-    Player.sendmsgEx(play, "已进入副本，击杀【"..cfg.boss.."】即可通关#57")
+    Player.sendmsgEx(play, "已进入副本，击杀#57|【"..cfg.boss.."】#249|即可通关#57")
 end
 
 function npc.main(play,npcid)
@@ -192,14 +192,14 @@ function npc.link(play,npcid,ew,aid)
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     local state = tonumber(jq_data[_cfg_key] or 0) or 0
     if state >= 2 then
-        Player.sendmsgEx(play, "【"..(_config.name or "任务").."】已完成，不能再次提交进入副本#57")
+        Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|已完成，不能再次提交进入副本#57")
         return
     end
 
     if state < 1 then
         jq_data[_cfg_key] = 1
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, "领取【"..(_config.name or "任务").."】")
+        Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#249|")
         sendluamsg(play,101,1005,0,0,"rwjs")
     end
 

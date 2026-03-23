@@ -32,13 +32,13 @@ function npc.link(play,npcid,ew,aid,data)
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_藏宝图"])
         local J_cs = getplaydef(play, VarCfg["J_今日藏宝图次数"])
         if J_cs >= _config.max then
-            Player.sendmsgEx(play, "今日藏宝图次数已达上限#249")
+            Player.sendmsgEx(play, "今日藏宝图次数已达上限#57")
             return 
         end
 
         local name, num = Player.checkItemNumByTable(play, _config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
             return
         end
         Player.takeItemByTable(play, _config.cost, ",藏宝图",nil)

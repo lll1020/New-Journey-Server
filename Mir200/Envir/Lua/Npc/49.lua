@@ -47,7 +47,7 @@ function npc.link(play,npcid,ew,aid,data)
 
         local name, num = Player.checkItemNumByTable(play, _config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("ÄãµÄ|%s#249|²»×ã|%d#249", name, num))
+            Player.sendmsgEx(play, string.format("ÄãµÄ#57|¡¾%s¡¿#249|²»×ã£º#57|¡¾%d¡¿#249|", name, num))
             return
         end
         Player.takeItemByTable(play, _config.cost, ",°ËØÔ",nil)
@@ -57,7 +57,7 @@ function npc.link(play,npcid,ew,aid,data)
 
         if #unactivated == 1 then
             Player.title_give(play, _config.ch)
-            Player.sendmsgEx(play,  "¹§Ï²Äã£¬»ñµÃ³ÆºÅ¡¾".._config.ch.."¡¿#57")
+            Player.sendmsgEx(play,  "¹§Ï²Äã£¬»ñµÃ³ÆºÅ£º|¡¾".._config.ch.."¡¿#249|")
         end
 
         local data = {}

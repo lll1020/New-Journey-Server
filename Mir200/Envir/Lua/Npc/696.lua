@@ -191,7 +191,7 @@ local function _complete_task(play, jq_data)
         shaguai.jian(play, _shaguai_id)
     end
 
-    Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成#57")
+    Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
     sendluamsg(play,101,1005,0,0,"rwwc")
     Guard.giveTaskReward(play, _config, (_config.name or "剧情任务").."奖励")
 end
@@ -232,7 +232,7 @@ function npc.link(play,npcid,ew,aid)
 
     local state = tonumber(jq_data[_cfg_key] or 0) or 0
     if state >= 2 then
-        Player.sendmsgEx(play, "你已经完成【"..(_config.name or "该任务").."】#57")
+        Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
         return
     end
 
@@ -242,7 +242,7 @@ function npc.link(play,npcid,ew,aid)
         jq_data[_move_key] = tonumber(jq_data[_move_key] or 0) or 0
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
 
-        Player.sendmsgEx(play, "领取【"..(_config.name or "任务").."】")
+        Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#249|")
         _ensure_kill_listener(play, jq_data)
         sendluamsg(play,101,1005,0,0,"rwjs")
         sendluamsg(play,100,npcid,1,0,"")
@@ -251,7 +251,7 @@ function npc.link(play,npcid,ew,aid)
 
     local req_map = _task_cfg.map or "白骨神庙"
     if req_map ~= "" and getbaseinfo(play,3) ~= req_map and getbaseinfo(play,3) ~= "xtc" then
-        Player.sendmsgEx(play, "请前往【"..req_map.."】击杀怪物后再前进#57")
+        Player.sendmsgEx(play, "请前往#57|【"..req_map.."】#249|击杀怪物后再前进#57")
         return
     end
 
@@ -272,7 +272,7 @@ function npc.link(play,npcid,ew,aid)
     local kill_cur = tonumber(sg_data[_cfg_key] or 0) or 0
     local need_kill = (moves + 1) * _kill_per_step()
     if kill_cur < need_kill then
-        Player.sendmsgEx(play, string.format("击杀不足：%d/%d（下一步）#57", kill_cur, need_kill))
+        Player.sendmsgEx(play, string.format("击杀不足：#57|【%d/%d】#249|（下一步）#57", kill_cur, need_kill))
         return
     end
 
@@ -302,15 +302,15 @@ function npc.link(play,npcid,ew,aid)
         _apply_attr_cache(play)
         local desc = _attr_pack_desc(attr_pack)
         if desc ~= "" then
-            Player.sendmsgEx(play, "获得属性奖励："..desc.."#57")
+            Player.sendmsgEx(play, "获得属性奖励：|【"..desc.."】#249|")
         end
     end
 
     if _give_item_pack(play, item_pack) then
-        Player.sendmsgEx(play, "获得物品奖励#57")
+        Player.sendmsgEx(play, "获得|【物品奖励】#249|")
     end
 
-    Player.sendmsgEx(play, string.format("前进%d格，当前位置：%d/%d（第%d/%d次）#57", step, pos, goal, moves, max_moves))
+    Player.sendmsgEx(play, string.format("前进|【%d格】#249|，当前位置：|【%d/%d】#249|（第|【%d/%d次】#249|）", step, pos, goal, moves, max_moves))
 
     if moves >= max_moves and pos >= goal then
         _complete_task(play, jq_data)

@@ -56,10 +56,10 @@ function npc.link(play,npcid,ew,aid)
                 _set_first_guanming_player(play)
                 sendluamsg(play,100,npcid,0,0,tbl2json(_get_guanming_panel_data(play)))
             else
-                Player.sendmsgEx(play, "您已经拥有冠名称号，无需重复领取#57")
+                Player.sendmsgEx(play, "您已拥有#57|【冠名称号】#249|，无需重复领取#57")
             end
         else
-            Player.sendmsgEx(play, "您的充值金额不足，无法领取冠名称号#57")
+            Player.sendmsgEx(play, "您的充值金额不足#57|，无法领取#57|【冠名称号】#249|")
         end
     end
 end

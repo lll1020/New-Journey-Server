@@ -81,12 +81,12 @@ function npc.link(play, npcid, p2, p3, msgData)
         end
 
         if dj_data[""..jsonData.idx] >= _config.config[jsonData.idx].max_level then
-            Player.sendmsgEx(play,  "等级已经达到了"..dj_data[""..jsonData.idx].."级，无需再提升#57")
+            Player.sendmsgEx(play,  "等级已达到#57|【"..dj_data[""..jsonData.idx].."级】#249|，无需再提升#57")
             return
         end
         local name, num = Player.checkItemNumByTable(play, _config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的|%s#249|不足#249", name))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足#57", name))
             return
         end
         Player.takeItemByTable(play, _config.cost, ",时光之杖",nil)
@@ -107,7 +107,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         local data = {}
         data["dj_data"] = dj_data
         sendluamsg(play,100,npcid,1,0,tbl2json(data))
-        Player.sendmsgEx(play,  string.format("恭喜你，成功提升了|%s#249|到|%d级#249", _config.config[jsonData.idx].attr_desc, dj_data[""..jsonData.idx]))
+        Player.sendmsgEx(play,  string.format("恭喜你，成功提升了|【%s】#249|到|【%d级】#249", _config.config[jsonData.idx].attr_desc, dj_data[""..jsonData.idx]))
     elseif p2 == 2 then
     end
 end

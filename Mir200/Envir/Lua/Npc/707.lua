@@ -43,7 +43,7 @@ function npc.link(play,npcid,ew,aid)
     local state = tonumber(jq_data[_cfg_key] or 0) or 0
     local cnt = tonumber(jq_data[prog_key] or 0) or 0
     if state >= 2 then
-        Player.sendmsgEx(play, "你已经完成【"..(_config.name or "该任务").."】#57")
+        Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
         return
     end
 
@@ -53,7 +53,7 @@ function npc.link(play,npcid,ew,aid)
     end
 
     if getbaseinfo(play,3) ~= "月牙泉" and getbaseinfo(play,3) ~= "xtc" then
-        Player.sendmsgEx(play, "请前往【月牙泉】完成后再提交#57")
+        Player.sendmsgEx(play, "请前往#57|【月牙泉】#249|完成后再提交#57")
         return
     end
 
@@ -66,13 +66,13 @@ function npc.link(play,npcid,ew,aid)
     cnt = cnt + 1
     jq_data[prog_key] = cnt
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-    Player.sendmsgEx(play, string.format("提交进度：%d/%d#57", cnt, max_num))
+    Player.sendmsgEx(play, string.format("提交进度：#57|【%d/%d】#249|", cnt, max_num))
 
     if cnt >= max_num then
         Guard.clearTaskTemp(jq_data, _cfg_key)
         jq_data[_cfg_key] = 2
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成#57")
+        Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
         sendluamsg(play,101,1005,0,0,"rwwc")
 
         Guard.giveTaskReward(play, _config, (_config.name or "剧情任务").."奖励")

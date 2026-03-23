@@ -153,7 +153,7 @@ function npc_627_finish(play)
         jq_data[key] = 2
     end
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-    Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成#57")
+    Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
     sendluamsg(play,101,1005,0,0,"rwwc")
     if _config.jl then
         Player.rwjl(play, _config.jl, (_config.name or "剧情任务").."奖励", 1)

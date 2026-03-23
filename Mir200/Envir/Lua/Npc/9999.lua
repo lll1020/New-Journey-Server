@@ -55,28 +55,28 @@ function npc.main(play,npcid)
 
 end
 
-function ggn(play,id)
+function ggna(play,id)
     if id == "1" then
         local item = linkbodyitem(play,73)
         if item == "0" then
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play, "数据异常#57")
         else
             if checktitle(play,"狂暴之力") then
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>您已经开启过狂暴之力了</font>","Type":9}')
+                Player.sendmsgEx(play, "你已经开启过#57|【狂暴之力】#249|了#57")
             else
                 confertitle(play,"狂暴之力")
                 changecustomitemvalue(play,linkbodyitem(play,73),0,"=",20,1)
-                sendmsg(play,1,'{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+                Player.sendmsgEx(play, "完成")
             end
         end
     elseif id == "2" then
         local item = linkbodyitem(play, 71)
         if item == "0" then
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play, "数据异常#57")
         else
             local sx = json2tbl(getitemcustomabil(play, item))
             if sx.abil[2].v[1][3] >= 30 then
-                sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>已满级</font>","Type":9}')
+                Player.sendmsgEx(play, "已满级#57")
             else
                 changecustomitemvalue(play,item,0,"=",30,1)
                 changecustomitemvalue(play,item,1,"=",1500,1)
@@ -88,13 +88,13 @@ function ggn(play,id)
                 changecustomitemvalue(play,item,6,"=",600,1)
                 changecustomitemvalue(play,item,7,"=",600,1)
                 confertitle(play,"传功阁大神魔")
-                sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+                Player.sendmsgEx(play, "完成")
             end
         end
     elseif id == "3" then
         local item = linkbodyitem(play, 71)
         if item == "0" then
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play, "数据异常#57")
         else
             changecustomitemvalue(play,item,0,"=",400,0)
             changecustomitemvalue(play,item,1,"=",400,0)
@@ -107,22 +107,22 @@ function ggn(play,id)
             changecustomitemvalue(play,item,6,"=",20,0)
             changecustomitemvalue(play,item,7,"=",10,0)
             changecustomitemvalue(play,item,8,"=",20,0)
-            sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play, "完成")
         end
     elseif id == "4" then
         local zs = getbaseinfo(play,39)
         if zs > 5 then
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[转生]</font><font color=\'#ff0000\'>您转生在我这已经满级了</font>","Type":9}')
+            Player.sendmsgEx(play, "【转生】#249|你转生在我这已经满级了#57")
         else
             setbaseinfo(play,39,6)
             confertitle(play,"6重转生")
             changecustomitemvalue(play,linkbodyitem(play,72),0,"=",15,2)
-            sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play, "完成")
         end
     elseif id == "5" then
         local item = linkbodyitem(play, 71)
         if item == "0" then
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play, "数据异常#57")
         else
             changecustomitemvalue(play,item,0,"=",500,2)
             changecustomitemvalue(play,item,1,"=",5000,2)
@@ -135,12 +135,12 @@ function ggn(play,id)
             changecustomitemvalue(play,item,8,"=",20,2)
             changecustomitemvalue(play,item,9,"=",40,2)
             confertitle(play,"八卦十重")
-            sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play, "完成")
         end
     elseif id == "6" then
         local item = linkbodyitem(play, 71)
         if item == "0" then
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play, "数据异常#57")
         else
             changecustomitemvalue(play,item,0,"=",10,3)
             changecustomitemvalue(play,item,1,"=",10,3)
@@ -157,19 +157,19 @@ function ggn(play,id)
             changecustomitemvalue(play,item,2,"=",15,4)
             changecustomitemvalue(play,item,3,"=",30,4)
             confertitle(play,"仙法阁十重")
-            sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play, "完成")
         end
     elseif id == "7" then
         local item = linkbodyitem(play, 71)
         if item == "0" then
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play, "数据异常#57")
         else
-            sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play, "完成")
         end
     elseif id == "8" then
         local item = linkbodyitem(play, 72)
         if item == "0" then
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play, "数据异常#57")
         else
             changecustomitemvalue(play,item,0,"+",100,0)
             changecustomitemvalue(play,item,1,"+",100,0)
@@ -185,12 +185,12 @@ function ggn(play,id)
             data.xt8 = 1
             setplaydef(play,VarCfg.T_ystz,tbl2json(data))
             confertitle(play,"天才地宝(地)")
-            sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play, "完成")
         end
     elseif id == "9" then
         local item = linkbodyitem(play, 72)
         if item == "0" then
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play, "数据异常#57")
         else
             changecustomitemvalue(play,item,0,"+",250,0)
             changecustomitemvalue(play,item,1,"+",250,0)
@@ -206,12 +206,12 @@ function ggn(play,id)
             data.yy8 = 1
             setplaydef(play,VarCfg.T_ystz,tbl2json(data))
             confertitle(play,"天才地宝(天)")
-            sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play, "完成")
         end
     elseif id == "10" then
         local item = linkbodyitem(play, 72)
         if item == "0" then
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>数据异常</font>","Type":9}')
+            Player.sendmsgEx(play, "数据异常#57")
         else
             changecustomitemvalue(play,item,0,"+",500,0)
             changecustomitemvalue(play,item,1,"+",500,0)
@@ -227,40 +227,40 @@ function ggn(play,id)
             data.xc8 = 1
             setplaydef(play,VarCfg.T_ystz,tbl2json(data))
             confertitle(play,"天才地宝(神)")
-            sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+            Player.sendmsgEx(play, "完成")
         end
     elseif id == "11" then
         setplaydef(play,VarCfg.T_gjyj,'{"gjyj":[100000,100000,100000,100000,100000,100000,100000,100000,100000,0,0,0]}')  --冠绝一界
-        sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+        Player.sendmsgEx(play, "完成")
     elseif id == "12" then
         setplaydef(play,VarCfg.U_qhdj[1],66)
         setplaydef(play,VarCfg.U_qhdj[2],66)
-        sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+        Player.sendmsgEx(play, "完成")
     elseif id == "13" then
         reddot(play, 200, 100, 10, 10, 0, "res/public/ists.png")
         reddot(play, 200, 101, 10, 10, 0, "res/public/ists.png")
         reddot(play, 0, tonumber("Button"), 10, 10, 0, "res/public/ists.png")
-        sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
-        sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>角色红点</font>","Type":9}')
+        Player.sendmsgEx(play, "完成")
+        Player.sendmsgEx(play, "角色红点")
     elseif id == "14" then
-        Player.sendmsgEx(play, "【灵根觉醒】#253|【金之力】#249|范围切割#250")
-        Player.sendmsgEx(play, "【极冰寒冬】#253|【极冰寒冬】#249|寒冬减速#250")
-        Player.sendmsgEx(play, "【冰冻】#253|【冰冻】#249|概率冰冻#250")
-        Player.sendmsgEx(play, "【天火】#253|【天火】#249|天火坠落#250")
-        Player.sendmsgEx(play, "颜色测试完成#249")
+        Player.sendmsgEx(play, "【灵根觉醒】#249|【金之力】#249|【范围切割】#249")
+        Player.sendmsgEx(play, "【极冰寒冬】#249|【极冰寒冬】#249|【寒冬减速】#249")
+        Player.sendmsgEx(play, "【冰冻】#249|【冰冻】#249|【概率冰冻】#249")
+        Player.sendmsgEx(play, "【天火】#249|【天火】#249|【天火坠落】#249")
+        Player.sendmsgEx(play, "颜色测试完成")
     elseif id == "15" then
         local wpdx = linkbodyitem(play,76)
         local item = linkbodyitem(play,17)
         setitemcustomabil(play, wpdx,getitemcustomabil(play, item))
-        sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+        Player.sendmsgEx(play, "完成")
     elseif id == "16" then
         setplaydef(play,VarCfg.U_zllv,1)
-        sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+        Player.sendmsgEx(play, "完成")
     elseif id == "17" then
         local zl = json2tbl(getplaydef(play,VarCfg.T_zlxj))
         zl["dj"] = 1 + zl["dj"]
         setplaydef(play,VarCfg.T_zlxj,tbl2json(zl))
-        sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>完成</font>","Type":9}')
+        Player.sendmsgEx(play, "完成")
     elseif id == "18" then
         if getplaydef(play,VarCfg.U_zxrw[1])then
             newdeletetask(play,getplaydef(play,VarCfg.U_zxrw[1]))
@@ -273,7 +273,7 @@ function ggn(play,id)
     elseif id == "21" then
         repaircastle()
         addattacksabakall()
-        sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>攻沙开始</font>","Type":9}')
+        Player.sendmsgEx(play, "攻沙开始")
     elseif id == "26" then
         _admin_qmdk_start(play)
     elseif id == "27" then
@@ -355,30 +355,153 @@ function ggn(play,id)
             end
         end
 
-        sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>大陆条件已一键解锁（主线>=21,转生>=40,剧情点>=100）</font>","Type":9}')
+        Player.sendmsgEx(play, "大陆条件已一键解锁：主线>=21，转生>=40，剧情点>=100")
     elseif id == "23" then
+        release_print("测试装备")
         local cailiao = {
-"山川神石【稀有】",
-"海洋神石【稀有】",
-"天空神石【稀有】",
-"清风神石【稀有】",
-"火焰神石【稀有】",
-"满月神石【稀有】",
-"大地神石【稀有】",
-"雷电神石【稀有】",
-
-
-
-
-
-
-
-
-
-
-
-
-
+"噬魂夺魄",
+"九幽魔音",
+"焚霄",
+"镇渊",
+"逆命",
+"斩仙令",
+"焚天印",
+"渡魂舟",
+"碎星刃",
+"九霄龙吟",
+"万法归宗",
+"天罚",
+"神寂",
+"劫烬",
+"道陨",
+"无情铁御",
+"褪色者",
+"七日杀",
+"长生",
+"狱門疆",
+"伏魔御厨子",
+"嵌合暗翳庭",
+"裂穹",
+"弑道",
+"封魔",
+"碎星",
+"玄元道印",
+"诸神黄昏",
+"青冥道果",
+"噬仙印",
+"·---特殊掉落（六）---",
+"圣光誓约",
+"天恩圣符",
+"净世真言",
+"荣耀之证",
+"深渊凝视",
+"亡语回响",
+"血祭残章",
+"混沌余烬",
+"古神语",
+"虚空裂隙",
+"禁忌之书",
+"旧日契约",
+"幻梦之钥",
+"残响",
+"虚骸",
+"蚀骨",
+"冥契",
+"罪印",
+"魂锁",
+"暗核",
+"星骸",
+"异星之骸",
+"虚空之光",
+"界域之核",
+"空界之芯",
+"·---特殊掉落（七）---",
+"封龙劍メ驱逐之刃",
+"安晓的右眼",
+"安晓的左眼",
+"异空：千年之光",
+"狂怒护手",
+"狂意之怒",
+"魔渊面具",
+"「无情」",
+"咆哮之意",
+"抉择",
+"啸之戒指",
+"时间锁",
+"轮回沙漏",
+"法师拳套",
+"半兽人之心",
+"天启星魂",
+"恶之握",
+"戰場之靴",
+"禁言",
+"无面恐惧",
+"命运的轮转",
+"起源·无尽幻境",
+"厄运代言人",
+"龙之力·不灭光剑!",
+"黄昏落幕ぁ",
+"·---特殊掉落（八）---",
+"群星之怒★★★",
+"夜风·不败剑意",
+"星辉的祷告乀",
+"御天机",
+"哨兵之首",
+"无序战盔",
+"生灵·屠杀",
+"星神之坠",
+"新月领域△核心",
+"幕轮",
+"狂魔·永夜",
+"贪婪之噬",
+"影幕之指",
+"★★星魂永燃★★",
+"无序的邪力",
+"无序的凝视",
+"刺·束缚之隐",
+"无序◎奥秘",
+"『神耀』",
+"悟道神带",
+"原初■混乱■",
+"血奴印记",
+"混乱制造者",
+"诛伏赐死",
+"新月头盔[月灵]",
+"新月项链[月灵]",
+"醉月手镯[魂灭]",
+"醉月戒指[魂灭]",
+"风月腰带[魂生]",
+"风月鞋子[魂生]",
+"·---特殊掉落（九）---",
+"巨象之环",
+"悸动★飞沙",
+"天魁＂湮灭",
+"地苍·岩落",
+"水泽·魂之护",
+"「恆古·碧波」",
+"自作·无铭",
+"诸神之智·暗靈",
+"奇迹之金刃圣剑",
+"咒怨劫·镜铁戒",
+"『巨兽之威』",
+"统御之灵「融合」",
+"暴怒の罪",
+"风息ぺ漩涡",
+"★天之苍·碧落★",
+"风暴之心·穹霄",
+"べ雷王之冠★",
+"极乐之界",
+"色欲の罪",
+"九霄雷动·氤氲之行",
+"山岳の指环",
+"靈-末日浮屠",
+"山之护·星际瑰宝",
+"無穹￠焚天",
+"無穹￠寒祇",
+"贪婪の罪",
+"傲慢の罪",
+"暴食の罪",
+"嫉妒の罪",
 
         }
         for k, v in pairs(cailiao) do

@@ -42,54 +42,54 @@ end
 local function _zs_check_stage_req(play, stage)
     if stage == 1 then
         if _zs_get_jingjie_level(play) < 9 then
-            Player.sendmsgEx(play, "需境界达到炼气大圆满")
+            Player.sendmsgEx(play, "需境界达到#57|【炼气大圆满】#249|")
             return false
         end
     elseif stage == 2 then
         if (getbaseinfo(play, 6) or 0) < 60 then
-            Player.sendmsgEx(play, "需等级达到60级")
+            Player.sendmsgEx(play, "需等级达到#57|【60级】#249|")
             return false
         end
         if _zs_get_jingjie_level(play) < 10 then
-            Player.sendmsgEx(play, "需境界达到筑基境")
+            Player.sendmsgEx(play, "需境界达到#57|【筑基境】#249|")
             return false
         end
     elseif stage == 3 then
         local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
         local levels = data.level or {}
         if (levels["4"] or 0) < 5 then
-            Player.sendmsgEx(play, "需火灵根达到LV5")
+            Player.sendmsgEx(play, "需火灵根达到#57|【LV5】#249|")
             return false
         end
         if _zs_get_jingjie_level(play) < 14 then
-            Player.sendmsgEx(play, "需境界达到金丹前期")
+            Player.sendmsgEx(play, "需境界达到#57|【金丹前期】#249|")
             return false
         end
     elseif stage == 4 then
         if not _zs_has_linggen(play, 1, 5) then
-            Player.sendmsgEx(play, "需激活五行灵根")
+            Player.sendmsgEx(play, "需激活#57|【五行灵根】#249|")
             return false
         end
         if _zs_get_jingjie_level(play) < 17 then
-            Player.sendmsgEx(play, "需境界达到金丹大圆满")
+            Player.sendmsgEx(play, "需境界达到#57|【金丹大圆满】#249|")
             return false
         end
     elseif stage == 5 then
         if not _zs_has_linggen(play, 1, 10) then
-            Player.sendmsgEx(play, "需激活全部灵根")
+            Player.sendmsgEx(play, "需激活#57|【全部灵根】#249|")
             return false
         end
         if _zs_get_jingjie_level(play) < 19 then
-            Player.sendmsgEx(play, "需境界达到元婴中期")
+            Player.sendmsgEx(play, "需境界达到#57|【元婴中期】#249|")
             return false
         end
     elseif stage == 6 then
         if not _zs_has_linggen_level(play, 1, 5, 10) then
-            Player.sendmsgEx(play, "需五行灵根全部满级")
+            Player.sendmsgEx(play, "需#57|【五行灵根全部满级】#249|")
             return false
         end
         if _zs_get_jingjie_level(play) < 29 then
-            Player.sendmsgEx(play, "需境界达到渡劫大圆满")
+            Player.sendmsgEx(play, "需境界达到#57|【渡劫大圆满】#249|")
             return false
         end
     end
@@ -150,12 +150,12 @@ function npc.link(play,npcid,ew,aid)
         end
         local name, num = Player.checkItemNumByTable(play, config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
             return
         end
         Player.takeItemByTable(play, config.cost, ",转生",nil)
         setplaydef(play, VarCfg["U_转生等级"], level)
-        Player.sendmsgEx(play, "升级成功，当前转生为"..stage.."阶"..step.."级")
+        Player.sendmsgEx(play, "升级成功，当前转生为|【"..stage.."阶"..step.."级】#249|")
         delattlist(play, "转生")
         Login_zsattr(play)
         if Buff and Buff.refreshHuTiGuangHuan then
@@ -164,7 +164,7 @@ function npc.link(play,npcid,ew,aid)
         sendluamsg(play,100,npcid,1,0,"")
         if step == 10 then
             renewlevel(play,1,0,0)
-            Player.sendmsgEx(play, "转生成功，当前转生为"..stage.."阶")
+            Player.sendmsgEx(play, "转生成功，当前转生为|【"..stage.."阶】#249|")
             if rwcf[npcid] then
                 Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
             end

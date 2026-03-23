@@ -102,16 +102,16 @@ npc[2] = function(play, p2, p3, msgData) --背包  面板
         refreshbag(play)
     elseif p2 == 999 then --销毁 单个
         if type(p3) ~= "number" then
-            Player.sendmsgEx(play, "参数错误!")
+            Player.sendmsgEx(play, "参数错误!#57")
             return
         end
         local itemName = Item.getNameMakeid(play, p3)
         local isSuccess = delitembymakeindex(play, tostring(p3), 0, "物品销毁")
         if not isSuccess then
-            Player.sendmsgEx(play, "物品销毁失败,请检查!#249")
+            Player.sendmsgEx(play, "物品销毁失败,请检查!#57")
         else
             if itemName then
-                Player.sendmsgEx(play, "【" .. itemName .. "】物品销毁成功!")
+                Player.sendmsgEx(play, "|【"..itemName.."】#249|物品销毁成功!")
             end
         end
     elseif p2 == 998 then --屏蔽全服掉落信息
@@ -119,11 +119,11 @@ npc[2] = function(play, p2, p3, msgData) --背包  面板
         if state == 0 then
             filterglobalmsg(play, 1)
             setflagstatus(play, VarCfg["F_过滤全服信息"], 1)
-            Player.sendmsgEx(play, "开启过滤全服掉落提示信息。#249")
+            Player.sendmsgEx(play, "开启过滤全服掉落提示信息。")
         else
             filterglobalmsg(play, 0)
             setflagstatus(play, VarCfg["F_过滤全服信息"], 0)
-            Player.sendmsgEx(play, "关闭过滤全服掉落提示信息。#249")
+            Player.sendmsgEx(play, "关闭过滤全服掉落提示信息。")
         end
     end
 end
@@ -165,7 +165,7 @@ local function _ywl_activate_linggen(play, idx)
     data.level[key] = 0
     Player.setJsonVarByTable(play, VarCfg["T_灵根"], data)
     -- 按 602 的激活逻辑，这里只做激活与提示，不走副本流程
-    Player.sendmsgEx(play, "恭喜你，成功激活了灵根#249")
+    Player.sendmsgEx(play, "恭喜你，成功激活|【灵根】#249|")
     return true
 end
 
@@ -276,7 +276,7 @@ local function _ywl_check_map_gate(play, shuju)
     if ok then
         return true
     end
-    Player.sendmsgEx(play, "请先完成[" .. cfg.tip .. "]#57")
+    Player.sendmsgEx(play, "请先完成#57|【" .. cfg.tip .. "】#249|")
     return false
 end
 
@@ -290,7 +290,7 @@ local function _ywl_can_transfer(play, sj, shuju)
     end
     if shuju.ydtk and shuju.fwdjy and not shuju.fwdjy(play, shuju.ydtk, shuju) then
         local ydtip = shuju.ydtip or "进入地图前置任务"
-        Player.sendmsgEx(play, "请先完成[" .. ydtip .. "]#57")
+        Player.sendmsgEx(play, "请先完成#57|【" .. ydtip .. "】#249|")
         return false
     end
     return true
@@ -639,35 +639,35 @@ npc[30] = function(play, p2, p3, data) --砍树系统
         if p3 == 1 then  --升级斧子
             T_data.axe = T_data.axe or 1
             if T_data.axe >= config.updata[1].max_level then
-                Player.sendmsgEx(play, "斧子已满级，无需升级...")
+                Player.sendmsgEx(play, "斧子已满级，无需升级...#57")
                 return
             end
             local name, num = Player.checkItemNumByTable(play, config.updata[1].details[T_data.axe].cost)
             if name then
-                Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+                Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
                 return
             end
             Player.takeItemByTable(play, config.updata[1].details[T_data.axe].cost, ",砍树系统",nil)
             T_data.axe = T_data.axe + 1
             Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
-            Player.sendmsgEx(play, "斧子升级成功，当前斧子等级为|"..T_data.axe.."#249|")
+            Player.sendmsgEx(play, "斧子升级成功，当前斧子等级为|【"..T_data.axe.."】#249|")
             sendluamsg(play, 101, 30, 2, 1, tbl2json({T_data = T_data}))
 
         elseif p3 == 2 then--升级自动升级
             T_data.auto = T_data.auto or 1
             if T_data.auto >= config.updata[2].max_level then
-                Player.sendmsgEx(play, "自动砍树已满级，无需升级...")
+                Player.sendmsgEx(play, "自动砍树已满级，无需升级...#57")
                 return
             end
             local name, num = Player.checkItemNumByTable(play, config.updata[2].details[T_data.auto].cost)
             if name then
-                Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+                Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
                 return
             end
             Player.takeItemByTable(play, config.updata[2].details[T_data.auto].cost, ",砍树系统",nil)
             T_data.auto = T_data.auto + 1
             Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
-            Player.sendmsgEx(play, "自动砍树升级成功，当前自动砍树等级为|"..T_data.auto.."#249|")
+            Player.sendmsgEx(play, "自动砍树升级成功，当前自动砍树等级为|【"..T_data.auto.."】#249|")
             sendluamsg(play, 101, 30, 2, 2, tbl2json({T_data = T_data}))
         end
     elseif p2 == 2 then --获得奖励
@@ -694,7 +694,7 @@ npc[30] = function(play, p2, p3, data) --砍树系统
         elseif p3 == 2 then -- 打开页面时手动点击的奖励
             local name, num = Player.checkItemNumByTable(play, config.click.cost)
             if name then
-                Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+                Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
                 return
             end
             Player.takeItemByTable(play, config.click.cost, ",砍树系统",nil)
@@ -733,7 +733,7 @@ npc[30] = function(play, p2, p3, data) --砍树系统
         T_data.dh_num = T_data.dh_num or 1
         local name, num = Player.checkItemNumByTable(play, T_data.dh_num > #config.dh.details and config.dh.cost or config.dh.details[T_data.dh_num].cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
             return
         end
         Player.takeItemByTable(play, T_data.dh_num > #config.dh.details and config.dh.cost or config.dh.details[T_data.dh_num].cost, ",砍树系统",nil)
@@ -1167,7 +1167,7 @@ local function _qmdt_submit_answer_507(play, answerRaw, p3)
     _qmdt_save_state_507(state)
     if isRight == 1 then
         sendluamsg(play, 101, 12, 4, 3, "")
-        Player.sendmsgEx(play, "回答正确，当前积分+" .. tostring(gainScore) .. "（基础" .. tostring(baseScore) .. "+时间奖励" .. tostring(timeBonus) .. "）#249")
+        Player.sendmsgEx(play, "回答正确，当前积分+|【"..tostring(gainScore) .. "（基础" .. tostring(baseScore) .. "+时间奖励" .. tostring(timeBonus).."）】#249|")
     else
         Player.sendmsgEx(play, "回答错误，可继续作答直到本题结束#57")
     end

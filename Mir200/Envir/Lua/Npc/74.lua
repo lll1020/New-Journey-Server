@@ -62,7 +62,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         end
         T_data["npc_74"]["all"] = cnt
         if T_data["npc_74"]["all"] >= _config.all then
-            Player.sendmsgEx(play,  "你完成了【天道命盘】全部任务，获得奖励#57")
+            Player.sendmsgEx(play,  "你完成了|【天道命盘】#249|全部任务，获得奖励")
             -- 发奖励
         end
         Player.setJsonVarByTable(play, VarCfg.T_dljq, T_data)

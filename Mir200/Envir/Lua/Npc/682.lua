@@ -45,13 +45,13 @@ function npc.link(play,npcid,ew,aid)
     local state = tonumber(jq_data[_cfg_key] or 0) or 0
     local cnt = tonumber(jq_data[prog_key] or 0) or 0
     if state >= 2 then
-        Player.sendmsgEx(play, "你已经完成【"..(_config.name or "该任务").."】#57")
+        Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
         return
     end
     if state < 1 then
         jq_data[_cfg_key] = 1
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, "领取【"..(_config.name or "任务").."】")
+        Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#249|")
         if _shaguai_id > 0 then
             shaguai.jia(play, _shaguai_id)
         end
@@ -62,13 +62,13 @@ function npc.link(play,npcid,ew,aid)
 
     local cur_map = getbaseinfo(play,3)
     if cur_map ~= "灵兽谷" and cur_map ~= "xtc" then
-        Player.sendmsgEx(play, "请前往【灵兽谷】完成后再提交#57")
+        Player.sendmsgEx(play, "请前往#57|【灵兽谷】#249|完成后再提交#57")
         return
     end
 
     local kill_cur = tonumber(sg_data[_cfg_key] or 0) or 0
     if kill_cur < 100 then
-        Player.sendmsgEx(play, string.format("击杀不足：%d/%d#57", kill_cur, 100))
+        Player.sendmsgEx(play, string.format("击杀不足：#57|【%d/%d】#249|", kill_cur, 100))
         return
     end
 
@@ -82,13 +82,13 @@ function npc.link(play,npcid,ew,aid)
     cnt = cnt + 1
     jq_data[prog_key] = cnt
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-    Player.sendmsgEx(play, string.format("提交进度：%d/%d#57", cnt, max_num))
+    Player.sendmsgEx(play, string.format("提交进度：#57|【%d/%d】#249|", cnt, max_num))
 
     if cnt >= max_num then
         Guard.clearTaskTemp(jq_data, _cfg_key)
         jq_data[_cfg_key] = 2
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成#57")
+        Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
         sendluamsg(play,101,1005,0,0,"rwwc")
 
         Guard.giveTaskReward(play, _config, (_config.name or "剧情任务").."奖励")

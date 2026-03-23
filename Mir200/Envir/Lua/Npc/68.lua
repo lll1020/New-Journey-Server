@@ -21,7 +21,7 @@ local function _check_trial_limit(play, aid)
     if Player.hasEquipInArtifactSlot(play, need) then
         return true
     end
-    Player.sendmsgEx(play, "进入该灵根试炼需要先拥有称号或背包神器位装备【"..need.."】#57")
+    Player.sendmsgEx(play, "进入该灵根试炼需要先拥有称号或背包神器位装备：#57|【"..need.."】#249|")
     return false
 end
 
@@ -81,7 +81,7 @@ function npc.link(play,npcid,ew,aid)
         if T_dljq["npc_68"][""..aid] and T_dljq["npc_68"][""..aid] == 1 then
             T_data.level[""..aid + 5] = 0
             Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
-            Player.sendmsgEx(play, "恭喜你，成功激活了#249|灵根")
+            Player.sendmsgEx(play, "恭喜你，成功激活|【灵根】#249|")
             sendluamsg(play,100,npcid,2,aid,"")
             sendluamsg(play,101,1005,0,0,"rwwc")
         else

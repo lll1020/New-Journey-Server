@@ -38,14 +38,14 @@ function npc.link(play,npcid,ew,aid)
                 --getitemaddvalue(play, itemobj, 2, 3)
                 local level = getplaydef(play, VarCfg["U_装备强化_".._config.where[aid][1]])
                 if level >= _config.max_level then
-                    Player.sendmsgEx(play, "该部位装备强化已达最高等级#249")
+                    Player.sendmsgEx(play, "该部位装备强化已达最高等级")
                     return
                 end
                 local nextLevel = level + 1
                 local cfg = _config.details[nextLevel]
                 local name, num = Player.checkItemNumByTable(play, cfg.cost)
                 if name then
-                    Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+                    Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
                     return
                 end
                 Player.takeItemByTable(play, cfg.cost, ",装备强化",nil)
@@ -64,18 +64,18 @@ function npc.link(play,npcid,ew,aid)
                 sendluamsg(play,100,npcid,1,aid,"")
 
                 if nextLevel == 10 or nextLevel == 20 or nextLevel == 30 then
-                    Player.sendmsgEx(play, "恭喜你，|".._config.where[aid][1].."#249|部位的装备强化提升到了|"..nextLevel.."级#249|，属性大幅提升！")
+                    Player.sendmsgEx(play, "恭喜你，|【".._config.where[aid][1].."】#249|部位的装备强化提升到了【"..nextLevel.."级】，属性大幅提升！")
                     delattlist(play, "装备强化")
                     Login_zbqh(play)
                 else
-                    Player.sendmsgEx(play, "恭喜你，|".._config.where[aid][1].."#249|部位的装备强化提升到了|"..nextLevel.."级#249|")
+                    Player.sendmsgEx(play, "恭喜你，|【".._config.where[aid][1].."】#249|部位的装备强化提升到了【"..nextLevel.."级】")
                 end
             else
-                Player.sendmsgEx(play, "请先穿戴对应部位的装备#249")
+                Player.sendmsgEx(play, "请先穿戴#57|【对应部位装备】#249|")
                 return
             end
         else
-            Player.sendmsgEx(play, "参数错误!#249")
+            Player.sendmsgEx(play, "参数错误!#57")
             return
         end
 

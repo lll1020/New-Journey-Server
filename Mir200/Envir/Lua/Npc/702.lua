@@ -212,7 +212,7 @@ local function _on_main_boss_killed(play)
     if (tonumber(jq_data[_cfg_key] or 0) or 0) < 2 then
         jq_data[_cfg_key] = 2
         sendluamsg(play,101,1005,0,0,"rwwc")
-        Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成#57")
+        Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
     end
 
     if tonumber(jq_data[_reward_done_key] or 0) ~= 1 then
@@ -232,9 +232,9 @@ local function _on_hidden_boss_killed(play)
     if title2 and title2 ~= "" and tonumber(jq_data[_hidden_title_key] or 0) ~= 1 then
         Player.title_give(play, title2)
         jq_data[_hidden_title_key] = 1
-        Player.sendmsgEx(play, "击杀隐藏BOSS成功，获得称号【"..title2.."】#57")
+        Player.sendmsgEx(play, "击杀|【隐藏BOSS】#249|成功，获得称号：|【"..title2.."】#249|")
     else
-        Player.sendmsgEx(play, "击杀隐藏BOSS成功#57")
+        Player.sendmsgEx(play, "击杀|【隐藏BOSS】#249|成功")
     end
 
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
@@ -425,7 +425,7 @@ function npc.link(play,npcid,ew,aid)
     if (tonumber(jq_data[_cfg_key] or 0) or 0) < 1 then
         jq_data[_cfg_key] = 1
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, "领取【"..(_config.name or "任务").."】")
+        Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#249|")
         sendluamsg(play,101,1005,0,0,"rwjs")
     end
 

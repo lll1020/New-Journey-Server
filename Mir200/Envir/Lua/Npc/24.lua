@@ -148,17 +148,17 @@ function npc.link(play,npcid,ew,aid,data)
         if itemobj then
             T_data.level = (T_data.level or 0) + 1
             if T_data.level > _config.details[1].max_level then
-                Player.sendmsgEx(play, "天书已经达到最高等级，无需再强化#57")
+                Player.sendmsgEx(play, "天书已达到#57|【最高等级】#249|，无需再强化#57")
                 return
             end
             local config = _config.details[1].details[T_data.level]
             -- release_print("天书强化配置:", T_data.level)
             -- release_print("天书强化配置:", tbl2json(config))
             if (T_data.jf or 0) < config.jf then
-                Player.sendmsgEx(play, "你的天书杀意值不足，无法进行强化#57")
+                Player.sendmsgEx(play, "你的#57|【天书杀意值】#249|不足，无法进行强化#57")
                 return
             end
-            Player.sendmsgEx(play, "恭喜你，天书强化成功，当前天书等级为|"..T_data.level.."级#249|")
+            Player.sendmsgEx(play, "恭喜你，天书强化成功，当前天书等级为|【"..T_data.level.."级】#249|")
             Player.setJsonVarByTable(play, VarCfg["T_天书"], T_data)
             xianfa_refresh(play)
             tianshu_refresh_item(play, T_data, itemobj)
@@ -176,7 +176,7 @@ function npc.link(play,npcid,ew,aid,data)
 
             sendluamsg(play,100,npcid,1,0,tbl2json({ ["T_data"] = T_data} ))
         else
-            Player.sendmsgEx(play, "请先穿戴对应部位的装备#249")
+            Player.sendmsgEx(play, "请先穿戴#57|【对应部位装备】#249|")
             return
         end
     elseif ew == 2 then --仙法
@@ -191,7 +191,7 @@ function npc.link(play,npcid,ew,aid,data)
             local need_lv = unlock_lv[slot] or 1
             local cur_lv = T_data.level or 0
             if cur_lv < need_lv then
-                Player.sendmsgEx(play, string.format("天书等级达到%d级才可解锁该仙法槽位#57", need_lv))
+                Player.sendmsgEx(play, string.format("天书等级达到#57|【%d级】#249|才可解锁该仙法槽位#57", need_lv))
                 return
             end
 
@@ -208,7 +208,7 @@ function npc.link(play,npcid,ew,aid,data)
                 local need = {{"仙品仙法卷轴",1}}
                 local name, num = Player.checkItemNumByTable(play, need)
                 if name then
-                    Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+                    Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
                     return
                 end
                 Player.takeItemByTable(play, need, ",天书仙法", nil)
@@ -222,10 +222,10 @@ function npc.link(play,npcid,ew,aid,data)
                     if name then
                         local name2, num2 = Player.checkItemNumByTable(play, cost_cfg[2])
                         if name2 then
-                            Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name2, num2))
+                            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name2, num2))
                             return
                         end
-                        Player.sendmsgEx(play, "仙法卷轴不足，改用灵石消耗#57")
+                        Player.sendmsgEx(play, "#57|【仙法卷轴】#249|不足，改用|【灵石】#249|消耗#57")
                         Player.takeItemByTable(play, cost_cfg[2], ",天书仙法", nil)
                     else
                         Player.takeItemByTable(play, cost_cfg[1], ",天书仙法", nil)

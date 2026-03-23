@@ -81,7 +81,7 @@ function npc.link(play,npcid,ew,aid)
 
     if ew == 1 then
         if jq_data[key] and jq_data[key] >= 2 then
-            Player.sendmsgEx(play, "你已经完成【"..(_config.name or "该任务").."】#57")
+            Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
             return
         end
 
@@ -145,14 +145,14 @@ function npc.link(play,npcid,ew,aid)
         local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
         jq_data["npc_671_token"] = (jq_data["npc_671_token"] or 0) + total_get
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, string.format("已回收信物：%d 个#57", total_get))
-        Player.sendmsgEx(play, string.format("共计已回收信物：%d 个#57", jq_data["npc_671_token"] or 0))
+        Player.sendmsgEx(play, string.format("已回收信物：|【%d个】#249|", total_get))
+        Player.sendmsgEx(play, string.format("共计已回收信物：|【%d个】#249|", jq_data["npc_671_token"] or 0))
         return
     end
 
     if ew == 2 then
         if jq_data[key] and jq_data[key] >= 2 then
-            Player.sendmsgEx(play, "你已经完成【"..(_config.name or "该任务").."】#57")
+            Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
             return
         end
         local npc_671_token = jq_data["npc_671_token"] or 0
@@ -160,7 +160,7 @@ function npc.link(play,npcid,ew,aid)
             -- 本NPC不清理临时字段，保留层数和回收进度
             jq_data[key] = 2
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-            Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成#57")
+            Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
             sendluamsg(play,101,1005,0,0,"rwwc")
             local reward = _config.jl or _config.rwjl
             if reward then
@@ -168,7 +168,7 @@ function npc.link(play,npcid,ew,aid)
             end
             sendluamsg(play,100,npcid,1,2,"")
         else
-            Player.sendmsgEx(play, string.format("当前进度：%d/%d#57", npc_671_token, total))
+            Player.sendmsgEx(play, string.format("当前进度：|【%d/%d】#249|", npc_671_token, total))
         end
     end
 end

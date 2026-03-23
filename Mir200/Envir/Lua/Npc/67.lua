@@ -53,14 +53,14 @@ function npc.link(play,npcid,ew,aid,data)
 
         local name, num = Player.checkItemNumByTable(play, _config.details[json_data.idx].cost or {})
         if name then
-            Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
             return
         end
         Player.takeItemByTable(play, _config.details[json_data.idx].cost or {}, ",生肖守护",nil)
 
         T_data[""..json_data.idx] = 1
         Player.setJsonTableByVar(play, VarCfg["T_生肖守护"], T_data)
-        Player.sendmsgEx(play, string.format("你成功激活了|%s#249|守护#57", _config.details[json_data.idx].name))
+        Player.sendmsgEx(play, string.format("你成功激活了#57|【%s】#249|守护#57", _config.details[json_data.idx].name))
         sendluamsg(play,100,npcid,1,json_data.idx,"")
 
         if T_data["1"] and T_data["2"] and T_data["3"] and T_data["4"] and not T_data["jl1"] then
@@ -69,7 +69,7 @@ function npc.link(play,npcid,ew,aid,data)
             Player.setJsonTableByVar(play, VarCfg["T_生肖守护"], T_data)
             Player.updateSomeAddr(play,nil, {{81,300}})
             Player.giveItemByTable(play, _config.details.jl[1].give or {}, "生肖守护全激活奖励", nil)
-            Player.sendmsgEx(play, "恭喜你激活了第一层生肖守护，获得了|生肖守护神#249|奖励#57")
+            Player.sendmsgEx(play, "恭喜你激活了第一层生肖守护，获得奖励：|【生肖守护神】#249|")
             sendluamsg(play,100,npcid,2,1,"")
         elseif T_data["5"] and T_data["6"] and T_data["7"] and T_data["8"] and not T_data["jl2"] then
             -- 全部激活，发奖励
@@ -77,7 +77,7 @@ function npc.link(play,npcid,ew,aid,data)
             Player.setJsonTableByVar(play, VarCfg["T_生肖守护"], T_data)
             Player.updateSomeAddr(play,nil, {{79,300}})
             Player.giveItemByTable(play, _config.details.jl[2].give or {}, "生肖守护全激活奖励", nil)
-            Player.sendmsgEx(play, "恭喜你激活了第二层生肖守护，获得了|生肖守护神#249|奖励#57")
+            Player.sendmsgEx(play, "恭喜你激活了第二层生肖守护，获得奖励：|【生肖守护神】#249|")
             sendluamsg(play,100,npcid,2,2,"")
         elseif T_data["9"] and T_data["10"] and T_data["11"] and T_data["12"] and not T_data["jl3"] then
             -- 全部激活，发奖励
@@ -85,7 +85,7 @@ function npc.link(play,npcid,ew,aid,data)
             Player.setJsonTableByVar(play, VarCfg["T_生肖守护"], T_data)
             Player.updateSomeAddr(play,nil, {{22,3}})
             Player.giveItemByTable(play, _config.details.jl[3].give or {}, "生肖守护全激活奖励", nil)
-            Player.sendmsgEx(play, "恭喜你激活了第三层生肖守护，获得了|生肖守护神#249|奖励#57")
+            Player.sendmsgEx(play, "恭喜你激活了第三层生肖守护，获得奖励：|【生肖守护神】#249|")
             sendluamsg(play,100,npcid,2,3,"")
            
         end
@@ -93,7 +93,7 @@ function npc.link(play,npcid,ew,aid,data)
             T_data["jl_all"] = 1
             Player.setJsonTableByVar(play, VarCfg["T_生肖守护"], T_data)
             Player.title_give(play, _config.ch)
-            Player.sendmsgEx(play, "恭喜你激活了全部生肖守护，获得了|生肖守护神#249|奖励#57")
+            Player.sendmsgEx(play, "恭喜你激活了全部生肖守护，获得奖励：|【生肖守护神】#249|")
             sendluamsg(play,100,npcid,2,4,"")
         end
 

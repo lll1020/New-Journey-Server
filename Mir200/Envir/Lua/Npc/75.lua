@@ -38,21 +38,21 @@ function npc.link(play, npcid, p2, p3, msgData)
         end
         local equipname = Player.getEquipNameByPos(play, _config.details[json_data.idx].where)
         if equipname ~= _config.details[json_data.idx].now then
-            Player.sendmsgEx(play, "请先装备".._config.details[json_data.idx].now.."#249|进行升级#57")
+            Player.sendmsgEx(play, "请先装备#57|【".._config.details[json_data.idx].now.."】#249|进行升级#57")
             return
         end
         if equipname == _config.details[json_data.idx].give then
-            Player.sendmsgEx(play, "你的".._config.details[json_data.idx].name.."已经是最高级别，无法继续升级#57")
+            Player.sendmsgEx(play, "你的#57|【".._config.details[json_data.idx].name.."】#249|已经是最高级别，无法继续升级#57")
             return
         end
         local name, num = Player.checkItemNumByTable(play, _config.details[json_data.idx].cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
             return
         end
         Player.takeItemByTable(play, _config.details[json_data.idx].cost, ",装备解封",nil)
         changeitemidx(play,getiteminfo(play,linkbodyitem(play,_config.details[json_data.idx].where),1),getstditeminfo(_config.details[json_data.idx].give, ConstCfg.stditeminfo.idx))
-        Player.sendmsgEx(play,  "恭喜你，".._config.details[json_data.idx].name.."升级成功，当前为".._config.details[json_data.idx].give.."#249|")
+        Player.sendmsgEx(play,  "恭喜你，|【".._config.details[json_data.idx].name.."升级成功，当前为".._config.details[json_data.idx].give.."】#249|")
         sendluamsg(play,100,npcid,1,0,"")
         sendluamsg(play,101,1005,0,0,"qhcg")
         

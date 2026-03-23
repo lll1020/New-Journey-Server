@@ -149,14 +149,14 @@ function npc.link(play,npcid,ew,aid)
         if _shaguai_id > 0 then
             shaguai.jia(play, _shaguai_id)
         end
-        Player.sendmsgEx(play, "领取【"..(_config.name or "任务").."】")
+        Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#249|")
         sendluamsg(play,101,1005,0,0,"rwjs")
         sendluamsg(play,100,npcid,1,0,"")
         return
     end
 
     if state >= 2 then
-        Player.sendmsgEx(play, "你已经完成【"..(_config.name or "该任务").."】#57")
+        Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
         return
     end
 
@@ -171,7 +171,7 @@ function npc.link(play,npcid,ew,aid)
             shaguai.jian(play, _shaguai_id)
         end
 
-        Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成#57")
+        Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
         sendluamsg(play,101,1005,0,0,"rwwc")
         Guard.giveTaskReward(play, _config, (_config.name or "剧情任务").."奖励")
         sendluamsg(play,100,npcid,1,3,"")
@@ -182,7 +182,7 @@ function npc.link(play,npcid,ew,aid)
     local st = stages[next_idx]
     local cur = tonumber(sg_data[_cnt_key(next_idx)] or 0) or 0
     local need = _need_of(st)
-    Player.sendmsgEx(play, string.format("当前进度：%s %d/%d#57", st.name or ("试炼"..next_idx), cur, need))
+    Player.sendmsgEx(play, string.format("当前进度：|【%s %d/%d】#249|", st.name or ("试炼"..next_idx), cur, need))
     Player.sendmsgEx(play, "完成当前试炼后将自动开启下一层地图门#57")
     sendluamsg(play,100,npcid,1,next_idx - 1,"")
 end

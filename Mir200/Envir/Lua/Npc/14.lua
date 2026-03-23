@@ -53,12 +53,12 @@ function npc.link(play, npcid, p2, p3, msgData)
         local dj_data = Player.getJsonTableByVar(play, VarCfg["T_仙食坊"]) or {}
         dj_data[""..jsonData.idx] = dj_data[""..jsonData.idx] or 0
         if dj_data[""..jsonData.idx] >= _config.config[jsonData.idx].max_level then
-            Player.sendmsgEx(play,  "等级已经达到了"..dj_data[""..jsonData.idx].."级，无需再提升#57")
+            Player.sendmsgEx(play,  "等级已达到#57|【"..dj_data[""..jsonData.idx].."级】#249|，无需再提升#57")
             return
         end
         local name, num = Player.checkItemNumByTable(play, _config.config[jsonData.idx].cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的|%s#249|不足#249", name))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足#57", name))
             return
         end
         Player.takeItemByTable(play, _config.config[jsonData.idx].cost, ",仙食坊",nil)
@@ -83,7 +83,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         local data = {}
         data["dj_data"] = dj_data
         sendluamsg(play,100,npcid,1,0,tbl2json(data))
-        Player.sendmsgEx(play,  string.format("成功，%s提升到了%d级", _config.config[jsonData.idx].cost[1][1], dj_data[""..jsonData.idx]))
+        Player.sendmsgEx(play,  string.format("成功，|【%s】#249|提升到了|【%d级】#249|", _config.config[jsonData.idx].cost[1][1], dj_data[""..jsonData.idx]))
         if isall then
             npc.AllMaxLevel(play)
         end
@@ -148,7 +148,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         sendluamsg(play,100,npcid,1,0,tbl2json(data))
 
         if upCount > 0 then
-            Player.sendmsgEx(play, string.format("一键使用完成，本次共提升%d级", upCount))
+            Player.sendmsgEx(play, string.format("一键使用完成，本次共提升|【%d级】#249|", upCount))
         else
             Player.sendmsgEx(play, "一键使用完成，材料已全部消耗")
         end
@@ -162,11 +162,11 @@ end
 
 function npc.AllMaxLevel(play)
     if checktitle(play, _config.title) then
-        Player.sendmsgEx(play, "你已经拥有该称号，无需重复领取#57")
+        Player.sendmsgEx(play, "你已拥有#57|【该称号】#249|，无需重复领取#57")
         return
     end
     Player.title_give(play, _config.title)
-    Player.sendmsgEx(play, "恭喜你获得称号：|".._config.title.."#249|，称号属性永久生效")
+    Player.sendmsgEx(play, "恭喜你获得称号：|【".._config.title.."】#249|，称号属性永久生效")
 
 end
 

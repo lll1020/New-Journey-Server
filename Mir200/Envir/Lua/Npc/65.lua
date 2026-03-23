@@ -39,7 +39,7 @@ function npc.link(play,npcid,ew,aid,data)
         json_data.idx = idx
         local name, num = Player.checkItemNumByTable(play, _config.config[json_data.idx].cost or {})
         if name then
-            Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
             return
         end
         Player.takeItemByTable(play, _config.config[json_data.idx].cost or {}, ",古玩鉴定",nil)
@@ -50,7 +50,7 @@ function npc.link(play,npcid,ew,aid,data)
         -- Player.rwjl(play,{awardItem},"古玩鉴定",nil)
 
         local itemobj = giveitem(play, awardItem[1], 1,850)
-        Player.sendmsgEx(play, string.format("你成功鉴定出|%s#249|x%d", awardItem[1], awardItem[2]))
+        Player.sendmsgEx(play, string.format("你成功鉴定出|【%s】#249|x%d", awardItem[1], awardItem[2]))
         sendluamsg(play,100,npcid,1,0,tbl2json({item = awardItem[1]}))
         
 

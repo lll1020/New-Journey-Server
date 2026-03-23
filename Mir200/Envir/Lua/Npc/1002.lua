@@ -61,16 +61,16 @@ function npc.link(play,npcid,ew,aid,data)
         T_data.dqzb = T_data.dqzb or 0
         T_data.yjs = T_data.yjs or {}
         if T_data.dqzb == aid then
-            Player.sendmsgEx(play, "当前装扮已是该装扮，无需更换")
+            Player.sendmsgEx(play, "当前装扮已是该装扮，无需更换#57")
             return
         else
             if not (aid > 0 and aid <= #_config.details.sz) then
-                Player.sendmsgEx(play, "装扮不存在，无法更换")
+                Player.sendmsgEx(play, "装扮不存在，无法更换#57")
                 return
             end
 
             if not T_data.yjs[""..aid] or T_data.yjs[""..aid] ~= 1 then
-                Player.sendmsgEx(play, "你还未拥有该装扮，无法更换")
+                Player.sendmsgEx(play, "你还未拥有该装扮，无法更换#57")
                 return
             end
             local config = _config.details.sz[aid]
@@ -81,7 +81,7 @@ function npc.link(play,npcid,ew,aid,data)
             refreshitem(play, equipObj)
             T_data.dqzb = aid
             Player.setJsonVarByTable(play, VarCfg.T_szjl, T_data)
-            Player.sendmsgEx(play, "更换装扮成功")
+            Player.sendmsgEx(play, "更换装扮成功，已切换到|【当前装扮】#249|")
             local data = {}
             data["T_data"] = T_data
             sendluamsg(play,100,npcid,1,0,tbl2json(data))

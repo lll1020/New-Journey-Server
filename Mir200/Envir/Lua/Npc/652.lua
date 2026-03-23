@@ -40,14 +40,14 @@ function npc.link(play,npcid,ew,aid)
         local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
         local key = "npc_652"
         if jq_data[key] and jq_data[key] >= 2 then
-            Player.sendmsgEx(play, "你已经完成【"..(_config.name or "该任务").."】#57")
+            Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
             return
         end
 
         local maxAtk = getbaseinfo(play, (ConstCfg and ConstCfg.gbase and ConstCfg.gbase.dc2) or 20)
         local need = _config.value or 0
         if maxAtk < need then
-            Player.sendmsgEx(play, string.format("最大攻击力不足：%d/%d#57", maxAtk, need))
+            Player.sendmsgEx(play, string.format("最大攻击力不足：#57|【%d/%d】#249|", maxAtk, need))
             return
         end
 
@@ -57,7 +57,7 @@ function npc.link(play,npcid,ew,aid)
             jq_data[key] = 2
         end
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成#57")
+        Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
         if _config.ch then
             Player.title_give(play, _config.ch)
         end

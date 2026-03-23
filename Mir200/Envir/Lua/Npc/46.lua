@@ -44,7 +44,7 @@ function npc.link(play,npcid,ew,aid,data)
         T_data["npc_46"]["wc"] = 1
         Player.setJsonVarByTable(play, VarCfg["T_dljq"], T_data)
         Player.title_give(play, _config.ch)
-        Player.sendmsgEx(play,  "¹§Ï²Äã£¬»ñµÃ³ÆºÅ¡¾".._config.ch.."¡¿#57")
+        Player.sendmsgEx(play,  "¹§Ï²Äã£¬»ñµÃ³ÆºÅ£º|¡¾".._config.ch.."¡¿#249|")
         sendluamsg(play,100,npcid,1,0,"")
     
         

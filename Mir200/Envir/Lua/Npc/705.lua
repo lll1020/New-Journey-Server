@@ -115,7 +115,7 @@ function npc.link(play,npcid,ew,aid)
     local cur_kill = tonumber(sg_data[_cfg_key] or 0) or 0
 
     if state >= 2 then
-        Player.sendmsgEx(play, "你已经完成【"..(_config.name or "该任务").."】#57")
+        Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
         return
     end
 
@@ -132,7 +132,7 @@ function npc.link(play,npcid,ew,aid)
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
 
         shaguai.jia(play, 705)
-        Player.sendmsgEx(play, "领取【"..(_config.name or "任务").."】成功，当前分支：".._choice_text(choice).."#57")
+        Player.sendmsgEx(play, "领取#57|【"..(_config.name or "任务").."】#249|成功，当前分支：#57".._choice_text(choice).."#57")
         sendluamsg(play,101,1005,0,0,"rwjs")
         sendluamsg(play,100,npcid,1,0,"")
         return
@@ -153,12 +153,12 @@ function npc.link(play,npcid,ew,aid)
 
     local req_map = _task_cfg.map or "罗刹海市"
     if getbaseinfo(play,3) ~= req_map and getbaseinfo(play,3) ~= "xtc" then
-        Player.sendmsgEx(play, "请前往【"..req_map.."】完成后再提交#57")
+        Player.sendmsgEx(play, "请前往#57|【"..req_map.."】#249|完成后再提交#57")
         return
     end
 
     if cur_kill < need_kill then
-        Player.sendmsgEx(play, string.format("击杀不足：%d/%d#57", cur_kill, need_kill))
+        Player.sendmsgEx(play, string.format("击杀不足：#57|【%d/%d】#249|", cur_kill, need_kill))
         return
     end
 
@@ -172,7 +172,7 @@ function npc.link(play,npcid,ew,aid)
     cnt = cnt + 1
     jq_data[prog_key] = cnt
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-    Player.sendmsgEx(play, string.format("提交进度：%d/%d#57", cnt, max_num))
+    Player.sendmsgEx(play, string.format("提交进度：#57|【%d/%d】#249|", cnt, max_num))
 
     if cnt >= max_num then
         local choice = choice_for_reward
@@ -180,13 +180,13 @@ function npc.link(play,npcid,ew,aid)
         Guard.clearTaskTemp(jq_data, _cfg_key)
         jq_data[_cfg_key] = 2
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成#57")
+        Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
         sendluamsg(play,101,1005,0,0,"rwwc")
 
         local title = _choice_title(choice)
         if type(title) == "string" and title ~= "" then
             Player.title_give(play, title)
-            Player.sendmsgEx(play, "获得称号【"..title.."】#57")
+            Player.sendmsgEx(play, "获得称号：|【"..title.."】#249|")
         end
 
         _give_item_reward_only(play)

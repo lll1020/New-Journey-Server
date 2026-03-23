@@ -58,17 +58,17 @@ function npc.link(play,npcid,ew,aid)
 
     if ew == 1 then
         if jq_data[key] and jq_data[key] >= 2 then
-            Player.sendmsgEx(play, "你已经完成【"..(_config.name or "该任务").."】#57")
+            Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
             return
         end
         if jq_data[key] and jq_data[key] == 1 then
-            Player.sendmsgEx(play, "你已经领取【"..(_config.name or "该任务").."】#57")
+            Player.sendmsgEx(play, "你已经领取#57|【"..(_config.name or "该任务").."】#249|")
             return
         end
         jq_data[key] = 1
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         shaguai.jia(play, _config.shaguai_id or 678)
-        Player.sendmsgEx(play, "领取【"..(_config.name or "任务").."】")
+        Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#249|")
         sendluamsg(play,101,1005,0,0,"rwjs")
         sendluamsg(play,100,npcid,1,1,"")
         return
@@ -89,7 +89,7 @@ function npc.link(play,npcid,ew,aid)
                 jq_data[key] = 2
             end
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-            Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成#57")
+            Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
             if _config.ch then
                 Player.title_give(play, _config.ch)
             end
@@ -100,7 +100,7 @@ function npc.link(play,npcid,ew,aid)
             end
             sendluamsg(play,100,npcid,1,2,"")
         else
-            Player.sendmsgEx(play, string.format("进度：%d/%d#57", done, #details))
+            Player.sendmsgEx(play, string.format("进度：|【%d/%d】#249|", done, #details))
         end
         return
     end
@@ -124,7 +124,7 @@ function npc.link(play,npcid,ew,aid)
         end
 
         if cfg.num and (sg_data[key] or 0) < cfg.num then
-            Player.sendmsgEx(play, string.format("击杀不足：%d/%d#57", (sg_data[key] or 0), cfg.num))
+            Player.sendmsgEx(play, string.format("击杀不足：#57|【%d/%d】#249|", (sg_data[key] or 0), cfg.num))
             return
         end
         if cfg.cost and not Guard.ensureCost(play, cfg.cost) then
@@ -140,7 +140,7 @@ function npc.link(play,npcid,ew,aid)
 
         jq_data[subKey] = 2
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, "提交成功#57")
+        Player.sendmsgEx(play, "提交成功")
         sendluamsg(play,100,npcid,1,idx,"")
         return
     end

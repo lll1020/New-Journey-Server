@@ -411,7 +411,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         local drawTimes = p2 == 1 and (tonumber(_config.draw_once_cost) or 1) or (tonumber(_config.draw_ten_cost) or 10)
         local ok, labels, err = _do_draw(play, T_data, drawTimes)
         if not ok then Player.sendmsgEx(play, err) return end
-        Player.sendmsgEx(play, "本次获得：|" .. table.concat(labels, "、") .. "#249")
+        Player.sendmsgEx(play, "本次获得：|【"..table.concat(labels, "、").."】#249|")
         _save_data(play, T_data)
         _refresh_bonus(play, T_data)
         _refresh_panel(play, npcid, p2)
@@ -420,7 +420,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         if count < 1 then count = 1 end
         local canExchange, progress = _get_exchange_info(play, T_data)
         if canExchange <= 0 then
-            Player.sendmsgEx(play, string.format("当前杀怪进度不足：%d/%d，今日已兑换%d次#57", progress, tonumber(_config.kill_per_exchange) or 188, tonumber(T_data.exchange_used) or 0))
+            Player.sendmsgEx(play, string.format("当前杀怪进度不足：#57|【%d/%d】#249|，今日已兑换#57|【%d次】#249|", progress, tonumber(_config.kill_per_exchange) or 188, tonumber(T_data.exchange_used) or 0))
             return
         end
         if count > canExchange then count = canExchange end
@@ -428,7 +428,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         T_data.token_count = T_data.token_count + count
         _append_log(T_data, "杀怪兑换：获得" .. _token_name .. "*" .. count)
         _save_data(play, T_data)
-        Player.sendmsgEx(play, "兑换成功，获得|" .. _token_name .. "#249|*" .. count)
+        Player.sendmsgEx(play, "兑换成功，获得|【".._token_name.."】#249|*" .. count)
         _refresh_panel(play, npcid, p2)
     elseif p2 == 4 then -- buy by cost
         local count = tonumber(json_data.count or p3) or 1
@@ -436,24 +436,24 @@ function npc.link(play, npcid, p2, p3, msgData)
         local cost = _ensure_cost_table(_config.buy_cost, count)
         local name, num = Player.checkItemNumByTable(play, cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
             return
         end
         Player.takeItemByTable(play, cost, ",msfc_buy", nil)
         T_data.token_count = T_data.token_count + count
         _append_log(T_data, "购买：获得" .. _token_name .. "*" .. count)
         _save_data(play, T_data)
-        Player.sendmsgEx(play, "购买成功，获得|" .. _token_name .. "#249|*" .. count)
+        Player.sendmsgEx(play, "购买成功，获得|【".._token_name.."】#249|*" .. count)
         _refresh_panel(play, npcid, p2)
     elseif p2 == 5 or p2 == 6 then -- 领取累抽奖励
         local milestoneIdx, milestone = _find_milestone(p3, json_data)
         if not milestone then Player.sendmsgEx(play, "参数错误#57") return end
         if T_data.draw_count < tonumber(milestone.draw or 0) then
-            Player.sendmsgEx(play, "累计抽奖次数不足，暂时无法领取#57")
+            Player.sendmsgEx(play, "累计抽奖次数不足#57|，暂时无法领取#57")
             return
         end
         if p2 == 6 and not _has_crown(play) then
-            Player.sendmsgEx(play, "你尚未达到冠名条件，无法领取冠名奖励#57")
+            Player.sendmsgEx(play, "你尚未达到#57|【冠名条件】#249|，无法领取冠名奖励#57")
             return
         end
         local claimedCount, labels = _claim_milestone_range(play, T_data, p2, milestoneIdx)
@@ -464,14 +464,14 @@ function npc.link(play, npcid, p2, p3, msgData)
         _append_log(T_data, "领取累抽奖励：" .. table.concat(labels, "、"))
         _save_data(play, T_data)
         _refresh_bonus(play, T_data)
-        Player.sendmsgEx(play, "领取成功：|" .. table.concat(labels, "、") .. "#249")
+        Player.sendmsgEx(play, "领取成功：|【"..table.concat(labels, "、").."】#249|")
         _refresh_panel(play, npcid, p2)
     elseif p2 == 8 then -- 领取日卡礼包
         local ok, msg = _claim_day_card(play, T_data)
         if not ok then Player.sendmsgEx(play, msg) return end
         _save_data(play, T_data)
         _refresh_bonus(play, T_data)
-        Player.sendmsgEx(play, "领取成功：|" .. tostring((_config.day_card or {}).title or "日卡") .. "#249、|元宝*100000#249、|" .. _token_name .. "次数*" .. tostring(tonumber(((_config.day_card or {}).token_count) or 0) or 0) .. "#249")
+        Player.sendmsgEx(play, "领取成功：|【"..tostring((_config.day_card or {}).title or "日卡") .. "、元宝*100000、" .. _token_name .. "次数*" .. tostring(tonumber(((_config.day_card or {}).token_count) or 0) or 0).."】#249|")
         _refresh_panel(play, npcid, p2)
     elseif p2 == 7 then -- 打开材料箱
         local boxType = tostring(json_data.box_type or json_data.box or "")
@@ -487,7 +487,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         local ok, msg = _open_box(play, T_data, boxType, choiceIdx)
         if not ok then Player.sendmsgEx(play, msg) return end
         _save_data(play, T_data)
-        Player.sendmsgEx(play, "开启成功，获得|" .. tostring(msg) .. "#249")
+        Player.sendmsgEx(play, "开启成功，获得|【"..tostring(msg).."】#249|")
         _refresh_panel(play, npcid, p2)
     end
 end

@@ -42,7 +42,7 @@ function npc.link(play,npcid,ew,aid)
         local max_num = _config.max_num or 1
         local cnt = jq_data[key] or 0
         if cnt >= max_num then
-            Player.sendmsgEx(play, "你已经完成【"..(_config.name or "该任务").."】#57")
+            Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
             return
         end
 
@@ -55,7 +55,7 @@ function npc.link(play,npcid,ew,aid)
         cnt = cnt + add
         jq_data[key] = cnt
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, string.format("本次进度+%d，当前：%d/%d#57", add, cnt, max_num))
+        Player.sendmsgEx(play, string.format("本次进度+|【%d】#249|，当前：|【%d/%d】#249|", add, cnt, max_num))
 
         if cnt >= max_num then
             if (jq_data[key] or 0) >= max_num then
@@ -63,7 +63,7 @@ function npc.link(play,npcid,ew,aid)
                 jq_data[key] = cnt
                 Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
             end
-            Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成#57")
+            Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
             if _config.ch then
                 Player.title_give(play, _config.ch)
             end
@@ -73,7 +73,7 @@ function npc.link(play,npcid,ew,aid)
             end
             sendluamsg(play,100,npcid,1,cnt,"")
         else
-            Player.sendmsgEx(play, "提交成功#57")
+            Player.sendmsgEx(play, "提交成功")
             sendluamsg(play,100,npcid,1,cnt,"")
         end
     end

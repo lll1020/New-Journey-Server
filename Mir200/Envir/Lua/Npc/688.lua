@@ -92,21 +92,21 @@ function npc.link(play,npcid,ew,aid)
         jq_data[_cfg_key] = 1
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         shaguai.jia(play, 688)
-        Player.sendmsgEx(play, "领取【"..(_config.name or "任务").."】")
+        Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#249|")
         sendluamsg(play,101,1005,0,0,"rwjs")
         sendluamsg(play,100,npcid,1,0,"")
         return
     end
 
     if state >= 2 then
-        Player.sendmsgEx(play, "【"..(_config.name or "任务").."】已完成，可直接传送#57")
+        Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|已完成，可直接传送#57")
         sendluamsg(play,100,npcid,1,3,"")
         return
     end
 
     local req_map = _task_cfg.map or "时空裂隙"
     if getbaseinfo(play,3) ~= req_map and getbaseinfo(play,3) ~= "xtc" then
-        Player.sendmsgEx(play, "请前往【"..req_map.."】完成后再提交#57")
+        Player.sendmsgEx(play, "请前往#57|【"..req_map.."】#249|完成后再提交#57")
         return
     end
 
@@ -126,7 +126,7 @@ function npc.link(play,npcid,ew,aid)
         jq_data[_cfg_key] = 2
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         shaguai.jian(play, 688)
-        Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成#57")
+        Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
         sendluamsg(play,101,1005,0,0,"rwwc")
         sendluamsg(play,100,npcid,1,#list,"")
         return
@@ -137,7 +137,7 @@ function npc.link(play,npcid,ew,aid)
     local kill_cur = tonumber(sg_data[_cfg_key] or 0) or 0
     local need_total = need_kill * (unlocked_count + 1)
     if need_total > 0 and kill_cur < need_total then
-        Player.sendmsgEx(play, string.format("击杀不足：%d/%d（累计）#57", kill_cur, need_total))
+        Player.sendmsgEx(play, string.format("击杀不足：#57|【%d/%d】#249|（累计）#57", kill_cur, need_total))
         return
     end
 
@@ -156,11 +156,11 @@ function npc.link(play,npcid,ew,aid)
         Guard.clearTaskTemp(jq_data, _cfg_key)
         jq_data[_cfg_key] = 2
         shaguai.jian(play, 688)
-        Player.sendmsgEx(play, "随机解锁【"..node.name.."】成功，三图已全部解锁#57")
-        Player.sendmsgEx(play, "【"..(_config.name or "任务").."】完成#57")
+        Player.sendmsgEx(play, "随机解锁#57|【"..node.name.."】#249|成功，三图已全部解锁#57")
+        Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
         sendluamsg(play,101,1005,0,0,"rwwc")
     else
-        Player.sendmsgEx(play, "随机解锁【"..node.name.."】成功（"..new_unlocked_count.."/"..#list.."）#57")
+        Player.sendmsgEx(play, "随机解锁#57|【"..node.name.."】#249|成功（#57"..new_unlocked_count.."/"..#list.."）#57")
     end
 
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)

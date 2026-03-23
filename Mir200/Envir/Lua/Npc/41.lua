@@ -32,17 +32,17 @@ function npc.link(play,npcid,ew,aid,data)
             return
         end
         if equipname ~= _config.now then
-            Player.sendmsgEx(play, "请先装备".._config.now.."#249|进行升级#57")
+            Player.sendmsgEx(play, "请先装备#57|【".._config.now.."】#249|进行升级#57")
             return
         end
         local name, num = Player.checkItemNumByTable(play, _config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
             return
         end
         Player.takeItemByTable(play, _config.cost, ",升级斗笠",nil)
         changeitemidx(play,getiteminfo(play,linkbodyitem(play,_config.where),1),getstditeminfo(_config.give, ConstCfg.stditeminfo.idx))
-        Player.sendmsgEx(play,  "恭喜你，斗笠升级成功，当前斗笠为".._config.give.."#249|")
+        Player.sendmsgEx(play,  "恭喜你，斗笠升级成功，当前斗笠为|【".._config.give.."】#249|")
         sendluamsg(play,100,npcid,1,0,"")
         sendluamsg(play,101,1005,0,0,"qhcg")
     end

@@ -26,13 +26,13 @@ function npc.link(play,npcid,ew,aid)
     end
 
     if getmyguild(play) == "0" then
-        Player.sendmsgEx(play, string.format("你没有加入行会#249"))
+        Player.sendmsgEx(play, string.format("你没有加入行会#57"))
         return
     end
 
     if ew == 1 then  --传送进地图
         if not castleinfo(5) then
-            Player.sendmsgEx(play, string.format("当前不是沙巴克攻城时间，无法进入沙巴克地图#249"))
+            Player.sendmsgEx(play, string.format("当前不是沙巴克攻城时间，无法进入沙巴克地图#57"))
             return
         end
 
@@ -45,7 +45,7 @@ function npc.link(play,npcid,ew,aid)
         end
 
         if isInMap then
-            Player.sendmsgEx(play, string.format("你已经在沙巴克地图中，无需重复传送#249"))
+            Player.sendmsgEx(play, string.format("你已经在沙巴克地图中，无需重复传送#57"))
             return
         end
 

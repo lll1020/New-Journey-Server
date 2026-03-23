@@ -38,18 +38,18 @@ function npc.link(play, npcid, p2, p3, msgData)
         jsonData.idx = idx
         --要求有前置称号
         if not checktitle(play, _config.del_title) then 
-            Player.sendmsgEx(play,  "你还未获得称号：|".._config.del_title.."#249|，无法进行高级淬体#57")
+            Player.sendmsgEx(play,  "你还未获得称号：#57|【".._config.del_title.."】#249|，无法进行高级淬体#57")
             return
         end
         local dj_data = Player.getJsonTableByVar(play, VarCfg["T_灵根修炼"])
         dj_data[""..jsonData.idx] = dj_data[""..jsonData.idx] or 0
         if dj_data[""..jsonData.idx] >= _config.max_level then
-            Player.sendmsgEx(play,  "等级已经达到了"..dj_data[""..jsonData.idx].."级，无需再提升#57")
+            Player.sendmsgEx(play,  "等级已达到#57|【"..dj_data[""..jsonData.idx].."级】#249|，无需再提升#57")
             return
         end
         local name, num = Player.checkItemNumByTable(play, _config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
             return
         end
         Player.takeItemByTable(play, _config.cost, ",高级淬体",nil)
@@ -72,12 +72,12 @@ function npc.link(play, npcid, p2, p3, msgData)
             local data = {}
             data["dj_data"] = dj_data
             sendluamsg(play,100,npcid,1,0,tbl2json(data))
-            Player.sendmsgEx(play,  string.format("修炼成功，%s提升到了%d级", _config.config[jsonData.idx].name, dj_data[""..jsonData.idx]))
+            Player.sendmsgEx(play,  string.format("修炼成功，|【%s】#249|提升到了|【%d级】#249|", _config.config[jsonData.idx].name, dj_data[""..jsonData.idx]))
             if isall then
                 AllMaxLevel(play)
             end
         else
-            Player.sendmsgEx(play,  "修炼失败，灵根没有提升#57")
+            Player.sendmsgEx(play,  "修炼失败，|【灵根】#249|没有提升#57")
             return
         end
     elseif p2 == 2 then
@@ -88,16 +88,16 @@ end
 
 function AllMaxLevel(play)
     if not checktitle(play, _config.del_title) then 
-        Player.sendmsgEx(play,  "你还未获得称号：|".._config.del_title.."#249|，无法进行高级淬体#57")
+        Player.sendmsgEx(play,  "你还未获得称号：#57|【".._config.del_title.."】#249|，无法进行高级淬体#57")
         return
     end
     if checktitle(play, _config.title) then
-        Player.sendmsgEx(play, "你已经拥有该称号，无需重复领取#57")
+        Player.sendmsgEx(play, "你已拥有#57|【该称号】#249|，无需重复领取#57")
         return
     end
     local name, num = Player.checkItemNumByTable(play, _config.max_cost)
     if name then
-        Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+        Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
         return
     end
     Player.takeItemByTable(play, _config.max_cost, ",灵根修炼",nil)
@@ -117,7 +117,7 @@ function AllMaxLevel(play)
     local data = {}
     data["dj_data"] = dj_data
     sendluamsg(play,100,54,1,0,tbl2json(data))
-    Player.sendmsgEx(play, "恭喜你获得称号：|".._config.title.."#249|，称号属性永久生效")
+    Player.sendmsgEx(play, "恭喜你获得称号：|【".._config.title.."】#249|，称号属性永久生效")
 
 end
 

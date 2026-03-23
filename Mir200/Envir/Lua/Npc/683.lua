@@ -53,7 +53,7 @@ function npc.link(play,npcid,ew,aid)
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     local need_task = cfg.need_task or "npc_682"
     if (tonumber(jq_data[need_task] or 0) or 0) < 2 then
-        Player.sendmsgEx(play, "请先完成【灵兽奥秘】后再进入#57")
+        Player.sendmsgEx(play, "请先完成#57|【灵兽奥秘】#249|后再进入#57")
         return
     end
 
@@ -63,7 +63,7 @@ function npc.link(play,npcid,ew,aid)
         local cur_ls = tonumber(ls_data and ls_data.dqzh or 0) or 0
         if cur_ls ~= need_ls then
             local need_name = cfg.need_lingshou_name or _lingshou_name(need_ls)
-            Player.sendmsgEx(play, "请先召唤【"..need_name.."】后再进入#57")
+            Player.sendmsgEx(play, "请先召唤#57|【"..need_name.."】#249|后再进入#57")
             return
         end
     end

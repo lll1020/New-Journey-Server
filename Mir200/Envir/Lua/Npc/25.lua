@@ -31,7 +31,7 @@ function npc.link(play,npcid,ew,aid)
     if ew == 1 then
         local level = getplaydef(play, VarCfg["U_幸运强化"])
         if level >= _config.max_level then
-            Player.sendmsgEx(play,  "你的幸运强化已经达到了"..level.."级，无需再提升")
+            Player.sendmsgEx(play,  "你的幸运强化已达到#57|【"..level.."级】#249|，无需再提升#57")
             return
         end
         level = level + 1
@@ -46,7 +46,7 @@ function npc.link(play,npcid,ew,aid)
         end
         local name, num = Player.checkItemNumByTable(play, config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
             return
         end
         Player.takeItemByTable(play, config.cost, ",幸运强化",nil)
@@ -57,7 +57,7 @@ function npc.link(play,npcid,ew,aid)
         end
 
         setplaydef(play, VarCfg["U_幸运强化"], level)
-        Player.sendmsgEx(play,  "恭喜你，幸运强化成功，当前等级为"..level.."级")
+        Player.sendmsgEx(play,  "恭喜你，幸运强化成功，当前等级为|【"..level.."级】#249|")
         sendluamsg(play,100,npcid,1,0,"")
         delattlist(play, "幸运强化")
         Login_xxqh(play)

@@ -39,7 +39,7 @@ function npc.link(play,npcid,ew,aid)
         local U_num = getplaydef(play, VarCfg["U_占卜次数"])
 
         if checktitle(play, _config.details[_config.max_level]) then
-            Player.sendmsgEx(play, "你已经拥有最高等级的称号,无法继续占卜!#249")
+            Player.sendmsgEx(play, "你已拥有最高等级#57|【称号】#249|，无法继续占卜#57")
             return
         end
 
@@ -58,12 +58,12 @@ function npc.link(play,npcid,ew,aid)
         end
         local cfg = _config.details[randomNum]
         if not cfg then
-            Player.sendmsgEx(play, "参数错误!#249")
+            Player.sendmsgEx(play, "参数错误!#57")
             return
         end
         local name, num = Player.checkItemNumByTable(play, _config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
             return
         end
         Player.takeItemByTable(play, _config.cost, ",占卜",nil)
@@ -71,7 +71,7 @@ function npc.link(play,npcid,ew,aid)
         local titileName = cfg
         Player.title_give(play, titileName)
         setplaydef(play, VarCfg["U_占卜次数"], U_num + 1)
-        Player.sendmsgEx(play, string.format("你获得了|%s#249", titileName))
+        Player.sendmsgEx(play, string.format("你获得了|【%s】#249", titileName))
         sendluamsg(play,100,npcid,1,0,"")
     end
 end

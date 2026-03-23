@@ -31,7 +31,7 @@ function npc.link(play, npcid, p2, p3, msgData)
     if p2 == 1 then
         local dh_num = getplaydef(play, VarCfg["J_今日材料兑换"])
         if dh_num >= _config.xg_day then
-            Player.sendmsgEx(play, "提示:#251|你今天的兑换次数已经用完了...")
+            Player.sendmsgEx(play, "提示：你今天的|【兑换次数】#249|已经用完#57")
             return
         end
         local idx = tonumber(p3)
@@ -42,14 +42,14 @@ function npc.link(play, npcid, p2, p3, msgData)
         local config = _config.sd[idx]
         local name, num = Player.checkItemNumByTable(play, config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
             return
         end
         Player.takeItemByTable(play, config.cost, ",材料兑换",nil)
         dh_num = dh_num + 1
         setplaydef(play, VarCfg["J_今日材料兑换"], dh_num)
         Player.rwjl(play,{{config.give,1}},"材料兑换",nil,1)
-        Player.sendmsgEx(play, "兑换成功")
+        Player.sendmsgEx(play, "兑换成功，获得|【兑换奖励】#249|")
 
         local data = {}
         data["dh_num"] = getplaydef(play, VarCfg["J_今日材料兑换"])

@@ -48,7 +48,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         end
         local name, num = Player.checkItemNumByTable(play, _config.details[json_data.idx].cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的|%s#249|不足#249", name))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足#57", name))
             return
         end
         Player.takeItemByTable(play, _config.details[json_data.idx].cost, ",天命试炼",nil)
