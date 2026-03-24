@@ -482,8 +482,10 @@ end
 local function _yybg45_save_rec(play, rec)
     setplaydef(play, VarCfg["T_物品使用记录"], tbl2json(rec or {}))
 end
+local _yybg45_clear_temp
 local function _yybg45_apply_full(play, rec)
     if tonumber((rec or {}).yybg45_full) >= 1 then
+        _yybg45_clear_temp(play)
         if not hasbuff(play, 20123) then
             addbuff(play, 20123)
         end
@@ -495,7 +497,7 @@ local function _yybg45_login(play)
     _yybg45_apply_full(play, _yybg45_get_rec(play))
 end
 GameEvent.add(EventCfg.onLogin, _yybg45_login, "Login_yybg45")
-local function _yybg45_clear_temp(play)
+_yybg45_clear_temp = function(play)
     for _, buffId in ipairs({20116, 20117, 20118, 20119, 20120, 20121, 20122}) do
         if hasbuff(play, buffId) then
             delbuff(play, buffId)
@@ -527,7 +529,6 @@ local function _yybg45_open_confirm(play, rec)
 end
 local function _yybg45_do_use(play, rec)
     local reward = _yybg45_roll(rec.yybg45_count)
-    _yybg45_clear_temp(play)
     addbuff(play, reward.id)
     rec.yybg45_count = rec.yybg45_count + 1
     local msg = "本次获得【" .. tostring(reward.name) .. "】，持续8小时；当前阴阳点数：【" .. tostring(rec.yybg45_count) .. "/66】"
@@ -741,6 +742,9 @@ function stdmodefunc45(play, item) --"背包道具（不可回收不可分解不可丢弃不可爆出
     end
     _yybg45_open_confirm(play, rec)
     return false
+end
+function stdmodefunc46(play, item) --等级卷轴  等级 + 1
+    callscriptex(play, "CHANGELEVEL", "+", 1)
 end
 -- 倩女幽魂召唤道具（预留）：仅副本中可用
 -- 后续将对应道具 StdMode 指向 49 即可生效
