@@ -469,7 +469,107 @@ local function Login_dan40(play)
     _apply_dan40_attr(play, rec)
 end
 GameEvent.add(EventCfg.onLogin, Login_dan40, "Login_dan40")
-
+local function _yybg45_get_rec(play)
+    local rec = json2tbl(getplaydef(play, VarCfg["T_物品使用记录"]))
+    if type(rec) ~= "table" then
+        rec = {}
+    end
+    rec.yybg45_count = tonumber(rec.yybg45_count) or 0
+    rec.yybg45_free_date = tostring(rec.yybg45_free_date or "")
+    rec.yybg45_full = tonumber(rec.yybg45_full) or 0
+    return rec
+end
+local function _yybg45_save_rec(play, rec)
+    setplaydef(play, VarCfg["T_物品使用记录"], tbl2json(rec or {}))
+end
+local function _yybg45_apply_full(play, rec)
+    if tonumber((rec or {}).yybg45_full) >= 1 then
+        if not hasbuff(play, 20123) then
+            addbuff(play, 20123)
+        end
+    elseif hasbuff(play, 20123) then
+        delbuff(play, 20123)
+    end
+end
+local function _yybg45_login(play)
+    _yybg45_apply_full(play, _yybg45_get_rec(play))
+end
+GameEvent.add(EventCfg.onLogin, _yybg45_login, "Login_yybg45")
+local function _yybg45_clear_temp(play)
+    for _, buffId in ipairs({20116, 20117, 20118, 20119, 20120, 20121, 20122}) do
+        if hasbuff(play, buffId) then
+            delbuff(play, buffId)
+        end
+    end
+end
+local function _yybg45_roll(totalCount)
+    local pool = {
+        {id = 20116, name = "幸运"},
+        {id = 20118, name = "急速"},
+        {id = 20121, name = "杀伐"},
+        {id = 20117, name = "爆破"},
+        {id = 20119, name = "体魄"},
+        {id = 20122, name = "嗜血"},
+    }
+    if tonumber(totalCount) >= 30 then
+        pool[#pool + 1] = {id = 20120, name = "猎杀"}
+    end
+    return pool[math.random(1, #pool)]
+end
+local function _yybg45_open_confirm(play, rec)
+    setplaydef(play, "S$yybg45_confirm", "1")
+    local today = os.date("%Y%m%d")
+    local msg = "今日首次使用免费，确认后将随机获得1个BUFF"
+    if tostring((rec or {}).yybg45_free_date or "") == today then
+        msg = "本次使用将消耗200灵石，确认后才会扣除并随机获得1个BUFF"
+    end
+    messagebox(play, msg, "@yybg45confirm,1", "@exit")
+end
+local function _yybg45_do_use(play, rec)
+    local reward = _yybg45_roll(rec.yybg45_count)
+    _yybg45_clear_temp(play)
+    addbuff(play, reward.id)
+    rec.yybg45_count = rec.yybg45_count + 1
+    local msg = "本次获得【" .. tostring(reward.name) .. "】，持续8小时；当前阴阳点数：【" .. tostring(rec.yybg45_count) .. "/66】"
+    if rec.yybg45_count >= 66 then
+        rec.yybg45_full = 1
+        _yybg45_apply_full(play, rec)
+        msg = msg .. "；已激活【圆满】"
+    end
+    _yybg45_save_rec(play, rec)
+    messagebox(play, msg)
+    return false
+end
+function yybg45confirm(play, code)
+    if tostring(code) ~= "1" then
+        return
+    end
+    if getplaydef(play, "S$yybg45_confirm") ~= "1" then
+        return
+    end
+    setplaydef(play, "S$yybg45_confirm", "")
+    local rec = _yybg45_get_rec(play)
+    if rec.yybg45_full >= 1 then
+        _yybg45_apply_full(play, rec)
+        messagebox(play, "阴阳八卦境已圆满，无需重复使用")
+        return
+    end
+    local today = os.date("%Y%m%d")
+    if rec.yybg45_free_date ~= today then
+        rec.yybg45_free_date = today
+        _yybg45_do_use(play, rec)
+        return
+    end
+    local cost = {{"灵石", 200}}
+    local name, num = Player.checkItemNumByTable(play, cost)
+    if name then
+        messagebox(play, string.format("%s不足：%d", name, num))
+        return false
+    end
+    Player.takeItemByTable(play, cost, ",阴阳八卦境", nil)
+    _yybg45_do_use(play, rec)
+    return false
+end
 function stdmodefunc40(play, item) --特殊丹药
     local idx = getstditeminfo(getiteminfo(play, item, 2), 8)
     local rec = json2tbl(getplaydef(play, VarCfg["T_物品使用记录"]))
@@ -617,7 +717,31 @@ function stdmodefunc44(play, item) --特级材料自选箱  --5个基础材料
     return false
 
 end
-    
+function stdmodefunc45(play, item) --"背包道具（不可回收不可分解不可丢弃不可爆出）
+-- 每天第一次免费使用，双击使用获得限时BUFF8小时（合理的话每天用2-3次）
+-- 免费之后在次使用需消耗200灵石（用的时候系统弹框确认）
+-- 1.幸运  打怪爆率+100% 4.爆破  暴击伤害+10% 7.轮回  人物等级+2级
+-- 2.急速  攻击速度+10%   5.体魄  最大生命+10% 8.猎杀  打怪切割+66666
+-- 3.杀伐  攻击伤害+10%   6.嗜血  最大攻击+10% 9.重生  复活次数+1
+-- 每次使用后，可积攒1阴阳点数，阴阳点数达到66次后，以上属性全部永久激活"
+-- 7和9永远都抽不到  只有在抽到66次阴阳点数后才会直接加上属性
+-- 20116	阴阳八卦境：幸运
+-- 20117	阴阳八卦境：爆破
+-- 20118	阴阳八卦境：急速
+-- 20119	阴阳八卦境：体魄
+-- 20120	阴阳八卦境：猎杀
+-- 20121	阴阳八卦境：杀伐
+-- 20122	阴阳八卦境：嗜血
+-- 20123	阴阳八卦境：圆满
+    local rec = _yybg45_get_rec(play)
+    if rec.yybg45_full >= 1 then
+        _yybg45_apply_full(play, rec)
+        messagebox(play, "阴阳八卦境已圆满，无需重复使用")
+        return false
+    end
+    _yybg45_open_confirm(play, rec)
+    return false
+end
 -- 倩女幽魂召唤道具（预留）：仅副本中可用
 -- 后续将对应道具 StdMode 指向 49 即可生效
 function stdmodefunc49(play, item)
@@ -644,3 +768,14 @@ function stdmodefunc50(play, item)
     end
     return _G.npc_709_use_item(play, item)
 end
+
+
+
+
+
+
+
+
+
+
+

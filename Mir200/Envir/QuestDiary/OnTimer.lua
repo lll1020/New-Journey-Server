@@ -1241,24 +1241,34 @@ function ontimer6(play)
         end
     end
 
-    -- 免费赞助（p3=16）可领取判定：顺序礼包中存在“前置已领 + 当前未领 + 杀怪达标”
+    -- 至尊赞助（p3=16）红点：仅保留可领取档位提示
     local can_zz = false
     local zz_data = Player.getJsonTableByVar(play, VarCfg["T_免费赞助"]) or {}
     local zz_cfg = (teshudata["anniu_516"] and teshudata["anniu_516"].details) or {}
-    local zz_kill = tonumber(getplaydef(play, VarCfg.U_fldt[2]) or 0) or 0
+    local zz_charge = math.max(tonumber(querymoney(play, 23) or 0) or 0, tonumber(getplaydef(play, VarCfg["U_真实充值"]) or 0) or 0)
     for i = 1, #zz_cfg do
         local cur_key = "zzlb_" .. i
         local pre_key = "zzlb_" .. (i - 1)
         local cur_claimed = tonumber(zz_data[cur_key] or 0) == 1
         local pre_ok = (i == 1) or (tonumber(zz_data[pre_key] or 0) == 1)
-        local need_kill = tonumber(zz_cfg[i].sgsl or 0) or 0
-        if (not cur_claimed) and pre_ok and zz_kill >= need_kill then
+        local need_cz502 = tonumber(zz_cfg[i].need_cz502 or 0) or 0
+        local can_charge = false
+        if need_cz502 > 0 then
+            local czlb = json2tbl(getplaydef(play, VarCfg.T_czlb))
+            if type(czlb) ~= "table" then
+                czlb = {}
+            end
+            can_charge = tonumber(czlb["cz502_" .. need_cz502] or 0) == 1
+        else
+            local need_charge = tonumber(zz_cfg[i].need_charge or zz_cfg[i].sgsl or 0) or 0
+            local need_money23 = tonumber(zz_cfg[i].need_money23 or 0) or 0
+            can_charge = (need_money23 > 0 and (tonumber(querymoney(play, 23) or 0) or 0) >= need_money23) or (need_money23 <= 0 and zz_charge >= need_charge)
+        end
+        if (not cur_claimed) and pre_ok and can_charge then
             can_zz = true
             break
         end
     end
-
-    -- 聚宝盆（p3=17）可领取判定：当前等级次数未满 + 积分达标
     local can_jbp = false
     local jbp_data = Player.getJsonTableByVar(play, VarCfg["T_聚宝盆"]) or {}
     local jbp_level = tonumber(jbp_data.level or 1) or 1
@@ -1382,16 +1392,3 @@ function hd_tcppk(xx,ditu)
 
     end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-

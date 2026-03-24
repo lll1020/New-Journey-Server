@@ -75,6 +75,22 @@ function resetday(play)
     T_qrbq["sgjl"] = 0
     Player.setJsonVarByTable(play, VarCfg.T_qrbq, T_qrbq)
 
+    local zz_cfg = (teshudata["anniu_516"] and teshudata["anniu_516"].details) or {}
+    local zz_data = Player.getJsonTableByVar(play, VarCfg["T_免费赞助"])
+    local today = os.date("%Y%m%d")
+    if type(zz_data) ~= "table" then
+        zz_data = {}
+    end
+    for i = #zz_cfg, 1, -1 do
+        local detail = zz_cfg[i]
+        local titleName = tostring((detail or {}).ch or "")
+        if titleName ~= "" and checktitle(play, titleName) and type(detail.salary) == "table" and #detail.salary > 0 then
+            sendmail(getbaseinfo(play, 2), 0, "至尊赞助工资", "跨天登录成功，今日【" .. titleName .. "】工资已通过邮件发放，请注意查收。", Player.jl_mail(detail.salary))
+            zz_data.salary_date = today
+            Player.setJsonVarByTable(play, VarCfg["T_免费赞助"], zz_data)
+            break
+        end
+    end
 end
 --------------------传送戒指传送前触发触发-------------------
 function beginteleport(play)
@@ -881,6 +897,11 @@ function _cz502_apply_reward(play, amount, idx, lb_json)
         if reward.give then
             Player.rwjl(play, reward.give, "充值档位奖励", 1)
         end
+        if tonumber(reward.token_count) and tonumber(reward.token_count) > 0 then
+            local T_data = Player.getJsonTableByVar(play, VarCfg["T_马上发财"])
+            T_data.token_count = (tonumber(T_data.token_count) or 0) + tonumber(reward.token_count)
+            Player.setJsonVarByTable(play, VarCfg["T_马上发财"], T_data)
+        end
         if reward.ch then
             if not checktitle(play, reward.ch) then
                 Player.title_give(play, reward.ch)
@@ -1447,3 +1468,6 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
         end
 	end
 end
+
+
+

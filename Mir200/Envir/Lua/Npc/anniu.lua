@@ -1917,47 +1917,116 @@ end
 npc[515] = function(play, p2, p3, msgData)
     FairyFate.handle(play, p2, p3, msgData)
 end
---免费赞助
-npc[516] = function(play, p2, p3, msgData) --免费赞助
-    local function DeleteAllTitle(actor)
-        for index, value in ipairs(teshudata["anniu_516"].details) do
-            deprivetitle(actor, value.ch)
+local function _zz516_get_cfg()
+    return (teshudata["anniu_516"] and teshudata["anniu_516"].details) or {}
+end
+local function _zz516_get_data(play)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_免费赞助"])
+    if type(data) ~= "table" then
+        data = {}
+    end
+    return data
+end
+local function _zz516_get_charge(play)
+    local charge23 = tonumber(querymoney(play, 23) or 0) or 0
+    local realCharge = tonumber(getplaydef(play, VarCfg["U_真实充值"]) or 0) or 0
+    return math.max(charge23, realCharge), charge23
+end
+local function _zz516_check_cfg(play, config)
+    local needCz502 = tonumber((config or {}).need_cz502 or 0) or 0
+    if needCz502 > 0 then
+        local czlb = json2tbl(getplaydef(play, VarCfg.T_czlb))
+        if type(czlb) ~= "table" then
+            czlb = {}
+        end
+        return tonumber(czlb["cz502_" .. needCz502] or 0) == 1
+    end
+    local totalCharge, charge23 = _zz516_get_charge(play)
+    local needCharge = tonumber((config or {}).need_charge or (config or {}).sgsl or 0) or 0
+    local needMoney23 = tonumber((config or {}).need_money23 or 0) or 0
+    return (needMoney23 > 0 and charge23 >= needMoney23) or (needMoney23 <= 0 and totalCharge >= needCharge)
+end
+local function _zz516_get_claim_tier(T_data)
+    local cfg = _zz516_get_cfg()
+    for i = #cfg, 1, -1 do
+        if tonumber((T_data or {})["zzlb_" .. i] or 0) == 1 then
+            return i, cfg[i]
         end
     end
-
-    if p2 == 0 then
-        local data = {}
-        data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_免费赞助"])
-        data["sgsl"] = getplaydef(play, VarCfg.U_fldt[2])
-        sendluamsg(play, 101, 516, 0, 0, tbl2json(data))
-    elseif p2 == 1 then
-        local T_data = Player.getJsonTableByVar(play, VarCfg["T_免费赞助"])
-        local config = Guard.getConfig("anniu_516").details[p3]
-        if not T_data["zzlb_" .. p3] then
-            if p3 > 1 then
-                if not T_data["zzlb_" .. (p3 - 1)] then
-                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff7700\'>[赞助礼包]</font><font color=\'#ff0500\'>请先领取前置礼包...</font>","Type":9}')
-                    return
-                end
-            end
-            if getplaydef(play, VarCfg.U_fldt[2]) >= config.sgsl then
-                T_data["zzlb_" .. p3] = 1
-                Player.setJsonVarByTable(play, VarCfg["T_免费赞助"], T_data)
-                if rwcf[516][1] == getplaydef(play,VarCfg.U_zxrw[1]) then 
-                    Player.zxrw_wancheng(play, rwcf[516][1], "任务") --完成任务
-                    sendluamsg(play, 101, 9999, 0, 0, "npc_anniu_516")
-                end
-                DeleteAllTitle(play)
-                Player.title_give(play, config.ch)
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[赞助礼包]</font><font color=\'#28ef01\'>领取成功...</font>","Type":9}' )
-                sendluamsg(play, 101, 516, 1, p3, "")
-            else
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[赞助礼包]</font><font color=\'#ff0500\'>当前杀怪数量不足,无法领取...</font>","Type":9}' )
-                return
-            end
-        else
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[赞助礼包]</font><font color=\'#ff0500\'>已经领取过礼包了...</font>","Type":9}')
+    return 0, nil
+end
+local function _zz516_clear_titles(play)
+    local cfg = _zz516_get_cfg()
+    for i = 1, #cfg do
+        local titleName = tostring((cfg[i] or {}).ch or "")
+        if titleName ~= "" then
+            deprivetitle(play, titleName)
         end
+    end
+end
+local function _zz516_apply_title(play, T_data)
+    _zz516_clear_titles(play)
+    local _, cfg = _zz516_get_claim_tier(T_data or _zz516_get_data(play))
+    if cfg and tostring(cfg.ch or "") ~= "" then
+        Player.title_give(play, cfg.ch)
+    end
+end
+local function _zz516_panel_data(play)
+    local data = {}
+    local T_data = _zz516_get_data(play)
+    local charge, charge23 = _zz516_get_charge(play)
+    data["T_data"] = T_data
+    data["sgsl"] = charge
+    data["charge"] = charge
+    data["money23"] = charge23
+    data["tier"] = _zz516_get_claim_tier(T_data)
+    return data
+end
+local function _zz516_send_panel(play, p2, p3)
+    sendluamsg(play, 101, 516, p2 or 0, p3 or 0, tbl2json(_zz516_panel_data(play)))
+end
+local function _zz516_login(play)
+    _zz516_apply_title(play, _zz516_get_data(play))
+end
+GameEvent.add(EventCfg.onLogin, _zz516_login, "至尊赞助")
+--至尊赞助
+npc[516] = function(play, p2, p3, msgData) --至尊赞助
+    if p2 == 0 then
+        _zz516_send_panel(play, 0, 0)
+    elseif p2 == 1 then
+        local idx = tonumber(p3 or 0) or 0
+        local cfg = _zz516_get_cfg()
+        local config = cfg[idx]
+        local T_data = _zz516_get_data(play)
+        local key = "zzlb_" .. idx
+        if not config then
+            return
+        end
+        if tonumber(T_data[key] or 0) == 1 then
+            sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[至尊赞助]</font><font color=\'#ff0500\'>已经领取过该档奖励...</font>","Type":9}')
+            return
+        end
+        if idx > 1 and tonumber(T_data["zzlb_" .. (idx - 1)] or 0) ~= 1 then
+            Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff7700\'>[至尊赞助]</font><font color=\'#ff0500\'>请先领取前一档奖励...</font>","Type":9}')
+            return
+        end
+        local canClaim = _zz516_check_cfg(play, config)
+        if not canClaim then
+            sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[至尊赞助]</font><font color=\'#ff0500\'>当前条件不足,无法领取...</font>","Type":9}')
+            return
+        end
+        T_data[key] = 1
+        Player.setJsonVarByTable(play, VarCfg["T_免费赞助"], T_data)
+        if rwcf[516] and rwcf[516][1] == getplaydef(play, VarCfg.U_zxrw[1]) then
+            Player.zxrw_wancheng(play, rwcf[516][1], "任务")
+            sendluamsg(play, 101, 9999, 0, 0, "npc_anniu_516")
+        end
+        _zz516_apply_title(play, T_data)
+        if type(config.jl) == "table" and #config.jl > 0 then
+            Player.rwjl(play, config.jl, "至尊赞助奖励", 1)
+        end
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[至尊赞助]</font><font color=\'#28ef01\'>领取成功...</font>","Type":9}')
+        _zz516_send_panel(play, 1, idx)
     end
 end
 --聚宝盆
@@ -2295,5 +2364,3 @@ for npcId, handler in pairs(npc) do
 end
 
 return npc
-
-

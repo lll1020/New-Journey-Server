@@ -43,7 +43,7 @@ local function _ff9999_random_finish(play) -- 9999测试：随机完成一个未完成成就
     end
     if FairyFate and FairyFate.touch then FairyFate.touch(play, "title") end
     sendluamsg(play, 101, 515, 2, tonumber(detail.id) or 0, tbl2json({tp = "cjdc", id = detail.id, name = detail.name, tip = "达成成就[" .. tostring(detail.name or detail.id) .. "]"}))
-    Player.sendmsgEx(play, "已随机完成|【" .. tostring(detail.name or detail.id) .. "】#249|成就")
+    -- Player.sendmsgEx(play, "已随机完成|【" .. tostring(detail.name or detail.id) .. "】#249|成就")
 end
 function npc.main(play,npcid)
     local zhid = tonumber(getconst(play,"<$USERACCOUNT>"))
