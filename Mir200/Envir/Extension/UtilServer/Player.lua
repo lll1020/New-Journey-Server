@@ -678,9 +678,9 @@ function Player.updata_zdl(actor, desc) --战斗力更新
         setplaydef(actor, VarCfg["B_记录战斗力"], zdl)
     end
 end
-function Player.title_give(actor, title_name) --???
+function Player.title_give(actor, title_name) --给称号
     if not checktitle(actor, title_name) then
-        release_print("???",title_name,getbaseinfo(actor,1))
+        release_print("给称号",title_name,getbaseinfo(actor,1))
         confertitle(actor, title_name)
         GameEvent.push(EventCfg.onGetTaskTitle, actor, title_name)
         local raw_idx = getstditeminfo(title_name,8)

@@ -48,7 +48,7 @@ local function _set_tianshu_shaqi_customabil(play, itemobj, T_data)
     local ok, item_json = pcall(json2tbl, getitemcustomabil(play, itemobj))
     item_json = ok and type(item_json) == "table" and item_json or nil
     if not item_json or type(item_json.abil) ~= "table" then
-        item_json = json2tbl('{"abil":[{"i":0,"t":"杀气属性","c":251,"v":[]}],"name":""}')
+        item_json = json2tbl('{"abil":[{"i":0,"t":"[杀气属性]","c":251,"v":[]}],"name":""}')
     end
     item_json.name = tostring(item_json.name or "")
     local idx = nil
@@ -77,10 +77,10 @@ local function _set_tianshu_shaqi_customabil(play, itemobj, T_data)
     local attack_value = T_data.shaqi * (tonumber(_config.shaqi_attack_per) or 1)
     local hp_value = T_data.shaqi * (tonumber(_config.shaqi_hp_per) or 20)
     if attack_value > 0 then
-        table.insert(attr_list, {1, tonumber(_config.shaqi_attack_attr) or 4, attack_value, 0, 20, 1, 1})
+        table.insert(attr_list, {254, tonumber(_config.shaqi_attack_attr) or 4, attack_value, 0, 20, 1, 1})
     end
     if hp_value > 0 then
-        table.insert(attr_list, {1, tonumber(_config.shaqi_hp_attr) or 1, hp_value, 0, 21, 2, 2})
+        table.insert(attr_list, {254, tonumber(_config.shaqi_hp_attr) or 1, hp_value, 0, 21, 2, 2})
     end
     item_json.abil[idx] = {i = abil_i or (idx - 1), t = "[杀气属性]", c = 251, v = attr_list}
     setitemcustomabil(play, itemobj, tbl2json(item_json))
@@ -120,6 +120,11 @@ function tianshu_refresh_item(play, T_data, itemobj)
 end
 
 function npc.main(play,npcid)
+    local itemobj = linkbodyitem(play, _config.where)
+    if not itemobj or itemobj == "0" then
+        Player.sendmsgEx(play, "请先装备#57|【天书】#249|后再打开#57")
+        return
+    end
     local data = {}
     data["T_data"] = _tianshu_fix_data(Player.getJsonTableByVar(play, VarCfg["T_天书"]))
     sendluamsg(play,100,npcid,0,0,tbl2json(data))
@@ -141,6 +146,11 @@ function npc.link(play,npcid,ew,aid,data)
         return
     end
 
+    local itemobj = linkbodyitem(play, _config.where)
+    if not itemobj or itemobj == "0" then
+        Player.sendmsgEx(play, "请先装备#57|【天书】#249|后再操作#57")
+        return
+    end
     local T_data = _tianshu_fix_data(Player.getJsonTableByVar(play, VarCfg["T_天书"]))
     local json_data = json2tbl(data)
     if ew == 1 then -- 强化

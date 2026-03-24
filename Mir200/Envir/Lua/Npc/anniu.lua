@@ -1955,20 +1955,22 @@ local function _zz516_get_claim_tier(T_data)
     end
     return 0, nil
 end
-local function _zz516_clear_titles(play)
+local function _zz516_clear_titles(play, keep_title)
     local cfg = _zz516_get_cfg()
+    keep_title = tostring(keep_title or "")
     for i = 1, #cfg do
         local titleName = tostring((cfg[i] or {}).ch or "")
-        if titleName ~= "" then
+        if titleName ~= "" and titleName ~= keep_title and checktitle(play, titleName) then
             deprivetitle(play, titleName)
         end
     end
 end
 local function _zz516_apply_title(play, T_data)
-    _zz516_clear_titles(play)
     local _, cfg = _zz516_get_claim_tier(T_data or _zz516_get_data(play))
-    if cfg and tostring(cfg.ch or "") ~= "" then
-        Player.title_give(play, cfg.ch)
+    local keep_title = cfg and tostring(cfg.ch or "") or ""
+    _zz516_clear_titles(play, keep_title)
+    if keep_title ~= "" and not checktitle(play, keep_title) then
+        Player.title_give(play, keep_title)
     end
 end
 local function _zz516_panel_data(play)
