@@ -93,7 +93,12 @@ npc[2] = function(play, p2, p3, msgData) --±³°ü  Ãæ°å
             local hs = json2tbl(msgData)
             Player.huishou(play, hs)
         end
-        Player.zxrw_wancheng(play, 5, "")
+        
+        if 10 == getplaydef(play,VarCfg.U_zxrw[1]) then 
+            Player.zxrw_wancheng(play, 10, "")
+            sendluamsg(play, 101, 9999, 0, 0, "npc_huishou")
+            openhyperlink(play, 7, 2)
+        end
     elseif p2 == 6 then --Ïú»Ù
         local hs = json2tbl(msgData)
         Player.huishou(play, hs)

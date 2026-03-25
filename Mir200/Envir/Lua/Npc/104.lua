@@ -288,9 +288,14 @@ function npc.link(play, npcid, ew, aid, msgData)
     T_data.saved = choice
     T_data.preview = {}
     _save_data(play, T_data)
-    _finish_mainline(play)
+    
     Player.sendmsgEx(play, "附魔成功：|【" .. tostring(choice.name or "先天词条") .. "】#249| " .. tostring(choice.desc or "") .. "，已替换天书当前词条#57")
-    sendluamsg(play, 100, npcid, 2, 0, tbl2json(_build_panel_data(play)))
+    if 19 == getplaydef(play,VarCfg.U_zxrw[1]) then 
+        _finish_mainline(play)
+        sendluamsg(play, 101, 9999, 0, 0, "npc_"..npcid)
+    else
+        sendluamsg(play, 100, npcid, 2, 0, tbl2json(_build_panel_data(play)))
+    end
 end
 
 return npc

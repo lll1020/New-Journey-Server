@@ -133,6 +133,7 @@ local function _finish(play)
     end
     Player.sendmsgEx(play, "|【"..((_config and _config.name) or "天书试炼").."】#249|完成，恭喜获得|【天书】#249|#57")
     sendluamsg(play, 101, 1005, 0, 0, "rwwc")
+    sendluamsg(play, 101, 9999, 0, 0, "npc_"..103)
     _finish_mainline(play, 18)
 end
 local function _enter_fb(play)
@@ -221,8 +222,10 @@ function npc.link(play, npcid, ew, aid, data)
         Player.sendmsgEx(play, "成功提交|【"..(cfg.name or ("材料"..submit_idx)).."】#249|，获得属性：|【"..(cfg.attr_desc or "已生效").."】#249|")
         if T_data.unlock == 1 then
             Player.sendmsgEx(play, "四种材料已全部提交，已解锁|【天书试炼副本】#249|挑战权限#57")
+            _refresh_panel(play, npcid, 1, submit_idx)
+        else
+            sendluamsg(play, 101, 9999, 0, 0, "npc_"..103)
         end
-        _refresh_panel(play, npcid, 1, submit_idx)
         _finish_mainline(play, _submit_task_map[submit_idx])
         return
     end
@@ -292,7 +295,7 @@ function npc_103_timeout(play)
     if checkmirrormap(dtm) then
         delmirrormap(dtm)
     end
-    _refresh_panel(play, _npcid, 4, 0)
+    -- _refresh_panel(play, _npcid, 4, 0)
 end
 GameEvent.add(EventCfg.onLogin, _on_login, "天书试炼")
 GameEvent.add(EventCfg.onKFLogin, _on_login, "天书试炼")

@@ -69,3 +69,13 @@
 [2026-03-25 22:40:16:922] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 62120, CurPlayThreadId: 62120
 [2026-03-25 22:40:16:922] [玩家名字]Lua执行耗时过高:31ms msgid:105 11 11 0 
 
+[2026-03-25 22:52:38:462] LuaNPC:玩家名字 ID:999999999 执行 struckdamage player:玩家名字 耗时：47; NpcThreadId: 62120, CurPlayThreadId: 62120
+
+[2026-03-26 00:04:43:056] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：32; NpcThreadId: 87748, CurPlayThreadId: 87748
+[2026-03-26 00:04:43:056] [玩家名字]Lua执行耗时过高:32ms msgid:100 70 2 0 
+
+[2026-03-26 00:17:11:692] .\Envir\lua/LuaLib/fairy_fate.lua time：359
+
+[2026-03-26 00:40:00:142] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：62; NpcThreadId: 87748, CurPlayThreadId: 87748
+[2026-03-26 00:40:00:142] [玩家名字k]Lua执行耗时过高:62ms msgid:100 103 2 0 
+
