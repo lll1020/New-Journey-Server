@@ -170,6 +170,7 @@ function npc.link(play,npcid,ew,aid)
             Player.sendmsgEx(play, "转生成功，当前转生为|【"..stage.."阶】#249|")
             if rwcf[npcid] then
                 Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
+                sendluamsg(play, 101, 9999, 0, 0, "npc_"..npcid)
             end
         end
     end
