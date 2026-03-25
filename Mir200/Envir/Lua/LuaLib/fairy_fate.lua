@@ -189,7 +189,7 @@ local function _parse_reward(text)
                 n = string.match(part, "^对怪切割%+(.+)$") or string.match(part, "^打怪切割%+(.+)$")
                 if n then _add_attr(cfg.attrs, 244, _parse_big_num(n)) end
                 n = string.match(part, "^对怪固定吸血%+(%d+)$")
-                if n then _add_attr(cfg.attrs, 248, n) end
+                if n then _add_attr(cfg.attrs, 81, n) end
                 n = string.match(part, "^怪物格挡%+(%d+)$")
                 if n then _add_attr(cfg.attrs, 255, n) end
                 n = string.match(part, "^死亡爆装概率%-(%d+)%%$")
@@ -322,9 +322,9 @@ end
 -- 当前实现按 77~88 这组穿戴位扫描，只有格子里真的有物品名时才记为已拥有。
 -- 这是快照阶段的数据来源，成就本身不保存该值，只在重算时即时读取。
 local function _count_artifacts(play)
-    local n = 0
-    for where = 77, 88 do local itemobj = linkbodyitem(play, where) if itemobj and itemobj ~= "0" and getiteminfo(play, itemobj, 7) ~= "" then n = n + 1 end end
-    return n
+    -- 背包神器数量按 77~88 神器槽当前实际穿戴数量计算。
+    -- 这里只看槽位是否有物品，不再额外校验名字，避免空名/改名物品造成漏算。
+    return Player.countArtifactEquipSlots(play)
 end
 -- 取灵兽系统的“全体最低星级”。
 -- 成就要求是“灵兽全部 X 星”，所以不是看最高星，也不是看总星数，

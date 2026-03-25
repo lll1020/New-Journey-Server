@@ -1,6 +1,7 @@
 Login = {}
 function Login.main(play)
     local weizhi = linkbodyitem(play,17)
+    local isnewhuman = false
     if weizhi == "0" then
         setsndaitembox(play,1) --首饰盒
         setbagcount(play,126) --格子
@@ -51,9 +52,7 @@ function Login.main(play)
             setsysvar(VarCfg["G_新区验证"],1)
             setsysvar(VarCfg["G_开区天数"],1)
             setsysvar(VarCfg["A_全区首曝json"],"{}")  --全区首爆
-            if getbaseinfo(play, ConstCfg.gbase.isnewhuman) then
-                GameEvent.push(EventCfg.onNewHuman, play)
-            end
+            isnewhuman = true
         end
         Login_msg(play,0)
 
@@ -153,6 +152,10 @@ function Login.main(play)
     GameEvent.push(EventCfg.onLogin, play)
 
     GameEvent.push(EventCfg.onLoginEnd, play)
+
+    if getbaseinfo(play, ConstCfg.gbase.isnewhuman) and isnewhuman then
+        GameEvent.push(EventCfg.onNewHuman, play)
+    end
 
 end
 

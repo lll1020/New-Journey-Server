@@ -678,10 +678,19 @@ function Player.updata_zdl(actor, desc) --战斗力更新
         setplaydef(actor, VarCfg["B_记录战斗力"], zdl)
     end
 end
+local function _change_title_level(actor, title_name, op)
+    local cfg = constant.title_level_change or {}
+    local delta = tonumber(cfg[title_name] or 0) or 0
+    if delta > 0 then
+        callscriptex(actor, "CHANGELEVEL", op, delta)
+    end
+end
+
 function Player.title_give(actor, title_name) --给称号
     if not checktitle(actor, title_name) then
         release_print("给称号",title_name,getbaseinfo(actor,1))
         confertitle(actor, title_name)
+        _change_title_level(actor, title_name, "+")
         GameEvent.push(EventCfg.onGetTaskTitle, actor, title_name)
         local raw_idx = getstditeminfo(title_name,8)
         local idx = tonumber(raw_idx or 0) or 0
@@ -695,7 +704,9 @@ function Player.title_del(actor, title_name) --删称号
     if checktitle(actor, title_name) then
         release_print("删称号",title_name,getbaseinfo(actor,1))
         deprivetitle(actor, title_name)
-        local idx = getstditeminfo(title_name,8)
+        _change_title_level(actor, title_name, "-")
+        local raw_idx = getstditeminfo(title_name,8)
+        local idx = tonumber(raw_idx or 0) or 0
         if idx > 0 then
             Buff[idx](actor,2)
             Buff[idx](actor,6)
@@ -1204,17 +1215,30 @@ function Player.getEquipFieldByPos(actor, pos, type)
         return field
     end
 end
+--统计背包神器位当前已穿戴的数量
+function Player.countArtifactEquipSlots(actor)
+    local n = 0
+    for i = 77, 88 do
+        local itemobj = linkbodyitem(actor, i)
+        if itemobj and itemobj ~= "0" then
+            n = n + 1
+        end
+    end
+    return n
+end
+
 --查询背包神器位是否有对应装备
 function Player.hasEquipInArtifactSlot(actor, itemname)
-    for i = 77 , 88 do
-        local itemobj = linkbodyitem(actor,i)
-        local name = getiteminfo(actor,itemobj,7)
-        if name == itemname then
-            return i
+    for i = 77, 88 do
+        local itemobj = linkbodyitem(actor, i)
+        if itemobj and itemobj ~= "0" then
+            local name = getiteminfo(actor, itemobj, ConstCfg.iteminfo.name)
+            if name == itemname then
+                return i
+            end
         end
     end
     return nil
-
 end
 
 

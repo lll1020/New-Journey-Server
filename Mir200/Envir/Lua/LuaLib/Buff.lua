@@ -21,6 +21,74 @@ local function _huti_monster_type(obj)
     end
     return guaiwutype and guaiwutype[name] or nil
 end
+local function _toggle_buff_var(play, varName, buffId, enable)
+    local bl = getplaydef(play, varName)
+    local data = json2tbl(bl == "" and {} or bl)
+    if enable then
+        data[tostring(buffId)] = true
+    else
+        data[tostring(buffId)] = nil
+    end
+    setplaydef(play, varName, tbl2json(data))
+end
+
+local function _set_title_buff_flag(play, buffId, enable)
+    setplaydef(play, "N$buff" .. tostring(buffId), enable and 1 or 0)
+end
+
+local function _has_title_buff_flag(play, buffId)
+    return (tonumber(getplaydef(play, "N$buff" .. tostring(buffId)) or 0) or 0) == 1
+end
+
+local function _title_all_percent_attr(percent)
+    local ids = {280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 300}
+    local arr = {}
+    for _, id in ipairs(ids) do
+        arr[#arr + 1] = "3#" .. id .. "#" .. percent
+    end
+    return table.concat(arr, "|")
+end
+
+local function _title_sync_time_attr(play, buffId, attrListName, attrStr, mode)
+    if not _has_title_buff_flag(play, buffId) then
+        delattlist(play, attrListName)
+        return false
+    end
+    local hour = tonumber(os.date("%H")) or 0
+    local enable = false
+    if mode == "day" then
+        enable = hour >= 6 and hour < 18
+    elseif mode == "night" then
+        enable = not (hour >= 6 and hour < 18)
+    else
+        enable = true
+    end
+    if enable then
+        addattlist(play, attrListName, "=", attrStr, 1)
+    else
+        delattlist(play, attrListName)
+    end
+    return enable
+end
+
+local function _title_sync_dadi_attr(play)
+    local stack = tonumber(getplaydef(play, "N$buff328_stack") or 0) or 0
+    if not _has_title_buff_flag(play, 328) then
+        stack = 0
+    end
+    if stack < 0 then
+        stack = 0
+    elseif stack > 10 then
+        stack = 10
+    end
+    setplaydef(play, "N$buff328_stack", stack)
+    if stack > 0 then
+        addattlist(play, "title_dadi_stack", "=", _title_all_percent_attr(stack), 1)
+    else
+        delattlist(play, "title_dadi_stack")
+    end
+end
+
 local function _tianshu_buff_splash(play, Target)
     if not play or not Target or getbaseinfo(Target, ConstCfg.gbase.isplayer) then
         return
@@ -524,6 +592,283 @@ Buff = {
             setplaydef(play,VarCfg.S_buffgjq,tbl2json(data))
         end
     end,
+    -- 316~338：称号/活动类 BUFF
+    -- 说明：
+    -- 1. zt == 1 表示获得称号或登录补挂时启用效果
+    -- 2. zt == 2 表示失去称号时移除效果
+    -- 3. zt == 3 表示战斗阶段的实时触发，用于追加伤害/回血等逻辑
+    -- 4. 纯标记型称号只记录 N$buffxxx 状态，具体数值由称号属性表或其他流程处理
+    [316] = function(play,zt) -- 镇杀幽魂：标记型BUFF，实际常驻属性由称号表提供
+        if zt == 1 then
+            _set_title_buff_flag(play, 316, true)
+        elseif zt == 2 then
+            _set_title_buff_flag(play, 316, false)
+        end
+    end,
+    [317] = function(play,zt) -- 画中仙境：标记型BUFF，免控类判定可从该状态继续扩展
+        if zt == 1 then
+            _set_title_buff_flag(play, 317, true)
+        elseif zt == 2 then
+            _set_title_buff_flag(play, 317, false)
+        end
+    end,
+    [318] = function(play,zt) -- 崂山秘法：标记型BUFF，常驻属性由称号表提供
+        if zt == 1 then
+            _set_title_buff_flag(play, 318, true)
+        elseif zt == 2 then
+            _set_title_buff_flag(play, 318, false)
+        end
+    end,
+    [319] = function(play,zt,Damage,Target,MagicId) -- 赤焰天使：烈火剑法额外增伤10%
+        if zt == 3 then
+            if MagicId == 26 and Damage and Damage > 0 then
+                return math.floor(Damage * 0.1)
+            end
+            return 0
+        end
+        -- 挂到 S_buffgjq，确保登录后能重新注册攻击增伤逻辑
+        _set_title_buff_flag(play, 319, zt == 1)
+        _toggle_buff_var(play, VarCfg.S_buffgjq, 319, zt == 1)
+    end,
+    [320] = function(play,zt,Damage) -- 葬众生：血量低于30%时，攻击伤害额外+20%
+        if zt == 3 then
+            local maxhp = tonumber(getbaseinfo(play, (ConstCfg and ConstCfg.gbase and ConstCfg.gbase.maxhp) or 10) or 0) or 0
+            local curhp = tonumber(getbaseinfo(play, (ConstCfg and ConstCfg.gbase and ConstCfg.gbase.curhp) or 11) or maxhp) or 0
+            if maxhp > 0 and curhp / maxhp <= 0.3 and Damage and Damage > 0 then
+                return math.floor(Damage * 0.2)
+            end
+            return 0
+        end
+        _set_title_buff_flag(play, 320, zt == 1)
+        _toggle_buff_var(play, VarCfg.S_buffgjq, 320, zt == 1)
+    end,
+    [321] = function(play,zt) -- 小倩的感谢：夜晚对怪增伤+1%，打怪爆率+10%
+        if zt == 3 then
+            -- 夜晚时补上限时属性，白天会自动移除，避免属性常驻
+            _title_sync_time_attr(play, 321, "title_321_night", "3#245#100|3#242#1000", "night")
+            return 0
+        end
+        if zt == 1 then
+            _set_title_buff_flag(play, 321, true)
+            _title_sync_time_attr(play, 321, "title_321_night", "3#245#100|3#242#1000", "night")
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 321, true)
+        elseif zt == 2 then
+            _set_title_buff_flag(play, 321, false)
+            delattlist(play, "title_321_night")
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 321, false)
+        end
+    end,
+    [322] = function(play,zt) -- 守护壁画：标记型BUFF，常驻切割属性由称号表提供
+        if zt == 1 then
+            _set_title_buff_flag(play, 322, true)
+        elseif zt == 2 then
+            _set_title_buff_flag(play, 322, false)
+        end
+    end,
+    [323] = function(play,zt) -- 以貌取人：白天对怪增伤+10%
+        if zt == 3 then
+            _title_sync_time_attr(play, 323, "title_323_day", "3#245#1000", "day")
+            return 0
+        end
+        if zt == 1 then
+            _set_title_buff_flag(play, 323, true)
+            _title_sync_time_attr(play, 323, "title_323_day", "3#245#1000", "day")
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 323, true)
+        elseif zt == 2 then
+            _set_title_buff_flag(play, 323, false)
+            delattlist(play, "title_323_day")
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 323, false)
+        end
+    end,
+    [324] = function(play,zt) -- 迟来的清醒：夜晚对怪增伤+10%
+        if zt == 3 then
+            _title_sync_time_attr(play, 324, "title_324_night", "3#245#1000", "night")
+            return 0
+        end
+        if zt == 1 then
+            _set_title_buff_flag(play, 324, true)
+            _title_sync_time_attr(play, 324, "title_324_night", "3#245#1000", "night")
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 324, true)
+        elseif zt == 2 then
+            _set_title_buff_flag(play, 324, false)
+            delattlist(play, "title_324_night")
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 324, false)
+        end
+    end,
+    [325] = function(play,zt,Damage,Target) -- 沙海明珠：攻击3%概率雷击怪物，并切割其最大生命3%
+        if zt == 3 then
+            if not Target or getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+                return 0
+            end
+            local now = os.time()
+            -- 10秒公共CD，避免同一称号效果过于频繁触发
+            if now - (tonumber(getplaydef(play, "N$buff325cd") or 0) or 0) < 10 then
+                return 0
+            end
+            if math.random(100) <= 3 then
+                setplaydef(play, "N$buff325cd", now)
+                local maxhp = tonumber(getbaseinfo(Target, (ConstCfg and ConstCfg.gbase and ConstCfg.gbase.maxhp) or 10) or 0) or 0
+                local hurt = math.floor(maxhp * 0.03)
+                if hurt > 0 then
+                    humanhp(Target, "-", hurt, 106, 0, play, 1)
+                    playeffect(Target, 60463, 0, 0, 1, 0, 0)
+                end
+            end
+            return 0
+        end
+        -- 挂到 S_buffgwh，确保登录后能重新注册攻击附加伤害逻辑
+        _set_title_buff_flag(play, 325, zt == 1)
+        _toggle_buff_var(play, VarCfg.S_buffgwh, 325, zt == 1)
+    end,
+    [326] = function(play,zt,Damage,Target) -- 丝路往事：攻击等级高于自身的玩家时，额外造成5%伤害
+        if zt == 3 then
+            if Target and getbaseinfo(Target, ConstCfg.gbase.isplayer) and Damage and Damage > 0 then
+                local myLevel = tonumber(getbaseinfo(play, ConstCfg.gbase.level) or 0) or 0
+                local targetLevel = tonumber(getbaseinfo(Target, ConstCfg.gbase.level) or 0) or 0
+                if targetLevel > myLevel then
+                    return math.floor(Damage * 0.05)
+                end
+            end
+            return 0
+        end
+        _set_title_buff_flag(play, 326, zt == 1)
+        _toggle_buff_var(play, VarCfg.S_buffgjq, 326, zt == 1)
+    end,
+    [327] = function(play,zt,Damage,Target) -- 你的因果我来抗：攻击满血玩家时，额外造成5%伤害
+        if zt == 3 then
+            if Target and getbaseinfo(Target, ConstCfg.gbase.isplayer) and Damage and Damage > 0 then
+                local maxhp = tonumber(getbaseinfo(Target, (ConstCfg and ConstCfg.gbase and ConstCfg.gbase.maxhp) or 10) or 0) or 0
+                local curhp = tonumber(getbaseinfo(Target, (ConstCfg and ConstCfg.gbase and ConstCfg.gbase.curhp) or 11) or 0) or 0
+                if maxhp > 0 and curhp >= maxhp then
+                    return math.floor(Damage * 0.05)
+                end
+            end
+            return 0
+        end
+        _set_title_buff_flag(play, 327, zt == 1)
+        _toggle_buff_var(play, VarCfg.S_buffgjq, 327, zt == 1)
+    end,
+    [328] = function(play,zt) -- 大地之王祝福：击杀玩家后每层全属性+1%，最多10层
+        if zt == 1 then
+            _set_title_buff_flag(play, 328, true)
+            _title_sync_dadi_attr(play)
+        elseif zt == 2 then
+            _set_title_buff_flag(play, 328, false)
+            setplaydef(play, "N$buff328_stack", 0)
+            _title_sync_dadi_attr(play)
+        end
+    end,
+    [329] = function(play,zt) -- 天空之王祝福：生命+10%，并且每60秒恢复10%最大生命
+        if zt == 3 then
+            local now = os.time()
+            if now - (tonumber(getplaydef(play, "N$buff329cd") or 0) or 0) >= 60 then
+                setplaydef(play, "N$buff329cd", now)
+                local maxhp = tonumber(getbaseinfo(play, (ConstCfg and ConstCfg.gbase and ConstCfg.gbase.maxhp) or 10) or 0) or 0
+                local heal = math.floor(maxhp * 0.1)
+                if heal > 0 then
+                    humanhp(play, "+", heal, 5, 0, play)
+                    playeffect(play, 60458, 0, 0, 1, 1, 0)
+                end
+            end
+            return 0
+        end
+        -- 该效果既有常驻加成也有定时回血，因此保留登录重挂和CD状态
+        if zt == 1 then
+            _set_title_buff_flag(play, 329, true)
+            _toggle_buff_var(play, VarCfg.S_buffgjh, 329, true)
+            _toggle_buff_var(play, VarCfg.S_buffbgjq, 329, true)
+        elseif zt == 2 then
+            _set_title_buff_flag(play, 329, false)
+            _toggle_buff_var(play, VarCfg.S_buffgjh, 329, false)
+            _toggle_buff_var(play, VarCfg.S_buffbgjq, 329, false)
+        end
+    end,
+    [330] = function(play,zt) -- 海洋之王祝福：标记型BUFF，冰冻相关数值由称号表或其他逻辑处理
+        if zt == 1 then
+            _set_title_buff_flag(play, 330, true)
+        elseif zt == 2 then
+            _set_title_buff_flag(play, 330, false)
+        end
+    end,
+    [331] = function(play,zt,Damage,Target) -- 青铜之王祝福：攻击红名玩家时，额外造成10%伤害
+        if zt == 3 then
+            if Target and getbaseinfo(Target, ConstCfg.gbase.isplayer) and Damage and Damage > 0 then
+                local pk = tonumber(getbaseinfo(Target, 46) or 0) or 0
+                if pk > 0 then
+                    return math.floor(Damage * 0.1)
+                end
+            end
+            return 0
+        end
+        _set_title_buff_flag(play, 331, zt == 1)
+        _toggle_buff_var(play, VarCfg.S_buffgjq, 331, zt == 1)
+    end,
+    [332] = function(play,zt,Damage,Target) -- 乾坤大挪移：5%概率对目标3x3范围造成最大魔法5%的范围伤害
+        if zt == 3 then
+            if not Target or math.random(100) > 5 then
+                return 0
+            end
+            local now = os.time()
+            -- 8秒公共CD，避免范围伤害效果连续触发
+            if now - (tonumber(getplaydef(play, "N$buff332cd") or 0) or 0) < 8 then
+                return 0
+            end
+            local maxmp = tonumber(getbaseinfo(play, (ConstCfg and ConstCfg.gbase and ConstCfg.gbase.maxmp) or 14) or 0) or 0
+            local hurt = math.floor(maxmp * 0.05)
+            if hurt > 0 then
+                setplaydef(play, "N$buff332cd", now)
+                rangeharm(play, getbaseinfo(Target, ConstCfg.gbase.x), getbaseinfo(Target, ConstCfg.gbase.y), 1, hurt, 0, 0, 0, 2, 20310, 12)
+            end
+            return 0
+        end
+        _set_title_buff_flag(play, 332, zt == 1)
+        _toggle_buff_var(play, VarCfg.S_buffgwh, 332, zt == 1)
+    end,
+    [333] = function(play,zt) -- 吕布之力：标记型BUFF，激活外观或展示效果时可据此判定
+        if zt == 1 then
+            _set_title_buff_flag(play, 333, true)
+        elseif zt == 2 then
+            _set_title_buff_flag(play, 333, false)
+        end
+    end,
+    [334] = function(play,zt,Damage,Target,MagicId) -- 火中取胜：受到烈火剑法伤害时减免5%
+        if zt == 3 then
+            if MagicId == 26 and Damage and Damage > 0 then
+                return math.floor(Damage * 0.05)
+            end
+            return 0
+        end
+        _set_title_buff_flag(play, 334, zt == 1)
+        _toggle_buff_var(play, VarCfg.S_buffbgjq, 334, zt == 1)
+    end,
+    [335] = function(play,zt) -- 打虎英雄：标记型BUFF，常驻攻速属性由称号表提供
+        if zt == 1 then
+            _set_title_buff_flag(play, 335, true)
+        elseif zt == 2 then
+            _set_title_buff_flag(play, 335, false)
+        end
+    end,
+    [336] = function(play,zt) -- 侠义祝福：标记型BUFF，常驻全属性由称号表提供
+        if zt == 1 then
+            _set_title_buff_flag(play, 336, true)
+        elseif zt == 2 then
+            _set_title_buff_flag(play, 336, false)
+        end
+    end,
+    [337] = function(play,zt) -- 马上发财：标记型BUFF，大奖励称号属性直接走称号表
+        if zt == 1 then
+            _set_title_buff_flag(play, 337, true)
+        elseif zt == 2 then
+            _set_title_buff_flag(play, 337, false)
+        end
+    end,
+    [338] = function(play,zt) -- 日卡：标记型BUFF，常驻爆率属性由称号表提供
+        if zt == 1 then
+            _set_title_buff_flag(play, 338, true)
+        elseif zt == 2 then
+            _set_title_buff_flag(play, 338, false)
+        end
+    end,
     [101] = function(play,zt) --仙食坊全满
         if zt == 1 then
             addattlist(play, "仙食坊全满", "=", "3#1#8888|3#4#588|3#242#3800|3#244#4888", 1)
@@ -747,6 +1092,21 @@ function Buff.login(play)
 end
 
 GameEvent.add(EventCfg.onLogin, Buff.login, "buff")
+
+
+
+-- 大地之王祝福：击杀玩家叠层事件
+-- 该称号不走普通 Buff[328](zt=3) 分支，改为在 onkillplay 中直接累加层数并同步属性
+GameEvent.add(EventCfg.onkillplay, function(play)
+    if not _has_title_buff_flag(play, 328) then
+        return
+    end
+    local stack = tonumber(getplaydef(play, "N$buff328_stack") or 0) or 0
+    if stack < 10 then
+        setplaydef(play, "N$buff328_stack", stack + 1)
+        _title_sync_dadi_attr(play)
+    end
+end, "Buff_328_stack")
 
 
 function Buff.chuan(play,item)
