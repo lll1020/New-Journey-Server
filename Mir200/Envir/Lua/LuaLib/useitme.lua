@@ -487,9 +487,11 @@ local function _yybg45_apply_full(play, rec)
     if tonumber((rec or {}).yybg45_full) >= 1 then
         _yybg45_clear_temp(play)
         if not hasbuff(play, 20123) then
+            callscriptex(play, "CHANGELEVEL", "+", 1)
             addbuff(play, 20123)
         end
     elseif hasbuff(play, 20123) then
+        callscriptex(play, "CHANGELEVEL", "+", 1)
         delbuff(play, 20123)
     end
 end

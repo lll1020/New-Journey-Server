@@ -65,12 +65,6 @@ local _config_spa = {
 function npc.main(play,npcid)
     sendluamsg(play,100,npcid,0,0,"")
 end
-local spa = {
-    [6] = 1,
-    [10] = 2,
-    [14] = 3,
-    [18] = 4,
-}
 
 function npc.link(play,npcid,ew,aid)
     -- npc_guard: 入参校验
@@ -93,11 +87,7 @@ function npc.link(play,npcid,ew,aid)
             if not Player.dl_sz(play, _config[npcid][6]) then
                 return
             end
-            if _config[npcid][2] > 0 then
-                mapmove(play,_config[npcid][1] .. (aid == 1 and "一" or ""),_config[npcid][2],_config[npcid][3],5)
-            else
-                map(play,_config[npcid][1] .. (spa[getplaydef(play,VarCfg.U_zxrw[1])] and "一" or ""))
-            end
+            mapmove(play,_config[npcid][1] .. (aid == 1 and "一" or ""),_config[npcid][2],_config[npcid][3],5)
             delaygoto(play,200,"npc_200_fbjs",0)
         end
         if _config_spa[npcid] then

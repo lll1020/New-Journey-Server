@@ -4,26 +4,68 @@ local function _zxrw_get_equip_level(play, pos)
     return tonumber(lv) or 0
 end
 
+local function _zxrw_get_trial_data(play)
+    local t = Player.getJsonTableByVar(play, VarCfg["T_天书试炼"])
+    t = type(t) == "table" and t or {}
+    t.submit = type(t.submit) == "table" and t.submit or {}
+    t.finish = tonumber(t.finish) or 0
+    return t
+end
+
+local function _zxrw_get_xiantian_data(play)
+    local t = Player.getJsonTableByVar(play, VarCfg["T_天书先天"])
+    t = type(t) == "table" and t or {}
+    t.saved = type(t.saved) == "table" and t.saved or {}
+    return t
+end
+
+local function _zxrw_get_task_npc_xy(rwid)
+    local cfg = constant.rw_syb[rwid] or {}
+    local xx = tonumber(cfg[4]) or 0
+    local yy = tonumber(cfg[5]) or 0
+    local npcIndex = tonumber(cfg[3]) or 0
+    if npcIndex > 0 then
+        local npcObj = getnpcbyindex(npcIndex)
+        if npcObj then
+            local nx = tonumber(getbaseinfo(npcObj, 4)) or 0
+            local ny = tonumber(getbaseinfo(npcObj, 5)) or 0
+            if nx > 0 and ny > 0 then
+                xx = nx
+                yy = ny
+            end
+        end
+    end
+    return xx, yy
+end
+
 -- handle pre-completed mainline tasks
 local function _zxrw_is_precompleted(play, rwid)
     if rwid == 2 then
         local t = Player.getJsonTableByVar(play, VarCfg["T_免费赞助"])
         return t and (tonumber(t["zzlb_1"] or 0) or 0) >= 1
-    elseif rwid == 7 then
+    elseif rwid == 4 then
         return _zxrw_get_equip_level(play, 9) >= 2
-    elseif rwid == 9 then
+    elseif rwid == 5 then
         return _zxrw_get_equip_level(play, 15) >= 2
-    elseif rwid == 11 then
+    elseif rwid == 6 then
         return _zxrw_get_equip_level(play, 13) >= 2
-    elseif rwid == 13 then
+    elseif rwid == 7 then
         return _zxrw_get_equip_level(play, 12) >= 2 or _zxrw_get_equip_level(play, 14) >= 2
-    elseif rwid == 15 then
+    elseif rwid == 8 then
         return _zxrw_get_equip_level(play, 16) >= 2
-    elseif rwid == 17 then
-        return (tonumber(getplaydef(play, VarCfg["U_兰姐好感度"]) or 0) or 0) >= 1
+    elseif rwid == 11 or rwid == 13 or rwid == 15 or rwid == 17 then
+        local trial = _zxrw_get_trial_data(play)
+        local submitMap = {[11] = "1", [13] = "2", [15] = "3", [17] = "4"}
+        return tonumber(trial.submit[submitMap[rwid]] or 0) >= 1
+    elseif rwid == 18 then
+        local trial = _zxrw_get_trial_data(play)
+        return tonumber(trial.finish or 0) >= 1
     elseif rwid == 19 then
-        return (tonumber(getplaydef(play, VarCfg["U_境界修炼"][1]) or 0) or 0) >= 9
+        local xt = _zxrw_get_xiantian_data(play)
+        return tostring((xt.saved or {}).name or "") ~= ""
     elseif rwid == 20 then
+        return (tonumber(getplaydef(play, VarCfg["U_境界修炼"][1]) or 0) or 0) >= 9
+    elseif rwid == 21 then
         return (tonumber(getplaydef(play, VarCfg["U_转生等级"]) or 0) or 0) >= 10
     end
     return false
@@ -241,12 +283,17 @@ function clicknewtask(play,rwid)
         elseif lx == 1 then--点击按钮
             sendluamsg(play, 101, 0, 1, 1,'{"lx":1,"fx":1,"an":'..constant.rw_syb[rwid][2]..',"ms":"点击按钮"}')
         elseif lx == 2 then--引导任务  npc类
-            if constant.rw_syb[rwid][2] ~= getbaseinfo(play,3) then
-                mapmove(play,constant.rw_syb[rwid][2],constant.rw_syb[rwid][4],constant.rw_syb[rwid][5],3)
+            local xx, yy = _zxrw_get_task_npc_xy(rwid)
+            if xx <= 0 then
+                xx = tonumber(getbaseinfo(play, 4)) or 0
             end
-            mapmove(play,constant.rw_syb[rwid][2],constant.rw_syb[rwid][4],constant.rw_syb[rwid][5],3)
-
-            sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'..constant.rw_syb[rwid][2]..'","npcid":'..constant.rw_syb[rwid][3]..',"xx":'..constant.rw_syb[rwid][4]..',"yy":'..constant.rw_syb[rwid][5]..'}')
+            if yy <= 0 then
+                yy = tonumber(getbaseinfo(play, 5)) or 0
+            end
+            if constant.rw_syb[rwid][2] ~= getbaseinfo(play,3) then
+                mapmove(play,constant.rw_syb[rwid][2],xx,yy,3)
+            end
+            sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'..constant.rw_syb[rwid][2]..'","npcid":'..constant.rw_syb[rwid][3]..',"xx":'..xx..',"yy":'..yy..'}')
         elseif lx == 3 then--刷新任务
             sendluamsg(play, 101, 0, 1, 1,'{"lx":3,"rwid":'.. rwid ..'}')
         elseif lx == 4 then--直接完成类的任务
@@ -374,7 +421,7 @@ function deletetask(play,rwid)
         setplaydef(play,VarCfg.U_zxrw[1],rwid+1)
         setplaydef(play,VarCfg.U_zxrw[2],0)
     end
-    if rwid == 18 then
+    if rwid == 19 then
         setplaydef(play, VarCfg["U_境界修炼"][2], 900)
     end
 
@@ -493,17 +540,16 @@ function deletetask(play,rwid)
 end
 
 rwcf = {
-    [6] = {7},
-    [7] = {9},
-    [8] = {11},
-    [9] = {13},
-    [10] = {15},
-    [13] = {17},
-    [21] = {19},
-    [32] = {20},
+    [6] = {4},
+    [7] = {5},
+    [8] = {6},
+    [9] = {7},
+    [10] = {8},
+    [21] = {20},
+    [32] = {21},
 
     [516] = {2},
-    [502] = {21},
+    [502] = {22},
 }
 
 rwcf.jia = function(play, id)

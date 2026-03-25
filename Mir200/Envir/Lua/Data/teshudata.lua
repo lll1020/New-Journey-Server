@@ -1460,8 +1460,8 @@ teshudata = {
         enter_pos = {29,27},
         boss = "天书试炼",
         boss_pos = {32,36},
-        boss_effect = 16419,
-        boss_fire = 5,
+        boss_effect = 92,
+        boss_fire = 92,
         reward = {{"天书",1}},
         materials = {
             {idx = 1,name = "天书残卷一",cost = {{"天书残卷一",1}},attr = {{244,1000}},attr_desc = "打怪切割+1000"},

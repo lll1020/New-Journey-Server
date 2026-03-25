@@ -546,7 +546,7 @@ npc[18] = function(play, p2, p3, data) --新手礼包
 
             Player.rwjl(
                 play,
-                {{"复活戒指",1},{"麻痹戒指",1},{"斗笠",1},{"攻速之镰[lv1]",1}, {"切割之斧[lv1]",1},{ "盟重回城石", 1 }, { "随机传送石", 1 }, { "龙骨刀", 1 }, { "龙骨甲", 1 },{"天书",1} },
+                {{"复活戒指",1},{"麻痹戒指",1},{"斗笠",1},{"攻速之镰[lv1]",1}, {"切割之斧[lv1]",1},{ "盟重回城石", 1 }, { "随机传送石", 1 }, { "龙骨刀", 1 }, { "龙骨甲", 1 },{"酒葫芦",1},},
                 "新手礼包",
                 nil
             )
@@ -1383,6 +1383,7 @@ GameEvent.add(EventCfg.onPlaydie, _qmdk_event_die, "全民夺矿")
 ---天天省钱
 npc[509] = function(play, p2, p3, msgData)
     openhyperlink(play, 111, 0)
+    Player.zxrw_wancheng(play, 3, "任务") --完成任务
 end
 ---交易行
 npc[510] = function(play, p2, p3, msgData)

@@ -621,6 +621,9 @@ end
 --------------------É±¹Ö´¥·¢-------------------
 function killmon(play, mob)
     GameEvent.push(EventCfg.onKillMon, play, mob, getbaseinfo(mob, ConstCfg.gbase.idx))
+    if FairyFate and FairyFate.touch then
+        FairyFate.touch(play, "kill_mon", getbaseinfo(play, 3))
+    end
     local bl = getplaydef(play, VarCfg.S_buffsgcf)
 	local data = json2tbl(bl == "" and {} or bl)
 	for k, v in pairs(data) do

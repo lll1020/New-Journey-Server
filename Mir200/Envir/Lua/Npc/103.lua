@@ -5,6 +5,14 @@ local _attr_list_name = (_config and _config.attr_list_name) or "天书试炼属性"
 local _back_pos_var = "S$npc103_back"
 local _run_map_var = "S$npc103_map"
 local _effect_prefix = "npc103_fx_"
+local _boss_effect_timer_id = 2
+local _submit_task_map = {[1] = 11,[2] = 13,[3] = 15,[4] = 17}
+local function _finish_mainline(play, taskId)
+    taskId = tonumber(taskId) or 0
+    if taskId > 0 and getplaydef(play, VarCfg.U_zxrw[1]) == taskId then
+        Player.zxrw_wancheng(play, taskId, "任务")
+    end
+end
 local function _merge_attrs(dst, src)
     for _, attr in ipairs(src or {}) do
         local attrId = tonumber(attr[1])
@@ -86,6 +94,14 @@ local function _save_back(play)
     local y = getbaseinfo(play, 5)
     setplaydef(play, _back_pos_var, map..","..x..","..y)
 end
+local function _play_boss_effect(dtm)
+    local bossPos = (_config and _config.boss_pos) or {32, 36}
+    mapeffect(_effect_prefix..dtm, dtm, tonumber(bossPos[1]) or 32, tonumber(bossPos[2]) or 36, tonumber((_config and _config.boss_effect) or 16419) or 16419, 2, 0)
+end
+local function _stop_fb_timers(dtm)
+    setenvirofftimer(dtm, 1)
+    setenvirofftimer(dtm, _boss_effect_timer_id)
+end
 local function _clear_run(play)
     setplaydef(play, _back_pos_var, "")
     setplaydef(play, _run_map_var, "")
@@ -117,6 +133,7 @@ local function _finish(play)
     end
     Player.sendmsgEx(play, "|【"..((_config and _config.name) or "天书试炼").."】#249|完成，恭喜获得|【天书】#249|#57")
     sendluamsg(play, 101, 1005, 0, 0, "rwwc")
+    _finish_mainline(play, 18)
 end
 local function _enter_fb(play)
     local runMap = tostring(getplaydef(play, _run_map_var) or "")
@@ -135,10 +152,11 @@ local function _enter_fb(play)
     mapmove(play, dtm, tonumber(enterPos[1]) or 29, tonumber(enterPos[2]) or 27, 2)
     local bossPos = (_config and _config.boss_pos) or {32, 36}
     genmonex(dtm, tonumber(bossPos[1]) or 32, tonumber(bossPos[2]) or 36, ((_config and _config.boss) or "★天穹裂变·雷域主★"), 1, 1, 0, 54, "", 0)
-    mapeffect(_effect_prefix..dtm, dtm, tonumber(bossPos[1]) or 32, tonumber(bossPos[2]) or 36, tonumber((_config and _config.boss_effect) or 16419) or 16419, tonumber((_config and _config.fb_time) or 300) or 300, 0)
+    _play_boss_effect(dtm)
     mobfireburn(play, dtm, tonumber(bossPos[1]) or 32, tonumber(bossPos[2]) or 36, tonumber((_config and _config.boss_fire) or 5) or 5, 30, 1, 1)
     startautoattack(play)
     setenvirontimer(dtm, 1, 1, "@npc_103_dsq,"..play..","..dtm)
+    setenvirontimer(dtm, _boss_effect_timer_id, 10, "@npc_103_fx,"..dtm)
     senddelaymsg(play, "距离副本结束剩余%s", tonumber((_config and _config.fb_time) or 300) or 300, 250, 1, "@npc_103_timeout")
     Player.sendmsgEx(play, "已进入|【天书试炼】#249|副本，击败炫光BOSS即可获得|【天书】#249|#57")
     sendluamsg(play, 101, 9999, 0, 0, "npc_"..103)
@@ -205,6 +223,7 @@ function npc.link(play, npcid, ew, aid, data)
             Player.sendmsgEx(play, "四种材料已全部提交，已解锁|【天书试炼副本】#249|挑战权限#57")
         end
         _refresh_panel(play, npcid, 1, submit_idx)
+        _finish_mainline(play, _submit_task_map[submit_idx])
         return
     end
     if not is_enter then
@@ -223,14 +242,14 @@ function npc.link(play, npcid, ew, aid, data)
 end
 function npc_103_dsq(xt, play, dtm, data)
     if getplaycount(dtm, false, true) == "0" then
-        setenvirofftimer(dtm, 1)
+        _stop_fb_timers(dtm)
         if checkmirrormap(dtm) then
             delmirrormap(dtm)
         end
         return
     end
     if getmoncount(dtm, -1, true) < 1 then
-        setenvirofftimer(dtm, 1)
+        _stop_fb_timers(dtm)
         if getbaseinfo(play, 3) == dtm then
             _back(play)
         else
@@ -243,13 +262,22 @@ function npc_103_dsq(xt, play, dtm, data)
         _refresh_panel(play, _npcid, 3, 0)
     end
 end
+function npc_103_fx(xt, dtm, data)
+    if not dtm or dtm == "" or not checkmirrormap(dtm) then
+        if dtm and dtm ~= "" then
+            setenvirofftimer(dtm, _boss_effect_timer_id)
+        end
+        return
+    end
+    _play_boss_effect(dtm)
+end
 function npc_103_timeout(play)
     local dtm = tostring(getplaydef(play, _run_map_var) or "")
     if dtm == "" then
         dtm = tostring(getbaseinfo(play, 1) or "").."_npc103"
     end
     if checkmirrormap(dtm) then
-        setenvirofftimer(dtm, 1)
+        _stop_fb_timers(dtm)
     end
     if getbaseinfo(play, 3) == dtm then
         if getmoncount(dtm, -1, true) < 1 then

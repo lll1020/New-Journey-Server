@@ -4,6 +4,11 @@ local _tianshu_cfg = Guard.getConfig("npc_24") or {}
 local _tag_prefix = tostring((_config and _config.custom_tag) or "附魔属性")
 local _tag_index = tonumber((_config and _config.custom_index) or 1) or 1
 local _legacy_tag_prefix = "先天词条"
+local function _finish_mainline(play)
+    if getplaydef(play, VarCfg.U_zxrw[1]) == 19 then
+        Player.zxrw_wancheng(play, 19, "任务")
+    end
+end
 
 local function _get_tianshu_item(play)
     local where = tonumber((_config and _config.where) or _tianshu_cfg.where or 90) or 90
@@ -283,6 +288,7 @@ function npc.link(play, npcid, ew, aid, msgData)
     T_data.saved = choice
     T_data.preview = {}
     _save_data(play, T_data)
+    _finish_mainline(play)
     Player.sendmsgEx(play, "附魔成功：|【" .. tostring(choice.name or "先天词条") .. "】#249| " .. tostring(choice.desc or "") .. "，已替换天书当前词条#57")
     sendluamsg(play, 100, npcid, 2, 0, tbl2json(_build_panel_data(play)))
 end

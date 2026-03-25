@@ -17,6 +17,9 @@ function bl_zyjhl3(play,mingzi)
             if data and not data[mingzi] then
                 data[mingzi] = getbaseinfo(play,1)
                 Player.setJsonVarByTable(nil, VarCfg["A_È«·þ¹ÂÆ·"], data)
+                if FairyFate and FairyFate.touch then
+                    FairyFate.touch(play, "global_unique")
+                end
                 return true
             end
         end

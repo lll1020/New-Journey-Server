@@ -6,6 +6,10 @@ local _attr_list_name = "ÏÉÍ¾ÆæÔµ³É¾Í" -- ÊôĞÔÁĞ±íÃû£ºÒÑ´ï³É³É¾Í»»ËãºóµÄ×îÖÕÊôĞÔ
 local _sys_first_login_key = "FF_ÏÉÍ¾ÆæÔµ_Ê×¸ö×¢²á" -- ÏµÍ³±äÁ¿£º¼ÇÂ¼È«·şÊ×¸ö×¢²á³É¾ÍÊÇ·ñÒÑ´¥·¢
 local _sys_castle_first_blood_key = "FF_ÏÉÍ¾ÆæÔµ_¹¥É³Ê×É±" -- ÏµÍ³±äÁ¿£º¼ÇÂ¼¹¥É³Ê×É±³É¾ÍÊÇ·ñÒÑ´¥·¢
 local _prepared = false -- ÅäÖÃ»º´æÊÇ·ñÒÑ³õÊ¼»¯
+-- ÕâÒ»Ì×³É¾ÍÂß¼­¸Ä³ÉÁË"ÅäÖÃÇı¶¯"£º
+-- 1. fairy_fate_cfg.lua ÀïµÄ cond ½ö×÷ÎªÕ¹Ê¾ÎÄ°¸±£Áô¸ø¿Í»§¶Ë/²ß»®²é¿´¡£
+-- 2. ·şÎñ¶ËÕæÕı²ÎÓëÅĞ¶¨µÄÌõ¼şÍ³Ò»Ğ´Èë detail.rule£¬±ÜÃâÖĞÎÄ×Ö·û¡¢±êµã¡¢¿Õ¸ñ±ä¶¯ºóÕıÔòÊ§Ğ§¡£
+-- 3. ÕâÀïµÄ´úÂëÖ»Ïû·Ñ rule/snapshot/counter Èı²ãÊı¾İ£¬²»ÔÙ·´Ïò½âÎö cond¡£
 local _cfg_44 = nil -- 44ºÅÅäÖÃ»º´æ£º¶ÁÈ¡Áé¸ù/¾³½çµÈÀ©Õ¹ÅäÖÃ
 local _realm_name_level = { ["Öş»ù¾³"] = 10, ["½ğµ¤¾³"] = 14, ["ÔªÓ¤¾³"] = 18, ["´ó³Ë¾³"] = 22, ["¶É½Ù¾³"] = 26, ["ÏÉÈË¾³"] = 30 } -- ¾³½çÃû³ÆÓ³Éäµ½ÄÚ²¿µÈ¼¶
 local _linggen_name_index = { ["½ğ"] = 1, ["Ä¾"] = 2, ["Ë®"] = 3, ["»ğ"] = 4, ["ÍÁ"] = 5, ["À×"] = 6, ["·ç"] = 7, ["±ù"] = 8, ["·Ù"] = 9, ["ÑÒ"] = 10 } -- Áé¸ùÃû³ÆÓ³Éäµ½´æµµË÷Òı
@@ -24,13 +28,101 @@ local _fake_attr_cfg = {
 local function _toint(v) return tonumber(v or 0) or 0 end
 local function _count_pairs(t) local n = 0 for _ in pairs(t or {}) do n = n + 1 end return n end
 local function _count_true(t) local n = 0 for _, v in pairs(t or {}) do if v and v ~= 0 and v ~= "0" and v ~= false then n = n + 1 end end return n end
+-- ÅĞ¶ÏÍæ¼ÒÊÇ·ñÓµÓĞ¡°È«·ş¹ÂÆ·¡±¶ÔÓ¦×Ê¸ñ¡£
+-- ÕâÀï¶ÁÈ¡µÄÊÇÈ«·ş¹²Ïí±äÁ¿ A_È«·ş¹ÂÆ·£¬¶ø²»ÊÇÍæ¼Ò¸öÈË¾Ö²¿±äÁ¿¡£
+-- Ä¿µÄÓĞÁ½¸ö£º
+-- 1. ÈÃ¡°È«·ş¹ÂÆ·¡±³É¾ÍÕæÕı°ó¶¨µ½È«·şÎ¨Ò»¹éÊô£¬¶ø²»ÊÇ±¾µØ»º´æ£»
+-- 2. Íæ¼ÒÖØĞÂµÇÂ¼Ê±£¬¿ÉÒÔÖ±½Ó¸ù¾İÈ«·şÊı¾İ²¹Ëã£¬²»ÒÀÀµµ±´ÎµôÂäÊÂ¼şÊÇ·ñÔÚÏß´¥·¢¡£
+local function _has_global_unique(play)
+    local data = Player.getJsonTableByVar(nil, VarCfg["A_È«·ş¹ÂÆ·"]) or {}
+    local playerName = tostring(getbaseinfo(play, ConstCfg.gbase.name) or "")
+    if playerName == "" then return 0 end
+    for _, owner in pairs(data) do
+        if tostring(owner or "") == playerName then
+            return 1
+        end
+    end
+    return 0
+end
+-- ÅĞ¶Ïµ±Ç°Íæ¼ÒÊÇ·ñ¾ÍÊÇ¡°È«·şµÚÒ»¸ö×¢²á/´´½¨½ÇÉ«µÄÈË¡±¡£
+-- ÕâÀïÖ»×öÖ»¶Á±È¶Ô£ºÕæÕıĞ´ÈëÊ×ÃûµÄÊÇ onNewHuman ÊÂ¼ş¡£
+-- ÕâÑù·ÖÀëºó£¬Ê×ÃûÅĞ¶¨Âß¼­¾Í¹Ì¶¨Îª¡°Ë­ÏÈÕ¼µ½ÏµÍ³±äÁ¿¡±£¬
+-- ¶ø²»ÊÇË­ÏÈ´ò¿ªÃæ°å¡¢Ë­ÏÈµÇÂ¼²¹ÅĞ¡£
+local function _is_first_create_login(play)
+    local playerName = tostring(getbaseinfo(play, ConstCfg.gbase.name) or "")
+    if playerName == "" then return 0 end
+    return tostring(getsysvarex(_sys_first_login_key) or "") == playerName and 1 or 0
+end
+-- ÅĞ¶ÏÍæ¼Òµ±Ç°ÊÇ·ñÒÑ¾­¼ÓÈëĞĞ»á¡£
+-- ÕâÀï×¨ÃÅ×öÁËÒ»²ãÔàÖµ¹ıÂË£¬ÒòÎª²¿·Öµ×²ã½Ó¿Ú»á·µ»Ø "0"¡¢"ÎŞ"¡¢"nil" ÕâÀà¼ÙÖµ¡£
+-- ³É¾ÍÏµÍ³Í³Ò»×ßÕâ¸öº¯Êı£¬±ÜÃâ²»Í¬µØ·½¸÷×ÔÅĞ¶Ïµ¼ÖÂ±ê×¼²»Ò»ÖÂ¡£
+local function _has_guild(play)
+    local guildName = tostring(getbaseinfo(play, ConstCfg.gbase.guild) or "")
+    return guildName ~= "" and guildName ~= "0" and guildName ~= "ÎŞ" and guildName ~= "None" and guildName ~= "nil" and 1 or 0
+end
+-- ¾ÀÆ«£ºÈç¹ûÀúÊ·ÔàÊı¾İ°Ñ¡°µÚÒ»Ãû¡±³É¾Í´íÎó·¢¸øÁË·ÇÊ×ÃûÍæ¼Ò£¬ÕâÀï»áÔÚÖØËãÇ°Çåµô¡£
+-- ÕâÒ»²½²»ÊÇÕı³£´ï³ÉÁ÷³ÌµÄÒ»²¿·Ö£¬¶øÊÇ¾ÉÊı¾İ¼æÈİ²ã¡£
+-- ÎªÊ²Ã´Òªµ¥¶À×ö£º
+-- 1. Ê×Ãû³É¾ÍÌìÈ»Ö»ÄÜÓĞÒ»¸öÈËÓµÓĞ£»
+-- 2. Ò»µ©¾ÉÂß¼­·¢´í£¬µ¥¿¿ _evaluate ²»»á×Ô¶¯»ØÊÕ£»
+-- 3. ËùÒÔ½øÈë _evaluate Ç°ÒªÏÈ×öÒ»´ÎĞŞÕı¡£
+local function _normalize_unique_done(play, state)
+    local changed = false
+    local firstOwner = tostring(getsysvarex(_sys_first_login_key) or "")
+    local playerName = tostring(getbaseinfo(play, ConstCfg.gbase.name) or "")
+    if firstOwner == "" or playerName == "" then
+        return false
+    end
+    local isFirst = firstOwner == playerName and 1 or 0
+    for _, detail in ipairs(_cfg.details or {}) do
+        if (detail.rule or {}).kind == "first_create_login" then
+            local key = tostring(detail.id)
+            if isFirst <= 0 and _toint(state.done[key]) > 0 then
+                state.done[key] = 0
+                changed = true
+            end
+            break
+        end
+    end
+    if isFirst <= 0 and _toint(state.counter.first_create_login) > 0 then
+        state.counter.first_create_login = 0
+        changed = true
+    end
+    return changed
+end
+-- ¾ÀÆ«£ºÀÛ¼Æ³äÖµÀà³É¾ÍÖØĞÂ°´¡°ÕæÊµ³äÖµ×Ü¶î¡±»ØÊÕ´íÎóÍê³É×´Ì¬¡£
+-- ÕâÀïÖ÷Òª·ÀÓùÁ½ÀàÀúÊ·ÎÊÌâ£º
+-- 1. ¾É°æ cond ÕıÔò½âÎö´íÎó£¬°ÑÃÅ¼÷Ëã´í£»
+-- 2. Íæ¼Ò±¾µØ±äÁ¿ºÍ money23 ÓĞ¹ı²»Í¬²½£¬µ¼ÖÂÃæ°åÌáÇ°µãÁÁ¡£
+-- Âß¼­ÉÏÕâÀïÊÇ¡°ÉÏÏŞ»ØÊÕ¡±£¬Ö»»áÇåµô²»¸ÃÍê³ÉµÄ£¬²»»áÖ÷¶¯·¢½±Àø¡£
+local function _normalize_recharge_done(play, state)
+    local changed = false
+    local rechargeTotal = math.max(_toint(querymoney(play, 23)), _toint(getplaydef(play, VarCfg["U_ÕæÊµ³äÖµ"])))
+    for _, detail in ipairs(_cfg.details or {}) do
+        local rule = detail.rule or {}
+        if rule.kind == "recharge_total" then
+            local key = tostring(detail.id)
+            if rechargeTotal < _toint(rule.target) and _toint(state.done[key]) > 0 then
+                state.done[key] = 0
+                changed = true
+            end
+        end
+    end
+    return changed
+end
+-- °Ñ²ß»®ÎÄ°¸ÀïµÄ´óÊı×ÖÍ³Ò»×ª³É´¿ÕûÊı¡£
+-- Ö§³Ö 1W/1w/1Íò/3000Ôª/30,000 ÕâÀà»ìºÏĞ´·¨¡£
+-- ËäÈ»³É¾ÍÌõ¼şÏÖÔÚÖ÷Òª¶Á rule.target£¬µ«½±ÀøÎÄ±¾½âÎöÈÔÈ»»á¸´ÓÃÕâ¸ö¹¤¾ß¡£
 local function _parse_big_num(text)
     text = tostring(text or "")
     local n = tonumber(text)
     if n then return n end
     local raw = string.lower(text)
-    local base = tonumber((raw:gsub("w", ""))) or 0
-    if string.find(raw, "w") then return base * 10000 end
+    raw = raw:gsub("%s+", ""):gsub(",", ""):gsub("£¬", ""):gsub("Ôª", ""):gsub("¿é", "")
+    local has_w = string.find(raw, "w") ~= nil or string.find(raw, "Íò") ~= nil
+    raw = raw:gsub("w", ""):gsub("Íò", "")
+    local base = tonumber(raw) or 0
+    if has_w then return base * 10000 end
     return 0
 end
 local function _split_text(text)
@@ -49,6 +141,12 @@ local function _add_attr(list, attrId, value)
 end
 local function _push_special(list, key, value) list[#list + 1] = {key = key, value = _toint(value)} end
 local function _reward_percent_value(v) return _toint(v) * 100 end
+-- °Ñ reward ÎÄ°¸Ô¤½âÎö³É¿ÉÖ´ĞĞ½±Àø½á¹¹¡£
+-- Êä³ö·Ö³ÉÈıÀà£º
+-- 1. attrs: ÕæÕı¹Òµ½ÊôĞÔÁĞ±íÀïµÄÊıÖµ£»
+-- 2. items/title: ´ï³ÉÊ±Ö±½Ó·¢·ÅµÄÎïÆ·»ò³ÆºÅ£»
+-- 3. special: ²»ÄÜÖ±½ÓÓ³Éäµ½³£¹æÊôĞÔ±í¡¢µ«Ãæ°åºÍÂß¼­ÈÔĞèÕ¹Ê¾/ÀÛ¼ÆµÄÌØÊâÖµ¡£
+-- ÕâÑù×öµÄÄ¿µÄ£¬ÊÇÈÃ³É¾Í´ï³ÉÊ±²»ÔÙÖØĞÂ²ğÎÄ°¸£¬¶øÊÇÖ±½ÓÏû·Ñ½á¹¹»¯»º´æ¡£
 local function _parse_reward(text)
     local cfg = {attrs = {}, items = {}, special = {}, raw = tostring(text or "")}
     for _, part in ipairs(_split_text(text)) do
@@ -152,6 +250,12 @@ local function _get_milestone_title_chain()
     table.sort(ret, function(a, b) return a.count < b.count end)
     return ret
 end
+-- Àï³Ì±®³ÆºÅ·¢·ÅÓĞË³ĞòÔ¼Êø¡£
+-- ±ÈÈç³É¾Í¾íÖá Lv.2 ²»ÄÜÌø¹ı Lv.1 Ö±½ÓÁìÈ¡£¬ÇÒÍ¬Á´Â·ÉÏÖ»±£Áôµ±Ç°½×³ÆºÅ¡£
+-- ÕâÀï×¨ÃÅ´¦Àí£º
+-- 1. Ç°ÖÃÀï³Ì±®ÊÇ·ñÒÑÁìÈ¡£»
+-- 2. ¾É³ÆºÅÊÇ·ñĞèÒªÉ¾³ı£»
+-- 3. ×îÖÕ°ÑÄ¿±ê³ÆºÅ·¢¸øÍæ¼Ò¡£
 local function _grant_milestone_title(play, state, target, titleName)
     for _, node in ipairs(_get_milestone_title_chain()) do
         if node.count < target and _toint(state.milestone_claim[tostring(node.count)]) < 1 then
@@ -166,92 +270,19 @@ local function _grant_milestone_title(play, state, target, titleName)
     Player.title_give(play, titleName)
     return true
 end
+-- ¶ÁÈ¡µ¥Ìõ³É¾ÍµÄ¹æÔòÅäÖÃ¡£
+-- ×¢Òâ£ºÕâÀï²»ÔÙ¸ù¾İ cond ÎÄ°¸×öÈÎºÎÕıÔòÍÆµ¼£¬cond ÏÖÔÚÖ»ÊÇÏÔÊ¾ÎÄ±¾¡£
+-- Èç¹ûÄ³Ìõ³É¾ÍÍüÁË²¹ rule£¬»á±»±ê³É unknown£¬²¢ÔÚ·şÎñ¶Ë´òÓ¡£¬±ãÓÚÖ±½Ó¶¨Î»ÅäÖÃÈ±¿Ú¡£
 local function _parse_condition(detail)
-    local cond = tostring(detail.cond or "")
-    local name = tostring(detail.name or "")
-    local prefix = string.match(name, "^(.-)Lv%.%d+") or name
-    local n = string.match(cond, "^½ÇÉ«µÈ¼¶´ïµ½£º(%d+)¼¶$")
-    if n then return {kind = "level", target = _toint(n)} end
-    n = string.match(cond, "^½ÇÉ«Íê³É(%d+)´óÂ½×ªÉú$")
-    if n then return {kind = "rebirth_stage", target = _toint(n)} end
-    n = string.match(cond, "^Õ½¶·Á¦´ïµ½(.+)$")
-    if n then return {kind = "power", target = _parse_big_num(n)} end
-    n = string.match(cond, "^ÌìÊéµÈ¼¶´ïµ½(%d+)¼¶$")
-    if n then return {kind = "tianshu_level", target = _toint(n)} end
-    n = string.match(cond, "^ÀÛ¼ÆÊÕ¼¯(%d+)¸ö²»Í¬µÄ×°°ç$")
-    if n then return {kind = "fashion_count", target = _toint(n)} end
-    n = string.match(cond, "^¼¤»î(%d+)¸öÁé¸ù$")
-    if n then return {kind = "linggen_count", target = _toint(n)} end
-    if cond == "¼¤»î½ğÄ¾Ë®»ğÍÁÁé¸ù" then return {kind = "linggen_group", list = {1,2,3,4,5}} end
-    if cond == "¼¤»îÀ×·ç±ù·ÙÑÒÁé¸ù" then return {kind = "linggen_group", list = {6,7,8,9,10}} end
-    if cond == "XÁé¸ùµÈ¼¶´ïµ½10¼¶" then return {kind = "linggen_level", idx = _linggen_name_index[string.sub(prefix, 1, 1)], target = 10} end
-    if cond == "µÚÒ»´ÎÌáÉı¾³½ç" then return {kind = "realm_up", target = 1} end
-    if cond == "¾³½ç´ïµ½X¾³" then return {kind = "realm_level", target = _realm_name_level[name] or 0} end
-    if cond == "µÚÒ»´Î¼ÓÈëĞĞ»á" then return {kind = "guild_joined", target = 1} end
-    n = string.match(cond, "^ÀÛ¼Æ»ñµÃ(%d+)¸ö³ÆºÅ$")
-    if n then return {kind = "title_count", target = _toint(n)} end
-    n = string.match(cond, "^ÀÛ¼Æ»ñµÃ(%d+)¸ö±³°üÉñÆ÷$")
-    if n then return {kind = "artifact_count", target = _toint(n)} end
-    n = string.match(cond, "^ÀÛ¼Æ¿³Ê÷(%d+)´Î$")
-    if n then return {kind = "woodcut_count", target = _toint(n)} end
-    local dlText, countText = string.match(cond, "^»÷É±([Ò»¶şÈıËÄÎåÁù])´óÂ½¹ÖÎï(%d+)Ö»$")
-    if dlText and countText then
-        local dlMap = { ["Ò»"] = 1, ["¶ş"] = 2, ["Èı"] = 3, ["ËÄ"] = 4, ["Îå"] = 5, ["Áù"] = 6 }
-        return {kind = "kill_dl", dl = dlMap[dlText] or 0, target = _toint(countText)}
+    local rule = type((detail or {}).rule) == "table" and detail.rule or {}
+    if tostring(rule.kind or "") == "" then
+        print("FairyFateMissingRule", tostring((detail or {}).id or 0), tostring((detail or {}).name or ""))
+        return {kind = "unknown"}
     end
-    countText = string.match(cond, "^»÷É±¼«¹âÃØ¾³ÖĞ¹ÖÎï(%d+)Ö»$")
-    if countText then return {kind = "kill_secret", dl = 2, target = _toint(countText)} end
-    countText = string.match(cond, "^»÷É±XXÃØ¾³ÖĞ¹ÖÎï(%d+)Ö»$")
-    if countText then return {kind = "kill_secret", dl = _secret_name_dl[prefix] or 0, target = _toint(countText)} end
-    countText = string.match(cond, "^»÷É±¿ç·ş¹ÖÎï(%d+)Ö»$")
-    if countText then return {kind = "kill_cross_mon", target = _toint(countText)} end
-    if cond == "ÔÚÊÀ½çÆµµÀÁ¬Ğø·¢ÑÔ50´Î" then return {kind = "chat_streak", target = 50} end
-    if cond == "ÔÚ°²È«ÇøËÀÍö" then return {kind = "safe_death", target = 1} end
-    if cond == "Ç¿»¯Ê§°Ü1´Î" then return {kind = "enhance_fail_total", target = 1} end
-    n = string.match(cond, "^Á¬ĞøÇ¿»¯Ê§°Ü(%d+)´Î$")
-    if n then return {kind = "enhance_fail_streak", target = _toint(n)} end
-    if cond == "±»¹ÖÎï´òËÀÊ±£¬×Ô¼ºÃ»ÓĞÔì³ÉÈÎºÎÉËº¦" then return {kind = "mon_kill_without_damage", target = 1} end
-    n = string.match(cond, "^ÓµÓĞ(%d+)¸öºÃÓÑ$")
-    if n then return {kind = "friend_count", target = _toint(n)} end
-    if cond == "µÚÒ»´Î¹¥É³Ê¤ÀûÊ±" then return {kind = "castle_win_once", target = 1} end
-    n = string.match(cond, "^ÀÛ¼Æ³äÖµ(.+)$")
-    if n then return {kind = "recharge_total", target = _parse_big_num(n)} end
-    local story = string.match(cond, "^Íê³É¾çÇé%[(.+)%]$")
-    if story then return {kind = "story_complete", name = story} end
-    n = string.match(cond, "^ÏÉ¸®ÏÉ»ªÖµ´ïµ½£º(%d+)$")
-    if n then return {kind = "xianfu_xianghua", target = _toint(n)} end
-    if cond == "Á¶ÖÆÈ«²¿µ¤Ò©¸÷1´Î" then return {kind = "xianfu_refine_all"} end
-    n = string.match(cond, "^ÁéÊŞÈ«²¿(%d+)ĞÇ$")
-    if n then return {kind = "pet_all_star", target = _toint(n)} end
-    n = string.match(cond, "^²Ø±¦Í¼Ñ°±¦ÀÛ¼Æ(%d+)´Î$")
-    if n then return {kind = "treasure_total", target = _toint(n)} end
-    if cond == "»ñµÃ1¼şÈ«·ş¹ÂÆ·" then return {kind = "global_unique", target = 1} end
-    if cond == "È«·şµÚÒ»¸ö×¢²áµÇÂ½ÉÏÏß" then return {kind = "first_create_login", target = 1} end
-    if cond == "Á¬Ğø¹Ò»ú10Ğ¡Ê±" then return {kind = "auto_online", target = 600} end
-    n = string.match(cond, "^ÀÛ¼ÆËÀÍö(%d+)´Î$")
-    if n then return {kind = "death_total", target = _toint(n)} end
-    n = string.match(cond, "^»÷É±Íæ¼Ò(%d+)´Î$")
-    if n then return {kind = "player_kill_total", target = _toint(n)} end
-    n = string.match(cond, "^ËÀÍöºó³É¹¦¸´³ğ»÷É±Õß(%d+)´Î$")
-    if n then return {kind = "revenge_total", target = _toint(n)} end
-    n = string.match(cond, "^»÷É±¿ñ±©Íæ¼Ò(%d+)´Î$")
-    if n then return {kind = "kill_kuangbao_total", target = _toint(n)} end
-    n = string.match(cond, "^ËÀÍö±¬×°(%d+)´Î$")
-    if n then return {kind = "death_drop_total", target = _toint(n)} end
-    n = string.match(cond, "^±¬³ö±ğÈË×°±¸(%d+)´Î$")
-    if n then return {kind = "loot_player_equip_total", target = _toint(n)} end
-    if cond == "¹¥É³Ê±£¬µÚÒ»¸ö»÷É±Íæ¼Ò" then return {kind = "castle_first_blood", target = 1} end
-    n = string.match(cond, "^¹¥É³ÆÚ¼ä£¬»÷É±(%d+)ÃûÍæ¼Ò$")
-    if n then return {kind = "castle_kill_total", target = _toint(n)} end
-    n = string.match(cond, "^ÔÚ»Ê¹¬ÄÚ£¬Á¬Ğø»÷É±(%d+)ÃûÍæ¼Ò£¬ÖĞÍ¾Ã»ËÀÍö¡¢»Ø³Ç$")
-    if n then return {kind = "palace_streak", target = _toint(n)} end
-    n = string.match(cond, "^¿ç·şÎäµÀ´ó»á»î¶¯ÖĞ£¬»÷É±(%d+)ÃûÍæ¼Ò$")
-    if n then return {kind = "bwdh_kill_total", target = _toint(n)} end
-    if cond == "ÆäËûÍæ¼Ò¹¥»÷Ä¿±êÊÇ¹ÖÎïÊ±£¬Ë³ÊÖ°ÑÄãÉ±ËÀ£¬¸ÅÂÊ»ñµÃ" then return {kind = "collateral_death", target = 1} end
-    if cond == "±»ÆäËûÍæ¼Ò1µ¶»÷É±" then return {kind = "one_hit_killed", target = 1} end
-    if cond == "Ò»µ¶É±ËÀÆäËûÍæ¼Ò" then return {kind = "one_hit_kill", target = 1} end
-    return {kind = "unknown"}
+    return rule
 end
+-- Ê×´Î³õÊ¼»¯Ê±£¬°ÑÅäÖÃÀïµÄ rule/reward Ô¤±àÒëµ½ÔËĞĞ»º´æÖĞ¡£
+-- ºóĞøËùÓĞ´ï³ÉÅĞ¶¨¶¼Ö»¶Á»º´æ£¬±ÜÃâÃ¿´ÎÊÂ¼ş´¥·¢¶¼ÖØĞÂ½âÎöÅäÖÃ×Ö·û´®¡£
 local function _prepare()
     if _prepared then return end
     for _, detail in ipairs(_cfg.details or {}) do detail.rule = _parse_condition(detail) detail.reward_cfg = _parse_reward(detail.reward) end
@@ -259,6 +290,9 @@ local function _prepare()
     _cfg_44 = Guard.getConfig("npc_44") or {}
     _prepared = true
 end
+-- ÅĞ¶Ï¾çÇéÀà³É¾ÍÊÇ·ñÍê³É¡£
+-- ¾çÇéÏµÍ³ÀúÊ·°ü¸¤±È½ÏÖØ£ºÓĞµÄ¾çÇé¿¿³ÆºÅ½áËã£¬ÓĞµÄ¿¿ÊıÖµ½Úµã£¬ÓĞµÄ¿¿ table ½á¹¹Ğ´Íê³É±ê¼Ç¡£
+-- ËùÒÔÕâÀï×öÍ³Ò»ÊÊÅä£¬°Ñ¡°¾çÇéÍê³É¡±³éÏó³ÉÒ»¸ö²¼¶û½á¹û£¬¹©³É¾ÍÏµÍ³Ö±½Óµ÷ÓÃ¡£
 local function _story_complete(play, storyName)
     local keyMap = { ["ÖØ×ßÎ÷ÓÎ"] = "npc_641", ["ÉúĞ¤ÊØ»¤"] = "npc_67", ["´«ËµĞŞ¸´¾Ö"] = "npc_673" }
     local key = keyMap[storyName]
@@ -275,23 +309,49 @@ local function _story_complete(play, storyName)
     end
     return false
 end
+-- ÅĞ¶Ïµ±Ç°µØÍ¼ÊÇ·ñÊôÓÚ¡°ÃØ¾³¡±ÏµÁĞµØÍ¼¡£
+-- ÕâÀïÍ¬Ê±¿´ mapid ºÍµØÍ¼±êÌâ£¬ÊÇÒòÎª²»Í¬¸±±¾µÄµ×²ãÃüÃû²»ÍêÈ«Í³Ò»¡£
+-- ¸ÃÅĞ¶ÏÖ»Ó°Ïì kill_secret ÕâÀà³É¾ÍµÄÀÛ¼Æ·ÖÁ÷£¬²»Ó°ÏìÆÕÍ¨´óÂ½»÷É±Í³¼Æ¡£
 local function _is_secret_map(play)
     local mapId = tostring(getbaseinfo(play, ConstCfg.gbase.mapid) or "")
     local title = tostring(getbaseinfo(play, ConstCfg.gbase.map_title) or "")
     if mapId == "ÌØÊâÃØ¾³¸±±¾¶ş" or mapId == "ÌØÊâÃØ¾³¸±±¾Èı" then return true end
     return string.find(mapId, "ÃØ¾³") ~= nil or string.find(title, "ÃØ¾³") ~= nil
 end
+-- Í³¼Æ±³°üÉñÆ÷ÊıÁ¿¡£
+-- µ±Ç°ÊµÏÖ°´ 77~88 Õâ×é´©´÷Î»É¨Ãè£¬Ö»ÓĞ¸ñ×ÓÀïÕæµÄÓĞÎïÆ·ÃûÊ±²Å¼ÇÎªÒÑÓµÓĞ¡£
+-- ÕâÊÇ¿ìÕÕ½×¶ÎµÄÊı¾İÀ´Ô´£¬³É¾Í±¾Éí²»±£´æ¸ÃÖµ£¬Ö»ÔÚÖØËãÊ±¼´Ê±¶ÁÈ¡¡£
 local function _count_artifacts(play)
     local n = 0
     for where = 77, 88 do local itemobj = linkbodyitem(play, where) if itemobj and itemobj ~= "0" and getiteminfo(play, itemobj, 7) ~= "" then n = n + 1 end end
     return n
 end
+-- È¡ÁéÊŞÏµÍ³µÄ¡°È«Ìå×îµÍĞÇ¼¶¡±¡£
+-- ³É¾ÍÒªÇóÊÇ¡°ÁéÊŞÈ«²¿ X ĞÇ¡±£¬ËùÒÔ²»ÊÇ¿´×î¸ßĞÇ£¬Ò²²»ÊÇ¿´×ÜĞÇÊı£¬
+-- ¶øÊÇ 1~5 ºÅÁéÊŞÀï×îµÍµÄÄÇÒ»Ö»´ïµ½Ä¿±ê¼´¿ÉÊÓÎªÈ«Ìå´ï±ê¡£
 local function _get_pet_all_star(play)
     local data = Player.getJsonTableByVar(play, VarCfg["T_ÁéÊŞ"])
     local minStar = 999
     for i = 1, 5 do local star = _toint((data.ls_sp or {})[tostring(i)]) if star <= 0 then return 0 end if star < minStar then minStar = star end end
     return minStar == 999 and 0 or minStar
 end
+-- ºÏ²¢´óÂ½»÷É±×ÜÊı¡£
+-- Êı¾İÀ´Ô´·ÖÁ½²ã£º
+-- 1. state.counter.kill_dl: ±¾³É¾ÍÏµÍ³ÔËĞĞÆÚÀÛ¼Æ£»
+-- 2. VarCfg.T_dlsgjl: ÀÏÏµÍ³/ÆäËûÄ£¿é³Ö¾Ã»¯µÄ´óÂ½É±¹Ö¼ÇÂ¼¡£
+-- È¡Á½±ß×î´óÖµ£¬ÊÇÎªÁË¼æÈİÀúÊ·Êı¾İ£¬²»ÈÃÀÏÍæ¼ÒÒòÎªÇĞ»»Í³¼Æ¿Ú¾¶¶ø¶ª½ø¶È¡£
+local function _get_dl_kill_total(play, stateKillDl)
+    local ret = {}
+    local saved = Player.getJsonTableByVar(play, VarCfg.T_dlsgjl) or {}
+    for i = 1, 6 do
+        local key = tostring(i)
+        ret[key] = math.max(_toint((stateKillDl or {})[key] or (stateKillDl or {})[i]), _toint(saved[key] or saved[i]))
+    end
+    return ret
+end
+-- ¶ÁÈ¡²¢ÕûÀíÏÉÍ¾ÆæÔµµÄ´æµµ½á¹¹¡£
+-- ÕâÀï»á±£Ö¤ done / milestone_claim / counter / special µÈ¹Ø¼ü×Ö¶ÎÒ»¶¨´æÔÚ£¬
+-- ÕâÑùºóÃæµÄÂß¼­¾Í¿ÉÒÔÄ¬ÈÏÕâĞ©±í¿ÉÓÃ£¬²»±ØÔÚÃ¿¸öµØ·½ÔÙÅĞ¿Õ¡£
 local function _get_state(play)
     local state = Player.getJsonTableByVar(play, VarCfg["T_ÏÉÍ¾ÆæÔµ"])
     state.done = type(state.done) == "table" and state.done or {}
@@ -302,7 +362,12 @@ local function _get_state(play)
     state.special = type(state.special) == "table" and state.special or {}
     return state
 end
+-- Í³Ò»´æµµ³ö¿Ú¡£
+-- ËùÓĞ»áĞŞ¸Ä³É¾Í×´Ì¬µÄÂß¼­£¬×îÖÕ¶¼Ó¦¸ÃÍ¨¹ıÕâÀïÂäÅÌ£¬±ÜÃâÎ´À´¸Ä´æ´¢Î»ÖÃÊ±ĞèÒªÈ«ÎÄ¼şÖğ¸öÌæ»»¡£
 local function _save_state(play, state) Player.setJsonVarByTable(play, VarCfg["T_ÏÉÍ¾ÆæÔµ"], state) end
+-- ¹¹½¨Ò»´ÎÍêÕûµÄ³É¾ÍÅĞ¶¨¿ìÕÕ¡£
+-- ÕâÀï»á°Ñ¡°½ÇÉ«µ±Ç°ÕæÊµ×´Ì¬¡±ºÍ¡°³É¾ÍÏµÍ³×Ô¼ºÀÛ¼ÆµÄ¼ÆÊıÆ÷¡±ºÏ²¢³ÉÍ³Ò»ÊÓÍ¼£¬
+-- ºóÃæµÄ _reached Ö»ºÍÕâ·İ¿ìÕÕ½»»¥£¬±ÜÃâÃ¿¸öÌõ¼ş¶¼¸÷×ÔÈ¥²éÒ»±éÍæ¼ÒÊı¾İ¡£
 local function _build_snapshot(play, state)
     local linggen = Player.getJsonTableByVar(play, VarCfg["T_Áé¸ù"])
     linggen.level = linggen.level or {}
@@ -310,19 +375,20 @@ local function _build_snapshot(play, state)
     xianfu.stats = xianfu.stats or {}
     xianfu.refine = xianfu.refine or {collection = {}}
     local recipes = ((_cfg_44.RefineCfg or {}).recipes or {})
+    local killDl = _get_dl_kill_total(play, state.counter.kill_dl)
     return {
         level = _toint(getbaseinfo(play, ConstCfg.gbase.level)), rebirth_stage = math.floor(_toint(getplaydef(play, VarCfg["U_×ªÉúµÈ¼¶"])) / 10),
         power = math.max(_toint(querymoney(play, 29)), _toint(getplaydef(play, VarCfg["B_¼ÇÂ¼Õ½¶·Á¦"]))), tianshu_level = _toint((Player.getJsonTableByVar(play, VarCfg["T_ÌìÊé"]) or {}).level),
         fashion_count = _count_true((Player.getJsonTableByVar(play, VarCfg.T_szjl) or {}).yjs or {}), linggen_count = _count_pairs(linggen.level), linggen_levels = linggen.level,
-        realm_level = _toint(getplaydef(play, VarCfg["U_¾³½çĞŞÁ¶"][1])), guild_joined = math.max(_toint(state.counter.guild_joined), tostring(getbaseinfo(play, ConstCfg.gbase.guild) or "0") ~= "0" and 1 or 0),
+        realm_level = _toint(getplaydef(play, VarCfg["U_¾³½çĞŞÁ¶"][1])), guild_joined = math.max(_toint(state.counter.guild_joined), _has_guild(play)),
         title_count = _count_pairs(gettitlelist(play)), artifact_count = _count_artifacts(play), woodcut_count = _toint((Player.getJsonTableByVar(play, VarCfg["T_¿³Ê÷ÏµÍ³"]) or {}).num),
-        kill_dl = state.counter.kill_dl, kill_secret = state.counter.kill_secret, kill_cross_mon = _toint(state.counter.kill_cross_mon), chat_streak = _toint(state.counter.chat_streak),
+        kill_dl = killDl, kill_secret = state.counter.kill_secret, kill_cross_mon = _toint(state.counter.kill_cross_mon), chat_streak = _toint(state.counter.chat_streak),
         safe_death = _toint(state.counter.safe_death), enhance_fail_total = _toint(state.counter.enhance_fail_total), enhance_fail_streak = _toint(state.counter.enhance_fail_streak),
         mon_kill_without_damage = _toint(state.counter.mon_kill_without_damage), friend_count = _count_pairs(getfriendnamelist(play)), castle_win_once = _toint(state.counter.castle_win_once),
         recharge_total = math.max(_toint(querymoney(play, 23)), _toint(getplaydef(play, VarCfg["U_ÕæÊµ³äÖµ"]))), xianfu_xianghua = _toint(xianfu.stats.xiangHua),
         xianfu_refine_all = _count_true(xianfu.refine.collection) >= _count_pairs(recipes) and _count_pairs(recipes) > 0, pet_all_star = _get_pet_all_star(play),
-        treasure_total = math.max(_toint(state.counter.treasure_total), _toint(getplaydef(play, VarCfg["U_²Ø±¦Í¼´ÎÊı"]))), global_unique = math.max(_toint(state.counter.global_unique), _count_true(Player.getJsonTableByVar(play, VarCfg.T_grss) or {}) > 0 and 1 or 0),
-        first_create_login = _toint(state.counter.first_create_login), auto_online = _toint(getplaydef(play, VarCfg.J_zxsj)),
+        treasure_total = math.max(_toint(state.counter.treasure_total), _toint(getplaydef(play, VarCfg["U_²Ø±¦Í¼´ÎÊı"]))), global_unique = math.max(_toint(state.counter.global_unique), _has_global_unique(play)),
+        first_create_login = math.max(_is_first_create_login(play), _toint(state.counter.first_create_login)), auto_online = _toint(getplaydef(play, VarCfg.J_zxsj)),
         death_total = math.max(_toint(state.counter.death_total), _toint(getplaydef(play, VarCfg["U_±»É±Êı"]))), player_kill_total = math.max(_toint(state.counter.player_kill_total), _toint(getplaydef(play, VarCfg.U_srsl)), _toint(getplaydef(play, VarCfg["U_É±ÈËÊı"]))),
         revenge_total = _toint(state.counter.revenge_total), kill_kuangbao_total = math.max(_toint(state.counter.kill_kuangbao_total), _toint(getplaydef(play, VarCfg.U_jskb))), death_drop_total = _toint(state.counter.death_drop_total),
         loot_player_equip_total = _toint(state.counter.loot_player_equip_total), castle_first_blood = _toint(state.counter.castle_first_blood), castle_kill_total = _toint(state.counter.castle_kill_total), palace_streak = _toint(state.counter.palace_best),
@@ -330,6 +396,9 @@ local function _build_snapshot(play, state)
         story_complete = function(storyName) return _story_complete(play, storyName) end,
     }
 end
+-- °´ rule.kind Ö´ĞĞ×îÖÕ±È½Ï¡£
+-- rule ¸ºÔğÃèÊö¡°ÅĞ¶¨Ê²Ã´¡±£¬snapshot/counter ¸ºÔğÌá¹©¡°µ±Ç°ÖµÊÇ¶àÉÙ¡±¡£
+-- Á½Õß·ÖÀëºó£¬ºóĞøĞÂÔö³É¾ÍÊ±Ö»ĞèÒª²¹ÅäÖÃºÍÉÙÁ¿ kind ·ÖÖ§£¬²»ĞèÒªÔÙÅö cond ÎÄ°¸¡£
 local function _reached(play, state, snap, detail)
     local r = detail.rule or {}
     local kind = r.kind
@@ -381,6 +450,45 @@ local function _reached(play, state, snap, detail)
     if kind == "one_hit_kill" then return snap.one_hit_kill >= r.target end
     return false
 end
+-- ÀÏ°æ 515 Ãæ°åÈÔÈ»¶Á state["1"], state["2"] ÕâÖÖÆ½ÆÌ×Ö¶Î¡£
+-- ĞÂ°æ·şÎñ¶ËÄÚ²¿ÒÑ¾­ÇĞµ½ state.done[id]£¬ËùÒÔÕâÀï×öÒ»´Î¼æÈİ»ØĞ´£º
+-- 1. ÓÅÏÈ°´ÅäÖÃÀïµÄ legacy_idx ¾«È·»ØĞ´£¬±ÜÃâÃû³Æ¸Ä¶¯µ¼ÖÂÀÏÃæ°åÊ§Áª¡£
+-- 2. Ã»Åä legacy_idx µÄÀÏ²ÛÎ»£¬ÔÙÍË»Øµ½Ãû³ÆÆ¥Åä£¬¼æÈİÀúÊ·Êı¾İ¡£
+local function _sync_legacy_panel_flags(state)
+    local legacy = ((teshudata or {})["anniu_515"] or {}).details or {}
+    local nameDone = {}
+    local mapped = {}
+    for _, detail in ipairs(_cfg.details or {}) do
+        local done = _toint((state.done or {})[tostring(detail.id)]) >= 1 and 1 or 0
+        local legacyIdx = _toint(detail.legacy_idx)
+        if done > 0 then
+            nameDone[tostring(detail.name or "")] = 1
+        end
+        if legacyIdx > 0 then
+            local key = tostring(legacyIdx)
+            mapped[key] = 1
+            state[key] = done > 0 and 1 or nil
+        end
+    end
+    for idx, info in pairs(legacy) do
+        local key = tostring(idx)
+        if mapped[key] == nil then
+            local name = tostring((info or {}).tt or "")
+            if name ~= "" then
+                if _toint(nameDone[name]) >= 1 then
+                    state[key] = 1
+                else
+                    state[key] = nil
+                end
+            end
+        end
+    end
+end
+-- ¸ù¾İµ±Ç°ÒÑÍê³É³É¾Í£¬ÖØĞÂ»ã×Ü×îÖÕÊôĞÔÁĞ±í¡£
+-- ×¢ÒâÕâÀï²»ÊÇ¡°±¾´ÎĞÂ´ï³É½±Àø¡±£¬¶øÊÇ¡°ËùÓĞÒÑ´ï³É³É¾ÍµÄ×ÜºÍÖØËã¡±£º
+-- 1. attrs »á¹Òµ½ addattlist£»
+-- 2. special »á»º´æµ½ state.special£¬¸øÃæ°åÏÔÊ¾ºÍÆäËûÂß¼­¶ÁÈ¡£»
+-- 3. Èç¹ûÍæ¼ÒÊ§È¥Ä³¸ö³É¾Í×Ê¸ñ£¬ÖØËãºóÊôĞÔÒ²»á×ÔÈ»»ØÍË¡£
 local function _refresh_attr(play, state)
     local attrs, special = {}, {}
     for _, detail in ipairs(_cfg.details or {}) do
@@ -393,6 +501,9 @@ local function _refresh_attr(play, state)
     if attrsStr and attrsStr ~= "" then addattlist(play, _attr_list_name, "=", attrsStr, 1) else delattlist(play, _attr_list_name) end
     state.special = special
 end
+-- É¨ÃèÈ«²¿³É¾Í¡£
+-- ÕâÀï²»¸ºÔğÀÛ¼Æ¼ÆÊı£¬¼ÆÊıÓÉ¸÷ÀàÊÂ¼şÏÈĞ´½ø state.counter£»
+-- _evaluate Ö»¸ºÔğÄÃ¿ìÕÕÖğÌõ±È½Ï£¬´ï³Éºó·¢½±¡¢ÂäÅÌ¡¢Ë¢ĞÂÊôĞÔ¡£
 local function _evaluate(play, state) -- É¨ÃèÈ«²¿³É¾ÍÌõ¼ş£¬´ï³Éºó¼´Ê±·¢½±ÀøÓëÌáÊ¾
     local snap = _build_snapshot(play, state)
     local changed = false
@@ -414,7 +525,12 @@ local function _evaluate(play, state) -- É¨ÃèÈ«²¿³É¾ÍÌõ¼ş£¬´ï³Éºó¼´Ê±·¢½±ÀøÓëÌáÊ
     if changed then _refresh_attr(play, state) end
     return changed
 end
+-- ÒÑÍê³É³É¾ÍÊıÁ¿¡£
+-- Õâ¸öÖµÖ÷Òª¸øÀï³Ì±®½±ÀøºÍ¿Í»§¶ËÊıÁ¿Õ¹Ê¾Ê¹ÓÃ¡£
 local function _done_count(state) return _count_true(state.done) end
+-- ×é×°¡°¼ÙÊôĞÔ¡±Õ¹Ê¾ÁĞ±í¡£
+-- ÕâÀàÖµ²»Ò»¶¨Ö±½Ó²ÎÓëÕ½¶·ÊôĞÔ»»Ëã£¬µ«¿Í»§¶ËÃæ°åÈÔÈ»ĞèÒªÕ¹Ê¾¸øÍæ¼Ò¿´¡£
+-- ÀıÈç¿ç·ş¶îÍâÔöÉË¡¢ÈËÔµ¡¢÷ÈÁ¦£¬¶¼×ßÕâÀï×ª³ÉÍ³Ò»ÏÔÊ¾½á¹¹¡£
 local function _build_fake_attr(special)
     local ret = {}
     for key, cfg in pairs(_fake_attr_cfg) do
@@ -428,19 +544,38 @@ local function _build_fake_attr(special)
     table.sort(ret, function(a, b) return tostring(a.key) < tostring(b.key) end)
     return ret
 end
+-- ÏÂ·¢¸ø¿Í»§¶ËµÄÔËĞĞÊ±Êı¾İ¡£
+-- ÕâÀïÖ»´«¡°Íæ¼Òµ±Ç°×´Ì¬¡±£¬²»ÔÙ´«ÕûÌ×³É¾ÍÅäÖÃ£º
+-- 1. ÅäÖÃÓÉ¿Í»§¶Ë±¾µØ¸±±¾¸ºÔğ£»
+-- 2. ·şÎñ¶ËÖ»¸ºÔğ´«´ï³É×´Ì¬¡¢ÌØÊâÊôĞÔºÍÉÙÁ¿ÊµÊ±ÊıÖµ£»
+-- 3. ÕâÑù¿ÉÒÔ¼õÉÙ´«ÊäÁ¿£¬Ò²±ÜÃâ·şÎñ¶ËÅäÖÃ±»¿Í»§¶ËÖ±½ÓÒÀÀµ¡£
 local function _payload(play, state) -- ½ö´«ÔËĞĞÌ¬Êı¾İ£¬¿Í»§¶ËÅäÖÃ×ß±¾µØ¸±±¾
     local special = state.special or {}
     local snap = _build_snapshot(play, state)
     return {T_data = state, done_count = _done_count(state), special = special, fake_attr = _build_fake_attr(special), now = {level = snap.level, power = snap.power}}
 end
+-- ³É¾ÍÏµÍ³µÄÍ³Ò»Ë¢ĞÂÈë¿Ú¡£
+-- ËùÓĞÊÂ¼ş×îÖÕ¶¼»á»ã¾Ûµ½ÕâÀï£¬´¦ÀíË³Ğò¹Ì¶¨Îª£º
+-- 1. ÏÈÖ´ĞĞ updater£¬°Ñ±¾´ÎÊÂ¼ş¶ÔÓ¦µÄ counter ¸Äµô£»
+-- 2. ÔÙ×öÀúÊ·ÔàÊı¾İ¾ÀÆ«£»
+-- 3. È»ºóÅÜ _evaluate ¿´ÊÇ·ñÓĞĞÂ³É¾ÍÍê³É£»
+-- 4. ×îºó°´ĞèÒªÍ¬²½¾ÉÃæ°å¡¢Ë¢ĞÂÊôĞÔ²¢ÂäÅÌ¡£
+-- Í³Ò»Èë¿ÚµÄºÃ´¦ÊÇ£¬ºóĞøÅÅ²éÎÊÌâÊ±Ö»Òª¿´ÕâÀï£¬¾ÍÄÜÖªµÀÒ»´ÎÊÂ¼şÍêÕû×ßÁËÄÄĞ©½×¶Î¡£
 local function _touch(play, updater, refresh)
     if not play then return end
     _prepare()
     local state = _get_state(play)
     local changed = updater and updater(state) or false
+    if _normalize_unique_done(play, state) then changed = true end
+    if _normalize_recharge_done(play, state) then changed = true end
     local unlocked = _evaluate(play, state)
-    if changed or unlocked or refresh then _refresh_attr(play, state) _save_state(play, state) end
+    if changed or unlocked or refresh then _sync_legacy_panel_flags(state) _refresh_attr(play, state) _save_state(play, state) end
 end
+-- 515 Ö÷Èë¿Ú¡£
+-- p2/p3 µÄÓïÒå£º
+-- 1. p2 == 1: ÁìÈ¡Àï³Ì±®ÊıÁ¿½±Àø£»
+-- 2. ÆäËûÇé¿ö: ½ö´ò¿ª/Ë¢ĞÂÃæ°å£»
+-- msgData Ö÷ÒªÓÃÓÚ¼æÈİ²¿·Ö¿Í»§¶Ë°ÑÄ¿±êÊıÁ¿°üÔÚ json Àï´«ÉÏÀ´µÄÇé¿ö¡£
 function FairyFate.handle(play, p2, p3, msgData) -- 515Ö÷Èë¿Ú£º´ò¿ªÃæ°å/ÁìÈ¡ÊıÁ¿½±Àø/ÁìÈ¡µ¥Ïî½±Àø
     _prepare()
     local state = _get_state(play)
@@ -454,6 +589,7 @@ function FairyFate.handle(play, p2, p3, msgData) -- 515Ö÷Èë¿Ú£º´ò¿ªÃæ°å/ÁìÈ¡ÊıÁ¿
                 if milestone.reward_cfg and milestone.reward_cfg.title and milestone.reward_cfg.title ~= "" then local ok, err = _grant_milestone_title(play, state, target, milestone.reward_cfg.title) if not ok then Player.sendmsgEx(play, err or "³ÆºÅÁìÈ¡Ê§°Ü#57") return end end
                 if milestone.reward_cfg and milestone.reward_cfg.items and #milestone.reward_cfg.items > 0 then Player.rwjl(play, milestone.reward_cfg.items, "ÏÉÍ¾ÆæÔµÀï³Ì±®", 1, 0) end
                 state.milestone_claim[tostring(target)] = 1
+                _sync_legacy_panel_flags(state)
                 _save_state(play, state)
                 sendluamsg(play, 101, 515, 1, target, tbl2json(_payload(play, state)))
                 return
@@ -463,16 +599,24 @@ function FairyFate.handle(play, p2, p3, msgData) -- 515Ö÷Èë¿Ú£º´ò¿ªÃæ°å/ÁìÈ¡ÊıÁ¿
         return
     end
     _evaluate(play, state)
+    _sync_legacy_panel_flags(state)
     _refresh_attr(play, state)
     _save_state(play, state)
     sendluamsg(play, 101, 515, _toint(p2), _toint(p3), tbl2json(_payload(play, state)))
 end
+-- Ìá¹©¸øÇ¿»¯ÏµÍ³¶ÁÈ¡¡°Ç¿»¯ÃâºÄ¸ÅÂÊ¡±¡£
+-- Õâ¸öÖµ±¾ÖÊÀ´×Ô³É¾Í reward.special µÄÀÛ¼Æ½á¹û£¬ËùÒÔÃ¿´ÎÈ¡ÖµÇ°¶¼»áÏÈË¢ĞÂÒ»´ÎÊôĞÔ»º´æ¡£
 function FairyFate.getStrengthFreeChance(play)
     _prepare()
     local state = _get_state(play)
     _refresh_attr(play, state)
     return _toint((state.special or {}).strength_free)
 end
+-- ¶ÔÍâ±©Â¶µÄÊÂ¼şĞ´Èë¿Ú¡£
+-- Íâ²¿Ä£¿é²»ÒªÖ±½Ó¸Ä state.counter£¬¶øÊÇÍ³Ò»µ÷ÓÃ FairyFate.touch£º
+-- 1. reason ¾ö¶¨±¾´ÎÊôÓÚÄÄÖÖĞĞÎª£»
+-- 2. a/b ×÷Îª¸½¼Ó²ÎÊı´«¸ø¶ÔÓ¦·ÖÖ§£»
+-- 3. ×îÖÕ»¹ÊÇ»Øµ½ _touch Íê³ÉÕûÂÖÖØËã¡£
 function FairyFate.touch(play, reason, a, b)
     if reason == "treasure" then
         _touch(play, function(state) state.counter.treasure_total = _toint(state.counter.treasure_total) + _toint(a ~= nil and a or 1) return true end, true)
@@ -484,24 +628,66 @@ function FairyFate.touch(play, reason, a, b)
         _touch(play, function(state) if _toint(state.counter.enhance_fail_streak) > 0 then state.counter.enhance_fail_streak = 0 return true end return false end, true)
     elseif reason == "woodcut" then
         _touch(play, function(state) state.counter.woodcut_count = _toint(state.counter.woodcut_count) + _toint(a ~= nil and a or 1) return true end, true)
+    elseif reason == "global_unique" then
+        _touch(play, function(state)
+            local cur = _has_global_unique(play)
+            if cur > _toint(state.counter.global_unique) then
+                state.counter.global_unique = cur
+                return true
+            end
+            return false
+        end, true)
+    -- kill_mon ±È½ÏÌØÊâ£º
+    -- 1. ÒªÍ¬Ê±¸üĞÂ´óÂ½»÷É±¡¢ÃØ¾³»÷É±¡¢¿ç·ş»÷É±ÈıÌ×¼ÆÊı£»
+    -- 2. »¹ÒªÍ¬²½Ğ´»Ø T_dlsgjl£¬¼æÈİÀúÊ·Í³¼Æ¿Ú¾¶£»
+    -- 3. ËùÒÔÕâÀïµ¥¶ÀÕ¹¿ª£¬²»×ß¼òµ¥µÄ +1 Ä£°å¡£
+    elseif reason == "kill_mon" then
+        _touch(play, function(state)
+            local mapId = tostring(a or getbaseinfo(play, 3) or "")
+            local dl = _toint(daluditu and daluditu[mapId])
+            local changed = false
+            if dl >= 1 and dl <= 6 then
+                local key = tostring(dl)
+                state.counter.kill_dl[key] = _toint(state.counter.kill_dl[key]) + 1
+                local dlData = Player.getJsonTableByVar(play, VarCfg.T_dlsgjl) or {}
+                dlData[key] = _toint(dlData[key] or dlData[dl]) + 1
+                Player.setJsonVarByTable(play, VarCfg.T_dlsgjl, dlData)
+                if _is_secret_map(play) then
+                    state.counter.kill_secret[key] = _toint(state.counter.kill_secret[key]) + 1
+                end
+                changed = true
+            end
+            if checkkuafu(play) then
+                state.counter.kill_cross_mon = _toint(state.counter.kill_cross_mon) + 1
+                changed = true
+            end
+            return changed
+        end, false)
     elseif reason == "linggen" or reason == "pet" or reason == "title" or reason == "fashion_unlock" or reason == "story" or reason == "xianfu" then
         _touch(play, nil, true)
     else
         _touch(play, nil, true)
     end
 end
-GameEvent.add(EventCfg.onLogin, function(play) _touch(play, function(state) if _toint(state.counter.guild_joined) <= 0 and tostring(getbaseinfo(play, ConstCfg.gbase.guild) or "0") ~= "0" then state.counter.guild_joined = 1 return true end return false end, true) end, "ÏÉÍ¾ÆæÔµ")
+
+-- ÊÂ¼ş°ó¶¨Çø£º
+-- 1. ÊÂ¼ş²ãÖ»¸ºÔğ¼ÇÂ¼ĞĞÎª£¬²»Ö±½ÓÅĞ¶Ï³É¾ÍÊÇ·ñÍê³É¡£
+-- 2. µÇÂ¼Ê±»á²¹ÅĞÒ»´ÎĞĞ»áÊ×Èë£¬±ÜÃâÀÏ½ÇÉ«ÒÑ¾­Èë»áµ«Ã»¾­¹ıµ±Ç°ÊÂ¼şÁ´¡£
+-- 3. ÕæÕıÍ¨¹ı guildaddmemberafter Èë»áÊ±£¬QFunction-0.lua »áÍÆËÍ goGuild/onGuildAddMemberAfter£¬Á½±ß¶¼»áÂäµ½ÕâÀïµÄÍ³Ò»ÖØËã¡£
+GameEvent.add(EventCfg.onLogin, function(play) _touch(play, function(state) if _toint(state.counter.guild_joined) <= 0 and _has_guild(play) > 0 then state.counter.guild_joined = 1 return true end return false end, true) end, "ÏÉÍ¾ÆæÔµ")
 GameEvent.add(EventCfg.onKFLogin, function(play) _touch(play, nil, true) end, "ÏÉÍ¾ÆæÔµ")
 GameEvent.add(EventCfg.onLoginEnd, function(play) _touch(play, nil, true) end, "ÏÉÍ¾ÆæÔµ")
 GameEvent.add(EventCfg.onSendAbility, function(play) _touch(play, nil, false) end, "ÏÉÍ¾ÆæÔµ")
 GameEvent.add(EventCfg.onProHarm, function(play, harm) _touch(play, function(state) local curHp = _toint(getbaseinfo(play, ConstCfg.gbase.curhp)) if _toint(harm) >= curHp and curHp > 0 then state.counter.one_hit_killed_pending = 1 return true end return false end, false) end, "ÏÉÍ¾ÆæÔµ")
 GameEvent.add(EventCfg.onAttackDamagePlayer, function(play, target, damage) _touch(play, function(state) if type(target) == "string" and getbaseinfo(target, ConstCfg.gbase.isplayer) and _toint(damage) >= _toint(getbaseinfo(target, ConstCfg.gbase.curhp)) and _toint(getbaseinfo(target, ConstCfg.gbase.curhp)) > 0 then state.counter.one_hit_kill_pending = 1 return true end return false end, false) end, "ÏÉÍ¾ÆæÔµ")
 GameEvent.add(EventCfg.onAttackDamageMonster, function(play) _touch(play, function(state) state.counter.life_hurt_mon = 1 state.counter.last_attack_mon_at = os.time() return true end, false) end, "ÏÉÍ¾ÆæÔµ")
-GameEvent.add(EventCfg.onKillMon, function(play, mob, mobIdx) _touch(play, function(state) local mapId = tostring(getbaseinfo(play, ConstCfg.gbase.mapid) or "") local dl = _toint(daluditu and daluditu[mapId]) if dl >= 1 and dl <= 6 then local key = tostring(dl) state.counter.kill_dl[key] = _toint(state.counter.kill_dl[key]) + 1 if _is_secret_map(play) then state.counter.kill_secret[key] = _toint(state.counter.kill_secret[key]) + 1 end end if checkkuafu(play) then state.counter.kill_cross_mon = _toint(state.counter.kill_cross_mon) + 1 end return true end, false) end, "ÏÉÍ¾ÆæÔµ")
+GameEvent.add(EventCfg.onKillMon, function(play, mob, mobIdx) end, "ÏÉÍ¾ÆæÔµ")
 GameEvent.add(EventCfg.onkillplay, function(play, target) _touch(play, function(state) state.counter.player_kill_total = math.max(_toint(state.counter.player_kill_total) + 1, _toint(getplaydef(play, VarCfg.U_srsl))) if _toint(state.counter.one_hit_kill_pending) > 0 then state.counter.one_hit_kill = _toint(state.counter.one_hit_kill) + 1 state.counter.one_hit_kill_pending = 0 end if state.counter.revenge_target ~= "" and state.counter.revenge_target == tostring(getbaseinfo(target, ConstCfg.gbase.name) or "") then state.counter.revenge_target = "" state.counter.revenge_total = _toint(state.counter.revenge_total) + 1 end if checktitle(target, "¿ñ±©Ö®Á¦") then state.counter.kill_kuangbao_total = math.max(_toint(state.counter.kill_kuangbao_total) + 1, _toint(getplaydef(play, VarCfg.U_jskb))) end if castleinfo and castleinfo(5) and getbaseinfo(play, ConstCfg.gbase.issbk) then state.counter.castle_kill_total = _toint(state.counter.castle_kill_total) + 1 if tostring(getsysvarex(_sys_castle_first_blood_key) or "") == "" then setsysvarex(_sys_castle_first_blood_key, tostring(getbaseinfo(play, ConstCfg.gbase.name) or ""), true) state.counter.castle_first_blood = 1 end local mapId = tostring(getbaseinfo(play, ConstCfg.gbase.mapid) or "") if mapId == "new0150" or mapId == "kuafu0150" then state.counter.palace_current = _toint(state.counter.palace_current) + 1 if _toint(state.counter.palace_current) > _toint(state.counter.palace_best) then state.counter.palace_best = state.counter.palace_current end end end local kqfz = _toint(getsysvar(constant.G_kqfz)) if kqfz >= 40 and kqfz <= 50 then state.counter.bwdh_kill_total = _toint(state.counter.bwdh_kill_total) + 1 end return true end, false) end, "ÏÉÍ¾ÆæÔµ")
 GameEvent.add(EventCfg.onPlaydie, function(play, killer) _touch(play, function(state) state.counter.death_total = _toint(state.counter.death_total) + 1 if getbaseinfo(play, ConstCfg.gbase.issaferect) then state.counter.safe_death = _toint(state.counter.safe_death) + 1 end state.counter.palace_current = 0 if killer and getbaseinfo(killer, ConstCfg.gbase.isplayer) then state.counter.revenge_target = tostring(getbaseinfo(killer, ConstCfg.gbase.name) or "") if _toint(state.counter.one_hit_killed_pending) > 0 then state.counter.one_hit_killed = _toint(state.counter.one_hit_killed) + 1 state.counter.one_hit_killed_pending = 0 end if os.time() - _toint(state.counter.last_attack_mon_at) <= 3 then state.counter.collateral_death = _toint(state.counter.collateral_death) + 1 end else if _toint(state.counter.life_hurt_mon) <= 0 then state.counter.mon_kill_without_damage = _toint(state.counter.mon_kill_without_damage) + 1 end state.counter.revenge_target = "" state.counter.one_hit_killed_pending = 0 end state.counter.life_hurt_mon = 0 return true end, false) end, "ÏÉÍ¾ÆæÔµ")
 GameEvent.add(EventCfg.onTriggerChat, function(play, text) _touch(play, function(state) state.counter.chat_streak = _toint(state.counter.chat_streak) + 1 return true end, false) end, "ÏÉÍ¾ÆæÔµ")
 GameEvent.add(EventCfg.goSwitchMap, function(play) _touch(play, function(state) local mapId = tostring(getbaseinfo(play, ConstCfg.gbase.mapid) or "") if mapId ~= "new0150" and mapId ~= "kuafu0150" and _toint(state.counter.palace_current) > 0 then state.counter.palace_current = 0 return true end return false end, false) end, "ÏÉÍ¾ÆæÔµ")
+-- goGuild / onGuildAddMemberAfter ¶¼»áÂäµ½Í¬Ò»¸ö counter£¬
+-- Ô­ÒòÊÇµ×²ã²»Í¬Èë¿Ú¿ÉÄÜÍÆ²»Í¬ÊÂ¼şÃû£¬µ«¶Ô³É¾ÍÏµÍ³À´ËµÓïÒå¶¼ÊÇ¡°Íæ¼ÒÍê³ÉÁËÊ×´ÎÈë»á¡±¡£
 GameEvent.add(EventCfg.goGuild, function(play) _touch(play, function(state) if _toint(state.counter.guild_joined) <= 0 then state.counter.guild_joined = 1 return true end return false end, true) end, "ÏÉÍ¾ÆæÔµ")
 GameEvent.add(EventCfg.onGuildAddMemberAfter, function(play) _touch(play, function(state) if _toint(state.counter.guild_joined) <= 0 then state.counter.guild_joined = 1 return true end return false end, true) end, "ÏÉÍ¾ÆæÔµ")
 GameEvent.add(EventCfg.onGetTaskTitle, function(play) _touch(play, nil, true) end, "ÏÉÍ¾ÆæÔµ")
