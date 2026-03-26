@@ -82,3 +82,8 @@
 [2026-03-26 00:49:33:415] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：32; NpcThreadId: 87748, CurPlayThreadId: 87748
 [2026-03-26 00:49:33:415] [玩家名字k]Lua执行耗时过高:32ms msgid:100 32 1 0 
 
+[2026-03-26 14:47:16:829] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：47; NpcThreadId: 87748, CurPlayThreadId: 87748
+[2026-03-26 14:47:16:829] [玩家名字k]Lua执行耗时过高:47ms msgid:100 24 2 0 {"caowei":1}
+
+[2026-03-26 15:02:34:726] LuaNPC:玩家名字k ID:999999999 执行 pickupitemex player:玩家名字k 耗时：31; NpcThreadId: 87748, CurPlayThreadId: 87748
+

@@ -90,6 +90,7 @@ local function _title_sync_dadi_attr(play)
 end
 
 local function _tianshu_buff_splash(play, Target)
+    -- release_print("触发天书溅射buff")
     if not play or not Target or getbaseinfo(Target, ConstCfg.gbase.isplayer) then
         return
     end
@@ -113,6 +114,7 @@ local function _tianshu_buff_splash(play, Target)
     end
     rangeharm(play, getbaseinfo(Target, ConstCfg.gbase.x), getbaseinfo(Target, ConstCfg.gbase.y), tonumber(cfg.splash_range) or 2, damage, 0, 0, 0, 2, tonumber(cfg.splash_effect) or 20310, tonumber(cfg.splash_max_targets) or 12)
     playeffect(Target, tonumber(cfg.splash_hit_effect) or 60463, 0, 0, 1, 1, 0)
+    -- Player.sendmsgEx(play,"【帝疆】#253|触发，范围造成"..damage.."点真实伤害")
 end
 
 Buff = {
@@ -971,6 +973,23 @@ Buff = {
                 data["106"] = nil
             end
             setplaydef(play,VarCfg.S_buffgwq,tbl2json(data))
+        end
+    end,
+    [339] = function(play,zt,Damage,Target,MagicId,Model) --天书仙法攻击触发
+        -- zt=1/2：注册或移除攻击触发；zt=3：攻击回调并返回额外伤害
+
+        if zt == 3 then
+            _tianshu_buff_splash(play, Target)
+            return 0
+        else
+            local bl = getplaydef(play,VarCfg.S_buffgjq)
+            local data = json2tbl(bl == "" and {} or bl)
+            if zt == 1 then
+                data["339"] = true
+            elseif zt == 2 then
+                data["339"] = nil
+            end
+            setplaydef(play,VarCfg.S_buffgjq,tbl2json(data))
         end
     end,
 }

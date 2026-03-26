@@ -11,6 +11,7 @@ VarCfg["G_全民夺矿状态"]           = "G8"                                       
 --引擎A变量
 VarCfg["A_天选之人json"]           = "A0"                                                                          --天选之人json
 VarCfg["A_全区首曝json"]           = "A1"                                                                          --全区首曝json
+VarCfg["A_全区首曝归属json"]           = "A2"                                                                          --全区首曝归属json
 VarCfg["A_统计信息用"]           = "A3"                                                                          --统计信息用
 VarCfg["A_行会积分记录"]           = "A4"                                                                          --A_行会积分记录
 VarCfg["A_行会积分记录跨服"]                  = "A5"                    --A_行会积分记录跨服
@@ -131,6 +132,7 @@ VarCfg.T_zxrw           =  "T16"                                                
 VarCfg.T_rwjl        = "T17"                                                                            --任务领取记录
 VarCfg.T_xybl           = "T18"                                                                         --幸运爆率
 VarCfg.T_grsb           = "T19"                                                                         --个人首爆
+VarCfg.T_grqqsb           = "T62"                                                                         --个人全区首爆
 VarCfg.T_qrbq           = "T20"                                                                         --福利大厅
 VarCfg.T_szjl           = "T21"                                                                         --时装记录
 VarCfg.T_xldtsg           = "T22"                                                                           --系列地图杀怪

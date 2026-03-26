@@ -1,13 +1,10 @@
 npc = {}
-
 local _fashionConfig1002 = Guard.getConfig("npc_1002")
 local FairyFate = include("lua/LuaLib/fairy_fate.lua")
 local _fashionAttrListName = "时装属性"
-
 local function _refreshFashionAttr(play, T_data)
     T_data = T_data or Player.getJsonTableByVar(play, VarCfg.T_szjl)
     T_data.yjs = T_data.yjs or {}
-
     local attrs = {}
     for idx, cfg in ipairs(((_fashionConfig1002 and _fashionConfig1002.details and _fashionConfig1002.details.sz) or {})) do
         if T_data.yjs[tostring(idx)] == 1 then
@@ -20,7 +17,6 @@ local function _refreshFashionAttr(play, T_data)
             end
         end
     end
-
     local attrsstr = Player.getAttrTableToStr(attrs)
     if attrsstr and attrsstr ~= "" then
         addattlist(play, _fashionAttrListName, "=", attrsstr, 1)
@@ -28,7 +24,6 @@ local function _refreshFashionAttr(play, T_data)
         delattlist(play, _fashionAttrListName)
     end
 end
-
 npc[2] = function(play, p2, p3, msgData) --背包  面板
     if p2 == 0 then
         -- 回收面板
@@ -133,17 +128,14 @@ npc[2] = function(play, p2, p3, msgData) --背包  面板
         end
     end
 end
-
 npc[3] = function(play) --仓库面板
     openstorage(play)
 end
-
 npc[5] = function(play, p2, p3, data) -- 内挂开关
     setflagstatus(play, VarCfg.BS_ngkg, p2)
     Buff[70](play, p2 == 1 and 1 or 2)
     sendluamsg(play, 103, 1, 0, 0, '{"ngkg":' .. p2 .. "}")
 end
-
 npc[6] = function(play, p2, p3, data) -- 屏蔽系统消息
     if getplaydef(play, "N$是否屏蔽系统消息") == 0 then
         setplaydef(play, "N$是否屏蔽系统消息", 1)
@@ -155,11 +147,9 @@ npc[6] = function(play, p2, p3, data) -- 屏蔽系统消息
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>正常接收系统消息...</font>","Type":9}')
     end
 end
-
 ---异闻录
 local npc_xyl = dofile('Envir/Lua/Data/npc_xyl.lua')
 local daluditu = dofile('Envir/Lua/Data/daluditu.lua')
-
 -- 
 local function _ywl_activate_linggen(play, idx)
     local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
@@ -174,7 +164,6 @@ local function _ywl_activate_linggen(play, idx)
     Player.sendmsgEx(play, "恭喜你，成功激活|【灵根】#249|")
     return true
 end
-
 local function _ywl_apply_special_reward(play, name, count)
     if name == "激活金灵根" then
         return _ywl_activate_linggen(play, 1)
@@ -189,7 +178,6 @@ local function _ywl_apply_special_reward(play, name, count)
     end
     return false
 end
-
 local function _ywl_filter_rewards(play, list)
     if type(list) ~= "table" then
         return list
@@ -221,7 +209,6 @@ local function _ywl_is_chapter_open(play, i, j)
     local cur_jqd = querymoney(play, getstditeminfo("剧情点", 0))
     return cur_jqd >= need_jqd
 end
-
 local function _ywl_get_target_dl(sj, shuju)
     if type(shuju) == "table" and type(shuju.yd) == "table" then
         local target_map = shuju.yd[2]
@@ -232,7 +219,6 @@ local function _ywl_get_target_dl(sj, shuju)
     end
     return tonumber(sj and sj.i) or 0
 end
-
 local _ywl_map_gate = {
     ["虚妄山脉"] = {mode = "ge", key = "npc_621", value = 2, tip = "踏入·虚妄山脉"},
     ["鬼嘲深渊"] = {mode = "ge", key = "npc_623", value = 2, tip = "踏入·鬼嘲深渊"},
@@ -261,7 +247,6 @@ local _ywl_map_gate = {
     ["灵域·三层"] = {mode = "ge", key = "npc_664", value = 2, tip = "灵域使者·二"},
     ["灵域·秘境"] = {mode = "ge", key = "npc_665", value = 2, tip = "灵域使者·三"},
 }
-
 local function _ywl_check_map_gate(play, shuju)
     if type(shuju) ~= "table" or type(shuju.yd) ~= "table" then
         return true
@@ -285,7 +270,6 @@ local function _ywl_check_map_gate(play, shuju)
     Player.sendmsgEx(play, "请先完成#57|【" .. cfg.tip .. "】#249|")
     return false
 end
-
 local function _ywl_can_transfer(play, sj, shuju)
     local need_dl = _ywl_get_target_dl(sj, shuju)
     if need_dl > 0 and not Player.dl_sz(play, need_dl) then
@@ -301,13 +285,11 @@ local function _ywl_can_transfer(play, sj, shuju)
     end
     return true
 end
-
 local function _ywl_send_current_task(play)
     local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
     local dq = T_ywl.dq or ""
     sendluamsg(play, 101, 11, 9, 0, '{"dq":"' .. dq .. '"}')
 end
-
 local function _ywl_set_current_task(play, sj)
     local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
     T_ywl.dq = sj.i .. "_" .. sj.j .. "_" .. sj.z
@@ -318,7 +300,6 @@ local function _ywl_set_current_task(play, sj)
     setplaydef(play, VarCfg.T_ywl, tbl2json(T_ywl))
     _ywl_send_current_task(play)
 end
-
 local function _ywl_try_clear_current_task(play, T_ywl, sj)
     T_ywl = T_ywl or json2tbl(getplaydef(play, VarCfg.T_ywl))
     if not sj or not sj.i or not sj.j or not sj.z then
@@ -336,7 +317,6 @@ local function _ywl_try_clear_current_task(play, T_ywl, sj)
     end
     return T_ywl, false
 end
-
 npc[11] = function(play, p2, p3, data) --异闻录
     -- sj.i 大陆  sj.j 章节  sj.k 暂时不用  sj.z 剧情
     if p2 == 0 then
@@ -537,7 +517,6 @@ npc[17] = function(play, p2, p3, data) --实力提升
         sendluamsg(play, 101, 17, 0, 0, "")
     end
 end
-
 ---新手礼包
 npc[18] = function(play, p2, p3, data) --新手礼包
     if p2 == 0 then
@@ -548,7 +527,6 @@ npc[18] = function(play, p2, p3, data) --新手礼包
         local rwid = getplaydef(play, VarCfg.U_zxrw[1])
         if rwid == 1 then
             
-
             Player.rwjl(
                 play,
                 {{"复活戒指",1},{"麻痹戒指",1},{"斗笠",1},{"攻速之镰[lv1]",1}, {"切割之斧[lv1]",1},{ "盟重回城石", 1 }, { "随机传送石", 1 }, { "龙骨刀", 1 }, { "龙骨甲", 1 },{"酒葫芦",1},},
@@ -560,14 +538,12 @@ npc[18] = function(play, p2, p3, data) --新手礼包
             addbuff(play, 20002)
             -- 飞剑功能临时下线：关闭新手礼包自动激活飞剑
             -- Npclib["anniu"][19](play, 1, 0, "")
-
             
             --新手技能
             for _, v in pairs(constant.pz_xrjn) do
                 addskill(play,v[1],v[2])
             end
             Player.zxrw_wancheng(play, getplaydef(play, VarCfg.U_zxrw[1]), "新手礼包") --完成任务
-
             sendluamsg(play, 101, 1005, 0, 0, "lqcg")
             sendluamsg(play, 101, 9999, 0, 0, "npc_xslb")
             sendluamsg(play, 101, 18, 1, 0, "")
@@ -581,12 +557,10 @@ function feijian(play, msgData) ---飞剑
     -- 飞剑功能临时下线
     return
 end
-
 npc[19] = function(play, p2, p3, data) --飞剑系统
     -- 飞剑功能临时下线
     return
 end
-
 npc[23] = function(play, p2, p3, data) --护体光环
     local zs_level = tonumber(getplaydef(play, VarCfg["U_转生等级"]) or 0) or 0
     local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
@@ -596,11 +570,9 @@ npc[23] = function(play, p2, p3, data) --护体光环
         [2] = {open = tonumber(sc_data["首充"] or 0) == 1 and 1 or 0},
         [3] = {open = getflagstatus(play, VarCfg.BS_mztq) == 1 and 1 or 0},
     }
-
     if active < 1 or active > 3 or aura[active].open ~= 1 then
         active = 0
     end
-
     if p2 == 0 then
         for i = 1, 3 do
             aura[i].active = active == i and 1 or 0
@@ -626,7 +598,6 @@ npc[23] = function(play, p2, p3, data) --护体光环
         sendluamsg(play, 101, 23, 1, idx, tbl2json({aura = aura, active = idx}))
     end
 end
-
 npc[30] = function(play, p2, p3, data) --砍树系统
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     if not (jq_data["npc_55"] and jq_data["npc_55"] >= 2) then
@@ -658,7 +629,6 @@ npc[30] = function(play, p2, p3, data) --砍树系统
             Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
             Player.sendmsgEx(play, "斧子升级成功，当前斧子等级为|【"..T_data.axe.."】#249|")
             sendluamsg(play, 101, 30, 2, 1, tbl2json({T_data = T_data}))
-
         elseif p3 == 2 then--升级自动升级
             T_data.auto = T_data.auto or 1
             if T_data.auto >= config.updata[2].max_level then
@@ -681,7 +651,6 @@ npc[30] = function(play, p2, p3, data) --砍树系统
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
         T_data.axe = T_data.axe or 1
         T_data.num = T_data.num or 0
-
         if p3 == 1 then -- 打开页面时自动的奖励
             -- release_print("砍树系统自动奖励触发")
             -- release_print(os.time())
@@ -705,12 +674,10 @@ npc[30] = function(play, p2, p3, data) --砍树系统
                 return
             end
             Player.takeItemByTable(play, config.click.cost, ",砍树系统",nil)
-
             T_data.num = T_data.num + 1
             Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
             if FairyFate and FairyFate.touch then FairyFate.touch(play, "woodcut", 1) end
             sendluamsg(play, 101, 30, 1, 0, tbl2json({T_data = T_data}))
-
             local jl = ransjstr(config.updata[1].details[T_data.axe].jl, 1, 3)
             release_print("砍树系统奖励:",tbl2json(jl))
             Player.rwjl(play, {{jl,1}}, "砍树系统自动奖励", 1,0)
@@ -751,6 +718,9 @@ npc[30] = function(play, p2, p3, data) --砍树系统
         sendluamsg(play, 101, 30, 4, 0, tbl2json({T_data = T_data}))
     end
 end
+npc[31] = function(play, p2, p3, data) --马上发财
+    Npclib[101].main(play, 101)
+end
 ---首充礼包
 npc[501] = function(play, p2, p3, data) --首充礼包
     if p2 == 0 then
@@ -776,7 +746,6 @@ npc[501] = function(play, p2, p3, data) --首充礼包
             sendluamsg(play, 101, 999, 6, 21, "")
             return
         end
-
         if T_data["首充"] == 1 then
             local list = cfg and cfg.details and cfg.details["首充"] or {}
             local max = #list
@@ -784,7 +753,6 @@ npc[501] = function(play, p2, p3, data) --首充礼包
                 Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>礼包配置异常...</font>","Type":9}')
                 return
             end
-
             local claimed = tonumber(T_data["other_lb"] or 0) or 0
             local idx = claimed + 1
             if idx > max then
@@ -797,7 +765,6 @@ npc[501] = function(play, p2, p3, data) --首充礼包
             T_data["other_lb"] = idx
             T_data["jq_time"] = time_data
             Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
-
             local reward = list[idx].jl
             if reward and #reward > 0 then
                 Player.rwjl(play, reward, "首充礼包", 1, 1000)
@@ -817,7 +784,6 @@ npc[501] = function(play, p2, p3, data) --首充礼包
             elseif idx == 2 then
                 addskill(play, 51, 3)
             end
-
             sendluamsg(play, 101, 1005, 0, 0, "lqcg")
             return
         end
@@ -973,9 +939,7 @@ npc[506] = function(play, p2, p3, msgData) --天选之子
         sendluamsg(play, 101, 506, 1, getflagstatus(play, VarCfg.BS_sckg), "")
     end
 end
-
 local hd_dtmz = {}
-
 -- 读取全民答题配置（提交入口固定走 npc[507]）
 local function _qmdt_get_cfg_507()
     local cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].qmdt or nil
@@ -991,7 +955,6 @@ local function _qmdt_get_cfg_507()
     cfg.time_bonus_per_sec = tonumber(cfg.time_bonus_per_sec) or 1
     return cfg
 end
-
 local function _qmdt_get_state_507()
     local raw = getsysvar(VarCfg["A_全民答题json"])
     if raw == "" then
@@ -1000,11 +963,9 @@ local function _qmdt_get_state_507()
     local tb = json2tbl(raw)
     return type(tb) == "table" and tb or {}
 end
-
 local function _qmdt_save_state_507(state)
     setsysvar(VarCfg["A_全民答题json"], tbl2json(state or {}))
 end
-
 local function _qmdt_build_prompt_507(q, qidx, total)
     local lines = {"第" .. tostring(qidx) .. "/" .. tostring(total) .. "题：" .. tostring(q.title or "")}
     for i, one in ipairs(q.options or {}) do
@@ -1013,7 +974,6 @@ local function _qmdt_build_prompt_507(q, qidx, total)
     lines[#lines + 1] = "请输入答案序号或完整答案"
     return table.concat(lines, "\n")
 end
-
 local function _qmdt_make_payload_507(state, cfg, qidx)
     local q = cfg and cfg.questions and cfg.questions[qidx]
     if not q then
@@ -1033,7 +993,6 @@ local function _qmdt_make_payload_507(state, cfg, qidx)
         end_ts = tonumber(state.question_end_ts) or 0,
     }
 end
-
 local function _qmdt_build_say_507(state, cfg, qidx)
     local q = cfg and cfg.questions and cfg.questions[qidx]
     if not q then
@@ -1050,7 +1009,6 @@ local function _qmdt_build_say_507(state, cfg, qidx)
     lines[#lines + 1] = '<发送/@@InputString24(请输入答案序号或完整答案：)>'
     return table.concat(lines, '\\') .. '\\'
 end
-
 local function _qmdt_is_active_507(state, cfg, qidx)
     if not cfg or tonumber(state.open) ~= 1 then
         return false
@@ -1064,7 +1022,6 @@ local function _qmdt_is_active_507(state, cfg, qidx)
     end
     return true
 end
-
 local function _qmdt_parse_answer_507(q, answerRaw, p3)
     local raw = tostring(answerRaw or "")
     raw = string.gsub(raw, "^%s+", "")
@@ -1112,7 +1069,6 @@ local function _qmdt_parse_answer_507(q, answerRaw, p3)
     end
     return nil
 end
-
 local function _qmdt_submit_answer_507(play, answerRaw, p3)
     local cfg = _qmdt_get_cfg_507()
     if not cfg then
@@ -1181,7 +1137,6 @@ local function _qmdt_submit_answer_507(play, answerRaw, p3)
         Player.sendmsgEx(play, "回答错误，可继续作答直到本题结束#57")
     end
 end
-
 function inputstring24(play)
 -- release_print("inputstring24:", getplaydef(play, "S24"))
 -- release_print("inputstring24:", getconst(play, "<$NPCPARAMS(1,S24)>"))
@@ -1194,7 +1149,6 @@ function inputstring24(play)
     answerRaw = string.gsub(answerRaw, "%s+$", "")
     _qmdt_submit_answer_507(play, answerRaw, 0)
 end
-
 local function _activity507_enter_notice(play, actIdx, actName)
     if not play or not actName or actName == "" then
         return
@@ -1210,8 +1164,6 @@ local function _activity507_enter_notice(play, actIdx, actName)
     end
     setsysvar(rowVar, (row + 1) % 30)
 end
-
-
 local function _activity507_is_open(p3)
     local dqfz = tonumber(getsysvar(VarCfg["G_开区分钟"]) or 0) or 0
     if p3 == 2 then
@@ -1234,7 +1186,6 @@ local function _activity507_is_open(p3)
     end
     return false
 end
-
 local function _activity507_open_state_payload()
     return tbl2json({
         [2] = _activity507_is_open(2) and 1 or 0,
@@ -1244,8 +1195,6 @@ local function _activity507_open_state_payload()
         [13] = _activity507_is_open(13) and 1 or 0,
     })
 end
-
-
 npc[507] = function(play, p2, p3, msgData) --游戏活动
     if p2 == 0 then
         local qmdt_state = getsysvar(VarCfg["A_全民答题json"])
@@ -1308,7 +1257,7 @@ npc[507] = function(play, p2, p3, msgData) --游戏活动
                 Player.sendmsgEx(play, "不是活动时间，无法进入#57")
                 return
             end
-            map(play, "xtc")
+            mapmove(play, "xtc",137,138)
             _activity507_enter_notice(play, 5, "土城跑酷")
         elseif p3 == 6 then
             Player.sendmsgEx(play, "天才地宝暂未接入活动入口#57")
@@ -1353,38 +1302,32 @@ npc[507] = function(play, p2, p3, msgData) --游戏活动
         return
     end
 end
-
 local function _qmdk_event_refresh(play)
     if QmdkApi and QmdkApi.refresh_actor then
         QmdkApi.refresh_actor(play)
     end
 end
-
 local function _qmdk_event_hurt(play)
     if QmdkApi and QmdkApi.on_actor_hurt then
         QmdkApi.on_actor_hurt(play, "你受到攻击，采集中断")
     end
 end
-
 local function _qmdk_event_move(play)
     if QmdkApi and QmdkApi.on_actor_move then
         QmdkApi.on_actor_move(play)
     end
 end
-
 local function _qmdk_event_die(play)
     if QmdkApi and QmdkApi.on_actor_die then
         QmdkApi.on_actor_die(play)
     end
 end
-
 GameEvent.add(EventCfg.onLogin, _qmdk_event_refresh, "全民夺矿")
 GameEvent.add(EventCfg.onKFLogin, _qmdk_event_refresh, "全民夺矿")
 GameEvent.add(EventCfg.goSwitchMap, _qmdk_event_refresh, "全民夺矿")
 GameEvent.add(EventCfg.onProHarm, _qmdk_event_hurt, "全民夺矿")
 GameEvent.add(EventCfg.onMove, _qmdk_event_move, "全民夺矿")
 GameEvent.add(EventCfg.onPlaydie, _qmdk_event_die, "全民夺矿")
-
 ---天天省钱
 npc[509] = function(play, p2, p3, msgData)
     openhyperlink(play, 111, 0)
@@ -1394,7 +1337,6 @@ end
 npc[510] = function(play, p2, p3, msgData)
     openhyperlink(play, 35, 0)
 end
-
 -- 福利大厅七日登录读取配置
 -- 福利大厅七日登录读取配置
 local fldt_cfg_table = teshudata["fldt"] and teshudata["fldt"]["fldt_cfg"]
@@ -1409,12 +1351,10 @@ local fldt_privilege_final_multiple = tonumber(fldt_seven_login_cfg.privilege_fi
 local fldt_final_reward_multiplier = tonumber(fldt_seven_login_cfg.final_reward_multiplier or 100) or 100
 local fldt_final_reward_cap = tonumber(fldt_seven_login_cfg.final_reward_cap or 1000000) or 1000000
 local fldt_final_reward_cap_privilege = tonumber(fldt_seven_login_cfg.final_reward_cap_privilege or 2000000) or 2000000
-
 -- 是否拥有麦尊特权（用于所有特权判断）
 local function fldt_is_privilege(play)
     return getflagstatus(play, VarCfg.BS_mztq) == 1
 end
-
 -- 根据配置生成当日翻牌数字，并处理特权玩家的避零逻辑
 -- 权重随机工具
 local function fldt_pick_weighted_entry(entries)
@@ -1438,7 +1378,6 @@ local function fldt_pick_weighted_entry(entries)
     end
     return entries[#entries]
 end
-
 -- 根据新版概率生成当日翻牌数字（绝不出现0）
 local function fldt_pick_seven_login_digit(day)
     local probKey = (day <= 3) and "front3" or "tail"
@@ -1456,7 +1395,6 @@ local function fldt_pick_seven_login_digit(day)
     end
     return math.random(minv, maxv)
 end
-
 -- 后三天神秘奖励（占位版）；PlanB可在此按玩家缺口动态替换 give
 local function fldt_pick_material_reward(day, play, privilege)
     local pool = fldt_material_pool[day] or fldt_material_pool["default"] or {}
@@ -1485,7 +1423,6 @@ local function fldt_clone_reward_list(give)
     end
     return out
 end
-
 -- 统一七日材料奖励记录结构，兼容旧版本字符串记录
 local function fldt_prepare_material_table(T_qrbq)
     local changed = false
@@ -1524,7 +1461,6 @@ local function fldt_prepare_material_table(T_qrbq)
     end
     return matData, changed
 end
-
 -- 获取/初始化翻牌记录表，用于保存七天的各位数
 local function fldt_prepare_flip_table(T_qrbq)
     if type(T_qrbq["7rqd_fp"]) ~= "table" then
@@ -1532,7 +1468,6 @@ local function fldt_prepare_flip_table(T_qrbq)
     end
     return T_qrbq["7rqd_fp"]
 end
-
 -- 将记录表中个位~百万位拼成最终元宝数
 -- 将记录表中前N天数字拼成最终数字（默认前4天，最高9999）
 local function fldt_calculate_flip_reward(fp, maxDays)
@@ -1552,6 +1487,81 @@ local function fldt_calculate_flip_reward(fp, maxDays)
     end
     return total
 end
+-- 充值达到328档位的玩家，也可以领取全区首爆奖励。
+local function fldt_has_qqsb_privilege(play)
+    local czlb = json2tbl(getplaydef(play, VarCfg.T_czlb))
+    if type(czlb) ~= "table" then
+        czlb = {}
+    end
+    return tonumber(czlb["cz502_328"] or 0) == 1
+end
+-- 玩家自己的全区首爆达成记录。
+local function fldt_get_qqsb_personal_map(play)
+    local data = Player.getJsonTableByVar(play, VarCfg.T_grqqsb)
+    if type(data) ~= "table" then
+        data = {}
+    end
+    return data
+end
+-- 玩家自己的全区首爆领取记录，防止重复领取。
+local function fldt_get_qqsb_claim_map(T_qrbq)
+    if type(T_qrbq) ~= "table" then
+        T_qrbq = {}
+    end
+    if type(T_qrbq["qqsb_claim"]) ~= "table" then
+        T_qrbq["qqsb_claim"] = {}
+    end
+    return T_qrbq["qqsb_claim"]
+end
+-- 按当前玩家视角构建全区首爆奖励状态。
+-- 0=未达成，1=可领取，2=已领取。
+-- 领取规则：
+-- 1. 该装备的全区首爆归属人可以直接领取。
+-- 2. 不是首爆归属人时，必须自己打到过该装备，且达到328档位才可领取。
+local function fldt_build_qqsb_view(play, T_qrbq, qqsb)
+    local reward_cfg = (teshudata["fldt"] and teshudata["fldt"]["qqsb"]) or {}
+    local claim_map = fldt_get_qqsb_claim_map(T_qrbq)
+    local personal_map = fldt_get_qqsb_personal_map(play)
+    local has_privilege = fldt_has_qqsb_privilege(play)
+    local player_name = tostring(getbaseinfo(play, 1) or "")
+    local view = {}
+    local can_claim = false
+    for idx in pairs(reward_cfg) do
+        local key = tostring(idx)
+        local global_owner = qqsb[key]
+        if global_owner == nil then
+            global_owner = qqsb[idx]
+        end
+        local claimed = claim_map[key]
+        if claimed == nil then
+            claimed = claim_map[idx]
+        end
+        local personal_ok = personal_map[key]
+        if personal_ok == nil then
+            personal_ok = personal_map[idx]
+        end
+        local is_first_owner = type(global_owner) == "string" and global_owner == player_name
+        local can_take = false
+        if global_owner ~= nil and tonumber(claimed or 0) ~= 1 then
+            if is_first_owner then
+                can_take = true
+            elseif has_privilege and tonumber(personal_ok or 0) == 1 then
+                can_take = true
+            end
+        end
+        local status = 0
+        if global_owner ~= nil then
+            if tonumber(claimed or 0) == 1 then
+                status = 2
+            elseif can_take then
+                status = 1
+                can_claim = true
+            end
+        end
+        view[key] = status
+    end
+    return view, can_claim, claim_map
+end
 npc[511] = function(play, p2, p3, msgData) --福利大厅
     -- p2 用于区分界面打开(0)、奖励领取(1)及数据下发(2)
     -- p3 则在 p2==1/2 时作为具体子功能编号（1=七日登录、2=在线奖励、3=杀怪等）
@@ -1566,7 +1576,6 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
         data["U_dlts"] = getplaydef(play, VarCfg["U_登录天数"])
         data["J_zxsj"] = getplaydef(play, VarCfg.J_zxsj)
         data["U_sgsl"] = getplaydef(play, VarCfg.J_jsgw[1]) + getplaydef(play, VarCfg.J_jsgw[2])
-
         local T_grss = Player.getJsonTableByVar(play, VarCfg.T_grss) or {}
         local T_grsb = Player.getJsonTableByVar(play, VarCfg.T_grsb) or {}
         local grss_can_claim = false
@@ -1584,17 +1593,13 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
             end
         end
         local T_qqsb = Player.getJsonTableByVar(nil, VarCfg["A_全区首曝json"]) or {}
-        local qqsb_can_claim = false
-        for _, status in pairs(T_qqsb) do
-            if tonumber(status or 0) == 1 then
-                qqsb_can_claim = true
-                break
-            end
-        end
+        local _, qqsb_can_claim = fldt_build_qqsb_view(play, T_qrbq, T_qqsb)
         data["grss_can_claim"] = grss_can_claim
         data["grsb_can_claim"] = grsb_can_claim
         data["qqsb_can_claim"] = qqsb_can_claim
+        data["qqsb_has_328"] = fldt_has_qqsb_privilege(play) and 1 or 0
         sendluamsg(play, 101, 511, 0, 0, tbl2json(data))
+        sendluamsg(play, 101, 511, 10, 0, tbl2json(T_qqsb))
     elseif p2 == 1 then
         -- 福利大厅任务进度存放在玩家 T_qrbq 变量中，包含七日登录/在线/杀怪等字段
         local T_qrbq = Player.getJsonTableByVar(play, VarCfg.T_qrbq)
@@ -1628,7 +1633,6 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
             local privilege = fldt_is_privilege(play)
             local flipDigits = fldt_prepare_flip_table(T_qrbq)
             local finalAwardToGive = 0
-
             if targetDay <= fldt_number_days then
                 local digit = fldt_pick_seven_login_digit(targetDay)
                 flipDigits[targetDay] = digit
@@ -1665,7 +1669,6 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
                     Player.rwjl(play, matRecord.give, "七日翻牌神秘奖励", 1)
                 end
             end
-
             T_qrbq["7rqd"] = targetDay
             if targetDay == fldt_number_days then
                 local finalSum = fldt_calculate_flip_reward(flipDigits, fldt_number_days)
@@ -1686,7 +1689,6 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
                     finalAwardToGive = awardValue
                 end
             end
-
             Player.setJsonVarByTable(play, VarCfg.T_qrbq, T_qrbq)
             sendmail(getbaseinfo(play,2),0,"七日登录奖励","七日登录奖励,奖励已下发!",Player.jl_mail(dayReward.jl))
             if finalAwardToGive > 0 then
@@ -1839,56 +1841,56 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
                 Player.sendmsgEx(play, "未完成该首爆任务#57")
                 return
             end
-        elseif p3 == 6 then --全区首曝
-            -- A_全区首曝json 为全局变量，需要以 nil actor 读取，逻辑与个人首爆一致但作用于全服
+        elseif p3 == 6 then --全区首爆
             local jsonData = json2tbl(msgData) or {}
             local qqsb = Player.getJsonTableByVar(nil, VarCfg["A_全区首曝json"])
+            if type(qqsb) ~= "table" then
+                qqsb = {}
+            end
+            local rewardCfg = teshudata["fldt"] and teshudata["fldt"]["qqsb"] or {}
+            local qqsb_view, _, qqsb_claim_map = fldt_build_qqsb_view(play, T_qrbq, qqsb)
             if tonumber(jsonData["isall"]) == 1 then
-                if type(qqsb) ~= "table" then
-                    qqsb = {}
-                end
-                local rewardCfg = teshudata["fldt"] and teshudata["fldt"]["qqsb"] or {}
                 local rewardList = {}
-                for key, status in pairs(qqsb) do
-                    if status == 1 then
-                        local index = tonumber(key)
-                        local cfg = index and rewardCfg[index]
-                        if cfg then
-                            qqsb[key] = 2
-                            rewardList[#rewardList + 1] = cfg.give
-                        end
+                for idx, cfg in pairs(rewardCfg) do
+                    local key = tostring(idx)
+                    if tonumber(qqsb_view[key] or 0) == 1 then
+                        qqsb_claim_map[key] = 1
+                        rewardList[#rewardList + 1] = cfg.give
                     end
                 end
                 if #rewardList > 0 then
-                    Player.setJsonVarByTable(nil, VarCfg["A_全区首曝json"], qqsb)
-                    sendluamsg(play, 101, 511, 2, 6, tbl2json(qqsb))
+                    Player.setJsonVarByTable(play, VarCfg.T_qrbq, T_qrbq)
+                    local new_view = fldt_build_qqsb_view(play, T_qrbq, qqsb)
+                    sendluamsg(play, 101, 511, 2, 6, tbl2json(new_view))
                     for _, give in ipairs(rewardList) do
-                        Player.rwjl(play, give, "全区首曝奖励", 1, 0)
+                        Player.rwjl(play, give, "全区首爆奖励", 1, 0)
                     end
                 else
-                    Player.sendmsgEx(play, "未完成该首曝任务#57")
+                    Player.sendmsgEx(play, "当前没有可领取的全区首爆奖励#57")
                 end
                 return
             end
-            if qqsb[jsonData["qqsb"]] and qqsb[jsonData["qqsb"]] == 2 then
-                Player.sendmsgEx(play, "该首爆奖励已经领取完毕#57")
+-- 单个领取时，只更新当前玩家自己的领取记录。
+            local qqsb_idx = tostring(jsonData["qqsb"] or "")
+            if qqsb_idx == "" or tonumber(qqsb_view[qqsb_idx] or 0) ~= 1 then
+                if tonumber(qqsb_view[qqsb_idx] or 0) == 2 then
+                    Player.sendmsgEx(play, "该全区首爆奖励已经领取完毕#57")
+                else
+                    Player.sendmsgEx(play, "未完成该全区首爆任务#57")
+                end
                 return
             end
-            if qqsb[jsonData["qqsb"]] and qqsb[jsonData["qqsb"]] == 1 then
-                qqsb[jsonData["qqsb"]] = 2
-                Player.setJsonVarByTable(nil, VarCfg["A_全区首曝json"], qqsb)
-                Player.rwjl(
-                    play,
-                    teshudata["fldt"]["qqsb"][tonumber(jsonData["qqsb"])].give,
-                    "全区首爆奖励",
-                    1,
-                    0
-                )
-                sendluamsg(play, 101, 511, 2, 6, tbl2json(qqsb))
-            else --未完成
-                Player.sendmsgEx(play, "未完成该首爆任务#57")
-                return
-            end
+            qqsb_claim_map[qqsb_idx] = 1
+            Player.setJsonVarByTable(play, VarCfg.T_qrbq, T_qrbq)
+            Player.rwjl(
+                play,
+                teshudata["fldt"]["qqsb"][tonumber(qqsb_idx)].give,
+                "全区首爆奖励",
+                1,
+                0
+            )
+            local new_view = fldt_build_qqsb_view(play, T_qrbq, qqsb)
+            sendluamsg(play, 101, 511, 2, 6, tbl2json(new_view))
         end
     elseif p2 == 2 then
         if p3 == 4 then --个人首杀
@@ -1898,18 +1900,21 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
             local T_grsb = Player.getJsonTableByVar(play, VarCfg.T_grsb)
             sendluamsg(play, 101, 511, 2, 5, tbl2json(T_grsb))
         elseif p3 == 6 then
-            local data = Player.getJsonTableByVar(nil, VarCfg["A_全区首曝json"])
+            local T_qrbq = Player.getJsonTableByVar(play, VarCfg.T_qrbq) or {}
+            local qqsb = Player.getJsonTableByVar(nil, VarCfg["A_全区首曝json"])
+            if type(qqsb) ~= "table" then
+                qqsb = {}
+            end
+            local data = fldt_build_qqsb_view(play, T_qrbq, qqsb)
             sendluamsg(play, 101, 511, 2, 6, tbl2json(data))
         end
     end
 end
-
 npc[512] = function(play, p2, p3, msgData) --游戏攻略
     if p2 == 0 then
         sendluamsg(play, 101, 512, 0, 0, "")
     end
 end
-
 npc[513] = function(play, p2, p3, msgData) --狂暴
     if p2 == 0 then
         sendluamsg(play, 100, 15, 0, 0, "")
@@ -2118,7 +2123,6 @@ npc[517] = function(play, p2, p3, msgData) --聚宝盆
         end
     end
 end
-
 local xlxl =
     { { 1, 2, 3, 4, 7, 8, 23, 22, 24, 25, 26 }, constant.cz_je, { 98, 6, 3 } }
 npc[998] = function(play, p2, p3, msg) --后台
@@ -2330,7 +2334,6 @@ npc[998] = function(play, p2, p3, msg) --后台
         end
     end
 end
-
 npc[1004] = function(play, p2, p3, msg) --排行榜查询
     if p2 == 1 then
         local dx = getplayerbyid(msg)
@@ -2342,7 +2345,6 @@ npc[1004] = function(play, p2, p3, msg) --排行榜查询
         end
     end
 end
-
 -- npc_guard: 自动加固按钮入口，所有按钮接口统一做玩家及参数校验。
 local _npcGuardUnpack = (table and table.unpack) or unpack
 for npcId, handler in pairs(npc) do
@@ -2370,5 +2372,4 @@ for npcId, handler in pairs(npc) do
         end)(npcId, handler)
     end
 end
-
 return npc

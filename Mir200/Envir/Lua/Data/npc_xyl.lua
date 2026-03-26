@@ -434,7 +434,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "二大陆主城", 24, 99, 106 },
+                    yd = { 1, "二大陆主城", 24, 100, 106 },
                     desc = "直面天书强化，破局前行",
                 },
                 {
@@ -447,7 +447,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "二大陆主城", 24, 99, 106 },
+                    yd = { 1, "二大陆主城", 24, 100, 106 },
                     desc = "历经初识仙法，收获机缘",
                 },
                 {
@@ -496,27 +496,27 @@ local npc_xyl = {
                 {
                     "幸运增幅",
                     id = 999,
-                    jl = { { "剧情点", 1 }, { "灵石", 100 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play)
                         return _xyl_check_task(play, "幸运增幅")
                     end,
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "二大陆主城", 25, 103, 106 },
+                    yd = { 1, "二大陆主城", 25, 105, 106 },
                     desc = "历经幸运增幅，收获机缘",
                 },
                 {
                     "气运占卜",
                     id = 999,
-                    jl = { { "剧情点", 1 }, { "灵石", 100 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play)
                         return _xyl_check_task(play, "气运占卜")
                     end,
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "二大陆主城", 26, 107, 106 },
+                    yd = { 1, "二大陆主城", 26, 110, 106 },
                     desc = "闯过气运占卜，证我道途",
                 },
                 {
@@ -954,7 +954,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "三大陆主城", 47, 154, 223 },
+                    yd = { 1, "藏星外海", 634, 69, 132 },
                     desc = "直面杀戮的欲望，化解其中隐患",
                 },
                 {
@@ -1322,7 +1322,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "四大陆主城", 65, 29, 23 },
+                    yd = { 1, "四大陆主城", 65, 28, 23 },
                     desc = "踏破唐代古玩，守护一方安宁",
                 },
                 {
@@ -1335,7 +1335,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "二大陆主城", 24, 99, 106 },
+                    yd = { 1, "二大陆主城", 24, 100, 106 },
                     desc = "闯过红色仙法，证我道途",
                 },
                 {
@@ -1933,7 +1933,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "四大陆主城", 67, 39, 23 },
+                    yd = { 1, "四大陆主城", 67, 36, 23 },
                     desc = "行走生肖守护，破除迷障",
                 },
             },

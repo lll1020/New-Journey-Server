@@ -7,23 +7,18 @@ for k, _ in pairs(package.loaded) do
 		package.loaded[k] = nil
 	end
 end
-
 function MainError(errinfo)
 	if errinfo then
 		release_print('脚本错误', errinfo)
 	end
 end
-
 local function init()
     dofile('Envir/Lua/Main.lua')
 end
-
 local result, errinfo = pcall(init)
 if not result then
 	MainError(errinfo)
 end
-
-
 --------------------引擎初始化--------------------
 function startup()
     local qf_ditucanshu = dofile('Envir/Lua/Data/ditulianjie.lua')
@@ -34,10 +29,7 @@ function startup()
         end
     end
     setontimerex(1, 60) ---全区定时器
-
-    
 end
-
 --------------------人物初始化--------------------
 function login(play)
     local quming = getconst(play, '<$SERVERNAME>')
@@ -68,13 +60,11 @@ function resetday(play)
 	for _, v in pairs(constant.pz_ldql) do
 		Player.title_del(play, v)
 	end
-
     setplaydef(play, VarCfg["U_登录天数"], getplaydef(play, VarCfg["U_登录天数"]) + 1)
     local T_qrbq = Player.getJsonTableByVar(play, VarCfg.T_qrbq)
     T_qrbq["zxjl"] = 0
     T_qrbq["sgjl"] = 0
     Player.setJsonVarByTable(play, VarCfg.T_qrbq, T_qrbq)
-
     local zz_cfg = (teshudata["anniu_516"] and teshudata["anniu_516"].details) or {}
     local zz_data = Player.getJsonTableByVar(play, VarCfg["T_免费赞助"])
     local today = os.date("%Y%m%d")
@@ -115,7 +105,6 @@ function beginteleport(play)
     sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}')
     return false
 end
-
 --------------------AI挂机自动切换地图-------------------
 function ai_qhdt(play)
 	local json, lins = json2tbl(getplaydef(play, VarCfg.T_aigj)), {}
@@ -137,7 +126,6 @@ end
 function ai_ksgj(play)
     startautoattack(play)
 end
-
 --------------------切换地图触发-------------------
 function entermap(play)
     local dt = getbaseinfo(play,3)
@@ -179,7 +167,6 @@ function findpathbegin(actor)
         Player.sendmsgEx(actor, "当前地图无法自动寻路传送#57")
         -- gotonow(actor,getconst(actor, "<$ToPointX>"),getconst(actor, "<$ToPointY>"))
         gotonow(actor, getbaseinfo(actor, ConstCfg.gbase.x), getbaseinfo(actor, ConstCfg.gbase.y))
-    
         return false
     end
     -- local x = tonumber(getconst(actor, "<$ToPointX>")) or 0
@@ -189,7 +176,6 @@ function findpathbegin(actor)
     --     mapmove(actor, mapid, x, y)
     -- end
 end
-
 --------------------死亡物品掉了-------------------
 function checkdropuseitems(play,item_wz,item_id,bool)
     local zb_dx = linkbodyitem(play,item_wz)
@@ -206,7 +192,6 @@ function checkdropuseitems(play,item_wz,item_id,bool)
         delitembymakeindex(play,getiteminfo(play,zb_dx,1))
     end
 end
-
 --------------------角色扔掉任意物品前触发-------------------
 function dropitemfrontex(play,item,itemName)
     if getitemaddvalue(play,item,2,1) ~= 0  then
@@ -214,18 +199,15 @@ function dropitemfrontex(play,item,itemName)
         return false
     end
 end
-
 --------------------拾取前触发-------------------
 function pickupitemfrontex(play, item)
     if getflagstatus(play,VarCfg.BS_mztq) == 0 then
         setitemaddvalue(play,item,2,1,850)
     end
 end
-
 --------------------进背包触发-------------------
 function addbag(play, item)
 end
-
 --------------------捡物品触发-------------------
 function pickupitemex(play, item)
     local idx = getiteminfo(play, item, 2)
@@ -240,7 +222,6 @@ function pickupitemex(play, item)
                 messagebox(play,"所需材料已找到,立即前往NPC提交","@moni_dj_rw,"..rwid,"@exit")
             end
         end
-
         if constant.rw_syb[rwid] then
             if constant.rw_syb[rwid].ts then
                 Player.zxrw_teshushuaxin(play, rwid, nil)
@@ -305,7 +286,6 @@ function pickupitemex(play, item)
     end
     --进背包动画
     setpickitemtobag(play,"200","101")
-
     --TODO: 首爆装备
     if getconst(play,"<$SERVERNAME>") ~= "" and getconst(play,"<$SERVERNAME>") ~= "直播区" or true then
         local T_grsb = Player.getJsonTableByVar(play, VarCfg.T_grsb)
@@ -314,12 +294,23 @@ function pickupitemex(play, item)
             Player.setJsonVarByTable(play, VarCfg.T_grsb, T_grsb)
         end
         local qqsb = Player.getJsonTableByVar(nil, VarCfg["A_全区首曝json"])
+        if type(qqsb) ~= "table" then
+            qqsb = {}
+        end
+-- A1 记录 idx -> 首爆玩家名，同时额外保存 first_name/first_item/first_idx 作为全服第一件展示信息。
+-- T_qrbq.qqsb_first 记录玩家自己的首爆归属，用来判断是否具备首爆领取资格。
         if teshudata["fldt"]["qqsb"][idx] and not qqsb[""..idx] then
-            qqsb[""..idx] = 1
-            Player.setJsonVarByTable(nil, VarCfg["A_全区首曝json"], qqsb)
             local mz = getbaseinfo(play,1)
-            sendmovemsg(play,1,253,0,185,1,'【全区首曝】: <恭喜玩家/FCOLOR=250><【'..mz..'】/FCOLOR=243><成功捡取/FCOLOR=250><【'..name..'】/FCOLOR=243>')
-            Player.sendmsgEx(play, "恭喜获得#215|【"..name.."】#191|首爆奖励,请到福利大厅领取#215")
+            qqsb[""..idx] = mz
+            Player.setJsonVarByTable(nil, VarCfg["A_全区首曝json"], qqsb)
+            sendmovemsg(play,1,253,0,300,1,'全区首爆: <玩家/FCOLOR=250><【'..mz..'】/FCOLOR=243><爆出/FCOLOR=250><【'..name..'】/FCOLOR=243>')
+            sendmovemsg(play,1,253,0,250,1,'全区首爆: <玩家/FCOLOR=250><【'..mz..'】/FCOLOR=243><爆出/FCOLOR=250><【'..name..'】/FCOLOR=243>')
+            Player.sendmsgEx(play, "恭喜#215|【"..name.."】#191|首爆成功,请前往福利大厅领取奖励#215")
+        end
+        if teshudata["fldt"]["qqsb"][idx] and qqsb[""..idx] then
+            local T_grqqsb = Player.getJsonTableByVar(play, VarCfg.T_grqqsb)
+            T_grqqsb[""..idx] = 1
+            Player.setJsonVarByTable(play, VarCfg.T_grqqsb, T_grqqsb)
         end
     end
 end
@@ -342,7 +333,6 @@ end
 function groupitemonex(actor, idx)
     GameEvent.push(EventCfg.onGroupItemOnEx, actor, idx)
 end
-
 --脱套装
 function groupitemoffex(actor, idx)
     GameEvent.push(EventCfg.onGroupItemOffEx, actor, idx)
@@ -363,8 +353,6 @@ function takeoffex(play, item, where, Name, makeindex)
     end
     GameEvent.push(EventCfg.onTakeOffEx, play, item, where, Name, makeindex)
 end
-
-
 --------------------攻击前触发-------------------
 function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
     GameEvent.push(EventCfg.onAttackDamage, play, Target, Hiter, MagicId, Damage, Model)
@@ -541,7 +529,6 @@ function attack(play, Target, Hiter, MagicId)
         humanhp(play,"+",xi)
     end
 end
-
 --------------------被攻击前触发-------------------
 function struckdamage(play, Hiter, Target, MagicId, Damage)
 	if hasbuff(play, 20033) and MagicId > 0 then
@@ -556,7 +543,6 @@ function struckdamage(play, Hiter, Target, MagicId, Damage)
 			ew = ew + (Buff[sy](play, 3, Damage, Hiter, MagicId) or 0)
 		end
 	end
-
     if getbaseinfo(Hiter, -1) then
 		bl = getplaydef(play, VarCfg.S_buffbrwq)
 		data = json2tbl(bl == '' and {} or bl)
@@ -592,7 +578,6 @@ function struckdamage(play, Hiter, Target, MagicId, Damage)
     if ew > 0 then
         ew = -ew
     end
-
     local xi = getbaseinfo(play, 51, 206)
     if xi > 0 then
         xi = Damage / 10000 * xi
@@ -617,7 +602,6 @@ function struck(play, Hiter, Target, MagicId)
         setplaydef(play,"N$战斗状态",os.time()+3)
     end
 end
-
 --------------------杀怪触发-------------------
 function killmon(play, mob)
     GameEvent.push(EventCfg.onKillMon, play, mob, getbaseinfo(mob, ConstCfg.gbase.idx))
@@ -696,20 +680,15 @@ function killmon(play, mob)
     else
         setplaydef(play,VarCfg.J_jsgw[2],getplaydef(play,VarCfg.J_jsgw[2])+1)
     end
-
     setplaydef(play,VarCfg["U_聚宝盆积分"],getplaydef(play,VarCfg["U_聚宝盆积分"])+math.random(1,4))
-
-
     setplaydef(play,VarCfg.U_fldt[2],getplaydef(play,VarCfg.U_fldt[2])+1)
     local mz = getbaseinfo(mob, 1, 1)
     local T_grss = Player.getJsonTableByVar(play, VarCfg.T_grss)
     local idx = getdbmonfieldvalue(mz, "idx")
-
     if teshudata["fldt"]["grss"][idx] and not T_grss[""..idx] then
         T_grss[""..idx] = 1
         Player.setJsonVarByTable(play, VarCfg.T_grss, T_grss)
     end
-
     local dt = getbaseinfo(play, 3)
     if dt ~= "xtc" then
         if guaiwutype[mz] and daluditu[dt] then
@@ -726,8 +705,6 @@ function killmon(play, mob)
         end
     end
 end
-
-
 --------------------货币改变触发-------------------金币
 function moneychange1(play)
     local gb = getplaydef(play,"N$金币改变触发")
@@ -742,7 +719,6 @@ function moneychange2(play)
         Buff[gb](play, 1)
     end
 end
-
 --------------------货币改变触发-------------------复活
 function moneychange15(play)
     if querymoney(play,16) > 0 and not hasbuff(play,20060) then
@@ -751,7 +727,6 @@ function moneychange15(play)
         changemode(play,23,999999999,querymoney(play,15))
     end
 end
-
 function moneychange16(play)
     if querymoney(play,16) > 0 and not hasbuff(play,20060) then
         changemode(play,23,999999999,querymoney(play,15)+1)
@@ -797,7 +772,6 @@ function killplay(play,hiter)
     GameEvent.push(EventCfg.onkillplay, play, hiter)
     setplaydef(play,VarCfg.U_srsl,getplaydef(play,VarCfg.U_srsl)+1)
     login_fhsx(play)
-
     if getsysvar(constant.G_kqfz) >= 40 and getsysvar(constant.G_kqfz) <= 50 then
         local jf = getplayvar(play, "HUMAN", "比武大会") + 50
         setplayvar(play, "HUMAN", "比武大会", jf, 1)
@@ -806,14 +780,12 @@ function killplay(play,hiter)
         setplayvar(hiter, "HUMAN", "比武大会", jf, 1)
         Player.sendmsgEx(hiter,1,'{"Msg":"比武大会：当前积分:'..jf..'","FColor":253,"BColor":255,"Type":1}')
     end
-
 end
 --------------------玩家死亡触发-------------------
 function playdie(play, hiter)
     local dt,x,y = getbaseinfo(play,3),getbaseinfo(play,4),getbaseinfo(play,5)
     sendmail("#" .. getbaseinfo(play, 1), 1, "系统提示", "您被["..getbaseinfo(hiter, 1).."]在"..getbaseinfo(play,45).."("..x.."."..y..")杀害了...")
     setplaydef(play,VarCfg.U_bssl,getplaydef(play,VarCfg.U_bssl)+1)
-
     GameEvent.push(EventCfg.onPlaydie, play, hiter)
     if getbaseinfo(hiter,-1) then
         local cs = getplaydef(hiter,VarCfg.U_jskb) + 1
@@ -845,14 +817,11 @@ function sendability(play)
         setplaydef(play,"N$移动速度加成",sd)
         callscriptex(play, 'changespeedex', 1, sd)
     end
-
     local zhenShiBaoLv = FCalculateActualExplosionRate(getbaseinfo(play,51,242)/100 - 100)
     --设置真实爆率
     setbaseinfo(play, 43, zhenShiBaoLv)
-
     Player.updata_zdl(play)
 end
-
 local czlb_je = constant.cz_je
 function _cz502_apply_reward(play, amount, idx, lb_json)
     local config = teshudata["anniu_502"]
@@ -894,7 +863,6 @@ function _cz502_apply_reward(play, amount, idx, lb_json)
         return lb_json
     end
     lb_json[key] = 1
-
     local reward = config.jl[idx]
     if reward then
         if reward.give then
@@ -917,7 +885,6 @@ function _cz502_apply_reward(play, amount, idx, lb_json)
             end
         end
     end
-
     if config.fj then
         local all = true
         for _, v in ipairs(config.fj) do
@@ -935,7 +902,6 @@ function _cz502_apply_reward(play, amount, idx, lb_json)
     end
     return lb_json
 end
-
 --------------------真充积分改变触发-------------------在线充值礼包筛选
 -- function moneychange22(play)
 --     local lb_json,hbsl,jezz = json2tbl(getplaydef(play, VarCfg.T_czlb)),querymoney(play,22),0
@@ -956,7 +922,6 @@ end
 --         changemoney(play,22,"-",jezz,"礼包积分",true)
 --     end
 -- end
-
 function czlb_pz(play,sy)
     sy = tonumber(sy)
     local lb_json = json2tbl(getplaydef(play, VarCfg.T_czlb))
@@ -966,7 +931,6 @@ function czlb_pz(play,sy)
         setplaydef(play,VarCfg.N_lbyz,0)
     end
 end
-
 --------------------累计充值改变触发-------------------冠名称号
 function moneychange23(play)
     setplaydef(play,VarCfg["U_真实充值"],querymoney(play,23))
@@ -975,8 +939,6 @@ function moneychange23(play)
         Npclib[20].link(play, 20, 1)
     end
 end
-
-
 --------------------充值触发-------------------
 function recharge(play, Gold, ProductId, MoneyId, isReal)
     release_print("充值触发","玩家："..getbaseinfo(play,1), "金额："..Gold, "订单:"..ProductId, "货币id:"..MoneyId, "是否真充:"..(isReal and "是" or "否"))
@@ -1048,7 +1010,6 @@ function stopautoplaygame(play)
     sendmsg(play, 1, '{"BColor":69,"FColor":255,"Msg":"停止挂机","Type":1}')
     setflagstatus(play,300,0)
 end
-
 --------------------延迟杀死宝宝触发-------------------
 function qf_ssbaobao(play)
     local ncount = getbaseinfo(play,38)
@@ -1066,7 +1027,6 @@ function rw_exit(play)
         mapmove(play,"xtc",137,138)
     end
 end
-
 --------------------机器人触发脚本-------------------
 function jqr_qingli() -- 每日0点清理
     if getsysvar(VarCfg["G_新区验证"]) == 0 then  -------是否有人验证
@@ -1077,8 +1037,6 @@ function jqr_qingli() -- 每日0点清理
     setsysvar(VarCfg["G_全民夺矿状态"], 0)
     setsysvar(VarCfg["A_全民夺矿json"], "")
 end
-
-
 --------------------机器人触发脚本-------------------全民夺矿开始
 function jqr_qmdk_start()
     local state = getsysvar(VarCfg["A_全民夺矿json"])
@@ -1088,7 +1046,6 @@ function jqr_qmdk_start()
     setsysvar(VarCfg["A_全民夺矿json"], tbl2json(state))
     release_print("机器人触发：全民夺矿开始")
 end
-
 --------------------机器人触发脚本-------------------全民夺矿结束
 function jqr_qmdk_end()
     local state = getsysvar(VarCfg["A_全民夺矿json"])
@@ -1109,7 +1066,6 @@ function jqr_shabake()
         end
     end
 end
-
 --------------------机器人触发脚本-------------------跨服沙巴克
 function jqr_kfshabake()
     if checkkuafuserver() or checkkuafuconnect() then
@@ -1127,8 +1083,6 @@ end
 function jqr_zxht_change()
     release_print("葬星海滩涨落潮切换触发")
     release_print("当前时间小时数为："..os.date("%H"))
-    
-
     local hour = tonumber(os.date("%H")) or 0
     local map_even = "葬星海滩"
     local map_odd = "葬星海滩1"
@@ -1143,7 +1097,6 @@ function jqr_zxht_change()
         end
     end
 end
-
 --------------------加入行会后触发-------------------
 function guildaddmemberafter(play,guild,name)
     GameEvent.push(EventCfg.goGuild, play, guild, name)
@@ -1152,7 +1105,6 @@ end
 --------------------退出行会后触发-------------------
 function guilddelmember(play)
 end
-
 function updateguildnotice(play)
     stop(play)
     sendmsg(play,1,'{"Msg":"<font color=\'#00ff00\'>禁止修改行会通告</font>","Type":9}')
@@ -1184,7 +1136,6 @@ function collectmonex(play,monIDX,monName,monMakeIndex)
 end
 function func_cjcg(play)
     setplaydef(play,"N$iscaiji",0)
-
     local monName = getplaydef(play, "S$采集目标名字")
     local monMakeIndex = getplaydef(play, "S$采集目标")
     if monName == nil or monName == "" or monMakeIndex == nil or monMakeIndex == "" then
@@ -1233,10 +1184,8 @@ function func_cjcg(play)
     elseif monName == "贝壳" then
         Player.rwjl(play, {{"贝壳",1}}, "贝壳",1,0)
     end
-
     setplaydef(play, "S$采集目标", "")
     setplaydef(play, "S$采集目标名字", "")
-
 end
 function func_cjsb(play)
     setplaydef(play,"N$iscaiji",0)
@@ -1247,7 +1196,6 @@ function func_cjsb(play)
     setplaydef(play,"S$采集目标","")
     setplaydef(play,"S$采集目标名字","")
 end
-
 function playoffline(play)--人物大退触发
     if getconst(play,"<$SERVERNAME>") ~= "" and getbaseinfo(play,6) > 31 and getplaycountinmap(play,"xtc",0) < 200 then
         setofftimer(play,1)
@@ -1270,15 +1218,10 @@ function playreconnection(play)--	人物小退触发
         offlineplay(play,9999)
     end
 end
-
-
-
 --------------------宠物攻击伤害前触发-------------------
-
 function attackdamagebb(self,Target,Hiter,MagicId,Damage)
     return Damage
 end
-
 function canpaimaiitem(actor,itemIdx,itemMakeIndex,moneyType,price)
     if checkkuafu(actor) then
         sendmsg(actor, 1, '{"Msg":"<font color=\'#ff0000\'>跨服不能上架拍卖行！</font>","Type":9}')
@@ -1286,7 +1229,6 @@ function canpaimaiitem(actor,itemIdx,itemMakeIndex,moneyType,price)
         return
     end
 end
-
 function biddingpaimaiitem(actor)
     if checkkuafu(actor) then
         sendmsg(actor,1, '{"Msg":"<font color=\'#ff0000\'>跨服不能使用拍卖行！</font>","Type":9}')
@@ -1308,7 +1250,6 @@ function buypaimaiitem(actor,itemIdx,itemMakeIndex,moneyType,price)
         return
     end
 end
-
 --------------------怪物掉落物品触发--------------------
 function mondropitemex(play,DropItem,mon,x,y)
     local dt = getbaseinfo(play,3)
@@ -1325,19 +1266,13 @@ end
 function titlechanged_1(play)
     seticon(play,1,-1)
 end
-
-
 function titlechanged_30405(play) seticon(play,1,1,30405,0,0,0,0,0) end
 function untitled_30405(play) seticon(play,1,-1) end
-
-
-
 --------------------聊天触发前置接口--------------------
 function triggerchat(play,sMsg,chat,msgType)
     GameEvent.push(EventCfg.onTriggerChat, play, sMsg, chat, msgType)
     return true
 end
-
 --------------------拿沙开始触发--------------------
 function castlewarstart()
     sendmovemsg("0", 1, 253, 0, 300, 2,"沙巴克攻城战：今日沙城战已开放，勇士们快快前往沙城传送了解详情，攻城时服务器不再刷新新的怪物，期间死亡不会掉落狂暴之力请保持在线以免领取不到...")
@@ -1349,19 +1284,13 @@ function getcastle0()
     sendmovemsg("0", 1, 253, 0, 300, 2,"沙巴克攻城战：【"..castleinfo(2).."】 行会成功夺得沙城...")
     release_print("沙巴克攻城战：【"..castleinfo(2).."】 行会成功夺得沙城...")
 end
-
 --------------------拿沙结束触发--------------------
 function castlewarend()
     release_print("shabakejl")
     sendmovemsg("0", 1, 253, 0, 300, 1,"沙巴克攻城战：今日沙城战已结束，所有奖励均已发放，请各位玩家及时领取...")
     sendmovemsg("0", 1, 249, 0, 250, 1,"沙巴克攻城战：今日沙城战已结束，所有奖励均已发放，请各位玩家及时领取...")
-
     GameEvent.push(EventCfg.goCastlewarend)
-
 end
-
-
-
 --进入跨服触发
 function kflogin(actor)
     --同步数据
@@ -1369,18 +1298,12 @@ function kflogin(actor)
     GameEvent.push(EventCfg.onKFLogin, actor, logindatas)
     --跨服开启拾取小精灵
     pickupitems(actor, 0, 10, 500)
-
     setflagstatus(actor,VarCfg["F_是否进入过跨服"],1)
-
 end
-
-
 function kuafuend(play)--	退出跨服
     GameEvent.push(EventCfg.onKuaFuEnd, play)
     -- local szjl = json2tbl(getplaydef(play,VarCfg.T_szjl))
 end
-
-
 function showfashion(actor)
     local T_data = Player.getJsonTableByVar(actor, VarCfg.T_szjl)
     T_data.dqzb = T_data.dqzb or 0
@@ -1392,14 +1315,9 @@ function showfashion(actor)
     end
     GameEvent.push(EventCfg.onShowFashion, actor)
 end
-
 function notshowfashion(actor)
     GameEvent.push(EventCfg.onNotShowFashion, actor)
 end
-
-
-
-
 --------------------NPC点击触发--------------------
 local qf_teshunpc = {
     [501] = 500, [502] = 500, [503] = 500, [504] = 500, [505] = 500, [506] = 500, [507] = 500, [508] = 500, [509] = 500, -- 世界地图
@@ -1414,6 +1332,7 @@ local qf_teshunpc = {
     [1003] = 1003,[1004] = 1003,[1005] = 1003,[1006] = 1003,[1007] = 1003, -- 各大陆时装兑换
     [69] = 64, -- 神兽圣遗物 --这个是特殊的 前端不要的
     [6] = 6,[7] = 7,[8] = 8,[9] = 9,[10] = 10,[11] = 11,[13] = 13,[14] = 14,[24] = 24,[22] = 22,[43] = 43,[26] = 26,[28] = 28,[25] = 25,[54] = 54,[27] = 27,[44] = 44,[64] = 64,[65] = 65,[70] = 70,--小提升
+    [101] = 101,
 }
 function clicknpc(play, npcid)
     --打印
@@ -1433,7 +1352,6 @@ function clicknpc(play, npcid)
 	end
 	return false
 end
-
 -- 消息号 100，NPC点击事件，p1:NPCid,p2:按钮id,p3:额外,
 --------------------消息监听触发--------------------
 function handlerequest(play, msgID, p1, p2, p3, msgData)
@@ -1471,6 +1389,3 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
         end
 	end
 end
-
-
-

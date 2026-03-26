@@ -290,6 +290,7 @@ function npc.link(play,npcid,ew,aid,data)
 
             xianfa_add(play,randomNum,idx)
             sendluamsg(play,100,npcid,2,0,tbl2json({ ["T_data"] = T_data} ))
+            sendluamsg(play,100,npcid,10,0,tbl2json({ ["group"] = randomNum,["idx"] = idx} ))
         else
         end
     end
@@ -768,6 +769,7 @@ function xianfa_refresh(actor, new_group, new_idx)
     if Buff and Buff[XIANFA_REVIVE_BUFF] then
         Buff[XIANFA_REVIVE_BUFF](actor, need_revive_buff and 1 or 2)
     end
+    Buff[339](actor, 1)
     tianshu_refresh_item(actor, T_data)
 end
 

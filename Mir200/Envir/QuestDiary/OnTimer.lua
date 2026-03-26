@@ -1,18 +1,16 @@
 --全局定时器
-
+local _fairy_fate_red_cfg = include("lua/Data/fairy_fate_cfg.lua") or {}
 -----------------全局1号60秒定时器----------------
 -- 读取玩家在指定轮次的天选 roll 点
 local function _txzr_get_roll_point(play, roundIdx)
     local txzr_data = json2tbl(getplaydef(play, VarCfg.T_txzr))
     return tonumber(txzr_data[roundIdx]) or 0
 end
-
 -- 获取天选活动基础配置（单源：teshudata.anniu_506）
 local function _txzr_get_base_cfg()
     local cfg = teshudata and teshudata["anniu_506"] or {}
     return type(cfg) == "table" and cfg or {}
 end
-
 -- 读取天选名次奖励列表（1~10）
 local function _txzr_get_reward_list()
     local cfg = _txzr_get_base_cfg()
@@ -35,7 +33,6 @@ local function _txzr_get_join_reward_cfg()
     end
     return nil
 end
-
 -- 读取天选第一名额外神器配置
 local function _txzr_get_shenqi_cfg()
     local cfg = _txzr_get_base_cfg()
@@ -44,7 +41,6 @@ local function _txzr_get_shenqi_cfg()
     end
     return {}
 end
-
 -- 读取天选活动注意事项配置
 local function _txzr_get_notice_cfg()
     local cfg = _txzr_get_base_cfg()
@@ -53,7 +49,6 @@ local function _txzr_get_notice_cfg()
     end
     return {}
 end
-
 -- 为指定玩家抽取未重复的背包神器
 local function _txzr_pick_unique_shenqi(txzz_data, playerName)
     local shenqi_cfg = _txzr_get_shenqi_cfg()
@@ -79,7 +74,6 @@ local function _txzr_pick_unique_shenqi(txzz_data, playerName)
     player_rec[picked] = 1
     return picked
 end
-
 -- 持久化玩家天选轮次结果与神器记录
 local function _txzr_save_player_history(player, roundIdx, rankIdx, rollPoint, rewardName, shenqiName)
     if not player then
@@ -99,7 +93,6 @@ local function _txzr_save_player_history(player, roundIdx, rankIdx, rollPoint, r
     end
     Player.setJsonVarByTable(player, VarCfg.T_hdjl, hdjl)
 end
-
 -- 广播当前轮次 roll 点前三名结果
 local function _txzr_broadcast_roll(roundIdx, rankData)
     local showCount = math.min(3, #rankData)
@@ -116,7 +109,6 @@ local function _txzr_broadcast_roll(roundIdx, rankData)
     sendmovemsg("0", 1, 253, 0, 300, 1, msg)
     sendmovemsg("0", 1, 249, 0, 250, 1, msg)
 end
-
 local function _txzr_broadcast_reward_rollscreen(roundIdx, rankData, rewardList, txzz_data)
     if type(rankData) ~= "table" or #rankData <= 0 then
         return
@@ -140,7 +132,6 @@ local function _txzr_broadcast_reward_rollscreen(roundIdx, rankData, rewardList,
         sendmovemsg("0", 1, 249, 0, 250, 1, msg)
     end
 end
-
 -- 获取随机夺宝配置（单源：teshudata.anniu_507.sjdb）
 local function _sjdb_get_cfg()
     local cfg = teshudata and teshudata["anniu_507"] or {}
@@ -163,7 +154,6 @@ local function _sjdb_get_cfg()
     end
     return sjdb
 end
-
 -- 随机夺宝：按 teshudata 配置投放奖励
 local function _sjdb_throw_by_cfg(sjdb_cfg)
     if not sjdb_cfg then
@@ -187,7 +177,6 @@ local function _sjdb_throw_by_cfg(sjdb_cfg)
     end
     return hasThrow
 end
-
 -- 随机夺宝：旧常量兜底投放，避免配置缺失导致活动异常
 local function _sjdb_throw_fallback()
     local hasThrow = false
@@ -199,7 +188,6 @@ local function _sjdb_throw_fallback()
     end
     return hasThrow
 end
-
 -- 获取全民答题配置（单源：teshudata.anniu_507.qmdt）
 local function _qmdt_get_cfg()
     local cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].qmdt or nil
@@ -218,7 +206,6 @@ local function _qmdt_get_cfg()
     cfg.duration_min = math.max(tonumber(cfg.duration_min) or (cfg.question_count * cfg.question_span_min), cfg.question_count * cfg.question_span_min)
     return cfg
 end
-
 local function _qmdt_get_state()
     local raw = getsysvar(VarCfg["A_全民答题json"])
     if raw == "" then
@@ -227,11 +214,9 @@ local function _qmdt_get_state()
     local tb = json2tbl(raw)
     return type(tb) == "table" and tb or {}
 end
-
 local function _qmdt_save_state(state)
     setsysvar(VarCfg["A_全民答题json"], tbl2json(state or {}))
 end
-
 local function _qmdt_build_prompt(q, qidx, total)
     local lines = {"第" .. tostring(qidx) .. "/" .. tostring(total) .. "题：" .. tostring(q.title or "")}
     for i, one in ipairs(q.options or {}) do
@@ -240,7 +225,6 @@ local function _qmdt_build_prompt(q, qidx, total)
     lines[#lines + 1] = "请输入答案序号或完整答案"
     return table.concat(lines, "\n")
 end
-
 local function _qmdt_make_payload(state, cfg, qidx)
     local q = cfg.questions[qidx]
     if not q then
@@ -260,7 +244,6 @@ local function _qmdt_make_payload(state, cfg, qidx)
         end_ts = tonumber(state.question_end_ts) or 0,
     }
 end
-
 local function _qmdt_push_question(state, cfg, qidx, dqfz)
     local q = cfg.questions[qidx]
     if not q then
@@ -276,7 +259,6 @@ local function _qmdt_push_question(state, cfg, qidx, dqfz)
     sendmovemsg("0", 1, 254, 0, 300, 1, "活动：全民答题第" .. tostring(qidx) .. "题已发布，请点击活动面板输入答案...")
     return true
 end
-
 local function _qmdt_start(dqfz, cfg)
     local state = {
         open = 1,
@@ -292,7 +274,6 @@ local function _qmdt_start(dqfz, cfg)
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《全民答题》已开启，请通过活动面板输入答案...")
     _qmdt_push_question(state, cfg, 1, dqfz)
 end
-
 local function _qmdt_finish(cfg)
     if getsysvar(VarCfg["G_全民答题状态"]) ~= 1 then
         return
@@ -319,7 +300,6 @@ local function _qmdt_finish(cfg)
         end
         return a.name < b.name
     end)
-
     local rankRewards = cfg.rank_rewards or {}
     local mailTitle = cfg.mail_title or "全民答题"
     local rankedTop = {}
@@ -344,19 +324,15 @@ local function _qmdt_finish(cfg)
             end
         end
     end
-
     local topName = rankData[1] and rankData[1].name or "无人上榜"
     sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《全民答题》已结束,本次第一名为【" .. topName .. "】...")
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《全民答题》已结束,本次第一名为【" .. topName .. "】...")
-
     state.open = 0
     state.finished = 1
     state.rank = rankData
     _qmdt_save_state(state)
     setsysvar(VarCfg["G_全民答题状态"], 0)
-
 end
-
 local function _qmdt_tick(dqfz, cfg)
     if getsysvar(VarCfg["G_全民答题状态"]) ~= 1 then
         return
@@ -388,14 +364,12 @@ local function _qmdt_tick(dqfz, cfg)
     end
     _qmdt_push_question(state, cfg, currentIdx + 1, dqfz)
 end
-
 QmdkApi = QmdkApi or {}
 local _QMDK_PREP_NOTICE_VAR = "N$qmdk_prep_notice"
 local _QMDK_PANEL_FLAG_VAR = "N$qmdk_panel"
 local _QMDK_CARRY_VAR = "N$qmdk_carry"
 local _QMDK_COLLECT_CANCEL_VAR = "N$qmdk_collect_cancel"
 local _QMDK_SCORE_VAR = "全民夺矿"
-
 local function _qmdk_get_cfg()
     local cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].qmdk or nil
     if type(cfg) ~= "table" then
@@ -422,7 +396,6 @@ local function _qmdk_get_cfg()
     cfg.carry_buff = tonumber(cfg.carry_buff) or 20115
     return cfg
 end
-
 local function _qmdk_get_state()
     local raw = getsysvar(VarCfg["A_全民夺矿json"])
     if raw == "" then
@@ -431,27 +404,21 @@ local function _qmdk_get_state()
     local tb = json2tbl(raw)
     return type(tb) == "table" and tb or {}
 end
-
 local function _qmdk_save_state(state)
     setsysvar(VarCfg["A_全民夺矿json"], tbl2json(state or {}))
 end
-
 local function _qmdk_get_score_var(cfg, state)
     return _QMDK_SCORE_VAR
 end
-
 local function _qmdk_reset_online_scores()
     for _, player in ipairs(getplayerlst() or {}) do
         setplayvar(player, "HUMAN", _QMDK_SCORE_VAR, 0, 1)
     end
 end
-
-
 local function _safe_getplayvar_num(play, objType, key)
     local raw = getplayvar(play, objType, key)
     return tonumber(raw or 0) or 0
 end
-
 local function _qmdk_is_active_map(play, cfg, state)
     if not play or not cfg then
         return false
@@ -459,12 +426,10 @@ local function _qmdk_is_active_map(play, cfg, state)
     local mapName = (state and state.map and state.map ~= "") and state.map or cfg.map
     return getbaseinfo(play, 3) == mapName
 end
-
 local function _qmdk_rank_payload(play, cfg, state)
     local scoreVar = _qmdk_get_score_var(cfg, state)
     return '{"pmsj":' .. tbl2json(sorthumvar(scoreVar, 1, 1, 5)) .. ',"grjf":' .. _safe_getplayvar_num(play, "HUMAN", scoreVar) .. '}'
 end
-
 local function _qmdk_send_rank(play, cfg, state)
     if not play or not cfg then
         return
@@ -472,14 +437,12 @@ local function _qmdk_send_rank(play, cfg, state)
     sendluamsg(play, 101, 498, 0, 0, _qmdk_rank_payload(play, cfg, state))
     setplaydef(play, _QMDK_PANEL_FLAG_VAR, 1)
 end
-
 local function _qmdk_close_rank(play)
     if getplaydef(play, _QMDK_PANEL_FLAG_VAR) == 1 then
         sendluamsg(play, 101, 498, 2, 0, "")
         setplaydef(play, _QMDK_PANEL_FLAG_VAR, 0)
     end
 end
-
 local function _qmdk_send_rank_to_map(cfg, state)
     local mapName = (state and state.map and state.map ~= "") and state.map or (cfg and cfg.map)
     if not mapName or mapName == "" then
@@ -490,11 +453,9 @@ local function _qmdk_send_rank_to_map(cfg, state)
         sendluamsg(v, 101, 498, 1, 0, _qmdk_rank_payload(v, cfg, state))
     end
 end
-
 local function _qmdk_map_name(cfg, state)
     return (state and state.map and state.map ~= "") and state.map or (cfg and cfg.map) or ""
 end
-
 local function _qmdk_clear_map_ores(cfg, state)
     local mapName = _qmdk_map_name(cfg, state)
     if mapName == "" or not cfg or not cfg.ore_mob or cfg.ore_mob == "" then
@@ -502,7 +463,6 @@ local function _qmdk_clear_map_ores(cfg, state)
     end
     killmonsters(mapName, cfg.ore_mob, 0, false)
 end
-
 local function _qmdk_spawn_one_ore(cfg, state)
     local mapName = _qmdk_map_name(cfg, state)
     if mapName == "" or not cfg or not cfg.ore_mob or cfg.ore_mob == "" then
@@ -533,7 +493,6 @@ local function _qmdk_spawn_one_ore(cfg, state)
     end
     return false
 end
-
 local function _qmdk_spawn_ores(cfg, state, count)
     local need = math.max(0, tonumber(count) or 0)
     local spawned = 0
@@ -544,7 +503,6 @@ local function _qmdk_spawn_ores(cfg, state, count)
     end
     return spawned
 end
-
 local function _qmdk_tick_runtime(cfg, state)
     if not cfg or type(state) ~= "table" or getsysvar(VarCfg["G_全民夺矿状态"]) ~= 1 or tonumber(state.open) ~= 1 then
         return state
@@ -572,14 +530,12 @@ local function _qmdk_tick_runtime(cfg, state)
     end
     return state
 end
-
 local function _qmdk_is_collecting_ore(play, cfg)
     if not play or not cfg then
         return false
     end
     return tonumber(getplaydef(play, "N$iscaiji") or 0) == 1 and getplaydef(play, "S$采集目标名字") == cfg.ore_mob
 end
-
 local function _qmdk_clear_collect(play, reason)
     local cfg = _qmdk_get_cfg()
     local isCollectingOre = _qmdk_is_collecting_ore(play, cfg)
@@ -593,7 +549,6 @@ local function _qmdk_clear_collect(play, reason)
         end
     end
 end
-
 local function _qmdk_drop_ore(play, cfg)
     if not cfg or not cfg.ore_mob or cfg.ore_mob == "" then
         return
@@ -605,7 +560,6 @@ local function _qmdk_drop_ore(play, cfg)
         genmonex(mapName, x, y, cfg.ore_mob, 1, 1, 0, 54, "", 0)
     end
 end
-
 local function _qmdk_clear_carry(play, cfg, dropOre, reason)
     if tonumber(getplaydef(play, _QMDK_CARRY_VAR) or 0) ~= 1 then
         return
@@ -621,13 +575,11 @@ local function _qmdk_clear_carry(play, cfg, dropOre, reason)
         Player.sendmsgEx(play, reason .. "#57")
     end
 end
-
 local function _qmdk_clear_actor_state(play, cfg, dropOre)
     _qmdk_clear_collect(play)
     _qmdk_clear_carry(play, cfg, dropOre)
     setplaydef(play, _QMDK_PREP_NOTICE_VAR, 0)
 end
-
 local function _qmdk_try_deliver(play, cfg, state)
     if tonumber(getplaydef(play, _QMDK_CARRY_VAR) or 0) ~= 1 then
         return false
@@ -647,16 +599,13 @@ local function _qmdk_try_deliver(play, cfg, state)
     _qmdk_send_rank_to_map(cfg, state)
     return true
 end
-
 local function _qmdk_tick_player(play, cfg, state)
     if not _qmdk_is_active_map(play, cfg, state) then
         _qmdk_clear_actor_state(play, cfg, false)
         _qmdk_close_rank(play)
         return
     end
-
     _qmdk_send_rank(play, cfg, state)
-
     local nowTs = os.time()
     local prepLeft = math.max(0, (tonumber(state.prepare_end_ts) or 0) - nowTs)
     if prepLeft > 0 then
@@ -671,10 +620,8 @@ local function _qmdk_tick_player(play, cfg, state)
         return
     end
     setplaydef(play, _QMDK_PREP_NOTICE_VAR, 0)
-
     _qmdk_try_deliver(play, cfg, state)
 end
-
 local function _qmdk_refresh_actor(play)
     local cfg = _qmdk_get_cfg()
     if not cfg then
@@ -691,7 +638,6 @@ local function _qmdk_refresh_actor(play)
         _qmdk_close_rank(play)
     end
 end
-
 local function _qmdk_interrupt_collect(play, reason)
     local cfg = _qmdk_get_cfg()
     if _qmdk_is_collecting_ore(play, cfg) then
@@ -702,7 +648,6 @@ local function _qmdk_interrupt_collect(play, reason)
         Player.sendmsgEx(play, (reason or "采集中断") .. "#57")
     end
 end
-
 local function _qmdk_on_die(play)
     local cfg = _qmdk_get_cfg()
     if not cfg then
@@ -717,13 +662,11 @@ local function _qmdk_on_die(play)
         _qmdk_clear_actor_state(play, cfg, false)
     end
 end
-
 local function _qmdk_clear_all_online(cfg, dropOre)
     for _, player in ipairs(getplayerlst() or {}) do
         _qmdk_clear_actor_state(player, cfg, dropOre)
     end
 end
-
 QmdkApi.get_cfg = _qmdk_get_cfg
 QmdkApi.get_state = _qmdk_get_state
 QmdkApi.save_state = _qmdk_save_state
@@ -806,10 +749,7 @@ QmdkApi.on_collect_fail = function(play, monName)
     setplaydef(play, _QMDK_COLLECT_CANCEL_VAR, 0)
     return true
 end
-
 local function _qmdk_start(dqfz, cfg, fromBot)
-
-
     if getsysvar(VarCfg["G_全民夺矿状态"]) == 1 then
         return false
     end
@@ -825,18 +765,15 @@ local function _qmdk_start(dqfz, cfg, fromBot)
     setsysvar(VarCfg["G_全民夺矿状态"], 1)
     _qmdk_save_state(state)
     state = _qmdk_tick_runtime(cfg, state) or state
-
     setenvirontimer(cfg.map, 3, cfg.score_tick_sec, "@hd_tcppk," .. cfg.map)
     sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《全民夺矿》已开启，10秒后开始采矿搬运...")
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《全民夺矿》已开启，10秒后开始采矿搬运...")
-
     for _, player in ipairs(getplayerlst() or {}) do
         sendluamsg(player, 101, 12, 1, 2, '{"sk":' .. cfg.duration_min .. ',"kf":2,"idx":2}')
         _qmdk_refresh_actor(player)
     end
     return true
 end
-
 local function _qmdk_finish(cfg, fromBot)
     if getsysvar(VarCfg["G_全民夺矿状态"]) ~= 1 then
         return false
@@ -844,10 +781,8 @@ local function _qmdk_finish(cfg, fromBot)
     local state = _qmdk_get_state()
     local mapName = (state.map and state.map ~= "") and state.map or cfg.map
     setenvirofftimer(mapName, 3)
-
     _qmdk_clear_map_ores(cfg, state)
     _qmdk_clear_all_online(cfg, false)
-
     local scoreVar = _qmdk_get_score_var(cfg, state)
     local rankRaw = sorthumvar(scoreVar, 1, 1, 10)
     local rankData = {}
@@ -858,7 +793,6 @@ local function _qmdk_finish(cfg, fromBot)
             table.insert(rankData, {name = name, score = score})
         end
     end
-
     local mailTitle = cfg.mail_title or "全民夺矿"
     local topNames = {}
     for i, one in ipairs(rankData) do
@@ -875,7 +809,6 @@ local function _qmdk_finish(cfg, fromBot)
             Player.setJsonVarByTable(playerObj, VarCfg.T_hdjl, hdjl)
         end
     end
-
     if type(cfg.join_reward) == "table" and #cfg.join_reward > 0 then
         for _, player in ipairs(getplayerlst() or {}) do
             local score = _safe_getplayvar_num(player, "HUMAN", scoreVar)
@@ -885,11 +818,9 @@ local function _qmdk_finish(cfg, fromBot)
             end
         end
     end
-
     local topName = rankData[1] and rankData[1].name or "无人上榜"
     sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《全民夺矿》已结束,本次第一名为【" .. topName .. "】...")
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《全民夺矿》已结束,本次第一名为【" .. topName .. "】...")
-
     state.open = 0
     state.finished = 1
     state.from_bot = fromBot and 1 or 0
@@ -899,7 +830,6 @@ local function _qmdk_finish(cfg, fromBot)
     _qmdk_send_rank_to_map(cfg, state)
     return true
 end
-
 local function _qmdk_tick(dqfz, cfg)
     local state = _qmdk_get_state()
     if tonumber(state.force_end) == 1 then
@@ -908,7 +838,6 @@ local function _qmdk_tick(dqfz, cfg)
         _qmdk_finish(cfg, true)
         return
     end
-
     if getsysvar(VarCfg["G_全民夺矿状态"]) == 1 then
         local startMinute = tonumber(state.start_minute) or dqfz
         if dqfz - startMinute >= cfg.duration_min then
@@ -916,14 +845,12 @@ local function _qmdk_tick(dqfz, cfg)
         end
         return
     end
-
     if tonumber(state.force_start) == 1 then
         state.force_start = nil
         _qmdk_save_state(state)
         _qmdk_start(dqfz, cfg, true)
         return
     end
-
     if dqfz == cfg.start_minute then
         _qmdk_start(dqfz, cfg, false)
     end
@@ -937,7 +864,6 @@ function ontimerex1()
     if getsysvar(VarCfg["G_新区验证"]) > 0 and not checkkuafuserver() then
         local dqfz = getsysvar(VarCfg["G_开区分钟"]) + 1
         setsysvar(VarCfg["G_开区分钟"], dqfz)
-
         if getsysvar(VarCfg["G_天选之人"][2]) < 4 then
             local txsj = getsysvar(VarCfg["G_天选之人"][1]) + 1
             if txsj >= 30 then--30分钟一轮
@@ -1020,7 +946,6 @@ function ontimerex1()
                     end
                 end
             end
-
             if dqfz == 20 then
                 setenvirontimer("xtc",1,3,"@hd_tcppk,xtc")
                 local t = getplayerlst()
@@ -1064,9 +989,6 @@ function ontimerex1()
                     _sjdb_throw_fallback()
                 end
             end
-
-
-
             local qmdtCfg = _qmdt_get_cfg()
             if qmdtCfg then
                 if dqfz == qmdtCfg.start_minute then
@@ -1122,15 +1044,10 @@ function ontimerex1()
         end
     end
 end
-
 --跨服攻沙同步数据
 function ontimerex2()
     GameEvent.push(EventCfg.goKFGongShaSync)
 end
-
-
-
-
 ------------------------------------个人定时器begin---------------------------------
 -----------------个人1号3秒定时器----------------一直开启
 function ontimer1(play)
@@ -1139,14 +1056,10 @@ function ontimer1(play)
         Player.huishou(play)
     end
 end
-
 --攻沙个人定时器
 function ontimer2(actor)
     GameEvent.push(EventCfg.gocastlewaring, actor)
 end
-
-
-
 -----------------个人4号定时器----------------60秒定时器
 function ontimer4(play)
     local zxsj = getplaydef(play, VarCfg.U_fldt[1])
@@ -1155,22 +1068,30 @@ function ontimer4(play)
 end
 -----------------个人5号定时器----------------1秒定时器AI挂机开启
 function ontimer5(play)
-
 end
 -----------------个人6号定时器---------------红点系统--60s
 function ontimer6(play)
     -- release_print("红点系统")
-
     -- 红点发送：客户端 npc[500] p2=10，p3 对应顶部 iconpx 槽位
     local function _send_top_red(icon_idx)
         sendluamsg(play, 101, 1, 10, icon_idx, "")
     end
-
+    local function _is_marked(v)
+        return v == true or (tonumber(v or 0) or 0) >= 1
+    end
+    local function _count_marked(tbl)
+        local num = 0
+        for _, v in pairs(tbl or {}) do
+            if _is_marked(v) then
+                num = num + 1
+            end
+        end
+        return num
+    end
     -- 首充礼包（p3=5）可领取判定
     local can_sc = false
     local sc_cfg = teshudata["anniu_501"] or {}
     local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
-
     if tonumber(sc_data["ok"] or 0) == 1 then
         if tonumber(sc_data["首充"] or 0) == 1 then
             local day_list = (sc_cfg.details and sc_cfg.details["首充"]) or {}
@@ -1184,20 +1105,20 @@ function ontimer6(play)
             end
         end
     end
-
     -- 福利大厅（p3=2）可领取判定：七日登录/在线/杀怪/首杀首爆任一可领则亮
     local can_fldt = false
     local fldt = teshudata["fldt"] or {}
     local fldt_data = Player.getJsonTableByVar(play, VarCfg.T_qrbq) or {}
     local login_days = tonumber(getplaydef(play, VarCfg["U_登录天数"]) or 0) or 0
     local kill_num = (tonumber(getplaydef(play, VarCfg.J_jsgw[1]) or 0) or 0) + (tonumber(getplaydef(play, VarCfg.J_jsgw[2]) or 0) or 0)
-
     local claimed_day = tonumber(fldt_data["7rqd"] or 0) or 0
     local next_day = claimed_day + 1
     if next_day <= 7 and next_day <= login_days then
         can_fldt = true
     end
     if not can_fldt then
+        -- 福利大厅红点和 npc[511] 的领取条件保持一致：
+        -- 首爆归属人可领；328 档位玩家即使不是首爆归属也可领一次。
         local zx_cfg = fldt["zxjl"] or {}
         local zx_claimed = tonumber(fldt_data["zxjl"] or 0) or 0
         local zx_next = zx_claimed + 1
@@ -1232,16 +1153,36 @@ function ontimer6(play)
         end
     end
     if not can_fldt then
-        local qqsb = Player.getJsonTableByVar(nil, VarCfg["A_全区首曝json"]) or {}
-        for _, st in pairs(qqsb) do
-            if tonumber(st or 0) == 1 then
-                can_fldt = true
-                break
+        local qqsb = Player.getJsonTableByVar(nil, VarCfg["A_????json"]) or {}
+        local fldt_self = Player.getJsonTableByVar(play, VarCfg.T_qrbq) or {}
+        local qqsb_claim = type(fldt_self["qqsb_claim"]) == "table" and fldt_self["qqsb_claim"] or {}
+        local grqqsb = Player.getJsonTableByVar(play, VarCfg.T_grqqsb) or {}
+        local czlb = json2tbl(getplaydef(play, VarCfg.T_czlb))
+        if type(czlb) ~= "table" then
+            czlb = {}
+        end
+        local has_qqsb_privilege = tonumber(czlb["cz502_328"] or 0) == 1
+        local player_name = tostring(getbaseinfo(play, 1) or "")
+        local reward_cfg = (teshudata["fldt"] and teshudata["fldt"]["qqsb"]) or {}
+        for idx in pairs(reward_cfg) do
+            local key = tostring(idx)
+            local global_owner = qqsb[key]
+            if global_owner == nil then
+                global_owner = qqsb[idx]
+            end
+            if global_owner ~= nil and tonumber(qqsb_claim[key] or qqsb_claim[idx] or 0) ~= 1 then
+                local personal_ok = grqqsb[key]
+                if personal_ok == nil then
+                    personal_ok = grqqsb[idx]
+                end
+                local is_first_owner = type(global_owner) == "string" and global_owner == player_name
+                if is_first_owner or (has_qqsb_privilege and tonumber(personal_ok or 0) == 1) then
+                    can_fldt = true
+                    break
+                end
             end
         end
     end
-
-    -- 至尊赞助（p3=16）红点：仅保留可领取档位提示
     local can_zz = false
     local zz_data = Player.getJsonTableByVar(play, VarCfg["T_免费赞助"]) or {}
     local zz_cfg = (teshudata["anniu_516"] and teshudata["anniu_516"].details) or {}
@@ -1270,25 +1211,100 @@ function ontimer6(play)
         end
     end
     local can_jbp = false
-    local jbp_data = Player.getJsonTableByVar(play, VarCfg["T_聚宝盆"]) or {}
+    local jbp_data = Player.getJsonTableByVar(play, "T44") or {}
     local jbp_level = tonumber(jbp_data.level or 1) or 1
     local jbp_cfg_all = (teshudata["anniu_517"] and teshudata["anniu_517"].details) or {}
     local jbp_cfg = jbp_cfg_all[jbp_level]
     if jbp_cfg then
-        local jbp_jf = tonumber(getplaydef(play, VarCfg["U_聚宝盆积分"]) or 0) or 0
-        local jbp_cs = tonumber(getplaydef(play, VarCfg["J_聚宝盆领取次数"]) or 0) or 0
+        local jbp_jf = tonumber(getplaydef(play, "U42") or 0) or 0
+        local jbp_cs = tonumber(getplaydef(play, "J22") or 0) or 0
         local need_jf = tonumber(jbp_cfg.jf or 999999999) or 999999999
         local max_cs = tonumber(jbp_cfg.maxcs or 0) or 0
         if jbp_cs < max_cs and jbp_jf >= need_jf then
             can_jbp = true
         end
     end
-
+    -- FairyFate top red: any milestone reward can be claimed.
+    local can_ff = false
+    local ff_state = Player.getJsonTableByVar(play, "T40") or {}
+    ff_state.done = type(ff_state.done) == "table" and ff_state.done or {}
+    ff_state.milestone_claim = type(ff_state.milestone_claim) == "table" and ff_state.milestone_claim or {}
+    local ff_done_count = _count_marked(ff_state.done)
+    for _, milestone in ipairs((_fairy_fate_red_cfg and _fairy_fate_red_cfg.milestones) or {}) do
+        local need_count = tonumber(milestone.count or 0) or 0
+        if need_count > 0 and ff_done_count >= need_count then
+            local claimed = ff_state.milestone_claim[tostring(need_count)]
+            if claimed == nil then
+                claimed = ff_state.milestone_claim[need_count]
+            end
+            if not _is_marked(claimed) then
+                can_ff = true
+                break
+            end
+        end
+    end
+    -- MSFC top red: free exchange / milestone reward / day-card reward.
+    local can_msfc = false
+    local msfc_cfg = teshudata["npc_101"] or {}
+    local msfc_data = Player.getJsonTableByVar(play, "T59") or {}
+    msfc_data.claim_normal = type(msfc_data.claim_normal) == "table" and msfc_data.claim_normal or {}
+    msfc_data.claim_crown = type(msfc_data.claim_crown) == "table" and msfc_data.claim_crown or {}
+    local total_kills = (tonumber(getplaydef(play, VarCfg.J_jsgw[1]) or 0) or 0) + (tonumber(getplaydef(play, VarCfg.J_jsgw[2]) or 0) or 0)
+    local kill_per_exchange = tonumber(msfc_cfg.kill_per_exchange or 188) or 188
+    local exchange_daily_limit = tonumber(msfc_cfg.exchange_daily_limit or 50) or 50
+    local exchange_used = tonumber(msfc_data.exchange_used or 0) or 0
+    if tostring(msfc_data.exchange_date or "") ~= os.date("%Y%m%d") then
+        exchange_used = 0
+    end
+    if kill_per_exchange > 0 then
+        local max_can_exchange = math.floor(total_kills / kill_per_exchange)
+        if exchange_used > exchange_daily_limit then
+            exchange_used = exchange_daily_limit
+        end
+        if exchange_used > max_can_exchange then
+            exchange_used = max_can_exchange
+        end
+        if math.max(0, math.min(exchange_daily_limit - exchange_used, max_can_exchange - exchange_used)) > 0 then
+            can_msfc = true
+        end
+    end
+    if not can_msfc then
+        local draw_count = tonumber(msfc_data.draw_count or 0) or 0
+        local has_crown = (tonumber(querymoney(play, 23) or 0) or 0) >= (tonumber(msfc_cfg.crown_cost or 0) or 0)
+        if not has_crown then
+            has_crown = checktitle(play, tostring(msfc_cfg.crown_title or "??"))
+        end
+        for idx, milestone in ipairs(msfc_cfg.milestones or {}) do
+            local need_draw = tonumber(milestone.draw or 0) or 0
+            if need_draw > 0 and draw_count >= need_draw then
+                if not _is_marked(msfc_data.claim_normal[tostring(idx)]) then
+                    can_msfc = true
+                    break
+                end
+                if has_crown and not _is_marked(msfc_data.claim_crown[tostring(idx)]) then
+                    can_msfc = true
+                    break
+                end
+            end
+        end
+    end
+    if not can_msfc then
+        local day_card_cfg = msfc_cfg.day_card or {}
+        local need_charge = tonumber(day_card_cfg.need_charge or 28) or 28
+        local claimed_today = tostring(msfc_data.day_card_claim_date or "") == os.date("%Y%m%d")
+        local today_charge = tonumber(getplaydef(play, VarCfg.J_zscz) or 0) or 0
+        if (not claimed_today) and today_charge >= need_charge then
+            can_msfc = true
+        end
+    end
     if can_fldt then
         _send_top_red(2)
     end
     if can_sc then
         _send_top_red(5)
+    end
+    if can_ff then
+        _send_top_red(515)
     end
     if can_zz then
         _send_top_red(16)
@@ -1296,13 +1312,13 @@ function ontimer6(play)
     if can_jbp then
         _send_top_red(17)
     end
+    if can_msfc then
+        _send_top_red(31)
+    end
 end
-
 -----------------定时器----------------清空除魔  每天五点
 function ql_smmrrw()
-
 end
-
 -----------------个人10号定时器----------------假人用-流程
 function ontimer10(play)
     local dqlc = getplaydef(play,"N$当前流程")
@@ -1351,7 +1367,6 @@ function ontimer7(play)
     setplaydef(play,"N$自动砍树",os.time())
     sendmail(getbaseinfo(play,2),0,"砍树奖励","每20分钟砍树奖励",Player.jl_mail(merged_jl))
 end
-
 ------------------------------------个人定时器end---------------------------------
 -----------------地图定时器----------------
 function hd_tcppk(xx,ditu)
@@ -1389,6 +1404,5 @@ function hd_tcppk(xx,ditu)
             local hsmy_px = sorthumvar(_WLMZ_SCORE_VAR,1,1,5)
             sendluamsg(v,101,498,1,0,'{"pmsj":'..tbl2json(hsmy_px)..',"grjf":'..jf..'}')
         end
-
     end
 end
