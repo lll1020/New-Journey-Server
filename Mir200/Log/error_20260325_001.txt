@@ -270,3 +270,22 @@
 [2026-03-25 23:39:27:162] NewHttpPost(0-0-0)-----------------------------------
 
 
+[2026-03-26 14:34:35:607] TLogger.Execute Stop Error Except£ºI/O error 32[0000000001CB8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001CB7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001CB79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001CBAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001CA9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001CA996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001CA9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000CE23B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000D1D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[0000000000CD9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000CD97B1] System._ZN6System8__IOTestEv (Line 5933, "System.pas" + 3)
+[0000000001C70954] uThread_Logger._ZN14Uthread_logger7TLogger7SaveLogERPN6System7Classes11TStringListES5_RPN6Uclass7TMyLockENS1_13UnicodeStringE (Line 557, "uThread_Logger.pas" + 22)
+[0000000001C6E5EB] uThread_Logger._ZN14Uthread_logger7TLogger7ExecuteEv (Line 242, "uThread_Logger.pas" + 6)
+[0000000000E02963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000CE2F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC46A6E8D7] BaseThreadInitThunk
+[00007FFC47D2C48C] RtlUserThreadStart
+
+

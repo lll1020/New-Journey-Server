@@ -147,6 +147,29 @@ local function _reward_percent_value(v) return _toint(v) * 100 end
 -- 2. items/title: 达成时直接发放的物品或称号；
 -- 3. special: 不能直接映射到常规属性表、但面板和逻辑仍需展示/累计的特殊值。
 -- 这样做的目的，是让成就达成时不再重新拆文案，而是直接消费结构化缓存。
+local function _apply_detail_attr(rewardCfg, attrList)
+    if type(attrList) ~= "table" or #attrList <= 0 then
+        return rewardCfg
+    end
+    rewardCfg.attrs = {}
+    rewardCfg.special = {}
+    rewardCfg.realm_exp = nil
+    for _, attr in ipairs(attrList) do
+        local key = attr[1]
+        local value = _toint(attr[2])
+        if type(key) == "number" then
+            _add_attr(rewardCfg.attrs, key, value)
+        else
+            key = tostring(key or "")
+            if key == "realm_exp" then
+                rewardCfg.realm_exp = (rewardCfg.realm_exp or 0) + value
+            elseif key ~= "" then
+                _push_special(rewardCfg.special, key, value)
+            end
+        end
+    end
+    return rewardCfg
+end
 local function _parse_reward(text)
     local cfg = {attrs = {}, items = {}, special = {}, raw = tostring(text or "")}
     for _, part in ipairs(_split_text(text)) do
@@ -285,7 +308,11 @@ end
 -- 后续所有达成判定都只读缓存，避免每次事件触发都重新解析配置字符串。
 local function _prepare()
     if _prepared then return end
-    for _, detail in ipairs(_cfg.details or {}) do detail.rule = _parse_condition(detail) detail.reward_cfg = _parse_reward(detail.reward) end
+    for _, detail in ipairs(_cfg.details or {}) do
+        detail.rule = _parse_condition(detail)
+        detail.reward_cfg = _parse_reward(detail.reward)
+        _apply_detail_attr(detail.reward_cfg, detail.attr)
+    end
     for _, milestone in ipairs(_cfg.milestones or {}) do milestone.reward_cfg = _parse_milestone_reward(milestone.reward) end
     _cfg_44 = Guard.getConfig("npc_44") or {}
     _prepared = true

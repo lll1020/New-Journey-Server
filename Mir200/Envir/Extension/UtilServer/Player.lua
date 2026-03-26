@@ -261,9 +261,8 @@ function Player.updateSomeAddr(actor, cur_attr, next_attr)
     local newattr = {}
     if cur_attr then
         for _,attr in ipairs(cur_attr) do
-            local attridx, attrvalue = attr[1], attr[2]
-            local addvalue = 0
-            addvalue = gethumnewvalue(actor, attridx)
+            local attridx, attrvalue = attr[1], tonumber(attr[2] or 0) or 0
+            local addvalue = tonumber(gethumnewvalue(actor, attridx) or 0) or 0
             newattr[attridx] = newattr[attridx] or addvalue
             newattr[attridx] = newattr[attridx] - attrvalue
             if newattr[attridx] < 0 then newattr[attridx] = 0 end
@@ -272,9 +271,8 @@ function Player.updateSomeAddr(actor, cur_attr, next_attr)
 
     if next_attr then
         for _,attr in ipairs(next_attr) do
-            local attridx, attrvalue = attr[1], attr[2]
-            local addvalue = 0
-            addvalue = gethumnewvalue(actor, attridx)
+            local attridx, attrvalue = attr[1], tonumber(attr[2] or 0) or 0
+            local addvalue = tonumber(gethumnewvalue(actor, attridx) or 0) or 0
             newattr[attridx] = newattr[attridx] or addvalue
             newattr[attridx] = newattr[attridx] + attrvalue
         end
@@ -290,9 +288,8 @@ function Player.updateSomeAddr_time(actor, cur_attr, next_attr,time)
     local newattr = {}
     if cur_attr and #cur_attr > 0 then
         for _,attr in ipairs(cur_attr) do
-            local attridx, attrvalue = attr[1], attr[2]
-            local addvalue = 0
-            addvalue = gethumnewvalue(actor, attridx)
+            local attridx, attrvalue = attr[1], tonumber(attr[2] or 0) or 0
+            local addvalue = tonumber(gethumnewvalue(actor, attridx) or 0) or 0
             newattr[attridx] = newattr[attridx] or addvalue
             newattr[attridx] = newattr[attridx] - attrvalue
             if newattr[attridx] < 0 then newattr[attridx] = 0 end
@@ -301,9 +298,8 @@ function Player.updateSomeAddr_time(actor, cur_attr, next_attr,time)
 
     if next_attr and #next_attr > 0 then
         for _,attr in ipairs(next_attr) do
-            local attridx, attrvalue = attr[1], attr[2]
-            local addvalue = 0
-            addvalue = gethumnewvalue(actor, attridx)
+            local attridx, attrvalue = attr[1], tonumber(attr[2] or 0) or 0
+            local addvalue = tonumber(gethumnewvalue(actor, attridx) or 0) or 0
             newattr[attridx] = newattr[attridx] or addvalue
             newattr[attridx] = newattr[attridx] + attrvalue
         end
@@ -330,9 +326,8 @@ function updateSomeAddr_time_del(actor,time)
     local newattr = {}
     if cur_attr and #cur_attr > 0 then
         for _,attr in ipairs(cur_attr) do
-            local attridx, attrvalue = attr[1], attr[2]
-            local addvalue = 0
-            addvalue = gethumnewvalue(actor, attridx)
+            local attridx, attrvalue = attr[1], tonumber(attr[2] or 0) or 0
+            local addvalue = tonumber(gethumnewvalue(actor, attridx) or 0) or 0
             newattr[attridx] = newattr[attridx] or addvalue
             newattr[attridx] = newattr[attridx] - attrvalue
             if newattr[attridx] < 0 then newattr[attridx] = 0 end
@@ -341,9 +336,8 @@ function updateSomeAddr_time_del(actor,time)
 
     if next_attr and #next_attr > 0 then
         for _,attr in ipairs(next_attr) do
-            local attridx, attrvalue = attr[1], attr[2]
-            local addvalue = 0
-            addvalue = gethumnewvalue(actor, attridx)
+            local attridx, attrvalue = attr[1], tonumber(attr[2] or 0) or 0
+            local addvalue = tonumber(gethumnewvalue(actor, attridx) or 0) or 0
             newattr[attridx] = newattr[attridx] or addvalue
             newattr[attridx] = newattr[attridx] + attrvalue
         end
