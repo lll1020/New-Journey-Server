@@ -1,0 +1,9 @@
+[2026-03-27 23:45:36:587] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：78; NpcThreadId: 5436, CurPlayThreadId: 5436
+
+[2026-03-28 00:59:54:711] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：31; NpcThreadId: 5436, CurPlayThreadId: 5436
+
+[2026-03-28 02:19:12:524] LuaNPC:玩家名字k ID:999999999 执行 stdmodefunc53 player:玩家名字k 耗时：32; NpcThreadId: 5436, CurPlayThreadId: 5436
+
+[2026-03-28 02:37:15:390] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：313; NpcThreadId: 5436, CurPlayThreadId: 5436
+[2026-03-28 02:37:15:390] [玩家名字k]Lua执行耗时过高:313ms msgid:100 1002 2 2 
+

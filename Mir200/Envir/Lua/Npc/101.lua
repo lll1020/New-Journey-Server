@@ -146,13 +146,15 @@ local function _grant_placeholder(play, T_data, reward)
 end
 local function _grant_fashion(play, T_data, reward, reason)
     local idx = tostring(tonumber(reward.idx) or 0)
-    local name = reward.name or ("累抽时装" .. idx)
+    local fashionCfg = (((teshudata or {})["npc_1002"] or {}).details or {}).sz or {}
+    local name = reward.name or (fashionCfg[tonumber(idx) or 0] and fashionCfg[tonumber(idx) or 0].name) or ("时装：累抽" .. idx)
     if idx == "0" then return "" end
     if tonumber(T_data.fashion[idx]) == 1 then
         _grant_item(play, {give = _config.duplicate_fashion_reward}, reason)
         return name .. "(重复分解为元宝*660000)"
     end
     T_data.fashion[idx] = 1
+    Player.rwjl(play, {{name, 1}}, reason, 1, 0)
     return name
 end
 local function _grant_random_fashion(play, T_data, reason)
@@ -173,8 +175,13 @@ local function _grant_random_fashion(play, T_data, reason)
 end
 local function _grant_footstep(play, T_data, reward)
     local idx = tostring(tonumber(reward.idx) or 0)
-    local name = reward.name or ("累抽足迹" .. idx)
-    if idx ~= "0" then T_data.footstep[idx] = 1 end
+    local footstepCfg = (((teshudata or {})["npc_1002"] or {}).details or {}).zj or {}
+    local name = reward.name or (footstepCfg[tonumber(idx) or 0] and footstepCfg[tonumber(idx) or 0].name) or ("累抽足迹" .. idx)
+    if idx == "0" then
+        return name
+    end
+    T_data.footstep[idx] = 1
+    Player.rwjl(play, {{name, 1}}, ",msfc_footstep", 1, 0)
     return name
 end
 local function _grant_title(play, T_data, reward)

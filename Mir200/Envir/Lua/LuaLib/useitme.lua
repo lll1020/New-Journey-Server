@@ -806,6 +806,78 @@ function stdmodefunc50(play, item)
     return _G.npc_709_use_item(play, item)
 end
 
+local function _refresh_1002_attr(play, T_data)
+    local cfg1002 = teshudata and teshudata["npc_1002"]
+    local details = cfg1002 and cfg1002.details or {}
+    T_data = T_data or Player.getJsonTableByVar(play, VarCfg.T_szjl)
+    T_data.yjs = T_data.yjs or {}
+    T_data.yjszj = T_data.yjszj or {}
+
+    local attrs = {}
+    for idx, cfg in ipairs(details.sz or {}) do
+        if T_data.yjs[tostring(idx)] == 1 then
+            for _, attr in ipairs(cfg.attr or {}) do
+                local attrId = tonumber(attr[1])
+                local attrValue = tonumber(attr[2]) or 0
+                if attrId and attrValue > 0 then
+                    attrs[attrId] = (attrs[attrId] or 0) + attrValue
+                end
+            end
+        end
+    end
+    for idx, cfg in ipairs(details.zj or {}) do
+        if T_data.yjszj[tostring(idx)] == 1 then
+            for _, attr in ipairs(cfg.attr or {}) do
+                local attrId = tonumber(attr[1])
+                local attrValue = tonumber(attr[2]) or 0
+                if attrId and attrValue > 0 then
+                    attrs[attrId] = (attrs[attrId] or 0) + attrValue
+                end
+            end
+        end
+    end
+
+    local attrsstr = Player.getAttrTableToStr(attrs)
+    if attrsstr and attrsstr ~= "" then
+        addattlist(play, "时装属性", "=", attrsstr, 1)
+    else
+        delattlist(play, "时装属性")
+    end
+end
+
+local function _use_1002_unlock(play, item, keyName, listName, label)
+    local idx = tonumber(getstditeminfo(getiteminfo(play, item, 2), 8) or 0) or 0
+    local cfg1002 = teshudata and teshudata["npc_1002"]
+    local details = cfg1002 and cfg1002.details or {}
+    local cfgList = details[listName] or {}
+    if idx <= 0 or not cfgList[idx] then
+        Player.sendmsgEx(play, label .. "序号不存在#57")
+        return false
+    end
+
+    local T_data = Player.getJsonTableByVar(play, VarCfg.T_szjl)
+    T_data[keyName] = T_data[keyName] or {}
+    if T_data[keyName][tostring(idx)] == 1 then
+        Player.sendmsgEx(play, "你已拥有该" .. label .. "，无需重复使用#57")
+        return false
+    end
+
+    T_data[keyName][tostring(idx)] = 1
+    Player.setJsonVarByTable(play, VarCfg.T_szjl, T_data)
+    GameEvent.push(EventCfg.onUPSkin, play, idx)
+    _refresh_1002_attr(play, T_data)
+    delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+    Player.sendmsgEx(play, "恭喜你成功激活|【" .. (cfgList[idx].name or label) .. "】#249|")
+    return false
+end
+
+function stdmodefunc53(play, item)  --使用时装  getstditeminfo(getiteminfo(play, item, 2), 8)  通过这个来获取对应的序号
+    _use_1002_unlock(play, item, "yjs", "sz", "时装")
+end
+function stdmodefunc54(play, item)  --使用足迹  getstditeminfo(getiteminfo(play, item, 2), 8)  通过这个来获取对应的序号
+    _use_1002_unlock(play, item, "yjszj", "zj", "足迹")
+end
+
 
 
 

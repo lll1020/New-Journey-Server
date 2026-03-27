@@ -4,6 +4,69 @@ npc = {}
 --冠名
 
 local _config = Guard.getConfig("npc_20")
+local _fashionConfig = Guard.getConfig("npc_1002")
+local _fashionAttrListName = "时装属性"
+
+local function _refresh_fashion_attr(play, T_data)
+    T_data = T_data or Player.getJsonTableByVar(play, VarCfg.T_szjl)
+    T_data.yjs = T_data.yjs or {}
+    T_data.yjszj = T_data.yjszj or {}
+
+    local attrs = {}
+    for idx, cfg in ipairs(((_fashionConfig and _fashionConfig.details and _fashionConfig.details.sz) or {})) do
+        if T_data.yjs[tostring(idx)] == 1 then
+            for _, attr in ipairs(cfg.attr or {}) do
+                local attrId = tonumber(attr[1])
+                local attrValue = tonumber(attr[2]) or 0
+                if attrId and attrValue > 0 then
+                    attrs[attrId] = (attrs[attrId] or 0) + attrValue
+                end
+            end
+        end
+    end
+    for idx, cfg in ipairs(((_fashionConfig and _fashionConfig.details and _fashionConfig.details.zj) or {})) do
+        if T_data.yjszj[tostring(idx)] == 1 then
+            for _, attr in ipairs(cfg.attr or {}) do
+                local attrId = tonumber(attr[1])
+                local attrValue = tonumber(attr[2]) or 0
+                if attrId and attrValue > 0 then
+                    attrs[attrId] = (attrs[attrId] or 0) + attrValue
+                end
+            end
+        end
+    end
+
+    local attrsstr = Player.getAttrTableToStr(attrs)
+    if attrsstr and attrsstr ~= "" then
+        addattlist(play, _fashionAttrListName, "=", attrsstr, 1)
+    else
+        delattlist(play, _fashionAttrListName)
+    end
+end
+
+local function _grant_guanming_fashion(play)
+    local szList = (_fashionConfig and _fashionConfig.details and _fashionConfig.details.sz) or {}
+    local fashionIdx = 0
+    for idx, cfg in ipairs(szList) do
+        if cfg.name == "时装：冠名" then
+            fashionIdx = idx
+            break
+        end
+    end
+    if fashionIdx <= 0 then
+        return
+    end
+
+    local T_data = Player.getJsonTableByVar(play, VarCfg.T_szjl)
+    T_data.yjs = T_data.yjs or {}
+    if T_data.yjs[tostring(fashionIdx)] == 1 then
+        return
+    end
+    T_data.yjs[tostring(fashionIdx)] = 1
+    Player.setJsonVarByTable(play, VarCfg.T_szjl, T_data)
+    GameEvent.push(EventCfg.onUPSkin, play, fashionIdx)
+    _refresh_fashion_attr(play, T_data)
+end
 
 local function _set_first_guanming_player(play)
     local data = Player.getJsonTableByVar(nil, VarCfg["A_首个冠名json"])
@@ -30,6 +93,9 @@ local function _get_guanming_panel_data(play)
     return data
 end
 function npc.main(play,npcid)
+    if checktitle(play, _config.ch) then
+        _grant_guanming_fashion(play)
+    end
     sendluamsg(play,100,npcid,0,0,tbl2json(_get_guanming_panel_data(play)))
 end
 
@@ -53,6 +119,7 @@ function npc.link(play,npcid,ew,aid)
         if querymoney(play,23) >= _config.cost then
             if not checktitle(play,_config.ch) then
                 Player.title_give(play,_config.ch,1)
+                _grant_guanming_fashion(play)
                 _set_first_guanming_player(play)
                 sendluamsg(play,100,npcid,0,0,tbl2json(_get_guanming_panel_data(play)))
             else
