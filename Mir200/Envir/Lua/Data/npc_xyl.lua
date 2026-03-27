@@ -384,7 +384,7 @@ local function _xyl_check_task(play, name)
         ["天书强化"] = _xyl_has_tianshu_level,
         ["初识仙法"] = _xyl_has_any_xianfa,
         ["装备强化"] = _xyl_has_equip_strength,
-        ["喂养灵根"] = _xyl_has_linggen_feed,
+        ["升级灵根"] = _xyl_has_linggen_feed,
         ["幸运增幅"] = _xyl_has_lucky_upgrade,
         ["气运占卜"] = _xyl_has_divination,
         ["转生·二"] = function(play) return _xyl_has_rebirth(play, 20) end,
@@ -620,17 +620,17 @@ local npc_xyl = {
         {
             jq = {
                 {
-                    "喂养灵根",
+                    "升级灵根",
                     id = 999,
                     jl = { { "剧情点", 1 } },
                     fwdjy = function(play)
-                        return _xyl_check_task(play, "喂养灵根")
+                        return _xyl_check_task(play, "升级灵根")
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 1, "二大陆主城", 22, 95, 106 },
-                    desc = "历经喂养灵根，收获机缘",
+                    desc = "历经升级灵根，收获机缘",
                 },
                 {
                     "讨伐夜魔（剧）",
@@ -705,11 +705,11 @@ local npc_xyl = {
         {
             jq = {
                 {
-                    "开辟仙府（主城NPC）",
+                    "开辟仙府",
                     id = 999,
                     jl = { { "剧情点", 1 } },
                     fwdjy = function(play)
-                        return _xyl_check_task(play, "开辟仙府（主城NPC）")
+                        return _xyl_check_task(play, "开辟仙府")
                     end,
                     khdjy = function()
                         return true
@@ -799,7 +799,7 @@ local npc_xyl = {
                     id = 999,
                     jl = { { "剧情点", 1 }, { "藏宝图碎片", 5 } },
                     fwdjy = function(play)
-                        return _xyl_check_task(play, "开辟仙府（主城NPC）") and _xyl_check_task(play, "种植仙草")
+                        return _xyl_check_task(play, "开辟仙府") and _xyl_check_task(play, "种植仙草")
                     end,
                     khdjy = function()
                         return true
@@ -812,7 +812,7 @@ local npc_xyl = {
                     id = 999,
                     jl = { { "剧情点", 1 }, { "藏宝图碎片", 5 } },
                     fwdjy = function(play)
-                        return _xyl_check_task(play, "开辟仙府（主城NPC）") and _xyl_check_task(play, "了解砍树")
+                        return _xyl_check_task(play, "开辟仙府") and _xyl_check_task(play, "了解砍树")
                     end,
                     khdjy = function()
                         return true
@@ -825,7 +825,7 @@ local npc_xyl = {
                     id = 999,
                     jl = { { "剧情点", 2 } },
                     fwdjy = function(play)
-                        return _xyl_check_task(play, "开辟仙府（主城NPC）") and _xyl_check_task(play, "寻宝大师")
+                        return _xyl_check_task(play, "开辟仙府") and _xyl_check_task(play, "寻宝大师")
                     end,
                     khdjy = function()
                         return true

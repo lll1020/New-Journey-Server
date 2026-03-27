@@ -57,7 +57,7 @@ end
 
 local function _take_use_all_item(play, item, sl, itemName)
     if sl < 1 then
-        return
+        return false
     end
     if itemName and itemName ~= "" then
         takeitem(play, itemName, sl)
@@ -69,7 +69,7 @@ end
 function stdmodefunc12(play, item)
     local sl, itemName = _get_use_all_info(play, item)
     if sl < 1 then
-        return
+        return false
     end
     local wpid = getiteminfo(play, item, 2)
     local wpjg = getstditeminfo(wpid, 8)
@@ -80,7 +80,7 @@ end
 function stdmodefunc20(play, item)
     local sl, itemName = _get_use_all_info(play, item)
     if sl < 1 then
-        return
+        return false
     end
     local pk = getbaseinfo(play,46) - 100 * sl
     if pk < 0 then
@@ -95,7 +95,7 @@ end
 function stdmodefunc21(play, item)
     local sl, itemName = _get_use_all_info(play, item)
     if sl < 1 then
-        return
+        return false
     end
     local wpid = getiteminfo(play, item, 2)
     local wpjg = getstditeminfo(wpid, 8)
@@ -107,7 +107,7 @@ end
 function stdmodefunc11(play, item)
     local sl, itemName = _get_use_all_info(play, item)
     if sl < 1 then
-        return
+        return false
     end
     changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, '+', getstditeminfo(getiteminfo(play, item, 2), 8) * sl, '双击获得', true)
     _take_use_all_item(play, item, sl, itemName)
@@ -116,7 +116,7 @@ end
 function stdmodefunc18(play, item)
     local sl, itemName = _get_use_all_info(play, item)
     if sl < 1 then
-        return
+        return false
     end
     changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', getstditeminfo(getiteminfo(play, item, 2), 8) * sl, '双击获得', true)
     _take_use_all_item(play, item, sl, itemName)
@@ -133,7 +133,7 @@ function stdmodefunc13(play, item)
     local sl, itemName = _get_use_all_info(play, item)
     release_print(itemName)
     if sl < 1 then
-        return
+        return false
     end
     local min = itme_13[itemName][1]
     local max = itme_13[itemName][2]
@@ -154,7 +154,7 @@ local itme_14 = {
 function stdmodefunc14(play, item)
     local sl, itemName = _get_use_all_info(play, item)
     if sl < 1 then
-        return
+        return false
     end
     local min = itme_14[itemName][1]
     local max = itme_14[itemName][2]
@@ -168,7 +168,7 @@ end
 function stdmodefunc48(play, item) -- 真实充值卷
     local sl, itemName = _get_use_all_info(play, item)
     if sl < 1 then
-        return
+        return false
     end
     local wpid = getiteminfo(play,item,2)
     local wpjg = getstditeminfo(wpid,8)
@@ -185,38 +185,38 @@ function stdmodefunc234(play) ---千里传音 提示：使用50级
     if checkkuafu(play) then
         stop(play)
         sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>跨服不能使用该物品</font>","Type":9}')
-        return
+        return false
     end
     stop(play)
     if getbaseinfo(play,6) < 60 then
         sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>使用千里传音需要达到60级！</font>","Type":9}')
-        return
+        return false
     end
     say(play, "<发送/@@InputString23(请输入传音内容：)>\\")
 end
 function inputstring23(play) ---
     if getbaseinfo(play,6) < 60 then
         sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>使用千里传音需要达到60级！</font>","Type":9}')
-        return
+        return false
     end
     local text = getplaydef(play, "S23")
     local name_len = string.len(text)
     if name_len < 1 then
         sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>请输入内容</font>","Type":9}')
-        return
+        return false
     end
     if name_len > 100 then
         sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>内容过长</font>","Type":9}')
-        return
+        return false
     end
     if getbagitemcount(play, "千里传音") < 1 then
         sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>千里传音不足</font>","Type":9}')
-        return
+        return false
     end
     local result, name = exisitssensitiveword(text)
     if result then
         sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>内容包含敏感词</font>","Type":9}')
-        return
+        return false
     end
     takeitem(play, "千里传音", 1)
     FsendQfPz(play, "【千里传音】" .. getbaseinfo(play, 1) .. "：" .. text, 1)
@@ -233,7 +233,7 @@ function stdmodefunc30(play, item)
     local exp = getplaydef(play, VarCfg["U_境界修炼"][2])
     if exp >= 10000000 then
         sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>境界修炼已满级</font>","Type":9}')
-        return
+        return false
     end
     exp = exp + getstditeminfo(getiteminfo(play, item, 2), 8)
     if exp > 10000000 then exp = 10000000 end
@@ -429,6 +429,8 @@ function stdmodefunc39(play, item) --特殊丹药
         addbuff(play, 20112)
     elseif idx == 4 then
         addbuff(play, 20113)
+    elseif idx == 5 and Npclib and Npclib[76] and Npclib[76].use_dujie_dan then
+        return Npclib[76].use_dujie_dan(play, item)
     end
 end
 local function _apply_dan40_attr(play, rec)
@@ -545,23 +547,23 @@ local function _yybg45_do_use(play, rec)
 end
 function yybg45confirm(play, code)
     if tostring(code) ~= "1" then
-        return
+        return false
     end
     if getplaydef(play, "S$yybg45_confirm") ~= "1" then
-        return
+        return false
     end
     setplaydef(play, "S$yybg45_confirm", "")
     local rec = _yybg45_get_rec(play)
     if rec.yybg45_full >= 1 then
         _yybg45_apply_full(play, rec)
         messagebox(play, "阴阳八卦境已圆满，无需重复使用")
-        return
+        return false
     end
     local today = os.date("%Y%m%d")
     if rec.yybg45_free_date ~= today then
         rec.yybg45_free_date = today
         _yybg45_do_use(play, rec)
-        return
+        return false
     end
     local cost = {{"灵石", 200}}
     local name, num = Player.checkItemNumByTable(play, cost)
@@ -584,7 +586,7 @@ function stdmodefunc40(play, item) --特殊丹药
     local key = "dan40_" .. tostring(idx)
     local max = max_map[idx]
     if not max then
-        return
+        return false
     end
     local cur = rec[key] or 0
     if cur >= max then
@@ -618,14 +620,17 @@ local function _msfc_reward_label(reward)
 end
 
 local function _msfc_box_code(poolKey, idx)
-    local map = {low = 100, high = 200, super = 300}
+    local map = {low = 100, high = 200, super = 300, relic = 400}
     return (map[poolKey] or 0) + (tonumber(idx) or 0)
 end
 
 local function _msfc_parse_box_code(code)
     code = tonumber(code) or 0
     local poolKey = nil
-    if code >= 300 then
+    if code >= 400 then
+        poolKey = "relic"
+        code = code - 400
+    elseif code >= 300 then
         poolKey = "super"
         code = code - 300
     elseif code >= 200 then
@@ -642,20 +647,22 @@ local function _msfc_open_box_say(play, boxName, poolKey)
     local pool = _msfc_get_box_pool(poolKey)
     if not pool or #pool < 1 then
         Player.sendmsgEx(play, "材料自选箱配置不存在#57")
-        return
+        return false
     end
-    local height = 150 + #pool * 48
+    local height = math.max(180, 92 + #pool * 30)
     local lines = {
-        '<Img|id=ui_msfc_bg|x=0|y=0|width=640|height=' .. tostring(height) .. '|img=public/bg_npc_01.png|bg=1|esc=1|move=0|reset=1|show=0|scale9l=15|scale9r=15|scale9t=15|scale9b=15>',
-        '    <Layout|id=ui_msfc_close_area|x=610|y=0|width=30|height=40|link=@exit>',
-        '    <Button|id=ui_msfc_close|x=604|y=0|width=26|height=40|nimg=public/1900000510.png|pimg=public/1900000511.png|link=@exit>',
-        '    <Text|id=ui_msfc_title|x=24|y=18|width=560|height=24|color=251|size=18|text=' .. tostring(boxName) .. '：点击奖励直接领取>',
+        '<Img|id=ui_msfc_bg|x=0|y=0|width=332|height=' .. tostring(height) .. '|img=public/bg_npc_01.png|bg=1|esc=1|move=0|reset=1|show=0|scale9l=15|scale9r=15|scale9t=15|scale9b=15>',
+        '<Layout|id=ui_msfc_close_area|x=329|y=3|width=30|height=40|link=@exit>',
+        '<Button|id=ui_msfc_close|x=332|y=3|width=26|height=40|nimg=public/1900000510.png|pimg=public/1900000511.png|color=255|size=18|link=@exit>',
+        '<Text|id=ui_msfc_title|x=27|y=23|color=251|size=18|text=' .. tostring(boxName) .. '：点击奖励直接领取>',
     }
+
     for i, reward in ipairs(pool) do
-        local y = 58 + (i - 1) * 44
-        lines[#lines + 1] = '    <Button|id=ui_msfc_btn_' .. tostring(i) .. '|x=24|y=' .. tostring(y) .. '|width=560|height=36|nimg=public/1900000660.png|pimg=public/1900000660.png|color=251|size=16|text=' .. _msfc_reward_label(reward) .. '|link=@msfcbox,' .. tostring(_msfc_box_code(poolKey, i)) .. '>'
+        local y = 60 + (i - 1) * 30
+        lines[#lines + 1] = '<Text|id=ui_' .. tostring(i) .. '|x=45|y=' .. tostring(y) .. '|color=255|size=18|text=' .. _msfc_reward_label(reward) .. '|link=@msfcbox,' .. tostring(_msfc_box_code(poolKey, i)) .. '>'
     end
     lines[#lines + 1] = '</Img>'
+    -- release_print("打开自选箱界面，奖励列表长度:", table.concat(lines, "\r\n"))
     say(play, table.concat(lines, "\r\n"))
 end
 
@@ -664,15 +671,15 @@ local function _msfc_submit_box_choice(play, boxName, poolKey, choiceIdx)
     local reward = tonumber(choiceIdx) and pool[tonumber(choiceIdx)] or nil
     if not reward then
         Player.sendmsgEx(play, "选择的奖励无效#57")
-        return
+        return false
     end
     if getbagitemcount(play, boxName) < 1 then
         Player.sendmsgEx(play, tostring(boxName) .. "不足#57")
-        return
+        return false
     end
     if reward.kind ~= "item" or type(reward.give) ~= "table" then
         Player.sendmsgEx(play, "该奖励暂不支持通过自选箱领取#57")
-        return
+        return false
     end
     takeitem(play, boxName, 1)
     Player.rwjl(play, reward.give, tostring(boxName), 1)
@@ -685,11 +692,12 @@ function msfcbox(play, code)
         low = "低级材料自选箱",
         high = "高级材料自选箱",
         super = "特级材料自选箱",
+        relic = "灵兽圣遗物自选礼盒",
     }
     local boxName = boxMap[poolKey]
     if not boxName or not choiceIdx or choiceIdx <= 0 then
         Player.sendmsgEx(play, "选择的奖励无效#57")
-        return
+        return false
     end
     _msfc_submit_box_choice(play, boxName, poolKey, choiceIdx)
 end
@@ -698,7 +706,7 @@ function stdmodefunc41(play, item) --仙法卷轴残页  -- 10合一  仙法卷轴
     local itemName = getiteminfo(play, item, ConstCfg.iteminfo.name) or "仙法卷轴残页"
     if getbagitemcount(play, itemName) < 10 then
         Player.sendmsgEx(play, itemName .. "不足10个#57")
-        return
+        return false
     end
     takeitem(play, itemName, 10)
     Player.rwjl(play, {{"仙法卷轴",1}}, "仙法卷轴残页合成", 1)
@@ -717,6 +725,11 @@ function stdmodefunc43(play, item) --高级材料自选箱  --5个基础材料
 end
 function stdmodefunc44(play, item) --特级材料自选箱  --5个基础材料  
     _msfc_open_box_say(play, "特级材料自选箱", "super")
+    return false
+
+end
+function stdmodefunc52(play, item) --灵兽圣遗物自选礼盒
+    _msfc_open_box_say(play, "灵兽圣遗物自选礼盒", "relic")
     return false
 
 end
@@ -747,6 +760,24 @@ function stdmodefunc45(play, item) --"背包道具（不可回收不可分解不可丢弃不可爆出
 end
 function stdmodefunc46(play, item) --等级卷轴  等级 + 1
     callscriptex(play, "CHANGELEVEL", "+", 1)
+end
+function stdmodefunc47(play, item) --天道·渡劫丹
+    if not Npclib or not Npclib[76] or type(Npclib[76].use_dujie_dan) ~= "function" then
+        Player.sendmsgEx(play, "天道试炼逻辑未加载#57")
+        return false
+    end
+    return Npclib[76].use_dujie_dan(play, item)
+end
+function stdmodefunc51(play, item) --酒葫芦材料
+    local equipLevel = Player.getEquipFieldByPos(play, 16, 1) or 0
+    if equipLevel == 0 then
+        Player.sendmsgEx(play,  "请先装备酒葫芦#57")
+        return
+    end
+    local data = {}
+    data["dj_data"] = Player.getJsonTableByVar(play, VarCfg["T_仙食坊"])
+    sendluamsg(play,100,14,0,0,tbl2json(data))
+    return false
 end
 -- 倩女幽魂召唤道具（预留）：仅副本中可用
 -- 后续将对应道具 StdMode 指向 49 即可生效

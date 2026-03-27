@@ -138,3 +138,22 @@ function bl_zyjhl7(play,mingzi)
     Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
     return true
 end
+--------------------爆率监听触发-------------------仙法卷轴残页
+function bl_zyjhl8(play,mingzi)
+    if mingzi ~= "仙法卷轴残页" then
+        return false
+    end
+
+    local cur_map = getbaseinfo(play, 3)
+    local dl = 0
+    if cur_map and daluditu then
+        dl = tonumber(daluditu[cur_map] or 0) or 0
+    end
+
+    -- 只允许二大陆及以上地图掉落；真实概率固定 1/500，不吃人物爆率加成
+    if dl < 2 then
+        return false
+    end
+
+    return math.random(500) == 1
+end

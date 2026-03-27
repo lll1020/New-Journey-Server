@@ -81,9 +81,5 @@ function npc_73_fb_end(play)
 end
 
 
-
-
-
-
 return npc
 

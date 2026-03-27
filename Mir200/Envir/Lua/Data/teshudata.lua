@@ -1233,11 +1233,14 @@ teshudata = {
         id = 74,
         name = "天道命盘",
         all = 4,
+        all_level_need = 150,
+        all_level_add = 5,
+        all_desc = "全命盘激活后：150级后等级+5",
         details = {
-            {name = "灵兽", cost = {{"天道命石",1},{"元宝",1000000}},attrs = {{1,1}}},
-            {name = "灵根", cost = {{"天道命石",10},{"元宝",1000000}},attrs = {{1,1}}},
-            {name = "境界", cost = {{"天道命石",10},{"元宝",1000000}},attrs = {{1,1}}},
-            {name = "天书仙法", cost = {{"天道命石",10},{"元宝",1000000}},attrs = {{1,1}}},
+            {name = "灵兽", reward_desc = "无", desc = "任意2只灵兽亲密度满级", cost = {{"天道命石",10},{"元宝",1000000}}, attr = {}},
+            {name = "灵根", reward_desc = "无", desc = "任意2个灵根满级", cost = {{"天道命石",10},{"元宝",1000000}}, attr = {}},
+            {name = "境界", reward_desc = "无", desc = "境界达到元婴境", cost = {{"天道命石",10},{"元宝",1000000}}, attr = {}},
+            {name = "天书仙法", reward_desc = "无", desc = "天书达到LV30且拥有3条红色仙法", cost = {{"天道命石",10},{"元宝",1000000}}, attr = {}},
         },
     },
     ["npc_75"] = {
@@ -1253,11 +1256,12 @@ teshudata = {
     ["npc_76"] = {
         id = 76,
         name = "天命试炼",
+        dujie_drop = {item = "天道·渡劫丹", rate = 5000, need_charge = 100},
         details = {
-            {name = "灵兽",reward = {{"天道卷轴[天命·复活]",1}},cost = {{"元宝",500000}}},
-            {name = "灵根",reward = {{"天道卷轴[天命·麻痹]",1}},cost = {{"元宝",500000}}},
-            {name = "境界",reward = {{"天道卷轴[天命·神镰]",1}},cost = {{"元宝",1000000}}},
-            {name = "天书仙法",reward = {{"天道卷轴[天命·神斧]",1}},cost = {{"元宝",1000000}}},
+            {name = "灵兽", reward = {{"天道卷轴[天命·复活]",1}}, cost = {}, trial = {fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "≮火烧连营·天命策尊≯", boss_pos = {32,36}, boss_effect = 92, pet_tick_sec = 1, pet_hurt_pct = 4, pet_hint_sec = 5}},
+            {name = "灵根", reward = {{"天道卷轴[天命·麻痹]",1}}, cost = {}, trial = {fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "王婆", boss_pos = {32,36}, elite = "暗影打手·精英", elite_count = 3, mob = "暗影打手", mob_count = 10, mob_center = {32,36}}},
+            {name = "境界", reward = {{"天道卷轴[天命·神镰]",1}}, cost = {}, trial = {fb_map = "mwsl", fb_time = 60, enter_pos = {29,27}, lightning_sec = 5, lightning_effect = 60463, need_success = 3, dan_item = "天道·渡劫丹", dan_keep_sec = 3}},
+            {name = "天书仙法", reward = {{"天道卷轴[天命·神斧]",1}}, cost = {}, trial = {fb_map = "mwsl", fb_time = 90, enter_pos = {29,27}, total_round = 3, round_sec = 20, score_target = 10, score_tick_sec = 1, safe_radius = 3, safe_effect = 92, safe_points = {{29,27},{35,27},{29,35},{35,35},{32,31}}}},
         },
     },
     ---剧情类npc
@@ -1265,9 +1269,9 @@ teshudata = {
         id = 601,
         name = "修复轩辕剑",
         cost = {
-            {"修复轩辕剑材料A",1},
-            {"修复轩辕剑材料B",1},
-            {"修复轩辕剑材料C",1},
+            {"首山之铜",1},
+            {"天女纯阳之力",1},
+            {"五色神石",1},
         },
         details = {
             ch = "轩辕剑传人",
@@ -2224,7 +2228,7 @@ teshudata = {
         fj = {10,30,68,128,198,328,648,998},
         jl = {
             {give = {{"灵石",100},{"元宝",50000},{"千年玄铁",388}},ch = "来去自如"},
-            {give = {{"灵石",300},{"金币",10000000},{"开辟许可证",1}},token_count = 5},
+            {give = {{"灵石",300},{"金币",10000000},{"炼丹许可证",1}},token_count = 5},
             {give = {{"灵石",680},{"元宝",300000},{"斗笠之魂",1}},ch = "恭喜发财"},
             {give = {{"灵石",1280},{"金币",35000000},{"千年玄铁",1388}},show = {{"至尊吊坠",1}}},
             {give = {{"灵石",1980},{"元宝",500000},{"若水宝玉",60}},skill = "魔法盾"},
@@ -2311,10 +2315,9 @@ teshudata = {
         box_pool = {
             low = {
                 {kind = "item", give = {{"千年玄铁",88}}, label = "千年玄铁*88"},
-                {kind = "item", give = {{"千年玄铁",88}}, label = "千年玄铁*88"},
                 {kind = "item", give = {{"五行石",5}}, label = "五行石*5"},
-                {kind = "item", give = {{"修为丹（小）",5}}, label = "修为丹（小）*5"},
-                {kind = "item", give = {{"杀伐神石[小]",5}}, label = "杀伐神石[小]*5"},
+                {kind = "item", give = {{"修为丹（小）",5}}, label = "修为丹小*5"},
+                {kind = "item", give = {{"杀伐神石[小]",5}}, label = "杀伐神石小*5"},
                 {kind = "item", give = {{"强化石",20}}, label = "强化石*20"},
             },
             high = {
@@ -2327,6 +2330,13 @@ teshudata = {
             super = {
                 {kind = "item", give = {{"圣星核",1}}, label = "圣星核*1"},
                 {kind = "item", give = {{"灵兽蛋",6}}, label = "灵兽蛋*6"},
+            },
+            relic = {
+                {kind = "item", give = {{"上古麒麟怒角",1}}, label = "上古麒麟怒角*1"},
+                {kind = "item", give = {{"上古青龙逆鳞",1}}, label = "上古青龙逆鳞*1"},
+                {kind = "item", give = {{"上古朱雀火羽",1}}, label = "上古朱雀火羽*1"},
+                {kind = "item", give = {{"上古白虎獠牙",1}}, label = "上古白虎獠牙*1"},
+                {kind = "item", give = {{"上古玄武鎏甲",1}}, label = "上古玄武鎏甲*1"},
             },
         },
         milestones = {
