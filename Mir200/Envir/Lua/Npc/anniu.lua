@@ -1,5 +1,6 @@
 npc = {}
 local _fashionConfig1002 = Guard.getConfig("npc_1002")
+local _linggenConfig22 = Guard.getConfig("npc_22")
 local FairyFate = include("lua/LuaLib/fairy_fate.lua")
 local _fashionAttrListName = "时装属性"
 local function _refreshFashionAttr(play, T_data)
@@ -160,6 +161,15 @@ local function _ywl_activate_linggen(play, idx)
     end
     data.level[key] = 0
     Player.setJsonVarByTable(play, VarCfg["T_灵根"], data)
+    local baseRatio = tonumber(_linggenConfig22 and _linggenConfig22.base_ratio or 0.4) or 0.4
+    local rootCfg = _linggenConfig22 and _linggenConfig22.main_r and _linggenConfig22.main_r[idx]
+    local addAttrs = {}
+    for _, one in ipairs(rootCfg and rootCfg.attr or {}) do
+        addAttrs[#addAttrs + 1] = {one[1], math.max(1, math.floor((tonumber(one[2]) or 0) * baseRatio + 0.5))}
+    end
+    if #addAttrs > 0 then
+        Player.updateSomeAddr(play, nil, addAttrs)
+    end
     -- 按 602 的激活逻辑，这里只做激活与提示，不走副本流程
     Player.sendmsgEx(play, "恭喜你，成功激活|【灵根】#249|")
     return true

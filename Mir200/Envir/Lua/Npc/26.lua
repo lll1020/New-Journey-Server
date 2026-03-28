@@ -61,12 +61,14 @@ function npc.link(play,npcid,ew,aid)
             Player.sendmsgEx(play, "参数错误!#57")
             return
         end
-        local name, num = Player.checkItemNumByTable(play, _config.cost)
-        if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
-            return
+        if tonumber(U_num or 0) > 0 then
+            local name, num = Player.checkItemNumByTable(play, _config.cost)
+            if name then
+                Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
+                return
+            end
+            Player.takeItemByTable(play, _config.cost, ",占卜",nil)
         end
-        Player.takeItemByTable(play, _config.cost, ",占卜",nil)
         DeleteAllTitle(play)
         local titileName = cfg
         Player.title_give(play, titileName)

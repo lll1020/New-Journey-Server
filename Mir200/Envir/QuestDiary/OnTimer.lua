@@ -378,8 +378,8 @@ local function _qmdk_get_cfg()
     if type(cfg.map) ~= "string" or cfg.map == "" then
         return nil
     end
-    cfg.start_minute = tonumber(cfg.start_minute) or 26
-    cfg.duration_min = tonumber(cfg.duration_min) or 8
+    cfg.start_minute = tonumber(cfg.start_minute) or -1
+    cfg.duration_min = tonumber(cfg.duration_min) or 20
     cfg.score_tick_sec = tonumber(cfg.score_tick_sec) or 1
     cfg.score_var_prefix = cfg.score_var_prefix or "全民夺矿"
     cfg.prepare_sec = tonumber(cfg.prepare_sec) or 10
@@ -394,6 +394,10 @@ local function _qmdk_get_cfg()
     cfg.deliver_pos = cfg.deliver_pos or {21, 20}
     cfg.ore_mob = cfg.ore_mob or "大矿石"
     cfg.carry_buff = tonumber(cfg.carry_buff) or 20115
+    cfg.mail_title = cfg.mail_title or "全民夺矿"
+    cfg.min_open_day = tonumber(cfg.min_open_day) or 2
+    cfg.start_hour = tonumber(cfg.start_hour) or 19
+    cfg.start_minute_clock = tonumber(cfg.start_minute_clock) or 0
     return cfg
 end
 local function _qmdk_get_state()
@@ -853,6 +857,14 @@ local function _qmdk_tick(dqfz, cfg)
     end
     if dqfz == cfg.start_minute then
         _qmdk_start(dqfz, cfg, false)
+        return
+    end
+    if dqfz >= ((cfg.min_open_day - 1) * 24 * 60) then
+        local hour = tonumber(os.date("%H")) or 0
+        local minute = tonumber(os.date("%M")) or 0
+        if hour == cfg.start_hour and minute == cfg.start_minute_clock then
+            _qmdk_start(dqfz, cfg, false)
+        end
     end
 end
 -- 武林盟主活动定义（单实体活动，地图与积分键统一管理）
@@ -937,7 +949,14 @@ function ontimerex1()
                 setsysvar(VarCfg["A_天选之人json"], tbl2json(txzz_data))
             else
                 setsysvar(VarCfg["G_天选之人"][1], txsj)
-                if txsj == 27 then
+                if dqfz == 1 then
+                    sendmovemsg("0", 1, 253, 0, 300, 1,"天选之人：活动《天选之人》已开启,请玩家尽快参与...")
+                    sendmovemsg("0", 1, 249, 0, 250, 1,"天选之人：活动《天选之人》已开启,请玩家尽快参与...")
+                    local player_list = getplayerlst()
+                    for i, player  in ipairs(player_list or {}) do
+                        sendluamsg(player,101,12,1,7,'{"sk":120,"kf":2,"idx":7}')
+                    end
+                elseif txsj == 27 then
                     sendmovemsg("0", 1, 253, 0, 300, 1,"天选之人：活动《天选之人》即将开启,请玩家做好准备...")
                     sendmovemsg("0", 1, 249, 0, 250, 1,"天选之人：活动《天选之人》即将开启,请玩家做好准备...")
                     local player_list = getplayerlst()
@@ -946,7 +965,7 @@ function ontimerex1()
                     end
                 end
             end
-            if dqfz == 20 then
+            if dqfz == 5 then
                 setenvirontimer("xtc",1,3,"@hd_tcppk,xtc")
                 local t = getplayerlst()
                 for _, v in pairs(t) do
@@ -961,7 +980,7 @@ function ontimerex1()
                 for i, player  in ipairs(player_list or {}) do
                     sendluamsg(player,101,12,1,5,'{"sk":'..3 ..',"kf":'..2 ..',"idx":'..5 ..'}')
                 end
-            elseif dqfz == 23 then
+            elseif dqfz == 8 then
                 setenvirofftimer("xtc",1)
                 local t = getplayerlst()
                 for _, v in pairs(t) do
@@ -978,7 +997,7 @@ function ontimerex1()
                 sendmovemsg("0", 1, 254, 0, 270, 1,"活动：活动《随机夺宝》已开启奖励丰厚,请尽快参加活动...")
                 sendmovemsg("0", 1, 254, 0, 240, 1,"活动：活动《随机夺宝》已开启奖励丰厚,请尽快参加活动...")
                 local sjdbCfg = _sjdb_get_cfg()
-                local sjdbKeepMin = math.max(1, math.floor(((sjdbCfg and sjdbCfg.keep_sec) or 300) / 60))
+                local sjdbKeepMin = math.max(1, math.floor((((sjdbCfg and sjdbCfg.keep_sec) or 180) + 59) / 60))
                 local player_list = getplayerlst()
                 for i, player  in ipairs(player_list or {}) do
                     sendluamsg(player,101,1,13,0,"")
@@ -997,15 +1016,15 @@ function ontimerex1()
                     _qmdt_tick(dqfz, qmdtCfg)
                 end
             end
-            if dqfz == 40 then
+            if dqfz == 25 then
                 setenvirontimer(_WLMZ_MAP_NAME,2,10,"@hd_tcppk,".._WLMZ_MAP_NAME)
                 sendmovemsg("0", 1, 254, 0, 300, 1,"活动：活动《".._WLMZ_EVENT_NAME.."》已开启奖励丰厚,请尽快参加活动...")
                 sendmovemsg("0", 1, 254, 0, 270, 1,"活动：活动《".._WLMZ_EVENT_NAME.."》已开启奖励丰厚,请尽快参加活动...")
                 local player_list = getplayerlst()
                 for i, player  in ipairs(player_list or {}) do
-                    sendluamsg(player,101,12,1,9,'{"sk":'..10 ..',"kf":'..2 ..',"idx":'..9 ..'}')
+                    sendluamsg(player,101,12,1,9,'{"sk":'..5 ..',"kf":'..2 ..',"idx":'..9 ..'}')
                 end
-            elseif dqfz == 50 then
+            elseif dqfz == 30 then
                 setenvirofftimer(_WLMZ_MAP_NAME,2)
                 local wanjia = getobjectinmap(_WLMZ_MAP_NAME,25,29,65,1)
                 for k, v in pairs(wanjia) do

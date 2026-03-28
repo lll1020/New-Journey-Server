@@ -2,6 +2,44 @@ npc = {}
 --灵根
 local _config = Guard.getConfig("npc_22")
 local FairyFate = include("lua/LuaLib/fairy_fate.lua")
+local _base_ratio = tonumber(_config.base_ratio or 0.4) or 0.4
+
+local function _lg_has_root(T_data, idx)
+    T_data = T_data or {}
+    T_data.level = T_data.level or {}
+    return T_data.level[tostring(idx)] ~= nil
+end
+
+local function _lg_effect_scale(T_data, idx)
+    if not _lg_has_root(T_data, idx) then
+        return 0
+    end
+    return (tonumber(T_data.level[tostring(idx)]) or 0) + _base_ratio
+end
+
+local function _lg_round_value(value)
+    value = tonumber(value) or 0
+    if value <= 0 then
+        return 0
+    end
+    local ret = math.floor(value + 0.5)
+    if ret <= 0 then
+        ret = 1
+    end
+    return ret
+end
+
+local function _lg_build_attr(attr_list, scale)
+    local attrs = {}
+    scale = tonumber(scale) or 0
+    if scale <= 0 then
+        return attrs
+    end
+    for _, one in ipairs(attr_list or {}) do
+        attrs[#attrs + 1] = {one[1], _lg_round_value((tonumber(one[2]) or 0) * scale)}
+    end
+    return attrs
+end
 function npc.main(play,npcid)
     local data = {}
     data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
@@ -43,7 +81,7 @@ function npc.link(play,npcid,ew,aid)
             Player.sendmsgEx(play, "提示:你已经装配该灵根属性，无需重复装配#57")
             return
         end
-        if not T_data.level[""..aid] then
+        if not _lg_has_root(T_data, aid) then
             Player.sendmsgEx(play, "提示:你还没有该灵根属性，无法进行装配#57")
             return
         end
@@ -69,7 +107,7 @@ function npc.link(play,npcid,ew,aid)
             Player.sendmsgEx(play, "提示:你已经装配该灵根属性，无需重复装配#57")
             return
         end
-        if not T_data.level[""..aid] then
+        if not _lg_has_root(T_data, aid) then
             Player.sendmsgEx(play, "提示:你还没有该灵根属性，无法进行装配#57")
             return
         end
@@ -83,11 +121,12 @@ function npc.link(play,npcid,ew,aid)
         sendluamsg(play,100,npcid,1,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
     elseif ew == 5 then--灵根升级
         T_data.level = T_data.level or {}
-        if not T_data.level[""..aid] then
+        if not _lg_has_root(T_data, aid) then
             Player.sendmsgEx(play, "提示:你还没有该灵根属性，无法进行升级#57")
             return
         end
-        T_data.level[""..aid] = (T_data.level[""..aid] or 0) + 1
+        local oldLevel = tonumber(T_data.level[""..aid] or 0) or 0
+        T_data.level[""..aid] = oldLevel + 1
         if T_data.level[""..aid] > _config.main_updata.max_level then
             Player.sendmsgEx(play, "提示：你的灵根等级已达到|【最高等级】#249|")
             return
@@ -106,30 +145,26 @@ function npc.link(play,npcid,ew,aid)
         Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
         Player.sendmsgEx(play, "提示：你的|【灵根】#249|升级成功")
         if FairyFate and FairyFate.touch then FairyFate.touch(play, "linggen") end
-        Player.updateSomeAddr(play,nil, _config.main_r[aid].attr)
+        Player.updateSomeAddr(play, _lg_build_attr(_config.main_r[aid].attr, oldLevel + _base_ratio), _lg_build_attr(_config.main_r[aid].attr, (tonumber(T_data.level[""..aid]) or 0) + _base_ratio))
         sendluamsg(play,101,1005,0,0,"tpcg")
         sendluamsg(play,100,npcid,2,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
     end
 end
 function Login_lg(play)
     local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
-    --灵根技能
-    --灵根属性
     T_data.level = T_data.level or {}
     local attr = {}
     for i = 1, 10 do
-        local level = T_data.level[""..i] or 0
-        if level > 0 then
-            for vv,kk in ipairs(_config.main_r[i].attr) do
-                table.insert(attr,{kk[1],kk[2] * level})
+        local scale = _lg_effect_scale(T_data, i)
+        if scale > 0 then
+            for _, one in ipairs(_lg_build_attr(_config.main_r[i].attr, scale)) do
+                table.insert(attr, one)
             end
         end
     end
     Player.updateSomeAddr(play,nil, attr)
-    --灵根特殊效果
     Buff[103](play,1)
     Buff[104](play,1)
-    --灵根技能
 end
 GameEvent.add(EventCfg.onLogin, Login_lg, "Login_lg")
 local function _lg_extract_title(desc, fallback)
@@ -182,10 +217,10 @@ function npc.lgcf(play,zt,Damage,Target,triggerType)
     if not T_data.main then
         return 0
     end
-    if not (T_data.level[""..T_data.main] and T_data.level[""..T_data.main] > 0) then
+    if not _lg_has_root(T_data, T_data.main) then
         return 0
     end
-    local level = T_data.level[""..T_data.main]
+    local level = _lg_effect_scale(T_data, T_data.main)
     local config = _config.main_r[T_data.main]
     local mainTriggered = false
     local otherTriggered = false
@@ -232,7 +267,7 @@ function npc.lgcf(play,zt,Damage,Target,triggerType)
         local huoTick = tonumber(getplaydef(play,"N$buff_lg_huo_tick") or 0) or 0
         local huoLv = tonumber(getplaydef(play,"N$buff_lg_huo_lv") or 0) or 0
         if huoEnd >= sj and huoLv > 0 and Target and sj - huoTick >= 1 then
-            local fireDamage = math.floor(huoLv * (tonumber(config.value1) or 0))
+            local fireDamage = _lg_round_value(huoLv)
             if fireDamage > 0 then
                 setplaydef(play,"N$buff_lg_huo_tick",sj)
                 humanhp(Target,"-",fireDamage,110,0,play,1)
@@ -258,13 +293,13 @@ function npc.lgcf(play,zt,Damage,Target,triggerType)
     end
     if sj - (tonumber(getplaydef(play,"N$buff_lg") or 0) or 0) >= 30 then
         if T_data.main == 1 then -- 金
-            setobjintvar(play,22041,level)
+            setobjintvar(play,22041,_lg_round_value(level * (tonumber(config.value1) or 0)))
             addbuff(play,20104,10)
             mainTriggered = true
         elseif T_data.main == 2 then -- 木
             if triggerType == 2 then
                 local maxHp = tonumber(getbaseinfo(play,10) or 0) or 0
-                local shield = math.floor(maxHp * level * (tonumber(config.value1) or 0) / 100)
+                local shield = _lg_round_value(maxHp * level * (tonumber(config.value1) or 0) / 100)
                 if shield > 0 then
                     setplaydef(play,"N$buff_lg_mhd",shield)
                     setplaydef(play,"N$buff_lg_mhd_end",sj + 10)
@@ -273,15 +308,15 @@ function npc.lgcf(play,zt,Damage,Target,triggerType)
                 end
             end
         elseif T_data.main == 3 then -- 水
-            setobjintvar(play,22042,level)
+            setobjintvar(play,22042,_lg_round_value(level * (tonumber(config.value1) or 0)))
             addbuff(play,20105,10)
             mainTriggered = true
         elseif T_data.main == 4 then -- 火
             setplaydef(play,"N$buff_lg_huo_end",sj + 10)
-            setplaydef(play,"N$buff_lg_huo_lv",level)
+            setplaydef(play,"N$buff_lg_huo_lv",_lg_round_value(level * (tonumber(config.value1) or 0)))
             setplaydef(play,"N$buff_lg_huo_tick",0)
             if Target then
-                local fireDamage = math.floor(level * (tonumber(config.value1) or 0))
+                local fireDamage = _lg_round_value(level * (tonumber(config.value1) or 0))
                 if fireDamage > 0 then
                     humanhp(Target,"-",fireDamage,110,0,play,1)
                     playeffect(Target,60463,0,0,1,1,0)
@@ -290,7 +325,7 @@ function npc.lgcf(play,zt,Damage,Target,triggerType)
             mainTriggered = true
         elseif T_data.main == 5 then -- 土
             if triggerType == 2 then
-                local shield = math.floor(level * (tonumber(config.value1) or 0))
+                local shield = _lg_round_value(level * (tonumber(config.value1) or 0))
                 if shield > 0 then
                     setplaydef(play,"N$buff_lg_tu",shield)
                     setplaydef(play,"N$buff_lg_tu_end",sj + 10)
@@ -300,13 +335,13 @@ function npc.lgcf(play,zt,Damage,Target,triggerType)
             end
         elseif T_data.main == 6 then -- 雷
             if Target then
-                setobjintvar(Target,22043,level)
+                setobjintvar(Target,22043,_lg_round_value(level * (tonumber(config.value) or 0) * 100))
                 setobjstrvar(Target,22043,getbaseinfo(play,1) or "")
-                addbuff(Target,20107,10,level,play)
+                addbuff(Target,20107,10,_lg_round_value(level * 10),play)
                 mainTriggered = true
             end
         elseif T_data.main == 7 then -- 风
-            Player.updateSomeAddr_time(play, nil, {{243, math.floor(level * (tonumber(config.value1) or 0) * 100)}},10)
+            Player.updateSomeAddr_time(play, nil, {{243, _lg_round_value(level * (tonumber(config.value1) or 0) * 100)}},10)
             playeffect(play,60036,0,0,10,1,0)
             mainTriggered = true
         elseif T_data.main == 8 then -- 冰
@@ -316,23 +351,23 @@ function npc.lgcf(play,zt,Damage,Target,triggerType)
                 local plays = getobjectinmap(dqdt, tx, ty, 3, 1) or {}
                 for _, v in ipairs(mons) do
                     if v ~= Target then
-                        Player.updateSomeAddr_time(v, {{243, math.floor(level * (tonumber(config.value1) or 0) * 100)},{201, math.floor(level * (tonumber(config.value1) or 0))}}, nil,10)
+                        Player.updateSomeAddr_time(v, {{243, _lg_round_value(level * (tonumber(config.value1) or 0) * 100)},{201, _lg_round_value(level * (tonumber(config.value1) or 0))}}, nil,10)
                         playeffect(v,60459,0,0,10,1,0)
                     end
                 end
                 for _, v in ipairs(plays) do
                     if v ~= play then
-                        Player.updateSomeAddr_time(v, {{243, math.floor(level * (tonumber(config.value1) or 0) * 100)},{201, math.floor(level * (tonumber(config.value1) or 0))}}, nil,10)
+                        Player.updateSomeAddr_time(v, {{243, _lg_round_value(level * (tonumber(config.value1) or 0) * 100)},{201, _lg_round_value(level * (tonumber(config.value1) or 0))}}, nil,10)
                         playeffect(v,60459,0,0,10,1,0)
                     end
                 end
                 mainTriggered = true
             end
         elseif T_data.main == 9 then -- 焚
-            recallself(play,10,1,level * (tonumber(config.value1) or 0),0,0,0,0,0,0,"20108")
+            recallself(play,10,1,_lg_round_value(level * (tonumber(config.value1) or 0)),0,0,0,0,0,0,"20108")
             mainTriggered = true
         elseif T_data.main == 10 then -- 岩
-            setplaydef(play,"N$buff_lg_yan_end",sj + math.max(1, math.ceil(level * (tonumber(config.value1) or 0))))
+            setplaydef(play,"N$buff_lg_yan_end",sj + math.max(1, _lg_round_value(level * (tonumber(config.value1) or 0))))
             playeffect(play,60458,0,0,10,1,0)
             mainTriggered = true
         end
@@ -344,56 +379,56 @@ function npc.lgcf(play,zt,Damage,Target,triggerType)
             return 0
         end
         -- 副灵根效果
-        if not (T_data.level[""..T_data.other] and T_data.level[""..T_data.other] > 0) then
+        if not _lg_has_root(T_data, T_data.other) then
             return 0
         end
-        level = T_data.level[""..T_data.other]
+        level = _lg_effect_scale(T_data, T_data.other)
         config = _config.main_r[T_data.other]
         if T_data.other == 1 then -- 金
             if Target then
-                humanhp(Target,"-",math.floor(level * (tonumber(config.value2) or 0)),110,1,play)
+                humanhp(Target,"-",_lg_round_value(level * (tonumber(config.value2) or 0)),110,1,play)
                 otherTriggered = true
             end
         elseif T_data.other == 2 then -- 木
             local curHp = tonumber(getbaseinfo(play,9) or 0) or 0
             local maxHp = tonumber(getbaseinfo(play,10) or 0) or 0
-            local heal = math.floor(math.max(0, maxHp - curHp) * level * (tonumber(config.value2) or 0) / 100)
+            local heal = _lg_round_value(math.max(0, maxHp - curHp) * level * (tonumber(config.value2) or 0) / 100)
             if heal > 0 then
                 humanhp(play,"+",heal,5,0,play)
                 otherTriggered = true
             end
         elseif T_data.other == 3 then -- 水
             if Target then
-                Player.updateSomeAddr_time(Target, {{243, math.floor(level * (tonumber(config.value2) or 0) * 100)}}, nil,10)
+                Player.updateSomeAddr_time(Target, {{243, _lg_round_value(level * (tonumber(config.value2) or 0) * 100)}}, nil,10)
                 otherTriggered = true
             end
         elseif T_data.other == 4 then -- 火
             if Target then
-                setobjintvar(Target,22045,math.floor(level * (tonumber(config.value2) or 0)))
+                setobjintvar(Target,22045,_lg_round_value(level * (tonumber(config.value2) or 0)))
                 setobjstrvar(Target,22045,getbaseinfo(play,1) or "")
-                addbuff(Target,20105,10,level,play)
+                addbuff(Target,20105,10,_lg_round_value(level * 10),play)
                 otherTriggered = true
             end
         elseif T_data.other == 5 then -- 土
-            Player.updateSomeAddr_time(play, nil, {{26, math.floor(level * (tonumber(config.value2) or 0) * 100)},{27, math.floor(level * (tonumber(config.value2) or 0) * 100)}},10)
+            Player.updateSomeAddr_time(play, nil, {{26, _lg_round_value(level * (tonumber(config.value2) or 0) * 100)},{27, _lg_round_value(level * (tonumber(config.value2) or 0) * 100)}},10)
             otherTriggered = true
         elseif T_data.other == 6 then -- 雷
             setplaydef(play,"N$buff_lg_lei_end",sj + 10)
-            setplaydef(play,"N$buff_lg_lei_rate",math.floor(level * (tonumber(config.value2) or 0)))
+            setplaydef(play,"N$buff_lg_lei_rate",_lg_round_value(level * (tonumber(config.value2) or 0)))
             otherTriggered = true
         elseif T_data.other == 7 then -- 风
-            Player.updateSomeAddr_time(play, nil, {{200, math.floor(level * (tonumber(config.value2) or 0))},{201, math.floor(level * (tonumber(config.value2) or 0))}},10)
+            Player.updateSomeAddr_time(play, nil, {{200, _lg_round_value(level * (tonumber(config.value2) or 0))},{201, _lg_round_value(level * (tonumber(config.value2) or 0))}},10)
             otherTriggered = true
         elseif T_data.other == 8 then -- 冰
-            if math.random(1,100) <= level * (tonumber(config.value2) or 0) then
+            if math.random(1,100) <= _lg_round_value(level * (tonumber(config.value2) or 0)) then
                 rangeharm(play,getbaseinfo(play,4),getbaseinfo(play,5),3,0,2,1,0,2,0)
                 otherTriggered = true
             end
         elseif T_data.other == 9 then -- 焚
-            rangeharm(play,getbaseinfo(play,4),getbaseinfo(play,5),3,level * (tonumber(config.value2) or 0),0,0,0,2,0)
+            rangeharm(play,getbaseinfo(play,4),getbaseinfo(play,5),3,_lg_round_value(level * (tonumber(config.value2) or 0)),0,0,0,2,0)
             otherTriggered = true
         elseif T_data.other == 10 then -- 岩
-            Player.updateSomeAddr_time(play, nil, {{206, math.floor(level * (tonumber(config.value2) or 0) * 100)}},10)
+            Player.updateSomeAddr_time(play, nil, {{206, _lg_round_value(level * (tonumber(config.value2) or 0) * 100)}},10)
             otherTriggered = true
         end
         if otherTriggered then

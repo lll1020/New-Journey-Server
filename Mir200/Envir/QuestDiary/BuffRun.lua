@@ -21,10 +21,9 @@ function buffchufa(play, buffid, zid)
         end
         Player.takeItemByTable(play, {{"Ôª±¦",200}}, ",×í¾Æ¿ñÄ§Îè",nil)
     elseif buffid == 20104 then --½ð
-        local level = tonumber(getobjintvar(play,22041) or 0) or 0
+        local damage = tonumber(getobjintvar(play,22041) or 0) or 0
         local xx,yy,dqdt = getbaseinfo(play,4),getbaseinfo(play,5),getbaseinfo(play,3)
         local mons = getobjectinmap(dqdt, xx, yy, 3, 2) or {}
-        local damage = math.floor(level * 10000)
         if damage > 0 then
             for _, v in ipairs(mons) do
                 humanhp(v,"-",damage,106,0,play,1)
@@ -33,14 +32,13 @@ function buffchufa(play, buffid, zid)
         rangeharm(play,xx,yy,3,0,0,0,0,2,20310)
         playeffect(play,20301,0,0,1,1,0)
     elseif buffid == 20105 then --Ë®/»ð
-        local waterLevel = tonumber(getobjintvar(play,22042) or 0) or 0
-        if waterLevel > 0 and getbaseinfo(play,ConstCfg.gbase.isplayer) then
+        local waterDamage = tonumber(getobjintvar(play,22042) or 0) or 0
+        if waterDamage > 0 and getbaseinfo(play,ConstCfg.gbase.isplayer) then
             local xx,yy,dqdt = getbaseinfo(play,4),getbaseinfo(play,5),getbaseinfo(play,3)
             local mons = getobjectinmap(dqdt, xx, yy, 5, 2) or {}
-            local damage = math.floor(waterLevel * 500)
             for _, v in ipairs(mons) do
-                if damage > 0 then
-                    humanhp(v,"-",damage,112,0,play,1)
+                if waterDamage > 0 then
+                    humanhp(v,"-",waterDamage,112,0,play,1)
                 end
                 monmission(v,xx,yy,0)
             end
@@ -58,10 +56,10 @@ function buffchufa(play, buffid, zid)
             end
         end
     elseif buffid == 20107 then --À×
-        local level = tonumber(getobjintvar(play,22043) or 0) or 0
-        if level > 0 then
+        local rateBp = tonumber(getobjintvar(play,22043) or 0) or 0
+        if rateBp > 0 then
             local maxHp = tonumber(getbaseinfo(play,10) or 0) or 0
-            local damage = math.floor(maxHp * (level * 0.5) / 100)
+            local damage = math.floor(maxHp * rateBp / 10000)
             local ownerName = getobjstrvar(play,22043) or ""
             local owner = ownerName ~= "" and getplayerbyname(ownerName) or nil
             if owner == 0 then
