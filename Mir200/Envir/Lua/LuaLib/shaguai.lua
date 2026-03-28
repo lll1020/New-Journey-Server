@@ -88,7 +88,7 @@ shaguai = {
 	end,
 	["3"] = function(play,mob)      --开辟仙府
 		local du = getbaseinfo(play,3)
-		if daluditu[du] and daluditu[du] == 3 then
+		if xilieditu[du] and xilieditu[du] == 3 then
 			local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
 			sg_data["npc_55"] = (sg_data["npc_55"] or 0) + 1
 			if sg_data["npc_55"] >= 200 then

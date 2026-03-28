@@ -96,7 +96,7 @@ local function _save_back(play)
 end
 local function _play_boss_effect(dtm)
     local bossPos = (_config and _config.boss_pos) or {32, 36}
-    mapeffect(_effect_prefix..dtm, dtm, tonumber(bossPos[1]) or 32, tonumber(bossPos[2]) or 36, tonumber((_config and _config.boss_effect) or 16419) or 16419, 2, 0)
+    mapeffect(_effect_prefix..dtm, dtm, tonumber(bossPos[1]) or 32, tonumber(bossPos[2]) or 36, tonumber((_config and _config.boss_effect) or 16419) or 16419, 1, 0)
 end
 local function _stop_fb_timers(dtm)
     setenvirofftimer(dtm, 1)
@@ -157,7 +157,7 @@ local function _enter_fb(play)
     mobfireburn(play, dtm, tonumber(bossPos[1]) or 32, tonumber(bossPos[2]) or 36, tonumber((_config and _config.boss_fire) or 5) or 5, 30, 1, 1)
     startautoattack(play)
     setenvirontimer(dtm, 1, 1, "@npc_103_dsq,"..play..","..dtm)
-    setenvirontimer(dtm, _boss_effect_timer_id, 10, "@npc_103_fx,"..dtm)
+    setenvirontimer(dtm, _boss_effect_timer_id, 5, "@npc_103_fx,"..dtm)
     senddelaymsg(play, "距离副本结束剩余%s", tonumber((_config and _config.fb_time) or 300) or 300, 250, 1, "@npc_103_timeout")
     Player.sendmsgEx(play, "已进入|【天书试炼】#249|副本，击败炫光BOSS即可获得|【天书】#249|#57")
     sendluamsg(play, 101, 9999, 0, 0, "npc_"..103)

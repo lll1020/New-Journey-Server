@@ -180,9 +180,21 @@ local function _xyl_has_linggen_feed(play)
     return false
 end
 
--- 备注：幸运强化次数是否大于 0
-local function _xyl_has_lucky_upgrade(play)
-    return (getplaydef(play, VarCfg["U_幸运强化"]) or 0) > 0
+-- 备注：江湖称号等级是否大于 0
+local function _xyl_has_jianghu_title(play)
+    return (getplaydef(play, VarCfg["U_江湖称号"]) or 0) > 0
+end
+
+-- 备注：是否已装配主灵根
+local function _xyl_has_main_linggen(play)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
+    return (tonumber(data.main) or 0) > 0
+end
+
+-- 备注：是否已装配副灵根
+local function _xyl_has_other_linggen(play)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
+    return (tonumber(data.other) or 0) > 0
 end
 
 -- 备注：气运占卜次数是否大于 0
@@ -385,7 +397,9 @@ local function _xyl_check_task(play, name)
         ["初识仙法"] = _xyl_has_any_xianfa,
         ["装备强化"] = _xyl_has_equip_strength,
         ["升级灵根"] = _xyl_has_linggen_feed,
-        ["幸运增幅"] = _xyl_has_lucky_upgrade,
+        ["获取江湖称号"] = _xyl_has_jianghu_title,
+        ["装配主灵根"] = _xyl_has_main_linggen,
+        ["装配副灵根"] = _xyl_has_other_linggen,
         ["气运占卜"] = _xyl_has_divination,
         ["转生·二"] = function(play) return _xyl_has_rebirth(play, 20) end,
         ["转生·三"] = function(play) return _xyl_has_rebirth(play, 30) end,
@@ -494,17 +508,29 @@ local npc_xyl = {
         {
             jq = {
                 {
-                    "幸运增幅",
+                    "装配主灵根",
                     id = 999,
-                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play)
-                        return _xyl_check_task(play, "幸运增幅")
+                        return _xyl_check_task(play, "装配主灵根")
                     end,
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "二大陆主城", 25, 105, 106 },
-                    desc = "历经幸运增幅，收获机缘",
+                    yd = { 1, "二大陆主城", 22, 95, 106 },
+                    desc = "装配主灵根，掌握灵根之力",
+                },
+                {
+                    "获取江湖称号",
+                    id = 999,
+                    jl = { { "剧情点", 1 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "获取江湖称号")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "二大陆主城", 43, 119, 122 },
+                    desc = "获取江湖称号，踏出江湖第一步",
                 },
                 {
                     "气运占卜",
@@ -562,6 +588,18 @@ local npc_xyl = {
         },
         {
             jq = {
+                {
+                    "装配副灵根",
+                    id = 999,
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "装配副灵根")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "二大陆主城", 22, 95, 106 },
+                    desc = "装配副灵根，补全第二道灵根之力",
+                },
                 {
                     "装备强化",
                     tk = "npc_28",
