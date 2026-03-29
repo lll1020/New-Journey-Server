@@ -1,0 +1,8 @@
+[2026-03-30 04:12:11:851] LuaNPC:玩家名字kk ID:999999999 执行 login player:玩家名字kk 耗时：31; NpcThreadId: 5128, CurPlayThreadId: 5128
+
+[2026-03-30 04:28:02:130] LuaNPC:玩家名字kk ID:999999999 执行 attackdamage player:玩家名字kk 耗时：47; NpcThreadId: 5128, CurPlayThreadId: 5128
+
+[2026-03-30 04:29:12:102] LuaNPC:玩家名字kk ID:999999999 执行 attackdamage player:玩家名字kk 耗时：47; NpcThreadId: 5128, CurPlayThreadId: 5128
+
+[2026-03-30 04:29:26:104] LuaNPC:玩家名字kk ID:999999999 执行 attackdamage player:玩家名字kk 耗时：47; NpcThreadId: 5128, CurPlayThreadId: 5128
+

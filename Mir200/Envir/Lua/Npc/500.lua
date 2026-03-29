@@ -29,7 +29,13 @@ function npc.link(play,npcid,ew,aid)
         if _config[npcid] and Player.dl_sz(play, _config[npcid][6]) then
             if getplaydef(play,"N$战斗状态") < os.time() then
                 if _config[npcid][1] == "三大陆主城" and not Player.hasThirdContinentPass(play) then
-                    Player.moveToThirdContinentFrontier(play, "未完成#57|【灾厄入侵】#249|，当前先传送至#57|【灰界】#249|")
+                    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+                    if not (jq_data["npc_55"] and jq_data["npc_55"] >= 1) then
+                        jq_data["npc_55"] = 1
+                        Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+                        shaguai.jia(play,3)
+                    end
+                    Player.moveToThirdContinentFrontier(play, "未完成#57|【灾厄入侵】#249|，传送至#57|【灰界】#249|")
                     sendluamsg(play,101,9999,0,0,"npc_sjdt")
                     return
                 end

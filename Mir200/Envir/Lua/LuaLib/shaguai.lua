@@ -93,9 +93,9 @@ shaguai = {
 			sg_data["npc_55"] = (sg_data["npc_55"] or 0) + 1
 			if sg_data["npc_55"] >= 200 then
 				shaguai.jian(play,3)
-				messagebox(play,"任务完成,立即前往提交")
+				-- messagebox(play,"任务完成,立即前往提交")
 			end
-			Player.sendmsgEx(play,  "开辟仙府#253|击杀怪物+"..1 .." ( "..sg_data["npc_55"].."/200 )#57")
+			-- Player.sendmsgEx(play,  "开辟仙府#253|击杀怪物+"..1 .." ( "..sg_data["npc_55"].."/200 )#57")
 			Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 		end
 	end,
