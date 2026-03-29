@@ -513,6 +513,108 @@ shaguai = {
 	end,
 
 
+	["625"] = function(play,mob)      --嘲天笑地
+		local cfg = teshudata["npc_625"]
+		local prep = cfg and cfg.prep_task or nil
+		if not prep or getbaseinfo(play,3) ~= prep.map then
+			return
+		end
+		local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+		if tonumber(jq_data["npc_625_rw"] or 0) ~= 1 then
+			return
+		end
+		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+		local key = "npc_625_rw"
+		sg_data[key] = (sg_data[key] or 0) + 1
+		if sg_data[key] >= (prep.need or 0) then
+			shaguai.jian(play,625)
+			messagebox(play,"任务完成,立即前往提交")
+		end
+		Player.sendmsgEx(play,  (prep.progress_name or "任务").."击杀+"..1 .." ( "..sg_data[key].."/"..(prep.need or 0).." )#57")
+		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+	end,
+	["626"] = function(play,mob)      --净化宝石
+		local cfg = teshudata["npc_626"]
+		local prep = cfg and cfg.prep_task or nil
+		if not prep or getbaseinfo(play,3) ~= prep.map then
+			return
+		end
+		local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+		if tonumber(jq_data["npc_626_rw"] or 0) ~= 1 then
+			return
+		end
+		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+		local killKey = "npc_626_rw_kill"
+		sg_data[killKey] = (sg_data[killKey] or 0) + 1
+		local need = tonumber(prep.need or 0) or 0
+		local cur = getbagitemcount(play, prep.item_name or "净化之泪")
+		if cur < need and sg_data[killKey] % (prep.drop_every or 5) == 0 then
+			giveitem(play, prep.item_name or "净化之泪", 1)
+			cur = getbagitemcount(play, prep.item_name or "净化之泪")
+			Player.sendmsgEx(play, (prep.item_name or "任务物品").."+1 ( "..cur.."/"..need.." )#57")
+			if cur >= need then
+				shaguai.jian(play,626)
+				messagebox(play,"任务完成,立即前往提交")
+			end
+		end
+		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+	end,
+	["627"] = function(play,mob)      --定身符
+		local cfg = teshudata["npc_627"]
+		local prep = cfg and cfg.prep_task or nil
+		if not prep or getbaseinfo(play,3) ~= prep.map then
+			return
+		end
+		local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+		if tonumber(jq_data["npc_627_rw"] or 0) ~= 1 then
+			return
+		end
+		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+		local killKey = "npc_627_rw_kill"
+		sg_data[killKey] = (sg_data[killKey] or 0) + 1
+		local need = tonumber(prep.need or 0) or 0
+		local cur = getbagitemcount(play, prep.item_name or "定身符碎片")
+		if cur < need and sg_data[killKey] % (prep.drop_every or 5) == 0 then
+			giveitem(play, prep.item_name or "定身符碎片", 1)
+			cur = getbagitemcount(play, prep.item_name or "定身符碎片")
+			Player.sendmsgEx(play, (prep.item_name or "任务物品").."+1 ( "..cur.."/"..need.." )#57")
+			if cur >= need then
+				shaguai.jian(play,627)
+				messagebox(play,"任务完成,立即前往提交")
+			end
+		end
+		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+	end,
+	["628"] = function(play,mob)      --真视之眼
+		local cfg = teshudata["npc_628"]
+		local prep = cfg and cfg.prep_task or nil
+		if not prep or getbaseinfo(play,3) ~= prep.map then
+			return
+		end
+		local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+		if tonumber(jq_data["npc_628_rw"] or 0) ~= 1 then
+			return
+		end
+		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+		local killKey = "npc_628_rw_kill"
+		sg_data[killKey] = (sg_data[killKey] or 0) + 1
+		local curKill = tonumber(sg_data[killKey] or 0) or 0
+		local leftName = prep.left_name or "真视之眼左"
+		local rightName = prep.right_name or "真视之眼右"
+		if curKill >= (prep.left_need or 15) and getbagitemcount(play, leftName) < 1 then
+			giveitem(play, leftName, 1)
+			Player.sendmsgEx(play, leftName.."已找到#57")
+		end
+		if curKill >= (prep.right_need or 35) and getbagitemcount(play, rightName) < 1 then
+			giveitem(play, rightName, 1)
+			Player.sendmsgEx(play, rightName.."已找到#57")
+		end
+		if getbagitemcount(play, leftName) >= 1 and getbagitemcount(play, rightName) >= 1 then
+			shaguai.jian(play,628)
+			messagebox(play,"任务完成,立即前往提交")
+		end
+		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+	end,
 	["645"] = function(play,mob)      --黄风大圣
 		local config = teshudata["npc_645"]
 		if not config then

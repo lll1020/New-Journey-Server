@@ -14,6 +14,12 @@ function stdmodefunc9(play, item)
     return false
 end
 --------------------双击物品触发-------------------回城石
+-- 灰界系列地图是否需要回到【灰界】统一通过 xilieditu 映射判断，避免这里再维护一份重复地图表。
+local function _is_huijie_return_map(map_name)
+    return type(xilieditu) == "table" and map_name ~= "灰界" and xilieditu[map_name] == 3
+end
+
+    
 function stdmodefunc10(play, item)
     setplaydef(play,"S$dtm",getbaseinfo(play, 3))
 
@@ -25,7 +31,18 @@ function stdmodefunc10(play, item)
             addmpper(play, '=', 100)
         elseif daluditu[du] and daluditu[du] == 1 then mapmove(play, "xtc",137,138,5) addhpper(play, '=', 100) addmpper(play, '=', 100)
         elseif daluditu[du] and daluditu[du] == 2 then mapmove(play, "二大陆主城",105,120,4) addhpper(play, '=', 100) addmpper(play, '=', 100)
-        elseif daluditu[du] and daluditu[du] == 3 then mapmove(play, "三大陆主城",159,231,5) addhpper(play, '=', 100) addmpper(play, '=', 100)
+        elseif daluditu[du] and daluditu[du] == 3 then
+            if _is_huijie_return_map(du) then
+                mapmove(play, "灰界",201,199,5)
+                addhpper(play, '=', 100)
+                addmpper(play, '=', 100)
+            elseif Player.hasThirdContinentPass(play) then
+                mapmove(play, "三大陆主城",159,231,5)
+                addhpper(play, '=', 100)
+                addmpper(play, '=', 100)
+            else
+                Player.moveToThirdContinentFrontier(play)
+            end
         elseif daluditu[du] and daluditu[du] == 4 then mapmove(play, "四大陆主城",37,33,3) addhpper(play, '=', 100) addmpper(play, '=', 100)
         elseif daluditu[du] and daluditu[du] == 5 then mapmove(play, "五大陆主城",30,28,4) addhpper(play, '=', 100) addmpper(play, '=', 100)
         elseif daluditu[du] and daluditu[du] == 6 then mapmove(play, "六大陆主城",90,69,4) addhpper(play, '=', 100) addmpper(play, '=', 100)
@@ -42,7 +59,6 @@ function stdmodefunc10(play, item)
     end
     return false
 end
---------------------双击物品触发-------------------经验通用
 local function _get_use_all_info(play, item)
     local itemName = getiteminfo(play, item, ConstCfg.iteminfo.name)
     local sl = 0
@@ -878,11 +894,17 @@ function stdmodefunc54(play, item)  --使用足迹  getstditeminfo(getiteminfo(play,
     _use_1002_unlock(play, item, "yjszj", "zj", "足迹")
 end
 
+function stdmodefunc55(play, item) --净化宝石
+    addbuff(play, 20112)
+    Player.sendmsgEx(play, "使用成功，已获得净化宝石效果#57")
+    return false
+end
 
-
-
-
-
+function stdmodefunc56(play, item) --定身符
+    addbuff(play, 20111)
+    Player.sendmsgEx(play, "使用成功，已获得定身符效果#57")
+    return false
+end
 
 
 

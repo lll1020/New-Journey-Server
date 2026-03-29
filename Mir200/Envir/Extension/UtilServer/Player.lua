@@ -776,6 +776,35 @@ function Player.dl_sz(actor, dl) --大陆限制 -- 有提示
     end
     return ok
 end
+
+function Player.hasThirdContinentPass(actor)
+    local jq_data = Player.getJsonTableByVar(actor, VarCfg.T_dljq)
+    local task = jq_data and jq_data["npc_46"] or nil
+    return type(task) == "table" and tonumber(task.wc) == 1
+end
+
+function Player.ensureThirdContinentPass(actor, tip)
+    if Player.hasThirdContinentPass(actor) then
+        return true
+    end
+    Player.sendmsgEx(actor, tip or "请先完成#57|【灾厄入侵】#249|后再使用该功能#57")
+    return false
+end
+
+function Player.moveToThirdContinentFrontier(actor, tip)
+    if tip and tip ~= "" then
+        Player.sendmsgEx(actor, tip)
+    end
+    mapmove(actor, "灰界", 201, 199, 5)
+    addhpper(actor, '=', 100)
+    addmpper(actor, '=', 100)
+end
+
+function Player.hasZaiEPrep(actor, npcid)
+    local jq_data = Player.getJsonTableByVar(actor, VarCfg.T_dljq)
+    local key = "npc_" .. tostring(npcid) .. "_rw"
+    return tonumber(jq_data[key] or 0) >= 2
+end
 --检查 物品 货币 装备是否满足数量(数量不足返回不足物品的名字)
 function Player.checkItemNum(actor, t, multiple)
     for _,item in ipairs(t) do
@@ -1235,8 +1264,13 @@ function Player.hasEquipInArtifactSlot(actor, itemname)
     return nil
 end
 
-
-
+-- 检查指定装备位是否穿戴了某件装备。
+function Player.hasEquipOnPos(actor, pos, itemname)
+    if not actor or not pos or not itemname or itemname == "" then
+        return false
+    end
+    local name = Player.getEquipNameByPos(actor, pos)
+    return name == itemname
+end
 
 return Player
-

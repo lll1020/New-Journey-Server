@@ -719,7 +719,6 @@ local npc_xyl = {
                 },
                 {
                     "修复轩辕剑（剧）",
-                    -- tk = "npc_601",
                     id = 999,
                     jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
@@ -752,12 +751,12 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "三大陆主城", 55, 146, 226 },
-                    desc = "踏入开辟仙府（主城NPC，循迹而行",
+                    yd = { 1, "灰界", 55, 197, 196 },
+                    desc = "开辟仙府，正式踏入灰界后的修行之路",
                 },
                 {
-                    "踏入·虚妄山脉",
-                    tk = "npc_621",
+                    "讨伐嘲灾",
+                    tk = "npc_625",
                     id = 999,
                     jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
@@ -769,12 +768,12 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "灰界南部", 621, 229, 144 },
-                    desc = "行走踏入·虚妄山脉，破除迷障",
+                    yd = { 1, "鬼嘲深渊", 625, 174, 460 },
+                    desc = "前往灾厄入口，进入嘲灾讨伐线",
                 },
                 {
-                    "踏入·叹息旷野",
-                    tk = "npc_622",
+                    "讨伐息灾",
+                    tk = "npc_627",
                     id = 999,
                     jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
@@ -786,12 +785,12 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "灰界北部", 622, 41, 43 },
-                    desc = "踏入踏入·叹息旷野，循迹而行",
+                    yd = { 1, "叹息旷野", 627, 85, 126 },
+                    desc = "前往灾厄入口，进入息灾讨伐线",
                 },
                 {
-                    "踏入·鬼嘲深渊",
-                    tk = "npc_623",
+                    "讨伐忌灾",
+                    tk = "npc_626",
                     id = 999,
                     jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
@@ -803,12 +802,12 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "灰界东部", 623, 10, 66 },
-                    desc = "闯过踏入·鬼嘲深渊，证我道途",
+                    yd = { 1, "禁忌之海", 626, 74, 67 },
+                    desc = "前往灾厄入口，进入忌灾讨伐线",
                 },
                 {
-                    "踏入·禁忌之海",
-                    tk = "npc_624",
+                    "讨伐妄灾",
+                    tk = "npc_628",
                     id = 999,
                     jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
@@ -820,15 +819,31 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "灰界西部", 624, 21, 77 },
-                    desc = "于踏入·禁忌之海中磨砺，道心更稳",
+                    yd = { 1, "虚妄山脉", 628, 107, 97 },
+                    desc = "前往灾厄入口，进入妄灾讨伐线",
+                },
+                {
+                    "灾厄入侵",
+                    tk = "npc_46",
+                    id = 999,
+                    jl = { { "剧情点", 2 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "灰界", 46, 205, 196 },
+                    desc = "完成四线讨伐后，回到灾厄入口提交总任务",
                 },
             },
             name = "灰界开篇",
+            jqd = 11,
 
-            jqd = 15,
-
-            jl = {{ "1元真实充值", 2 }, { "藏宝图碎片", 10 }},
+            jl = { { "1元真实充值", 1 }, { "藏宝图碎片", 10 } },
         },
         {
             jq = {
@@ -842,7 +857,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "三大陆主城", 44, 149, 223 },
+                    yd = { 3, 14 },
                     desc = "闯过种植仙草，证我道途",
                 },
                 {
@@ -855,7 +870,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "三大陆主城", 44, 149, 223 },
+                    yd = { 3, 14 },
                     desc = "行走了解砍树，破除迷障",
                 },
                 {
@@ -873,108 +888,9 @@ local npc_xyl = {
                 },
             },
             name = "仙府功能",
-
-            jqd = 18,
+            jqd = 17,
 
             jl = {{ "1元真实充值", 2 }, { "激活火灵根", 1 }},
-        },
-        {
-            jq = {
-                {
-                    "炼制丹药",
-                    id = 999,
-                    jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "炼制丹药")
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "三大陆主城", 44, 149, 223 },
-                    desc = "闯过炼制丹药，证我道途",
-                },
-                {
-                    "讨伐嘲灾",
-                    tk = "npc_625",
-                    ydtk = "npc_623",
-                    ydtip = "踏入·鬼嘲深渊",
-                    id = 999,
-                    jl = { { "剧情点", 2 } },
-                    fwdjy = function(play, tk)
-                        if tk then
-                            return _xyl_check_task(play, tk)
-                        end
-                        return false
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "鬼嘲深渊", 625, 174, 460 },
-                    desc = "踏破讨伐嘲灾，守护一方安宁",
-                },
-                {
-                    "讨伐忌灾",
-                    tk = "npc_626",
-                    ydtk = "npc_624",
-                    ydtip = "踏入·禁忌之海",
-                    id = 999,
-                    jl = { { "剧情点", 2 } },
-                    fwdjy = function(play, tk)
-                        if tk then
-                            return _xyl_check_task(play, tk)
-                        end
-                        return false
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "禁忌之海", 626, 74, 67 },
-                    desc = "深入讨伐忌灾，寻回失落线索",
-                },
-                {
-                    "讨伐息灾",
-                    tk = "npc_627",
-                    ydtk = "npc_622",
-                    ydtip = "踏入·叹息旷野",
-                    id = 999,
-                    jl = { { "剧情点", 2 } },
-                    fwdjy = function(play, tk)
-                        if tk then
-                            return _xyl_check_task(play, tk)
-                        end
-                        return false
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "叹息旷野", 627, 85, 126 },
-                    desc = "探访讨伐息灾，揭开真相",
-                },
-                {
-                    "讨伐妄灾",
-                    tk = "npc_628",
-                    ydtk = "npc_621",
-                    ydtip = "踏入·虚妄山脉",
-                    id = 999,
-                    jl = { { "剧情点", 2 } },
-                    fwdjy = function(play, tk)
-                        if tk then
-                            return _xyl_check_task(play, tk)
-                        end
-                        return false
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "虚妄山脉", 628, 107, 97 },
-                    desc = "踏破讨伐妄灾，守护一方安宁",
-                },
-            },
-            name = "炼丹与讨伐",
-
-            jqd = 22,
-
-            jl = {{ "1元真实充值", 2 }, { "神石宝箱钥匙", 1 }},
         },
         {
             jq = {
@@ -1052,8 +968,7 @@ local npc_xyl = {
                 },
             },
             name = "外海之旅",
-
-            jqd = 22,
+            jqd = 21,
 
             jl = {{ "1元真实充值", 2 }, { "激活土灵根", 1 }},
         },
@@ -1146,8 +1061,7 @@ local npc_xyl = {
                 },
             },
             name = "内海探秘",
-
-            jqd = 30,
+            jqd = 29,
 
             jl = {{ "1元真实充值", 2 }, { "神石宝箱钥匙", 1 }},
         },
@@ -1206,30 +1120,12 @@ local npc_xyl = {
                 },
             },
             name = "草谷丹道",
-
-            jqd = 34,
+            jqd = 33,
 
             jl = {{ "1元真实充值", 2 }, { "神石宝箱钥匙", 1 }},
         },
         {
             jq = {
-                {
-                    "灾厄入侵",
-                    tk = "npc_46",
-                    id = 999,
-                    jl = {},
-                    fwdjy = function(play, tk)
-                        if tk then
-                            return _xyl_check_task(play, tk)
-                        end
-                        return false
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "三大陆主城", 46, 146, 231 },
-                    desc = "踏入灾厄入侵，循迹而行",
-                },
                 {
                     "拥有1传说神石",
                     id = 999,
@@ -1299,11 +1195,9 @@ local npc_xyl = {
                     yd = { 1, "三大陆主城", 34, 142, 236 },
                     desc = "历经转生·三，收获机缘",
                 },
-                
             },
             name = "三大陆毕业章",
-
-            jqd = 37,
+            jqd = 36,
 
             jl = {{ "1元真实充值", 5 }, { "等级卷轴", 5 }},
         },
@@ -1391,8 +1285,7 @@ local npc_xyl = {
                 },
             },
             name = "若水秘闻",
-
-            jqd = 50,
+            jqd = 42,
 
             jl = { { "等级卷轴", 20 }, { "1元真实充值", 25 } },
         },
@@ -1515,8 +1408,7 @@ local npc_xyl = {
                 },
             },
             name = "地府探秘",
-
-            jqd = 50,
+            jqd = 42,
 
             jl = { { "等级卷轴", 5 }, { "1元真实充值", 8 } },
         },
@@ -1678,7 +1570,7 @@ local npc_xyl = {
             },
             name = "重走西游",
 
-            jqd = 60,
+            jqd = 55,
 
             jl = { { "等级卷轴", 10 }, { "1元真实充值", 15 } },
         },
@@ -1772,7 +1664,7 @@ local npc_xyl = {
             },
             name = "生肖守护[始]",
 
-            jqd = 75,
+            jqd = 70,
 
             jl = { { "等级卷轴", 5 }, { "1元真实充值", 8 } },
         },
@@ -1866,7 +1758,7 @@ local npc_xyl = {
             },
             name = "生肖守护[转]",
 
-            jqd = 82,
+            jqd = 77,
 
             jl = { { "等级卷轴", 5 }, { "1元真实充值", 8 } },
         },
@@ -1977,7 +1869,7 @@ local npc_xyl = {
             },
             name = "生肖守护[终]",
 
-            jqd = 80,
+            jqd = 85,
 
             jl = { { "等级卷轴", 5 }, { "1元真实充值", 8 } },
         },
@@ -2138,7 +2030,7 @@ local npc_xyl = {
                 },
             },
             name = "修复传说",
-            jqd = 89,
+            jqd = 99,
             jl = { { "等级卷轴", 10 }, { "1元真实充值", 15 } },
         },
     },
@@ -2182,6 +2074,13 @@ local npc_xyl = {
     },
 }
 return npc_xyl
+
+
+
+
+
+
+
 
 
 

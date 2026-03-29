@@ -285,6 +285,15 @@ local function _ywl_can_transfer(play, sj, shuju)
     if need_dl > 0 and not Player.dl_sz(play, need_dl) then
         return false
     end
+    -- 三大陆相关异闻录功能必须在玩家真正完成【灾厄入侵】并实际进入三大陆后才能使用。
+    -- 仅保留仙府、灾厄主线入口等例外 NPC（44、46、55），避免通过异闻录提前绕进三大陆功能。
+    if need_dl == 3 and not Player.hasThirdContinentPass(play) then
+        local targetNpc = shuju and shuju.yd and shuju.yd[3] or 0
+        if targetNpc ~= 44 and targetNpc ~= 46 and targetNpc ~= 55 then
+            Player.sendmsgEx(play, "请先真正完成#57|【灾厄入侵】#249|并进入#57|【三大陆】#249|后再使用该异闻录功能")
+            return false
+        end
+    end
     if not _ywl_check_map_gate(play, shuju) then
         return false
     end
@@ -357,8 +366,13 @@ npc[11] = function(play, p2, p3, data) --异闻录
                     sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>当前剧情未配置传送坐标...</font>","Type":9}')
                 elseif shuju.yd[1] == 1 then
                     if getplaydef(play, "N$战斗状态") < os.time() then
-                        mapmove(play, shuju.yd[2], shuju.yd[4], shuju.yd[5], 5)
-                        sendluamsg(play, 101, 0, 1, 1, '{"lx":2,"npcdt":"' .. shuju.yd[2] .. '","npcid":' .. shuju.yd[3] .. ',"xx":' .. shuju.yd[4] .. ',"yy":' .. shuju.yd[5] .. '}')
+                        local targetMap = shuju.yd[2]
+                        local targetNpc = shuju.yd[3]
+                        local targetX = shuju.yd[4]
+                        local targetY = shuju.yd[5]
+                        -- 这里不再对未完成三大陆主线的玩家自动兜底传送到灰界，是否可传送统一前置到 _ywl_can_transfer 里拦截。
+                        mapmove(play, targetMap, targetX, targetY, 5)
+                        sendluamsg(play, 101, 0, 1, 1, '{"lx":2,"npcdt":"' .. targetMap .. '","npcid":' .. targetNpc .. ',"xx":' .. targetX .. ',"yy":' .. targetY .. '}')
                         sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
                         is_transfer_ok = true
                     else

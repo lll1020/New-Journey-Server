@@ -958,8 +958,8 @@ Buff = {
             -- release_print(hasbuff(play,20110))
             
             if getbaseinfo(Target,1) == "嘲灾" then
-                local hasbuff20110 = hasbuff(play,20110)
-                if not hasbuff20110 then
+                local hasWeapon = Player.hasEquipOnPos(play, 1, "嘲天笑地")
+                if not hasWeapon then
                     humanhp(play, "-", Damage, 0, 0)
                     -- release_print("嘲灾触发，造成"..Damage.."点伤害")
                 end
@@ -1142,8 +1142,6 @@ function Buff.tuo(play,item)
     end
 end
 return Buff
-
-
 
 
 

@@ -4,7 +4,7 @@ npc = {}
 仙府总览：
 1. 所有玩法参数都来自 teshudata["npc_44"]，这里会读取 gridSize、currencyMap、PlantCfg 等子表，确保策划调表即可改玩法。
 2. 玩家个人数据单独存放在 VarCfg.T_XianFuData，对他人访问时从在线角色实时拉取，避免历史全服大表。
-3. 仙华排行榜只在仙华值发生变动时写入 VarCfg.A_XianFuRank，当天发奖逻辑仍由定时器处理。
+3. 当前仅保留仙府基础玩法，不再维护仙府排行榜数据。
 ]]
 
 local _config = Guard.getConfig("npc_44")
@@ -18,7 +18,6 @@ local TitleCfg = _config.TitleCfg or {}
 local PetCfg = _config.PetCfg or {}
 local ShopCfg = _config.ShopCfg or {}
 local maxShopBuy = _config.shopMaxBuy or 9999
-local RankCfg = _config.RankCfg or {}
 local visitorLimit = _config.visitorLogLimit or 20
 local gridSize = _config.gridSize or 9
 
@@ -80,7 +79,6 @@ local function ensureHerbCount(record, herbName)
 end
 
 local PLAYER_DATA_VAR = VarCfg.T_XianFuData or "T47"
-local RANK_VAR = VarCfg.A_XianFuRank or "A6"
 
 ---------------------------------------------------------------------
 -- Common: 基础工具
@@ -480,6 +478,32 @@ local function ensureStealCooldown(stat)
     stat.cooldown = stat.cooldown or {}
     return stat.cooldown
 end
+local function splitStealReward(plot)
+    local need = math.max(1, tonumber(StealCfg.stealAmount) or 1)
+    local reward = {}
+    local remain = need
+    local left = {}
+    for _, info in ipairs(plot.product or {}) do
+        local name = info[1]
+        local amount = math.max(0, tonumber(info[2]) or 0)
+        if remain > 0 and amount > 0 then
+            local take = math.min(amount, remain)
+            if take > 0 then
+                reward[#reward + 1] = {name, take}
+                amount = amount - take
+                remain = remain - take
+            end
+        end
+        if amount > 0 then
+            left[#left + 1] = {name, amount}
+        end
+    end
+    if #reward == 0 then
+        return nil, nil
+    end
+    return reward, left
+end
+
 
 function Steal.try(play, thiefRecord, targetRecord, now, gridId)
     if thiefRecord.meta.key == targetRecord.meta.key then
@@ -507,13 +531,22 @@ function Steal.try(play, thiefRecord, targetRecord, now, gridId)
     if not plot.product or #plot.product == 0 then
         return false, "没有剩余灵草"
     end
-    local reward = cloneRewardList(plot.product)
+    local reward, left = splitStealReward(plot)
+    if not reward then
+        return false, "没有剩余灵草"
+    end
     Player.rwjl(play, reward, "仙府偷菜", 1, 0)
     addProductStat(thiefRecord, reward)
     thiefRecord.steal.daily.count = thiefRecord.steal.daily.count + 1
     targetRecord.guard.daily.count = targetRecord.guard.daily.count + 1
     bucket[targetRecord.meta.key] = now + (StealCfg.cooldown or 0)
-    resetPlot(plot, plot.gridId)
+    if left and #left > 0 then
+        plot.product = left
+        plot.state = "mature"
+        plot.canSteal = cfg and cfg.canSteal and true or false
+    else
+        resetPlot(plot, plot.gridId)
+    end
     return true, {product = reward, plot = plot}
 end
 
@@ -622,6 +655,22 @@ local function refineCostWithBuff(play, cost)
 end
 
 
+local function hasRefinePermit(play)
+    local needEquip = RefineCfg.needEquip
+    if not needEquip or needEquip == "" then
+        return true
+    end
+    if Player.hasEquipInArtifactSlot(play, needEquip) then
+        return true
+    end
+    for pos = 0, 20 do
+        if Player.getEquipNameByPos(play, pos) == needEquip then
+            return true
+        end
+    end
+    return false
+end
+
 local function hasAllRecipes(record)
     for name in pairs(RefineCfg.recipes or {}) do
         if not record.refine.collection[name] then
@@ -635,6 +684,9 @@ function Refine.start(play, record, params, now)
     local recipe = RefineCfg.recipes and RefineCfg.recipes[params.recipeId]
     if not recipe then
         return false, "丹方不存在"
+    end
+    if not hasRefinePermit(play) then
+        return false, string.format("请先装备#249|%s#255|后再炼丹", RefineCfg.needEquip or "炼丹许可证")
     end
     local cd = RefineCfg.furnaceCd or 0
     if (record.refine.lastTime or 0) + cd > now then
@@ -739,51 +791,6 @@ end
 --     return true, {pet = pet}
 -- end
 
----------------------------------------------------------------------
--- Rank: 仙华榜
----------------------------------------------------------------------
-local Rank = {}
-
-function Rank.load()
-    local data = Player.getJsonTableByVar(nil, RANK_VAR) or {}
-    data.entries = data.entries or {}
-    return data
-end
-
-function Rank.save(data)
-    Player.setJsonVarByTable(nil, RANK_VAR, data)
-end
-
-function Rank.maybeUpdate(rankData, record)
-    local key = record.meta.key
-    local value = record.stats.xiangHua or 0
-    local node = rankData.entries[key]
-    local likenum = record.stats.likenum or 0
-    if node and node.value == value and node.likenum == likenum then
-        return false
-    end
-    rankData.entries[key] = {name = record.meta.name, value = value, likenum = likenum}
-    return true
-end
-
-function Rank.getTopList(rankData)
-    local snapshot = {}
-    for key, node in pairs(rankData.entries or {}) do
-        table.insert(snapshot, {key = key, name = node.name, value = node.value, likenum = node.likenum})
-    end
-    table.sort(snapshot, function(a, b)
-        if a.value == b.value then
-            return (a.name or "") < (b.name or "")
-        end
-        return (a.value or 0) > (b.value or 0)
-    end)
-    local limit = math.min(RankCfg.topN or 20, #snapshot)
-    local result = {}
-    for i = 1, limit do
-        result[i] = snapshot[i]
-    end
-    return result
-end
 
 ---------------------------------------------------------------------
 -- 状态加载 / 持久化
@@ -796,15 +803,11 @@ local function loadState(play)
         now = now,
         player = play,
         record = record,
-        rank = Rank.load(),
     }
 end
 
-local function persistState(state, rankDirty)
+local function persistState(state)
     Storage.savePlayer(state.player, state.record)
-    if rankDirty then
-        Rank.save(state.rank)
-    end
 end
 
 local function buildSnapshot(state)
@@ -824,16 +827,6 @@ local function buildSnapshot(state)
             pet = state.record.pet,
             visitor = state.record.visitor,
         },
-        cfg = {
-            plant = PlantCfg,
-            steal = StealCfg,
-            like = LikeCfg,
-            refine = RefineCfg,
-            decorate = DecorateCfg,
-            pet = PetCfg,
-            shop = ShopCfg,
-        },
-        rank = Rank.getTopList(state.rank),
     }
 end
 
@@ -866,14 +859,13 @@ end
 local ActionHandler = {}
 
 function ActionHandler.sync(play, npcid, state)
-    persistState(state, false)
+    persistState(state)
     pushAction(play, npcid, "sync", true, "", state)
 end
 
 function ActionHandler.plant(play, npcid, state, params)
     local ok, res = Planting.plant(play, state.record, params or {}, state.now)
-    local rankDirty = Rank.maybeUpdate(state.rank, state.record)
-    persistState(state, rankDirty)
+    persistState(state)
     if not ok then
         Player.sendmsgEx(play, res or "播种失败#57")
         return
@@ -884,8 +876,7 @@ end
 
 function ActionHandler.harvest(play, npcid, state, params)
     local ok, res = Planting.harvest(play, state.record, params or {}, state.now)
-    local rankDirty = Rank.maybeUpdate(state.rank, state.record)
-    persistState(state, rankDirty)
+    persistState(state)
     if not ok then
         Player.sendmsgEx(play, res or "尚未成熟#57")
         return
@@ -896,8 +887,7 @@ end
 
 function ActionHandler.buySeed(play, npcid, state, params)
     local ok, res = Shop.buySeed(play, state.record, params or {})
-    local rankDirty = Rank.maybeUpdate(state.rank, state.record)
-    persistState(state, rankDirty)
+    persistState(state)
     if not ok then
         Player.sendmsgEx(play, res or "购买失败#57")
         return
@@ -908,8 +898,7 @@ end
 
 function ActionHandler.buyEgg(play, npcid, state, params)
     local ok, res = Shop.buyEgg(play, state.record, params or {})
-    local rankDirty = Rank.maybeUpdate(state.rank, state.record)
-    persistState(state, rankDirty)
+    persistState(state)
     if not ok then
         Player.sendmsgEx(play, res or "购买失败#57")
         return
@@ -920,7 +909,7 @@ end
 
 function ActionHandler.buyMaterial(play, npcid, state, params)
     local ok, res = Shop.buyMaterial(play, state.record, params or {})
-    persistState(state, false)
+    persistState(state)
     if not ok then
         Player.sendmsgEx(play, res or "购买失败#57")
         return
@@ -931,8 +920,7 @@ end
 
 function ActionHandler.refine(play, npcid, state, params)
     local ok, res = Refine.start(play, state.record, params or {}, state.now)
-    local rankDirty = Rank.maybeUpdate(state.rank, state.record)
-    persistState(state, rankDirty)
+    persistState(state)
     if not ok then
         Player.sendmsgEx(play, res or "炼丹失败#57")
         return
@@ -943,8 +931,7 @@ end
 
 function ActionHandler.buyDecoration(play, npcid, state, params)
     local ok, res = Decoration.buy(play, state.record, params and params.decoId)
-    local rankDirty = Rank.maybeUpdate(state.rank, state.record)
-    persistState(state, rankDirty)
+    persistState(state)
     if not ok then
         Player.sendmsgEx(play, res or "购买失败#57")
         return
@@ -955,8 +942,7 @@ end
 
 function ActionHandler.equipDecoration(play, npcid, state, params)
     local ok, res = Decoration.equip(state.record, params and params.decoId)
-    local rankDirty = Rank.maybeUpdate(state.rank, state.record)
-    persistState(state, rankDirty)
+    persistState(state)
     if not ok then
         Player.sendmsgEx(play, res or "装扮无法生效#57")
         return
@@ -967,7 +953,7 @@ end
 
 function ActionHandler.hatch(play, npcid, state, params)
     local ok, res = Pet.hatch(play, state.record, params or {}, state.now)
-    persistState(state, false)
+    persistState(state)
     if not ok then
         Player.sendmsgEx(play, res or "孵化失败#57")
         return
@@ -978,7 +964,7 @@ end
 
 -- function ActionHandler.feed(play, npcid, state, params)
 --     local ok, res = Pet.feed(play, state.record, params or {})
---     persistState(state, false)
+--     persistState(state)
 --     if not ok then
 --         Player.sendmsgEx(play, res or "喂养失败#57")
 --         return
@@ -989,8 +975,6 @@ end
 
 -- function ActionHandler.identify(play, npcid, state, params)
 --     local ok, res = Pet.identify(play, state.record, params or {})
---     local rankDirty = Rank.maybeUpdate(state.rank, state.record)
---     persistState(state, rankDirty)
 --     if not ok then
 --         Player.sendmsgEx(play, res or "鉴定失败#57")
 --         return
@@ -1019,12 +1003,8 @@ function ActionHandler.like(play, npcid, state, params)
         if ok then
             Visitor.push(targetRecord, state.record.meta.name, "like", "+" .. (LikeCfg.likeValue or 0), state.now)
             Storage.savePlayer(actor, targetRecord)
-            if Rank.maybeUpdate(state.rank, targetRecord) then
-                Rank.save(state.rank)
-            end
         end
-        local rankDirty = Rank.maybeUpdate(state.rank, state.record)
-        persistState(state, rankDirty)
+        persistState(state)
         if not ok then
             Player.sendmsgEx(play, res or "点赞失败#57")
             return
@@ -1040,10 +1020,8 @@ function ActionHandler.steal(play, npcid, state, params)
         if ok then
             Visitor.push(targetRecord, state.record.meta.name, "steal", "-" .. summarizeReward(res.product), state.now)
             Storage.savePlayer(actor, targetRecord)
-            Rank.save(state.rank)
         end
-        local rankDirty = Rank.maybeUpdate(state.rank, state.record)
-        persistState(state, rankDirty)
+        persistState(state)
         if not ok then
             Player.sendmsgEx(play, res or "偷取失败#57")
             return
@@ -1058,7 +1036,7 @@ function ActionHandler.visit(play, npcid, state, params)
         local snapshot = Storage.buildPublicSnapshot(targetRecord)
         snapshot.isGuest = true
         Storage.savePlayer(actor, targetRecord)
-        persistState(state, false)
+        persistState(state)
         pushAction(play, npcid, "visit", true, "", state, {target = snapshot, visitMode = true})
     end)
 end
@@ -1073,7 +1051,7 @@ function npc.main(play, npcid)
         return
     end
     local state = loadState(play)
-    persistState(state, Rank.maybeUpdate(state.rank, state.record))
+    persistState(state)
     sendluamsg(play, 100, npcid, 0, 0, tbl2json(buildSnapshot(state)))
 end
 

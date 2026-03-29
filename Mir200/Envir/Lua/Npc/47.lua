@@ -7,6 +7,9 @@ local _config = Guard.getConfig("npc_47")
 local FairyFate = include("lua/LuaLib/fairy_fate.lua")
 
 function npc.main(play,npcid)
+    if not Player.ensureThirdContinentPass(play, '请先完成#57|【灾厄入侵】#249|后再使用该功能#57') then
+        return
+    end
     local data = {}
     data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_藏宝图"])
     data["J_cs"] = getplaydef(play, VarCfg["J_今日藏宝图次数"])
@@ -14,6 +17,9 @@ function npc.main(play,npcid)
 end
 
 function npc.link(play,npcid,ew,aid,data)
+    if not Player.ensureThirdContinentPass(play, '请先完成#57|【灾厄入侵】#249|后再使用该功能#57') then
+        return
+    end
     -- npc_guard: 入参校验
     if not Guard.ensurePlayer(play, npcid) then
         return

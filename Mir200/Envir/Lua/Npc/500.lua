@@ -28,6 +28,11 @@ function npc.link(play,npcid,ew,aid)
     if ew == 1 then
         if _config[npcid] and Player.dl_sz(play, _config[npcid][6]) then
             if getplaydef(play,"N$战斗状态") < os.time() then
+                if _config[npcid][1] == "三大陆主城" and not Player.hasThirdContinentPass(play) then
+                    Player.moveToThirdContinentFrontier(play, "未完成#57|【灾厄入侵】#249|，当前先传送至#57|【灰界】#249|")
+                    sendluamsg(play,101,9999,0,0,"npc_sjdt")
+                    return
+                end
                 mapmove(play,_config[npcid][1],_config[npcid][2],_config[npcid][3],_config[npcid][7])
                 if rwcf[npcid] then
                     Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务

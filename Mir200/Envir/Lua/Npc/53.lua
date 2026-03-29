@@ -58,10 +58,16 @@ local function getStackCount(play, itemObj)
 end
 
 function npc.main(play,npcid)
+    if not Player.ensureThirdContinentPass(play, '请先完成#57|【灾厄入侵】#249|后再使用该功能#57') then
+        return
+    end
     sendluamsg(play,100,npcid,0,0,"")
 end
 
 function npc.link(play,npcid,ew,aid,data)
+    if not Player.ensureThirdContinentPass(play, '请先完成#57|【灾厄入侵】#249|后再使用该功能#57') then
+        return
+    end
     -- npc_guard: 入参校验
     if not Guard.ensurePlayer(play, npcid) then
         return
