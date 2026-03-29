@@ -81,7 +81,7 @@ function Login_xxqh(play)
         attrs[k[1]] = k[2]
     end
     attrsstr = Player.getAttrTableToStr(attrs)
-    Player.addattlist(play, "幸运强化", "=", attrsstr, 1)
+    Player.add_attlist(play, "幸运强化", "=", attrsstr, 1)
 end
 GameEvent.add(EventCfg.onLogin, Login_xxqh, "Login_xxqh")
 

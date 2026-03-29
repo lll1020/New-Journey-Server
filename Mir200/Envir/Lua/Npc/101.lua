@@ -120,7 +120,7 @@ local function _refresh_bonus(play, T_data)
     end
     local attrsstr = Player.getAttrTableToStr(attrs)
     if attrsstr and attrsstr ~= "" then
-        Player.addattlist(play, _attr_list_name, "=", attrsstr, 1)
+        Player.add_attlist(play, _attr_list_name, "=", attrsstr, 1)
     else
         Player.del_attlist(play, _attr_list_name)
     end

@@ -124,7 +124,7 @@ function Login_jq_675(play)
         attrs[k[1]] = k[2] * level
     end
     attrsstr = Player.getAttrTableToStr(attrs)
-    Player.addattlist(play, "后羿射日", "=", attrsstr, 1)
+    Player.add_attlist(play, "后羿射日", "=", attrsstr, 1)
 end
 GameEvent.add(EventCfg.onLogin, Login_jq_675, "Login_后羿射日")
 

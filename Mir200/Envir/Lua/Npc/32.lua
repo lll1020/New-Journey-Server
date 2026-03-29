@@ -192,7 +192,7 @@ function Login_zsattr(play)
         end
     end
     attrsstr = Player.getAttrTableToStr(attrs)
-    Player.addattlist(play, "转生", "=", attrsstr, 1)
+    Player.add_attlist(play, "转生", "=", attrsstr, 1)
 end
 GameEvent.add(EventCfg.onLogin, Login_zsattr, "Login_zsattr")
 

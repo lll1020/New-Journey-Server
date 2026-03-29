@@ -51,7 +51,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         setplaydef(play, VarCfg["U_兰姐好感度"], dj_data)
 
         Player.del_attlist(play, "兰姐好感度")
-        Player.addattlist(play, "兰姐好感度", "=", "3#".._config.attrID.."#".._config.config[dj_data].ratio, 1)
+        Player.add_attlist(play, "兰姐好感度", "=", "3#".._config.attrID.."#".._config.config[dj_data].ratio, 1)
         sendluamsg(play,100,npcid,1,0,"")
         if dj_data == 5 then
             Player.rwjl(play,{{_config.half_give,1}},"兰姐好感度",1)

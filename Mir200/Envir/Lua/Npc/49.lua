@@ -90,7 +90,7 @@ function Login_bg(play)
         end
     end
     attrsstr = Player.getAttrTableToStr(attrs)
-    Player.addattlist(play, "°ËØÔÊôĞÔ", "=", attrsstr, 1)
+    Player.add_attlist(play, "°ËØÔÊôĞÔ", "=", attrsstr, 1)
 end
 GameEvent.add(EventCfg.onLogin, Login_bg, "Login_bg")
 

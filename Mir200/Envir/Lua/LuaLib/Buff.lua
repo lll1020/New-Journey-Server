@@ -64,7 +64,7 @@ local function _title_sync_time_attr(play, buffId, attrListName, attrStr, mode)
         enable = true
     end
     if enable then
-        Player.addattlist(play, attrListName, "=", attrStr, 1)
+        Player.add_attlist(play, attrListName, "=", attrStr, 1)
     else
         Player.del_attlist(play, attrListName)
     end
@@ -83,7 +83,7 @@ local function _title_sync_dadi_attr(play)
     end
     setplaydef(play, "N$buff328_stack", stack)
     if stack > 0 then
-        Player.addattlist(play, "title_dadi_stack", "=", _title_all_percent_attr(stack), 1)
+        Player.add_attlist(play, "title_dadi_stack", "=", _title_all_percent_attr(stack), 1)
     else
         Player.del_attlist(play, "title_dadi_stack")
     end
@@ -526,10 +526,10 @@ Buff = {
     [313] = function(play,zt) --ÒõÑôÓñÅå£º°´Ê±¼äÇĞ»»ÊôĞÔ£¨06-18Ñô£º¶Ô¹Ö¹¥ËÙ+10%£¬18-06Òõ£º´ò¹Ö±¬ÂÊ+10%£©
         local function _apply(mode)
             if mode == 1 then
-                Player.addattlist(play, "ÒõÑôÓñÅå_Ñô", "=", "3#200#1000", 1)
+                Player.add_attlist(play, "ÒõÑôÓñÅå_Ñô", "=", "3#200#1000", 1)
                 Player.del_attlist(play, "ÒõÑôÓñÅå_Òõ")
             else
-                Player.addattlist(play, "ÒõÑôÓñÅå_Òõ", "=", "3#242#1000", 1)
+                Player.add_attlist(play, "ÒõÑôÓñÅå_Òõ", "=", "3#242#1000", 1)
                 Player.del_attlist(play, "ÒõÑôÓñÅå_Ñô")
             end
         end
@@ -873,7 +873,7 @@ Buff = {
     end,
     [101] = function(play,zt) --ÏÉÊ³·»È«Âú
         if zt == 1 then
-            Player.addattlist(play, "ÏÉÊ³·»È«Âú", "=", "3#1#8888|3#4#588|3#242#3800|3#244#4888", 1)
+            Player.add_attlist(play, "ÏÉÊ³·»È«Âú", "=", "3#1#8888|3#4#588|3#242#3800|3#244#4888", 1)
         elseif zt == 2 then
             Player.del_attlist(play, "ÏÉÊ³·»È«Âú")
         end
@@ -1082,7 +1082,7 @@ function Buff.login(play)
             attrs[teshudata["npc_1"].config[i].attr] = data[""..i] or 0
         end
         attrsstr = Player.getAttrTableToStr(attrs)
-        Player.addattlist(play, "Áé¸ù¼ø¶¨", "=", attrsstr, 1)
+        Player.add_attlist(play, "Áé¸ù¼ø¶¨", "=", attrsstr, 1)
     end
     --Áé¸ùĞŞÁ¶
     data = Player.getJsonTableByVar(play, VarCfg["T_Áé¸ùĞŞÁ¶"])
@@ -1092,17 +1092,17 @@ function Buff.login(play)
         attrs[teshudata["npc_11"].attrID[i]] = (data[""..i] or 0) * teshudata["npc_11"].config[i].ratio
     end
     attrsstr = Player.getAttrTableToStr(attrs)
-    Player.addattlist(play, "Áé¸ùĞŞÁ¶", "=", attrsstr, 1)
+    Player.add_attlist(play, "Áé¸ùĞŞÁ¶", "=", attrsstr, 1)
     --À¼½ãºÃ¸Ğ¶È
     if getplaydef(play, VarCfg["U_À¼½ãºÃ¸Ğ¶È"]) > 0 then
-        Player.addattlist(play, "À¼½ãºÃ¸Ğ¶È", "=", "3#"..teshudata["npc_13"].attrID.."#"..teshudata["npc_13"].config[getplaydef(play, VarCfg["U_À¼½ãºÃ¸Ğ¶È"])].ratio, 1)
+        Player.add_attlist(play, "À¼½ãºÃ¸Ğ¶È", "=", "3#"..teshudata["npc_13"].attrID.."#"..teshudata["npc_13"].config[getplaydef(play, VarCfg["U_À¼½ãºÃ¸Ğ¶È"])].ratio, 1)
     end
     --¸£ÍŞ²ÂÈ­ÇĞ¸î
     data = Player.getJsonTableByVar(play, VarCfg["T_¸£ÍŞ²ÂÈ­"] )
     local fuwa_cut = tonumber(data.cut) or 0
     Player.del_attlist(play, "¸£ÍŞ²ÂÈ­ÇĞ¸î")
     if fuwa_cut > 0 then
-        Player.addattlist(play, "¸£ÍŞ²ÂÈ­ÇĞ¸î", "=", "3#" .. (teshudata["npc_66"].cut_attr or 244) .. "#" .. fuwa_cut, 1)
+        Player.add_attlist(play, "¸£ÍŞ²ÂÈ­ÇĞ¸î", "=", "3#" .. (teshudata["npc_66"].cut_attr or 244) .. "#" .. fuwa_cut, 1)
     end
    
     ------------------------------------------------------------Í¨ÓÃÊôĞÔ

@@ -158,7 +158,7 @@ function Login_jq_691(play)
     local attrsstr = jq_data[_attr_cache_key] or jq_data[_legacy_attr_cache_key]
     Player.del_attlist(play, _attr_list_name)
     if attrsstr and attrsstr ~= "" then
-        Player.addattlist(play, _attr_list_name, "=", attrsstr, 1)
+        Player.add_attlist(play, _attr_list_name, "=", attrsstr, 1)
     end
 end
 GameEvent.add(EventCfg.onLogin, Login_jq_691, "Login_ÖØÆôÊÀ½ç")

@@ -9,7 +9,7 @@ local function _refresh_fuwa_attr(play, T_data)
     local cut = tonumber(T_data and T_data.cut) or 0
     Player.del_attlist(play, "¸£ÍŞ²ÂÈ­ÇĞ¸î")
     if cut > 0 then
-        Player.addattlist(play, "¸£ÍŞ²ÂÈ­ÇĞ¸î", "=", "3#" .. (_config.cut_attr or 244) .. "#" .. cut, 1)
+        Player.add_attlist(play, "¸£ÍŞ²ÂÈ­ÇĞ¸î", "=", "3#" .. (_config.cut_attr or 244) .. "#" .. cut, 1)
     end
 end
 

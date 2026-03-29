@@ -713,8 +713,8 @@ function Player.del_attlist(actor, arrt_name) --删属性
     Player.del_attlist(actor, arrt_name)
     release_print("删属性",arrt_name,getbaseinfo(actor,1))
 end
-function Player.Player.addattlist(actor, title_name,opt, attrsstr,idx) --给属性
-    Player.addattlist(actor, title_name, opt, attrsstr, idx)
+function Player.add_attlist(actor, title_name,opt, attrsstr,idx) --给属性
+    addattlist(actor, title_name, opt, attrsstr, idx)
     release_print("给属性",title_name,attrsstr,getbaseinfo(actor,1),opt,idx)
 end
 

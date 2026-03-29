@@ -63,7 +63,7 @@ function npc.link(play, npcid, p2, p3, msgData)
             end
             attrsstr = Player.getAttrTableToStr(attrs)
             Player.del_attlist(play, "Áé¸ùĞŞÁ¶")
-            Player.addattlist(play, "Áé¸ùĞŞÁ¶", "=", attrsstr, 1)
+            Player.add_attlist(play, "Áé¸ùĞŞÁ¶", "=", attrsstr, 1)
 
             Player.setJsonVarByTable(play, VarCfg["T_Áé¸ùĞŞÁ¶"], dj_data)
             local data = {}
@@ -107,7 +107,7 @@ function AllMaxLevel(play)
     end
     attrsstr = Player.getAttrTableToStr(attrs)
     Player.del_attlist(play, "Áé¸ùĞŞÁ¶")
-    Player.addattlist(play, "Áé¸ùĞŞÁ¶", "=", attrsstr, 1)
+    Player.add_attlist(play, "Áé¸ùĞŞÁ¶", "=", attrsstr, 1)
     Player.setJsonVarByTable(play, VarCfg["T_Áé¸ùĞŞÁ¶"], dj_data)
     local data = {}
     data["dj_data"] = dj_data

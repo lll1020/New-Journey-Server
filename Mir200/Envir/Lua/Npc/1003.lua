@@ -26,7 +26,7 @@
 
 --     local attrsstr = Player.getAttrTableToStr(attrs)
 --     if attrsstr and attrsstr ~= "" then
---         Player.addattlist(play, _fashionAttrListName, "=", attrsstr, 1)
+--         Player.add_attlist(play, _fashionAttrListName, "=", attrsstr, 1)
 --     else
 --         Player.del_attlist(play, _fashionAttrListName)
 --     end

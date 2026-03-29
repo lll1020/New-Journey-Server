@@ -162,7 +162,7 @@ function Login_zbqh(play)
             attrs[k[1]] = k[2]
         end
         attrsstr = Player.getAttrTableToStr(attrs)
-        Player.addattlist(play, "装备强化", "=", attrsstr, 1)
+        Player.add_attlist(play, "装备强化", "=", attrsstr, 1)
     end
 end
 GameEvent.add(EventCfg.onLogin, Login_zbqh, "Login_zbqh")

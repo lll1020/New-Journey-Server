@@ -213,7 +213,7 @@ function Login_lignshi(actor)
     end
     attrsstr = Player.getAttrTableToStr(attrs)
     -- release_print("登录触发神石属性"..attrsstr)
-    Player.addattlist(actor, "神石属性", "=", attrsstr, 1)
+    Player.add_attlist(actor, "神石属性", "=", attrsstr, 1)
 
 end
 GameEvent.add(EventCfg.onLogin, Login_lignshi, "Login_lignshi")
@@ -245,7 +245,7 @@ function takeonex_lignshi(actor, itemobj, where, itemname, makeid)
         end
         attrsstr = Player.getAttrTableToStr(attrs)
         -- release_print("穿戴触发神石属性"..attrsstr)
-        Player.addattlist(actor, "神石属性", "=", attrsstr, 1)
+        Player.add_attlist(actor, "神石属性", "=", attrsstr, 1)
     end
 	
 end

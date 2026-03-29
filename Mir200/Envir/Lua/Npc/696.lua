@@ -77,7 +77,7 @@ local function _apply_attr_cache(play)
 
     Player.del_attlist(play, _attr_list_name)
     if attrsstr and attrsstr ~= "" then
-        Player.addattlist(play, _attr_list_name, "=", attrsstr, 1)
+        Player.add_attlist(play, _attr_list_name, "=", attrsstr, 1)
     end
 end
 

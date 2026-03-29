@@ -43,7 +43,7 @@
 --             attrs[_config.config[i].attr] = data[""..i]
 --         end
 --         attrsstr = Player.getAttrTableToStr(attrs)
---         Player.addattlist(play, "灵根鉴定", "=", attrsstr, 1)
+--         Player.add_attlist(play, "灵根鉴定", "=", attrsstr, 1)
 
 --         setplaydef(play, VarCfg["U_灵根鉴定次数"], cs + 1)
 --         Player.setJsonVarByTable(play, VarCfg["T_灵根鉴定"], data)

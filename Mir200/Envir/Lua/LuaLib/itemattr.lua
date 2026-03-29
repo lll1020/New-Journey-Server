@@ -10,7 +10,7 @@ local function _onGroupItemOnEx(actor ,idx)
       attrs[k[1]] = k[2]
     end
     attrsstr = Player.getAttrTableToStr(attrs)
-    Player.addattlist(actor,"Ì××°"..idx,"=",attrsstr,1)
+    Player.add_attlist(actor,"Ì××°"..idx,"=",attrsstr,1)
 
   end
 end

@@ -476,7 +476,7 @@ local function _apply_dan40_attr(play, rec)
 
     if next(attrs) then
         local attrsstr = Player.getAttrTableToStr(attrs)
-        Player.addattlist(play, "特殊丹药", "=", attrsstr, 1)
+        Player.add_attlist(play, "特殊丹药", "=", attrsstr, 1)
     else
         Player.del_attlist(play, "特殊丹药")
     end
@@ -855,7 +855,7 @@ local function _refresh_1002_attr(play, T_data)
 
     local attrsstr = Player.getAttrTableToStr(attrs)
     if attrsstr and attrsstr ~= "" then
-        Player.addattlist(play, "时装属性", "=", attrsstr, 1)
+        Player.add_attlist(play, "时装属性", "=", attrsstr, 1)
     else
         Player.del_attlist(play, "时装属性")
     end

@@ -93,7 +93,7 @@ function Login_jjxw(play)
         attrs[k[1]] = k[2]
     end
     attrsstr = Player.getAttrTableToStr(attrs)
-    Player.addattlist(play, "境界修为", "=", attrsstr, 1)
+    Player.add_attlist(play, "境界修为", "=", attrsstr, 1)
 end
 GameEvent.add(EventCfg.onLogin, Login_jjxw, "Login_jjxw")
 

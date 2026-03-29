@@ -512,7 +512,7 @@ local function _xianfa_apply_hp_state(actor)
         local attrs = { [36] = 2000, [37] = 2000 }
         local attrsstr = Player.getAttrTableToStr(attrs)
         if attrsstr and attrsstr ~= "" then
-            Player.addattlist(actor, XIANFA_HP_ATTR_NAME, "=", attrsstr, 1)
+            Player.add_attlist(actor, XIANFA_HP_ATTR_NAME, "=", attrsstr, 1)
         end
     else
         Player.del_attlist(actor, XIANFA_HP_ATTR_NAME)
@@ -750,7 +750,7 @@ function xianfa_refresh(actor, new_group, new_idx)
 
     local attrsstr = Player.getAttrTableToStr(attrs)
     if attrsstr and attrsstr ~= "" then
-        Player.addattlist(actor, XIANFA_ATTR_NAME, "=", attrsstr, 1)
+        Player.add_attlist(actor, XIANFA_ATTR_NAME, "=", attrsstr, 1)
     end
 
     _xianfa_set_invis(actor, need_invis)
@@ -780,7 +780,7 @@ function xianfa_revive_trigger(play)
         return
     end
     Player.del_attlist(play, XIANFA_REVIVE_ATTR_NAME)
-    Player.addattlist(play, XIANFA_REVIVE_ATTR_NAME, "=", "3#243#5", 1)
+    Player.add_attlist(play, XIANFA_REVIVE_ATTR_NAME, "=", "3#243#5", 1)
     delaygoto(play, 30000, "@xianfa_revive_remove")
 end
 
