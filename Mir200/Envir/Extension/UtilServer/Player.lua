@@ -710,7 +710,7 @@ function Player.title_del(actor, title_name) --…æ≥∆∫≈
 end
 
 function Player.del_attlist(actor, arrt_name) --…æ Ù–‘
-    Player.del_attlist(actor, arrt_name)
+    delattlist(actor, arrt_name)
     release_print("…æ Ù–‘",arrt_name,getbaseinfo(actor,1))
 end
 function Player.add_attlist(actor, title_name,opt, attrsstr,idx) --∏¯ Ù–‘
