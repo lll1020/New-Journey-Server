@@ -69,7 +69,7 @@ function npc.link(play,npcid,ew,aid,data)
         local data = {}
         data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_°ËØÔ"])
         sendluamsg(play,100,npcid,0,0,tbl2json(data))
-        delattlist(play, "°ËØÔÊôĞÔ")
+        Player.del_attlist(play, "°ËØÔÊôĞÔ")
         Login_bg(play)
 
     end
@@ -90,7 +90,7 @@ function Login_bg(play)
         end
     end
     attrsstr = Player.getAttrTableToStr(attrs)
-    addattlist(play, "°ËØÔÊôĞÔ", "=", attrsstr, 1)
+    Player.addattlist(play, "°ËØÔÊôĞÔ", "=", attrsstr, 1)
 end
 GameEvent.add(EventCfg.onLogin, Login_bg, "Login_bg")
 

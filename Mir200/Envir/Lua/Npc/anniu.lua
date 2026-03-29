@@ -20,9 +20,9 @@ local function _refreshFashionAttr(play, T_data)
     end
     local attrsstr = Player.getAttrTableToStr(attrs)
     if attrsstr and attrsstr ~= "" then
-        addattlist(play, _fashionAttrListName, "=", attrsstr, 1)
+        Player.addattlist(play, _fashionAttrListName, "=", attrsstr, 1)
     else
-        delattlist(play, _fashionAttrListName)
+        Player.del_attlist(play, _fashionAttrListName)
     end
 end
 npc[2] = function(play, p2, p3, msgData) --±³°ü  Ãæ°å

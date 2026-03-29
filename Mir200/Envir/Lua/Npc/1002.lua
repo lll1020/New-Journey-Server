@@ -39,9 +39,9 @@ local function refreshFashionAttr(play)
 
     local attrsstr = Player.getAttrTableToStr(attrs)
     if attrsstr and attrsstr ~= "" then
-        addattlist(play, FASHION_ATTR_LIST_NAME, "=", attrsstr, 1)
+        Player.addattlist(play, FASHION_ATTR_LIST_NAME, "=", attrsstr, 1)
     else
-        delattlist(play, FASHION_ATTR_LIST_NAME)
+        Player.del_attlist(play, FASHION_ATTR_LIST_NAME)
     end
     T_data.dqzj = T_data.dqzj or 0
     if T_data.dqzj > 0 then

@@ -495,13 +495,13 @@ end
 -- 返回值：是否还需要持续监控
 local function _xianfa_apply_hp_state(actor)
     if getbaseinfo(actor, ConstCfg.gbase.isdie) then
-        delattlist(actor, XIANFA_HP_ATTR_NAME)
+        Player.del_attlist(actor, XIANFA_HP_ATTR_NAME)
         return _xianfa_has(actor, "不死族") or _xianfa_has(actor, "愈战愈勇")
     end
     local has_undead = _xianfa_has(actor, "不死族")
     local has_berserk = _xianfa_has(actor, "愈战愈勇")
     if not has_undead and not has_berserk then
-        delattlist(actor, XIANFA_HP_ATTR_NAME)
+        Player.del_attlist(actor, XIANFA_HP_ATTR_NAME)
         return false
     end
     local maxhp = getbaseinfo(actor, ConstCfg.gbase.maxhp)
@@ -512,10 +512,10 @@ local function _xianfa_apply_hp_state(actor)
         local attrs = { [36] = 2000, [37] = 2000 }
         local attrsstr = Player.getAttrTableToStr(attrs)
         if attrsstr and attrsstr ~= "" then
-            addattlist(actor, XIANFA_HP_ATTR_NAME, "=", attrsstr, 1)
+            Player.addattlist(actor, XIANFA_HP_ATTR_NAME, "=", attrsstr, 1)
         end
     else
-        delattlist(actor, XIANFA_HP_ATTR_NAME)
+        Player.del_attlist(actor, XIANFA_HP_ATTR_NAME)
     end
 
     if has_undead and hp_rate < 0.3 then
@@ -559,7 +559,7 @@ end
 function xianfa_refresh(actor, new_group, new_idx)
     local list, T_data = _xianfa_iter(actor)
     T_data = _tianshu_fix_data(T_data)
-    delattlist(actor, XIANFA_ATTR_NAME)
+    Player.del_attlist(actor, XIANFA_ATTR_NAME)
 
     local attrs = {}
     local need_attack_buff = false
@@ -750,7 +750,7 @@ function xianfa_refresh(actor, new_group, new_idx)
 
     local attrsstr = Player.getAttrTableToStr(attrs)
     if attrsstr and attrsstr ~= "" then
-        addattlist(actor, XIANFA_ATTR_NAME, "=", attrsstr, 1)
+        Player.addattlist(actor, XIANFA_ATTR_NAME, "=", attrsstr, 1)
     end
 
     _xianfa_set_invis(actor, need_invis)
@@ -759,7 +759,7 @@ function xianfa_refresh(actor, new_group, new_idx)
         _xianfa_apply_hp_state(actor)
         _xianfa_start_hp_timer(actor)
     else
-        delattlist(actor, XIANFA_HP_ATTR_NAME)
+        Player.del_attlist(actor, XIANFA_HP_ATTR_NAME)
         setplaydef(actor, XIANFA_HP_TIMER_FLAG, 0)
     end
 
@@ -779,13 +779,13 @@ function xianfa_revive_trigger(play)
     if not _xianfa_has(play, "溜了溜了") then
         return
     end
-    delattlist(play, XIANFA_REVIVE_ATTR_NAME)
-    addattlist(play, XIANFA_REVIVE_ATTR_NAME, "=", "3#243#5", 1)
+    Player.del_attlist(play, XIANFA_REVIVE_ATTR_NAME)
+    Player.addattlist(play, XIANFA_REVIVE_ATTR_NAME, "=", "3#243#5", 1)
     delaygoto(play, 30000, "@xianfa_revive_remove")
 end
 
 function xianfa_revive_remove(play)
-    delattlist(play, XIANFA_REVIVE_ATTR_NAME)
+    Player.del_attlist(play, XIANFA_REVIVE_ATTR_NAME)
 end
 
 -- 攻击触发：由 Buff[301] 回调，返回额外伤害值（叠加到最终伤害）
@@ -1051,9 +1051,9 @@ GameEvent.add(EventCfg.OpenKuangBao, _xianfa_on_login, "天书仙法")
 
 -- 清空仙法属性与状态（切换/重抽时调用）
 function xianfa_del(actor, group ,idx)
-    delattlist(actor, XIANFA_ATTR_NAME)
-    delattlist(actor, XIANFA_REVIVE_ATTR_NAME)
-    delattlist(actor, XIANFA_HP_ATTR_NAME)
+    Player.del_attlist(actor, XIANFA_ATTR_NAME)
+    Player.del_attlist(actor, XIANFA_REVIVE_ATTR_NAME)
+    Player.del_attlist(actor, XIANFA_HP_ATTR_NAME)
     setplaydef(actor, XIANFA_HP_TIMER_FLAG, 0)
     _xianfa_set_invis(actor, false)
     -- 删除仙法时回收等级上限加成（如：打破枷锁/诅咒冠冕）

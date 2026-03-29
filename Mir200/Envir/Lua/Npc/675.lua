@@ -84,7 +84,7 @@ function npc.link(play,npcid,ew,aid)
             Player.sendmsgEx(play, "提交成功")
             sendluamsg(play,100,npcid,1,cnt,"")
         end
-        delattlist(play, "后羿射日")
+        Player.del_attlist(play, "后羿射日")
         Login_jq_675(play)
     elseif ew == 2 then
         if _config.bag_cost then
@@ -124,7 +124,7 @@ function Login_jq_675(play)
         attrs[k[1]] = k[2] * level
     end
     attrsstr = Player.getAttrTableToStr(attrs)
-    addattlist(play, "后羿射日", "=", attrsstr, 1)
+    Player.addattlist(play, "后羿射日", "=", attrsstr, 1)
 end
 GameEvent.add(EventCfg.onLogin, Login_jq_675, "Login_后羿射日")
 

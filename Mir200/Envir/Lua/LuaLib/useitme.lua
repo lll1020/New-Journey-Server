@@ -451,7 +451,7 @@ function stdmodefunc39(play, item) --特殊丹药
 end
 local function _apply_dan40_attr(play, rec)
     if type(rec) ~= "table" then
-        delattlist(play, "特殊丹药")
+        Player.del_attlist(play, "特殊丹药")
         return
     end
     local attrs = {}
@@ -476,9 +476,9 @@ local function _apply_dan40_attr(play, rec)
 
     if next(attrs) then
         local attrsstr = Player.getAttrTableToStr(attrs)
-        addattlist(play, "特殊丹药", "=", attrsstr, 1)
+        Player.addattlist(play, "特殊丹药", "=", attrsstr, 1)
     else
-        delattlist(play, "特殊丹药")
+        Player.del_attlist(play, "特殊丹药")
     end
 end
 
@@ -855,9 +855,9 @@ local function _refresh_1002_attr(play, T_data)
 
     local attrsstr = Player.getAttrTableToStr(attrs)
     if attrsstr and attrsstr ~= "" then
-        addattlist(play, "时装属性", "=", attrsstr, 1)
+        Player.addattlist(play, "时装属性", "=", attrsstr, 1)
     else
-        delattlist(play, "时装属性")
+        Player.del_attlist(play, "时装属性")
     end
 end
 

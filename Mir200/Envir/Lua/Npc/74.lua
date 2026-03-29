@@ -110,7 +110,7 @@ end
 local function _rebuild_tmlp_attr(play)
     local _, state = _get_dljq_data(play)
     local attrs = {}
-    delattlist(play, _attr_list_name)
+    Player.del_attlist(play, _attr_list_name)
     for idx, cfg in ipairs(_config.details or {}) do
         if state[tostring(idx)] == 1 then
             for _, attr in pairs(cfg.attr or cfg.attrs or {}) do
@@ -126,7 +126,7 @@ local function _rebuild_tmlp_attr(play)
     end
     local attrsstr = Player.getAttrTableToStr(attrs)
     if attrsstr and attrsstr ~= "" then
-        addattlist(play, _attr_list_name, "=", attrsstr, 1)
+        Player.addattlist(play, _attr_list_name, "=", attrsstr, 1)
     end
 end
 

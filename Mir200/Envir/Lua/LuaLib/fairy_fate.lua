@@ -513,7 +513,7 @@ local function _sync_legacy_panel_flags(state)
 end
 -- 根据当前已完成成就，重新汇总最终属性列表。
 -- 注意这里不是“本次新达成奖励”，而是“所有已达成成就的总和重算”：
--- 1. attrs 会挂到 addattlist；
+-- 1. attrs 会挂到 Player.addattlist；
 -- 2. special 会缓存到 state.special，给面板显示和其他逻辑读取；
 -- 3. 如果玩家失去某个成就资格，重算后属性也会自然回退。
 local function _refresh_attr(play, state)
@@ -525,7 +525,7 @@ local function _refresh_attr(play, state)
         end
     end
     local attrsStr = Player.getAttrTableToStr(attrs)
-    if attrsStr and attrsStr ~= "" then addattlist(play, _attr_list_name, "=", attrsStr, 1) else delattlist(play, _attr_list_name) end
+    if attrsStr and attrsStr ~= "" then Player.addattlist(play, _attr_list_name, "=", attrsStr, 1) else Player.del_attlist(play, _attr_list_name) end
     state.special = special
 end
 -- 扫描全部成就。

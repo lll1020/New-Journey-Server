@@ -71,7 +71,7 @@ function npc.link(play,npcid,ew,aid)
 
                 if nextLevel == 10 or nextLevel == 20 or nextLevel == 30 then
                     Player.sendmsgEx(play, "恭喜你，|【".._config.where[aid][1].."】#249|部位的装备强化提升到了【"..nextLevel.."级】，属性大幅提升！")
-                    delattlist(play, "装备强化")
+                    Player.del_attlist(play, "装备强化")
                     Login_zbqh(play)
                 else
                     Player.sendmsgEx(play, "恭喜你，|【".._config.where[aid][1].."】#249|部位的装备强化提升到了【"..nextLevel.."级】")
@@ -162,7 +162,7 @@ function Login_zbqh(play)
             attrs[k[1]] = k[2]
         end
         attrsstr = Player.getAttrTableToStr(attrs)
-        addattlist(play, "装备强化", "=", attrsstr, 1)
+        Player.addattlist(play, "装备强化", "=", attrsstr, 1)
     end
 end
 GameEvent.add(EventCfg.onLogin, Login_zbqh, "Login_zbqh")

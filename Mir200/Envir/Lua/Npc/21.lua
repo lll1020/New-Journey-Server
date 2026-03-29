@@ -63,7 +63,7 @@ function npc.link(play,npcid,ew,aid)
             Player.sendmsgEx(play,  "恭喜你，境界提升成功，当前境界等级为|【"..level.."级】#249|")
             if FairyFate and FairyFate.touch then FairyFate.touch(play, "realm_up") end
             sendluamsg(play,100,npcid,1,0,"")
-            delattlist(play, "境界修为")
+            Player.del_attlist(play, "境界修为")
             Login_jjxw(play)
             if level == 9 then
                 Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
@@ -93,7 +93,7 @@ function Login_jjxw(play)
         attrs[k[1]] = k[2]
     end
     attrsstr = Player.getAttrTableToStr(attrs)
-    addattlist(play, "境界修为", "=", attrsstr, 1)
+    Player.addattlist(play, "境界修为", "=", attrsstr, 1)
 end
 GameEvent.add(EventCfg.onLogin, Login_jjxw, "Login_jjxw")
 

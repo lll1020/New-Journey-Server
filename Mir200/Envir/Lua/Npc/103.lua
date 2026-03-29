@@ -60,9 +60,9 @@ local function _refresh_attr(play, T_data)
         end
     end
     if next(attrs) then
-        addattlist(play, _attr_list_name, "=", Player.getAttrTableToStr(attrs), 1)
+        Player.addattlist(play, _attr_list_name, "=", Player.getAttrTableToStr(attrs), 1)
     else
-        delattlist(play, _attr_list_name)
+        Player.del_attlist(play, _attr_list_name)
     end
     recalcabilitys(play)
 end

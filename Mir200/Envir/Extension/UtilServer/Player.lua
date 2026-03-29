@@ -709,6 +709,17 @@ function Player.title_del(actor, title_name) --删称号
 
 end
 
+function Player.del_attlist(actor, arrt_name) --删属性
+    Player.del_attlist(actor, arrt_name)
+    release_print("删属性",arrt_name,getbaseinfo(actor,1))
+end
+function Player.Player.addattlist(actor, title_name,opt, attrsstr,idx) --给属性
+    Player.addattlist(actor, title_name, opt, attrsstr, idx)
+    release_print("给属性",title_name,attrsstr,getbaseinfo(actor,1),opt,idx)
+end
+
+
+
 function Player.jl_mail(table) --奖励转邮件
     local str = ""
     for v,k in pairs(table) do

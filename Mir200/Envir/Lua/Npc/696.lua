@@ -75,9 +75,9 @@ local function _apply_attr_cache(play)
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     local attrsstr = jq_data[_attr_cache_key]
 
-    delattlist(play, _attr_list_name)
+    Player.del_attlist(play, _attr_list_name)
     if attrsstr and attrsstr ~= "" then
-        addattlist(play, _attr_list_name, "=", attrsstr, 1)
+        Player.addattlist(play, _attr_list_name, "=", attrsstr, 1)
     end
 end
 

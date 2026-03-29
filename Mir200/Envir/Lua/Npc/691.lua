@@ -127,7 +127,7 @@ function npc.link(play,npcid,ew,aid)
     _rebuild_attr_cache(jq_data)
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
 
-    delattlist(play, _attr_list_name)
+    Player.del_attlist(play, _attr_list_name)
     Login_jq_691(play)
 
     Player.sendmsgEx(play, string.format("提交进度：#57|【%d/%d】#249|", cnt, max_num))
@@ -156,9 +156,9 @@ end
 function Login_jq_691(play)
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     local attrsstr = jq_data[_attr_cache_key] or jq_data[_legacy_attr_cache_key]
-    delattlist(play, _attr_list_name)
+    Player.del_attlist(play, _attr_list_name)
     if attrsstr and attrsstr ~= "" then
-        addattlist(play, _attr_list_name, "=", attrsstr, 1)
+        Player.addattlist(play, _attr_list_name, "=", attrsstr, 1)
     end
 end
 GameEvent.add(EventCfg.onLogin, Login_jq_691, "Login_重启世界")

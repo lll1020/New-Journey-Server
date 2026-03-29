@@ -952,16 +952,17 @@ function ontimerex1()
                 if dqfz == 1 then
                     sendmovemsg("0", 1, 253, 0, 300, 1,"天选之人：活动《天选之人》已开启,请玩家尽快参与...")
                     sendmovemsg("0", 1, 249, 0, 250, 1,"天选之人：活动《天选之人》已开启,请玩家尽快参与...")
-                    local player_list = getplayerlst()
-                    for i, player  in ipairs(player_list or {}) do
-                        sendluamsg(player,101,12,1,7,'{"sk":120,"kf":2,"idx":7}')
-                    end
-                elseif txsj == 27 then
+                    -- local player_list = getplayerlst()
+                    -- for i, player  in ipairs(player_list or {}) do
+                    --     sendluamsg(player,101,12,1,7,'{"sk":120,"kf":2,"idx":7}')
+                    -- end
+                elseif txsj == 29 then
                     sendmovemsg("0", 1, 253, 0, 300, 1,"天选之人：活动《天选之人》即将开启,请玩家做好准备...")
                     sendmovemsg("0", 1, 249, 0, 250, 1,"天选之人：活动《天选之人》即将开启,请玩家做好准备...")
                     local player_list = getplayerlst()
                     for i, player  in ipairs(player_list or {}) do
-                        sendluamsg(player,101,1,13,0,"")
+                        -- sendluamsg(player,101,1,13,0,"")
+                        sendluamsg(player,101,12,1,7,'{"sk":2,"kf":2,"idx":7}')
                     end
                 end
             end

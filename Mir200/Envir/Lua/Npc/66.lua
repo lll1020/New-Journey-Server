@@ -7,9 +7,9 @@ local _config = Guard.getConfig("npc_66")
 
 local function _refresh_fuwa_attr(play, T_data)
     local cut = tonumber(T_data and T_data.cut) or 0
-    delattlist(play, "¸£ÍŞ²ÂÈ­ÇĞ¸î")
+    Player.del_attlist(play, "¸£ÍŞ²ÂÈ­ÇĞ¸î")
     if cut > 0 then
-        addattlist(play, "¸£ÍŞ²ÂÈ­ÇĞ¸î", "=", "3#" .. (_config.cut_attr or 244) .. "#" .. cut, 1)
+        Player.addattlist(play, "¸£ÍŞ²ÂÈ­ÇĞ¸î", "=", "3#" .. (_config.cut_attr or 244) .. "#" .. cut, 1)
     end
 end
 

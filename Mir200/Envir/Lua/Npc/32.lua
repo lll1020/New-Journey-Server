@@ -158,7 +158,7 @@ function npc.link(play,npcid,ew,aid)
         setplaydef(play, VarCfg["U_转生等级"], level)
         Player.sendmsgEx(play, "升级成功，当前转生为|【"..stage.."阶"..step.."级】#249|")
         if FairyFate and FairyFate.touch then FairyFate.touch(play) end
-        delattlist(play, "转生")
+        Player.del_attlist(play, "转生")
         Login_zsattr(play)
         if Buff and Buff.refreshHuTiGuangHuan then
             Buff.refreshHuTiGuangHuan(play)
@@ -192,7 +192,7 @@ function Login_zsattr(play)
         end
     end
     attrsstr = Player.getAttrTableToStr(attrs)
-    addattlist(play, "转生", "=", attrsstr, 1)
+    Player.addattlist(play, "转生", "=", attrsstr, 1)
 end
 GameEvent.add(EventCfg.onLogin, Login_zsattr, "Login_zsattr")
 

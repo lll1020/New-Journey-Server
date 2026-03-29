@@ -62,7 +62,7 @@ function npc.link(play,npcid,ew,aid)
         if FairyFate and FairyFate.touch then FairyFate.touch(play, "strength_success") end
         Player.sendmsgEx(play,  "恭喜你，幸运强化成功，当前等级为|【"..level.."级】#249|")
         sendluamsg(play,100,npcid,1,0,"")
-        delattlist(play, "幸运强化")
+        Player.del_attlist(play, "幸运强化")
         Login_xxqh(play)
 
         sendluamsg(play,101,1005,0,0,"tpcg")
@@ -81,7 +81,7 @@ function Login_xxqh(play)
         attrs[k[1]] = k[2]
     end
     attrsstr = Player.getAttrTableToStr(attrs)
-    addattlist(play, "幸运强化", "=", attrsstr, 1)
+    Player.addattlist(play, "幸运强化", "=", attrsstr, 1)
 end
 GameEvent.add(EventCfg.onLogin, Login_xxqh, "Login_xxqh")
 

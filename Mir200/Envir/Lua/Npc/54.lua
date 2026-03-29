@@ -65,8 +65,8 @@ function npc.link(play, npcid, p2, p3, msgData)
                 end
             end
             attrsstr = Player.getAttrTableToStr(attrs)
-            delattlist(play, "Áé¸ùĞŞÁ¶")
-            addattlist(play, "Áé¸ùĞŞÁ¶", "=", attrsstr, 1)
+            Player.del_attlist(play, "Áé¸ùĞŞÁ¶")
+            Player.addattlist(play, "Áé¸ùĞŞÁ¶", "=", attrsstr, 1)
 
             Player.setJsonVarByTable(play, VarCfg["T_Áé¸ùĞŞÁ¶"], dj_data)
             local data = {}
@@ -111,8 +111,8 @@ function AllMaxLevel(play)
         attrs[_config.attrID[i]] = (dj_data[""..i] or 0) * _config.config[i].ratio
     end
     attrsstr = Player.getAttrTableToStr(attrs)
-    delattlist(play, "Áé¸ùĞŞÁ¶")
-    addattlist(play, "Áé¸ùĞŞÁ¶", "=", attrsstr, 1)
+    Player.del_attlist(play, "Áé¸ùĞŞÁ¶")
+    Player.addattlist(play, "Áé¸ùĞŞÁ¶", "=", attrsstr, 1)
     Player.setJsonVarByTable(play, VarCfg["T_Áé¸ùĞŞÁ¶"], dj_data)
     local data = {}
     data["dj_data"] = dj_data
