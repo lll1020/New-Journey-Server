@@ -2384,11 +2384,11 @@ teshudata = {
             time_bonus_per_sec = 1,      -- 时间奖励系数（每剩余 1 秒额外奖励多少积分）
             mail_title = "全民答题",
             rank_rewards = {
-                {rank = 1, items = {{"元宝", 50000}, {"5元真实充值", 1}}},
-                {rank = 2, items = {{"元宝", 30000}, {"2元真实充值", 1}}},
-                {rank = 3, items = {{"元宝", 20000}, {"1元真实充值", 1}}},
+                {rank = 1, items = {{"绑定金币", 300000}}},
+                {rank = 2, items = {{"绑定金币", 250000}}},
+                {rank = 3, items = {{"绑定金币", 180000}}},
             },
-            join_reward = {{"金币", 500000}},
+            join_reward = {{"绑定金币", 50000}},
             questions = {
                 {title = "传奇里通常用于补给血量的药品是?", options = {"魔法药", "太阳水", "毒药", "随机石"}, answer = 2, score = 100},
                 {title = "下列哪个更偏向提升打怪效率?", options = {"打怪爆率", "回城石", "聊天字体", "交易税"}, answer = 1, score = 100},
@@ -2420,21 +2420,21 @@ teshudata = {
             start_hour = 19,
             start_minute_clock = 0,
             rank_rewards = {
-                {rank = 1, items = {{"元宝", 50000}, {"5元真实充值", 1}}},
-                {rank = 2, items = {{"元宝", 30000}, {"2元真实充值", 1}}},
-                {rank = 3, items = {{"元宝", 20000}, {"1元真实充值", 1}}},
+                {rank = 1, items = {{"绑定金币", 500000}}},
+                {rank = 2, items = {{"绑定金币", 300000}}},
+                {rank = 3, items = {{"绑定金币", 200000}}},
             },
-            join_reward = {{"金币", 500000}},
+            join_reward = {{"绑定金币", 100000}},
         },
         -- 土城跑酷（开服5分钟开启，持续3分钟）        -- 随机夺宝（三圈投放，持续3分钟）
         sjdb = {
             map = "天降财宝",
-            center = {x = 215, y = 53},
+            center = {x = 28, y = 35},
             keep_sec = 180,
             circles = {
                 {
                     name = "outer",
-                    range = 200,
+                    range = 20,
                     drops = {
                         {item = "金币[10000]", count = 30},
                         {item = "元宝[2000]", count = 30},
@@ -2443,7 +2443,7 @@ teshudata = {
                 },
                 {
                     name = "middle",
-                    range = 130,
+                    range = 10,
                     drops = {
                         {item = "金币[50000]", count = 15},
                         {item = "元宝[5000]", count = 15},
@@ -2452,7 +2452,7 @@ teshudata = {
                 },
                 {
                     name = "inner",
-                    range = 70,
+                    range = 5,
                     drops = {
                         {item = "金币[100000]", count = 5},
                         {item = "元宝[10000]", count = 5},

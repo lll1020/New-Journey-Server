@@ -1047,6 +1047,8 @@ end
 
 function Buff.login(play)
     -------------------------------------------------------------------装备BUFF登录初始化
+    -- 登录时先清空属性下发缓存，避免跨上下线后同属性被误判为已挂载
+    Player.clear_attlist_cache(play)
     for k, v in pairs(weizhi) do
         local item = linkbodyitem(play,v)
         if item ~= "0" then

@@ -5,7 +5,9 @@ npc = {}
 
 local _config = Guard.getConfig("npc_43")
 
+local _xyl_jhch_view_flag = "N$查看江湖称号"
 function npc.main(play,npcid)
+    setplaydef(play, _xyl_jhch_view_flag, 1)
     local data = {}
     data["dj_num"] = getplaydef(play, VarCfg["U_江湖称号"])
     sendluamsg(play,100,npcid,0,0,tbl2json(data))

@@ -14,6 +14,26 @@ for index, value in ipairs(bind_money) do
     end
 end
 
+-- 属性列表缓存：同一玩家、同一属性名、同一属性串重复下发时直接跳过
+local _attlist_cache = setmetatable({}, {__mode = "k"})
+
+local function _get_attlist_cache(actor)
+    local cache = _attlist_cache[actor]
+    if not cache then
+        cache = {}
+        _attlist_cache[actor] = cache
+    end
+    return cache
+end
+
+local function _build_attlist_cache_value(opt, attrsstr, idx)
+    return table.concat({
+        tostring(opt or ""),
+        tostring(idx or 0),
+        tostring(attrsstr or ""),
+    }, "\1")
+end
+
 --- 自定义属性相关方法
 
 --声明自定义个人变量
@@ -709,14 +729,42 @@ function Player.title_del(actor, title_name) --删称号
 
 end
 
+function Player.clear_attlist_cache(actor, attr_name)
+    if not actor then
+        return
+    end
+    local cache = _attlist_cache[actor]
+    if not cache then
+        return
+    end
+    if attr_name and attr_name ~= "" then
+        cache[attr_name] = nil
+    else
+        _attlist_cache[actor] = nil
+    end
+end
+
 function Player.del_attlist(actor, arrt_name) --删属性
+    local cache = _get_attlist_cache(actor)
+    if cache[arrt_name] == false then
+        return
+    end
     delattlist(actor, arrt_name)
+    cache[arrt_name] = false
     release_print("删属性",arrt_name,getbaseinfo(actor,1))
 end
 function Player.add_attlist(actor, title_name,opt, attrsstr,idx) --给属性
+    local cache = _get_attlist_cache(actor)
+    local cache_value = _build_attlist_cache_value(opt, attrsstr, idx)
+    if cache[title_name] == cache_value then
+        return
+    end
     addattlist(actor, title_name, opt, attrsstr, idx)
+    cache[title_name] = cache_value
     release_print("给属性",title_name,attrsstr,getbaseinfo(actor,1),opt,idx)
 end
+
+
 
 
 

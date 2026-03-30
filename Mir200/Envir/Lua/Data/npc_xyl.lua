@@ -180,9 +180,9 @@ local function _xyl_has_linggen_feed(play)
     return false
 end
 
--- 备注：江湖称号等级是否大于 0
+-- 备注：江湖称号任务改为查看界面即可完成，不再要求实际升级称号等级
 local function _xyl_has_jianghu_title(play)
-    return (getplaydef(play, VarCfg["U_江湖称号"]) or 0) > 0
+    return (tonumber(getplaydef(play, "N$查看江湖称号") or 0) or 0) > 0
 end
 
 -- 备注：是否已装配主灵根
@@ -229,6 +229,46 @@ local function _xyl_is_lower_gourd_name(name)
     return name:match("^酒葫芦%[lv%d+%]$") ~= nil
 end
 
+-- 备注：读取物品在装备/物品表中的 std idx，系列装备按 idx 先后判断高低
+local function _xyl_get_std_idx(name)
+    if not name or name == "" then
+        return 0
+    end
+    return tonumber(getstditeminfo(name, ConstCfg.stditeminfo.idx) or 0) or 0
+end
+
+-- 备注：检测是否拥有某个系列里达到目标档位及以上的装备/物品
+-- 规则：名称命中系列关键字，且物品表 idx 不低于目标档位
+local function _xyl_has_series_item_at_least(play, cfg, keyword)
+    if not (cfg and cfg.give and cfg.where) then
+        return false
+    end
+    local targetIdx = _xyl_get_std_idx(cfg.give)
+    if targetIdx <= 0 then
+        return false
+    end
+
+    local equipIdx = tonumber(Player.getEquipIdxByPos(play, cfg.where) or 0) or 0
+    if equipIdx >= targetIdx then
+        local equipName = Player.getEquipNameByPos(play, cfg.where)
+        if equipName and (not keyword or equipName:find(keyword, 1, true)) then
+            return true
+        end
+    end
+
+    local bagItems = getbagitems(play) or {}
+    for _, itemObj in pairs(bagItems) do
+        local itemIdx = tonumber(getiteminfo(play, itemObj, ConstCfg.iteminfo.idx) or 0) or 0
+        if itemIdx >= targetIdx then
+            local itemName = getiteminfo(play, itemObj, ConstCfg.iteminfo.name)
+            if itemName and (not keyword or itemName:find(keyword, 1, true)) then
+                return true
+            end
+        end
+    end
+    return false
+end
+
 -- 备注：是否拥有传说神石类道具
 local function _xyl_has_legendary_stone(play)
     local cfg = teshudata and teshudata["npc_53"]
@@ -239,33 +279,13 @@ end
 -- 备注：传说斗笠（装备或背包）是否拥有（上位斗笠也视为完成）
 local function _xyl_has_legendary_hat(play)
     local cfg = teshudata and teshudata["npc_51"]
-    if cfg and cfg.where and cfg.give then
-        local equipName = Player.getEquipNameByPos(play, cfg.where)
-        if equipName == cfg.give then
-            return true
-        end
-        if equipName and equipName:find("斗笠") and not _xyl_is_lower_hat_name(equipName) then
-            return true
-        end
-        return _xyl_has_item(play, cfg.give, 1)
-    end
-    return false
+    return _xyl_has_series_item_at_least(play, cfg, "斗笠")
 end
 
 -- 备注：神酒葫芦（装备或背包）是否拥有（上位葫芦也视为完成）
 local function _xyl_has_god_gourd(play)
     local cfg = teshudata and teshudata["npc_52"]
-    if cfg and cfg.where and cfg.give then
-        local equipName = Player.getEquipNameByPos(play, cfg.where)
-        if equipName == cfg.give then
-            return true
-        end
-        if equipName and equipName:find("葫芦") and not _xyl_is_lower_gourd_name(equipName) then
-            return true
-        end
-        return _xyl_has_item(play, cfg.give, 1)
-    end
-    return false
+    return _xyl_has_series_item_at_least(play, cfg, "葫芦")
 end
 -- 备注：高级淬体是否全完成（或已有称号）
 local function _xyl_has_advanced_quench(play)
@@ -397,7 +417,7 @@ local function _xyl_check_task(play, name)
         ["初识仙法"] = _xyl_has_any_xianfa,
         ["装备强化"] = _xyl_has_equip_strength,
         ["升级灵根"] = _xyl_has_linggen_feed,
-        ["获取江湖称号"] = _xyl_has_jianghu_title,
+        ["查看江湖称号"] = _xyl_has_jianghu_title,
         ["装配主灵根"] = _xyl_has_main_linggen,
         ["装配副灵根"] = _xyl_has_other_linggen,
         ["气运占卜"] = _xyl_has_divination,
@@ -520,17 +540,17 @@ local npc_xyl = {
                     desc = "装配主灵根，掌握灵根之力",
                 },
                 {
-                    "获取江湖称号",
+                    "查看江湖称号",
                     id = 999,
                     jl = { { "剧情点", 1 } },
                     fwdjy = function(play)
-                        return _xyl_check_task(play, "获取江湖称号")
+                        return _xyl_check_task(play, "查看江湖称号")
                     end,
                     khdjy = function()
                         return true
                     end,
                     yd = { 1, "二大陆主城", 43, 119, 122 },
-                    desc = "获取江湖称号，踏出江湖第一步",
+                    desc = "查看江湖称号，踏出江湖第一步",
                 },
                 {
                     "气运占卜",
@@ -2074,6 +2094,7 @@ local npc_xyl = {
     },
 }
 return npc_xyl
+
 
 
 

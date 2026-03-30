@@ -51,7 +51,13 @@ function npc.link(play,npcid,ew,aid)
             weight = "1#30|2#30|3#20|4#20|5#5"
         end
 
-        local randomNum = ransjstr(weight, 1, 3)
+        local randomNum = nil
+        -- 第一次占卜固定只出第一个档位，避免开局直接跳高档
+        if tonumber(U_num or 0) <= 0 then
+            randomNum = 1
+        else
+            randomNum = ransjstr(weight, 1, 3)
+        end
         randomNum = tonumber(randomNum)
         if U_num >= 65 then
             randomNum = 5
