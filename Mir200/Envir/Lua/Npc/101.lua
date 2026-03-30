@@ -35,6 +35,12 @@ local function _count_owned(tbl)
     end
     return num
 end
+local function _get_1002_unlock_data(play)
+    local T_szjl = Player.getJsonTableByVar(play, VarCfg.T_szjl)
+    T_szjl.yjs = T_szjl.yjs or {}
+    T_szjl.yjszj = T_szjl.yjszj or {}
+    return T_szjl
+end
 local function _append_log(T_data, text)
     return
 end
@@ -98,6 +104,7 @@ end
 -- 属性方法：重算称号与套装属性
 local function _refresh_bonus(play, T_data)
     T_data = T_data or _get_data(play)
+    local unlockData = _get_1002_unlock_data(play)
     local attrs = {}
     if _config.title_reward and checktitle(play, _config.title_reward.name) then
         T_data.flags.title_msfc = 1
@@ -105,13 +112,13 @@ local function _refresh_bonus(play, T_data)
     if tonumber(T_data.flags.title_msfc) == 1 and _config.title_reward then
         _merge_attrs(attrs, _config.title_reward.attr)
     end
-    local fashionCount = _count_owned(T_data.fashion)
+    local fashionCount = _count_owned(unlockData.yjs)
     if fashionCount >= 6 then
         _merge_attrs(attrs, _config.fashion_bonus[6].attr)
     elseif fashionCount >= 3 then
         _merge_attrs(attrs, _config.fashion_bonus[3].attr)
     end
-    local footstepCount = _count_owned(T_data.footstep)
+    local footstepCount = _count_owned(unlockData.yjszj)
     if footstepCount >= 5 then
         _merge_attrs(attrs, _config.footstep_bonus[5].attr)
         setskilldeccd(play, _config.footstep_bonus[5].skill.name, "=", _config.footstep_bonus[5].skill.dec_cd)
@@ -149,18 +156,14 @@ local function _grant_fashion(play, T_data, reward, reason)
     local fashionCfg = (((teshudata or {})["npc_1002"] or {}).details or {}).sz or {}
     local name = reward.name or (fashionCfg[tonumber(idx) or 0] and fashionCfg[tonumber(idx) or 0].name) or ("时装：累抽" .. idx)
     if idx == "0" then return "" end
-    if tonumber(T_data.fashion[idx]) == 1 then
-        _grant_item(play, {give = _config.duplicate_fashion_reward}, reason)
-        return name .. "(重复分解为元宝*660000)"
-    end
-    T_data.fashion[idx] = 1
     Player.rwjl(play, {{name, 1}}, reason, 1, 0)
     return name
 end
 local function _grant_random_fashion(play, T_data, reason)
+    local unlockData = _get_1002_unlock_data(play)
     local unowned = {}
     for _, cfg in ipairs(_config.fashion_pool or {}) do
-        if tonumber(T_data.fashion[tostring(cfg.idx)]) ~= 1 then
+        if tonumber(unlockData.yjs[tostring(cfg.idx)]) ~= 1 then
             table.insert(unowned, cfg)
         end
     end
@@ -180,7 +183,6 @@ local function _grant_footstep(play, T_data, reward)
     if idx == "0" then
         return name
     end
-    T_data.footstep[idx] = 1
     Player.rwjl(play, {{name, 1}}, ",msfc_footstep", 1, 0)
     return name
 end
@@ -311,6 +313,7 @@ end
 -- 面板方法：组装客户端展示数据
 local function _build_panel_data(play)
     local T_data = _get_data(play)
+    local unlockData = _get_1002_unlock_data(play)
     local exchangeAvailable, exchangeProgress, totalKills = _get_exchange_info(play, T_data)
     local data = {}
     data.T_data = T_data
@@ -336,8 +339,8 @@ local function _build_panel_data(play)
     }
     data.logs = {}
     data.placeholder = T_data.placeholder
-    data.fashion_count = _count_owned(T_data.fashion)
-    data.footstep_count = _count_owned(T_data.footstep)
+    data.fashion_count = _count_owned(unlockData.yjs)
+    data.footstep_count = _count_owned(unlockData.yjszj)
     data.title_owned = tonumber(T_data.flags.title_msfc) or 0
     data.today_charge = _get_today_charge(play)
     data.day_card_need_charge = tonumber((_config.day_card or {}).need_charge) or 28

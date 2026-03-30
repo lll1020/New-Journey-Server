@@ -16,7 +16,7 @@ end
 --------------------双击物品触发-------------------回城石
 -- 灰界系列地图是否需要回到【灰界】统一通过 xilieditu 映射判断，避免这里再维护一份重复地图表。
 local function _is_huijie_return_map(map_name)
-    return type(xilieditu) == "table" and map_name ~= "灰界" and xilieditu[map_name] == 3
+    return type(xilieditu) == "table" and xilieditu[map_name] == 3
 end
 
     
@@ -25,7 +25,7 @@ function stdmodefunc10(play, item)
 
     local du = getbaseinfo(play, 3)
     if getplaydef(play,"N$战斗状态") < os.time() then
-        if du == "xtc" or du == "二大陆主城" or du == "三大陆主城" or du == "四大陆主城" or du == "五大陆主城" or du == "六大陆主城" or du == "七大陆主城" or du == "八大陆主城" or du == "九大陆主城" then
+        if du == "xtc" or du == "灰界" or du == "二大陆主城" or du == "三大陆主城" or du == "四大陆主城" or du == "五大陆主城" or du == "六大陆主城" or du == "七大陆主城" or du == "八大陆主城" or du == "九大陆主城" then
             mapmove(play, 'xtc', 137,138,8)
             addhpper(play, '=', 100)
             addmpper(play, '=', 100)
@@ -905,6 +905,77 @@ function stdmodefunc56(play, item) --定身符
     Player.sendmsgEx(play, "使用成功，已获得定身符效果#57")
     return false
 end
+
+local function _box57_pick_reward(pool)
+    if type(pool) ~= "table" or #pool == 0 then
+        return nil
+    end
+    local totalWeight = 0
+    for _, cfg in ipairs(pool) do
+        if type(cfg) == "table" then
+            totalWeight = totalWeight + (tonumber(cfg.weight) or 1)
+        else
+            totalWeight = totalWeight + 1
+        end
+    end
+    if totalWeight <= 0 then
+        return nil
+    end
+
+    local roll = math.random(1, totalWeight)
+    local acc = 0
+    for _, cfg in ipairs(pool) do
+        local weight = 1
+        local reward = cfg
+        if type(cfg) == "table" then
+            weight = tonumber(cfg.weight) or 1
+            reward = cfg.name
+        end
+        acc = acc + weight
+        if reward and reward ~= "" and roll <= acc then
+            return cfg
+        end
+    end
+    return pool[#pool]
+end
+
+function stdmodefunc57(play, item) --大陆专属装备随机宝箱 getstditeminfo(getiteminfo(play, item, 2), 8)  通过这个来获取对应的大陆
+    local dl = tonumber(getstditeminfo(getiteminfo(play, item, 2), 8) or 0) or 0
+    local pool = constant and constant.dalu_zszb_box57 and constant.dalu_zszb_box57[dl]
+    if dl <= 0 then
+        Player.sendmsgEx(play, "大陆参数错误，无法开启#57")
+        return false
+    end
+    if type(pool) ~= "table" or #pool == 0 then
+        Player.sendmsgEx(play, "该大陆专属装备奖池未配置#57")
+        return false
+    end
+
+    local rewardCfg = _box57_pick_reward(pool)
+    if not rewardCfg then
+        Player.sendmsgEx(play, "随机奖励失败，请检查奖池配置#57")
+        return false
+    end
+
+    local rewardName = rewardCfg
+    local rewardNum = 1
+    local rewardBind = 0
+    if type(rewardCfg) == "table" then
+        rewardName = rewardCfg.name
+        rewardNum = tonumber(rewardCfg.num) or 1
+        rewardBind = tonumber(rewardCfg.bind) or 0
+    end
+    if not rewardName or rewardName == "" then
+        Player.sendmsgEx(play, "随机奖励失败，奖励名称为空#57")
+        return false
+    end
+
+    giveitem(play, rewardName, rewardNum, rewardBind)
+    delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+    Player.sendmsgEx(play, "恭喜获得|【" .. rewardName .. "】#249|")
+    return false
+end
+
 
 
 

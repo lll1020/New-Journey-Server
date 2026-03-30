@@ -1,5 +1,4 @@
 release_print("加载Buff模块")
-
 local function _huti_set_trigger(play, varName, buffId, enable)
     local bl = getplaydef(play, varName)
     local data = json2tbl(bl == "" and {} or bl)
@@ -10,7 +9,6 @@ local function _huti_set_trigger(play, varName, buffId, enable)
     end
     setplaydef(play, varName, tbl2json(data))
 end
-
 local function _huti_monster_type(obj)
     if not obj or getbaseinfo(obj, -1) then
         return nil
@@ -31,15 +29,12 @@ local function _toggle_buff_var(play, varName, buffId, enable)
     end
     setplaydef(play, varName, tbl2json(data))
 end
-
 local function _set_title_buff_flag(play, buffId, enable)
     setplaydef(play, "N$buff" .. tostring(buffId), enable and 1 or 0)
 end
-
 local function _has_title_buff_flag(play, buffId)
     return (tonumber(getplaydef(play, "N$buff" .. tostring(buffId)) or 0) or 0) == 1
 end
-
 local function _title_all_percent_attr(percent)
     local ids = {280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 300}
     local arr = {}
@@ -48,7 +43,6 @@ local function _title_all_percent_attr(percent)
     end
     return table.concat(arr, "|")
 end
-
 local function _title_sync_time_attr(play, buffId, attrListName, attrStr, mode)
     if not _has_title_buff_flag(play, buffId) then
         Player.del_attlist(play, attrListName)
@@ -70,7 +64,6 @@ local function _title_sync_time_attr(play, buffId, attrListName, attrStr, mode)
     end
     return enable
 end
-
 local function _title_sync_dadi_attr(play)
     local stack = tonumber(getplaydef(play, "N$buff328_stack") or 0) or 0
     if not _has_title_buff_flag(play, 328) then
@@ -88,7 +81,66 @@ local function _title_sync_dadi_attr(play)
         Player.del_attlist(play, "title_dadi_stack")
     end
 end
-
+local function _gcmp_refresh_item(play)
+    local stack = tonumber(getplaydef(play, "N$buff340_stack") or 0) or 0
+    if stack < 0 then
+        stack = 0
+    end
+    setplaydef(play, "N$buff340_stack", stack)
+    if not _has_title_buff_flag(play, 340) then
+        return
+    end
+    local where = Player.hasEquipInArtifactSlot(play, "古刹魔瓶")
+    if not where then
+        return
+    end
+    local itemobj = linkbodyitem(play, where)
+    if not itemobj or itemobj == "0" then
+        return
+    end
+    local ok, item_json = pcall(json2tbl, getitemcustomabil(play, itemobj))
+    item_json = ok and type(item_json) == "table" and item_json or nil
+    if not item_json or type(item_json.abil) ~= "table" then
+        item_json = json2tbl('{"abil":[{"i":0,"t":"[古刹切割]","c":251,"v":[]}],"name":""}')
+    end
+    item_json.name = tostring(item_json.name or "")
+    local idx = nil
+    local abil_i = nil
+    for i, v in ipairs(item_json.abil) do
+        if type(v) == "table" and tostring(v.t or "") == "[古刹切割]" then
+            idx = i
+            abil_i = tonumber(v.i) or (i - 1)
+            break
+        end
+    end
+    if not idx then
+        for i, v in ipairs(item_json.abil) do
+            if type(v) == "table" and tostring(v.t or "") == "" and next(v.v or {}) == nil then
+                idx = i
+                abil_i = tonumber(v.i) or (i - 1)
+                break
+            end
+        end
+    end
+    if not idx then
+        idx = #item_json.abil + 1
+        abil_i = idx - 1
+    end
+    local attr_list = {}
+    if stack > 0 then
+        table.insert(attr_list, {254, 244, stack, 0, 20, 1, 1})
+    end
+    item_json.abil[idx] = {i = abil_i or (idx - 1), t = "[古刹切割]", c = 251, v = attr_list}
+    setitemcustomabil(play, itemobj, tbl2json(item_json))
+    setcustomitemprogressbar(play, itemobj, 0, tbl2json({
+        ["open"] = 1,
+        ["show"] = 0,
+        ["name"] = string.format("古刹切割：+%d", stack),
+        ["color"] = 251,
+        ["imgcount"] = 1,
+    }))
+    refreshitem(play, itemobj)
+end
 local function _tianshu_buff_splash(play, Target)
     -- release_print("触发天书溅射buff")
     if not play or not Target or getbaseinfo(Target, ConstCfg.gbase.isplayer) then
@@ -116,9 +168,7 @@ local function _tianshu_buff_splash(play, Target)
     playeffect(Target, tonumber(cfg.splash_hit_effect) or 60463, 0, 0, 1, 1, 0)
     -- Player.sendmsgEx(play,"【帝疆】#253|触发，范围造成"..damage.."点真实伤害")
 end
-
 Buff = {
-
     [70] = function(play,zt)      --被人物攻击随机(CD30秒)
         if zt == 3 then
             local sj = os.time()
@@ -365,7 +415,6 @@ Buff = {
     end,
     [301] = function(play,zt,Damage,Target,MagicId,Model) --天书仙法攻击触发
         -- zt=1/2：注册或移除攻击触发；zt=3：攻击回调并返回额外伤害
-
         if zt == 3 then
             _tianshu_buff_splash(play, Target)
             if xianfa_attack_trigger then
@@ -385,7 +434,6 @@ Buff = {
     end,
     [302] = function(play,zt) --天书仙法复活触发
         -- zt=1/2：注册或移除复活触发；zt=4：复活后回调
-
         if zt == 4 then
             if xianfa_revive_trigger then
                 xianfa_revive_trigger(play)
@@ -569,7 +617,6 @@ Buff = {
             if math.random(100) > 5 then
                 return 0
             end
-
             local cutDamage = tonumber(getbaseinfo(play, 51, 244) or 0) or 0
             local atkDamage = tonumber(getbaseinfo(play, 20) or 0) or 0
             local axeLevel = tonumber(Player.getEquipFieldByPos(play, 9, 1) or 0) or 0
@@ -785,6 +832,21 @@ Buff = {
             _toggle_buff_var(play, VarCfg.S_buffbgjq, 329, false)
         end
     end,
+    [340] = function(play,zt) -- 古刹魔瓶：装备背包神器后，击杀怪物有5%概率使打怪切割+1（常驻累计）
+        if zt == 1 then
+            _set_title_buff_flag(play, 340, true)
+            if shaguai and shaguai.jia then
+                shaguai.jia(play, 340)
+            end
+            _gcmp_refresh_item(play)
+        elseif zt == 2 then
+            _set_title_buff_flag(play, 340, false)
+            if shaguai and shaguai.jian then
+                shaguai.jian(play, 340)
+            end
+            _gcmp_refresh_item(play)
+        end
+    end,
     [330] = function(play,zt) -- 海洋之王祝福：标记型BUFF，冰冻相关数值由称号表或其他逻辑处理
         if zt == 1 then
             _set_title_buff_flag(play, 330, true)
@@ -956,7 +1018,6 @@ Buff = {
             -- release_print("嘲灾触发")
             -- release_print(getbaseinfo(Target,1))
             -- release_print(hasbuff(play,20110))
-            
             if getbaseinfo(Target,1) == "嘲灾" then
                 local hasWeapon = Player.hasEquipOnPos(play, 1, "嘲天笑地")
                 if not hasWeapon then
@@ -977,7 +1038,6 @@ Buff = {
     end,
     [339] = function(play,zt,Damage,Target,MagicId,Model) --天书仙法攻击触发
         -- zt=1/2：注册或移除攻击触发；zt=3：攻击回调并返回额外伤害
-
         if zt == 3 then
             _tianshu_buff_splash(play, Target)
             return 0
@@ -993,10 +1053,7 @@ Buff = {
         end
     end,
 }
-
 local weizhi = {0,1,3,4,5,6,7,8,9,10,11,13,14,16,30,31,32,33,34,35,36,37,38,39,40,41}
-
-
 function Buff.refreshHuTiGuangHuan(play)
     Buff[107](play, 2)
     Buff[108](play, 2)
@@ -1005,7 +1062,6 @@ function Buff.refreshHuTiGuangHuan(play)
     clearplayeffect(play,11502)
     clearplayeffect(play,11503)
     clearplayeffect(play,11504)
-
     local zs_level = tonumber(getplaydef(play, VarCfg["U_转生等级"]) or 0) or 0
     local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
     local unlocked = {
@@ -1014,12 +1070,10 @@ function Buff.refreshHuTiGuangHuan(play)
         [3] = getflagstatus(play, VarCfg.BS_mztq) == 1,
     }
     local active = tonumber(getplaydef(play, VarCfg["U_护体光环激活"]) or 0) or 0
-
     if active < 1 or active > 3 or not unlocked[active] then
         active = 0
         setplaydef(play, VarCfg["U_护体光环激活"], 0)
     end
-
     if active == 1 then
         Buff[107](play, 1)
         playeffect(play,11502,0,0,0,1,0)
@@ -1031,7 +1085,6 @@ function Buff.refreshHuTiGuangHuan(play)
         Buff[110](play, 1)
         playeffect(play,11504,0,0,0,1,0)
     end
-
     if active > 0 then
         if FSetGuangHuan then
             FSetGuangHuan(play, 20)
@@ -1044,7 +1097,6 @@ function Buff.refreshHuTiGuangHuan(play)
         seticon(play, ConstCfg.iconWhere.guangHuan, -1)
     end
 end
-
 function Buff.login(play)
     -------------------------------------------------------------------装备BUFF登录初始化
     -- 登录时先清空属性下发缓存，避免跨上下线后同属性被误判为已挂载
@@ -1069,11 +1121,9 @@ function Buff.login(play)
             Buff[idx](play,1)
         end
     end
-
     -------------------------------------------------------------------护体光环
     -- 护体光环登录刷新
     Buff.refreshHuTiGuangHuan(play)
-
     -------------------------------------------------------------------额外附加属性登录初始化
     --灵根鉴定
     local data = Player.getJsonTableByVar(play, VarCfg["T_灵根鉴定"])
@@ -1106,16 +1156,17 @@ function Buff.login(play)
     if fuwa_cut > 0 then
         Player.add_attlist(play, "福娃猜拳切割", "=", "3#" .. (teshudata["npc_66"].cut_attr or 244) .. "#" .. fuwa_cut, 1)
     end
-   
+    -- 古刹魔瓶：背包神器位不走常规装备位登录初始化，这里补一次。
+    if Player.hasEquipInArtifactSlot(play, "古刹魔瓶") then
+        Buff[340](play, 1)
+    else
+        Buff[340](play, 2)
+    end
     ------------------------------------------------------------通用属性
     local attr = {}
     Player.updateSomeAddr(play,nil, attr)
 end
-
 GameEvent.add(EventCfg.onLogin, Buff.login, "buff")
-
-
-
 -- 大地之王祝福：击杀玩家叠层事件
 -- 该称号不走普通 Buff[328](zt=3) 分支，改为在 onkillplay 中直接累加层数并同步属性
 GameEvent.add(EventCfg.onkillplay, function(play)
@@ -1128,15 +1179,12 @@ GameEvent.add(EventCfg.onkillplay, function(play)
         _title_sync_dadi_attr(play)
     end
 end, "Buff_328_stack")
-
-
 function Buff.chuan(play,item)
     local id = getstditeminfo(getiteminfo(play,item,2),8)
     if id > 0 and Buff[id]then
         Buff[id](play,1)
     end
 end
-
 function Buff.tuo(play,item)
     local id = getstditeminfo(getiteminfo(play,item,2),8)
     if id > 0 and Buff[id] then
@@ -1144,30 +1192,3 @@ function Buff.tuo(play,item)
     end
 end
 return Buff
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

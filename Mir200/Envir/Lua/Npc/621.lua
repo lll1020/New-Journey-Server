@@ -5,6 +5,14 @@ npc = {}
 
 local _config = Guard.getConfig("npc_621")
 
+local _target_npc = {map = "虚妄山脉", id = 628, x = 107, y = 97}
+
+-- 任务完成后直接传到对应讨伐 NPC 附近，并给客户端发起引导点击。
+local function _guide_to_target_npc(play)
+    mapmove(play, _target_npc.map, _target_npc.x, _target_npc.y, 5)
+    sendluamsg(play, 101, 0, 1, 1, '{"lx":2,"npcdt":"' .. _target_npc.map .. '","npcid":' .. _target_npc.id .. ',"xx":' .. _target_npc.x .. ',"yy":' .. _target_npc.y .. '}')
+end
+
 
 
 
@@ -42,11 +50,7 @@ function npc.link(play,npcid,ew,aid)
         local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
         local key = "npc_621"
         if jq_data[key] and jq_data[key] >= 2 then
-            if _config.tp_map and _config.tp_map[1] and _config.tp_map[2] and _config.tp_map[3] then
-                mapmove(play, _config.tp_map[1], _config.tp_map[2], _config.tp_map[3], 5)
-            else
-                Player.sendmsgEx(play, "传送配置缺失#57")
-            end
+            _guide_to_target_npc(play)
             return
         end
 

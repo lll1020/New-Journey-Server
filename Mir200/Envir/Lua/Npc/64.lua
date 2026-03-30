@@ -142,7 +142,8 @@ function npc.link(play,npcid,ew,aid,data)
             Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
             return
         end
-        Player.takeItemByTable(play, {{_config.config.ls[json_data.idx].syw,1},{"元宝",1880000}}, ",灵兽圣遗物",nil)
+        -- 圣遗物装备额外增加辉耀水晶消耗，和配置表要求保持一致。
+        Player.takeItemByTable(play, {{_config.config.ls[json_data.idx].syw,1},{"元宝",1880000},{"辉耀水晶",88}}, ",灵兽圣遗物",nil)
         T_data.syw[""..json_data.idx] = 1
         Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
         if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end

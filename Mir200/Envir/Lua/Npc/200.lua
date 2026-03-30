@@ -18,7 +18,7 @@ local _config = {
     -- [210] = {"特殊秘境副本二",0,0,nil,nil,2, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
 
     -- [211] = {"隐藏地图三",0,0,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
-    [212] = {"灰界",100,100,nil,nil,3, mob_name = "灰纹·潜噬者", mob_shape = 12033, min_map = "000100"},
+    [212] = {"灰界",201,199,nil,nil,3, mob_name = "灰纹·潜噬者", mob_shape = 12033, min_map = "000100"},
     [213] = {"藏星海",100,100,nil,nil,3, mob_name = "≮群星渊皇≯", mob_shape = 16206, min_map = "000100"},
     [214] = {"苍云城",100,100,nil,nil,3, mob_name = "「红幕法皇」[咆哮]", mob_shape = 12054, min_map = "000100"},
     -- [215] = {"无主深渊",100,100,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},

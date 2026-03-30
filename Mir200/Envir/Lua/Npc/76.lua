@@ -464,6 +464,11 @@ function npc.link(play, npcid, p2, p3, msgData)
             Player.sendmsgEx(play, "你当前已经在天命试炼副本中#57")
             return
         end
+        local cost = (_config.details[idx] and _config.details[idx].cost) or {}
+        if not Guard.ensureCost(play, cost) then
+            return
+        end
+        Guard.consumeCost(play, cost, ",天命试炼")
         _enter_trial(play, idx)
     elseif p2 == 2 then
         local dtm = tostring(getplaydef(play, _run_map_var) or "")

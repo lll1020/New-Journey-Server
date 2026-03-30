@@ -43,6 +43,13 @@ local _route_map = {
         boss_x = 107,
         boss_y = 97,
     },
+    [5] = {
+        guide_self = true,
+        step_id = 46,
+        step_map = "灰界",
+        step_x = 205,
+        step_y = 196,
+    },
 }
 
 local function _get_missing_task_name(jq_data)
@@ -64,6 +71,12 @@ local function _jump_to_route(play, route_idx)
     local route = _route_map[route_idx]
     if not route then
         Player.sendmsgEx(play, "分线参数错误")
+        return
+    end
+
+    -- 入口面板补一个“回到灾厄入口”引导，直接跳回 46 号 NPC 自己。
+    if route.guide_self then
+        _guide_to_npc(play, route.step_map, route.step_id, route.step_x, route.step_y)
         return
     end
 

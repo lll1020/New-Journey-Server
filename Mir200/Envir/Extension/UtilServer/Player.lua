@@ -979,6 +979,11 @@ local function hs_add_item_reward(reward, item_name, item_num)
     if item_num <= 0 or type(item_name) ~= "string" or item_name == "" then
         return
     end
+    -- Legacy recycle material converts to 5x HuiYaoShuiJing.
+    if item_name == hs_name_lingshi then
+        item_name = hs_name_hlsj
+        item_num = item_num * 5
+    end
     if item_name == hs_name_lingshi then
         reward.lingshi = reward.lingshi + item_num
     elseif item_name == hs_name_hlsj then

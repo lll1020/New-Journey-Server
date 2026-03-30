@@ -40,6 +40,7 @@ local function _get_data(play)
     T_data.submit = type(T_data.submit) == "table" and T_data.submit or {}
     T_data.unlock = tonumber(T_data.unlock) or 0
     T_data.finish = tonumber(T_data.finish) or 0
+    T_data.claimed = tonumber(T_data.claimed) or 0
     for _, cfg in ipairs((_config and _config.materials) or {}) do
         local key = tostring(cfg.idx or 0)
         T_data.submit[key] = tonumber(T_data.submit[key]) or 0
@@ -72,6 +73,7 @@ local function _build_panel_data(play)
         T_data = T_data,
         unlock = T_data.unlock,
         finish = T_data.finish,
+        claimed = T_data.claimed,
     }
     local runMap = tostring(getplaydef(play, _run_map_var) or "")
     data.in_fb = runMap ~= "" and getbaseinfo(play, 3) == runMap and 1 or 0
@@ -126,12 +128,10 @@ local function _finish(play)
     end
     T_data.finish = 1
     T_data.unlock = 1
+    T_data.claimed = 0
     _save_data(play, T_data)
     _refresh_attr(play, T_data)
-    if _config and _config.reward and #_config.reward > 0 then
-        Player.rwjl(play, _config.reward, (_config.name or "天书试炼").."奖励", 1, 0)
-    end
-    Player.sendmsgEx(play, "|【"..((_config and _config.name) or "天书试炼").."】#249|完成，恭喜获得|【天书】#249|#57")
+    Player.sendmsgEx(play, "|【"..((_config and _config.name) or "天书试炼").."】#249|完成，请返回界面领取|【天书】#249|#57")
     sendluamsg(play, 101, 1005, 0, 0, "rwwc")
     sendluamsg(play, 101, 9999, 0, 0, "npc_"..103)
     _finish_mainline(play, 18)
@@ -227,6 +227,24 @@ function npc.link(play, npcid, ew, aid, data)
             sendluamsg(play, 101, 9999, 0, 0, "npc_"..103)
         end
         _finish_mainline(play, _submit_task_map[submit_idx])
+        return
+    end
+    if ew == 3 then
+        if T_data.finish ~= 1 then
+            Player.sendmsgEx(play, "请先完成|【天书试炼】#249|后再领取|【天书】#249|#57")
+            return
+        end
+        if tonumber(T_data.claimed or 0) == 1 then
+            Player.sendmsgEx(play, "|【天书】#249|已领取过#57")
+            return
+        end
+        T_data.claimed = 1
+        _save_data(play, T_data)
+        if _config and _config.reward and #_config.reward > 0 then
+            Player.rwjl(play, _config.reward, (_config.name or "天书试炼").."奖励", 1, 0)
+        end
+        Player.sendmsgEx(play, "成功领取|【天书】#249|#57")
+        _refresh_panel(play, npcid, 5, 0)
         return
     end
     if not is_enter then
