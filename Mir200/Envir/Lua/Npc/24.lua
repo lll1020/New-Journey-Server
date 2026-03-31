@@ -228,11 +228,6 @@ function npc.link(play,npcid,ew,aid,data)
 
             T_data["caowei"] = T_data["caowei"] or {}
             local slot_key = ""..slot
-            local is_first = (T_data["caowei"][slot_key] == nil)
-
-            if is_first then
-                Player.sendmsgEx(play, "首次解锁仙法槽位，不消耗材料#57")
-            end
 
             local force_xianpin = false
             if tonumber(aid) == 2 then
@@ -246,7 +241,7 @@ function npc.link(play,npcid,ew,aid,data)
                 force_xianpin = true
             end
 
-            if not is_first and not force_xianpin then
+            if not force_xianpin then
                 local cost_cfg = cfg.cost
                 if cost_cfg then
                     local name, num = Player.checkItemNumByTable(play, cost_cfg[1])
