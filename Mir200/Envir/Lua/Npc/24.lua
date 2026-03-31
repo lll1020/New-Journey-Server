@@ -39,6 +39,29 @@ local function _get_tianshu_prompt_text(T_data)
     T_data = _tianshu_fix_data(T_data)
     return string.format("提示：%s 杀气：%d/%d", _get_jf_need_kill_text(T_data.jf), T_data.shaqi, tonumber(_config.shaqi_max) or 1000)
 end
+
+local XIANFA_UNLOCK_ARTIFACT = "首切法宝"
+local XIANFA_UNLOCK_POS = 72
+
+-- 装备位72穿上首切法宝时，仙法10个槽位都视为已解锁。
+local function _xianfa_unlock_all_slots(actor)
+    return Player and Player.hasEquipOnPos and Player.hasEquipOnPos(actor, XIANFA_UNLOCK_POS, XIANFA_UNLOCK_ARTIFACT)
+end
+
+local function _xianfa_get_slot_need_lv(actor, cfg, slot)
+    if _xianfa_unlock_all_slots(actor) then
+        return 1, true
+    end
+    local unlock_lv = cfg.unlock_lv or {}
+    return tonumber(unlock_lv[slot]) or 1, false
+end
+
+local function _build_npc24_payload(actor, T_data)
+    return {
+        ["T_data"] = _tianshu_fix_data(T_data),
+        ["xianfa_all_unlock"] = _xianfa_unlock_all_slots(actor) and 1 or 0,
+    }
+end
 local function _set_tianshu_shaqi_customabil(play, itemobj, T_data)
     itemobj = itemobj or linkbodyitem(play, _config.where)
     if not itemobj or itemobj == "0" then
@@ -125,9 +148,8 @@ function npc.main(play,npcid)
         Player.sendmsgEx(play, "请先装备#57|【天书】#249|后再打开#57")
         return
     end
-    local data = {}
-    data["T_data"] = _tianshu_fix_data(Player.getJsonTableByVar(play, VarCfg["T_天书"]))
-    sendluamsg(play,100,npcid,0,0,tbl2json(data))
+    local T_data = _tianshu_fix_data(Player.getJsonTableByVar(play, VarCfg["T_天书"]))
+    sendluamsg(play,100,npcid,0,0,tbl2json(_build_npc24_payload(play, T_data)))
 end
 
 function npc.link(play,npcid,ew,aid,data)
@@ -184,7 +206,7 @@ function npc.link(play,npcid,ew,aid,data)
             recalcabilitys(play)
 
 
-            sendluamsg(play,100,npcid,1,0,tbl2json({ ["T_data"] = T_data} ))
+            sendluamsg(play,100,npcid,1,0,tbl2json(_build_npc24_payload(play, T_data)))
         else
             Player.sendmsgEx(play, "请先穿戴#57|【对应部位装备】#249|")
             return
@@ -197,10 +219,9 @@ function npc.link(play,npcid,ew,aid,data)
             end
 
             local cfg = _config.details[2]
-            local unlock_lv = cfg.unlock_lv or {}
-            local need_lv = unlock_lv[slot] or 1
+            local need_lv, unlock_by_artifact = _xianfa_get_slot_need_lv(play, cfg, slot)
             local cur_lv = T_data.level or 0
-            if cur_lv < need_lv then
+            if not unlock_by_artifact and cur_lv < need_lv then
                 Player.sendmsgEx(play, string.format("天书等级达到#57|【%d级】#249|才可解锁该仙法槽位#57", need_lv))
                 return
             end
@@ -289,7 +310,7 @@ function npc.link(play,npcid,ew,aid,data)
             xianfa_refresh(play)
 
             xianfa_add(play,randomNum,idx)
-            sendluamsg(play,100,npcid,2,0,tbl2json({ ["T_data"] = T_data} ))
+            sendluamsg(play,100,npcid,2,0,tbl2json(_build_npc24_payload(play, T_data)))
             sendluamsg(play,100,npcid,10,0,tbl2json({ ["group"] = randomNum,["idx"] = idx} ))
         else
         end

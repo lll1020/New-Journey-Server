@@ -229,7 +229,7 @@ function npc.link(play, npcid, ew, aid, data)
         _finish_mainline(play, _submit_task_map[submit_idx])
         return
     end
-    if ew == 3 then
+    if ew == 5 then
         if T_data.finish ~= 1 then
             Player.sendmsgEx(play, "请先完成|【天书试炼】#249|后再领取|【天书】#249|#57")
             return
@@ -244,7 +244,7 @@ function npc.link(play, npcid, ew, aid, data)
             Player.rwjl(play, _config.reward, (_config.name or "天书试炼").."奖励", 1, 0)
         end
         Player.sendmsgEx(play, "成功领取|【天书】#249|#57")
-        _refresh_panel(play, npcid, 5, 0)
+        sendluamsg(play, 101, 9999, 0, 0, "npc_"..103)
         return
     end
     if not is_enter then

@@ -468,7 +468,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "二大陆主城", 24, 100, 106 },
+                    yd = { 3, 14 },
                     desc = "直面天书强化，破局前行",
                 },
                 {
@@ -481,7 +481,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "二大陆主城", 24, 100, 106 },
+                    yd = { 3, 14 },
                     desc = "历经初识仙法，收获机缘",
                 },
                 {
@@ -536,7 +536,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "二大陆主城", 22, 95, 106 },
+                    yd = { 3, 14 },
                     desc = "装配主灵根，掌握灵根之力",
                 },
                 {
@@ -617,7 +617,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "二大陆主城", 22, 95, 106 },
+                    yd = { 3, 14 },
                     desc = "装配副灵根，补全第二道灵根之力",
                 },
                 {
@@ -687,7 +687,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "二大陆主城", 22, 95, 106 },
+                    yd = { 3, 14 },
                     desc = "历经升级灵根，收获机缘",
                 },
                 {
@@ -1287,7 +1287,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "二大陆主城", 24, 100, 106 },
+                    yd = { 3, 14 },
                     desc = "闯过红色仙法，证我道途",
                 },
                 {

@@ -604,13 +604,21 @@ function stdmodefunc40(play, item) --特殊丹药
     if not max then
         return false
     end
-    local cur = rec[key] or 0
+    local cur = tonumber(rec[key] or 0) or 0
     if cur >= max then
         Player.sendmsgEx(play, "已达到该丹药使用上限#57")
         return true
     end
 
-    rec[key] = cur + 1
+    local count_key = key .. "_count"
+    -- 兼容旧数据：以前每次固定+1，老数据里的总值可直接当作已服用次数。
+    local use_count = tonumber(rec[count_key] or cur) or 0
+    local add_value = use_count + 1
+    if cur + add_value > max then
+        add_value = max - cur
+    end
+    rec[key] = cur + add_value
+    rec[count_key] = use_count + 1
 
     _apply_dan40_attr(play, rec)
     setplaydef(play, VarCfg["T_物品使用记录"], tbl2json(rec))

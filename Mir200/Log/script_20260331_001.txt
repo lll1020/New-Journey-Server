@@ -6,3 +6,8 @@
 [2026-03-31 05:38:13:806] LuaNPC:玩家名字kk ID:999999999 执行 handlerequest player:玩家名字kk 耗时：47; NpcThreadId: 1732, CurPlayThreadId: 1732
 [2026-03-31 05:38:13:806] [玩家名字kk]Lua执行耗时过高:47ms msgid:100 55 2 0 
 
+[2026-03-31 20:04:53:526] LuaNPC:玩家名字kk ID:999999999 执行 ontimer7 player:玩家名字kk 耗时：31; NpcThreadId: 1732, CurPlayThreadId: 1732
+
+[2026-04-01 01:05:20:212] LuaNPC:玩家名字kk ID:999999999 执行 handlerequest player:玩家名字kk 耗时：62; NpcThreadId: 1732, CurPlayThreadId: 1732
+[2026-04-01 01:05:20:212] [玩家名字kk]Lua执行耗时过高:62ms msgid:100 24 1 0 
+

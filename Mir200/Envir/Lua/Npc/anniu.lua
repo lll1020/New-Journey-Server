@@ -1200,9 +1200,11 @@ local function _activity507_is_open(p3)
         local idx = tonumber(state.current_idx) or 0
         return cfg and tonumber(state.open) == 1 and idx > 0 and _qmdt_is_active_507(state, cfg, idx)
     elseif p3 == 5 then
-        return dqfz >= 20 and dqfz < 23
+        -- 土城跑酷：OnTimer 在开服第 5 分钟开启，第 8 分钟关闭。
+        return dqfz >= 5 and dqfz < 8
     elseif p3 == 9 then
-        return dqfz >= 40 and dqfz < 50
+        -- 武林盟主：OnTimer 在开服第 25 分钟开启，第 30 分钟关闭。
+        return dqfz >= 25 and dqfz < 30
     elseif p3 == 13 then
         local cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].sjdb or {}
         local keepMin = math.max(1, math.ceil((tonumber(cfg.keep_sec) or 300) / 60))

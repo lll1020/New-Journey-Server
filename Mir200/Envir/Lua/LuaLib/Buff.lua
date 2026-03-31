@@ -165,7 +165,12 @@ local function _tianshu_buff_splash(play, Target)
         return
     end
     rangeharm(play, getbaseinfo(Target, ConstCfg.gbase.x), getbaseinfo(Target, ConstCfg.gbase.y), tonumber(cfg.splash_range) or 2, damage, 0, 0, 0, 2, tonumber(cfg.splash_effect) or 20310, tonumber(cfg.splash_max_targets) or 12)
-    playeffect(Target, tonumber(cfg.splash_hit_effect) or 60463, 0, 0, 1, 1, 0)
+    local splash_effect_cd = tonumber(getplaydef(play, "N$天书溅射特效CD") or 0) or 0
+    local now = os.time()
+    if now - splash_effect_cd >= 5 then
+        setplaydef(play, "N$天书溅射特效CD", now)
+        playeffect(Target, tonumber(cfg.splash_hit_effect) or 60463, 0, 0, 1, 1, 0)
+    end
     -- Player.sendmsgEx(play,"【帝疆】#253|触发，范围造成"..damage.."点真实伤害")
 end
 Buff = {
@@ -846,6 +851,47 @@ Buff = {
             end
             _gcmp_refresh_item(play)
         end
+    end,
+    [341] = function(play,zt,Damage,Target) -- 首刀：首次命中满血怪物时，额外斩掉目标最大生命值15%
+        if zt == 3 then
+            if not Target or getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+                return 0
+            end
+            local maxhp = tonumber(getbaseinfo(Target, (ConstCfg and ConstCfg.gbase and ConstCfg.gbase.maxhp) or 10) or 0) or 0
+            local curhp = tonumber(getbaseinfo(Target, (ConstCfg and ConstCfg.gbase and ConstCfg.gbase.hp) or 9) or 0) or 0
+            if maxhp <= 0 or curhp <= 0 then
+                return 0
+            end
+            -- attackdamage 里会先结算人物切割/对怪增伤，这里把那部分补回去后再判断是否为首刀。
+            local pre_cut = tonumber(getbaseinfo(play, 51, 244) or 0) or 0
+            local pre_hurt_up = 0
+            if Damage and Damage > 0 then
+                pre_hurt_up = Damage / 10000 * (tonumber(getbaseinfo(play, 51, 245) or 0) or 0)
+            end
+            if curhp + pre_cut + pre_hurt_up < maxhp then
+                return 0
+            end
+            local hurt = math.floor(maxhp * 0.15)
+            if hurt < 1 then
+                hurt = 1
+            end
+            if hurt > curhp then
+                hurt = curhp
+            end
+            return hurt
+        end
+        _set_title_buff_flag(play, 341, zt == 1)
+        _toggle_buff_var(play, VarCfg.S_buffgwq, 341, zt == 1)
+    end,
+    [342] = function(play,zt,Damage,Target) -- 对玩家每次命中额外附加6666点真伤
+        if zt == 3 then
+            if Target and getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+                return 6666
+            end
+            return 0
+        end
+        _set_title_buff_flag(play, 342, zt == 1)
+        _toggle_buff_var(play, VarCfg.S_buffrwq, 342, zt == 1)
     end,
     [330] = function(play,zt) -- 海洋之王祝福：标记型BUFF，冰冻相关数值由称号表或其他逻辑处理
         if zt == 1 then

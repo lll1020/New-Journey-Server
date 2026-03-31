@@ -430,7 +430,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         if count < 1 then count = 1 end
         local canExchange, progress = _get_exchange_info(play, T_data)
         if canExchange <= 0 then
-            Player.sendmsgEx(play, string.format("当前杀怪进度不足：#57|【%d/%d】#249|，今日已兑换#57|【%d次】#249|", progress, tonumber(_config.kill_per_exchange) or 188, tonumber(T_data.exchange_used) or 0))
+            Player.sendmsgEx(play, string.format("当前杀怪进度不足：#57|【%d/%d】#249|，今日兑换：#251|【%d/%d】#249|", progress, tonumber(_config.kill_per_exchange) or 188, tonumber(T_data.exchange_used) or 0, tonumber(_config.exchange_daily_limit) or 50))
             return
         end
         if count > canExchange then count = canExchange end
@@ -438,7 +438,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         T_data.token_count = T_data.token_count + count
         _append_log(T_data, "杀怪兑换：获得" .. _token_name .. "*" .. count)
         _save_data(play, T_data)
-        Player.sendmsgEx(play, "兑换成功，获得|【".._token_name.."】#249|*" .. count)
+        Player.sendmsgEx(play, string.format("兑换成功：获得#251|【%s*%d】#249|，今日兑换进度#57|【%d/%d】#249|", _token_name, count, tonumber(T_data.exchange_used) or 0, tonumber(_config.exchange_daily_limit) or 50))
         _refresh_panel(play, npcid, p2)
     elseif p2 == 4 then -- buy by cost
         local count = tonumber(json_data.count or p3) or 1
