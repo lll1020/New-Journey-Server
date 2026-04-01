@@ -24,3 +24,13 @@
 
 [2026-04-01 11:07:56:569] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：188; NpcThreadId: 38652, CurPlayThreadId: 38652
 
+[2026-04-01 11:42:52:148] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 38652, CurPlayThreadId: 38652
+
+[2026-04-01 11:54:04:922] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：735; NpcThreadId: 38652, CurPlayThreadId: 38652
+[2026-04-01 11:54:04:922] [玩家名字]Lua执行耗时过高:735ms msgid:105 9999 9999 0 
+
+[2026-04-01 13:16:31:814] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：47; NpcThreadId: 38652, CurPlayThreadId: 38652
+[2026-04-01 13:16:31:814] [玩家名字]Lua执行耗时过高:47ms msgid:100 22 5 4 
+
+[2026-04-01 15:01:48:262] LuaNPC:玩家名字 ID:999999999 执行 ontimer7 player:玩家名字 耗时：31; NpcThreadId: 38652, CurPlayThreadId: 38652
+

@@ -303,8 +303,8 @@ function pickupitemex(play, item)
             local mz = getbaseinfo(play,1)
             qqsb[""..idx] = mz
             Player.setJsonVarByTable(nil, VarCfg["A_全区首曝json"], qqsb)
-            sendmovemsg(play,1,253,0,300,1,'全区首爆: <玩家/FCOLOR=250><【'..mz..'】/FCOLOR=243><爆出/FCOLOR=250><【'..name..'】/FCOLOR=243>')
-            sendmovemsg(play,1,253,0,250,1,'全区首爆: <玩家/FCOLOR=250><【'..mz..'】/FCOLOR=243><爆出/FCOLOR=250><【'..name..'】/FCOLOR=243>')
+            sendmovemsg(play,1,253,0,400,1,'全区首爆: <玩家/FCOLOR=250><【'..mz..'】/FCOLOR=243><爆出/FCOLOR=250><【'..name..'】/FCOLOR=243>')
+            sendmovemsg(play,1,253,0,370,1,'全区首爆: <玩家/FCOLOR=250><【'..mz..'】/FCOLOR=243><爆出/FCOLOR=250><【'..name..'】/FCOLOR=243>')
             Player.sendmsgEx(play, "恭喜#215|【"..name.."】#191|首爆成功,请前往福利大厅领取奖励#215")
         end
         if teshudata["fldt"]["qqsb"][idx] and qqsb[""..idx] then
