@@ -364,7 +364,7 @@ function stdmodefunc35(play, item) --²Ø±¦Í¼
                 return false
             end
             local gw = genmonex(map_name,map_x,map_y,teshudata["npc_47"].details[getstditeminfo(getiteminfo(play, item, 2), 8)].mob_name,1,1,0,54,"",0)
-            local times = (getplaydef(play, VarCfg["U_²Ø±¦Í¼´ÎÊý"]) or 0) + 1
+            local tims = (getplaydef(play, VarCfg["U_²Ø±¦Í¼´ÎÊýe"]) or 0) + 1
             setplaydef(play, VarCfg["U_²Ø±¦Í¼´ÎÊý"], times)
             return true
         else

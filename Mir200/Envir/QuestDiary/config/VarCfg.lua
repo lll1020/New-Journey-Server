@@ -102,7 +102,7 @@ VarCfg["F_跨服攻沙是否领取"]                 = 800                --F_跨服攻沙是
 --个人J变量
 VarCfg.J_kill_boss_mum                      = "J1"                  --每日击杀Boss数量
 VarCfg["J_今日真实充值"]                     = "J2"                  --J_今日真实充值
-VarCfg["J_今日藏宝图次数"]                     = "J2"                  --J_今日藏宝图次数
+VarCfg["J_今日藏宝图次数"]                     = "J3"                  --J_今日藏宝图次数
 VarCfg.J_mrfhw          = "J11"                                                                          --每日使用复活丹次数
 VarCfg.J_jsgw         =   {"J12","J13"}                                                                    --每日大小怪--数量
 VarCfg.J_zxsj         =   "J14"                                                                         --今日在线时间

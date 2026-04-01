@@ -62,8 +62,12 @@ function npc.link(play,npcid,ew,aid,data)
             return
         end
         local map = detail.map[math.random(1, #detail.map)]
-        release_print("²Ø±¦Í¼ÏêÇé:", tbl2json(detail))
-        release_print("²Ø±¦Í¼Éú³É:", tbl2json(map))
+        -- release_print("²Ø±¦Í¼ÏêÇé:", tbl2json(detail))
+        -- release_print("²Ø±¦Í¼Éú³É:", tbl2json(map))
+        local name, num = Player.checkItemNumByTable(play, {{"²ù×Ó",1}})
+        if name then
+            giveitem(play,"²ù×Ó",1,850)
+        end
 
 
         local itemobj = giveitem(play,detail.item,1)

@@ -118,7 +118,7 @@ teshudata = {
     },
     ["npc_10"] = {
         id = 10,
-        name = "»êÌå",
+        name = "¾ÆºùÂ«",
         where = 16,
         max_level = 11,
         config = {

@@ -278,14 +278,22 @@ end
 
 -- 备注：传说斗笠（装备或背包）是否拥有（上位斗笠也视为完成）
 local function _xyl_has_legendary_hat(play)
-    local cfg = teshudata and teshudata["npc_51"]
-    return _xyl_has_series_item_at_least(play, cfg, "斗笠")
+    local equipLevel = Player.getEquipFieldByPos(play, 13, 1) or 0
+    if equipLevel == 0 then
+        return false
+    end
+    equipLevel = tonumber(equipLevel)
+    return equipLevel >= 13
 end
 
 -- 备注：神酒葫芦（装备或背包）是否拥有（上位葫芦也视为完成）
 local function _xyl_has_god_gourd(play)
-    local cfg = teshudata and teshudata["npc_52"]
-    return _xyl_has_series_item_at_least(play, cfg, "葫芦")
+    local equipLevel = Player.getEquipFieldByPos(play, 16, 1) or 0
+    if equipLevel == 0 then
+        return false
+    end
+    equipLevel = tonumber(equipLevel)
+    return equipLevel >= 13
 end
 -- 备注：高级淬体是否全完成（或已有称号）
 local function _xyl_has_advanced_quench(play)
