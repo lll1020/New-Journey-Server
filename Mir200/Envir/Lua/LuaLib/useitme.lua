@@ -25,14 +25,20 @@ function stdmodefunc10(play, item)
 
     local du = getbaseinfo(play, 3)
     if getplaydef(play,"N$战斗状态") < os.time() then
-        if du == "xtc" or du == "灰界" or du == "二大陆主城" or du == "三大陆主城" or du == "四大陆主城" or du == "五大陆主城" or du == "六大陆主城" or du == "七大陆主城" or du == "八大陆主城" or du == "九大陆主城" then
+        if du == "xtc" or du == "二大陆主城" or du == "三大陆主城" or du == "四大陆主城" or du == "五大陆主城" or du == "六大陆主城" or du == "七大陆主城" or du == "八大陆主城" or du == "九大陆主城" then
             mapmove(play, 'xtc', 137,138,8)
             addhpper(play, '=', 100)
             addmpper(play, '=', 100)
         elseif daluditu[du] and daluditu[du] == 1 then mapmove(play, "xtc",137,138,5) addhpper(play, '=', 100) addmpper(play, '=', 100)
         elseif daluditu[du] and daluditu[du] == 2 then mapmove(play, "二大陆主城",105,120,4) addhpper(play, '=', 100) addmpper(play, '=', 100)
         elseif daluditu[du] and daluditu[du] == 3 then
-            if _is_huijie_return_map(du) then
+            if du == "灰界" and Player.hasThirdContinentPass(play) then
+                mapmove(play, "三大陆主城",159,231,5)
+                addhpper(play, '=', 100)
+                addmpper(play, '=', 100)
+            elseif du == "灰界" and not Player.hasThirdContinentPass(play) then
+                mapmove(play, "xtc",137,138,5) addhpper(play, '=', 100) addmpper(play, '=', 100)
+            elseif _is_huijie_return_map(du) then
                 mapmove(play, "灰界",201,199,5)
                 addhpper(play, '=', 100)
                 addmpper(play, '=', 100)

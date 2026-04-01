@@ -44,6 +44,7 @@ function npc.main(play,npcid)
     local data = {}
     data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
     sendluamsg(play,100,npcid,0,0,tbl2json(data))
+    openhyperlink(play, 1, 2)
 end
 function npc.link(play,npcid,ew,aid)
     -- npc_guard: 入参校验

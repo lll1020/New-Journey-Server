@@ -1053,6 +1053,7 @@ function npc.main(play, npcid)
     local state = loadState(play)
     persistState(state)
     sendluamsg(play, 100, npcid, 0, 0, tbl2json(buildSnapshot(state)))
+    openhyperlink(play, 1, 2)
 end
 
 function npc.link(play, npcid, p2, p3, msgData)

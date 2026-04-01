@@ -150,6 +150,7 @@ function npc.main(play,npcid)
     end
     local T_data = _tianshu_fix_data(Player.getJsonTableByVar(play, VarCfg["T_ÃÏ È"]))
     sendluamsg(play,100,npcid,0,0,tbl2json(_build_npc24_payload(play, T_data)))
+    openhyperlink(play, 1, 2)
 end
 
 function npc.link(play,npcid,ew,aid,data)

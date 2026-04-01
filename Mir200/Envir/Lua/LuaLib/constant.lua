@@ -39,21 +39,39 @@ constant.pz_qsx = { 280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 
 constant.dalu_zszb_box57 = {
     [1] = {
         -- {name = "第一大陆专属装备", weight = 100},
+        -- {name = "锁鳞", weight = 100},
+        -- {name = "裂天", weight = 100},
+        -- {name = "星陨", weight = 100},
     },
     [2] = {
         -- {name = "第二大陆专属装备", weight = 100},
+        {name = "锁鳞", weight = 100},
+        {name = "裂天", weight = 100},
+        {name = "星陨", weight = 100},
     },
     [3] = {
         -- {name = "第三大陆专属装备", weight = 100},
+        {name = "冥火", weight = 100},
+        {name = "鬼影", weight = 100},
+        {name = "夜行", weight = 100},
     },
     [4] = {
         -- {name = "第四大陆专属装备", weight = 100},
+        {name = "深渊低语", weight = 100},
+        {name = "血月残魂", weight = 100},
+        {name = "亡者契约", weight = 100},
     },
     [5] = {
         -- {name = "第五大陆专属装备", weight = 100},
+        {name = "月下听松", weight = 100},
+        {name = "风吟鹤唳", weight = 100},
+        {name = "空山灵雨", weight = 100},
     },
     [6] = {
         -- {name = "第六大陆专属装备", weight = 100},
+        {name = "天恩圣符", weight = 100},
+        {name = "净世真言", weight = 100},
+        {name = "荣耀之证", weight = 100},
     },
     [7] = {
         -- {name = "第七大陆专属装备", weight = 100},
