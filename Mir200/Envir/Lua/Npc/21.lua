@@ -13,6 +13,7 @@ function npc.main(play,npcid)
     data["level"] = getplaydef(play, VarCfg["U_境界修炼"][1])
     data["exp"] = getplaydef(play, VarCfg["U_境界修炼"][2])
     sendluamsg(play,100,npcid,0,0,tbl2json(data))
+    openhyperlink(play, 1, 2)
 end
 
 function npc.link(play,npcid,ew,aid)

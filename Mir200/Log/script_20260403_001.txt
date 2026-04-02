@@ -1,0 +1,35 @@
+[2026-04-03 01:09:12:829] LuaNPC: ID:999999999 执行 startup player: 耗时：31; NpcThreadId: 50056, CurPlayThreadId: 50056
+
+[2026-04-03 01:09:46:674] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：140; NpcThreadId: 50056, CurPlayThreadId: 50056
+
+[2026-04-03 01:10:20:679] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：47; NpcThreadId: 50056, CurPlayThreadId: 50056
+[2026-04-03 01:10:20:679] [玩家名字]Lua执行耗时过高:47ms msgid:105 9999 9999 0 
+
+[2026-04-03 01:10:30:112] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：32; NpcThreadId: 50056, CurPlayThreadId: 50056
+
+[2026-04-03 01:30:18:914] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：109; NpcThreadId: 31596, CurPlayThreadId: 31596
+
+[2026-04-03 01:42:07:461] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 31596, CurPlayThreadId: 31596
+
+[2026-04-03 02:05:53:562] LuaNPC:玩家名字 ID:999999999 执行 ontimer1 player:玩家名字 耗时：172; NpcThreadId: 31596, CurPlayThreadId: 31596
+
+[2026-04-03 02:07:02:241] LuaNPC:玩家名字 ID:999999999 执行 ontimer1 player:玩家名字 耗时：47; NpcThreadId: 31596, CurPlayThreadId: 31596
+
+[2026-04-03 02:08:36:930] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 31596, CurPlayThreadId: 31596
+
+[2026-04-03 02:14:39:539] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：47; NpcThreadId: 12344, CurPlayThreadId: 12344
+
+[2026-04-03 02:14:52:796] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：31; NpcThreadId: 12344, CurPlayThreadId: 12344
+
+[2026-04-03 02:25:53:101] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 12344, CurPlayThreadId: 12344
+
+[2026-04-03 02:26:56:836] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 12344, CurPlayThreadId: 12344
+
+[2026-04-03 02:28:49:664] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 12344, CurPlayThreadId: 12344
+
+[2026-04-03 02:36:15:493] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 12344, CurPlayThreadId: 12344
+
+[2026-04-03 02:48:36:097] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 12344, CurPlayThreadId: 12344
+
+[2026-04-03 02:50:36:495] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 12344, CurPlayThreadId: 12344
+

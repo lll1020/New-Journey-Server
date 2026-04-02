@@ -153,7 +153,7 @@ local itme_13 = {
 }
 function stdmodefunc13(play, item)
     local sl, itemName = _get_use_all_info(play, item)
-    release_print(itemName)
+    -- release_print(itemName)
     if sl < 1 then
         return false
     end
