@@ -102,3 +102,5 @@
 
 [2026-04-02 08:20:50:437] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
 
+[2026-04-02 08:28:35:781] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
