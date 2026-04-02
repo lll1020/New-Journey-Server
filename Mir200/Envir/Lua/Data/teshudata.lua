@@ -1148,9 +1148,9 @@ teshudata = {
             {name= "生肖守护[猪]", cost = {{"生肖守护[猪]",1}},},
         },
         jl = {
-            {give = {{"元宝",1}}},
-            {give = {{"元宝",1}}},
-            {give = {{"元宝",1}}},
+            {give = {{"绑定元宝",1}}},
+            {give = {{"绑定元宝",1}}},
+            {give = {{"绑定元宝",1}}},
         },
         ch = "生肖守护神"
     },
@@ -1375,8 +1375,8 @@ teshudata = {
     ["npc_673"]  = {id = 673, name = "传说修复局",xz = {674,675,676,677,678,679,680,681,},ch = "传说之神"},
     ["npc_674"]  = {id = 674, name = "盘古开天",cost = {{"洪荒真气",3}},ch = '我是盘古？'},
     ["npc_675"]  = {id = 675, name = "羿射九日",bag_cost = {{"逐日弓",1}},cost = {{"箭矢",1}},ch = '太阳杀手',hb = {{"元宝",1000000}},attr = {{244,1888}},max_num = 9},
-    ["npc_676"]  = {id = 676, name = "共公怒触不周山",map = "不周山",shaguai_id = 676,num = 500,jl_num = 100,ch = "五拳轰碎不周山",jl_c = {{"金币",1},{"元宝",1}},},
-    ["npc_677"]  = {id = 677, name = "女娲补天",cost = {{"五彩石",1}},max_num = 9,ch = "补天神子",jl_c = {{"金币",1},{"元宝",1}},},
+    ["npc_676"]  = {id = 676, name = "共公怒触不周山",map = "不周山",shaguai_id = 676,num = 500,jl_num = 100,ch = "五拳轰碎不周山",jl_c = {{"绑定金币",1}},},
+    ["npc_677"]  = {id = 677, name = "女娲补天",cost = {{"五彩石",1}},max_num = 9,ch = "补天神子",jl_c = {{"绑定金币",1},},},
     ["npc_678"]  = {id = 678, name = "后土娘娘",ch = "后土之力",
         details = {
             {idx = 1,cost = {{"判官笔",1}}},
@@ -1440,8 +1440,8 @@ teshudata = {
         enter_pos = {29,27},
         boss = "天书试炼",
         boss_pos = {32,36},
-        boss_effect = 20310,
-        boss_fire = 92,
+        boss_effect = 14153,
+        boss_fire = 14153,
         reward = {{"天书",1}},
         materials = {
             {idx = 1,name = "天书残卷一",cost = {{"天书残卷一",1}},attr = {{244,1000}},attr_desc = "打怪切割+1000"},
@@ -2179,7 +2179,7 @@ teshudata = {
         name = "首冲礼包",
         details = {
             ["首充"] = {
-                {jl ={{"元宝",1},{"灵石",1},},show = {{"半月弯刀",1},{"天选资格",1},{"首充时装",1},{"护体光环激活",1},{"巡航功能",1}}},
+                {jl ={},show = {{"半月弯刀",1},{"天选资格",1},{"首充时装",1},{"护体光环激活",1},{"巡航功能",1}}},
                 {jl ={{"二重转生石",10},{"金币",880000},{"仙法卷轴",1}},show = {{"群体施毒术",1},{"二重转生石",10},{"金币",880000},{"仙法卷轴",1}}},
                 {jl ={{"金币",1880000},{"神石宝箱钥匙",1},{"辉耀水晶",5},{"书页",20}},show = {{"金币",1880000},{"神石宝箱钥匙",1},{"辉耀水晶",5},{"书页",20}}},
             },
@@ -2271,7 +2271,7 @@ teshudata = {
             {idx = 5, name = "累抽足迹5"},
         },
         pool = {
-            {kind = "item", give = {{"金币",380000}}, rate = 800000, show_rate = "80%", label = "金币*38w"},
+            {kind = "item", give = {{"绑定金币",380000}}, rate = 800000, show_rate = "80%", label = "金币*38w"},
             {kind = "item", give = {{"千年玄铁",5}}, rate = 100000, show_rate = "10%", label = "千年玄铁*5"},
             {kind = "item", give = {{"辉耀水晶",1}}, rate = 50000, show_rate = "5%", label = "辉耀水晶*1"},
             {kind = "item", give = {{"仙法卷轴残页",5}}, rate = 45000, show_rate = "4.5%", label = "仙法卷轴残页*5"},
@@ -2310,13 +2310,13 @@ teshudata = {
             },
         },
         milestones = {
-            [1] = {draw = 10, normal = {main = {kind = "item", give = {{"仙法卷轴",5}}, label = "仙法卷轴*5"}}, crown = {main = {kind = "item", give = {{"金币",380000}}, label = "金币*380000"}}},
-            [2] = {draw = 30, normal = {main = {kind = "item", give = {{"金币",1280000}}, label = "金币*1280000"}}, crown = {main = {kind = "item", give = {{"仙法卷轴",15}}, label = "仙法卷轴*15"}}},
-            [3] = {draw = 50, normal = {main = {kind = "item", give = {{"斗笠之魄",1}}, label = "斗笠之魄*1"}}, crown = {main = {kind = "item", give = {{"金币",8880000}}, label = "金币*8880000"}}},
+            [1] = {draw = 10, normal = {main = {kind = "item", give = {{"仙法卷轴",5}}, label = "仙法卷轴*5"}}, crown = {main = {kind = "item", give = {{"绑定金币",380000}}, label = "绑定金币*380000"}}},
+            [2] = {draw = 30, normal = {main = {kind = "item", give = {{"绑定金币",1280000}}, label = "绑定金币*1280000"}}, crown = {main = {kind = "item", give = {{"仙法卷轴",15}}, label = "仙法卷轴*15"}}},
+            [3] = {draw = 50, normal = {main = {kind = "item", give = {{"斗笠之魄",1}}, label = "斗笠之魄*1"}}, crown = {main = {kind = "item", give = {{"绑定金币",8880000}}, label = "绑定金币*8880000"}}},
             [4] = {draw = 100, normal = {main = {kind = "item", give = {{"神石宝箱钥匙",5}}, label = "神石宝箱钥匙*5"}}, crown = {main = {kind = "footstep", idx = 1, name = "累抽足迹1", label = "累抽足迹1"}}},
             [5] = {draw = 150, normal = {main = {kind = "item", give = {{"辉耀水晶",88}}, label = "辉耀水晶*88"}}, crown = {main = {kind = "item", give = {{"辉耀水晶",188}}, label = "辉耀水晶*188"}}},
             [6] = {draw = 200, normal = {main = {kind = "item", give = {{"仙法卷轴",100}}, label = "仙法卷轴*100"}}, crown = {main = {kind = "item", give = {{"仙品仙法卷轴",1}}, label = "仙品仙法卷轴*1"}}},
-            [7] = {draw = 250, normal = {main = {kind = "item", give = {{"高阶强化石",100}}, label = "高阶强化石*100"}}, crown = {main = {kind = "item", give = {{"元宝",1280000}}, label = "元宝*1280000"}}},
+            [7] = {draw = 250, normal = {main = {kind = "item", give = {{"高阶强化石",100}}, label = "高阶强化石*100"}}, crown = {main = {kind = "item", give = {{"绑定元宝",1280000}}, label = "绑定元宝*1280000"}}},
             [8] = {draw = 300, normal = {main = {kind = "item", give = {{"灵兽蛋",10}}, label = "灵兽蛋*10"}}, crown = {main = {kind = "footstep", idx = 2, name = "累抽足迹2", label = "累抽足迹2"}}},
             [9] = {draw = 400, normal = {main = {kind = "item", give = {{"仙法卷轴",200}}, label = "仙法卷轴*200"}}, crown = {main = {kind = "item", give = {{"仙品仙法卷轴",2}}, label = "仙品仙法卷轴*2"}}},
             [10] = {draw = 600, normal = {main = {kind = "item", give = {{"时光鉴定石",50}}, label = "时光鉴定石*50"}}, crown = {main = {kind = "footstep", idx = 3, name = "累抽足迹3", label = "累抽足迹3"}}},
@@ -2484,7 +2484,7 @@ teshudata = {
         id = "anniu_516",
         name = "至尊赞助",
         details = {
-            {ch = "入门玩家", sgsl = 0, need_charge = 0, salary = {{"金币",50000},{"元宝",500}}},
+            {ch = "入门玩家", sgsl = 0, need_charge = 0, salary = {{"绑定金币",50000},{"绑定元宝",500}}},
             {ch = "高级玩家", sgsl = 0, need_charge = 8, need_money23 = 8, salary = {{"绑定金币",100000},{"绑定元宝",1000},{"绑定灵石",10}},jl = {{"切割刀",1}}},
             {ch = "至尊玩家", sgsl = 0, need_charge = 128, need_cz502 = 128, salary = {{"绑定金币",200000},{"绑定元宝",2000},{"绑定灵石",50}},jl = {{"至尊战刃",1}}},
         },
