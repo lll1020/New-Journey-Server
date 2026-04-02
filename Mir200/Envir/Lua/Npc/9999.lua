@@ -1156,12 +1156,6 @@ function ggna(play,id)
         -- setplaydef(play, VarCfg.T_czlb,"{}")
         -- setplaydef(play,VarCfg.U_zxrw[1],21)
         -- setplaydef(play,VarCfg.T_hsdg, '{"1_1_1":1,"1_1_2":1,"1_1_3":1,"1_1_4":1,"1_1_5":1,"1_1_6":1,"1_1_7":1,"1_1_8":1,"1_1_9":1,"1_1_10":1,"1_1_11":1,"1_1_12":1}')--回收打勾
-        local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
-    T_data.level = T_data.level or {}
-T_data.level[""..math.random(1, 5)] = 0
-        Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
-        Player.sendmsgEx(play, "提示：你获得了新的|【灵根】#249|，请前往灵根升级界面查看")
-        sendluamsg(play,100,npcid,1,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
 
     end
 

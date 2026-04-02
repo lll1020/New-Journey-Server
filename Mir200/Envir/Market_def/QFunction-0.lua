@@ -1081,14 +1081,14 @@ function jqr_kfshabakejltz()
 end
 --------------------机器人触发脚本-------------------葬星海滩 切换
 function jqr_zxht_change()
-    release_print("葬星海滩涨落潮切换触发")
-    release_print("当前时间小时数为："..os.date("%H"))
+    -- release_print("葬星海滩涨落潮切换触发")
+    -- release_print("当前时间小时数为："..os.date("%H"))
     local hour = tonumber(os.date("%H")) or 0
     local map_even = "葬星海滩"
     local map_odd = "葬星海滩1"
     local target = (hour % 2 == 0) and map_even or map_odd
     local source = (hour % 2 == 0) and map_odd or map_even
-    release_print("当前地图为："..target)
+    -- release_print("当前地图为："..target)
     local players = getobjectinmap(source, 0, 0, 999, 1)
     if players then
         for _, v in pairs(players) do

@@ -9,7 +9,7 @@ local _listeners = {}
 ---*priority:优先级
 function GameEvent.add(eventName, func, tag, priority)
 	assert(tag, "Tag must not be nil")
-	release_print("添加事件监听：", eventName, tag)
+	-- release_print("添加事件监听：", eventName, tag)
 	if not _listeners[eventName] then
 		_listeners[eventName] = {}
 	end

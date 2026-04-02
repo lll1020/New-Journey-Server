@@ -394,6 +394,7 @@ function Player.rwjl(actor, t, desc, multiple,gm)
         if str ~= "" and gm ~= 0 then
             sendluamsg(actor,101,0,9,gm and gm or 999,'{"item":['..str..']}')
         end
+        release_print("Player.rwjl", desc, str, getbaseinfo(actor,1))
     end
 end
 
@@ -751,7 +752,7 @@ function Player.del_attlist(actor, arrt_name) --删属性
     end
     delattlist(actor, arrt_name)
     cache[arrt_name] = false
-    release_print("删属性",arrt_name,getbaseinfo(actor,1))
+    -- release_print("删属性",arrt_name,getbaseinfo(actor,1))
 end
 function Player.add_attlist(actor, title_name,opt, attrsstr,idx) --给属性
     local cache = _get_attlist_cache(actor)
@@ -761,7 +762,7 @@ function Player.add_attlist(actor, title_name,opt, attrsstr,idx) --给属性
     end
     addattlist(actor, title_name, opt, attrsstr, idx)
     cache[title_name] = cache_value
-    release_print("给属性",title_name,attrsstr,getbaseinfo(actor,1),opt,idx)
+    -- release_print("给属性",title_name,attrsstr,getbaseinfo(actor,1),opt,idx)
 end
 
 

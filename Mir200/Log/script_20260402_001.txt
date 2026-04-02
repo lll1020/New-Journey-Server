@@ -104,3 +104,198 @@
 
 [2026-04-02 08:28:35:781] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
 
+[2026-04-02 08:38:19:344] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 08:47:55:361] LuaNPC:玩家名字l成 ID:999999999 执行 pickupitemex player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 08:50:14:526] LuaNPC:玩家名字l成 ID:999999999 执行 struckdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+[2026-04-02 08:50:16:063] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 08:56:52:094] LuaNPC:玩家名字l成 ID:999999999 执行 struckdamage player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 09:00:25:398] LuaNPC:玩家名字l成 ID:999999999 执行 mondropitemex player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 09:19:22:219] LuaNPC:玩家名字l成 ID:999999999 执行 struckdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 09:22:34:528] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 09:43:46:747] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 10:23:18:433] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 10:25:38:326] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 10:28:19:134] LuaNPC:玩家名字l成 ID:999999999 执行 killmon player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 10:32:53:455] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 10:45:27:474] LuaNPC:玩家名字l成 ID:999999999 执行 attack player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 10:47:25:996] LuaNPC:玩家名字l成 ID:999999999 执行 pickupitemex player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 10:49:31:301] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 10:57:05:675] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 10:57:27:034] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 11:18:33:093] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 11:18:42:640] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 11:25:05:189] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 11:41:27:653] LuaNPC:玩家名字l成 ID:999999999 执行 mondropitemex player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 11:51:37:308] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 12:13:59:306] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 12:17:24:499] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 12:18:22:774] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 12:25:02:571] LuaNPC:玩家名字l成 ID:999999999 执行 pickupitemex player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 12:36:30:257] LuaNPC:玩家名字l成 ID:999999999 执行 attack player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 12:47:38:469] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 12:53:09:566] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 12:54:43:356] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 12:57:36:224] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 13:05:06:133] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 13:08:48:533] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 13:18:35:442] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 13:25:05:558] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+[2026-04-02 13:25:06:195] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 13:34:35:019] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 13:34:44:238] LuaNPC:玩家名字l成 ID:999999999 执行 killmon player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 13:34:49:894] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 13:36:30:550] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 13:57:03:859] LuaNPC:玩家名字l成 ID:999999999 执行 killmon player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 14:00:18:402] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 14:06:32:302] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 14:15:37:250] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 14:17:43:937] LuaNPC:玩家名字l成 ID:999999999 执行 killmon player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 14:30:26:908] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 14:45:35:000] LuaNPC:玩家名字l成 ID:999999999 执行 pickupitemfrontex player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 14:53:37:169] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 15:01:56:603] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 15:11:42:923] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 15:23:08:625] LuaNPC:玩家名字l成 ID:999999999 执行 pickupitemex player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 15:29:19:643] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 15:35:37:327] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 15:40:56:746] LuaNPC:玩家名字l成 ID:999999999 执行 pickupitemex player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 15:41:16:609] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 15:47:13:764] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 15:47:47:761] LuaNPC:玩家名字l成 ID:999999999 执行 killmon player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 15:53:01:028] LuaNPC:玩家名字l成 ID:999999999 执行 pickupitemex player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 15:53:26:438] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 15:56:30:088] LuaNPC:玩家名字l成 ID:999999999 执行 pickupitemex player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 16:03:31:536] LuaNPC:玩家名字l成 ID:999999999 执行 pickupitemex player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 16:05:13:299] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 16:28:56:138] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 16:41:08:146] LuaNPC:玩家名字l成 ID:999999999 执行 pickupitemex player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 16:41:17:247] LuaNPC:玩家名字l成 ID:999999999 执行 pickupitemex player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 16:43:49:223] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 16:46:19:667] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 17:09:13:667] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 17:34:18:733] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 17:37:13:988] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 18:03:06:983] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 18:07:23:416] LuaNPC:玩家名字l成 ID:999999999 执行 attack player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 18:17:49:895] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 18:29:05:147] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 18:31:41:962] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 18:34:23:075] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 18:36:08:643] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 18:48:51:761] LuaNPC:玩家名字l成 ID:999999999 执行 pickupitemex player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 18:51:13:134] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 18:56:53:195] LuaNPC:玩家名字l成 ID:999999999 执行 pickupitemex player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 19:12:43:095] LuaNPC:玩家名字l成 ID:999999999 执行 pickupitemex player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 19:20:59:232] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 19:22:55:028] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 19:23:53:371] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 19:49:09:208] LuaNPC:玩家名字l成 ID:999999999 执行 pickupitemex player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 19:53:27:464] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 19:57:00:907] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 20:10:55:088] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 20:18:37:139] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 20:25:48:189] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 20:25:50:981] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：31; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 20:33:43:075] LuaNPC:玩家名字l成 ID:999999999 执行 attackdamage player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 20:34:23:501] LuaNPC:玩家名字l成 ID:999999999 执行 pickupitemex player:玩家名字l成 耗时：32; NpcThreadId: 23320, CurPlayThreadId: 23320
+
+[2026-04-02 20:47:09:754] LuaNPC:玩家名字l成 ID:999999999 执行 handlerequest player:玩家名字l成 耗时：172; NpcThreadId: 23320, CurPlayThreadId: 23320
+[2026-04-02 20:47:09:754] [玩家名字l成]Lua执行耗时过高:172ms msgid:100 13 1 0 
+
+[2026-04-02 20:47:21:889] LuaNPC:玩家名字l成 ID:999999999 执行 handlerequest player:玩家名字l成 耗时：47; NpcThreadId: 23320, CurPlayThreadId: 23320
+[2026-04-02 20:47:21:889] [玩家名字l成]Lua执行耗时过高:47ms msgid:100 24 1 0 
+
+[2026-04-02 21:29:03:798] LuaNPC:玩家名字l成 ID:999999999 执行 handlerequest player:玩家名字l成 耗时：125; NpcThreadId: 23320, CurPlayThreadId: 23320
+[2026-04-02 21:29:03:798] [玩家名字l成]Lua执行耗时过高:125ms msgid:100 101 3 1 {"count":1}
+
