@@ -3,3 +3,6 @@
 [2026-04-04 04:02:21:801] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：47; NpcThreadId: 31036, CurPlayThreadId: 31036
 [2026-04-04 04:02:21:801] [玩家名字]Lua执行耗时过高:47ms msgid:100 44 1 0 {"param":{"gridId":5},"action":"harvest"}
 
+[2026-04-04 12:19:29:544] LuaNPC:玩家名字 ID:999999999 执行 sendability player:玩家名字 耗时：47; NpcThreadId: 31036, CurPlayThreadId: 31036
+[2026-04-04 12:19:29:548] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 31036, CurPlayThreadId: 31036
+

@@ -405,11 +405,41 @@ end
 -- 备注：生肖守护是否全激活
 local function _xyl_has_shengxiao_guard(play)
     local data = Player.getJsonTableByVar(play, VarCfg["T_生肖守护"])
-    if data["jl_all"] and data["jl_all"] == 1 then
+    return (tonumber(data.level) or 0) >= 1
+end
+
+-- 备注：是否已激活全部圣遗物（灵兽圣遗物）
+local function _xyl_has_all_syw(play)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
+    if data.syw_all == 1 then
         return true
     end
-    for i = 1, 12 do
-        if not (data[tostring(i)] and data[tostring(i)] == 1) then
+    if checktitle(play, "上古神兽掌控者") then
+        return true
+    end
+    local syw = data.syw or {}
+    for i = 1, 5 do
+        if syw[tostring(i)] ~= 1 then
+            return false
+        end
+    end
+    return true
+end
+
+-- 备注：是否已激活全部天命装备（持有或穿戴）
+local function _xyl_has_all_tianming(play)
+    local list = {
+        { name = "天命·复活", where = 12 },
+        { name = "天命·麻痹", where = 14 },
+        { name = "天命·神镰", where = 15 },
+        { name = "天命·神斧", where = 9 },
+    }
+    for _, one in ipairs(list) do
+        local ok = _xyl_has_item(play, one.name, 1)
+        if not ok and one.where then
+            ok = _xyl_has_equip_named(play, one.where, one.name)
+        end
+        if not ok then
             return false
         end
     end
@@ -432,6 +462,8 @@ local function _xyl_check_task(play, name)
         ["转生·二"] = function(play) return _xyl_has_rebirth(play, 20) end,
         ["转生·三"] = function(play) return _xyl_has_rebirth(play, 30) end,
         ["转生·四"] = function(play) return _xyl_has_rebirth(play, 40) end,
+        ["转生·五"] = function(play) return _xyl_has_rebirth(play, 50) end,
+        ["完成转生·五"] = function(play) return _xyl_has_rebirth(play, 50) end,
         ["拥有1传说神石"] = _xyl_has_legendary_stone,
         ["传说·斗笠"] = _xyl_has_legendary_hat,
         ["神·酒葫芦"] = _xyl_has_god_gourd,
@@ -441,6 +473,8 @@ local function _xyl_check_task(play, name)
         ["了解砍树"] = _xyl_has_tree,
         ["种植仙草"] = _xyl_has_xianfu_plant,
         ["寻宝大师"] = _xyl_has_treasure,
+        ["激活全部圣遗物"] = _xyl_has_all_syw,
+        ["激活全部天命装备"] = _xyl_has_all_tianming,
         ["灵兽全一星"] = function(play) return _xyl_has_lingshou_star(play, 2) end,
         ["灵兽全二星"] = function(play) return _xyl_has_lingshou_star(play, 3) end,
         ["灵兽全三星"] = function(play) return _xyl_has_lingshou_star(play, 4) end,
@@ -2064,44 +2098,572 @@ local npc_xyl = {
     },
     {
         {
-            jq = {},
+            jq = {
+                {
+                    "灵兽奥秘",
+                    tk = "npc_682",
+                    id = 999,
+                    jl = {},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "灵兽谷", 682, 88, 91 },
+                    desc = "踏入灵兽奥秘，探寻灵兽之源",
+                },
+                {
+                    "激活全部圣遗物",
+                    id = 999,
+                    jl = { { "剧情点", 5 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "激活全部圣遗物")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 0 },
+                    desc = "为全部灵兽激活圣遗物",
+                },
+                {
+                    "激活全部天命装备",
+                    id = 999,
+                    jl = { { "剧情点", 5 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "激活全部天命装备")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 0 },
+                    desc = "集齐并激活全部天命装备",
+                },
+                {
+                    "完成转生·五",
+                    id = 999,
+                    jl = { { "剧情点", 1 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "完成转生·五")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 0 },
+                    desc = "完成转生·五，跨入更高境界",
+                },
+            },
             name = "红尘秘闻",
-            jqd = 100,
+            jqd = 80,
             jl = { { "等级卷轴", 20 }, { "1元真实充值", 25 } },
         },
         {
-            jq = {},
+            jq = {
+                {
+                    "时空之门",
+                    tk = "npc_688",
+                    id = 999,
+                    jl = { { "剧情点", 1 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "时空裂隙", 688, 54, 277 },
+                    desc = "开启时空之门，踏入裂隙",
+                },
+                {
+                    "屠龙宝刀",
+                    tk = "npc_714",
+                    id = 999,
+                    jl = { { "剧情点", 2 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "冰火岛", 714, 34, 51 },
+                    desc = "屠龙宝刀出世，拔刀破敌",
+                },
+                {
+                    "围攻光明顶",
+                    tk = "npc_715",
+                    id = 999,
+                    jl = { { "剧情点", 2 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "光明顶", 715, 46, 42 },
+                    desc = "围攻光明顶，夺取乾坤之力",
+                },
+                {
+                    "孤身战吕布",
+                    tk = "npc_716",
+                    id = 999,
+                    jl = { { "剧情点", 3 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "虎牢关", 716, 238, 238 },
+                    desc = "孤身战吕布，破阵夺势",
+                },
+                {
+                    "火烧赤壁",
+                    tk = "npc_717",
+                    id = 999,
+                    jl = { { "剧情点", 3 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "赤壁", 717, 258, 53 },
+                    desc = "火烧赤壁，胜局已定",
+                },
+                {
+                    "景阳冈打虎",
+                    tk = "npc_718",
+                    id = 999,
+                    jl = { { "剧情点", 2 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "景阳冈", 718, 52, 151 },
+                    desc = "景阳冈打虎，名扬四方",
+                },
+                {
+                    "血溅狮子楼",
+                    tk = "npc_719",
+                    id = 999,
+                    jl = { { "剧情点", 3 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "狮子楼", 719, 93, 44 },
+                    desc = "血溅狮子楼，快意恩仇",
+                },
+                {
+                    "时空守护者",
+                    tk = "npc_690",
+                    id = 999,
+                    jl = {},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "五大陆主城", 690, 24, 13 },
+                    desc = "直面时空守护者，守护时空秩序",
+                },
+            },
             name = "守护时空",
+            jqd = 90,
+            jl = { { "等级卷轴", 10 }, { "1元真实充值", 15 } },
+        },
+        {
+            jq = {
+                {
+                    "神庙逃亡",
+                    tk = "npc_696",
+                    id = 999,
+                    jl = { { "剧情点", 1 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "白骨神庙", 696, 336, 153 },
+                    desc = "神庙逃亡，避开杀机",
+                },
+                {
+                    "祭祀河神",
+                    tk = "npc_698",
+                    id = 999,
+                    jl = { { "剧情点", 2 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "诡冥墨河", 698, 120, 130 },
+                    desc = "祭祀河神，平息河患",
+                },
+                {
+                    "赤焰试炼",
+                    tk = "npc_700",
+                    id = 999,
+                    jl = { { "剧情点", 2 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "赤焰焚殿", 700, 28, 104 },
+                    desc = "赤焰试炼，淬火成锋",
+                },
+                {
+                    "葬天试炼",
+                    tk = "npc_701",
+                    id = 999,
+                    jl = { { "剧情点", 2 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "葬天旧土", 701, 247, 244 },
+                    desc = "葬天试炼，踏破旧土",
+                },
+                {
+                    "生命边界之谜",
+                    tk = "npc_692",
+                    id = 999,
+                    jl = {},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "五大陆主城", 692, 32, 13 },
+                    desc = "破解生命边界之谜",
+                },
+            },
+            name = "生命边界",
             jqd = 100,
             jl = { { "等级卷轴", 10 }, { "1元真实充值", 15 } },
         },
         {
-            jq = {},
-            name = "生命边界",
-            jqd = 115,
-            jl = { { "等级卷轴", 10 }, { "1元真实充值", 15 } },
-        },
-        {
-            jq = {},
+            jq = {
+                {
+                    "倩女幽魂",
+                    tk = "npc_702",
+                    id = 999,
+                    jl = { { "剧情点", 2 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "兰若寺", 702, 88, 74 },
+                    desc = "倩女幽魂，镇杀幽魂",
+                },
+                {
+                    "画中仙境",
+                    tk = "npc_703",
+                    id = 999,
+                    jl = { { "剧情点", 2 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "画壁", 703, 33, 57 },
+                    desc = "画中仙境，探寻真相",
+                },
+                {
+                    "崂山学法",
+                    tk = "npc_704",
+                    id = 999,
+                    jl = { { "剧情点", 2 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "崂山", 704, 80, 33 },
+                    desc = "崂山学法，道法自成",
+                },
+                {
+                    "是非难辨",
+                    tk = "npc_705",
+                    id = 999,
+                    jl = { { "剧情点", 2 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "罗刹海市", 705, 71, 31 },
+                    desc = "是非难辨，见证真相",
+                },
+            },
             name = "聊斋志异",
-            jqd = 120,
+            jqd = 100,
             jl = { { "等级卷轴", 10 }, { "1元真实充值", 15 } },
         },
         {
-            jq = {},
+            jq = {
+                {
+                    "守护壁画",
+                    tk = "npc_706",
+                    id = 999,
+                    jl = { { "剧情点", 2 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "莫高窟", 706, 19, 25 },
+                    desc = "守护壁画，护佑遗梦",
+                },
+                {
+                    "沙海明珠",
+                    tk = "npc_707",
+                    id = 999,
+                    jl = { { "剧情点", 2 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "月牙泉", 707, 81, 167 },
+                    desc = "沙海明珠，寻回秘宝",
+                },
+                {
+                    "丝路往事",
+                    tk = "npc_708",
+                    id = 999,
+                    jl = { { "剧情点", 2 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "玉门关", 708, 35, 45 },
+                    desc = "丝路往事，回溯旧影",
+                },
+                {
+                    "故人远行",
+                    tk = "npc_709",
+                    id = 999,
+                    jl = { { "剧情点", 3 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "阳关道", 709, 179, 207 },
+                    desc = "故人远行，缘起缘落",
+                },
+            },
             name = "敦煌遗梦",
-            jqd = 126,
+            jqd = 100,
             jl = { { "等级卷轴", 10 }, { "1元真实充值", 15 } },
         },
         {
-            jq = {},
+            jq = {
+                {
+                    "禁墟之门",
+                    tk = "npc_689",
+                    id = 999,
+                    jl = { { "剧情点", 1 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "世界禁墟", 689, 95, 69 },
+                    desc = "禁墟之门开启，步入禁墟",
+                },
+                {
+                    "大地之王",
+                    tk = "npc_710",
+                    id = 999,
+                    jl = { { "剧情点", 3 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "大地禁墟三层", 710, 61, 57 },
+                    desc = "挑战大地之王，夺取祝福",
+                },
+                {
+                    "天空之王",
+                    tk = "npc_711",
+                    id = 999,
+                    jl = { { "剧情点", 3 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "天空禁墟三层", 711, 40, 31 },
+                    desc = "挑战天空之王，夺取祝福",
+                },
+                {
+                    "海洋之王",
+                    tk = "npc_712",
+                    id = 999,
+                    jl = { { "剧情点", 3 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "海洋禁墟三层", 712, 200, 210 },
+                    desc = "挑战海洋之王，夺取祝福",
+                },
+                {
+                    "青铜之王",
+                    tk = "npc_713",
+                    id = 999,
+                    jl = { { "剧情点", 3 } },
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "青铜禁墟三层", 713, 31, 49 },
+                    desc = "挑战青铜之王，夺取祝福",
+                },
+                {
+                    "重启世界",
+                    tk = "npc_691",
+                    id = 999,
+                    jl = {},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "五大陆主城", 691, 28, 13 },
+                    desc = "完成重启世界，开启新篇",
+                },
+            },
             name = "重启世界",
-            jqd = 133,
+            jqd = 100,
             jl = { { "等级卷轴", 10 }, { "1元真实充值", 15 } },
         },
     },
 }
 return npc_xyl
+
+
+
+
+
+
+
 
 
 

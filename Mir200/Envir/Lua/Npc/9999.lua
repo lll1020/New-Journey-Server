@@ -779,7 +779,7 @@ function ggna(play,id)
         -- 大陆进入条件一键达成：主线进度、转生等级、剧情点
         local target_task = 21
         local target_zs = 40
-        local target_jqd = 100
+        local target_jqd = 200
 
         local cur_task = tonumber(getplaydef(play, VarCfg.U_zxrw[1])) or 0
         if cur_task < target_task then

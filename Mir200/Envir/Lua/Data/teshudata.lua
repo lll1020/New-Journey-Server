@@ -899,7 +899,7 @@ teshudata = {
     ["npc_49"] = {
         id = 49,
         name = "八卦",
-        cost = {{"◆『八卦卷轴』◆",1},{"若水宝玉",3},{"辉耀水晶",10}},
+        cost = {{"◆『八卦卷轴』◆",1},{"千年玄铁",200},{"辉耀水晶",10}},
         ch = "天下第一神算子",
         details = {
             {attr = {{244,666}}},
@@ -1393,7 +1393,7 @@ teshudata = {
     ["npc_680"]  = {id = 680, name = "真假玉帝",cost = {{"鱼竿",2},{"鱼饵",20}},ch = '愿者上钩'},
     ["npc_681"]  = {id = 681, name = "白蛇传说",cost = {{"白蛇的礼物",1}},max_num = 100,ch = "我是许仙",},
     -- Story5 task config for npc_682~719 (single source for server/client)
-    ["npc_682"] = { id = 682, name = "灵兽奥秘", shaguai_id = 682, cost = {{"若水宝玉",1}}, ch = "灵兽奥秘", task_cfg = { chapter = 5, task_type = "story", map = "灵兽谷", kill_count = 100, }, },
+    ["npc_682"] = { id = 682, name = "灵兽奥秘", shaguai_id = 682, cost = {{"辉耀水晶",100}}, ch = "灵兽奥秘", task_cfg = { chapter = 5, task_type = "story", map = "灵兽谷", kill_count = 100, }, },
     ["npc_683"] = { id = 683, name = "青龙之境", task_cfg = { chapter = 5, task_type = "enter_map", map = "青龙之境", need_task = "npc_682", need_lingshou = 2, need_lingshou_name = "青龙", tp_map = {"青龙之境",23,273}, }, },
     ["npc_684"] = { id = 684, name = "白虎之境", task_cfg = { chapter = 5, task_type = "enter_map", map = "白虎之境", need_task = "npc_682", need_lingshou = 4, need_lingshou_name = "白虎", tp_map = {"白虎之境",239,266}, }, },
     ["npc_685"] = { id = 685, name = "朱雀之境", task_cfg = { chapter = 5, task_type = "enter_map", map = "朱雀之境", need_task = "npc_682", need_lingshou = 3, need_lingshou_name = "朱雀", tp_map = {"朱雀之境",149,23}, }, },
@@ -1415,7 +1415,7 @@ teshudata = {
     ["npc_701"] = { id = 701, name = "葬天试炼", shaguai_id = 701, ch = "葬众生", task_cfg = { chapter = 5, task_type = "trial_chain", map = "葬天旧土", kill_count = 300, submit = {{"葬亡晶石",10}}, }, },
     ["npc_702"] = { id = 702, name = "倩女幽魂", ch = {"镇杀幽魂","小倩的感谢"}, task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "兰若寺", fb_map = "mwsl", fb_time = 300, submit = {{"镇魂符",10}}, main_boss = "树妖姥姥", hidden_boss = "黑山老妖", enter_pos = {29,27}, main_pos = {32,36}, hide_pos = {35,36}, }, },
     ["npc_703"] = { id = 703, name = "画中仙境", ch = "画中仙境", task_cfg = { chapter = 5, task_type = "story", map = "画壁", submit = { {"诡异碎片一",1}, {"诡异碎片二",1}, {"诡异碎片三",1}, }, }, },
-    ["npc_704"] = { id = 704, name = "崂山学法", ch = "崂山秘法", task_cfg = { chapter = 5, task_type = "story", map = "崂山", submit = { {"崂山秘法残页",10}, {"千年玄铁",1}, {"金币",8880000}, }, }, },
+    ["npc_704"] = { id = 704, name = "崂山学法", ch = "崂山秘法", task_cfg = { chapter = 5, task_type = "story", map = "崂山", submit = { {"崂山秘法残页",10}, {"千年玄铁",200}, {"金币",8880000}, }, }, },
     ["npc_705"] = { id = 705, name = "是非难辨", shaguai_id = 705, ch = {"以貌取人","迟来的清醒"}, task_cfg = { chapter = 5, task_type = "story", map = "罗刹海市", kill_count = 5, mob = "≮欲望具现·海市尊≯", mob_a = nil, mob_b = nil, }, },
     ["npc_706"] = { id = 706, name = "守护壁画", ch = "守护壁画", task_cfg = { chapter = 5, task_type = "story", map = "莫高窟", submit = { {"莫高窟壁画上卷",10}, {"莫高窟壁画下卷",10}, }, }, },
     ["npc_707"] = { id = 707, name = "沙海明珠", ch = "沙海明珠", task_cfg = { chapter = 5, task_type = "story", map = "月牙泉", submit = {{"失落的秘宝",20}}, }, },
@@ -1427,7 +1427,7 @@ teshudata = {
     ["npc_713"] = { id = 713, name = "青铜之王", ch = "青铜之王祝福", jl = {{"愿力碎片",1}}, task_cfg = { chapter = 5, task_type = "boss_submit", map = "青铜禁墟三层", submit = {{"青铜之怒",1}}, }, },
     ["npc_714"] = { id = 714, name = "屠龙宝刀", shaguai_id = 714, ch = "屠龙刀", task_cfg = { chapter = 5, task_type = "trial_chain", map = "冰火岛", kill_count = 10, kill_boss = "BOSS", scale_item = "冰火龙鳞", scale_drop_rate = 1000, artifact_item = "屠龙刀", artifact_upgrade_item = "真·屠龙刀", upgrade_submit = { {"冰火龙鳞",100}, {"元宝",1000000}, }, }, },
     ["npc_715"] = { id = 715, name = "围攻光明顶", ch = "乾坤大挪移", task_cfg = { chapter = 5, task_type = "trial_chain", map = "光明顶", submit = { {"乾坤大挪移残页",66}, {"元宝",500000}, }, }, },
-    ["npc_716"] = { id = 716, name = "孤身战吕布", ch = "吕布之力", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "虎牢关", fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "吕布", boss_pos = {32,36}, submit = { {"刘备祝福",3}, {"张飞祝福",3}, {"关羽祝福",3}, }, }, },
+    ["npc_716"] = { id = 716, name = "孤身战吕布", ch = "吕布之力",jl = {{"时装：吕奉先",1}}, task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "虎牢关", fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "吕布", boss_pos = {32,36}, submit = { {"刘备祝福",3}, {"张飞祝福",3}, {"关羽祝福",3}, }, }, },
     ["npc_717"] = { id = 717, name = "火烧赤壁", ch = "火中取胜", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "赤壁", fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "≮火烧连营·天命策尊≯", boss_pos = {32,36}, night_only = 1, night_start = 18, night_end = 6, fire_effect_id = 19, fire_tick_hurt_pct = 2, fire_burst_hurt_pct = 20, submit = {{"赤壁密函",10}}, }, },
     ["npc_718"] = { id = 718, name = "景阳冈打虎", shaguai_id = 718, ch = "打虎英雄", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "景阳冈", fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "吊睛白额虎", boss_pos = {32,36}, submit = {{"武松的酒",3}}, drop_item = "武松的酒", drop_rate = 2500, }, },
     ["npc_719"] = { id = 719, name = "血溅狮子楼", shaguai_id = 719, ch = "侠义祝福", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "狮子楼", fb_map = "mwsl", limit_time_sec = 1200, enter_pos = {29,27}, submit = {{"净化水晶",1}}, drop_item = "净化水晶", drop_rate = 3000, stage1_mob = "暗影打手", stage1_count = 20, stage1_timeout = 300, stage1_elite_mob = "暗影打手·精英", stage1_elite_count = 2, stage2_boss = "王婆", stage2_boss_count = 1, stage2_mob = "暗影侍女", stage2_mob_count = 2, stage3_boss = "邪恶西门庆", stage3_boss_count = 1, stage3_mob = "暗影侍女", stage3_mob_count = 4, boss_pos = {32,36}, mob_center = {32,36}, rage_hp_pct = 50, explode_hurt_pct = 12, explode_effect_id = 4011, }, },

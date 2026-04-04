@@ -1431,12 +1431,8 @@ shaguai = {
 			shaguai.jian(play,718)
 			return
 		end
-		local drop_item = task_cfg.drop_item or "武松的酒"
-		local drop_rate = tonumber(task_cfg.drop_rate or 2500) or 2500
-		if drop_item ~= "" and drop_rate > 0 and math.random(drop_rate) == 1 then
-			shaguai.temp_drop(play, mob, drop_item)
-			Player.sendmsgEx(play, "打怪掉落【"..drop_item.."】#57")
-		end
+		-- 掉落改为怪物爆率表处理，避免双倍掉落
+		return
 	end,
 	["719"] = function(play,mob)      --第五章：血溅狮子楼（本图掉落净化水晶）
 		local key = "npc_719"
