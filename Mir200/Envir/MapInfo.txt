@@ -458,14 +458,56 @@ kfhg 23 26 -> kfhjsbk 86 102
 
 
 ;==============================================六大陆野外地图==============================
-[六大陆地图一|new_44   六大陆地图一] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[六大陆地图二|new_44   六大陆地图二] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[六大陆地图三|new_44   六大陆地图三] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[六大陆地图四|new_44   六大陆地图四] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[六大陆地图五|new_44   六大陆地图五] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[六大陆地图六|new_44   六大陆地图六] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[六大陆地图七|new_44   六大陆地图七] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[六大陆地图八|new_44   六大陆地图八] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+;登神之路
+[登神之路|new_44   登神之路] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[鬼道古藏|new_44   鬼道古藏] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[兵道古藏|new_44   兵道古藏] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[鬼道古藏深处|new_44   鬼道古藏深处] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[兵道古藏深处|new_44   兵道古藏深处] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+
+
+
+;血契之地
+[血契之地|new_44   血契之地] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[血契之地二层|new_44   血契之地二层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+
+;冰川雪域
+[冰川雪域|new_44   冰川雪域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[凛冬冰原|new_44   凛冬冰原] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[碎星冰谷|new_44   碎星冰谷] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[寒峰圣坛|new_44   寒峰圣坛] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[冻魂冰窟|new_44   冻魂冰窟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[星陨冰窟|new_44   星陨冰窟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+
+;森罗魔域
+[森罗魔域|new_44   森罗魔域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[邪影回廊|new_44   邪影回廊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[噬魂魔窟|new_44   噬魂魔窟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[幽冥血沼|new_44   幽冥血沼] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[魔焰祭坛|new_44   魔焰祭坛] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+
+;边关烽城
+[边关烽城|new_44   边关烽城] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[魔渊关隘|new_44   魔渊关隘] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[灵脉戍楼|new_44   灵脉戍楼] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[残垣烽火|new_44   残垣烽火] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[镇关帅府|new_44   镇关帅府] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+
+;盛世古城
+[盛世古城|new_44   盛世古城] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[长安西市|new_44   长安西市] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[洛阳天街|new_44   洛阳天街] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[汴京御街|new_44   汴京御街] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[临安古渡|new_44   临安古渡] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+
+;[六大陆地图一|new_44   六大陆地图一] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+;[六大陆地图二|new_44   六大陆地图二] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+;[六大陆地图三|new_44   六大陆地图三] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+;[六大陆地图四|new_44   六大陆地图四] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+;[六大陆地图五|new_44   六大陆地图五] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+;[六大陆地图六|new_44   六大陆地图六] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+;[六大陆地图七|new_44   六大陆地图七] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+;[六大陆地图八|new_44   六大陆地图八] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 
 ;==============================================七大陆野外地图==============================

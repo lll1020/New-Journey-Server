@@ -121,12 +121,12 @@ function npc.link(play,npcid,ew,aid)
                 mapmove(play,(hour % 2 == 0) and "葬星海滩" or "葬星海滩1",config[2],config[3],5)
                 return
             elseif npcid == 305 then -- 船长室 629的任务完成 -a
-                if jq_data["npc_629_a"] ~= 1 then
+                if jq_data["npc_629_a"] ~= 1 and not (jq_data["npc_629"] == 2) then
                     Player.sendmsgEx(play, "未完成对应提交，无法进入#57")
                     return
                 end
             elseif npcid == 306 then -- 水手舱 629的任务完成 -b
-                if jq_data["npc_629_b"] ~= 1 then
+                if jq_data["npc_629_b"] ~= 1 and not (jq_data["npc_629"] == 2) then
                     Player.sendmsgEx(play, "未完成对应提交，无法进入#57")
                     return
                 end

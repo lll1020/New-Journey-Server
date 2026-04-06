@@ -1120,27 +1120,25 @@ function Buff.refreshHuTiGuangHuan(play)
         active = 0
         setplaydef(play, VarCfg["U_护体光环激活"], 0)
     end
-    if active == 1 then
+    if unlocked[1] then
         Buff[107](play, 1)
         playeffect(play,11502,0,0,0,1,0)
-    elseif active == 2 then
+    end
+    if unlocked[2] then
         Buff[108](play, 1)
         Buff[109](play, 1)
         playeffect(play,11503,0,0,0,1,0)
-    elseif active == 3 then
+    end
+    if unlocked[3] then
         Buff[110](play, 1)
         playeffect(play,11504,0,0,0,1,0)
     end
-    if active > 0 then
-        if FSetGuangHuan then
-            FSetGuangHuan(play, 20)
-        else
-            setplaydef(play, VarCfg["U_光环外观记录"], 20)
-            seticon(play, ConstCfg.iconWhere.guangHuan, 1, 20, 0, 0, 0, 0, 1)
-        end
-    else
-        setplaydef(play, VarCfg["U_光环外观记录"], 0)
-        seticon(play, ConstCfg.iconWhere.guangHuan, -1)
+    if active == 1 then
+        playeffect(play,11502,0,0,0,1,0)
+    elseif active == 2 then
+        playeffect(play,11503,0,0,0,1,0)
+    elseif active == 3 then
+        playeffect(play,11504,0,0,0,1,0)
     end
 end
 function Buff.login(play)

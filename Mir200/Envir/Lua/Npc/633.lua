@@ -59,7 +59,7 @@ function npc.link(play,npcid,ew,aid)
             jq_data[key] = 2
         end
             if (jq_data[key] or 0) >= 2 then
-                Guard.clearTaskTemp(jq_data, key)
+                -- Guard.clearTaskTemp(jq_data, key)
                 jq_data[key] = 2
             end
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
@@ -76,10 +76,12 @@ function npc.link(play,npcid,ew,aid)
             if _config.ch then
                 Player.title_give(play, _config.ch)
             end
-            sendluamsg(play,100,npcid,1,2,"")
         else
             Player.sendmsgEx(play, "提交成功")
         end
+        local data = {}
+        data["T_dljq"] = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+        sendluamsg(play,100,npcid,0,0,tbl2json(data))
     end
 end
 

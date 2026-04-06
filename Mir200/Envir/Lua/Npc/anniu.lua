@@ -709,7 +709,11 @@ npc[30] = function(play, p2, p3, data) --砍树系统
         end
     elseif p2 == 3 then --定时器开关
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
-        if not (getplaydef(play,"N$自动砍树") == 1) or true then
+        if getflagstatus(play, VarCfg.BS_mztq) ~= 1 then
+            sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[自动砍树]</font><font color=\'#ff0500\'>未激活特权，无法开启自动砍树...</font>","Type":9}')
+            return
+        end
+        if not (getplaydef(play,"N$自动砍树") == 1) then
             T_data.auto = T_data.auto or 1
             Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
             setontimer(play,7,60*20,0,1)
@@ -2399,3 +2403,4 @@ for npcId, handler in pairs(npc) do
     end
 end
 return npc
+

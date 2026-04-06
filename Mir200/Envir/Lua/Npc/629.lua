@@ -73,10 +73,6 @@ function npc.link(play,npcid,ew,aid)
 
         if a_done and b_done then
             jq_data[key] = 2
-            if (jq_data[key] or 0) >= 2 then
-                Guard.clearTaskTemp(jq_data, key)
-                jq_data[key] = 2
-            end
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
             Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
             sendluamsg(play,101,1005,0,0,"rwwc")
@@ -96,4 +92,5 @@ function npc.link(play,npcid,ew,aid)
 end
 
 return npc
+
 

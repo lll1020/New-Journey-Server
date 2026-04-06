@@ -806,20 +806,20 @@ local function _dl_check(actor, dl)
         end
         return false, "需完成主线引导后才可进入二大陆"
     elseif dl == 3 then
-        if zslv >= 20 and jqd >= 15 then
+        if zslv >= 20 and jqd >= 11 then
             return true
         end
-        return false, "需完成二大陆转生且剧情点达到15后才可进入三大陆"
+        return false, "需完成二大陆转生且剧情点达到11后才可进入三大陆"
     elseif dl == 4 then
-        if zslv >= 30 and jqd >= 50 then
+        if zslv >= 30 and jqd >= 40 then
             return true
         end
-        return false, "需完成三大陆转生且剧情点达到50后才可进入四大陆"
+        return false, "需完成三大陆转生且剧情点达到40后才可进入四大陆"
     elseif dl == 5 then
-        if zslv >= 40 and jqd >= 100 then
+        if zslv >= 40 and jqd >= 90 then
             return true
         end
-        return false, "需完成四大陆转生且剧情点达到100后才可进入五大陆"
+        return false, "需完成四大陆转生且剧情点达到90后才可进入五大陆"
     end
 
     return true

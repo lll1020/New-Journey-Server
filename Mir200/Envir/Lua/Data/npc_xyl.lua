@@ -47,6 +47,10 @@ local function _xyl_check_story(play, name)
     end
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     local node = jq_data[key]
+    -- 特殊验证
+    if key == "npc_633" then
+        return node >= 2
+    end
     if type(node) == "number" then
         if max_num and max_num > 0 then
             return node >= max_num
@@ -272,7 +276,7 @@ end
 -- 备注：是否拥有传说神石类道具
 local function _xyl_has_legendary_stone(play)
     local cfg = teshudata and teshudata["npc_53"]
-    local list = cfg and cfg.cost and cfg.cost[3]
+    local list = cfg and cfg.cost and cfg.cost[4]
     return _xyl_has_any_item(play, list)
 end
 

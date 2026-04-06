@@ -364,7 +364,7 @@ function stdmodefunc35(play, item) --²Ø±¦Í¼
                 return false
             end
             local gw = genmonex(map_name,map_x,map_y,teshudata["npc_47"].details[getstditeminfo(getiteminfo(play, item, 2), 8)].mob_name,1,1,0,54,"",0)
-            local tims = (getplaydef(play, VarCfg["U_²Ø±¦Í¼´ÎÊıe"]) or 0) + 1
+            local times = (getplaydef(play, VarCfg["U_²Ø±¦Í¼´ÎÊı"]) or 0) + 1
             setplaydef(play, VarCfg["U_²Ø±¦Í¼´ÎÊı"], times)
             return true
         else
@@ -404,6 +404,7 @@ function stdmodefunc36(play, item) --º£µÁ±¦Ïä  º£µÁÑÛÕÖ  º£µÁÑÛÕÖ 10%¡¢90% ½ğ±Ò*
 
     setplaydef(play, VarCfg["T_ÎïÆ·Ê¹ÓÃ¼ÇÂ¼"], tbl2json(rec))
     delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+    return false
 end
 function stdmodefunc37(play, item) --´¬³¤µÄ±¦²Ø  ¿ªÆôËæ»ú»ñµÃÒÔÏÂ½±ÀøÖ®Ò»£º½ğ±Ò88w¡¢Ôª±¦8w¡¢ÎåĞĞÊ¯*5
     local roll = math.random(3)
@@ -415,6 +416,7 @@ function stdmodefunc37(play, item) --´¬³¤µÄ±¦²Ø  ¿ªÆôËæ»ú»ñµÃÒÔÏÂ½±ÀøÖ®Ò»£º½ğ±Ò8
         giveitem(play, "ÎåĞĞÊ¯", 5)
     end
     delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+    return false
 end
 function stdmodefunc38(play, item) --º£ÔôÍõ×°±¸Ëæ»ú±¦Ïä  Â··ÉµÄ²İÃ± Ë÷Â¡µÄÅåµ¶ ÎÚË÷ÆÕµÄµ¯¹­ Ã¿¸ö¿ªÒ»¸ö²»»áÖØ¸´
     local rec = json2tbl(getplaydef(play, VarCfg["T_ÎïÆ·Ê¹ÓÃ¼ÇÂ¼"]))
@@ -423,7 +425,7 @@ function stdmodefunc38(play, item) --º£ÔôÍõ×°±¸Ëæ»ú±¦Ïä  Â··ÉµÄ²İÃ± Ë÷Â¡µÄÅåµ¶ Î
     end
     rec.box38 = type(rec.box38) == "table" and rec.box38 or {}
 
-    local pool = {"Â··ÉµÄ²İÃ±", "Ë÷Â¡µÄÅåµ¶", "ÎÚË÷ÆÕµÄµ¯¹­"}
+    local pool = {"Â··ÉµÄÃ±×Ó", "Ë÷Â¡µÄµ¶", "ÎÚË÷ÆÕµÄµ¯¹­"}
     local missing = {}
     for _, name in ipairs(pool) do
         if not rec.box38[name] then
@@ -440,6 +442,7 @@ function stdmodefunc38(play, item) --º£ÔôÍõ×°±¸Ëæ»ú±¦Ïä  Â··ÉµÄ²İÃ± Ë÷Â¡µÄÅåµ¶ Î
     rec.box38[reward] = 1
     setplaydef(play, VarCfg["T_ÎïÆ·Ê¹ÓÃ¼ÇÂ¼"], tbl2json(rec))
     delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+    return false
 end
 function stdmodefunc39(play, item) --ÌØÊâµ¤Ò©
     local idx = getstditeminfo(getiteminfo(play, item, 2), 8)

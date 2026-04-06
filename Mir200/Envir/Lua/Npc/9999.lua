@@ -456,6 +456,7 @@ function npc.main(play,npcid)
             <Button|id=ui_100|x=150|y=450|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=llxf测试|link=@ggna,24>
             <Button|id=ui_101|x=350|y=450|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=测试装备|link=@ggna,23>
             <Button|id=ui_102|x=550|y=450|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=大陆全解锁|link=@ggna,25>
+            <Button|id=ui_103|x=550|y=400|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=灰界全任务|link=@ggna,54>
 
             <Button|id=ui_39|x=18|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=村庄开始|link=@ggna,32>
             <Button|id=ui_40|x=130|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=村庄结束|link=@ggna,33>
@@ -775,6 +776,22 @@ function ggna(play,id)
         _ff9999_random_finish(play)
     elseif id == "53" then
         _admin_spawn_test_monsters(play)
+    elseif id == "54" then
+        local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+        local keys = {"npc_621", "npc_622", "npc_623", "npc_624", "npc_625", "npc_626", "npc_627", "npc_628"}
+        for _, key in ipairs(keys) do
+            jq_data[key] = 2
+        end
+        local prep_keys = {"npc_625_rw", "npc_626_rw", "npc_627_rw", "npc_628_rw"}
+        for _, key in ipairs(prep_keys) do
+            jq_data[key] = 2
+        end
+        jq_data["npc_55"] = 2
+        if Guard and Guard.clearTaskTemp then
+            Guard.clearTaskTemp(jq_data, "npc_55")
+        end
+        Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+        Player.sendmsgEx(play, "灰界任务已一键完成#249")
     elseif id == "25" then
         -- 大陆进入条件一键达成：主线进度、转生等级、剧情点
         local target_task = 21
@@ -1163,6 +1180,9 @@ function ggna(play,id)
 end
 
 return npc
+
+
+
 
 
 

@@ -975,6 +975,12 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
                     Player.title_give(play, teshudata["anniu_504"].ch,1)
                     Player.rwjl(play, teshudata["anniu_504"].give, "快人一步",1,1000)
                     setflagstatus(play,constant.BS_mztq,1)
+                    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+                    if jq_data["npc_55"] and jq_data["npc_55"] >= 2 then
+                        if Npclib and Npclib["anniu"] and Npclib["anniu"][30] then
+                            Npclib["anniu"][30](play, 3, 0, "")
+                        end
+                    end
                     if Buff and Buff.refreshHuTiGuangHuan then
                         Buff.refreshHuTiGuangHuan(play)
                     end
@@ -1391,3 +1397,4 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
         end
 	end
 end
+

@@ -71,7 +71,7 @@ function Login.main(play)
     iniplayvar(play, "integer","HUMAN","比武大会")
     iniplayvar(play, "integer","HUMAN","全民夺矿")
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
-    if jq_data["npc_55"] and jq_data["npc_55"] >= 2 then
+    if (jq_data["npc_55"] and jq_data["npc_55"] >= 2) and getflagstatus(play, VarCfg.BS_mztq) == 1 then
         Npclib['anniu'][30](play, 3, 0, "") --初始化砍树系统
     end
     --天书  杀意值
@@ -161,3 +161,5 @@ end
 
 
 return Login
+
+
