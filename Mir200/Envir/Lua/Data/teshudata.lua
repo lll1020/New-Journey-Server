@@ -1274,7 +1274,7 @@ teshudata = {
     },
     ["npc_603"] = {id = 603,name = "扫荡野火帮",level = 2,map = "野火帮",desc = "击杀30只怪物",shaguai_id = 603,num = 30,rwjl = {},ch = "野火燎原"},
     ["npc_604"] = {id = 604,name = "剿灭恶徒",level = 2,map = "极光城郊",desc = "击杀怪物A、B各15只",shaguai_id = 604,num_a = 15,num_b = 15,mob_a = "寒霜狐",mob_b = "冰羽雀",rwjl = {{"绑定金币",150000},{"二大陆专属装备随机宝箱",1}},},
-    ["npc_605"] = {id = 605,name = "杀伐之路",level = 2,map = "兵道古藏",desc = "击杀怪物30只",shaguai_id = 605,num = 30,rwjl = {{"绑定金币",300000},{"千年玄铁",30}},},
+    ["npc_605"] = {id = 605,name = "杀伐之路",level = 2,map = "杀伐道场",desc = "击杀怪物30只",shaguai_id = 605,num = 30,rwjl = {{"绑定金币",300000},{"千年玄铁",30}},},
     ["npc_606"] = {id = 606,name = "讨伐夜魔",level = 2,map = "夜魔洞",desc = "击杀A、B怪各20只",shaguai_id = 606,num_a = 20,num_b = 20,mob_a = "夜蝠魇",mob_b = "地腔鼠",rwjl = {{"绑定金币",150000},{"玫瑰花",50}},},
     ["npc_607"] = {id = 607,name = "深入野火",level = 2,map = "野火大本营",desc = "提交：野火帮罪证*10",cost = {{"野火帮罪证",10}},rwjl = {},ch = "除魔卫道"},
     ["npc_608"] = {id = 608,name = "守护森林",level = 2,map = "神秘森林",desc = "击杀怪物50只",shaguai_id = 608,num = 50,rwjl = {{"绑定金币",200000},{"称号卷轴",5}},},

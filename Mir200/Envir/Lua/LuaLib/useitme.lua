@@ -3,7 +3,7 @@ release_print("useitme.lua")
 function stdmodefunc9(play, item)
     setplaydef(play,"S$dtm",getbaseinfo(play, 3))
     release_print("Ëæ»úÊ¯")
-    if getplaydef(play,"N$Õ½¶·×´Ì¬") < os.time() then
+    if getplaydef(play,"N$Õ½¶·×´Ì¬") < os.time() or _has_equip_name(play, "ÕÚÔÆÈÕ") then
         map(play,getbaseinfo(play,3))
         -- if getflagstatus(play, 300) == 1 then
         --     startautoattack(play)
@@ -21,6 +21,20 @@ end
 
     
 function stdmodefunc10(play, item)
+
+local _equip_slots = {0,1,3,4,5,6,7,8,9,10,11,13,14,16,30,31,32,33,34,35,36,37,38,39,40,41}
+local function _has_equip_name(play, itemname)
+    if not play or not itemname or itemname == "" then
+        return false
+    end
+    for _, pos in ipairs(_equip_slots) do
+        if Player.hasEquipOnPos(play, pos, itemname) then
+            return true
+        end
+    end
+    return false
+end
+
     setplaydef(play,"S$dtm",getbaseinfo(play, 3))
 
     local du = getbaseinfo(play, 3)

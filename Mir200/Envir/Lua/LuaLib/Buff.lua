@@ -132,13 +132,13 @@ local function _gcmp_refresh_item(play)
     end
     item_json.abil[idx] = {i = abil_i or (idx - 1), t = "[古刹切割]", c = 251, v = attr_list}
     setitemcustomabil(play, itemobj, tbl2json(item_json))
-    setcustomitemprogressbar(play, itemobj, 0, tbl2json({
-        ["open"] = 1,
-        ["show"] = 0,
-        ["name"] = string.format("古刹切割：+%d", stack),
-        ["color"] = 251,
-        ["imgcount"] = 1,
-    }))
+    -- setcustomitemprogressbar(play, itemobj, 0, tbl2json({
+    --     ["open"] = 1,
+    --     ["show"] = 0,
+    --     ["name"] = string.format("古刹切割：+%d", stack),
+    --     ["color"] = 251,
+    --     ["imgcount"] = 1,
+    -- }))
     refreshitem(play, itemobj)
 end
 local function _tianshu_buff_splash(play, Target)
@@ -172,6 +172,315 @@ local function _tianshu_buff_splash(play, Target)
         playeffect(Target, tonumber(cfg.splash_hit_effect) or 60463, 0, 0, 1, 1, 0)
     end
     -- Player.sendmsgEx(play,"【帝疆】#253|触发，范围造成"..damage.."点真实伤害")
+end
+
+
+local function _equip_is_normal_attack(MagicId)
+    -- 仅普攻(MagicId为0或空)
+    return not MagicId or MagicId == 0
+end
+
+-- 装备特殊效果辅助(Price列作为BuffId)
+-- 说明: 所有逻辑只在穿戴/脱下时计算一次, 升级不自动刷新.
+local _equip_slots = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,55,71,72,73,74,75,76,78,85,86,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120}
+local function _equip_has_name(play, itemname)
+    -- 检测当前穿戴中是否存在指定装备名
+    if not play or not itemname or itemname == "" then
+        return false
+    end
+    for _, pos in ipairs(_equip_slots) do
+        local item = linkbodyitem(play, pos)
+        if item and item ~= "0" then
+            local name = getiteminfo(play, item, 7)
+            release_print("检测装备位置"..pos.."，物品名："..tostring(name))
+            if name == itemname then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+local function _equip_has_any(play, names)
+    -- 检测当前穿戴中是否存在任意一件装备名
+    if type(names) ~= "table" then
+        return false
+    end
+    for _, name in ipairs(names) do
+        if _equip_has_name(play, name) then
+            return true
+        end
+    end
+    return false
+end
+
+local function _equip_find_item(play, itemname)
+    -- 获取指定装备名的物品对象
+    if not play or not itemname or itemname == "" then
+        return nil
+    end
+    for _, pos in ipairs(_equip_slots) do
+        local item = linkbodyitem(play, pos)
+        if item and item ~= "0" then
+            local name = getiteminfo(play, item, 7)
+            if name == itemname then
+                return item
+            end
+        end
+    end
+    return nil
+end
+
+local function _equip_attr_str(attrs)
+    -- 属性表转为 add_attlist 字符串
+    if type(attrs) ~= "table" then
+        return ""
+    end
+    local t = {}
+    for k, v in pairs(attrs) do
+        if v and v ~= 0 then
+            t[k] = v
+        end
+    end
+    return Player.getAttrTableToStr(t)
+end
+
+local function _equip_set_attr(play, listName, attrs, enable)
+    -- 统一的属性加成/删除入口
+    if not play or not listName or listName == "" then
+        return
+    end
+    if enable then
+        local attrStr = _equip_attr_str(attrs)
+        if attrStr ~= "" then
+            Player.add_attlist(play, listName, "=", attrStr, 1)
+        end
+    else
+        Player.del_attlist(play, listName)
+    end
+end
+
+local function _equip_roll(play, idx, chance, cd)
+    -- 概率+CD触发判定(默认5%/30s)
+    local now = os.time()
+    local key = "N$equipbuff" .. idx .. "cd"
+    local last = tonumber(getplaydef(play, key) or 0) or 0
+    local cdv = tonumber(cd or 30) or 30
+    if now - last < cdv then
+        return false
+    end
+    local rate = tonumber(chance or 5) or 5
+    if math.random(100) <= rate then
+        setplaydef(play, key, now)
+        return true
+    end
+    return false
+end
+
+local function _equip_hit_step(play, idx, step, MagicId)
+    -- 连击计数: 只算普攻
+    if not _equip_is_normal_attack(MagicId) then
+        return false
+    end
+    local key = "N$equipbuff" .. idx .. "hit"
+    local cnt = (tonumber(getplaydef(play, key) or 0) or 0) + 1
+    setplaydef(play, key, cnt)
+    return cnt % step == 0
+end
+
+local function _equip_clear_state(play, idx)
+    -- 脱下时清除CD与计数
+    setplaydef(play, "N$equipbuff" .. idx .. "cd", 0)
+    setplaydef(play, "N$equipbuff" .. idx .. "hit", 0)
+end
+
+local function _equip_set_flag(play, key, enable)
+    -- 套装标记
+    setplaydef(play, key, enable and 1 or 0)
+end
+
+local function _equip_has_flag(play, key)
+    return (tonumber(getplaydef(play, key) or 0) or 0) == 1
+end
+
+local function _equip_set_next_flag(play, idx, enable)
+    setplaydef(play, "N$equipbuff" .. idx .. "next", enable and 1 or 0)
+end
+
+local function _equip_has_next_flag(play, idx)
+    return (tonumber(getplaydef(play, "N$equipbuff" .. idx .. "next") or 0) or 0) == 1
+end
+
+local function _equip_is_player(obj)
+    return obj and getbaseinfo(obj, ConstCfg.gbase.isplayer)
+end
+
+local function _equip_is_mon(obj)
+    return obj and not getbaseinfo(obj, ConstCfg.gbase.isplayer)
+end
+
+local function _equip_get_maxhp(obj)
+    return tonumber(getbaseinfo(obj, ConstCfg.gbase.maxhp) or 0) or 0
+end
+
+local function _equip_get_curhp(obj)
+    return tonumber(getbaseinfo(obj, ConstCfg.gbase.curhp) or 0) or 0
+end
+
+local function _equip_is_full_hp(obj)
+    local maxhp = _equip_get_maxhp(obj)
+    local curhp = _equip_get_curhp(obj)
+    return maxhp > 0 and curhp >= maxhp
+end
+
+local function _equip_add_hp_pct(play, pct)
+    local maxhp = _equip_get_maxhp(play)
+    if maxhp > 0 then
+        humanhp(play, "+", math.floor(maxhp * pct))
+    end
+end
+
+local function _equip_is_dalu(play, d)
+    local mapid = tostring(getbaseinfo(play, ConstCfg.gbase.mapid) or "")
+    return daluditu and daluditu[mapid] == d
+end
+
+local function _equip_set_timed_attr(play, key, listName, attrs, seconds)
+    local now = os.time()
+    local end_time = now + (tonumber(seconds) or 0)
+    setplaydef(play, key, end_time)
+    _equip_set_attr(play, listName, attrs, true)
+end
+
+local function _equip_clear_timed_attr(play, key, listName)
+    local end_time = tonumber(getplaydef(play, key) or 0) or 0
+    if end_time > 0 and os.time() >= end_time then
+        setplaydef(play, key, 0)
+        _equip_set_attr(play, listName, {}, false)
+    end
+end
+
+local function _equip_add_random_stamina(play, itemname, minv, maxv)
+    -- 体力元素(属性30)随机, 已有则不再生成
+    local itemobj = _equip_find_item(play, itemname)
+    if not itemobj or itemobj == "0" then
+        return
+    end
+    local ok, item_json = pcall(json2tbl, getitemcustomabil(play, itemobj))
+    item_json = ok and type(item_json) == "table" and item_json or nil
+    if not item_json or type(item_json.abil) ~= "table" then
+        item_json = json2tbl('{"abil":[{"i":0,"t":"[体力元素]","c":251,"v":[]}],"name":""}')
+    end
+    local idx = nil
+    local abil_i = nil
+    for i, v in ipairs(item_json.abil) do
+        if type(v) == "table" and tostring(v.t or "") == "[体力元素]" then
+            idx = i
+            abil_i = tonumber(v.i) or (i - 1)
+            if type(v.v) == "table" and #v.v > 0 then
+                return
+            end
+            break
+        end
+    end
+    if not idx then
+        for i, v in ipairs(item_json.abil) do
+            if type(v) == "table" and tostring(v.t or "") == "" and next(v.v or {}) == nil then
+                idx = i
+                abil_i = tonumber(v.i) or (i - 1)
+                break
+            end
+        end
+    end
+    if not idx then
+        idx = #item_json.abil + 1
+        abil_i = idx - 1
+    end
+    local vmin = tonumber(minv) or 1
+    local vmax = tonumber(maxv) or vmin
+    if vmax < vmin then
+        vmax = vmin
+    end
+    local val = math.random(vmin, vmax)
+    local attr_list = {
+        {254, 30, val, 0, 20, 1, 1},
+    }
+    item_json.abil[idx] = {i = abil_i or (idx - 1), t = "[体力元素]", c = 251, v = attr_list}
+    setitemcustomabil(play, itemobj, tbl2json(item_json))
+    refreshitem(play, itemobj)
+end
+
+local function _equip_add_random_element(play, itemname)
+    -- 断情遗世/浮生梦痕: 首次穿戴随机21~26属性+5, 已有则不再生成
+    local itemobj = _equip_find_item(play, itemname)
+    if not itemobj or itemobj == "0" then
+        return
+    end
+    local ok, item_json = pcall(json2tbl, getitemcustomabil(play, itemobj))
+    item_json = ok and type(item_json) == "table" and item_json or nil
+    if not item_json or type(item_json.abil) ~= "table" then
+        item_json = json2tbl('{"abil":[{"i":0,"t":"[元素随机]","c":251,"v":[]}],"name":""}')
+    end
+    local idx = nil
+    local abil_i = nil
+    for i, v in ipairs(item_json.abil) do
+        if type(v) == "table" and tostring(v.t or "") == "[元素随机]" then
+            idx = i
+            abil_i = tonumber(v.i) or (i - 1)
+            if type(v.v) == "table" and #v.v > 0 then
+                return
+            end
+            break
+        end
+    end
+    if not idx then
+        for i, v in ipairs(item_json.abil) do
+            if type(v) == "table" and tostring(v.t or "") == "" and next(v.v or {}) == nil then
+                idx = i
+                abil_i = tonumber(v.i) or (i - 1)
+                break
+            end
+        end
+    end
+    if not idx then
+        idx = #item_json.abil + 1
+        abil_i = idx - 1
+    end
+    local pool = {21, 22, 23, 24, 25, 26}
+    local attr_id = pool[math.random(#pool)]
+    local attr_list = {
+        {254, attr_id, 5, 0, 20, 1, 1},
+    }
+    item_json.abil[idx] = {i = abil_i or (idx - 1), t = "[元素随机]", c = 251, v = attr_list}
+    setitemcustomabil(play, itemobj, tbl2json(item_json))
+    refreshitem(play, itemobj)
+end
+
+local function _equip_lock_series(play, zt, Damage, Target, MagicId, idx)
+    -- 天痕: 穿戴加攻/血/魔; 对低等级玩家烈火/开天/逐日有概率冰冻
+    if zt == 3 then
+        if not Target or not getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+            return 0
+        end
+        if MagicId ~= 26 and MagicId ~= 66 and MagicId ~= 56 then
+            return 0
+        end
+        local mylv = tonumber(getbaseinfo(play, ConstCfg.gbase.level) or 0) or 0
+        local tlv = tonumber(getbaseinfo(Target, ConstCfg.gbase.level) or 0) or 0
+        if tlv >= mylv then
+            return 0
+        end
+        if _equip_roll(play, idx, 5, 30) then
+            changemode(Target, ConstCfg.pmode.frost, 1)
+        end
+        return 0
+    else
+        _equip_set_attr(play, "装备buff" .. idx, { [3]=4888, [4]=4888, [1]=48888, [2]=48888 }, zt == 1)
+        _toggle_buff_var(play, VarCfg.S_buffrwq, idx, zt == 1)
+        if zt == 2 then
+            _equip_clear_state(play, idx)
+        end
+    end
 end
 Buff = {
     [70] = function(play,zt)      --被人物攻击随机(CD30秒)
@@ -1098,8 +1407,3029 @@ Buff = {
             setplaydef(play,VarCfg.S_buffgjq,tbl2json(data))
         end
     end,
+
+    -- 装备特殊效果(Price列作为BuffId)
+    [343] = function(play,zt,Damage,Target,MagicId) -- 锁鳞(无特殊效果)
+        -- 注释: 仅作为装备表映射, 无属性与触发
+        return 0
+    end,
+    [344] = function(play,zt,Damage,Target,MagicId) -- 裂天(无特殊效果)
+        return 0
+    end,
+    [345] = function(play,zt,Damage,Target,MagicId) -- 星陨(无特殊效果)
+        return 0
+    end,
+    [346] = function(play,zt,Damage,Target,MagicId) -- 寂照(无特殊效果)
+        return 0
+    end,
+    [347] = function(play,zt,Damage,Target,MagicId) -- 天痕
+        -- 效果: 穿戴加攻/血/魔; 对低等级玩家施放烈火/开天/逐日有概率冰冻1秒
+        return _equip_lock_series(play, zt, Damage, Target, MagicId, 347)
+    end,
+    [348] = function(play,zt,Damage,Target,MagicId) -- ￠破晓￠
+        -- 效果: 与潜锋两件套, 对怪伤害+5%
+        if zt == 3 then
+            return 0
+        else
+            local has = _equip_has_name(play, "￠破晓￠") and _equip_has_name(play, "潜锋")
+            _equip_set_attr(play, "套装_破晓潜锋", { [245]=500 }, has)
+        end
+    end,
+    [349] = function(play,zt,Damage,Target,MagicId) -- 潜锋
+        -- 效果: 与￠破晓￠两件套, 对怪伤害+5%
+        if zt == 3 then
+            return 0
+        else
+            local has = _equip_has_name(play, "￠破晓￠") and _equip_has_name(play, "潜锋")
+            _equip_set_attr(play, "套装_破晓潜锋", { [245]=500 }, has)
+        end
+    end,
+    [350] = function(play,zt,Damage,Target,MagicId) -- 杀破狼
+        -- 效果: 打怪爆率+20%; 与狱魔神两件套对怪切割+500
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff350", { [242]=2000 }, zt == 1)
+            local has = _equip_has_name(play, "杀破狼") and _equip_has_name(play, "狱魔神")
+            _equip_set_attr(play, "套装_玫瑰奇缘", { [244]=500 }, has)
+        end
+    end,
+    [351] = function(play,zt,Damage,Target,MagicId) -- 狱魔神
+        -- 效果: 打怪爆率+20%; 与杀破狼两件套对怪切割+500
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff351", { [242]=2000 }, zt == 1)
+            local has = _equip_has_name(play, "杀破狼") and _equip_has_name(play, "狱魔神")
+            _equip_set_attr(play, "套装_玫瑰奇缘", { [244]=500 }, has)
+        end
+    end,
+    [352] = function(play,zt,Damage,Target,MagicId) -- 飞霞
+        -- 效果: 固定攻击+444; 攻击怪物附带对怪切割7777
+        if zt == 3 then
+            if Target and not getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+                return 7777
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff352", { [3]=444, [4]=444 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 352, zt == 1)
+        end
+    end,
+    [353] = function(play,zt,Damage,Target,MagicId) -- 雷渊
+        -- 效果: 打怪爆率+28%; 固定生命/魔法+4444
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff353", { [242]=2800, [1]=4444, [2]=4444 }, zt == 1)
+        end
+    end,
+    [354] = function(play,zt,Damage,Target,MagicId) -- 玄冥
+        -- 效果: 固定攻击+444
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff354", { [3]=444, [4]=444 }, zt == 1)
+        end
+    end,
+    [355] = function(play,zt,Damage,Target,MagicId) -- 月痕
+        -- 效果: 固定生命/魔法+4444; 概率切割怪物1%~3%最大生命
+        if zt == 3 then
+            if Target and not getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+                if _equip_roll(play, 355, 5, 30) then
+                    local maxhp = tonumber(getbaseinfo(Target, ConstCfg.gbase.maxhp) or 0) or 0
+                    if maxhp > 0 then
+                        local pct = math.random(1, 3)
+                        return math.floor(maxhp * pct / 100)
+                    end
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff355", { [1]=4444, [2]=4444 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 355, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 355)
+            end
+        end
+    end,
+    [356] = function(play,zt,Damage,Target,MagicId) -- 青衿
+        -- 效果: 生命<50%时概率回血15%, CD 60s
+        if zt == 3 then
+            local maxhp = tonumber(getbaseinfo(play, ConstCfg.gbase.maxhp) or 0) or 0
+            local curhp = tonumber(getbaseinfo(play, ConstCfg.gbase.curhp) or 0) or 0
+            if maxhp > 0 and curhp * 100 <= maxhp * 50 then
+                if _equip_roll(play, 356, 5, 60) then
+                    humanhp(play, "+", math.floor(maxhp * 0.15))
+                end
+            end
+            return 0
+        else
+            _toggle_buff_var(play, VarCfg.S_buffbgwq, 356, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffbrwq, 356, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 356)
+            end
+        end
+    end,
+    [357] = function(play,zt,Damage,Target,MagicId) -- 烛阴
+        -- 效果: 固定生命/魔法+4444; 被攻击概率回复10%最大生命, CD 30s
+        if zt == 3 then
+            if _equip_roll(play, 357, 5, 30) then
+                local maxhp = tonumber(getbaseinfo(play, ConstCfg.gbase.maxhp) or 0) or 0
+                if maxhp > 0 then
+                    humanhp(play, "+", math.floor(maxhp * 0.10))
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff357", { [1]=4444, [2]=4444 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffbgwq, 357, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffbrwq, 357, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 357)
+            end
+        end
+    end,
+    [358] = function(play,zt,Damage,Target,MagicId) -- 流岚
+        -- 效果: 固定攻击+444; 概率造成攻击*333%
+        if zt == 3 then
+            if Target and not getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+                if _equip_roll(play, 358, 5, 30) then
+                    local dc2 = tonumber(getbaseinfo(play, ConstCfg.gbase.dc2) or 0) or 0
+                    return math.floor(dc2 * 3.33)
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff358", { [3]=444, [4]=444 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 358, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 358)
+            end
+        end
+    end,
+    [359] = function(play,zt,Damage,Target,MagicId) -- 酒醉黄龙(无特殊效果)
+        return 0
+    end,
+    [360] = function(play,zt,Damage,Target,MagicId) -- 云渡履
+        -- 效果: 固定攻击+444; 攻击满血怪物切割10%最大生命(普攻, CD 60s)
+        if zt == 3 then
+            if Target and not getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+                local curhp = tonumber(getbaseinfo(Target, ConstCfg.gbase.curhp) or 0) or 0
+                local maxhp = tonumber(getbaseinfo(Target, ConstCfg.gbase.maxhp) or 0) or 0
+                if maxhp > 0 and curhp == maxhp and _equip_is_normal_attack(MagicId) then
+                    if _equip_roll(play, 360, 5, 60) then
+                        return math.floor(maxhp * 0.10)
+                    end
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff360", { [3]=444, [4]=444 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 360, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 360)
+            end
+        end
+    end,
+    [361] = function(play,zt,Damage,Target,MagicId) -- 笑傲天
+        -- 效果: 打怪爆率+22%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff361", { [242]=2200 }, zt == 1)
+        end
+    end,
+    [362] = function(play,zt,Damage,Target,MagicId) -- 破云金盔
+        -- 效果: 固定攻+1488, 固定血/魔+14888; 攻击玩家概率切割10%~50%最大生命
+        if zt == 3 then
+            if Target and getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+                if _equip_roll(play, 362, 5, 30) then
+                    local maxhp = tonumber(getbaseinfo(Target, ConstCfg.gbase.maxhp) or 0) or 0
+                    if maxhp > 0 then
+                        local pct = math.random(10, 50)
+                        return math.floor(maxhp * pct / 100)
+                    end
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff362", { [3]=1488, [4]=1488, [1]=14888, [2]=14888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffrwq, 362, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 362)
+            end
+        end
+    end,
+    [363] = function(play,zt,Damage,Target,MagicId) -- 云影缥缈
+        -- 效果: 对怪切割+4396
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff363", { [244]=4396 }, zt == 1)
+        end
+    end,
+    [364] = function(play,zt,Damage,Target,MagicId) -- 金乌映日
+        -- 效果: 对怪切割+4396
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff364", { [244]=4396 }, zt == 1)
+        end
+    end,
+    [365] = function(play,zt,Damage,Target,MagicId) -- 雁南飞
+        -- 效果: 与龙吟风两件套, 最大MP*1%转为攻击, 上限2000
+        if zt == 3 then
+            return 0
+        else
+            local has = _equip_has_name(play, "雁南飞") and _equip_has_name(play, "龙吟风")
+            if has then
+                local maxmp = tonumber(getbaseinfo(play, ConstCfg.gbase.maxmp) or 0) or 0
+                local add = math.floor(maxmp * 0.01)
+                if add > 2000 then
+                    add = 2000
+                end
+                _equip_set_attr(play, "套装_雁南飞龙吟风", { [3]=add, [4]=add }, true)
+            else
+                _equip_set_attr(play, "套装_雁南飞龙吟风", {}, false)
+            end
+        end
+    end,
+    [366] = function(play,zt,Damage,Target,MagicId) -- 龙吟风
+        -- 效果: 与雁南飞两件套, 最大MP*1%转为攻击, 上限2000
+        if zt == 3 then
+            return 0
+        else
+            local has = _equip_has_name(play, "雁南飞") and _equip_has_name(play, "龙吟风")
+            if has then
+                local maxmp = tonumber(getbaseinfo(play, ConstCfg.gbase.maxmp) or 0) or 0
+                local add = math.floor(maxmp * 0.01)
+                if add > 2000 then
+                    add = 2000
+                end
+                _equip_set_attr(play, "套装_雁南飞龙吟风", { [3]=add, [4]=add }, true)
+            else
+                _equip_set_attr(play, "套装_雁南飞龙吟风", {}, false)
+            end
+        end
+    end,
+    [367] = function(play,zt,Damage,Target,MagicId) -- 踏风追电
+        -- 效果: 固定攻击+444; 最大攻击+3%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff367", { [3]=444, [4]=444, [282]=3 }, zt == 1)
+        end
+    end,
+    [368] = function(play,zt,Damage,Target,MagicId) -- 流光仙索
+        -- 效果: 最大生命+3%; 固定生命/魔法+4444
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff368", { [280]=3, [1]=4444, [2]=4444 }, zt == 1)
+        end
+    end,
+    [369] = function(play,zt,Damage,Target,MagicId) -- 断情遗世
+        -- 效果: 固定攻击+444; 首次穿戴随机元素21~26之一+5
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff369", { [3]=444, [4]=444 }, zt == 1)
+            if zt == 1 then
+                _equip_add_random_element(play, "断情遗世")
+            end
+        end
+    end,
+    [370] = function(play,zt,Damage,Target,MagicId) -- 浮生梦痕
+        -- 效果: 固定攻击+1488; 固定生命/魔法+14888; 首次穿戴随机元素21~26之一+5
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff370", { [3]=1488, [4]=1488, [1]=14888, [2]=14888 }, zt == 1)
+            if zt == 1 then
+                _equip_add_random_element(play, "浮生梦痕")
+            end
+        end
+    end,
+    [371] = function(play,zt,Damage,Target,MagicId) -- 清君侧
+        -- 效果: 每三刀, 对人1.5倍伤害; 对怪2倍切割
+        if zt == 3 then
+            if not Target then
+                return 0
+            end
+            if _equip_hit_step(play, 371, 3, MagicId) then
+                if getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+                    return math.floor(Damage * 0.5)
+                else
+                    local cut = tonumber(getbaseinfo(play, 51, 244) or 0) or 0
+                    if cut > 0 then
+                        return cut * 2
+                    end
+                end
+            end
+            return 0
+        else
+            _toggle_buff_var(play, VarCfg.S_buffgjq, 371, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 371)
+            end
+        end
+    end,
+    [372] = function(play,zt,Damage,Target,MagicId) -- 鸿蒙初启
+        -- 效果: 每三刀, 对人1.5倍伤害; 对怪2倍切割
+        if zt == 3 then
+            if not Target then
+                return 0
+            end
+            if _equip_hit_step(play, 372, 3, MagicId) then
+                if getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+                    return math.floor(Damage * 0.5)
+                else
+                    local cut = tonumber(getbaseinfo(play, 51, 244) or 0) or 0
+                    if cut > 0 then
+                        return cut * 2
+                    end
+                end
+            end
+            return 0
+        else
+            _toggle_buff_var(play, VarCfg.S_buffgjq, 372, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 372)
+            end
+        end
+    end,
+    [373] = function(play,zt,Damage,Target,MagicId) -- 青冥幻影
+        -- 效果: 固定攻+288, 固定血/魔+2888; 每三刀对人1.5倍伤害
+        if zt == 3 then
+            if Target and getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+                if _equip_hit_step(play, 373, 3, MagicId) then
+                    return math.floor(Damage * 0.5)
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff373", { [3]=288, [4]=288, [1]=2888, [2]=2888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgjq, 373, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 373)
+            end
+        end
+    end,
+    [374] = function(play,zt,Damage,Target,MagicId) -- 玄羽乘风
+        -- 效果: 固定攻+288, 固定血/魔+2888; 每三刀对怪切割*2
+        if zt == 3 then
+            if Target and not getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+                if _equip_hit_step(play, 374, 3, MagicId) then
+                    local cut = tonumber(getbaseinfo(play, 51, 244) or 0) or 0
+                    if cut > 0 then
+                        return cut * 2
+                    end
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff374", { [3]=288, [4]=288, [1]=2888, [2]=2888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgjq, 374, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 374)
+            end
+        end
+    end,
+    [375] = function(play,zt,Damage,Target,MagicId) -- 锁天紫绦
+        -- 效果: 固定攻+1888, 固定血/魔+18888; 每三刀对人1.5倍, 对怪切割*2
+        if zt == 3 then
+            if not Target then
+                return 0
+            end
+            if _equip_hit_step(play, 375, 3, MagicId) then
+                if getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+                    return math.floor(Damage * 0.5)
+                else
+                    local cut = tonumber(getbaseinfo(play, 51, 244) or 0) or 0
+                    if cut > 0 then
+                        return cut * 2
+                    end
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff375", { [3]=1888, [4]=1888, [1]=18888, [2]=18888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgjq, 375, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 375)
+            end
+        end
+    end,
+    [376] = function(play,zt,Damage,Target,MagicId) -- 裂星玄盔(无特殊效果)
+        return 0
+    end,
+    [377] = function(play,zt,Damage,Target,MagicId) -- 曜天灵珑(无特殊效果)
+        return 0
+    end,
+    [378] = function(play,zt,Damage,Target,MagicId) -- 风云浩劫(无特殊效果)
+        return 0
+    end,
+    [379] = function(play,zt,Damage,Target,MagicId) -- 寂灭苍穹(无特殊效果)
+        return 0
+    end,
+    [380] = function(play,zt,Damage,Target,MagicId) -- 伏龙玄带(无特殊效果)
+        return 0
+    end,
+    [381] = function(play,zt,Damage,Target,MagicId) -- 长歌踏月
+        -- 效果: 与九霄游风两件套, 触发九霄游风效果
+        if zt == 3 then
+            return 0
+        else
+            local has = _equip_has_name(play, "九霄游风") and _equip_has_name(play, "长歌踏月")
+            _equip_set_flag(play, "N$equipset_jiuxiao", has)
+        end
+    end,
+    [382] = function(play,zt,Damage,Target,MagicId) -- 九霄游风
+        -- 效果: 两件套(九霄游风+长歌踏月)时, 对人概率打掉10%血量并回复自身同等血量
+        if zt == 3 then
+            if not _equip_has_flag(play, "N$equipset_jiuxiao") then
+                return 0
+            end
+            if Target and getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+                if _equip_roll(play, 382, 5, 30) then
+                    local maxhp = tonumber(getbaseinfo(Target, ConstCfg.gbase.maxhp) or 0) or 0
+                    if maxhp > 0 then
+                        local dmg = math.floor(maxhp * 0.10)
+                        humanhp(play, "+", dmg)
+                        return dmg
+                    end
+                end
+            end
+            return 0
+        else
+            local has = _equip_has_name(play, "九霄游风") and _equip_has_name(play, "长歌踏月")
+            _equip_set_flag(play, "N$equipset_jiuxiao", has)
+            _toggle_buff_var(play, VarCfg.S_buffrwq, 382, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 382)
+            end
+        end
+    end,
+    [383] = function(play,zt,Damage,Target,MagicId) -- 封魔镇狱
+        -- 效果: 被人物攻击概率定身对方2秒
+        if zt == 3 then
+            if Target and getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+                if _equip_roll(play, 383, 5, 30) then
+                    changemode(Target, ConstCfg.pmode.stick, 2)
+                end
+            end
+            return 0
+        else
+            _toggle_buff_var(play, VarCfg.S_buffbrwq, 383, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 383)
+            end
+        end
+    end,
+    [384] = function(play,zt,Damage,Target,MagicId) -- 炽焰珠链
+        -- 效果: 打怪爆率+25%; 固定生命/魔法+4444
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff384", { [242]=2500, [1]=4444, [2]=4444 }, zt == 1)
+        end
+    end,
+    [385] = function(play,zt,Damage,Target,MagicId) -- 火种之戒
+        -- 效果: 固定生命/魔法+4888; 防止全毒+100%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff385", { [1]=4888, [2]=4888, [16]=100 }, zt == 1)
+        end
+    end,
+    [386] = function(play,zt,Damage,Target,MagicId) -- 明冽寒
+        -- 效果: 每18次普攻触发斩杀怪物5%最大生命
+        if zt == 3 then
+            if Target and not getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+                if _equip_hit_step(play, 386, 18, MagicId) then
+                    local maxhp = tonumber(getbaseinfo(Target, ConstCfg.gbase.maxhp) or 0) or 0
+                    if maxhp > 0 then
+                        return math.floor(maxhp * 0.05)
+                    end
+                end
+            end
+            return 0
+        else
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 386, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 386)
+            end
+        end
+    end,
+    [387] = function(play,zt,Damage,Target,MagicId) -- 赤焰戒
+        -- 效果: 每18次普攻触发斩杀怪物5%最大生命
+        if zt == 3 then
+            if Target and not getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+                if _equip_hit_step(play, 387, 18, MagicId) then
+                    local maxhp = tonumber(getbaseinfo(Target, ConstCfg.gbase.maxhp) or 0) or 0
+                    if maxhp > 0 then
+                        return math.floor(maxhp * 0.05)
+                    end
+                end
+            end
+            return 0
+        else
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 387, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 387)
+            end
+        end
+    end,
+    [388] = function(play,zt,Damage,Target,MagicId) -- 火舞手镯
+        -- 效果: 固定攻+488; 固定血/魔+4888; 打怪爆率+28%; 每秒回血=等级*10
+        if zt == 3 then
+            return 0
+        else
+            local level = tonumber(getbaseinfo(play, ConstCfg.gbase.level) or 0) or 0
+            _equip_set_attr(play, "装备buff388", { [3]=488, [4]=488, [1]=4888, [2]=4888, [242]=2800, [71]=level*10 }, zt == 1)
+        end
+    end,
+    [389] = function(play,zt,Damage,Target,MagicId) -- 熔岩手镯
+        -- 效果: 固定攻+288; 固定血/魔+2888; 攻击力+688
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff389", { [3]=976, [4]=976, [1]=2888, [2]=2888 }, zt == 1)
+        end
+    end,
+    [390] = function(play,zt,Damage,Target,MagicId) -- 烈风之履
+        -- 效果: 固定攻+288; 固定血/魔+2888; 攻击力+488
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff390", { [3]=776, [4]=776, [1]=2888, [2]=2888 }, zt == 1)
+        end
+    end,
+    [391] = function(play,zt,Damage,Target,MagicId) -- 火龙束带
+        -- 效果: 固定攻+444; 对怪伤害+5%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff391", { [3]=444, [4]=444, [245]=500 }, zt == 1)
+        end
+    end,
+    [392] = function(play,zt,Damage,Target,MagicId) -- 夜幕
+        -- 效果: 固定攻+288; 固定血/魔+2888; 攻击倍数+1.05(属性67 +5)
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff392", { [3]=288, [4]=288, [1]=2888, [2]=2888, [67]=5 }, zt == 1)
+        end
+    end,
+
+
+        [393] = function(play,zt,Damage,Target,MagicId) -- 冥火
+-- 被玩家攻击时有高概率反弹(50%)的伤害
+-- 并恢复自身[50%]的生命值(CD120秒)
+        if zt == 3 then
+            if _equip_is_player(Target) then
+                if _equip_roll(play, 393, 50, 120) then
+                    local maxhp = _equip_get_maxhp(play)
+                    if maxhp > 0 then
+                        humanhp(play, "+", math.floor(maxhp * 0.50))
+                    end
+                    if Damage and Damage > 0 then
+                        humanhp(Target, "-", math.floor(Damage * 0.50), 110, 0, play, 1)
+                    end
+                end
+            end
+            return 0
+        else
+            _toggle_buff_var(play, VarCfg.S_buffbrwq, 393, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 393)
+            end
+        end
+    end,
+
+        [394] = function(play,zt,Damage,Target,MagicId) -- 鬼影
+-- 攻击力：+ 4888
+-- 生命值：+ 48888
+-- 魔法值：+ 48888
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击对当前(5000W生命值)以下的怪物时
+-- 触发刀刀切割[2%]的最大生命值！
+        if zt == 3 then
+            if _equip_is_mon(Target) then
+                local maxhp = _equip_get_maxhp(Target)
+                if maxhp > 0 and maxhp <= 50000000 then
+                    return math.floor(maxhp * 0.02)
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff394", { [3]=4888, [4]=4888, [1]=48888, [2]=48888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 394, zt == 1)
+        end
+    end,
+
+        [395] = function(play,zt,Damage,Target,MagicId) -- 夜行
+-- 攻击力：+ 3888
+-- 生命值：+ 38888
+-- 魔法值：+ 38888
+-- IMG:res/tips/3.png#0#0&0
+-- 人物在三大陆所属地图增加以下属性
+-- 对怪伤害：+ 20%
+-- 打怪爆率：+ 50%
+-- 攻击时附带对(三大陆所属地图)的怪
+-- 物额外造成[88888]点对怪切割！
+        if zt == 3 then
+            if _equip_is_mon(Target) and _equip_is_dalu(play, 3) then
+                return 88888
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff395", { [3]=3888, [4]=3888, [1]=38888, [2]=38888, [245]=2000, [242]=5000 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 395, zt == 1)
+        end
+    end,
+
+        [396] = function(play,zt,Damage,Target,MagicId) -- 星辰冕冠
+-- 固定攻击力：+ 1288
+-- 固定生命值：+ 12888
+-- 固定魔法值：+ 12888
+-- IMG:res/tips/3.png#0#0&0
+-- 每秒恢复人物(等级*10)的生命值
+-- 攻击时附带对(三大陆所属地图)的怪
+-- 物额外造成[88888]点对怪切割！
+        if zt == 3 then
+            if _equip_is_mon(Target) and _equip_is_dalu(play, 3) then
+                return 88888
+            end
+            return 0
+        else
+            local level = tonumber(getbaseinfo(play, ConstCfg.gbase.level) or 0) or 0
+            _equip_set_attr(play, "装备buff396", { [3]=1288, [4]=1288, [1]=12888, [2]=12888, [71]=level*10 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 396, zt == 1)
+        end
+    end,
+
+        [397] = function(play,zt,Damage,Target,MagicId) -- 无影梦链
+-- 固定攻击力：+ 1288
+-- 固定生命值：+ 12888
+-- 固定魔法值：+ 12888
+-- IMG:res/tips/3.png#0#0&0
+-- 每秒恢复人物(等级*10)的生命值
+-- 攻击时附带对(三大陆所属地图)的怪
+-- 物额外造成[88888]点对怪切割！
+        if zt == 3 then
+            if _equip_is_mon(Target) and _equip_is_dalu(play, 3) then
+                return 88888
+            end
+            return 0
+        else
+            local level = tonumber(getbaseinfo(play, ConstCfg.gbase.level) or 0) or 0
+            _equip_set_attr(play, "装备buff397", { [3]=1288, [4]=1288, [1]=12888, [2]=12888, [71]=level*10 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 397, zt == 1)
+        end
+    end,
+
+        [398] = function(play,zt,Damage,Target,MagicId) -- 冥炎之戒
+-- 固定攻击力：+ 1288
+-- 固定生命值：+ 12888
+-- 固定魔法值：+ 12888
+-- IMG:res/tips/3.png#0#0&0
+-- 每秒恢复人物(等级*10)的生命值
+-- 攻击时附带对(三大陆所属地图)的怪
+-- 物额外造成[88888]点对怪切割！
+        if zt == 3 then
+            if _equip_is_mon(Target) and _equip_is_dalu(play, 3) then
+                return 88888
+            end
+            return 0
+        else
+            local level = tonumber(getbaseinfo(play, ConstCfg.gbase.level) or 0) or 0
+            _equip_set_attr(play, "装备buff398", { [3]=1288, [4]=1288, [1]=12888, [2]=12888, [71]=level*10 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 398, zt == 1)
+        end
+    end,
+
+        [399] = function(play,zt,Damage,Target,MagicId) -- 破碎轮回
+-- 固定攻击力：+ 1288
+-- 固定生命值：+ 12888
+-- 固定魔法值：+ 12888
+-- IMG:res/tips/3.png#0#0&0
+-- 每秒恢复人物(等级*10)的生命值
+-- 攻击时附带对(三大陆所属地图)的怪
+-- 物额外造成[88888]点对怪切割！
+        if zt == 3 then
+            if _equip_is_mon(Target) and _equip_is_dalu(play, 3) then
+                return 88888
+            end
+            return 0
+        else
+            local level = tonumber(getbaseinfo(play, ConstCfg.gbase.level) or 0) or 0
+            _equip_set_attr(play, "装备buff399", { [3]=1288, [4]=1288, [1]=12888, [2]=12888, [71]=level*10 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 399, zt == 1)
+        end
+    end,
+
+    [400] = function(play,zt,Damage,Target,MagicId) -- 幽灵步履
+-- 固定攻击力：+ 1288
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击倍数：+ 5%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff400", { [3]=1288, [4]=1288, [67]=5 }, zt == 1)
+        end
+    end,
+
+    [401] = function(play,zt,Damage,Target,MagicId) -- 惊雷踏云
+-- 固定攻击力：+ 1288
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff401", { [3]=1288, [4]=1288 }, zt == 1)
+        end
+    end,
+
+    [402] = function(play,zt,Damage,Target,MagicId) -- 疾风追星
+-- 固定攻击力：+ 1288
+-- 固定生命值：+ 12888
+-- 固定魔法值：+ 12888
+-- IMG:res/tips/3.png#0#0&0
+-- 打怪爆率：+ 38%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff402", { [3]=1288, [4]=1288, [1]=12888, [2]=12888, [242]=3800 }, zt == 1)
+        end
+    end,
+
+    [403] = function(play,zt,Damage,Target,MagicId) -- 九重苍带
+-- 固定攻击力：+ 1288
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff403", { [3]=1288, [4]=1288 }, zt == 1)
+        end
+    end,
+
+        [404] = function(play,zt,Damage,Target,MagicId) -- 紫电
+-- IMG:res/tips/3.png#0#0&0
+-- 每2分钟必定会获得一个[能量护盾]
+-- 可抵挡一次目标的技能伤害，护盾被
+-- 击破后会召唤雷劫降临，对击破护盾
+-- 的目标造成[20%]最大生命值的伤害!
+        if zt == 3 then
+            if MagicId and MagicId > 0 and Target then
+                if _equip_roll(play, 404, 100, 120) then
+                    local tmax = _equip_get_maxhp(Target)
+                    if tmax > 0 then
+                        humanhp(Target, "-", math.floor(tmax * 0.20), 110, 0, play, 1)
+                    end
+                    return Damage
+                end
+            end
+            return 0
+        else
+            _toggle_buff_var(play, VarCfg.S_buffbgjq, 404, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 404)
+            end
+        end
+    end,
+
+    [405] = function(play,zt,Damage,Target,MagicId) -- 羽化仙
+        -- 人物触发复活后每秒恢复人物[10%]
+        -- 的最大生命值，效果持续(5秒)
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff405", { [1]=12888, [2]=12888 }, zt == 1)
+        end
+    end,
+
+    [406] = function(play,zt,Damage,Target,MagicId) -- 幻梦池
+        -- 人物触发复活后每秒恢复人物[10%]
+        -- 的最大生命值，效果持续(5秒)
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff406", { [1]=12888, [2]=12888 }, zt == 1)
+        end
+    end,
+
+    [407] = function(play,zt,Damage,Target,MagicId) -- 血焰
+        -- 使用传送功能增加[30%]移速3S。
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff407", { [1]=12888, [2]=12888 }, zt == 1)
+        end
+    end,
+
+        [408] = function(play,zt,Damage,Target,MagicId) -- 青霄剑舞
+-- 固定攻击力：+ 2888
+-- 固定生命值：+ 28888
+-- 固定魔法值：+ 28888
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击生命值低于30%的怪物时刀刀切
+-- 割[1%]最大生命值。
+        if zt == 3 then
+            if _equip_is_mon(Target) then
+                local maxhp = _equip_get_maxhp(Target)
+                local curhp = _equip_get_curhp(Target)
+                if maxhp > 0 and curhp * 100 <= maxhp * 30 then
+                    return math.floor(maxhp * 0.01)
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff408", { [3]=2888, [4]=2888, [1]=28888, [2]=28888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 408, zt == 1)
+        end
+    end,
+
+    [409] = function(play,zt,Damage,Target,MagicId) -- 苍月孤行
+-- 打怪爆率：+ 20%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff409", { [242]=2000 }, zt == 1)
+        end
+    end,
+
+    [410] = function(play,zt,Damage,Target,MagicId) -- 白莲盛开
+-- 打怪爆率：+ 20%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff410", { [242]=2000 }, zt == 1)
+        end
+    end,
+
+    [411] = function(play,zt,Damage,Target,MagicId) -- 指天
+-- 打怪爆率：+ 20%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff411", { [242]=2000 }, zt == 1)
+        end
+    end,
+
+    [412] = function(play,zt,Damage,Target,MagicId) -- 金刚
+-- 打怪爆率：+ 20%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff412", { [242]=2000 }, zt == 1)
+        end
+    end,
+
+        [413] = function(play,zt,Damage,Target,MagicId) -- 出世
+-- 固定生命值：+ 12888
+-- 固定魔法值：+ 12888
+-- IMG:res/tips/3.png#0#0&0
+-- 杀死人物后触发隐身[2秒]并且恢复
+-- (10%)的最大生命值！[CD:20S]
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff413", { [1]=12888, [2]=12888 }, zt == 1)
+            _equip_set_flag(play, "N$equipbuff413on", zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 413)
+            end
+        end
+    end,
+
+    [414] = function(play,zt,Damage,Target,MagicId) -- 宿命
+-- 固定生命值：+ 12888
+-- 固定魔法值：+ 12888
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff414", { [1]=12888, [2]=12888 }, zt == 1)
+        end
+    end,
+
+    [415] = function(play,zt,Damage,Target,MagicId) -- 向问天
+-- 固定攻击力：+ 1288
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff415", { [3]=1288, [4]=1288 }, zt == 1)
+        end
+    end,
+
+    [416] = function(play,zt,Damage,Target,MagicId) -- 归一
+-- 固定攻击力：+ 1288
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff416", { [3]=1288, [4]=1288 }, zt == 1)
+        end
+    end,
+
+        [417] = function(play,zt,Damage,Target,MagicId) -- 薜萝藏虺
+-- 攻击时有概率召唤天雷对[3*3范围]
+-- 的目标麻痹(1S)，并造成5倍攻击力
+-- 数值的对怪切割！(CD60秒)
+        if zt == 3 then
+            if _equip_is_mon(Target) then
+                if _equip_roll(play, 417, 5, 60) then
+                    changemode(Target, ConstCfg.pmode.stick, 1)
+                    local dc2 = tonumber(getbaseinfo(play, ConstCfg.gbase.dc2) or 0) or 0
+                    return math.floor(dc2 * 5)
+                end
+            end
+            return 0
+        else
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 417, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 417)
+            end
+        end
+    end,
+
+        [418] = function(play,zt,Damage,Target,MagicId) -- 破界
+-- 攻击时有概率召唤天雷对[3*3范围]
+-- 的目标麻痹(1S)，并造成5倍攻击力
+-- 数值的对怪切割！(CD60秒)
+        if zt == 3 then
+            if _equip_is_mon(Target) then
+                if _equip_roll(play, 418, 5, 60) then
+                    changemode(Target, ConstCfg.pmode.stick, 1)
+                    local dc2 = tonumber(getbaseinfo(play, ConstCfg.gbase.dc2) or 0) or 0
+                    return math.floor(dc2 * 5)
+                end
+            end
+            return 0
+        else
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 418, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 418)
+            end
+        end
+    end,
+
+        [419] = function(play,zt,Damage,Target,MagicId) -- 传奇
+-- 固定攻击力：+ 2888
+-- 固定生命值：+ 28888
+-- 固定魔法值：+ 28888
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击时有概率可召唤天雷对目标进行
+-- [8次]连击，第一次造成20%伤害，后
+-- 续每次连击增加30%伤害![CD：60秒]
+        if zt == 3 then
+            if _equip_roll(play, 419, 5, 60) then
+                return math.floor(Damage * 10)
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff419", { [3]=2888, [4]=2888, [1]=28888, [2]=28888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgjq, 419, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 419)
+            end
+        end
+    end,
+
+        [420] = function(play,zt,Damage,Target,MagicId) -- 阿修罗之眼
+-- IMG:res/tips/3.png#0#0&0
+-- 搭配[扶摇上青天]可组合套装
+-- 人物每秒恢复[1%]的最大生命值
+        if zt == 3 then
+            return 0
+        else
+            local has = _equip_has_name(play, "阿修罗之眼") and _equip_has_name(play, "扶摇上青天")
+            if has then
+                local maxhp = _equip_get_maxhp(play)
+                local add = math.floor(maxhp * 0.01)
+                _equip_set_attr(play, "装备buff_阿修罗之眼_扶摇上青天", { [71]=add }, true)
+            else
+                _equip_set_attr(play, "装备buff_阿修罗之眼_扶摇上青天", {}, false)
+            end
+        end
+    end,
+
+        [421] = function(play,zt,Damage,Target,MagicId) -- 扶摇上青天
+-- IMG:res/tips/3.png#0#0&0
+-- 搭配[阿修罗之眼]可组合套装
+-- 人物每秒恢复[1%]的最大生命值
+        if zt == 3 then
+            return 0
+        else
+            local has = _equip_has_name(play, "阿修罗之眼") and _equip_has_name(play, "扶摇上青天")
+            if has then
+                local maxhp = _equip_get_maxhp(play)
+                local add = math.floor(maxhp * 0.01)
+                _equip_set_attr(play, "装备buff_阿修罗之眼_扶摇上青天", { [71]=add }, true)
+            else
+                _equip_set_attr(play, "装备buff_阿修罗之眼_扶摇上青天", {}, false)
+            end
+        end
+    end,
+
+        [422] = function(play,zt,Damage,Target,MagicId) -- 空
+-- 固定攻击力：+ 1288
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击满血人物直接斩杀(10%)生命值
+-- (60秒内只允许触发一次当前BUFF)
+        if zt == 3 then
+            if _equip_is_player(Target) and _equip_is_full_hp(Target) then
+                if _equip_roll(play, 422, 5, 60) then
+                    local maxhp = _equip_get_maxhp(Target)
+                    return math.floor(maxhp * 0.10)
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff422", { [3]=1288, [4]=1288 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffrwq, 422, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 422)
+            end
+        end
+    end,
+
+        [423] = function(play,zt,Damage,Target,MagicId) -- 若
+-- 固定攻击力：+ 1288
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击满血人物直接斩杀(10%)生命值
+-- (60秒内只允许触发一次当前BUFF)
+        if zt == 3 then
+            if _equip_is_player(Target) and _equip_is_full_hp(Target) then
+                if _equip_roll(play, 423, 5, 60) then
+                    local maxhp = _equip_get_maxhp(Target)
+                    return math.floor(maxhp * 0.10)
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff423", { [3]=1288, [4]=1288 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffrwq, 423, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 423)
+            end
+        end
+    end,
+
+        [424] = function(play,zt,Damage,Target,MagicId) -- 道
+-- 固定攻击力：+ 1288
+-- IMG:res/tips/3.png#0#0&0
+-- 每十三刀会触发对(3*3)范围内的所
+-- 有怪物造成(66万)的对怪切割！
+        if zt == 3 then
+            if _equip_is_mon(Target) then
+                if _equip_hit_step(play, 424, 13, MagicId) then
+                    local x = getbaseinfo(Target, ConstCfg.gbase.x)
+                    local y = getbaseinfo(Target, ConstCfg.gbase.y)
+                    rangeharm(play, x, y, 3, 660000, 0, 0, 0, 2, 0, 20)
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff424", { [3]=1288, [4]=1288 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 424, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 424)
+            end
+        end
+    end,
+
+        [425] = function(play,zt,Damage,Target,MagicId) -- 色
+-- 固定攻击力：+ 1288
+-- IMG:res/tips/3.png#0#0&0
+-- 施放技能后下次攻击造成[2]倍伤害!
+-- (60秒内只允许触发一次当前BUFF)
+        if zt == 3 then
+            if MagicId and MagicId > 0 then
+                if _equip_roll(play, 425, 100, 60) then
+                    _equip_set_next_flag(play, 425, true)
+                end
+                return 0
+            end
+            if _equip_has_next_flag(play, 425) then
+                _equip_set_next_flag(play, 425, false)
+                return Damage
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff425", { [3]=1288, [4]=1288 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgjq, 425, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 425)
+                _equip_set_next_flag(play, 425, false)
+            end
+        end
+    end,
+
+        [426] = function(play,zt,Damage,Target,MagicId) -- 悲
+-- 固定攻击力：+ 2888
+-- 固定生命值：+ 28888
+-- 固定魔法值：+ 28888
+-- IMG:res/tips/3.png#0#0&0
+-- 生命值低于(20%)时触发BUFF隐身1秒
+-- 恢复自身(100%)生命值[CD：120秒]
+        if zt == 3 then
+            local maxhp = _equip_get_maxhp(play)
+            local curhp = _equip_get_curhp(play)
+            if maxhp > 0 and curhp * 100 <= maxhp * 20 then
+                if _equip_roll(play, 426, 5, 120) then
+                    humanhp(play, "+", maxhp)
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff426", { [3]=2888, [4]=2888, [1]=28888, [2]=28888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffbgwq, 426, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffbrwq, 426, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 426)
+            end
+        end
+    end,
+
+    [427] = function(play,zt,Damage,Target,MagicId) -- 桃李满天下
+-- 固定攻击力：+ 888
+-- 固定生命值：+ 8888
+-- 固定魔法值：+ 8888
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff427", { [3]=888, [4]=888, [1]=8888, [2]=8888 }, zt == 1)
+        end
+    end,
+
+    [428] = function(play,zt,Damage,Target,MagicId) -- 狂风起苍穹
+-- 固定攻击力：+ 888
+-- 固定生命值：+ 8888
+-- 固定魔法值：+ 8888
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff428", { [3]=888, [4]=888, [1]=8888, [2]=8888 }, zt == 1)
+        end
+    end,
+
+    [429] = function(play,zt,Damage,Target,MagicId) -- 恶
+-- 固定生命值：+ 12888
+-- 固定魔法值：+ 12888
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff429", { [1]=12888, [2]=12888 }, zt == 1)
+        end
+    end,
+
+        [430] = function(play,zt,Damage,Target,MagicId) -- 天
+-- 固定生命值：+ 12888
+-- 固定魔法值：+ 12888
+-- IMG:res/tips/3.png#0#0&0
+-- PK时有概率对目标造成禁锢(2秒钟)
+        if zt == 3 then
+            if _equip_is_player(Target) then
+                if _equip_roll(play, 430, 5, 30) then
+                    changemode(Target, ConstCfg.pmode.stick, 2)
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff430", { [1]=12888, [2]=12888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffrwq, 430, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 430)
+            end
+        end
+    end,
+
+    [431] = function(play,zt,Damage,Target,MagicId) -- 月上影
+        -- 复活状态不可用时概率获得一次原地重
+        -- 生的机会！(300秒只触发一次BUFF)
+        if zt == 3 then
+            return 0
+        else
+-- 装备效果
+        end
+    end,
+
+        [432] = function(play,zt,Damage,Target,MagicId) -- 月无痕
+-- 固定攻击力：+ 1288
+-- 固定生命值：+ 12888
+-- 固定魔法值：+ 12888
+-- 每秒恢复人物(等级*10)的生命值
+-- IMG:res/tips/3.png#0#0&0
+-- 每秒恢复[1%]的最大生命值
+-- 每隔(60S)增加[10%]的最大攻击力
+-- (效果持续20秒)
+        if zt == 3 then
+            _equip_clear_timed_attr(play, "N$equipbuff432_atk_end", "装备buff432_atk20")
+            if _equip_roll(play, 432, 100, 60) then
+                _equip_set_timed_attr(play, "N$equipbuff432_atk_end", "装备buff432_atk20", { [282]=10 }, 20)
+            end
+            return 0
+        else
+            local level = tonumber(getbaseinfo(play, ConstCfg.gbase.level) or 0) or 0
+            local maxhp = _equip_get_maxhp(play)
+            local regen = level * 10
+            if maxhp > 0 then
+                regen = regen + math.floor(maxhp * 0.01)
+            end
+            _equip_set_attr(play, "装备buff432", { [3]=1288, [4]=1288, [1]=12888, [2]=12888, [71]=regen }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgjq, 432, zt == 1)
+            if zt == 2 then
+                _equip_set_attr(play, "装备buff432_atk20", {}, false)
+                setplaydef(play, "N$equipbuff432_atk_end", 0)
+                _equip_clear_state(play, 432)
+            end
+        end
+    end,
+
+    [433] = function(play,zt,Damage,Target,MagicId) -- 月如歌
+-- 固定攻击力：+ 1288
+-- 打怪爆率：+ 30%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff433", { [3]=1288, [4]=1288, [242]=3000 }, zt == 1)
+        end
+    end,
+
+    [434] = function(play,zt,Damage,Target,MagicId) -- 月中寒
+-- 固定攻击力：+ 1288
+-- 打怪爆率：+ 30%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff434", { [3]=1288, [4]=1288, [242]=3000 }, zt == 1)
+        end
+    end,
+
+    [435] = function(play,zt,Damage,Target,MagicId) -- 锁九天
+-- 固定攻击力：+ 1288
+-- 打怪爆率：+ 30%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff435", { [3]=1288, [4]=1288, [242]=3000 }, zt == 1)
+        end
+    end,
+
+        [436] = function(play,zt,Damage,Target,MagicId) -- 春不语
+-- 固定攻击力：+ 2888
+-- 固定生命值：+ 28888
+-- 固定魔法值：+ 28888
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击生命值低于(20%)的怪物时触发
+-- 造成[2.0]倍对怪切割的伤害！
+        if zt == 3 then
+            if _equip_is_mon(Target) then
+                local maxhp = _equip_get_maxhp(Target)
+                local curhp = _equip_get_curhp(Target)
+                if maxhp > 0 and curhp * 100 <= maxhp * 20 then
+                    local cut = tonumber(getbaseinfo(play, 51, 244) or 0) or 0
+                    if cut > 0 then
+                        return cut * 2
+                    end
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff436", { [3]=2888, [4]=2888, [1]=28888, [2]=28888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 436, zt == 1)
+        end
+    end,
+
+    [437] = function(play,zt,Damage,Target,MagicId) -- 叶知秋
+-- 攻击倍数：+ 5%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff437", { [67]=5 }, zt == 1)
+        end
+    end,
+
+    [438] = function(play,zt,Damage,Target,MagicId) -- 浅吟唱
+        -- 施放技能时有概率触发双重施法效果
+        -- 让技能额外在释放一次[CD60秒]
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff438", { [1]=12888, [2]=12888 }, zt == 1)
+        end
+    end,
+
+    [439] = function(play,zt,Damage,Target,MagicId) -- 烟醉雨
+-- 攻击力：+ 777
+-- 生命值：+ 7777
+-- 魔法值：+ 7777
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff439", { [3]=777, [4]=777, [1]=7777, [2]=7777 }, zt == 1)
+        end
+    end,
+
+        [440] = function(play,zt,Damage,Target,MagicId) -- 洛情弃
+-- 固定攻击力：+ 2888
+-- 固定生命值：+ 28888
+-- IMG:res/tips/3.png#0#0&0
+-- 最大生命值：+ 10%
+-- 穿戴时随机获得[1%-10%]的体力元素
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff440", { [3]=2888, [4]=2888, [1]=28888, [280]=10 }, zt == 1)
+            if zt == 1 then
+                _equip_add_random_stamina(play, "洛情弃", 1, 10)
+            end
+        end
+    end,
+
+        [441] = function(play,zt,Damage,Target,MagicId) -- 仙人跪
+-- 固定攻击力：+ 1288
+-- IMG:res/tips/3.png#0#0&0
+-- 烈火剑法可斩杀目标[10%]的生命值
+        if zt == 3 then
+            if MagicId == 26 and Target then
+                local maxhp = _equip_get_maxhp(Target)
+                if maxhp > 0 then
+                    return math.floor(maxhp * 0.10)
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff441", { [3]=1288, [4]=1288 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgjq, 441, zt == 1)
+        end
+    end,
+
+    [442] = function(play,zt,Damage,Target,MagicId) -- 遮云日
+        -- 战斗状态下可使用[回城石]无视限制
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff442", { [3]=1288, [4]=1288, [1]=12888, [2]=12888 }, zt == 1)
+        end
+    end,
+
+    [443] = function(play,zt,Damage,Target,MagicId) -- 囚魍魉
+-- 固定攻击力：+ 2888
+-- 固定生命值：+ 28888
+-- 固定魔法值：+ 28888
+-- IMG:res/tips/3.png#0#0&0
+-- 最大攻击力：+ 3%
+-- 最大生命值：+ 5%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff443", { [3]=2891, [4]=2891, [1]=28893, [2]=28888 }, zt == 1)
+        end
+    end,
+
+    [444] = function(play,zt,Damage,Target,MagicId) -- 深渊低语
+-- 打怪爆率：+ 25%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff444", { [242]=2500 }, zt == 1)
+        end
+    end,
+
+    [445] = function(play,zt,Damage,Target,MagicId) -- 血月残魂
+-- 打怪爆率：+ 25%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff445", { [242]=2500 }, zt == 1)
+        end
+    end,
+
+    [446] = function(play,zt,Damage,Target,MagicId) -- 亡者契约
+-- 固定攻击力：+ 888
+-- 固定生命值：+ 8888
+-- 固定魔法值：+ 8888
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff446", { [3]=888, [4]=888, [1]=8888, [2]=8888 }, zt == 1)
+        end
+    end,
+
+    [447] = function(play,zt,Damage,Target,MagicId) -- 混沌之种
+-- 固定攻击力：+ 888
+-- 固定生命值：+ 8888
+-- 固定魔法值：+ 8888
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff447", { [3]=888, [4]=888, [1]=8888, [2]=8888 }, zt == 1)
+        end
+    end,
+
+        [448] = function(play,zt,Damage,Target,MagicId) -- 暗影囚笼
+-- 固定攻击力：+ 2488
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击时有概率切割怪物[1%-3%]的最
+-- 大生命值！(对极少数BOSS不生效)
+        if zt == 3 then
+            if _equip_is_mon(Target) then
+                if _equip_roll(play, 448, 5, 30) then
+                    local maxhp = _equip_get_maxhp(Target)
+                    if maxhp > 0 then
+                        local pct = math.random(1, 3)
+                        return math.floor(maxhp * pct / 100)
+                    end
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff448", { [3]=2488, [4]=2488 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 448, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 448)
+            end
+        end
+    end,
+
+        [449] = function(play,zt,Damage,Target,MagicId) -- 噬魂之镰影
+-- 固定生命值：+ 24888
+-- 固定魔法值：+ 24888
+-- IMG:res/tips/3.png#0#0&0
+-- 人物生命值低于(15%)的时候会瞬间
+-- 恢复人物[55%]最大生命值(CD120S)
+        if zt == 3 then
+            local maxhp = _equip_get_maxhp(play)
+            local curhp = _equip_get_curhp(play)
+            if maxhp > 0 and curhp * 100 <= maxhp * 15 then
+                if _equip_roll(play, 449, 5, 120) then
+                    humanhp(play, "+", math.floor(maxhp * 0.55))
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff449", { [1]=24888, [2]=24888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffbgwq, 449, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffbrwq, 449, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 449)
+            end
+        end
+    end,
+
+    [450] = function(play,zt,Damage,Target,MagicId) -- 霸天震九州
+-- 固定属性/未配置说明
+        if zt == 3 then
+            return 0
+        else
+-- 装备效果
+        end
+    end,
+
+    [451] = function(play,zt,Damage,Target,MagicId) -- 永夜诅咒
+        -- 攻击时有概率卸下目标[1件]装备返
+        -- 回到背包里面！
+        if zt == 3 then
+            return 0
+        else
+-- 装备效果
+        end
+    end,
+
+    [452] = function(play,zt,Damage,Target,MagicId) -- 狂风之力
+-- 打怪爆率：+ 25%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff452", { [242]=2500 }, zt == 1)
+        end
+    end,
+
+    [453] = function(play,zt,Damage,Target,MagicId) -- 虚空回响
+        -- 人物复活后必定获得[100%暴击几率]
+        -- (暴击几率的BUFF持续时间为5秒)
+        if zt == 3 then
+            return 0
+        else
+-- 装备效果
+        end
+    end,
+
+    [454] = function(play,zt,Damage,Target,MagicId) -- 堕落圣歌
+-- 固定攻击力：+ 3888
+-- 固定生命值：+ 38888
+-- 固定魔法值：+ 38888
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff454", { [3]=3888, [4]=3888, [1]=38888, [2]=38888 }, zt == 1)
+        end
+    end,
+
+    [455] = function(play,zt,Damage,Target,MagicId) -- 焚天令
+-- PK时伤害：+ 10%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff455", { [76]=10 }, zt == 1)
+        end
+    end,
+
+    [456] = function(play,zt,Damage,Target,MagicId) -- 逆命玉
+-- PK时伤害：+ 10%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff456", { [76]=10 }, zt == 1)
+        end
+    end,
+
+    [457] = function(play,zt,Damage,Target,MagicId) -- 诛仙箓
+        -- 施放技能时有概率触发双重施法效果
+        -- 让技能额外在释放一次[CD60秒]
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff457", { [3]=2488, [4]=2488 }, zt == 1)
+        end
+    end,
+
+    [458] = function(play,zt,Damage,Target,MagicId) -- 万法归宗卷
+-- 固定攻击力：+ 2488
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff458", { [3]=2488, [4]=2488 }, zt == 1)
+        end
+    end,
+
+    [459] = function(play,zt,Damage,Target,MagicId) -- 九霄龙吟印
+-- 固定生命值：+ 24888
+-- 固定魔法值：+ 24888
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff459", { [1]=24888, [2]=24888 }, zt == 1)
+        end
+    end,
+
+    [460] = function(play,zt,Damage,Target,MagicId) -- 飞龙在天
+-- 固定攻击力：+ 555
+-- 固定生命值：+ 5555
+-- 固定魔法值：+ 5555
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff460", { [3]=555, [4]=555, [1]=5555, [2]=5555 }, zt == 1)
+        end
+    end,
+
+    [461] = function(play,zt,Damage,Target,MagicId) -- 霸者傲天下
+-- 固定攻击力：+ 555
+-- 固定生命值：+ 5555
+-- 固定魔法值：+ 5555
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff461", { [3]=555, [4]=555, [1]=5555, [2]=5555 }, zt == 1)
+        end
+    end,
+
+        [462] = function(play,zt,Damage,Target,MagicId) -- 铁血战歌
+-- 固定攻击力：+ 3888
+-- 固定生命值：+ 38888
+-- 固定魔法值：+ 38888
+-- IMG:res/tips/3.png#0#0&0
+-- 伤害吸收：+ 10%
+-- 穿戴时随机获得[1%-15%]的体力元素
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff462", { [3]=3888, [4]=3888, [1]=38888, [2]=38888, [206]=10 }, zt == 1)
+            if zt == 1 then
+                _equip_add_random_stamina(play, "铁血战歌", 1, 15)
+            end
+        end
+    end,
+
+    [463] = function(play,zt,Damage,Target,MagicId) -- 焚天战旗
+        -- 人物脱战后每秒恢复[1%]最大生命
+        -- 搭配[无尽征伐]可组合套装
+        if zt == 3 then
+            return 0
+        else
+-- 装备效果
+        end
+    end,
+
+    [464] = function(play,zt,Damage,Target,MagicId) -- 无尽征伐
+        -- 人物脱战后每秒恢复[1%]最大生命
+        -- 搭配[焚天战旗]可组合套装
+        if zt == 3 then
+            return 0
+        else
+-- 装备效果
+        end
+    end,
+
+    [465] = function(play,zt,Damage,Target,MagicId) -- 天罚之威
+        -- 暴击时概率切割目标(3%)最大生命值
+        -- (30秒内只允许触发一次当前BUFF)
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff465", { [1]=24888, [2]=24888 }, zt == 1)
+        end
+    end,
+
+    [466] = function(play,zt,Damage,Target,MagicId) -- 诸神黄昏令
+-- 固定攻击力：+ 2488
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击倍数：+ 5%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff466", { [3]=2488, [4]=2488, [67]=5 }, zt == 1)
+        end
+    end,
+
+    [467] = function(play,zt,Damage,Target,MagicId) -- 死亡彗星
+-- 固定属性/未配置说明
+        if zt == 3 then
+            return 0
+        else
+-- 装备效果
+        end
+    end,
+
+        [468] = function(play,zt,Damage,Target,MagicId) -- 太虚真意
+-- 固定攻击力：+ 2488
+-- 固定生命值：+ 24888
+-- 固定魔法值：+ 24888
+-- 每秒恢复人物(等级*10)的生命值
+-- IMG:res/tips/3.png#0#0&0
+-- 穿戴后激活人物[全身黑化]的状态
+-- 黑化状态下增加(5%)的最大攻击力
+        if zt == 3 then
+            return 0
+        else
+            local level = tonumber(getbaseinfo(play, ConstCfg.gbase.level) or 0) or 0
+            _equip_set_attr(play, "装备buff468", { [3]=2488, [4]=2488, [1]=24888, [2]=24888, [71]=level*10, [282]=5 }, zt == 1)
+        end
+    end,
+
+        [469] = function(play,zt,Damage,Target,MagicId) -- 傲骨豪
+-- 固定攻击力：+ 3888
+-- 固定生命值：+ 38888
+-- 固定魔法值：+ 38888
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击满血人物直接斩杀(30%)生命值
+-- (60秒内只允许触发一次当前BUFF)
+        if zt == 3 then
+            if _equip_is_player(Target) and _equip_is_full_hp(Target) then
+                if _equip_roll(play, 469, 5, 60) then
+                    local maxhp = _equip_get_maxhp(Target)
+                    return math.floor(maxhp * 0.30)
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff469", { [3]=3888, [4]=3888, [1]=38888, [2]=38888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffrwq, 469, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 469)
+            end
+        end
+    end,
+
+        [470] = function(play,zt,Damage,Target,MagicId) -- 灵犀一点
+-- 固定攻击力：+ 3888
+-- 固定生命值：+ 38888
+-- 固定魔法值：+ 38888
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击满血人物直接斩杀(30%)生命值
+-- (60秒内只允许触发一次当前BUFF)
+        if zt == 3 then
+            if _equip_is_player(Target) and _equip_is_full_hp(Target) then
+                if _equip_roll(play, 470, 5, 60) then
+                    local maxhp = _equip_get_maxhp(Target)
+                    return math.floor(maxhp * 0.30)
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff470", { [3]=3888, [4]=3888, [1]=38888, [2]=38888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffrwq, 470, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 470)
+            end
+        end
+    end,
+
+        [471] = function(play,zt,Damage,Target,MagicId) -- 碎穹裂宇
+-- 固定攻击力：+ 3888
+-- 固定生命值：+ 38888
+-- 固定魔法值：+ 38888
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击满血人物直接斩杀(30%)生命值
+-- (60秒内只允许触发一次当前BUFF)
+        if zt == 3 then
+            if _equip_is_player(Target) and _equip_is_full_hp(Target) then
+                if _equip_roll(play, 471, 5, 60) then
+                    local maxhp = _equip_get_maxhp(Target)
+                    return math.floor(maxhp * 0.30)
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff471", { [3]=3888, [4]=3888, [1]=38888, [2]=38888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffrwq, 471, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 471)
+            end
+        end
+    end,
+
+    [472] = function(play,zt,Damage,Target,MagicId) -- 万劫归墟
+-- 攻击倍数：+ 5%
+-- 最大生命值：+ 10%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff472", { [1]=10, [67]=5 }, zt == 1)
+        end
+    end,
+
+        [473] = function(play,zt,Damage,Target,MagicId) -- 弑道焚心
+-- 攻击时刀刀切割怪物[1%]的生命值
+-- (切割效果对极少数BOSS无法生效)
+        if zt == 3 then
+            if _equip_is_mon(Target) then
+                local maxhp = _equip_get_maxhp(Target)
+                if maxhp > 0 then
+                    return math.floor(maxhp * 0.01)
+                end
+            end
+            return 0
+        else
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 473, zt == 1)
+        end
+    end,
+
+    [474] = function(play,zt,Damage,Target,MagicId) -- 破界诛邪
+        -- 攻击人物时有概率使目标诅咒[5秒]
+        -- 命中被诅咒的目标每秒额外掉血[1%]
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff474", { [1]=24888, [2]=24888 }, zt == 1)
+        end
+    end,
+
+    [475] = function(play,zt,Damage,Target,MagicId) -- 镇狱封魔
+        -- 施放烈火时有概率触发双重施法效果
+        -- 让技能额外在释放一次[CD60秒]
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff475", { [3]=2488, [4]=2488 }, zt == 1)
+        end
+    end,
+
+    [476] = function(play,zt,Damage,Target,MagicId) -- 灭道焚天
+-- 固定攻击力：+ 2488
+-- 固定生命值：+ 24888
+-- 固定魔法值：+ 24888
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff476", { [3]=2488, [4]=2488, [1]=24888, [2]=24888 }, zt == 1)
+        end
+    end,
+
+        [477] = function(play,zt,Damage,Target,MagicId) -- 破天魂
+-- 人物死亡后记录[击杀者]的游戏名称
+-- 下次与目标PK时增加[20%]的伤害值
+-- 搭配[地狱火]可组合套装
+        if zt == 3 then
+            if _equip_has_flag(play, "N$equipset_potian") and _equip_is_player(Target) then
+                local name = tostring(getplaydef(play, "N$equipbuff477_target") or "")
+                if name ~= "" and name == tostring(getbaseinfo(Target, ConstCfg.gbase.name) or "") then
+                    setplaydef(play, "N$equipbuff477_target", "")
+                    return math.floor(Damage * 0.20)
+                end
+            end
+            return 0
+        else
+            local has = _equip_has_name(play, "破天魂") and _equip_has_name(play, "地狱火")
+            _equip_set_flag(play, "N$equipset_potian", has)
+            _toggle_buff_var(play, VarCfg.S_buffrwq, 477, zt == 1)
+        end
+    end,
+
+        [478] = function(play,zt,Damage,Target,MagicId) -- 地狱火
+-- 人物死亡后记录[击杀者]的游戏名称
+-- 下次与目标PK时增加[20%]的伤害值
+-- 搭配[破天魂]可组合套装
+        if zt == 3 then
+            if _equip_has_flag(play, "N$equipset_potian") and _equip_is_player(Target) then
+                local name = tostring(getplaydef(play, "N$equipbuff477_target") or "")
+                if name ~= "" and name == tostring(getbaseinfo(Target, ConstCfg.gbase.name) or "") then
+                    setplaydef(play, "N$equipbuff477_target", "")
+                    return math.floor(Damage * 0.20)
+                end
+            end
+            return 0
+        else
+            local has = _equip_has_name(play, "破天魂") and _equip_has_name(play, "地狱火")
+            _equip_set_flag(play, "N$equipset_potian", has)
+            _toggle_buff_var(play, VarCfg.S_buffrwq, 478, zt == 1)
+        end
+    end,
+
+        [479] = function(play,zt,Damage,Target,MagicId) -- 三生石影
+-- 生命值低于[30%]时触发无敌状态1秒
+-- 并且恢复人物(100%)的最大生命值！
+-- [CD150秒]
+        if zt == 3 then
+            local maxhp = _equip_get_maxhp(play)
+            local curhp = _equip_get_curhp(play)
+            if maxhp > 0 and curhp * 100 <= maxhp * 30 then
+                if _equip_roll(play, 479, 5, 150) then
+                    humanhp(play, "+", maxhp)
+                end
+            end
+            return 0
+        else
+            _toggle_buff_var(play, VarCfg.S_buffbgwq, 479, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffbrwq, 479, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 479)
+            end
+        end
+    end,
+
+    [480] = function(play,zt,Damage,Target,MagicId) -- 忘川渡魂
+        -- 每秒恢复人物(等级*10)的生命值
+        -- 复活在不可用的情况下有(3%)的概率
+        -- 斩杀目标人物[99%]的最大生命值！
+        -- [CD300秒]
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff480", { [3]=3888, [4]=3888, [1]=38888, [2]=38888 }, zt == 1)
+        end
+    end,
+
+        [481] = function(play,zt,Damage,Target,MagicId) -- 渡厄仙符
+-- 固定攻击力：+ 2488
+-- 固定生命值：+ 24888
+-- 固定魔法值：+ 24888
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击时有概率强制麻痹目标[1]秒
+        if zt == 3 then
+            if Target then
+                if _equip_roll(play, 481, 5, 30) then
+                    changemode(Target, ConstCfg.pmode.stick, 1)
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff481", { [3]=2488, [4]=2488, [1]=24888, [2]=24888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgjq, 481, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 481)
+            end
+        end
+    end,
+
+    [482] = function(play,zt,Damage,Target,MagicId) -- 因果天锁
+        -- 杀怪触发鞭尸后有[2%]概率触发连爆
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff482", { [3]=2488, [4]=2488, [1]=24888 }, zt == 1)
+        end
+    end,
+
+    [483] = function(play,zt,Damage,Target,MagicId) -- 命数天盘
+        -- 被击杀时有[20%]的概率不掉狂暴
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff483", { [3]=2488, [4]=2488, [1]=24888, [2]=24888 }, zt == 1)
+        end
+    end,
+
+        [484] = function(play,zt,Damage,Target,MagicId) -- 尘缘劫火
+-- 固定攻击力：+ 2488
+-- IMG:res/tips/3.png#0#0&0
+-- 人物复活后触发隐身[2秒]下次攻击
+-- 必定造成[3.0]倍伤害[CD:30秒]
+        if zt == 3 then
+            if _equip_has_next_flag(play, 484) then
+                _equip_set_next_flag(play, 484, false)
+                return math.floor(Damage * 2)
+            end
+            return 0
+        elseif zt == 4 then
+            if _equip_roll(play, 484, 100, 30) then
+                _equip_set_next_flag(play, 484, true)
+            end
+        else
+            _equip_set_attr(play, "装备buff484", { [3]=2488, [4]=2488 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgjq, 484, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_bufffuhuo, 484, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 484)
+                _equip_set_next_flag(play, 484, false)
+            end
+        end
+    end,
+
+        [485] = function(play,zt,Damage,Target,MagicId) -- 渡世莲华
+-- 攻击时触发刀刀斩杀人物[3%]生命值
+        if zt == 3 then
+            if _equip_is_player(Target) then
+                local maxhp = _equip_get_maxhp(Target)
+                if maxhp > 0 then
+                    return math.floor(maxhp * 0.03)
+                end
+            end
+            return 0
+        else
+            _toggle_buff_var(play, VarCfg.S_buffrwq, 485, zt == 1)
+        end
+    end,
+
+    [486] = function(play,zt,Damage,Target,MagicId) -- 鸿蒙初判
+        -- 等级上限：+ 3
+        if zt == 3 then
+            return 0
+        else
+-- 装备效果
+        end
+    end,
+
+    [487] = function(play,zt,Damage,Target,MagicId) -- 混沌道胎
+-- 固定攻击力：+ 1288
+-- 固定生命值：+ 12888
+-- 固定魔法值：+ 12888
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff487", { [3]=1288, [4]=1288, [1]=12888, [2]=12888 }, zt == 1)
+        end
+    end,
+
+    [488] = function(play,zt,Damage,Target,MagicId) -- 轩辕镇世符
+-- 固定攻击力：+ 1288
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击倍数：+ 5%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff488", { [3]=1288, [4]=1288, [67]=5 }, zt == 1)
+        end
+    end,
+
+        [489] = function(play,zt,Damage,Target,MagicId) -- 东皇钟魂
+-- 攻击时有概率连续造成[8]连击，每
+-- 次连击时造成最大伤害值的(70%)！
+-- (30秒内只允许触发一次当前BUFF)
+        if zt == 3 then
+            if _equip_roll(play, 489, 5, 30) then
+                return math.floor(Damage * 0.70 * 8)
+            end
+            return 0
+        else
+            _toggle_buff_var(play, VarCfg.S_buffgjq, 489, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 489)
+            end
+        end
+    end,
+
+    [490] = function(play,zt,Damage,Target,MagicId) -- 熱翔
+-- 装备回收：+ 30%
+-- 经验倍数：+ 50%
+-- 打怪爆率：+ 50%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff490", { [242]=5000, [204]=30, [66]=50 }, zt == 1)
+        end
+    end,
+
+    [491] = function(play,zt,Damage,Target,MagicId) -- 致命节奏
+-- 固定属性/未配置说明
+        if zt == 3 then
+            return 0
+        else
+-- 装备效果
+        end
+    end,
+
+    [492] = function(play,zt,Damage,Target,MagicId) -- 玄武震天尊
+-- 固定属性/未配置说明
+        if zt == 3 then
+            return 0
+        else
+-- 装备效果
+        end
+    end,
+
+    [493] = function(play,zt,Damage,Target,MagicId) -- 月下听松
+        -- 人物永久进入[杀人不红名]状态
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff493", { [3]=4888, [4]=4888, [1]=48888, [2]=48888 }, zt == 1)
+        end
+    end,
+
+    [494] = function(play,zt,Damage,Target,MagicId) -- 风吟鹤唳
+-- 固定攻击力：+ 4888
+-- 固定生命值：+ 48888
+-- 固定魔法值：+ 48888
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff494", { [3]=4888, [4]=4888, [1]=48888, [2]=48888 }, zt == 1)
+        end
+    end,
+
+    [495] = function(play,zt,Damage,Target,MagicId) -- 空山灵雨
+        -- 每层噬魂之力：附加20点攻击力
+        -- 每层噬魂之力：附加200点生命值
+        -- 击杀怪物有概率增加(1层)噬魂之力
+        -- 击杀狂暴玩家可增加(3层)噬魂之力
+        -- 击杀狂暴玩家可增加[1%]攻击倍数
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff495", { [3]=4888, [4]=4888, [1]=48888, [2]=48888 }, zt == 1)
+        end
+    end,
+
+        [496] = function(play,zt,Damage,Target,MagicId) -- 流霞醉客
+-- 固定攻击力：+ 3688
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击怪物时附带[15555]点对怪切割
+        if zt == 3 then
+            if _equip_is_mon(Target) then
+                return 15555
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff496", { [3]=3688, [4]=3688 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 496, zt == 1)
+        end
+    end,
+
+    [497] = function(play,zt,Damage,Target,MagicId) -- 星垂平野
+-- 固定生命值：+ 36888
+-- 固定魔法值：+ 36888
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff497", { [1]=36888, [2]=36888 }, zt == 1)
+        end
+    end,
+
+        [498] = function(play,zt,Damage,Target,MagicId) -- 月落乌啼
+-- 固定攻击力：+ 3688
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击时有概率切割怪物[1%-3%]的最
+-- 大生命值！
+        if zt == 3 then
+            if _equip_is_mon(Target) then
+                if _equip_roll(play, 498, 5, 30) then
+                    local maxhp = _equip_get_maxhp(Target)
+                    if maxhp > 0 then
+                        local pct = math.random(1, 3)
+                        return math.floor(maxhp * pct / 100)
+                    end
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff498", { [3]=3688, [4]=3688 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 498, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 498)
+            end
+        end
+    end,
+
+        [499] = function(play,zt,Damage,Target,MagicId) -- 一苇渡江
+-- 固定攻击力：+ 4888
+-- 固定生命值：+ 48888
+-- 固定魔法值：+ 48888
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击有概率打掉目标[66%]的生命值
+-- 恢复自身[66%]的生命值(仅PK触发)
+        if zt == 3 then
+            if _equip_is_player(Target) then
+                if _equip_roll(play, 499, 5, 30) then
+                    local maxhp = _equip_get_maxhp(Target)
+                    if maxhp > 0 then
+                        local dmg = math.floor(maxhp * 0.66)
+                        humanhp(play, "+", dmg)
+                        return dmg
+                    end
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff499", { [3]=4888, [4]=4888, [1]=48888, [2]=48888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffrwq, 499, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 499)
+            end
+        end
+    end,
+
+        [500] = function(play,zt,Damage,Target,MagicId) -- 浮生若梦
+-- 固定生命值：+ 36888
+-- 固定魔法值：+ 36888
+-- IMG:res/tips/3.png#0#0&0
+-- 每八刀对目标造成[2.0倍]对怪切割
+        if zt == 3 then
+            if _equip_is_mon(Target) then
+                if _equip_hit_step(play, 500, 8, MagicId) then
+                    local cut = tonumber(getbaseinfo(play, 51, 244) or 0) or 0
+                    if cut > 0 then
+                        return cut * 2
+                    end
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff500", { [1]=36888, [2]=36888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 500, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 500)
+            end
+        end
+    end,
+
+    [501] = function(play,zt,Damage,Target,MagicId) -- 血煞魔心
+-- 固定攻击力：+ 3688
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击倍数：+ 5%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff501", { [3]=3688, [4]=3688, [67]=5 }, zt == 1)
+        end
+    end,
+
+        [502] = function(play,zt,Damage,Target,MagicId) -- 万魔归宗
+-- 固定攻击力：+ 4888
+-- 固定生命值：+ 48888
+-- 固定魔法值：+ 48888
+-- IMG:res/tips/3.png#0#0&0
+-- 当人物生命值低于[20%]时触发冰冻
+-- 自身[2*2范围]内的目标1S(CD60秒)
+        if zt == 3 then
+            local maxhp = _equip_get_maxhp(play)
+            local curhp = _equip_get_curhp(play)
+            if maxhp > 0 and curhp * 100 <= maxhp * 20 then
+                if _equip_roll(play, 502, 5, 60) then
+                    if Target then
+                        changemode(Target, ConstCfg.pmode.frost, 1)
+                    end
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff502", { [3]=4888, [4]=4888, [1]=48888, [2]=48888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffbgwq, 502, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffbrwq, 502, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 502)
+            end
+        end
+    end,
+
+        [503] = function(play,zt,Damage,Target,MagicId) -- 幽狱炼魂
+-- 固定攻击力：+ 3688
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击时有概率直接打掉5大陆内的
+-- 怪物(5%)最大生命值！
+        if zt == 3 then
+            if _equip_is_mon(Target) and _equip_is_dalu(play, 5) then
+                if _equip_roll(play, 503, 5, 30) then
+                    local maxhp = _equip_get_maxhp(Target)
+                    if maxhp > 0 then
+                        return math.floor(maxhp * 0.05)
+                    end
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff503", { [3]=3688, [4]=3688 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 503, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 503)
+            end
+        end
+    end,
+
+        [504] = function(play,zt,Damage,Target,MagicId) -- 蚀道魔印
+-- 固定生命值：+ 36888
+-- 固定魔法值：+ 36888
+-- IMG:res/tips/3.png#0#0&0
+-- 施放技能后下次攻击造成[2]倍伤害!
+-- (30秒内只允许触发一次当前BUFF)
+        if zt == 3 then
+            if MagicId and MagicId > 0 then
+                if _equip_roll(play, 504, 100, 30) then
+                    _equip_set_next_flag(play, 504, true)
+                end
+                return 0
+            end
+            if _equip_has_next_flag(play, 504) then
+                _equip_set_next_flag(play, 504, false)
+                return Damage
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff504", { [1]=36888, [2]=36888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgjq, 504, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 504)
+                _equip_set_next_flag(play, 504, false)
+            end
+        end
+    end,
+
+    [505] = function(play,zt,Damage,Target,MagicId) -- 血河浮屠
+-- 固定攻击力：+ 3688
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff505", { [3]=3688, [4]=3688 }, zt == 1)
+        end
+    end,
+
+    [506] = function(play,zt,Damage,Target,MagicId) -- 噬魂夺魄
+-- 攻击倍数：+ 10%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff506", { [67]=10 }, zt == 1)
+        end
+    end,
+
+    [507] = function(play,zt,Damage,Target,MagicId) -- 九幽魔音
+        -- 每秒恢复人物(等级*10)的生命值
+        -- 人物永久进入[杀人不红名]状态
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff507", { [3]=3688, [4]=3688, [1]=36888, [2]=36888, [76]=10 }, zt == 1)
+        end
+    end,
+
+        [508] = function(play,zt,Damage,Target,MagicId) -- 焚霄
+-- 被攻击时有概率反弹(50%)的伤害
+-- 并恢复自身[50%]的生命值(CD120秒)
+        if zt == 3 then
+            if _equip_roll(play, 508, 50, 120) then
+                local maxhp = _equip_get_maxhp(play)
+                if maxhp > 0 then
+                    humanhp(play, "+", math.floor(maxhp * 0.50))
+                end
+                if Target and Damage and Damage > 0 then
+                    humanhp(Target, "-", math.floor(Damage * 0.50), 110, 0, play, 1)
+                end
+            end
+            return 0
+        else
+            _toggle_buff_var(play, VarCfg.S_buffbgjq, 508, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 508)
+            end
+        end
+    end,
+
+    [509] = function(play,zt,Damage,Target,MagicId) -- 镇渊
+        -- 人物触发复活后每秒恢复人物[10%]
+        -- 的最大生命值，效果持续(5秒)
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff509", { [1]=36888, [2]=36888 }, zt == 1)
+        end
+    end,
+
+    [510] = function(play,zt,Damage,Target,MagicId) -- 逆命
+        -- 攻击有概率忽视[100%]的防御力
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff510", { [3]=3688, [4]=3688 }, zt == 1)
+        end
+    end,
+
+    [511] = function(play,zt,Damage,Target,MagicId) -- 斩仙令
+-- 固定攻击力：+ 3688
+-- IMG:res/tips/3.png#0#0&0
+-- 防止暴击概率：+ 10%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff511", { [3]=3688, [4]=3688, [23]=10 }, zt == 1)
+        end
+    end,
+
+        [512] = function(play,zt,Damage,Target,MagicId) -- 焚天印
+-- 固定攻击力：+ 3688
+-- 固定生命值：+ 36888
+-- 固定魔法值：+ 36888
+-- 每秒恢复人物(等级*10)的生命值
+        if zt == 3 then
+            return 0
+        else
+            local level = tonumber(getbaseinfo(play, ConstCfg.gbase.level) or 0) or 0
+            _equip_set_attr(play, "装备buff512", { [3]=3688, [4]=3688, [1]=36888, [2]=36888, [71]=level*10 }, zt == 1)
+        end
+    end,
+
+    [513] = function(play,zt,Damage,Target,MagicId) -- 渡魂舟
+-- 固定生命值：+ 36888
+-- 固定魔法值：+ 36888
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff513", { [1]=36888, [2]=36888 }, zt == 1)
+        end
+    end,
+
+    [514] = function(play,zt,Damage,Target,MagicId) -- 碎星刃
+        -- 穿戴后体型增大且增加(大量生命值)
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff514", { [3]=4888, [4]=4888, [1]=48888, [2]=48888 }, zt == 1)
+        end
+    end,
+
+        [515] = function(play,zt,Damage,Target,MagicId) -- 九霄龙吟
+-- 固定攻击力：+ 4888
+-- 固定生命值：+ 48888
+-- 固定魔法值：+ 48888
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击时有概率恢复[100%]最大生命值 CD500
+        if zt == 3 then
+            if _equip_roll(play, 515, 5, 500) then
+                local maxhp = _equip_get_maxhp(play)
+                if maxhp > 0 then
+                    humanhp(play, "+", maxhp)
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff515", { [3]=4888, [4]=4888, [1]=48888, [2]=48888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgjq, 515, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 515)
+            end
+        end
+    end,
+
+    [516] = function(play,zt,Damage,Target,MagicId) -- 万法归宗
+        -- PK时有概率将目标的武器打入背包
+        -- (30秒内只允许触发一次当前BUFF)
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff516", { [3]=3688, [4]=3688, [1]=36888, [2]=36888 }, zt == 1)
+        end
+    end,
+
+        [517] = function(play,zt,Damage,Target,MagicId) -- 天罚
+-- 固定生命值：+ 36888
+-- 固定魔法值：+ 36888
+-- IMG:res/tips/3.png#0#0&0
+-- 烈火剑法可斩杀目标[10%]的生命值
+        if zt == 3 then
+            if MagicId == 26 and Target then
+                local maxhp = _equip_get_maxhp(Target)
+                if maxhp > 0 then
+                    return math.floor(maxhp * 0.10)
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff517", { [1]=36888, [2]=36888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgjq, 517, zt == 1)
+        end
+    end,
+
+        [518] = function(play,zt,Damage,Target,MagicId) -- 神寂
+-- 攻击满血人物时有(30%)的概率斩杀
+-- 掉目标[50%]的最大生命值!并且额外
+-- 触发缴械目标人物的武器(3)秒钟！
+-- (当处于缴械期间无法佩戴任何武器)
+        if zt == 3 then
+            if _equip_is_player(Target) and _equip_is_full_hp(Target) then
+                if _equip_roll(play, 518, 30, 30) then
+                    local maxhp = _equip_get_maxhp(Target)
+                    return math.floor(maxhp * 0.50)
+                end
+            end
+            return 0
+        else
+            _toggle_buff_var(play, VarCfg.S_buffrwq, 518, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 518)
+            end
+        end
+    end,
+
+    [519] = function(play,zt,Damage,Target,MagicId) -- 劫烬
+-- 固定属性/未配置说明
+        if zt == 3 then
+            return 0
+        else
+-- 装备效果
+        end
+    end,
+
+        [520] = function(play,zt,Damage,Target,MagicId) -- 道陨
+-- 当人物死亡时会对3*3范围内的全部
+-- 目标造成攻击力[333%]的伤害!
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_flag(play, "N$equipbuff520on", zt == 1)
+        end
+    end,
+
+    [521] = function(play,zt,Damage,Target,MagicId) -- 无情铁御
+-- 固定生命值：+ 12888
+-- 固定魔法值：+ 12888
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff521", { [1]=12888, [2]=12888 }, zt == 1)
+        end
+    end,
+
+    [522] = function(play,zt,Damage,Target,MagicId) -- 褪色者
+-- 固定生命值：+ 12888
+-- 固定魔法值：+ 12888
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff522", { [1]=12888, [2]=12888 }, zt == 1)
+        end
+    end,
+
+    [523] = function(play,zt,Damage,Target,MagicId) -- 七日杀
+-- 固定生命值：+ 12888
+-- 固定魔法值：+ 12888
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff523", { [1]=12888, [2]=12888 }, zt == 1)
+        end
+    end,
+
+    [524] = function(play,zt,Damage,Target,MagicId) -- 长生
+-- 固定攻击力：+ 1288
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff524", { [3]=1288, [4]=1288 }, zt == 1)
+        end
+    end,
+
+    [525] = function(play,zt,Damage,Target,MagicId) -- 狱門疆
+-- 打怪爆率：+ 20%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff525", { [242]=2000 }, zt == 1)
+        end
+    end,
+
+    [526] = function(play,zt,Damage,Target,MagicId) -- 伏魔御厨子
+-- 打怪爆率：+ 20%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff526", { [242]=2000 }, zt == 1)
+        end
+    end,
+
+    [527] = function(play,zt,Damage,Target,MagicId) -- 嵌合暗翳庭
+-- 打怪爆率：+ 20%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff527", { [242]=2000 }, zt == 1)
+        end
+    end,
+
+    [528] = function(play,zt,Damage,Target,MagicId) -- 裂穹
+-- 打怪爆率：+ 20%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff528", { [242]=2000 }, zt == 1)
+        end
+    end,
+
+    [529] = function(play,zt,Damage,Target,MagicId) -- 弑道
+-- 打怪爆率：+ 20%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff529", { [242]=2000 }, zt == 1)
+        end
+    end,
+
+    [530] = function(play,zt,Damage,Target,MagicId) -- 封魔
+-- 对怪切割：+ 9999
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff530", { [244]=9999 }, zt == 1)
+        end
+    end,
+
+    [531] = function(play,zt,Damage,Target,MagicId) -- 碎星
+-- 对怪切割：+ 9999
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff531", { [244]=9999 }, zt == 1)
+        end
+    end,
+
+    [532] = function(play,zt,Damage,Target,MagicId) -- 玄元道印
+-- 对怪伤害：+ 10%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff532", { [245]=1000 }, zt == 1)
+        end
+    end,
+
+    [533] = function(play,zt,Damage,Target,MagicId) -- 诸神黄昏
+-- 对怪伤害：+ 10%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff533", { [245]=1000 }, zt == 1)
+        end
+    end,
+
+        [534] = function(play,zt,Damage,Target,MagicId) -- 青冥道果
+-- 人物每秒恢复[1%]的最大生命值
+        if zt == 3 then
+            return 0
+        else
+            local maxhp = _equip_get_maxhp(play)
+            local regen = 0
+            if maxhp > 0 then
+                regen = math.floor(maxhp * 0.01)
+            end
+            _equip_set_attr(play, "装备buff534", { [71]=regen }, zt == 1)
+        end
+    end,
+
+        [535] = function(play,zt,Damage,Target,MagicId) -- 噬仙印
+-- 人物每秒恢复[1%]的最大生命值
+        if zt == 3 then
+            return 0
+        else
+            local maxhp = _equip_get_maxhp(play)
+            local regen = 0
+            if maxhp > 0 then
+                regen = math.floor(maxhp * 0.01)
+            end
+            _equip_set_attr(play, "装备buff535", { [71]=regen }, zt == 1)
+        end
+    end,
+
+        [536] = function(play,zt,Damage,Target,MagicId) -- 圣光誓约
+-- 固定攻击力：+ 4588
+-- IMG:res/tips/3.png#0#0&0
+-- 施放烈火剑法概率冰冻目标[1-3]秒
+        if zt == 3 then
+            if MagicId == 26 and Target then
+                if _equip_roll(play, 536, 5, 30) then
+                    changemode(Target, ConstCfg.pmode.frost, math.random(1, 3))
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff536", { [3]=4588, [4]=4588 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgjq, 536, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 536)
+            end
+        end
+    end,
+
+        [537] = function(play,zt,Damage,Target,MagicId) -- 天恩圣符
+-- 固定攻击力：+ 4588
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击时有概率触发[死亡一指]直接斩
+-- 杀目标[100%]的最大生命值！ cd 600 不能对高等级玩家生效
+        if zt == 3 then
+            if Target then
+                if _equip_is_player(Target) then
+                    local mylv = tonumber(getbaseinfo(play, ConstCfg.gbase.level) or 0) or 0
+                    local tlv = tonumber(getbaseinfo(Target, ConstCfg.gbase.level) or 0) or 0
+                    if tlv >= mylv then
+                        return 0
+                    end
+                end
+                if _equip_roll(play, 537, 5, 600) then
+                    local maxhp = _equip_get_maxhp(Target)
+                    if maxhp > 0 then
+                        return maxhp
+                    end
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff537", { [3]=4588, [4]=4588 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgjq, 537, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 537)
+            end
+        end
+    end,
+
+        [538] = function(play,zt,Damage,Target,MagicId) -- 净世真言
+-- 血量低于(30%)时恢复自身[50%]血量
+-- 并且推开周围人物三格距离(CD60秒)
+        if zt == 3 then
+            local maxhp = _equip_get_maxhp(play)
+            local curhp = _equip_get_curhp(play)
+            if maxhp > 0 and curhp * 100 <= maxhp * 30 then
+                if _equip_roll(play, 538, 5, 60) then
+                    humanhp(play, "+", math.floor(maxhp * 0.50))
+                end
+            end
+            return 0
+        else
+            _toggle_buff_var(play, VarCfg.S_buffbgwq, 538, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffbrwq, 538, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 538)
+            end
+        end
+    end,
+
+    [539] = function(play,zt,Damage,Target,MagicId) -- 荣耀之证
+        -- 每次攻击怪物时增加[10%]的总伤害
+        -- 当效果叠加十次后触发增伤效果清零
+        -- (效果清零后需要人物重新叠加BUFF)
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff539", { [3]=6288, [4]=6288, [1]=62888, [2]=62888 }, zt == 1)
+        end
+    end,
+
+        [540] = function(play,zt,Damage,Target,MagicId) -- 深渊凝视
+-- 破复活几率：+ 5%
+-- 攻击时有概率斩杀人物[15%]生命值
+        if zt == 3 then
+            if _equip_is_player(Target) then
+                if _equip_roll(play, 540, 5, 30) then
+                    local maxhp = _equip_get_maxhp(Target)
+                    if maxhp > 0 then
+                        return math.floor(maxhp * 0.15)
+                    end
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff540", { [47]=5 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffrwq, 540, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 540)
+            end
+        end
+    end,
+
+    [541] = function(play,zt,Damage,Target,MagicId) -- 亡语回响
+-- 固定攻击力：+ 4588
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff541", { [3]=4588, [4]=4588 }, zt == 1)
+        end
+    end,
+
+        [542] = function(play,zt,Damage,Target,MagicId) -- 血祭残章
+-- 固定攻击力：+ 4588
+-- IMG:res/tips/3.png#0#0&0
+-- 对怪伤害：+ 5%
+-- 攻击时附带[18888]点对怪切割
+        if zt == 3 then
+            if _equip_is_mon(Target) then
+                return 18888
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff542", { [3]=4588, [4]=4588, [245]=500 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 542, zt == 1)
+        end
+    end,
+
+        [543] = function(play,zt,Damage,Target,MagicId) -- 混沌余烬
+-- 固定攻击力：+ 4588
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击有概率打掉目标[50%]的生命值
+-- 恢复自身[20%]的生命值(仅PK触发)
+        if zt == 3 then
+            if _equip_is_player(Target) then
+                if _equip_roll(play, 543, 5, 30) then
+                    local maxhp = _equip_get_maxhp(Target)
+                    if maxhp > 0 then
+                        local dmg = math.floor(maxhp * 0.50)
+                        local selfmax = _equip_get_maxhp(play)
+                        humanhp(play, "+", math.floor(selfmax * 0.20))
+                        return dmg
+                    end
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff543", { [3]=4588, [4]=4588 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffrwq, 543, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 543)
+            end
+        end
+    end,
+
+        [544] = function(play,zt,Damage,Target,MagicId) -- 古神语
+-- 固定攻击力：+ 6288
+-- 固定生命值：+ 62888
+-- 固定魔法值：+ 62888
+-- 每秒恢复人物(等级*10)的生命值
+-- IMG:res/tips/3.png#0#0&0
+-- 当生命值低于[50%]时触发下一次攻
+-- 击切割人物(20%)的生命值(CD120秒)
+        if zt == 3 then
+            if _equip_has_next_flag(play, 544) and _equip_is_player(Target) then
+                _equip_set_next_flag(play, 544, false)
+                local maxhp = _equip_get_maxhp(Target)
+                if maxhp > 0 then
+                    return math.floor(maxhp * 0.20)
+                end
+            end
+            local maxhp = _equip_get_maxhp(play)
+            local curhp = _equip_get_curhp(play)
+            if maxhp > 0 and curhp * 100 <= maxhp * 50 then
+                if _equip_roll(play, 544, 5, 120) then
+                    _equip_set_next_flag(play, 544, true)
+                end
+            end
+            return 0
+        else
+            local level = tonumber(getbaseinfo(play, ConstCfg.gbase.level) or 0) or 0
+            _equip_set_attr(play, "装备buff544", { [3]=6288, [4]=6288, [1]=62888, [2]=62888, [71]=level*10 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgjq, 544, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffbgwq, 544, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffbrwq, 544, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 544)
+                _equip_set_next_flag(play, 544, false)
+            end
+        end
+    end,
+
+    [545] = function(play,zt,Damage,Target,MagicId) -- 虚空裂隙
+        -- 攻击时有概率将目标[衣服]打入背包
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff545", { [1]=45888, [2]=45888 }, zt == 1)
+        end
+    end,
+
+    [546] = function(play,zt,Damage,Target,MagicId) -- 禁忌之书
+-- 固定生命值：+ 45888
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击倍数：+ 5%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff546", { [1]=45888, [67]=5 }, zt == 1)
+        end
+    end,
+
+        [547] = function(play,zt,Damage,Target,MagicId) -- 旧日契约
+-- 固定攻击力：+ 4588
+-- 固定生命值：+ 45888
+-- 固定魔法值：+ 45888
+-- 每秒恢复人物(等级*10)的生命值
+-- IMG:res/tips/3.png#0#0&0
+-- 人物永久进入[防冰冻]状态
+-- 攻击时有概率造成冰冻[1]秒的效果
+        if zt == 3 then
+            if Target and _equip_roll(play, 547, 5, 30) then
+                changemode(Target, ConstCfg.pmode.frost, 1)
+            end
+            return 0
+        else
+            local level = tonumber(getbaseinfo(play, ConstCfg.gbase.level) or 0) or 0
+            _equip_set_attr(play, "装备buff547", { [3]=4588, [4]=4588, [1]=45888, [2]=45888, [71]=level*10, [51]=100 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgjq, 547, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 547)
+            end
+        end
+    end,
+
+    [548] = function(play,zt,Damage,Target,MagicId) -- 幻梦之钥
+-- 固定攻击力：+ 6288
+-- 固定生命值：+ 62888
+-- 固定魔法值：+ 62888
+-- IMG:res/tips/3.png#0#0&0
+-- 防止冰冻：+ 100%
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff548", { [3]=6288, [4]=6288, [1]=62888, [2]=62888, [51]=100 }, zt == 1)
+        end
+    end,
+
+    [549] = function(play,zt,Damage,Target,MagicId) -- 残响
+-- 固定攻击力：+ 4588
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff549", { [3]=4588, [4]=4588 }, zt == 1)
+        end
+    end,
+
+        [550] = function(play,zt,Damage,Target,MagicId) -- 虚骸
+-- 固定攻击力：+ 4588
+-- 固定生命值：+ 45888
+-- 固定魔法值：+ 45888
+-- IMG:res/tips/3.png#0#0&0
+-- 被攻击时有概率反弹[30%]所受伤害
+        if zt == 3 then
+            if Target and Damage and Damage > 0 then
+                if _equip_roll(play, 550, 5, 30) then
+                    humanhp(Target, "-", math.floor(Damage * 0.30), 110, 0, play, 1)
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff550", { [3]=4588, [4]=4588, [1]=45888, [2]=45888 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffbgjq, 550, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 550)
+            end
+        end
+    end,
+
+    [551] = function(play,zt,Damage,Target,MagicId) -- 蚀骨
+        -- 复活后触发增加[50%]的最大攻击力
+        -- (BUFF效果持续5秒·无法重复触发)
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff551", { [1]=45888, [2]=45888 }, zt == 1)
+        end
+    end,
+
+    [552] = function(play,zt,Damage,Target,MagicId) -- 冥契
+        -- 攻击人物时有概率使目标灼烧[10秒]
+        -- 被灼烧命中的目标每秒额外掉血[2%]
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff552", { [3]=4588, [4]=4588, [1]=45888, [2]=45888 }, zt == 1)
+        end
+    end,
+
+    [553] = function(play,zt,Damage,Target,MagicId) -- 罪印
+        -- 攻击时有概率将目标附加[攻击倍数]
+        -- 全部清空，BUFF效果持续3秒！
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff553", { [1]=45888, [2]=45888 }, zt == 1)
+        end
+    end,
+
+    [554] = function(play,zt,Damage,Target,MagicId) -- 魂锁
+-- 固定攻击力：+ 6288
+-- 固定生命值：+ 62888
+-- 固定魔法值：+ 62888
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff554", { [3]=6288, [4]=6288, [1]=62888, [2]=62888 }, zt == 1)
+        end
+    end,
+
+    [555] = function(play,zt,Damage,Target,MagicId) -- 暗核
+-- 固定攻击力：+ 6288
+-- 固定生命值：+ 62888
+-- 固定魔法值：+ 62888
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff555", { [3]=6288, [4]=6288, [1]=62888, [2]=62888 }, zt == 1)
+        end
+    end,
+
+    [556] = function(play,zt,Damage,Target,MagicId) -- 星骸
+        -- 穿戴随机获得以下[变异属性]的一种
+        -- 变异①：攻击增加10%上限
+        -- 变异②：全技能冷却CD减少2秒
+        -- 变异③：人物体型增大增加10%体力
+        -- 变异④：直接斩杀血量低于10%的怪物
+        -- 变异⑤：攻击时概率触发1-3倍多重攻击
+        if zt == 3 then
+            return 0
+        else
+-- 装备效果
+        end
+    end,
+
+    [557] = function(play,zt,Damage,Target,MagicId) -- 异星之骸
+        -- 当人物的生命值低于(50%)时触发每秒
+        -- 恢复[3%]生命值且增加(10%)攻击倍数
+        -- (回血等BUFF效果持续10S·CD120秒)
+        if zt == 3 then
+            return 0
+        else
+-- 装备效果
+        end
+    end,
+
+        [558] = function(play,zt,Damage,Target,MagicId) -- 虚空之光
+-- 固定攻击力：+ 4588
+-- IMG:res/tips/3.png#0#0&0
+-- 攻击时有概率对目标造成瘫痪[1秒]
+-- 并且恢复自身(30%)的最大生命值！
+        if zt == 3 then
+            if Target and _equip_roll(play, 558, 5, 30) then
+                changemode(Target, ConstCfg.pmode.stick, 1)
+                local maxhp = _equip_get_maxhp(play)
+                if maxhp > 0 then
+                    humanhp(play, "+", math.floor(maxhp * 0.30))
+                end
+            end
+            return 0
+        else
+            _equip_set_attr(play, "装备buff558", { [3]=4588, [4]=4588 }, zt == 1)
+            _toggle_buff_var(play, VarCfg.S_buffgjq, 558, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 558)
+            end
+        end
+    end,
+
+    [559] = function(play,zt,Damage,Target,MagicId) -- 界域之核
+        -- (非战斗状态下)使用十步一杀会触发
+        -- 接下来第一刀必定会麻痹目标[1秒]
+        if zt == 3 then
+            return 0
+        else
+            _equip_set_attr(play, "装备buff559", { [1]=45888, [2]=45888 }, zt == 1)
+        end
+    end,
+
+        [560] = function(play,zt,Damage,Target,MagicId) -- 空界之芯
+-- 攻击时有概率造成[700%]的对怪切割
+        if zt == 3 then
+            if _equip_is_mon(Target) then
+                if _equip_roll(play, 560, 5, 30) then
+                    local cut = tonumber(getbaseinfo(play, 51, 244) or 0) or 0
+                    if cut > 0 then
+                        return cut * 7
+                    end
+                end
+            end
+            return 0
+        else
+            _toggle_buff_var(play, VarCfg.S_buffgwq, 560, zt == 1)
+            if zt == 2 then
+                _equip_clear_state(play, 560)
+            end
+        end
+    end,
+
 }
-local weizhi = {0,1,3,4,5,6,7,8,9,10,11,13,14,16,30,31,32,33,34,35,36,37,38,39,40,41}
+local weizhi = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,55,71,72,73,74,75,76,78,85,86,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120}
 function Buff.refreshHuTiGuangHuan(play)
     Buff[107](play, 2)
     Buff[108](play, 2)
@@ -1223,10 +4553,38 @@ GameEvent.add(EventCfg.onkillplay, function(play)
         _title_sync_dadi_attr(play)
     end
 end, "Buff_328_stack")
+
+-- 装备效果
+GameEvent.add(EventCfg.onkillplay, function(play, target)
+    if (tonumber(getplaydef(play, "N$equipbuff413on") or 0) or 0) == 1 then
+        if _equip_roll(play, 413, 100, 20) then
+            local maxhp = _equip_get_maxhp(play)
+            if maxhp > 0 then
+                humanhp(play, "+", math.floor(maxhp * 0.10))
+            end
+        end
+    end
+end, "Equip_Kill_413")
+
+-- 装备效果
+GameEvent.add(EventCfg.onPlaydie, function(play, killer)
+    if _equip_has_flag(play, "N$equipset_potian") and killer and getbaseinfo(killer, ConstCfg.gbase.isplayer) then
+        setplaydef(play, "N$equipbuff477_target", tostring(getbaseinfo(killer, ConstCfg.gbase.name) or ""))
+    end
+    if _equip_has_flag(play, "N$equipbuff520on") then
+        local dc2 = tonumber(getbaseinfo(play, ConstCfg.gbase.dc2) or 0) or 0
+        if dc2 > 0 then
+            local x = getbaseinfo(play, ConstCfg.gbase.x)
+            local y = getbaseinfo(play, ConstCfg.gbase.y)
+            rangeharm(play, x, y, 3, math.floor(dc2 * 3.33), 0, 0, 0, 2, 0, 20)
+        end
+    end
+end, "Equip_OnPlaydie")
 function Buff.chuan(play,item)
     local id = getstditeminfo(getiteminfo(play,item,2),8)
     if id > 0 and Buff[id]then
         Buff[id](play,1)
+        release_print("装备BUFF触发，位置："..item.."，BUFFID："..id)
     end
 end
 function Buff.tuo(play,item)
@@ -1236,3 +4594,5 @@ function Buff.tuo(play,item)
     end
 end
 return Buff
+
+

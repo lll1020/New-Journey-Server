@@ -694,7 +694,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "兵道古藏", 605, 103, 53 },
+                    yd = { 1, "杀伐道场", 605, 103, 53 },
                     desc = "踏入杀伐之路，循迹而行",
                 },
                 {
