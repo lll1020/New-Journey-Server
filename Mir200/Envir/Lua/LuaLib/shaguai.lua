@@ -1487,14 +1487,14 @@ shaguai = {
 				end
 				return 60
 			elseif _dl == 3 then
-				if _cz > 0 then
+				if _cz > 80 then
 					return math.random(50,100)
 				end
 				return math.random(150,200)
 			elseif _dl == 4 or _dl == 5 or _dl == 6 then
-				if _cz > 110 then
+				if _cz > 200 then
 					return math.random(80,100)
-				elseif _cz >= 10 then
+				elseif _cz >= 100 then
 					return math.random(100,150)
 				end
 				return math.random(500,600)

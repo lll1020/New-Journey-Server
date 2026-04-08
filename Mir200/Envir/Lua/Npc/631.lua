@@ -95,12 +95,18 @@ function npc.link(play,npcid,ew,aid)
             end
             sendluamsg(play,101,1005,0,0,"rwwc")
             shaguai.jian(play, _config.shaguai_id or 631)
-            npc.main(play,npcid)
+            local data = {}
+            data["T_dljq"] = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+            data["sg_data"] = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+            sendluamsg(play,100,npcid,0,0,tbl2json(data))
         else
             jq_data[key] = 1
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
             Player.sendmsgEx(play, string.format("确认身份成功：|【%d/4】#249|", #jq_data[markKey]))
-            npc.main(play,npcid)
+            local data = {}
+            data["T_dljq"] = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+            data["sg_data"] = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+            sendluamsg(play,100,npcid,0,0,tbl2json(data))
         end
     end
 end

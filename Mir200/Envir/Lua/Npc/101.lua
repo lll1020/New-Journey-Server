@@ -326,6 +326,8 @@ local function _build_panel_data(play)
     data.exchange_limit = _config.exchange_daily_limit
     data.exchange_used = T_data.exchange_used
     data.total_kills = totalKills
+    data.today_kills = totalKills
+    data.U_sgsl = totalKills
     data.has_crown = _has_crown(play) and 1 or 0
     data.crown_cost = _config.crown_cost
     data.buy_cost = _config.buy_cost
@@ -504,3 +506,4 @@ end
 GameEvent.add(EventCfg.onLoginEnd, _on_login, _token_name)
 GameEvent.add(EventCfg.onKFLogin, _on_login, _token_name)
 return npc
+

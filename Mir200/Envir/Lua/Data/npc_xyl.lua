@@ -997,8 +997,8 @@ local npc_xyl = {
                 {
                     "船长的宝藏",
                     tk = "npc_630",
-                    ydtk = "npc_629",
-                    ydtip = "沉船之谜",
+                    -- ydtk = "npc_629",
+                    -- ydtip = "沉船之谜",
                     id = 999,
                     jl = { { "剧情点", 2 } },
                     fwdjy = function(play, tk)
@@ -1016,8 +1016,8 @@ local npc_xyl = {
                 {
                     "谁是内鬼",
                     tk = "npc_631",
-                    ydtk = "npc_629",
-                    ydtip = "沉船之谜",
+                    -- ydtk = "npc_629",
+                    -- ydtip = "沉船之谜",
                     id = 999,
                     jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
