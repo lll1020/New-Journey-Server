@@ -192,7 +192,7 @@ local function _equip_has_name(play, itemname)
         local item = linkbodyitem(play, pos)
         if item and item ~= "0" then
             local name = getiteminfo(play, item, 7)
-            release_print("检测装备位置"..pos.."，物品名："..tostring(name))
+            -- release_print("检测装备位置"..pos.."，物品名："..tostring(name))
             if name == itemname then
                 return true
             end
