@@ -1485,7 +1485,7 @@ shaguai = {
 				if _cnt < 10 then
 					return 30
 				end
-				return 60
+				return 100
 			elseif _dl == 3 then
 				if _cz > 80 then
 					return math.random(50,100)

@@ -13,7 +13,7 @@ local _config = {
     -- [205] = {"隐藏地图二",0,0,nil,nil,2, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
     [206] = {"野火帮",100,100,nil,nil,2, mob_name = "「焚骨统领·赤狱」", mob_shape = 16236, min_map = "000100"},
     [207] = {"极光城郊",100,100,nil,nil,2, mob_name = "「辉域守护者·冰霄」", mob_shape = 12015, min_map = "000100"},
-    [208] = {"兵道古藏",100,100,nil,nil,2, mob_name = "古兵执戟者", mob_shape = 16192, min_map = "000100"},
+    [208] = {"杀伐道场",100,100,nil,nil,2, mob_name = "古兵执戟者", mob_shape = 16192, min_map = "000100"},
     [209] = {"夜魔洞",100,100,nil,nil,2, mob_name = "「深夜魔君·漆渊」", mob_shape = 12011, min_map = "000100"},
     -- [210] = {"特殊秘境副本二",0,0,nil,nil,2, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
 

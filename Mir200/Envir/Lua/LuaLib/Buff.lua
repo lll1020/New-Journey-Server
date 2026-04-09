@@ -931,6 +931,12 @@ Buff = {
             if math.random(100) > 5 then
                 return 0
             end
+            local now = tonumber(os.time() or 0) or 0
+            local last = tonumber(getplaydef(play,"N$buff315cd") or 0) or 0
+            if now <= last then
+                return 0
+            end
+            setplaydef(play,"N$buff315cd", now + 1)
             local cutDamage = tonumber(getbaseinfo(play, 51, 244) or 0) or 0
             local atkDamage = tonumber(getbaseinfo(play, 20) or 0) or 0
             local axeLevel = tonumber(Player.getEquipFieldByPos(play, 9, 1) or 0) or 0
