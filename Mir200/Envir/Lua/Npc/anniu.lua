@@ -2103,7 +2103,7 @@ npc[517] = function(play, p2, p3, msgData) --聚宝盆
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#28ef01\'>升级成功...</font>","Type":9}' )
                 sendluamsg(play, 101, 517, 1, 3, "")
             else
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#ff0500\'>未激活【解绑特权】,无法升级聚宝盆...</font>","Type":9}' )
+                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#ff0500\'>未激活【超级特权】,无法升级聚宝盆...</font>","Type":9}' )
                 return
             end
         elseif T_data.level == 3 then --累计充值 200
