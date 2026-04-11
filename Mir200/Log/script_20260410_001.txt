@@ -4,3 +4,74 @@
 [2026-04-10 16:17:36:082] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 359964, CurPlayThreadId: 359964
 [2026-04-10 16:17:36:082] [玩家名字]Lua执行耗时过高:31ms msgid:101 31 0 0 
 
+[2026-04-10 16:44:55:599] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：32; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-10 16:45:06:920] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-10 17:08:41:658] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-10 17:08:56:023] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：46; NpcThreadId: 357768, CurPlayThreadId: 357768
+[2026-04-10 17:08:56:023] [玩家名字]Lua执行耗时过高:46ms msgid:101 11 1 0 {"i":2,"j":1,"k":0,"z":2}
+
+[2026-04-10 17:09:26:012] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-10 17:14:32:984] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：32; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-10 17:33:22:485] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：78; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-10 17:37:26:435] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-10 17:38:44:136] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 357768, CurPlayThreadId: 357768
+[2026-04-10 17:38:44:136] [玩家名字]Lua执行耗时过高:31ms msgid:100 10 1 0 
+
+[2026-04-10 17:38:46:693] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 357768, CurPlayThreadId: 357768
+[2026-04-10 17:38:46:693] [玩家名字]Lua执行耗时过高:31ms msgid:105 13 13 0 
+
+[2026-04-10 18:07:43:663] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-10 18:39:29:370] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：47; NpcThreadId: 357768, CurPlayThreadId: 357768
+[2026-04-10 18:39:29:370] [玩家名字]Lua执行耗时过高:47ms msgid:100 33 1 0 
+[2026-04-10 18:39:30:219] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：63; NpcThreadId: 357768, CurPlayThreadId: 357768
+[2026-04-10 18:39:30:219] [玩家名字]Lua执行耗时过高:63ms msgid:100 33 1 0 
+
+[2026-04-10 18:41:06:660] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：188; NpcThreadId: 357768, CurPlayThreadId: 357768
+[2026-04-10 18:41:06:660] [玩家名字]Lua执行耗时过高:188ms msgid:101 511 1 5 {"isall":1}
+
+[2026-04-10 18:45:49:374] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：47; NpcThreadId: 357768, CurPlayThreadId: 357768
+[2026-04-10 18:45:49:374] [玩家名字]Lua执行耗时过高:47ms msgid:105 11 11 0 
+
+[2026-04-10 18:54:03:549] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-10 19:02:25:501] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-10 19:27:50:284] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：32; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-10 19:28:37:493] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-10 19:29:12:450] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：125; NpcThreadId: 357768, CurPlayThreadId: 357768
+[2026-04-10 19:29:12:450] [玩家名字]Lua执行耗时过高:125ms msgid:100 101 3 1 {"count":1}
+
+[2026-04-10 19:54:37:667] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-10 19:58:25:144] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-10 20:39:53:304] LuaNPC:玩家名字 ID:999999999 执行 attack player:玩家名字 耗时：31; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-10 21:02:28:078] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：47; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-10 21:41:30:424] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-10 21:51:33:166] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-10 22:16:41:397] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-10 22:20:28:487] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：46; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-10 22:26:46:520] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：47; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-10 23:41:25:181] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-11 00:31:45:424] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 357768, CurPlayThreadId: 357768
+
+[2026-04-11 00:45:34:064] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 357768, CurPlayThreadId: 357768
+
