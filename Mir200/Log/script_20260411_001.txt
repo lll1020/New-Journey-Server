@@ -24,3 +24,8 @@
 
 [2026-04-11 14:39:17:485] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：125; NpcThreadId: 503412, CurPlayThreadId: 503412
 
+[2026-04-11 16:42:02:633] LuaNPC:玩家名字 ID:999999999 执行 entermap player:玩家名字 耗时：125; NpcThreadId: 503412, CurPlayThreadId: 503412
+[2026-04-11 16:42:02:633] LuaNPC:玩家名字 ID:999999999 执行 stdmodefunc10 player:玩家名字 耗时：172; NpcThreadId: 503412, CurPlayThreadId: 503412
+
+[2026-04-11 16:50:59:997] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 503412, CurPlayThreadId: 503412
+

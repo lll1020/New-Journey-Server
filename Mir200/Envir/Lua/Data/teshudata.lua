@@ -1069,7 +1069,7 @@ teshudata = {
         era_base_ratio = {20,10,5,3,1.5,1},
         era_adapt_ratio = {30,20,10,5,2,1},
         fake_ratio = 0.1,
-        true_rate = 10,
+        true_rate = 90,
         false_rate = 10,
         era_weight = {1,6,16,26,31,20},
         segment_rate = { [2]=15, [3]=30, [4]=50, [5]=70, [6]=80 },

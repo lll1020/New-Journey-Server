@@ -36,7 +36,7 @@ function npc.link(play,npcid,ew,aid)
         local level = getplaydef(play, VarCfg["U_境界修炼"][1])
         local exp = getplaydef(play, VarCfg["U_境界修炼"][2])
         if level >= _config.max_level then
-            Player.sendmsgEx(play,  "你的境界已达到#57|【"..level.."级】#249|，无需再提升#57")
+            Player.sendmsgEx(play,  "你的境界已达到#57|【".._config.details[level].title.."级】#249|，无需再提升#57")
             return
         end
         level = level + 1
@@ -61,7 +61,7 @@ function npc.link(play,npcid,ew,aid)
             end
 
             setplaydef(play, VarCfg["U_境界修炼"][1], level)
-            Player.sendmsgEx(play,  "恭喜你，境界提升成功，当前境界等级为|【"..level.."级】#249|")
+            Player.sendmsgEx(play,  "恭喜你，境界提升成功，当前境界等级为|【".._config.details[level].title.."级】#249|")
             if FairyFate and FairyFate.touch then FairyFate.touch(play, "realm_up") end
             sendluamsg(play,100,npcid,1,0,"")
             Player.del_attlist(play, "境界修为")
