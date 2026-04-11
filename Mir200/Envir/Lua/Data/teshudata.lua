@@ -2286,6 +2286,8 @@ teshudata = {
             super = {
                 {kind = "item", give = {{"Ê¥ĞÇºË",1}}, label = "Ê¥ĞÇºË*1"},
                 {kind = "item", give = {{"ÁéÊŞµ°",6}}, label = "ÁéÊŞµ°*6"},
+                {kind = "item", give = {{"ÌìµÀ¡¤¶É½Ùµ¤",6}}, label = "ÌìµÀ¡¤¶É½Ùµ¤*3"},
+                {kind = "item", give = {{"¼ø¹Å·û",3}}, label = "¼ø¹Å·û*3"},
             },
             relic = {
                 {kind = "item", give = {{"ÉÏ¹Å÷è÷ëÅ­½Ç",1}}, label = "ÉÏ¹Å÷è÷ëÅ­½Ç*1"},
