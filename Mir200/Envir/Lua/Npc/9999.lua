@@ -1155,7 +1155,37 @@ function ggna(play,id)
         -- setplaydef(play, VarCfg.T_czlb,"{}")
         -- setplaydef(play,VarCfg.U_zxrw[1],21)
         -- setplaydef(play,VarCfg.T_hsdg, '{"1_1_1":1,"1_1_2":1,"1_1_3":1,"1_1_4":1,"1_1_5":1,"1_1_6":1,"1_1_7":1,"1_1_8":1,"1_1_9":1,"1_1_10":1,"1_1_11":1,"1_1_12":1}')--回收打勾
-        sendluamsg(play,101,12,1,13,'{"sk":' .. 2 .. ',"kf":2,"idx":13}')
+        local _cfg_key = "npc_705"
+        -- local _config = Guard.getConfig(_cfg_key)
+        -- local _task_cfg = (_config and _config.task_cfg) or {}
+
+        -- local _choice_key = _cfg_key .. "_choice" -- 1=赤血花，2=紫梦花
+        -- local _step_key = _cfg_key .. "_step" -- 1=击杀阶段提交完成
+
+        -- local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+        -- local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+        -- local state = tonumber(jq_data[_cfg_key] or 0) or 0
+        -- local key_small = _cfg_key .. "_small"
+        -- local key_boss = _cfg_key .. "_boss"
+        -- local cur_small = tonumber(sg_data[key_small] or 0) or 0
+        -- local cur_boss = tonumber(sg_data[key_boss] or 0) or 0
+        -- jq_data[_cfg_key] = nil
+        -- jq_data[_choice_key] = nil
+        -- jq_data[_cfg_key] = nil
+        --     jq_data[_step_key] = nil
+        --     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+
+        --     -- 清理击杀进度
+        -- sg_data[key_small] = nil
+        -- sg_data[key_boss] = nil
+        -- Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+
+        local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+        local key_small = _cfg_key .. "_small"
+        local key_boss = _cfg_key .. "_boss"
+        sg_data[key_small] = 200
+        sg_data[key_boss] = 2
+        Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 
     end
 

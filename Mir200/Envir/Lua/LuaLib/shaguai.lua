@@ -1231,7 +1231,7 @@ shaguai = {
 	["701"] = function(play,mob)      --第五章：葬天试炼
 		_story5_kill_progress(play, mob, 701)
 	end,
-	["705"] = function(play,mob)      --第五章：是非难辨（领取时按A/B记录分支，指定怪击杀）
+	["705"] = function(play,mob)      --第五章：是非难辨（击杀小怪+BOSS）
 		local wrap = teshudata["npc_705"]
 		local task_cfg = wrap and wrap.task_cfg or nil
 		if type(task_cfg) ~= "table" then
@@ -1250,44 +1250,53 @@ shaguai = {
 			shaguai.jian(play,705)
 			return
 		end
-		local choice = tonumber(jq_data["npc_705_b"] or 0) or 0
-		local target = task_cfg.mob
-		if choice == 1 and task_cfg.mob_a and task_cfg.mob_a ~= "" then
-			target = task_cfg.mob_a
-		elseif choice == 2 and task_cfg.mob_b and task_cfg.mob_b ~= "" then
-			target = task_cfg.mob_b
-		end
-		if not target or target == "" then
-			return
-		end
 		local mob_name = getbaseinfo(mob,1)
-		if mob_name ~= target then
+		local small = task_cfg.mob_small or task_cfg.mob
+		local boss = task_cfg.mob_boss or task_cfg.boss
+		local is_small = getbaseinfo(play,3) == wrap.task_cfg.map and guaiwutype[mob_name] <= 1
+		local is_boss = getbaseinfo(play,3) == wrap.task_cfg.map and guaiwutype[mob_name] == 2
+		if not is_small and not is_boss then
 			return
 		end
 		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
-		local key = "npc_705"
-		local need = tonumber(task_cfg.kill_count or 1) or 1
-		if need < 1 then
-			need = 1
+		local key_small = "npc_705_small"
+		local key_boss = "npc_705_boss"
+		local need_small = tonumber(task_cfg.kill_small or 0) or 0
+		local need_boss = tonumber(task_cfg.kill_boss or 0) or 0
+		if need_small < 0 then
+			need_small = 0
 		end
-		local cur = tonumber(sg_data[key] or 0) or 0
-		if cur >= need then
-			shaguai.jian(play,705)
-			return
+		if need_boss < 0 then
+			need_boss = 0
 		end
-		cur = cur + 1
-		if cur > need then
-			cur = need
+		local cur_small = tonumber(sg_data[key_small] or 0) or 0
+		local cur_boss = tonumber(sg_data[key_boss] or 0) or 0
+		local updated = false
+		if is_small and need_small > 0 and cur_small < need_small then
+			cur_small = cur_small + 1
+			if cur_small > need_small then
+				cur_small = need_small
+			end
+			sg_data[key_small] = cur_small
+			updated = true
+			Player.sendmsgEx(play, (wrap.name or "npc_705").."击杀["..small.."]+"..1 .." ( "..cur_small.."/"..need_small.." )#57")
+		elseif is_boss and need_boss > 0 and cur_boss < need_boss then
+			cur_boss = cur_boss + 1
+			if cur_boss > need_boss then
+				cur_boss = need_boss
+			end
+			sg_data[key_boss] = cur_boss
+			updated = true
+			Player.sendmsgEx(play, (wrap.name or "npc_705").."击杀["..boss.."]+"..1 .." ( "..cur_boss.."/"..need_boss.." )#57")
 		end
-		sg_data[key] = cur
-		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
-		Player.sendmsgEx(play, (wrap.name or key).."击杀["..target.."]+"..1 .." ( "..cur.."/"..need.." )#57")
-		if cur >= need then
+		if updated then
+			Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+		end
+		if (need_small <= 0 or cur_small >= need_small) and (need_boss <= 0 or cur_boss >= need_boss) then
 			shaguai.jian(play,705)
 			messagebox(play,"任务完成,立即前往提交")
 		end
-	end,
-	["709"] = function(play,mob)      --第五章：故人远行（使用酒壶召唤指定BOSS后击杀）
+	end,["709"] = function(play,mob)      --第五章：故人远行（使用酒壶召唤指定BOSS后击杀）
 		local wrap = teshudata["npc_709"]
 		local task_cfg = wrap and wrap.task_cfg or nil
 		if type(task_cfg) ~= "table" then

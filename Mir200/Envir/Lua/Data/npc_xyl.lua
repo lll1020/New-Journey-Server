@@ -2454,7 +2454,7 @@ local npc_xyl = {
                 },
                 {
                     "是非难辨",
-                    tk = "npc_705",
+                    tk = "npc_720",
                     id = 999,
                     jl = { { "剧情点", 2 } },
                     fwdjy = function(play, tk)
@@ -2467,6 +2467,7 @@ local npc_xyl = {
                         return true
                     end,
                     yd = { 1, "罗刹海市", 705, 71, 31 },
+                    yd2 = { 1, "罗刹海市", 720, 71, 31 },
                     desc = "是非难辨，见证真相",
                 },
             },

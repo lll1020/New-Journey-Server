@@ -1,18 +1,23 @@
 npc = {}
 
--- reward_desc: 两种称号：
--- A=以貌取人：LV+1、白天打怪增伤+10%
--- B=迟来的清醒：LV+1、夜晚打怪增伤+10%
+-- 任务：是非难辨
+-- 阶段1：击杀小怪+BOSS
+-- 阶段2：提交两种材料二选一（记录选择）
 
 local _cfg_key = "npc_705"
 local _config = Guard.getConfig(_cfg_key)
 local _task_cfg = (_config and _config.task_cfg) or {}
 
-local _choice_key = _cfg_key .. "_b" -- 1=a, 2=b
+local _choice_key = _cfg_key .. "_choice" -- 1=赤血花，2=紫梦花
+local _step_key = _cfg_key .. "_step" -- 1=击杀阶段提交完成
 
 local function _normalize_choice(raw)
     if raw == nil then
         return nil
+    end
+    local n = tonumber(raw)
+    if n == 1 or n == 2 then
+        return n
     end
     if type(raw) == "string" then
         local s = string.lower(raw)
@@ -22,18 +27,14 @@ local function _normalize_choice(raw)
             return 2
         end
     end
-    local n = tonumber(raw)
-    if n == 1 or n == 2 then
-        return n
-    end
     return nil
 end
 
 local function _choice_text(choice)
     if choice == 1 then
-        return "A"
+        return "赤血花"
     elseif choice == 2 then
-        return "B"
+        return "紫梦花"
     end
     return "?"
 end
@@ -49,7 +50,7 @@ local function _choice_title(choice)
     return nil
 end
 
--- 仅发放物品奖励，不额外处理称号（称号按 A/B 单独发）
+-- 仅发放物品奖励，不额外处理称号（称号按提交分支发）
 local function _give_item_reward_only(play)
     local reward = _config.jl or _config.rwjl or _task_cfg.jl or _task_cfg.rwjl or _task_cfg.reward or _task_cfg.rewards
     if type(reward) ~= "table" or #reward == 0 then
@@ -69,6 +70,15 @@ local function _give_item_reward_only(play)
             end
         end
     end
+end
+
+local function _get_progress(play)
+    local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+    local key_small = _cfg_key .. "_small"
+    local key_boss = _cfg_key .. "_boss"
+    local cur_small = tonumber(sg_data[key_small] or 0) or 0
+    local cur_boss = tonumber(sg_data[key_boss] or 0) or 0
+    return sg_data, key_small, key_boss, cur_small, cur_boss
 end
 
 function npc.main(play,npcid)
@@ -102,100 +112,101 @@ function npc.link(play,npcid,ew,aid)
     end
 
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
-    local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
-    local max_num = 1
-    local need_kill = tonumber(_task_cfg.kill_count or 1) or 1
-    if need_kill < 1 then
-        need_kill = 1
-    end
-
-    local prog_key = _cfg_key .. "_a"
     local state = tonumber(jq_data[_cfg_key] or 0) or 0
-    local cnt = tonumber(jq_data[prog_key] or 0) or 0
-    local cur_kill = tonumber(sg_data[_cfg_key] or 0) or 0
 
     if state >= 2 then
         Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
         return
     end
 
-    -- 首次领取：按 p3(a/b) 记录分支
+    -- 首次领取任务
     if state < 1 then
-        local choice = _normalize_choice(aid)
-        if not choice then
-            Player.sendmsgEx(play, "请选择分支后再领取（A=1 / B=2）#57")
-            return
-        end
-
         jq_data[_cfg_key] = 1
-        jq_data[_choice_key] = choice
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-
         shaguai.jia(play, 705)
-        Player.sendmsgEx(play, "领取#57|【"..(_config.name or "任务").."】#249|成功，当前分支：#57".._choice_text(choice).."#57")
+        Player.sendmsgEx(play, "领取#57|【"..(_config.name or "任务").."】#249|成功")
         sendluamsg(play,101,1005,0,0,"rwjs")
         sendluamsg(play,100,npcid,1,0,"")
         return
     end
 
-    local choice_for_reward = tonumber(jq_data[_choice_key] or 0) or 0
-    if choice_for_reward ~= 1 and choice_for_reward ~= 2 then
-        local repick = _normalize_choice(aid)
-        if repick then
-            jq_data[_choice_key] = repick
-            choice_for_reward = repick
-            Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        else
-            Player.sendmsgEx(play, "分支数据缺失，请重新选择（A=1 / B=2）#57")
-            return
-        end
-    end
-
     local req_map = _task_cfg.map or "罗刹海市"
-    if getbaseinfo(play,3) ~= req_map and getbaseinfo(play,3) ~= "xtc" then
+    if req_map ~= "" and getbaseinfo(play,3) ~= req_map and getbaseinfo(play,3) ~= "xtc" then
         Player.sendmsgEx(play, "请前往#57|【"..req_map.."】#249|完成后再提交#57")
         return
     end
 
-    if cur_kill < need_kill then
-        Player.sendmsgEx(play, string.format("击杀不足：#57|【%d/%d】#249|", cur_kill, need_kill))
+    -- 阶段1：击杀进度检查
+    local need_small = tonumber(_task_cfg.kill_small or 0) or 0
+    local need_boss = tonumber(_task_cfg.kill_boss or 0) or 0
+    local sg_data, key_small, key_boss, cur_small, cur_boss = _get_progress(play)
+    local small_done = (need_small <= 0) or (cur_small >= need_small)
+    local boss_done = (need_boss <= 0) or (cur_boss >= need_boss)
+
+    if not (small_done and boss_done) then
+        local msg = string.format("击杀进度：小怪#57|【%d/%d】#249|，BOSS#57|【%d/%d】#249|", cur_small, need_small, cur_boss, need_boss)
+        Player.sendmsgEx(play, msg)
         return
     end
 
-    if type(_task_cfg.submit) == "table" and #_task_cfg.submit > 0 then
-        if not Guard.ensureCost(play, _task_cfg.submit) then
+    local step = tonumber(jq_data[_step_key] or 0) or 0
+    if step < 1 then
+        jq_data[_step_key] = 1
+        Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+        Player.sendmsgEx(play, "委托已提交，继续完成下一步#57")
+        sendluamsg(play,100,npcid,1,0,"")
+        return
+    end
+
+    -- 阶段2：提交二选一
+    local choice = tonumber(jq_data[_choice_key] or 0) or 0
+    local pick = _normalize_choice(aid)
+    if choice ~= 1 and choice ~= 2 then
+        if not pick then
+            Player.sendmsgEx(play, "请选择提交分支：1=赤血花 / 2=紫梦花#57")
             return
         end
-        Guard.consumeCost(play, _task_cfg.submit, ","..(_config.name or "剧情任务"))
+        choice = pick
+        jq_data[_choice_key] = choice
+    elseif pick and pick ~= choice then
+        Player.sendmsgEx(play, "已选择提交#57|".._choice_text(choice).."#249|，不可更改#57")
+        return
     end
 
-    cnt = cnt + 1
-    jq_data[prog_key] = cnt
-    Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-    Player.sendmsgEx(play, string.format("提交进度：#57|【%d/%d】#249|", cnt, max_num))
-
-    if cnt >= max_num then
-        local choice = choice_for_reward
-
-        Guard.clearTaskTemp(jq_data, _cfg_key)
-        jq_data[_cfg_key] = 2
-        Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
-        sendluamsg(play,101,1005,0,0,"rwwc")
-
-        local title = _choice_title(choice)
-        if type(title) == "string" and title ~= "" then
-            Player.title_give(play, title)
-            Player.sendmsgEx(play, "获得称号：|【"..title.."】#249|")
+    local submit = nil
+    if choice == 1 then
+        submit = _task_cfg.submit_a
+    elseif choice == 2 then
+        submit = _task_cfg.submit_b
+    end
+    if type(submit) == "table" and #submit > 0 then
+        if not Guard.ensureCost(play, submit) then
+            return
         end
-
-        _give_item_reward_only(play)
+        Guard.consumeCost(play, submit, ","..(_config.name or "剧情任务"))
     end
 
-    sendluamsg(play,100,npcid,1,cnt,"")
+    -- 完成 705（奖励仍在此发放）
+    jq_data[_cfg_key] = 2
+    jq_data[_step_key] = nil
+    Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+
+    -- 清理击杀进度
+    sg_data[key_small] = nil
+    sg_data[key_boss] = nil
+    Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+
+    Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+    sendluamsg(play,101,1005,0,0,"rwwc")
+
+    local title = _choice_title(choice)
+    if type(title) == "string" and title ~= "" then
+        Player.title_give(play, title)
+        Player.sendmsgEx(play, "获得称号：|【"..title.."】#249|")
+    end
+
+    _give_item_reward_only(play)
+    sendluamsg(play,100,npcid,1,0,"")
 end
 
 return npc
-
-
-

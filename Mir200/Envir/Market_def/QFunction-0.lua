@@ -1190,6 +1190,10 @@ function func_cjcg(play)
         Player.rwjl(play, {{"仙草[任务]",1}}, "贝壳",1,0)
     elseif monName == "贝壳" then
         Player.rwjl(play, {{"贝壳",1}}, "贝壳",1,0)
+    elseif monName == "紫梦花" then
+        Player.rwjl(play, {{"紫梦花",1}}, "紫梦花",1,0)
+    elseif monName == "赤血花" then
+        Player.rwjl(play, {{"赤血花",1}}, "赤血花",1,0)
     end
     setplaydef(play, "S$采集目标", "")
     setplaydef(play, "S$采集目标名字", "")

@@ -360,7 +360,20 @@ npc[11] = function(play, p2, p3, data) --异闻录
                 return
             end
             local shuju = npc_xyl[sj.i][sj.j].jq[sj.z]
-            if _ywl_can_transfer(play, sj, shuju) then
+            local use_shuju = shuju
+            if shuju and shuju.tk == "npc_720" and shuju.yd2 then
+                local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+                local state705 = tonumber(jq_data["npc_705"] or 0) or 0
+                if state705 >= 2 then
+                    use_shuju = {}
+                    for k, v in pairs(shuju) do
+                        use_shuju[k] = v
+                    end
+                    use_shuju.yd = shuju.yd2
+                end
+            end
+            if _ywl_can_transfer(play, sj, use_shuju) then
+                    local shuju = use_shuju
                 local is_transfer_ok = false
                 if shuju.yd[1] == 0 then
                     sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>当前剧情未配置传送坐标...</font>","Type":9}')
