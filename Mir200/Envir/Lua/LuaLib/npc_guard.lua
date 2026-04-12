@@ -225,7 +225,24 @@ function Guard.safeJsonDecode(play, raw, maxLength, fallback)
     end
     return data
 end
+-- 关闭NPC界面
+function Guard.closeNpc(play, npcId)
+    if play == nil then
+        return
+    end
+    sendluamsg(play, 101, 9999, 0, 0, "npc_"..tostring(npcId))
+end
+
+-- 关闭NPC界面并自动挂机
+function Guard.closeNpcAndAuto(play, npcId)
+    if play == nil then
+        return
+    end
+    sendluamsg(play, 101, 9999, 0, 0, "npc_"..tostring(npcId))
+    startautoattack(play) --自动攻击
+end
 
 _G.Guard = Guard
 
 return Guard
+

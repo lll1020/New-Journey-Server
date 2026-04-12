@@ -79,7 +79,7 @@ function npc.link(play,npcid,ew,aid)
         local titileName = cfg
         Player.title_give(play, titileName)
         setplaydef(play, VarCfg["U_占卜次数"], U_num + 1)
-        Player.sendmsgEx(play, string.format("你获得了|【%s】#249", titileName))
+        -- Player.sendmsgEx(play, string.format("你获得了|【%s】#249", titileName))
         sendluamsg(play,100,npcid,1,0,"")
     end
 end

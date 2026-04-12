@@ -4,9 +4,6 @@ npc = {}
 --深入野火（剧）
 
 local _config = Guard.getConfig("npc_607")
-
-
-
 function npc.main(play,npcid)
     if not _config then
         return
@@ -57,12 +54,13 @@ function npc.link(play,npcid,ew,aid)
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成")
         sendluamsg(play,101,1005,0,0,"rwwc")
-        Player.rwjl(play, _config.rwjl or {{"绑定元宝",1},{"绑定金币",1}}, (_config.name or "剧情任务").."奖励", 0)
+        Player.rwjl(play, _config.rwjl or {{"绑定元宝",1},{"绑定金币",1}}, (_config.name or "剧情任务").."奖励", 1)
         if _config.ch then
             Player.title_give(play, _config.ch)
             Player.sendmsgEx(play, "恭喜获得称号|【".._config.ch.."】#249|")
         end
         sendluamsg(play,100,npcid,1,2,"")
+                Guard.closeNpc(play, npcid)
     end
 end
 

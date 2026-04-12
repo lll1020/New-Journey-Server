@@ -83,8 +83,8 @@ kfhg 23 26 -> kfhjsbk 86 102
 野火帮 106 198 -> 野火帮大营 56 275
 
 
-[极光城郊|GM_020   极光城郊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[神秘森林|EZ025   神秘森林] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[极光城郊|EV_MysticVil   极光城郊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[神秘森林|EZ015   神秘森林] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 极光城郊 71 152 -> 神秘森林 45 51
 
 [杀伐道场|ID8_010   杀伐道场] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)

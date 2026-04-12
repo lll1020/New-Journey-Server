@@ -4,9 +4,6 @@ npc = {}
 --剿灭恶徒（剧）
 
 local _config = Guard.getConfig("npc_604")
-
-
-
 function npc.main(play,npcid)
     if not _config then
         return
@@ -56,6 +53,7 @@ function npc.link(play,npcid,ew,aid)
         shaguai.jia(play, _config.shaguai_id or 604)
         sendluamsg(play,101,1005,0,0,"rwjs")
         sendluamsg(play,100,npcid,1,1,"")
+        Guard.closeNpcAndAuto(play, npcid)
     elseif ew == 2 then
         if jq_data[key] and jq_data[key] == 1 then
             if (sg_data[key_a] or 0) >= (_config.num_a or 0) and (sg_data[key_b] or 0) >= (_config.num_b or 0) then
@@ -67,14 +65,16 @@ function npc.link(play,npcid,ew,aid)
                 Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
                 Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成")
                 sendluamsg(play,101,1005,0,0,"rwwc")
-                Player.rwjl(play, _config.rwjl or {{"绑定元宝",1},{"绑定金币",1}}, (_config.name or "剧情任务").."奖励", 0)
+                Player.rwjl(play, _config.rwjl or {{"绑定元宝",1},{"绑定金币",1}}, (_config.name or "剧情任务").."奖励", 1)
                 if _config.ch then
                     Player.title_give(play, _config.ch)
                     Player.sendmsgEx(play, "恭喜获得称号|【".._config.ch.."】#249|")
                 end
                 sendluamsg(play,100,npcid,1,2,"")
+                Guard.closeNpc(play, npcid)
             else
                 Player.sendmsgEx(play, "你还没有完成#57|【"..(_config.name or "该任务").."】#249|")
+                Guard.closeNpcAndAuto(play, npcid)
                 return
             end
         else

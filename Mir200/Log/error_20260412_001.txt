@@ -1,0 +1,80 @@
+[2026-04-12 02:27:42:633] D701 - secret map not found !!
+[2026-04-12 02:27:42:633] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-96576] 当前Thread:106040
+[2026-04-12 02:27:42:633] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2026-04-12 02:27:42:633] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-96576] 当前Thread:106040
+[2026-04-12 02:27:42:633] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2026-04-12 02:27:42:633] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-96576] 当前Thread:106040
+[2026-04-12 02:27:42:633] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2026-04-12 02:27:42:633] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-96576] 当前Thread:106040
+[2026-04-12 02:27:42:633] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2026-04-12 02:27:42:801] ---------------------线程耗时监控
+[2026-04-12 02:27:43:164] Frame-----------------------------------
+
+[2026-04-12 02:27:43:178] MainRunThread(0)-----------------------------------
+
+[2026-04-12 02:27:43:190] EnvirThread 0/0(9875-0)flag:50000004  lua: 1 CallLua:setontimerex 422-----------------------------------
+
+[2026-04-12 02:27:43:203] DbThread(0-0)-----------------------------------
+
+[2026-04-12 02:27:43:218] BoxSellDbThread(15)-----------------------------------
+
+[2026-04-12 02:27:43:231] NewHttpPost(16-0-0)-----------------------------------
+
+
+[2026-04-12 17:03:24:654] D701 - secret map not found !!
+[2026-04-12 17:03:24:654] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-157188] 当前Thread:146496
+[2026-04-12 17:03:24:654] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2026-04-12 17:03:24:654] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-157188] 当前Thread:146496
+[2026-04-12 17:03:24:654] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2026-04-12 17:03:24:654] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-157188] 当前Thread:146496
+[2026-04-12 17:03:24:654] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2026-04-12 17:03:24:654] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-157188] 当前Thread:146496
+[2026-04-12 17:03:24:654] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2026-04-12 17:03:24:928] ---------------------线程耗时监控
+[2026-04-12 17:03:24:928] Frame-----------------------------------
+
+[2026-04-12 17:03:25:390] MainRunThread(15)-----------------------------------
+
+[2026-04-12 17:03:25:409] EnvirThread 0/0(11359-1)flag:50000004  lua: 1 CallLua:setontimerex 422-----------------------------------
+
+[2026-04-12 17:03:25:434] DbThread(0-0)-----------------------------------
+
+[2026-04-12 17:03:25:467] BoxSellDbThread(16)-----------------------------------
+
+[2026-04-12 17:03:25:546] NewHttpPost(16-0-0)-----------------------------------
+
+
+[2026-04-12 17:16:24:972] lua.SortHumVar Except：Invalid pointer operation[0000000001C18281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001C17AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001C179B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001C1AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001C09702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001C0996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001C09AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000C423B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000C7D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[0000000000C39733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000C39781] System._ZN6System5ErrorENS_13TRuntimeErrorE (Line 5908, "System.pas" + 2)
+[0000000000C39451] System._ZN6System8_FreeMemEPv (Line 4974, "System.pas" + 6)
+[0000000000C3FD38] System._ZN6System7TObject12FreeInstanceEv (Line 18316, "System.pas" + 3)
+[0000000000C40921] System._ZN6System13_ClassDestroyEPNS_7TObjectE (Line 19679, "System.pas" + 2)
+[0000000000D4059E] System.Classes._ZN6System7Classes5TListD0Ev (Line 5036, "System.Classes.pas" + 2)
+[0000000000C3FF68] System._ZN6System7TObject4FreeEv (Line 18380, "System.pas" + 7)
+[00000000018D0304] uMyLua._ZN6Umylua6TMyLua10SortHumVarEPv (Line 3077, "uMyLua.pas" + 102)
+[00000000018CFE38] uMyLua._ZN6Umylua6TMyLua10SortHumVarEPv (Line 3077, "uMyLua.pas" + 102)
+[0000000001531E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFEF9162C36]
+[00007FFEF91689EA] lua_pcall
+[000000000192B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000001929256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000019E3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000019E3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[000000000181A91D] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 580, "uThread_Envir.pas" + 50)
+[00000000010621D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000001061D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000D62963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000C42F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFF3C3EE8D7] BaseThreadInitThunk
+[00007FFF3E6AC48C] RtlUserThreadStart
+
+

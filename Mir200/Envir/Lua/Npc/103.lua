@@ -108,11 +108,6 @@ local function _clear_run(play)
     setplaydef(play, _back_pos_var, "")
     setplaydef(play, _run_map_var, "")
 end
-local function _back_delay(play, sec)
-    sec = tonumber(sec) or 3
-    local handle = tostring(getbaseinfo(play, 1) or "").."_npc103_back"
-    setenvirontimer(handle, 1, sec, "@npc_103_back_delay,"..play)
-end
 local function _back(play)
     local back = getplaydef(play, _back_pos_var)
     if back and back ~= "" then
@@ -277,7 +272,7 @@ function npc_103_dsq(xt, play, dtm, data)
     if getmoncount(dtm, -1, true) < 1 then
         _stop_fb_timers(dtm)
         if getbaseinfo(play, 3) == dtm then
-            _back_delay(play, 3)
+            _back(play)
         else
             _clear_run(play)
         end
@@ -297,11 +292,6 @@ function npc_103_fx(xt, dtm, data)
     end
     _play_boss_effect(dtm)
 end
-function npc_103_back_delay(xt, play, data)
-    if play then
-        _back(play)
-    end
-end
 function npc_103_timeout(play)
     local dtm = tostring(getplaydef(play, _run_map_var) or "")
     if dtm == "" then
@@ -316,7 +306,7 @@ function npc_103_timeout(play)
         else
             Player.sendmsgEx(play, "副本时间结束，本次挑战失败，可重新进入#57")
         end
-        _back_delay(play, 3)
+        _back(play)
     else
         _clear_run(play)
     end

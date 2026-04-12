@@ -4,7 +4,6 @@ npc = {}
 --ÐÞ¸´ÐùÔ¯½£
 
 local _config = Guard.getConfig("npc_601")
-
 function npc.main(play,npcid)
     if not _config then
         return
@@ -49,6 +48,7 @@ function npc.link(play,npcid,ew,aid)
             Player.sendmsgEx(play, "ÐùÔ¯½£ÐÞ¸´³É¹¦£¬»ñµÃ³ÆºÅ|¡¾".._config.details.ch.."¡¿#249|")
             sendluamsg(play,101,1005,0,0,"rwwc")
             sendluamsg(play,100,npcid,1,0,"")
+            Guard.closeNpc(play, npcid)
         else
             Player.sendmsgEx(play, "ÄãÒÑ¾­ÓµÓÐÐùÔ¯½£³ÆºÅ£¬ÎÞÐèÐÞ¸´#57")
             return
