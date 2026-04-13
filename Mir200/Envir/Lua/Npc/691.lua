@@ -111,6 +111,7 @@ function npc.link(play,npcid,ew,aid)
     local cur_map = getbaseinfo(play,3)
     if cur_map ~= req_map and cur_map ~= "xtc" and not (req_map == "红尘大陆" and cur_map == "生命边界") then
         Player.sendmsgEx(play, "请前往#57|【"..req_map.."】#249|完成后再提交#57")
+        if npcid then Guard.closeNpc(play, npcid) end
         return
     end
 
@@ -145,6 +146,7 @@ function npc.link(play,npcid,ew,aid)
         jq_data[_cfg_key] = 2
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+        if npcid then Guard.closeNpc(play, npcid) end
         sendluamsg(play,101,1005,0,0,"rwwc")
 
         Guard.giveTaskReward(play, _config, (_config.name or "剧情任务").."奖励")

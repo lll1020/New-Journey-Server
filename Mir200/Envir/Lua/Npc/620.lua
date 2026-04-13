@@ -38,6 +38,7 @@ function npc.link(play,npcid,ew,aid)
         if not T_dljq["npc_620"] or T_dljq["npc_620"] < 2 then
             if not _config.cost then
                 Player.sendmsgEx(play, "ÅäÖÃÈ±Ê§#57")
+                if npcid then Guard.closeNpcAndAuto(play, npcid) end
                 return
             end
             local name, num = Player.checkItemNumByTable(play, _config.cost)

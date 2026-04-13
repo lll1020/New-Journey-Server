@@ -105,6 +105,7 @@ local function _on_pass(play)
 
         sendluamsg(play,101,1005,0,0,"rwwc")
         Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+        if npcid then Guard.closeNpc(play, npcid) end
         Guard.giveTaskReward(play, _config, (_config.name or "剧情任务").."奖励")
     end
 end
@@ -200,6 +201,7 @@ function npc.link(play,npcid,ew,aid)
         jq_data[_cfg_key] = 1
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#249|")
+        if npcid then Guard.closeNpcAndAuto(play, npcid) end
         sendluamsg(play,101,1005,0,0,"rwjs")
     end
 

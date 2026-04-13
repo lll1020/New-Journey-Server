@@ -133,6 +133,7 @@ function npc.link(play,npcid,ew,aid)
     local req_map = _task_cfg.map or "罗刹海市"
     if req_map ~= "" and getbaseinfo(play,3) ~= req_map and getbaseinfo(play,3) ~= "xtc" then
         Player.sendmsgEx(play, "请前往#57|【"..req_map.."】#249|完成后再提交#57")
+        if npcid then Guard.closeNpc(play, npcid) end
         return
     end
 
@@ -197,6 +198,7 @@ function npc.link(play,npcid,ew,aid)
     Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 
     Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+    if npcid then Guard.closeNpc(play, npcid) end
     sendluamsg(play,101,1005,0,0,"rwwc")
 
     local title = _choice_title(choice)

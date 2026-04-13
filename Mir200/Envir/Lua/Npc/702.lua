@@ -213,6 +213,7 @@ local function _on_main_boss_killed(play)
         jq_data[_cfg_key] = 2
         sendluamsg(play,101,1005,0,0,"rwwc")
         Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+        if npcid then Guard.closeNpc(play, npcid) end
     end
 
     if tonumber(jq_data[_reward_done_key] or 0) ~= 1 then
@@ -426,6 +427,7 @@ function npc.link(play,npcid,ew,aid)
         jq_data[_cfg_key] = 1
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#249|")
+        if npcid then Guard.closeNpcAndAuto(play, npcid) end
         sendluamsg(play,101,1005,0,0,"rwjs")
     end
 

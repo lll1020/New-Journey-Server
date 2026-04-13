@@ -127,6 +127,7 @@ function npc.link(play,npcid,ew,aid,data)
 
         if jq_data[key] and jq_data[key] >= 2 then
             Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+            if npcid then Guard.closeNpc(play, npcid) end
             if _config.ch then
                 Player.title_give(play, _config.ch)
             end

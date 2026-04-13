@@ -84,6 +84,7 @@ function npc.link(play,npcid,ew,aid)
     local miss = _missing_required_tasks(jq_data)
     if #miss > 0 then
         Player.sendmsgEx(play, "请先完成：#57|【"..table.concat(miss, "、").."】#249|")
+        if npcid then Guard.closeNpcAndAuto(play, npcid) end
         return
     end
 
@@ -95,6 +96,7 @@ function npc.link(play,npcid,ew,aid)
     local ok_map, req_map = _in_submit_map(play)
     if not ok_map then
         Player.sendmsgEx(play, "请前往#57|【"..req_map.."】#249|完成后再提交#57")
+        if npcid then Guard.closeNpc(play, npcid) end
         return
     end
     local costs = _task_cfg.submit or _config.cost
@@ -115,6 +117,7 @@ function npc.link(play,npcid,ew,aid)
         jq_data[_cfg_key] = 2
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+        if npcid then Guard.closeNpc(play, npcid) end
         sendluamsg(play,101,1005,0,0,"rwwc")
 
         Guard.giveTaskReward(play, _config, (_config.name or "剧情任务").."奖励")

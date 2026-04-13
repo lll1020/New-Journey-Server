@@ -378,8 +378,7 @@ function stdmodefunc35(play, item) --藏宝图
                 return false
             end
             local gw = genmonex(map_name,map_x,map_y,teshudata["npc_47"].details[getstditeminfo(getiteminfo(play, item, 2), 8)].mob_name,1,1,0,54,"",0)
-            local times = (getplaydef(play, VarCfg["U_藏宝图次数"]) or 0) + 1
-            setplaydef(play, VarCfg["U_藏宝图次数"], times)
+            
             return true
         else
             Player.sendmsgEx(play, "当前位置不是藏宝图指定的坐标，无法使用！#249")

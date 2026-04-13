@@ -157,3 +157,37 @@ function bl_zyjhl8(play,mingzi)
 
     return math.random(500) == 1
 end
+--------------------爆率监听触发-------------------二大陆材料保底
+function bl_zyjhl9(play,mingzi)
+    if not mingzi or mingzi == "" then
+        return false
+    end
+
+    local targets = {
+        ["首山之铜"] = 100,
+        ["天女纯阳之力"] = 150,
+        ["五色神石"] = 200,
+    }
+    local need = targets[mingzi]
+    if not need then
+        return false
+    end
+
+    local data = Player.getJsonTableByVar(play, VarCfg["T_物品掉落记录"])
+    if not data then
+        data = {}
+    end
+
+    local key = "pity_" .. mingzi
+    local cnt = tonumber(data[key]) or 0
+    cnt = cnt + 1
+    data[key] = cnt
+    Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
+
+    -- 不清零：达到阈值后，之后每满1000的倍数再掉落
+    if cnt == need or (cnt > need and cnt % (need * 5) == 0) then
+        return true
+    end
+
+    return false
+end

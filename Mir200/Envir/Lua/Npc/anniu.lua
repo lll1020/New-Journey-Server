@@ -439,8 +439,14 @@ npc[11] = function(play, p2, p3, data) --异闻录
             if _jl and #_jl > 0 then
                 Player.rwjl(play, _jl, "剧情jl", 1)
             end
-            sendluamsg(play, 101, 11, 2, 2, tbl2json(sj) )
-            _ywl_send_current_task(play)
+            if sj.i == 2 and sj.j == 4 then 
+                Player.zxrw_wancheng(play, 23, "任务") --完成任务
+                sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
+            else
+                sendluamsg(play, 101, 11, 2, 2, tbl2json(sj) )
+                _ywl_send_current_task(play)
+            end
+            
         end
     elseif p2 == 3 then --单个任务奖励
         local sj = json2tbl(data)

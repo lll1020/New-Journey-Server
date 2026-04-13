@@ -88,6 +88,7 @@ function npc.link(play,npcid,ew,aid)
         -- local cur = jq_data["npc_671_cur"]
         -- if cur and cur > 0 then
         --     Player.sendmsgEx(play, "正在挑战中，请先完成当前层#57")
+        if npcid then Guard.closeNpcAndAuto(play, npcid) end
         --     return
         -- end
 
@@ -108,6 +109,7 @@ function npc.link(play,npcid,ew,aid)
         local cfg = details[next_lv]
         if not cfg or not cfg.fb_map or not cfg.mob then
             Player.sendmsgEx(play, "挑战配置缺失#57")
+            if npcid then Guard.closeNpcAndAuto(play, npcid) end
             return
         end
 
@@ -161,6 +163,7 @@ function npc.link(play,npcid,ew,aid)
             jq_data[key] = 2
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
             Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+            if npcid then Guard.closeNpc(play, npcid) end
             sendluamsg(play,101,1005,0,0,"rwwc")
             local reward = _config.jl or _config.rwjl
             if reward then

@@ -50,6 +50,7 @@ function npc.link(play,npcid,ew,aid)
             jq_data[key] = 1
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
             Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#249|")
+            if npcid then Guard.closeNpcAndAuto(play, npcid) end
             shaguai.jia(play, _config.shaguai_id or 676)
             sendluamsg(play,101,1005,0,0,"rwjs")
             npc.main(play,npcid)
@@ -82,6 +83,7 @@ function npc.link(play,npcid,ew,aid)
                 Player.rwjl(play, reward, (_config.name or "剧情任务").."小奖励", 1)
             end
             Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+            if npcid then Guard.closeNpc(play, npcid) end
             if _config.ch then
                 Player.title_give(play, _config.ch)
             end

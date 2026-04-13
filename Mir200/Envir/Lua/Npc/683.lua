@@ -54,6 +54,7 @@ function npc.link(play,npcid,ew,aid)
     local need_task = cfg.need_task or "npc_682"
     if (tonumber(jq_data[need_task] or 0) or 0) < 2 then
         Player.sendmsgEx(play, "请先完成#57|【灵兽奥秘】#249|后再进入#57")
+        if npcid then Guard.closeNpcAndAuto(play, npcid) end
         return
     end
 
@@ -64,6 +65,7 @@ function npc.link(play,npcid,ew,aid)
         if cur_ls ~= need_ls then
             local need_name = cfg.need_lingshou_name or _lingshou_name(need_ls)
             Player.sendmsgEx(play, "请先召唤#57|【"..need_name.."】#249|后再进入#57")
+            if npcid then Guard.closeNpcAndAuto(play, npcid) end
             return
         end
     end
@@ -71,6 +73,7 @@ function npc.link(play,npcid,ew,aid)
     local tp = cfg.tp_map or _config.tp_map
     if not (type(tp) == "table" and tp[1] and tp[2] and tp[3]) then
         Player.sendmsgEx(play, "传送配置缺失#57")
+        if npcid then Guard.closeNpcAndAuto(play, npcid) end
         return
     end
 

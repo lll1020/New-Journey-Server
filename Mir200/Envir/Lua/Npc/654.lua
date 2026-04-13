@@ -41,6 +41,7 @@ local function npc_654_finish(play, dtm, win)
         end
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+        if npcid then Guard.closeNpc(play, npcid) end
         if _config.ch then
             Player.title_give(play, _config.ch)
         end
@@ -86,6 +87,7 @@ function npc.link(play,npcid,ew,aid)
         local base_map = _config.map
         if not base_map or base_map == "" then
             Player.sendmsgEx(play, "地图配置缺失#57")
+            if npcid then Guard.closeNpcAndAuto(play, npcid) end
             return
         end
         local dtm = getbaseinfo(play,1).."_npc654"
@@ -102,6 +104,7 @@ function npc.link(play,npcid,ew,aid)
         local ey = (_config.end_pos and _config.end_pos[2]) or 0
         if sx <= 0 or sy <= 0 or ex <= 0 or ey <= 0 then
             Player.sendmsgEx(play, "起点/终点配置缺失#57")
+            if npcid then Guard.closeNpcAndAuto(play, npcid) end
             return
         end
 

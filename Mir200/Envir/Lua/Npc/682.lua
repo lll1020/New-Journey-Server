@@ -52,6 +52,7 @@ function npc.link(play,npcid,ew,aid)
         jq_data[_cfg_key] = 1
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#249|")
+        if npcid then Guard.closeNpcAndAuto(play, npcid) end
         if _shaguai_id > 0 then
             shaguai.jia(play, _shaguai_id)
         end
@@ -63,6 +64,7 @@ function npc.link(play,npcid,ew,aid)
     local cur_map = getbaseinfo(play,3)
     if cur_map ~= "灵兽谷" and cur_map ~= "xtc" then
         Player.sendmsgEx(play, "请前往#57|【灵兽谷】#249|完成后再提交#57")
+        if npcid then Guard.closeNpc(play, npcid) end
         return
     end
 
@@ -89,6 +91,7 @@ function npc.link(play,npcid,ew,aid)
         jq_data[_cfg_key] = 2
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+        if npcid then Guard.closeNpc(play, npcid) end
         sendluamsg(play,101,1005,0,0,"rwwc")
 
         Guard.giveTaskReward(play, _config, (_config.name or "剧情任务").."奖励")

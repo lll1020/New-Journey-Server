@@ -43,6 +43,7 @@ local function _try_tp(play, jq_data, idx)
     local tp = node.tp
     if not (type(tp) == "table" and tp[1] and tp[2] and tp[3]) then
         Player.sendmsgEx(play, "传送配置缺失#57")
+        if npcid then Guard.closeNpcAndAuto(play, npcid) end
         return false
     end
 
@@ -93,6 +94,7 @@ function npc.link(play,npcid,ew,aid)
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         shaguai.jia(play, 688)
         Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#249|")
+        if npcid then Guard.closeNpcAndAuto(play, npcid) end
         sendluamsg(play,101,1005,0,0,"rwjs")
         sendluamsg(play,100,npcid,1,0,"")
         return
@@ -107,6 +109,7 @@ function npc.link(play,npcid,ew,aid)
     local req_map = _task_cfg.map or "时空裂隙"
     if getbaseinfo(play,3) ~= req_map and getbaseinfo(play,3) ~= "xtc" then
         Player.sendmsgEx(play, "请前往#57|【"..req_map.."】#249|完成后再提交#57")
+        if npcid then Guard.closeNpc(play, npcid) end
         return
     end
 
@@ -127,6 +130,7 @@ function npc.link(play,npcid,ew,aid)
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         shaguai.jian(play, 688)
         Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+        if npcid then Guard.closeNpc(play, npcid) end
         sendluamsg(play,101,1005,0,0,"rwwc")
         sendluamsg(play,100,npcid,1,#list,"")
         return
@@ -158,6 +162,7 @@ function npc.link(play,npcid,ew,aid)
         shaguai.jian(play, 688)
         Player.sendmsgEx(play, "随机解锁#57|【"..node.name.."】#249|成功，三图已全部解锁#57")
         Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+        if npcid then Guard.closeNpc(play, npcid) end
         sendluamsg(play,101,1005,0,0,"rwwc")
     else
         Player.sendmsgEx(play, "随机解锁#57|【"..node.name.."】#249|成功（#57"..new_unlocked_count.."/"..#list.."）#57")

@@ -550,6 +550,7 @@ rwcf = {
 
     [516] = {2},
     [502] = {22},
+    [503] = {24},
 }
 
 rwcf.jia = function(play, id)

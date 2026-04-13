@@ -66,6 +66,7 @@ function npc.link(play,npcid,ew,aid)
                 Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
             end
             Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+            if npcid then Guard.closeNpc(play, npcid) end
             sendluamsg(play,101,1005,0,0,"rwwc")
             sendluamsg(play,100,npcid,1,cnt,"")
         else

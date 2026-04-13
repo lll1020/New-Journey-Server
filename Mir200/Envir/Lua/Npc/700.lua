@@ -88,12 +88,14 @@ local function _try_tp(play, jq_data, sg_data, idx)
 
     if not _is_unlocked(jq_data, sg_data, idx) then
         Player.sendmsgEx(play, "该层尚未开启，请先完成前置试炼#57")
+        if npcid then Guard.closeNpcAndAuto(play, npcid) end
         return
     end
 
     local tp = st.tp or {st.map, 20, 20}
     if not (type(tp) == "table" and tp[1] and tp[2] and tp[3]) then
         Player.sendmsgEx(play, "传送配置缺失#57")
+        if npcid then Guard.closeNpcAndAuto(play, npcid) end
         return
     end
     mapmove(play, tp[1], tp[2], tp[3], 5)
@@ -150,6 +152,7 @@ function npc.link(play,npcid,ew,aid)
             shaguai.jia(play, _shaguai_id)
         end
         Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#249|")
+        if npcid then Guard.closeNpcAndAuto(play, npcid) end
         sendluamsg(play,101,1005,0,0,"rwjs")
         sendluamsg(play,100,npcid,1,0,"")
         return
@@ -172,6 +175,7 @@ function npc.link(play,npcid,ew,aid)
         end
 
         Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+        if npcid then Guard.closeNpc(play, npcid) end
         sendluamsg(play,101,1005,0,0,"rwwc")
         Guard.giveTaskReward(play, _config, (_config.name or "剧情任务").."奖励")
         sendluamsg(play,100,npcid,1,3,"")

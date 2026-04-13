@@ -53,6 +53,7 @@ function npc.link(play,npcid,ew,aid)
         local cost = _config.cost and _config.cost[idx]
         if not cost then
             Player.sendmsgEx(play, "提交配置缺失#57")
+            if npcid then Guard.closeNpcAndAuto(play, npcid) end
             return
         end
 
@@ -75,6 +76,7 @@ function npc.link(play,npcid,ew,aid)
             jq_data[key] = 2
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
             Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+            if npcid then Guard.closeNpc(play, npcid) end
             sendluamsg(play,101,1005,0,0,"rwwc")
             local reward = _config.jl or _config.rwjl
             if reward then

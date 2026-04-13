@@ -124,9 +124,9 @@ local function _txzr_broadcast_reward_rollscreen(roundIdx, rankData, rewardList,
         local playerName = tostring(one[1] or "")
         local rewardName = tostring((rewardList and rewardList[i]) or "")
         local rankText = constant.pz_hanzi[i] or tostring(i)
-        local msg = string.format("<outline size='1'><font color='#ff3030'>天选之人第%s轮开奖：%s获得第%s名，奖励[%s]</font></outline>", roundText, playerName, rankText, rewardName)
+        local msg = string.format("天选之人第%s轮开奖：%s获得第%s名，奖励[%s]", roundText, playerName, rankText, rewardName)
         if i == 1 and type(txzz_data) == "table" and type(txzz_data["sq" .. roundIdx]) == "table" and txzz_data["sq" .. roundIdx].item and txzz_data["sq" .. roundIdx].item ~= "" then
-            msg = string.format("<outline size='1'><font color='#ff3030'>天选之人第%s轮开奖：%s获得第%s名，奖励[%s]，额外获得[%s]</font></outline>", roundText, playerName, rankText, rewardName, tostring(txzz_data["sq" .. roundIdx].item))
+            msg = string.format("天选之人第%s轮开奖：%s获得第%s名，奖励[%s]，额外获得[%s]", roundText, playerName, rankText, rewardName, tostring(txzz_data["sq" .. roundIdx].item))
         end
         sendmovemsg("0", 1, 253, 0, 300, 1, msg)
         sendmovemsg("0", 1, 249, 0, 250, 1, msg)

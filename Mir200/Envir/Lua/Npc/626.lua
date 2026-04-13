@@ -221,6 +221,7 @@ function npc_626_finish(play)
         delbuff(play, 20112)
     end
     Player.sendmsgEx(play, "|"..(_config.name or "任务").."#249|完成#57")
+    if npcid then Guard.closeNpc(play, npcid) end
     sendluamsg(play,101,1005,0,0,"rwwc")
     if _config.jl then
         Player.rwjl(play, _config.jl, (_config.name or "剧情任务").."奖励", 1)

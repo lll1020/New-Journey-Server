@@ -1491,10 +1491,10 @@ shaguai = {
 		local cz = tonumber(getplaydef(play, VarCfg["U_’Ê µ≥‰÷µ"])) or 0
 		local function _base_by_old_rule(_dl, _cnt, _cz)
 			if _dl == 2 then
-				if _cnt < 10 then
+				if _cnt < 7 then
 					return 30
 				end
-				return 100
+				return 80
 			elseif _dl == 3 then
 				if _cz > 80 then
 					return math.random(50,100)

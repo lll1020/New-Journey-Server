@@ -57,6 +57,7 @@ function npc.link(play,npcid,ew,aid)
             Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
             Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#249|")
+            if npcid then Guard.closeNpcAndAuto(play, npcid) end
             if limit and limit > 0 then
                 senddelaymsg(play, "任务剩余时间：%s", limit, 250, 1, "@npc_661_timeout")
             end
@@ -75,6 +76,7 @@ function npc.link(play,npcid,ew,aid)
                 end
                 Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
                 Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成")
+                if npcid then Guard.closeNpc(play, npcid) end
                 if _config.ch then
                     Player.title_give(play, _config.ch)
                 end
@@ -98,6 +100,7 @@ function npc.link(play,npcid,ew,aid)
             end
 
             Player.sendmsgEx(play, "你还没有完成#57|【"..(_config.name or "该任务").."】#249|")
+            if npcid then Guard.closeNpcAndAuto(play, npcid) end
         end
     end
 end

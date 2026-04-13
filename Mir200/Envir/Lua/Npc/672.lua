@@ -55,6 +55,7 @@ function npc.link(play,npcid,ew,aid)
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         shaguai.jia(play, _config.shaguai_id or 672)
         Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#249|")
+        if npcid then Guard.closeNpcAndAuto(play, npcid) end
         sendluamsg(play,101,1005,0,0,"rwjs")
         sendluamsg(play,100,npcid,1,1,"")
         return
@@ -75,6 +76,7 @@ function npc.link(play,npcid,ew,aid)
         local cfg = details[idx]
         if not cfg then
             Player.sendmsgEx(play, "配置缺失#57")
+            if npcid then Guard.closeNpcAndAuto(play, npcid) end
             return
         end
 
@@ -119,6 +121,7 @@ function npc.link(play,npcid,ew,aid)
             end
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
             Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+            if npcid then Guard.closeNpc(play, npcid) end
             if _config.ch then
                 Player.title_give(play, _config.ch)
             end

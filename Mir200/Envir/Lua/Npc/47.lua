@@ -75,6 +75,8 @@ function npc.link(play,npcid,ew,aid,data)
 
         Player.setJsonVarByTable(play, VarCfg["T_藏宝图"], T_data)
         setplaydef(play, VarCfg["J_今日藏宝图次数"], J_cs)
+        local times = (getplaydef(play, VarCfg["U_藏宝图次数"]) or 0) + 1
+        setplaydef(play, VarCfg["U_藏宝图次数"], times)
 
         if FairyFate and FairyFate.touch then FairyFate.touch(play, "treasure", 1) end
         npc.main(play,npcid)
