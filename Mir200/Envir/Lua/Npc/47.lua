@@ -64,10 +64,10 @@ function npc.link(play,npcid,ew,aid,data)
         local map = detail.map[math.random(1, #detail.map)]
         -- release_print("藏宝图详情:", tbl2json(detail))
         -- release_print("藏宝图生成:", tbl2json(map))
-        local name, num = Player.checkItemNumByTable(play, {{"铲子",1}})
-        if name then
-            giveitem(play,"铲子",1,850)
-        end
+        -- local name, num = Player.checkItemNumByTable(play, {{"铲子",1}})
+        -- if name then
+        --     giveitem(play,"铲子",1,850)
+        -- end
 
 
         local itemobj = giveitem(play,detail.item,1)

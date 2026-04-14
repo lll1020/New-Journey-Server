@@ -372,11 +372,11 @@ function stdmodefunc35(play, item) --²Ø±¦Í¼
         if math.abs(getbaseinfo(play,4) - map_x) <= 1 and math.abs(getbaseinfo(play,5) - map_y) <= 1 then
             -- ´¥·¢ÍÚ±¦Âß¼­
             release_print("´¥·¢ÍÚ±¦Âß¼­")
-            local name, num = Player.checkItemNumByTable(play, {{"²ù×Ó",1}})
-            if name then
-                Player.sendmsgEx(play, string.format("ÄãµÄ|%s#249|²»×ã|%d#249", name, num))
-                return false
-            end
+            -- local name, num = Player.checkItemNumByTable(play, {{"²ù×Ó",1}})
+            -- if name then
+            --     Player.sendmsgEx(play, string.format("ÄãµÄ|%s#249|²»×ã|%d#249", name, num))
+            --     return false
+            -- end
             local gw = genmonex(map_name,map_x,map_y,teshudata["npc_47"].details[getstditeminfo(getiteminfo(play, item, 2), 8)].mob_name,1,1,0,54,"",0)
             
             return true

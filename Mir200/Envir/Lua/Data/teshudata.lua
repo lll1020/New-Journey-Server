@@ -1230,7 +1230,6 @@ teshudata = {
         details = {
             {name = "灵兽", reward = {{"天道卷轴[天命·复活]",1}}, cost = {{"辉耀水晶",5}}, trial = {fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "≮火烧连营·天命策尊≯", boss_pos = {32,36}, boss_effect = 92, pet_tick_sec = 1, pet_hurt_pct = 4, pet_hint_sec = 5}},
             {name = "灵根", reward = {{"天道卷轴[天命·麻痹]",1}}, cost = {{"辉耀水晶",5}}, trial = {fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "王婆", boss_pos = {32,36}, elite = "暗影打手·精英", elite_count = 3, mob = "暗影打手", mob_count = 10, mob_center = {32,36}}},
-            {name = "境界", reward = {{"天道卷轴[天命·神镰]",1}}, cost = {{"辉耀水晶",5}}, trial = {fb_map = "mwsl", fb_time = 60, enter_pos = {29,27}, lightning_sec = 5, lightning_effect = 60463, need_success = 3, dan_item = "天道·渡劫丹", dan_keep_sec = 3}},
             {name = "天书仙法", reward = {{"天道卷轴[天命·神斧]",1}}, cost = {{"辉耀水晶",5}}, trial = {fb_map = "mwsl", fb_time = 90, enter_pos = {29,27}, total_round = 3, round_sec = 20, score_target = 10, score_tick_sec = 1, safe_radius = 3, safe_effect = 92, safe_points = {{29,27},{35,27},{29,35},{35,35},{32,31}}}},
         },
     },
@@ -1307,7 +1306,6 @@ teshudata = {
     ["npc_651"]  = {id = 651, name = "天鼠的游戏",jl = {{"生肖守护[鼠]",1}},ch = "天鼠的认可",answer = {4,4,3}},
     ["npc_652"]  = {id = 652, name = "天牛的游戏",jl = {{"生肖守护[牛]",1}},ch = "天牛的认可",value = 500000},
     ["npc_653"]  = {id = 653, name = "天虎的游戏",jl = {{"生肖守护[虎]",1}},ch = "天虎的认可",map = "寅虎灵域",shaguai_id = 653,num = 300},
-    ["npc_654"]  = {id = 654, name = "天兔的游戏",jl = {{"生肖守护[兔]",1}},ch = "天兔的认可",map = "DQ0_003",mob = "玉兔精",end_pos = {142,20},start_pos = {20,142},time = 600,},
     ["npc_655"]  = {id = 655, name = "天龙的游戏",jl = {{"生肖守护[龙]",1}},ch = "天龙的认可",cost = {{"龙珠",1}},max_num = 9,},
     ["npc_656"]  = {id = 656, name = "天蛇的游戏",jl = {{"生肖守护[蛇]",1}},ch = "天蛇的认可",cost = {{"蛇图腾碎片",1}},max_num = 9,},
     ["npc_657"]  = {id = 657, name = "天马的游戏",jl = {{"生肖守护[马]",1}},ch = "天马的认可",cost = {{"摸鱼能力卡",5}},max_num = 100,value = {5,20},},
@@ -1539,16 +1537,16 @@ teshudata = {
         ["zxjl"] = {
             {time = 10,jl = { { "1元真实充值", 1 }},},
             {time = 30,jl = { { "1元真实充值", 1 }},},
-            {time = 60,jl = { { "1元真实充值", 1 }},},
-            {time = 120,jl = { { "1元真实充值", 1 }},},
-            {time = 360,jl = { { "仙法卷轴", 1 }},},
+            {time = 60,jl = { { "1元真实充值", 2 }},},
+            {time = 120,jl = { { "仙法卷轴残页", 5 }},},
+            {time = 360,jl = { { "仙法卷轴残页", 5 }},},
         },
         ["sgjl"] = {
             {num = 100,jl = { { "绑定金币", 100000}},},
             {num = 500,jl = { { "绑定金币", 200000}},},
             {num = 1000,jl = { { "绑定金币",300000}},},
             {num = 3000,jl = { { "绑定金币", 500000}},},
-            {num = 5000,jl = { { "仙法卷轴", 1 }},},
+            {num = 5000,jl = { { "仙法卷轴残页", 5 }},},
         },
         ["grss"] = {
             [1018] = { name = '枯灯客', give = { {'绑定金币',10000} } },

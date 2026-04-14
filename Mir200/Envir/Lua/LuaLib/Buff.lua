@@ -4438,12 +4438,12 @@ Buff = {
 local weizhi = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,55,71,72,73,74,75,76,78,85,86,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120}
 function Buff.refreshHuTiGuangHuan(play)
     Buff[107](play, 2)
-    Buff[108](play, 2)
-    Buff[109](play, 2)
+    -- Buff[108](play, 2)
+    -- Buff[109](play, 2)
     Buff[110](play, 2)
-    clearplayeffect(play,11502)
-    clearplayeffect(play,11503)
-    clearplayeffect(play,11504)
+    clearplayeffect(play,11501)
+    clearplayeffect(play,11506)
+    clearplayeffect(play,11505)
     local zs_level = tonumber(getplaydef(play, VarCfg["U_转生等级"]) or 0) or 0
     local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
     local unlocked = {
@@ -4458,23 +4458,24 @@ function Buff.refreshHuTiGuangHuan(play)
     end
     if unlocked[1] then
         Buff[107](play, 1)
-        playeffect(play,11502,0,0,0,1,0)
+        -- playeffect(play,11502,0,0,0,1,0)
     end
     if unlocked[2] then
-        Buff[108](play, 1)
-        Buff[109](play, 1)
-        playeffect(play,11503,0,0,0,1,0)
+        -- Buff[108](play, 1)
+        -- Buff[109](play, 1)
+        Player.add_attlist(play, "光环属性", "=", "3#255#888", 1)
+        -- playeffect(play,11503,0,0,0,1,0)
     end
     if unlocked[3] then
         Buff[110](play, 1)
-        playeffect(play,11504,0,0,0,1,0)
+        -- playeffect(play,11504,0,0,0,1,0)
     end
     if active == 1 then
-        playeffect(play,11502,0,0,0,1,0)
+        playeffect(play,11501,0,0,0,1,0)
     elseif active == 2 then
-        playeffect(play,11503,0,0,0,1,0)
+        playeffect(play,11506,0,0,0,1,0)
     elseif active == 3 then
-        playeffect(play,11504,0,0,0,1,0)
+        playeffect(play,11505,0,0,0,1,0)
     end
 end
 function Buff.login(play)
