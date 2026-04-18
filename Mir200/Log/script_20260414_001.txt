@@ -32,3 +32,5 @@
 
 [2026-04-16 04:41:29:757] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：31; NpcThreadId: 337260, CurPlayThreadId: 337260
 
+[2026-04-16 10:48:11:586] LuaNPC:玩家名字k ID:999999999 执行 ggna player:玩家名字k 耗时：32; NpcThreadId: 337260, CurPlayThreadId: 337260
+

@@ -1,0 +1,7 @@
+[2026-04-17 20:30:05:016] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：31; NpcThreadId: 48936, CurPlayThreadId: 48936
+
+[2026-04-18 00:29:23:104] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：32; NpcThreadId: 48936, CurPlayThreadId: 48936
+[2026-04-18 00:29:23:104] [玩家名字k]Lua执行耗时过高:32ms msgid:100 101 5 1 {"draw":10,"idx":1}
+[2026-04-18 00:29:25:127] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：94; NpcThreadId: 48936, CurPlayThreadId: 48936
+[2026-04-18 00:29:25:127] [玩家名字k]Lua执行耗时过高:94ms msgid:100 101 3 1 {"count":1}
+

@@ -1,0 +1,5 @@
+[2026-04-18 19:32:49:934] LuaNPC: ID:999999999 执行 startup player: 耗时：31; NpcThreadId: 54600, CurPlayThreadId: 54600
+
+[2026-04-18 19:33:31:167] LuaNPC:玩家名字 ID:999999999 执行 sendability player:玩家名字 耗时：32; NpcThreadId: 54600, CurPlayThreadId: 54600
+[2026-04-18 19:33:31:223] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：125; NpcThreadId: 54600, CurPlayThreadId: 54600
+

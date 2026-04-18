@@ -40,10 +40,10 @@ local function _get_tianshu_prompt_text(T_data)
     return string.format("提示：%s 杀气：%d/%d", _get_jf_need_kill_text(T_data.jf), T_data.shaqi, tonumber(_config.shaqi_max) or 1000)
 end
 
-local XIANFA_UNLOCK_ARTIFACT = "首切法宝"
+local XIANFA_UNLOCK_ARTIFACT = "雷霆双子剑"
 local XIANFA_UNLOCK_POS = 72
 
--- 装备位72穿上首切法宝时，仙法10个槽位都视为已解锁。
+-- 装备位72穿上雷霆双子剑时，仙法10个槽位都视为已解锁。
 local function _xianfa_unlock_all_slots(actor)
     return Player and Player.hasEquipOnPos and Player.hasEquipOnPos(actor, XIANFA_UNLOCK_POS, XIANFA_UNLOCK_ARTIFACT)
 end
