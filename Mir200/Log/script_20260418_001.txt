@@ -3,3 +3,9 @@
 [2026-04-18 19:33:31:167] LuaNPC:玩家名字 ID:999999999 执行 sendability player:玩家名字 耗时：32; NpcThreadId: 54600, CurPlayThreadId: 54600
 [2026-04-18 19:33:31:223] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：125; NpcThreadId: 54600, CurPlayThreadId: 54600
 
+[2026-04-19 01:20:57:571] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：32; NpcThreadId: 54600, CurPlayThreadId: 54600
+[2026-04-19 01:20:57:571] [玩家名字]Lua执行耗时过高:32ms msgid:105 9999 9999 0 
+
+[2026-04-19 02:39:42:288] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 54600, CurPlayThreadId: 54600
+[2026-04-19 02:39:42:288] [玩家名字]Lua执行耗时过高:31ms msgid:101 30 2 1 
+

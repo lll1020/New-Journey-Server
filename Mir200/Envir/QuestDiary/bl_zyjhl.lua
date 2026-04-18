@@ -191,3 +191,22 @@ function bl_zyjhl9(play,mingzi)
 
     return false
 end
+--------------------爆率监听触发-------------------斗笠碎片分R
+function bl_zyjhl10(play,mingzi)
+    if mingzi ~= "斗笠碎片" then
+        return false
+    end
+
+    local total_charge = math.max(tonumber(querymoney(play,23) or 0) or 0, tonumber(getplaydef(play, VarCfg["U_真实充值"]) or 0) or 0)
+    if total_charge > 0 then
+        return true
+    end
+
+    local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
+    if tonumber(sc_data["首充"] or 0) == 1 then
+        return true
+    end
+
+    -- 免费玩家在原始爆率命中后，再做一次 70% 放行
+    return math.random(100) <= 70
+end

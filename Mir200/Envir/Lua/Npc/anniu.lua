@@ -828,8 +828,6 @@ npc[501] = function(play, p2, p3, data) --Ê×³äÀñ°ü
                 Player.setJsonVarByTable(play, VarCfg.T_szjl, T_data)
                 GameEvent.push(EventCfg.onUPSkin, play, 1)
                 _refreshFashionAttr(play, T_data)
-            elseif idx == 2 then
-                addskill(play, 51, 3)
             end
             sendluamsg(play, 101, 1005, 0, 0, "lqcg")
             return
