@@ -43,6 +43,13 @@ kfhg 23 26 -> kfhjsbk 86 102
 [mwsl 太虚幻境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
 [副本|mwsl 任务副本] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
 
+[苍云秘境|4dlzc   苍云秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[若水秘境|4dlzc   若水秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[红尘秘境|4dlzc   红尘秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[灵虚秘境|4dlzc   灵虚秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[万灵秘境|4dlzc   万灵秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[诸天秘境|4dlzc   诸天秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+
 
 ;==============================================额外杀怪地图==============================
 [slwtzdt  十六王挑战地图] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
@@ -56,8 +63,8 @@ kfhg 23 26 -> kfhjsbk 86 102
 [四大陆主城|cgzd  若水大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
 [五大陆主城|dhzj  红尘大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
 [六大陆主城|hgsq 灵虚大陆] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
-[七大陆主城|xssl  七大陆主城] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
-[八大陆主城|xssl  八大陆主城] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
+[七大陆主城|xssl  万灵界域] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
+[八大陆主城|xssl  诸天之上] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
 [九大陆主城|xssl  九大陆主城] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
 [十大陆主城|xssl  十大陆主城] ;noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) day
 
