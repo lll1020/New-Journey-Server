@@ -4,6 +4,7 @@ npc = {}
 --npc名称：
 --npc功能：
 local _config = Guard.getConfig("npc_11")
+local _advanced_config = Guard.getConfig("npc_54") or {}
 
 function npc.main(play,npcid)
     local data = {}
@@ -87,7 +88,7 @@ end
 
 
 function AllMaxLevel(play)
-    if checktitle(play, _config.title) then
+    if checktitle(play, _config.title) or (_advanced_config.title and checktitle(play, _advanced_config.title)) then
         Player.sendmsgEx(play, "你已拥有#57|【该称号】#249|，无需重复领取#57")
         return
     end

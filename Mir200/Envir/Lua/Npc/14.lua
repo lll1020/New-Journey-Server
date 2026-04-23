@@ -148,11 +148,11 @@ function npc.link(play, npcid, p2, p3, msgData)
         sendluamsg(play,100,npcid,1,0,tbl2json(data))
 
         if upCount > 0 then
-            Player.sendmsgEx(play, string.format("一键使用完成，本次共提升|【%d级】#249|", upCount))
+            Player.sendmsgEx(play, string.format("饮用完成，本次共提升|【%d级】#249|", upCount))
         else
-            Player.sendmsgEx(play, "一键使用完成，材料已全部消耗")
+            Player.sendmsgEx(play, "一键饮用，材料已全部消耗")
         end
-
+    
         if isall then
             npc.AllMaxLevel(play)
         end

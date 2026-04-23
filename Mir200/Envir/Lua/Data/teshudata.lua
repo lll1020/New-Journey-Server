@@ -877,7 +877,7 @@ teshudata = {
         name = "灾厄入侵",
         details = {
             {idx = 1, key = 625,name = "嘲灾", mob_name = "嘲灾", mob_eff = 16416, num = 1,jl = {{"无相镜",1}},map = "鬼嘲深渊",spa = "无相",spa_details = "100%反弹所受伤害", time = 300,kz = "前置：嘲天笑地", kz_details = "鬼嘲深渊击杀50只怪物，提交后挑战嘲灾时可免疫反弹"},
-            {idx = 2, key = 627,name = "息灾", mob_name = "息灾", mob_eff = 16417, num = 1,jl = {{"定风珠",1}},map = "叹息旷野",spa = "叹息",spa_details = "被攻击时，会快速逃离玩家", time = 300,kz = "前置：定身符", kz_details = "叹息旷野打怪收集10个定身符碎片，提交后挑战息灾时可压制逃离"},
+            {idx = 2, key = 627,name = "息灾", mob_name = "息灾", mob_eff = 16408, num = 1,jl = {{"定风珠",1}},map = "叹息旷野",spa = "叹息",spa_details = "被攻击时，会快速逃离玩家", time = 300,kz = "前置：定身符", kz_details = "叹息旷野打怪收集10个定身符碎片，提交后挑战息灾时可压制逃离"},
             {idx = 3, key = 626,name = "忌灾", mob_name = "忌灾", mob_eff = 16418, num = 1,jl = {{"诅咒傀儡",1}},map = "禁忌之海",spa = "诅咒",spa_details = "攻击会令你陷入诅咒", time = 300,kz = "前置：净化宝石", kz_details = "禁忌之海打怪收集10个净化之泪，提交后挑战忌灾时可抵御诅咒"},
             {idx = 4, key = 628,name = "妄灾", mob_name = "妄灾", mob_eff = 16419, num = 1,jl = {{"破妄之瞳",1}},map = "虚妄山脉",spa = "隐身",spa_details = "平时无法直视妄灾", time = 300,kz = "前置：真视之眼", kz_details = "虚妄山脉先后找回真视之眼左、真视之眼右，提交后挑战妄灾时可看见真身"},
         },
@@ -1193,7 +1193,7 @@ teshudata = {
         id = 73,
         name = "地狱深渊",
         itme = 5,
-        cost = {{"深渊门票",1},{"辉耀水晶",2}},
+        cost = {{"深渊门票",1},{"金币",1000000}},
         mob = {
             {"深渊怪",10},
             {"深渊怪[特殊]",10},
@@ -1207,10 +1207,10 @@ teshudata = {
         all_level_add = 5,
         all_desc = "全命盘激活后：150级后等级+5",
         details = {
-            {name = "灵兽", reward_desc = "无", desc = "任意2只灵兽亲密度满级", cost = {{"天道命石",10},{"元宝",1000000}}, attr = {}},
-            {name = "灵根", reward_desc = "无", desc = "任意2个灵根满级", cost = {{"天道命石",10},{"元宝",1000000}}, attr = {}},
-            {name = "境界", reward_desc = "无", desc = "境界达到元婴境", cost = {{"天道命石",10},{"元宝",1000000}}, attr = {}},
-            {name = "天书仙法", reward_desc = "无", desc = "天书达到LV30且拥有3条红色仙法", cost = {{"天道命石",10},{"元宝",1000000}}, attr = {}},
+            {name = "灵兽", reward_desc = "无", desc = "任意2只灵兽亲密度满级", cost = {{"天道命石",10},{"元宝",1000000}}, attr = {{25,10}}},
+            {name = "灵根", reward_desc = "无", desc = "任意2个灵根满级", cost = {{"天道命石",10},{"元宝",1000000}}, attr = {{25,10}}},
+            {name = "境界", reward_desc = "无", desc = "境界达到元婴境", cost = {{"天道命石",10},{"元宝",1000000}}, attr = {{25,10}}},
+            {name = "天书仙法", reward_desc = "无", desc = "天书达到LV30且拥有3条红色仙法", cost = {{"天道命石",10},{"元宝",1000000}}, attr = {{25,10}}},
         },
     },
     ["npc_75"] = {
@@ -1424,8 +1424,8 @@ teshudata = {
         enter_pos = {29,27},
         boss = "天书试炼",
         boss_pos = {32,36},
-        boss_effect = 14153,
-        boss_fire = 14153,
+        boss_effect = 14155,
+        boss_fire = 14155,
         reward = {{"天书",1}},
         materials = {
             {idx = 1,name = "天书残卷一",cost = {{"天书残卷一",1}},attr = {{244,1000}},attr_desc = "打怪切割+1000"},

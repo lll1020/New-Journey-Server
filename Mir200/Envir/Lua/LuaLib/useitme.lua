@@ -633,9 +633,9 @@ function stdmodefunc40(play, item) --特殊丹药
     end
 
     local count_key = key .. "_count"
-    -- 兼容旧数据：以前每次固定+1，老数据里的总值可直接当作已服用次数。
+    -- 前4个丹药保留累计成长，最后3个丹药改为每次固定+1。
     local use_count = tonumber(rec[count_key] or cur) or 0
-    local add_value = use_count + 1
+    local add_value = (idx >= 5 and idx <= 7) and 1 or (use_count + 1)
     if cur + add_value > max then
         add_value = max - cur
     end

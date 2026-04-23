@@ -892,27 +892,61 @@ npc[504] = function(play, p2, p3, data) --快人一步
         end
     end
 end
+local function _aigj_has_privilege(play)
+    return getflagstatus(play, VarCfg.BS_mztq) == 1
+end
+
+local function _aigj_get_json(play)
+    local raw = getplaydef(play, VarCfg.T_aigj)
+    local json = json2tbl((raw == nil or raw == "") and "{}" or raw)
+    return type(json) == "table" and json or {}
+end
+
+local function _aigj_close(play, json)
+    json = type(json) == "table" and json or _aigj_get_json(play)
+    json.gjkg = nil
+    stopautoattack(play)
+    setflagstatus(play, VarCfg.BS_AIgj, 0)
+    setplaydef(play, VarCfg.T_aigj, tbl2json(json))
+    return json
+end
+
+local function _aigj_send_privilege_msg(play)
+    sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[自动巡航]</font><font color=\'#ff0500\'>未激活特权，无法使用自动巡航...</font>","Type":9}')
+end
+
 ---自动巡航
 npc[505] = function(play, p2, p3, data) --自动巡航
+    local json = _aigj_get_json(play)
+    local has_privilege = _aigj_has_privilege(play)
+    if not has_privilege and (json.gjkg or getflagstatus(play, VarCfg.BS_AIgj) == 1) then
+        json = _aigj_close(play, json)
+    end
     if p2 == 0 then
         sendluamsg(play, 101, 505, 0, 0, "")
     elseif p2 == 1 then
-        sendluamsg(play, 101, 505, 1, 0, getplaydef(play, VarCfg.T_aigj))
+        sendluamsg(play, 101, 505, 1, 0, tbl2json(json))
     elseif p2 == 2 then
+        if not has_privilege then
+            _aigj_send_privilege_msg(play)
+            return
+        end
         local dtmz = getbaseinfo(play, 3)
         if jinzhigj[dtmz] or string.find(dtmz, "_") then
             sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[自动巡航]</font><font color=\'#ff0000\'>当前地图,无法记录...</font>","Type":9}')
         elseif checkkuafu(play) then
             sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[自动巡航]</font><font color=\'#ff0000\'>跨服地图,无法记录...</font>","Type":9}')
         else
-            local json = json2tbl(getplaydef(play, VarCfg.T_aigj))
             json["dt" .. p3] = getbaseinfo(play, 45)
             json["dtid" .. p3] = dtmz
             sendluamsg(play, 101, 505, 2, p3, getbaseinfo(play, 45))
             setplaydef(play, VarCfg.T_aigj, tbl2json(json))
         end
     elseif p2 == 3 then
-        local json = json2tbl(getplaydef(play, VarCfg.T_aigj))
+        if not has_privilege then
+            _aigj_send_privilege_msg(play)
+            return
+        end
         if json["fgx" .. p3] then
             json["fgx" .. p3] = nil
         elseif json["dtid" .. p3] then
@@ -921,9 +955,13 @@ npc[505] = function(play, p2, p3, data) --自动巡航
             sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[自动巡航]</font><font color=\'#ff0500\'>当前未记录地图,无法勾选...</font>","Type":9}')
         end
         setplaydef(play, VarCfg.T_aigj, tbl2json(json))
-        sendluamsg(play, 101, 505, 3, p3, getplaydef(play, VarCfg.T_aigj))
+        sendluamsg(play, 101, 505, 3, p3, tbl2json(json))
     elseif p2 == 4 then
-        local json = json2tbl(getplaydef(play, VarCfg.T_aigj))
+        if not has_privilege then
+            _aigj_send_privilege_msg(play)
+            sendluamsg(play, 101, 505, 4, 0, tbl2json(json))
+            return
+        end
         if getflagstatus(play, VarCfg.BS_AIgj) == 0 then
             local yz = 0
             for i = 1, 10, 1 do
@@ -948,7 +986,10 @@ npc[505] = function(play, p2, p3, data) --自动巡航
         setplaydef(play, VarCfg.T_aigj, tbl2json(json))
         sendluamsg(play, 101, 505, 4, 0, tbl2json(json))
     elseif p2 == 5 then
-        local json = json2tbl(getplaydef(play, VarCfg.T_aigj))
+        if not has_privilege then
+            _aigj_send_privilege_msg(play)
+            return
+        end
         if p3 == 1 then
             if json.zgx1 then
                 json.zgx1 = nil

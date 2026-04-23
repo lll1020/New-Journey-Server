@@ -1,0 +1,23 @@
+[2026-04-23 05:24:11:151] D701 - secret map not found !!
+[2026-04-23 05:24:11:256] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-105152] 当前Thread:82440
+[2026-04-23 05:24:11:603] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2026-04-23 05:24:11:603] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-105152] 当前Thread:82440
+[2026-04-23 05:24:11:603] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2026-04-23 05:24:11:603] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-105152] 当前Thread:82440
+[2026-04-23 05:24:11:603] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2026-04-23 05:24:11:603] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-105152] 当前Thread:82440
+[2026-04-23 05:24:11:603] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2026-04-23 05:24:13:840] ---------------------线程耗时监控
+[2026-04-23 05:24:14:015] Frame-----------------------------------
+
+[2026-04-23 05:24:15:041] MainRunThread(0)-----------------------------------
+
+[2026-04-23 05:24:15:076] EnvirThread 0/0(59516-1)flag:50000004 DelayCnt:0,TimeCnt:0, Err:0, Msg:0, MonMsg:0 lua: 1 CallLua:setontimerex 422-----------------------------------
+
+[2026-04-23 05:24:15:116] DbThread(0-0)-----------------------------------
+
+[2026-04-23 05:24:15:151] BoxSellDbThread(0)-----------------------------------
+
+[2026-04-23 05:24:15:199] NewHttpPost(0-0-0)-----------------------------------
+
+

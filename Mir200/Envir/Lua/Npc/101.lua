@@ -460,14 +460,15 @@ function npc.link(play, npcid, p2, p3, msgData)
     elseif p2 == 5 or p2 == 6 then -- 领取累抽奖励
         local milestoneIdx, milestone = _find_milestone(p3, json_data)
         if not milestone then Player.sendmsgEx(play, "参数错误#57") return end
-        if T_data.draw_count < tonumber(milestone.draw or 0) then
-            Player.sendmsgEx(play, "累计抽奖次数不足#57|，暂时无法领取#57")
-            return
-        end
         if p2 == 6 and not _has_crown(play) then
             Player.sendmsgEx(play, "你尚未达到#57|【冠名条件】#249|，无法领取冠名奖励#57")
             return
         end
+        if T_data.draw_count < tonumber(milestone.draw or 0) then
+            Player.sendmsgEx(play, "累计抽奖次数不足#57|，暂时无法领取#57")
+            return
+        end
+
         local claimedCount, labels = _claim_milestone_range(play, T_data, p2, milestoneIdx)
         if claimedCount <= 0 then
             Player.sendmsgEx(play, "该档位及此前奖励已领取，无需重复领取#57")

@@ -9,3 +9,7 @@
 [2026-04-21 06:31:16:770] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 90060, CurPlayThreadId: 90060
 [2026-04-21 06:31:16:770] [玩家名字]Lua执行耗时过高:31ms msgid:101 505 5 5 
 
+[2026-04-21 17:56:57:307] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：31; NpcThreadId: 90060, CurPlayThreadId: 90060
+
+[2026-04-21 19:00:41:855] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：31; NpcThreadId: 90060, CurPlayThreadId: 90060
+

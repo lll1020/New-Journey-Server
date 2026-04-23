@@ -108,6 +108,16 @@ end
 --------------------AI挂机自动切换地图-------------------
 function ai_qhdt(play)
 	local json, lins = json2tbl(getplaydef(play, VarCfg.T_aigj)), {}
+    json = type(json) == "table" and json or {}
+    if getflagstatus(play, VarCfg.BS_mztq) ~= 1 then
+        if json.gjkg or getflagstatus(play, VarCfg.BS_AIgj) == 1 then
+            json.gjkg = nil
+            setplaydef(play, VarCfg.T_aigj, tbl2json(json))
+            setflagstatus(play, VarCfg.BS_AIgj, 0)
+            stopautoattack(play)
+        end
+        return
+    end
     if json.gjkg then
         if json.zgx4 or json.zgx3 or json.zgx5 then
             for i = 1, 10, 1 do
@@ -147,8 +157,17 @@ function entermap(play)
         sendluamsg(play,101,498,2,0,"")
         setplaydef(play,VarCfg.N_tyecmb,0)
     end
-    if getflagstatus(play, VarCfg.BS_AIgj) == 1 and not getbaseinfo(play, 48) then
-        startautoattack(play)
+    if getflagstatus(play, VarCfg.BS_AIgj) == 1 then
+        if getflagstatus(play, VarCfg.BS_mztq) == 1 and not getbaseinfo(play, 48) then
+            startautoattack(play)
+        else
+            local ai_json = json2tbl(getplaydef(play, VarCfg.T_aigj))
+            ai_json = type(ai_json) == "table" and ai_json or {}
+            ai_json.gjkg = nil
+            setplaydef(play, VarCfg.T_aigj, tbl2json(ai_json))
+            setflagstatus(play, VarCfg.BS_AIgj, 0)
+            stopautoattack(play)
+        end
     end
     -- 切换地图触发：用于刷新天书仙法等模块状态
     GameEvent.push(EventCfg.goSwitchMap, play)

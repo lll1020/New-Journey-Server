@@ -62,6 +62,126 @@ local function _build_npc24_payload(actor, T_data)
         ["xianfa_all_unlock"] = _xianfa_unlock_all_slots(actor) and 1 or 0,
     }
 end
+
+local function _xianfa_parse_weight_map(weight)
+    local map = {}
+    for token in string.gmatch(weight or "", "[^|]+") do
+        local k, v = token:match("(%d+)#(%d+)")
+        if k and v then
+            map[tonumber(k)] = tonumber(v)
+        end
+    end
+    return map
+end
+
+local function _xianfa_build_block_map(T_data, slot)
+    T_data = _tianshu_fix_data(T_data)
+    local block_map = {}
+    local slot_key = tostring(slot or "")
+    local caowei = T_data.caowei or {}
+
+    for key, value in pairs(caowei) do
+        if tostring(key) ~= slot_key and type(value) == "table" then
+            local group = tonumber(value[1])
+            local idx = tonumber(value[2])
+            if group and idx then
+                block_map[group .. "_" .. idx] = true
+            end
+        end
+    end
+
+    local last_slot = caowei[slot_key]
+    if type(last_slot) == "table" then
+        local group = tonumber(last_slot[1])
+        local idx = tonumber(last_slot[2])
+        if group and idx then
+            block_map[group .. "_" .. idx] = true
+        end
+    end
+
+    local last_draw = T_data.last_xianfa_draw
+    if type(last_draw) == "table" then
+        local group = tonumber(last_draw[1])
+        local idx = tonumber(last_draw[2])
+        if group and idx then
+            block_map[group .. "_" .. idx] = true
+        end
+    end
+    return block_map
+end
+
+local function _xianfa_pick_group(weight_map, group_candidates)
+    local total_weight = 0
+    for group = 1, 5 do
+        local list = group_candidates[group]
+        if list and #list > 0 then
+            total_weight = total_weight + (tonumber(weight_map[group]) or 0)
+        end
+    end
+
+    if total_weight <= 0 then
+        local groups = {}
+        for group = 1, 5 do
+            local list = group_candidates[group]
+            if list and #list > 0 then
+                table.insert(groups, group)
+            end
+        end
+        if #groups == 0 then
+            return nil
+        end
+        return groups[math.random(1, #groups)]
+    end
+
+    local roll = math.random(1, total_weight)
+    local cur = 0
+    for group = 1, 5 do
+        local list = group_candidates[group]
+        if list and #list > 0 then
+            cur = cur + (tonumber(weight_map[group]) or 0)
+            if roll <= cur then
+                return group
+            end
+        end
+    end
+    return nil
+end
+
+local function _xianfa_roll_non_repeat(T_data, slot, weight, max_group, force_group)
+    local details = _config.details[2].details or {}
+    local block_map = _xianfa_build_block_map(T_data, slot)
+    local group_candidates = {}
+    local group_limit = tonumber(force_group or max_group) or 0
+
+    for group = 1, group_limit do
+        if not force_group or group == force_group then
+            local group_cfg = details[group] or {}
+            for idx, _ in ipairs(group_cfg) do
+                if not block_map[group .. "_" .. idx] then
+                    group_candidates[group] = group_candidates[group] or {}
+                    table.insert(group_candidates[group], idx)
+                end
+            end
+        end
+    end
+
+    local group = nil
+    if force_group then
+        local list = group_candidates[force_group]
+        if not list or #list == 0 then
+            return nil, nil
+        end
+        group = force_group
+    else
+        group = _xianfa_pick_group(_xianfa_parse_weight_map(weight), group_candidates)
+    end
+
+    local list = group and group_candidates[group] or nil
+    if not list or #list == 0 then
+        return nil, nil
+    end
+    return group, list[math.random(1, #list)]
+end
 local function _set_tianshu_shaqi_customabil(play, itemobj, T_data)
     itemobj = itemobj or linkbodyitem(play, _config.where)
     if not itemobj or itemobj == "0" then
@@ -230,8 +350,30 @@ function npc.link(play,npcid,ew,aid,data)
             T_data["caowei"] = T_data["caowei"] or {}
             local slot_key = ""..slot
 
-            local force_xianpin = false
-            if tonumber(aid) == 2 then
+            local force_xianpin = tonumber(aid) == 2
+            local weight = cfg.weight
+            if getplaydef(play, "N$buff311") == 1 then
+                local wmap = _xianfa_parse_weight_map(weight)
+                if next(wmap) ~= nil then
+                    wmap[5] = (wmap[5] or 0) + 20 -- 红色仙法概率+20%
+                    local parts = {}
+                    for i = 1, 5 do
+                        if wmap[i] then
+                            table.insert(parts, i .. "#" .. wmap[i])
+                        end
+                    end
+                    weight = table.concat(parts, "|")
+                end
+            end
+
+            local max_group = (getplaydef(play, "N$buff311") == 1) and 5 or 3
+            local randomNum, idx = _xianfa_roll_non_repeat(T_data, slot, weight, max_group, force_xianpin and 5 or nil)
+            if not randomNum or not idx then
+                Player.sendmsgEx(play, "当前已没有可抽取的新仙法，请先更换槽位或调整已有仙法#57")
+                return
+            end
+
+            if force_xianpin then
                 local need = {{"仙品仙法卷轴",1}}
                 local name, num = Player.checkItemNumByTable(play, need)
                 if name then
@@ -239,10 +381,7 @@ function npc.link(play,npcid,ew,aid,data)
                     return
                 end
                 Player.takeItemByTable(play, need, ",天书仙法", nil)
-                force_xianpin = true
-            end
-
-            if not force_xianpin then
+            else
                 local cost_cfg = cfg.cost
                 if cost_cfg then
                     local name, num = Player.checkItemNumByTable(play, cost_cfg[1])
@@ -260,48 +399,18 @@ function npc.link(play,npcid,ew,aid,data)
                 end
             end
 
-            local randomNum
-            local weight = cfg.weight
-            if getplaydef(play, "N$buff311") == 1 then
-                local wmap = {}
-                for token in string.gmatch(weight or "", "[^|]+") do
-                    local k, v = token:match("(%d+)#(%d+)")
-                    if k and v then
-                        wmap[tonumber(k)] = tonumber(v)
-                    end
-                end
-                if next(wmap) ~= nil then
-                    wmap[5] = (wmap[5] or 0) + 20 -- 红色仙法概率+20%
-                    local parts = {}
-                    for i = 1, 5 do
-                        if wmap[i] then
-                            table.insert(parts, i .. "#" .. wmap[i])
-                        end
-                    end
-                    weight = table.concat(parts, "|")
-                end
-            end
-            if force_xianpin then
-                randomNum = 5
-            else
-                local max_group = (getplaydef(play, "N$buff311") == 1) and 5 or 3
-
-                randomNum = ransjstr(weight, 1, max_group)
-                randomNum = tonumber(randomNum)
-            end
-
             local list_cfg = cfg.details and cfg.details[randomNum]
-            if not list_cfg or #list_cfg == 0 then
+            if not list_cfg or not list_cfg[idx] then
                 Player.sendmsgEx(play, "配置异常，请联系管理员#57")
                 return
             end
-            local idx = math.random(1, #list_cfg)
             if T_data["caowei"][slot_key] then
                 xianfa_del(play, T_data["caowei"][slot_key][1], T_data["caowei"][slot_key][2])
             end
             T_data["caowei"][slot_key] = {randomNum,idx}
             T_data["tj"] = T_data["tj"] or {}
             T_data["tj"][randomNum.."_"..idx] = 1
+            T_data.last_xianfa_draw = {randomNum,idx}
             Player.setJsonVarByTable(play, VarCfg["T_天书"], T_data)
             xianfa_refresh(play)
 

@@ -537,6 +537,10 @@ Buff = {
         if zt == 3 then
             local sj = os.time()
             local json = json2tbl(getplaydef(play,VarCfg.T_aigj))
+            json = type(json) == "table" and json or {}
+            if getflagstatus(play, VarCfg.BS_mztq) ~= 1 then
+                return 0
+            end
             if sj - getplaydef(play,VarCfg.N_Aigj[1]) >= 60 and not getbaseinfo(play,0) and json.gjkg then
                 setplaydef(play,VarCfg.N_Aigj[1],sj)
                 map(play,getbaseinfo(play,3))
