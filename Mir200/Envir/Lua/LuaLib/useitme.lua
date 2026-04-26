@@ -66,7 +66,14 @@ end
         elseif daluditu[du] and daluditu[du] == 4 then mapmove(play, "四大陆主城",37,33,3) addhpper(play, '=', 100) addmpper(play, '=', 100)
         elseif daluditu[du] and daluditu[du] == 5 then mapmove(play, "五大陆主城",30,28,4) addhpper(play, '=', 100) addmpper(play, '=', 100)
         elseif daluditu[du] and daluditu[du] == 6 then mapmove(play, "六大陆主城",90,69,4) addhpper(play, '=', 100) addmpper(play, '=', 100)
-        elseif daluditu[du] and daluditu[du] == 7 then mapmove(play, "七大陆主城",92,76,5) addhpper(play, '=', 100) addmpper(play, '=', 100)
+        elseif daluditu[du] and daluditu[du] == 7 then
+            -- 世界符文总奖励是第七大陆通行的统一门槛。
+            if not Player.ensureSeventhContinentPass(play, "请先集齐并领取#57|【世界符文】#249|奖励后再前往七大陆#57") then
+                return
+            end
+            mapmove(play, "七大陆主城",92,76,5)
+            addhpper(play, '=', 100)
+            addmpper(play, '=', 100)
         elseif daluditu[du] and daluditu[du] == 8 then mapmove(play, "八大陆主城",92,76,5) addhpper(play, '=', 100) addmpper(play, '=', 100)
         elseif daluditu[du] and daluditu[du] == 9 then mapmove(play, "九大陆主城",92,76,5) addhpper(play, '=', 100) addmpper(play, '=', 100)
         else
@@ -1008,6 +1015,30 @@ end
 
 
 
+
+
+
+
+-- 消耗品入口：净业符直接走残魂商店真实编号逻辑。
+function stdmodefunc58(play, item) --净业符
+    local cfg = ((teshudata or {})["npc_83"] or {}).cleanse or {}
+    local reduce = tonumber(cfg.reduce or 30) or 30
+    local shopNpc = Npclib and Npclib[83] or nil
+    if not shopNpc or type(shopNpc.reduce_fire) ~= "function" then
+        Player.sendmsgEx(play, "残魂商店逻辑未加载#57")
+        return false
+    end
+    local data = shopNpc.get_data and shopNpc.get_data(play) or {}
+    local before = tonumber(data.fire or 0) or 0
+    if before <= 0 then
+        Player.sendmsgEx(play, "当前业火值为0，无需使用#57")
+        return false
+    end
+    local after = shopNpc.reduce_fire(play, reduce) or 0
+    delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+    Player.sendmsgEx(play, string.format("使用成功，业火值从#57|【%d】#249|降至#57|【%d】#249|", before, tonumber(after) or 0))
+    return false
+end
 
 
 

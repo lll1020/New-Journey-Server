@@ -1,0 +1,332 @@
+npc = {}
+
+-- 世界符文
+-- 世界符文：激活七枚符文后解锁第七大陆通行资格。
+local _config = Guard.getConfig("npc_84")
+local _var_name = VarCfg["T_世界符文"]
+local _npc_key = "npc_84"
+local _title_name = (_config and _config.title_reward) or "世界符文·[真我]"
+local _all_level_need = tonumber((_config and _config.all_level_need) or 150) or 150
+local _all_level_add = tonumber((_config and _config.all_level_add) or 10) or 10
+
+-- 统一处理可能为空的数值。
+local function _toint(v)
+    return tonumber(v) or 0
+end
+
+-- 读取并规范化世界符文存档数据。
+local function _get_state(play)
+    local data = Player.getJsonTableByVar(play, _var_name) or {}
+    data.runes = type(data.runes) == "table" and data.runes or {}
+    data.claim = _toint(data.claim)
+    data.level_bonus = _toint(data.level_bonus)
+    return data
+end
+
+-- 持久化世界符文存档数据。
+local function _save_state(play, data)
+    Player.setJsonVarByTable(play, _var_name, data)
+end
+
+-- 检查灵根条件是否达成。
+local function _has_all_linggen(play)
+    local lg = Player.getJsonTableByVar(play, VarCfg["T_灵根"]) or {}
+    local level = lg.level or {}
+    for i = 1, 10 do
+        if level[tostring(i)] == nil then
+            return false
+        end
+    end
+    return true
+end
+
+-- 检查灵兽条件是否达成。
+local function _has_all_lingshou(play)
+    local cfg = ((teshudata or {})["npc_64"] or {}).config or {}
+    local ls_cfg = cfg.ls or {}
+    if #ls_cfg <= 0 then
+        return false
+    end
+    local data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"]) or {}
+    local ls = data.ls or {}
+    for i = 1, #ls_cfg do
+        if _toint(ls[tostring(i)]) <= 0 then
+            return false
+        end
+    end
+    return true
+end
+
+-- 检查境界修为完成条件是否达成。
+local function _has_realm_max(play)
+    return _toint(getplaydef(play, VarCfg["U_境界修炼"][1])) >= 30
+end
+
+-- 检查酒仙剑是否穿戴在 75 槽位。
+local function _has_wine_artifact(play)
+    local compat = (_config and _config.compat) or {}
+    for _, name in ipairs(compat.wine_items or {}) do
+        if Player.hasEquipOnPos(play, 75, name) then
+            return true
+        end
+    end
+    return false
+end
+
+-- 将任务键配置统一解析为键名与所需进度。
+local function _resolve_task_need(entry, default_need)
+    local key = entry
+    local need = _toint(default_need)
+    if type(entry) == "table" then
+        key = entry.key or entry[1]
+        need = _toint(entry.need or entry[2] or default_need)
+    end
+    if need <= 0 and type(key) == "string" then
+        local cfg = (teshudata or {})[key] or {}
+        if _toint(cfg.max_num) > 0 then
+            need = _toint(cfg.max_num)
+        else
+            need = 2
+        end
+    end
+    if need <= 0 then
+        need = 2
+    end
+    return key, need
+end
+
+-- 检查双神道相关任务是否全部完成。
+local function _has_double_shendao(play)
+    local compat = (_config and _config.compat) or {}
+    local jq = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
+    local tasks = compat.shendao_tasks or {}
+    for _, entry in ipairs(tasks) do
+        local key, need = _resolve_task_need(entry, 0)
+        if key == nil or key == "" then
+            return false
+        end
+        if _toint(jq[key]) < need then
+            return false
+        end
+    end
+    return #tasks > 0
+end
+
+-- 检查命格节点是否全部点亮。
+local function _has_all_destiny(play)
+    local jq = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
+    local state = jq["npc_74"] or {}
+    return _toint(state.all) >= _toint((_config and (_config.destiny_all or 4)) or 4)
+end
+
+-- 检查任一配置的夜祸标记是否已达标。
+local function _has_join_yehuo(play)
+    local compat = (_config and _config.compat) or {}
+    local jq = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
+    for _, key in ipairs(compat.yehuo_flags or {}) do
+        local v = jq[key]
+        if type(v) == "number" and v >= 1 then
+            return true
+        elseif type(v) == "table" then
+            if _toint(v.wc) >= 1 or _toint(v.done) >= 1 or _toint(v.finish) >= 1 or _toint(v.ok) >= 1 then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+-- 检查星象圣图是否达到帝星阶段。
+local function _has_star_emperor(play)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_星象圣图"]) or {}
+    local stage = data.stage or {}
+    local info = stage["8"] or stage[8] or {}
+    return _toint(info.full) == 1
+end
+
+-- 校验单个符文的激活条件。
+local function _check_rune(play, idx)
+    if idx == 1 then
+        if not _has_all_linggen(play) then
+            return false, "需要先激活全部灵根#57"
+        end
+        if not _has_all_lingshou(play) then
+            return false, "需要先激活全部灵兽#57"
+        end
+        return true
+    elseif idx == 2 then
+        if not _has_realm_max(play) then
+            return false, "需要修为达到圆满后才可激活#57"
+        end
+        return true
+    elseif idx == 3 then
+        if not _has_wine_artifact(play) then
+            return false, "需要获得背包神器#57|【酒仙剑】#249|后才可激活#57"
+        end
+        return true
+    elseif idx == 4 then
+        if not _has_double_shendao(play) then
+            return false, "需要完成双神道自证后才可激活#57"
+        end
+        return true
+    elseif idx == 5 then
+        if not _has_all_destiny(play) then
+            return false, "需要激活全部天道命盘后才可激活#57"
+        end
+        return true
+    elseif idx == 6 then
+        if not _has_join_yehuo(play) then
+            return false, "需要先参加业火清算后才可激活#57"
+        end
+        return true
+    elseif idx == 7 then
+        if not _has_star_emperor(play) then
+            return false, "需要星象达到#57|【帝星】#249|后才可激活#57"
+        end
+        return true
+    end
+    return false, "参数错误#57"
+end
+
+-- 重新统计当前已激活的符文数量。
+local function _refresh_count(data)
+    local count = 0
+    for _, idx in ipairs((_config and _config.rune_order) or {}) do
+        if _toint((data.runes or {})[tostring(idx)]) == 1 then
+            count = count + 1
+        end
+    end
+    data.all = count
+    return count
+end
+
+-- 组装客户端数据与条件状态标记。
+local function _build_payload(play)
+    local data = _get_state(play)
+    _refresh_count(data)
+    local ret = {
+        T_data = data,
+        rune_data = data.runes,
+        all = data.all or 0,
+        claim = data.claim or 0,
+        has_title = checktitle(play, _title_name) and 1 or 0,
+    }
+    ret.cond = {}
+    for _, idx in ipairs((_config and _config.rune_order) or {}) do
+        local ok = _check_rune(play, idx)
+        ret.cond[tostring(idx)] = ok and 1 or 0
+    end
+    return ret
+end
+
+-- 总奖励领取后，等级达到门槛时补发后置等级奖励。
+local function _try_grant_level_bonus(play, data)
+    if _toint(data.claim) ~= 1 then
+        return false
+    end
+    if _toint(data.level_bonus) == 1 then
+        return false
+    end
+    if (tonumber(getbaseinfo(play, 6)) or 0) < _all_level_need then
+        return false
+    end
+    data.level_bonus = 1
+    _save_state(play, data)
+    callscriptex(play, "CHANGELEVEL", "+", _all_level_add)
+    Player.sendmsgEx(play, string.format("你已获得称号#57|【%s】#249|，额外获得#57|【%d级】#249|", _title_name, _all_level_add))
+    return true
+end
+
+-- 打开世界符文面板。
+function npc.main(play, npcid)
+    sendluamsg(play, 100, npcid, 0, 0, tbl2json(_build_payload(play)))
+end
+
+-- 处理符文激活、总奖励领取与刷新操作。
+function npc.link(play, npcid, p2, p3, msgData)
+    if not Guard.ensurePlayer(play, npcid) then
+        return
+    end
+    local __guardAction = Guard.normalizeAction(play, npcid, p2)
+    if __guardAction == nil then
+        return
+    end
+    p2 = __guardAction
+    local __guardAllowedActions = Guard.newActionSet({1,2,9})
+    if not Guard.ensureActionAllowed(play, npcid, p2, __guardAllowedActions) then
+        return
+    end
+
+    local json_data = json2tbl(msgData) or {}
+    local idx = _toint(json_data.idx or json_data.id or p3)
+    local data = _get_state(play)
+    _refresh_count(data)
+
+    if p2 == 1 then
+        if idx <= 0 then
+            sendluamsg(play, 100, npcid, 1, 0, tbl2json(_build_payload(play)))
+            return
+        end
+        local cfg = _config and _config.runes and _config.runes[idx] or nil
+        if not cfg then
+            Player.sendmsgEx(play, "参数错误#57")
+            return
+        end
+        local key = tostring(idx)
+        if _toint(data.runes[key]) == 1 then
+            Player.sendmsgEx(play, "该符文已经激活#57")
+            return
+        end
+        local ok, err = _check_rune(play, idx)
+        if not ok then
+            Player.sendmsgEx(play, err)
+            return
+        end
+        data.runes[key] = 1
+        _refresh_count(data)
+        _save_state(play, data)
+        Player.sendmsgEx(play, string.format("你成功激活了#57|【%s】#249|", cfg.name or "世界符文"))
+        sendluamsg(play, 100, npcid, 1, idx, tbl2json(_build_payload(play)))
+    elseif p2 == 2 then
+        if _toint(data.claim) == 1 or checktitle(play, _title_name) then
+            Player.sendmsgEx(play, "世界符文奖励已领取#57")
+            return
+        end
+        if _refresh_count(data) < #((_config and _config.rune_order) or {}) then
+            Player.sendmsgEx(play, "请先激活全部世界符文后再领取奖励#57")
+            return
+        end
+        data.claim = 1
+        _save_state(play, data)
+        if not checktitle(play, _title_name) then
+            Player.title_give(play, _title_name, 1)
+        end
+        if not _try_grant_level_bonus(play, data) then
+            if (tonumber(getbaseinfo(play, 6)) or 0) < _all_level_need then
+                Player.sendmsgEx(play, string.format("你已获得#57|【%s】#249|，达到#57|【%d级】#249|后可额外获得#57|【%d级】#249|", _title_name, _all_level_need, _all_level_add))
+            end
+        end
+        sendluamsg(play, 100, npcid, 2, 0, tbl2json(_build_payload(play)))
+    elseif p2 == 9 then
+        sendluamsg(play, 100, npcid, 9, idx, tbl2json(_build_payload(play)))
+    end
+end
+
+-- 登录时补发延迟的等级奖励。
+local function _world_rune_on_login(play)
+    local data = _get_state(play)
+    _try_grant_level_bonus(play, data)
+end
+
+-- 升级后补发延迟的等级奖励。
+local function _world_rune_on_level(play)
+    local data = _get_state(play)
+    _try_grant_level_bonus(play, data)
+end
+
+GameEvent.add(EventCfg.onLogin, _world_rune_on_login, "世界符文")
+GameEvent.add(EventCfg.onPlayLevelUp, _world_rune_on_level, "世界符文")
+
+return npc
+
+

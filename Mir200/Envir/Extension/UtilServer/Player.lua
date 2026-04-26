@@ -820,6 +820,13 @@ local function _dl_check(actor, dl)
             return true
         end
         return false, "需完成四大陆转生且剧情点达到90后才可进入五大陆"
+    elseif dl == 6 then
+        return true
+    elseif dl == 7 then
+        if Player.hasSeventhContinentPass(actor) then
+            return true
+        end
+        return false, "需集齐并领取#57|【世界符文】#249|奖励后才可进入七大陆"
     end
 
     return true
@@ -858,6 +865,24 @@ function Player.moveToThirdContinentFrontier(actor, tip)
     mapmove(actor, "灰界", 201, 199, 5)
     addhpper(actor, '=', 100)
     addmpper(actor, '=', 100)
+end
+
+-- 通用门槛：世界符文总奖励领取后视为已解锁。
+function Player.hasSeventhContinentPass(actor)
+    if checktitle(actor, "世界符文·[真我]") then
+        return true
+    end
+    local data = Player.getJsonTableByVar(actor, VarCfg["T_世界符文"]) or {}
+    return tonumber(data.claim or data.reward or 0) == 1
+end
+
+-- 通用辅助：未解锁时拦截第七大陆进入并发送提示。
+function Player.ensureSeventhContinentPass(actor, tip)
+    if Player.hasSeventhContinentPass(actor) then
+        return true
+    end
+    Player.sendmsgEx(actor, tip or "请先集齐并领取#57|【世界符文】#249|奖励后再使用该功能#57")
+    return false
 end
 
 function Player.hasZaiEPrep(actor, npcid)
@@ -980,7 +1005,7 @@ local function hs_add_item_reward(reward, item_name, item_num)
     if item_num <= 0 or type(item_name) ~= "string" or item_name == "" then
         return
     end
-    -- Legacy recycle material converts to 5x HuiYaoShuiJing.
+    -- 旧回收材料统一折算为 5 个辉耀水晶。
     if item_name == hs_name_lingshi then
         item_name = hs_name_hlsj
         item_num = item_num * 5
@@ -1339,3 +1364,4 @@ function Player.hasEquipOnPos(actor, pos, itemname)
 end
 
 return Player
+

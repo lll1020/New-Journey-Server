@@ -876,6 +876,10 @@ function ontimerex1()
     if getsysvar(VarCfg["G_新区验证"]) > 0 and not checkkuafuserver() then
         local dqfz = getsysvar(VarCfg["G_开区分钟"]) + 1
         setsysvar(VarCfg["G_开区分钟"], dqfz)
+        -- 在全局每分钟心跳中轮询血契之门真实编号的开放提示。
+        if Npclib and Npclib[81] and Npclib[81].roll_open_notice then
+            pcall(Npclib[81].roll_open_notice)
+        end
         if getsysvar(VarCfg["G_天选之人"][2]) < 4 then
             local txsj = getsysvar(VarCfg["G_天选之人"][1]) + 1
             if txsj >= 30 then--30分钟一轮
@@ -1244,7 +1248,7 @@ function ontimer6(play)
             can_jbp = true
         end
     end
-    -- FairyFate top red: any milestone reward can be claimed.
+    -- 仙途奇缘顶部红点：存在任一里程碑奖励可领取时点亮。
     local can_ff = false
     local ff_state = Player.getJsonTableByVar(play, "T40") or {}
     ff_state.done = type(ff_state.done) == "table" and ff_state.done or {}
@@ -1263,7 +1267,7 @@ function ontimer6(play)
             end
         end
     end
-    -- MSFC top red: free exchange / milestone reward / day-card reward.
+    -- 马上发财顶部红点：免费兑换、里程碑奖励或日卡奖励可领取时点亮。
     local can_msfc = false
     local msfc_cfg = teshudata["npc_101"] or {}
     local msfc_data = Player.getJsonTableByVar(play, "T59") or {}
@@ -1426,3 +1430,7 @@ function hd_tcppk(xx,ditu)
         end
     end
 end
+
+
+
+

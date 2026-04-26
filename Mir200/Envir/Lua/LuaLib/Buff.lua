@@ -4438,6 +4438,29 @@ Buff = {
         end
     end,
 
+        -- Buff 561 将攻击触发转发到星象圣图系统。
+        [561] = function(play,zt,Damage,Target,MagicId,Model) -- 星象圣图攻击触发
+        if zt == 3 then
+            if star_chart_attack_trigger then
+                return star_chart_attack_trigger(play, Damage, Target, MagicId, Model) or 0
+            end
+            return 0
+        else
+            _toggle_buff_var(play, VarCfg.S_buffgjq, 561, zt == 1)
+        end
+    end,
+
+        -- Buff 562 将受击触发转发到星象圣图系统。
+        [562] = function(play,zt,Damage,Target,MagicId) -- 星象圣图被击触发
+        if zt == 3 then
+            if star_chart_struck_trigger then
+                return star_chart_struck_trigger(play, Damage, Target, MagicId) or 0
+            end
+            return 0
+        else
+            _toggle_buff_var(play, VarCfg.S_buffbgjq, 562, zt == 1)
+        end
+    end,
 }
 local weizhi = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,55,71,72,73,74,75,76,78,85,86,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120}
 function Buff.refreshHuTiGuangHuan(play)
@@ -4605,5 +4628,6 @@ function Buff.tuo(play,item)
     end
 end
 return Buff
+
 
 

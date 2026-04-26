@@ -501,9 +501,14 @@ end
 local function _xianfa_apply_skill_bonus(actor, bonus)
     local skill_data = Player.getJsonTableByVar(actor, VarCfg["T_技能升级"])
     skill_data.level = skill_data.level or {}
+    -- 在基础仙法倍率上叠加星象圣图加成。
+    local extra_bonus = 0
+    if star_chart_skill_bonus_get then
+        extra_bonus = tonumber(star_chart_skill_bonus_get(actor)) or 0
+    end
     for i, v in ipairs(VarCfg.N_jnsh) do
         local base = (skill_data.level[""..i] or 0) * 2
-        setplaydef(actor, v, base + bonus)
+        setplaydef(actor, v, base + bonus + extra_bonus)
     end
     Login_jnsh(actor)
 end
@@ -1215,3 +1220,4 @@ end
 GameEvent.add(EventCfg.onTakeOnEx, _onTakeOnEx, "天书初始化")
 
 return npc
+

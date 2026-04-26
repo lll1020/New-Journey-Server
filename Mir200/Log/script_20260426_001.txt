@@ -1,0 +1,10 @@
+[2026-04-26 02:29:25:925] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 138972, CurPlayThreadId: 138972
+
+[2026-04-26 02:29:35:701] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 138972, CurPlayThreadId: 138972
+
+[2026-04-26 19:00:04:352] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：46; NpcThreadId: 138972, CurPlayThreadId: 138972
+
+[2026-04-26 19:51:33:161] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 138972, CurPlayThreadId: 138972
+
+[2026-04-26 19:52:04:338] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：31; NpcThreadId: 138972, CurPlayThreadId: 138972
+

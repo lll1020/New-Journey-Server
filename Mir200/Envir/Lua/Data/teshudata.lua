@@ -210,6 +210,7 @@ teshudata = {
             ch = "狂暴之力",
             skill = "十步一杀",
         },
+        -- 血契地图内的死亡惩罚配置。
         death = {
             hb = 50,
         },
@@ -1107,6 +1108,7 @@ teshudata = {
         cost = {{"金币",1000000},{"辉耀水晶",6}},
         cut_attr = 244,
         cut_range = {300,1000},
+        -- 残魂商店内可兑换的条目配置。
         shop = {
             {item = "胖娃的朋友",win_num = 1,ch = "胖娃的朋友"},
             {item = "胖娃的肚兜",win_num = 5,give = {{"胖娃的肚兜",1}}},
@@ -1166,6 +1168,35 @@ teshudata = {
             {cost = {{"千年仙酒",1}},num = 50},
             {cost = {{"百年仙酒",1}},num = 20},
             {cost = {{"十年仙酒",1}},num = 10},
+        },
+    },
+    -- 六大陆功能：世界符文作为第七大陆通行前置。
+    ["npc_84"] = {
+        id = 84,
+        name = "世界符文",
+        title = "集齐七大世界符文，解锁进入七大陆的钥匙！",
+        attr_list_name = "世界符文",
+        title_reward = "世界符文·[真我]",
+        all_level_need = 150,
+        all_level_add = 10,
+        all_desc = "获得七大陆进入权限，150级后等级+10",
+        -- 面板基础文案与总奖励配置。
+        rune_order = {1,2,3,4,5,6,7},
+        -- 面板展示的符文列表及其条件说明。
+        runes = {
+            [1] = {key = "spirit", name = "灵力符文", short = "灵力", desc = "激活全部灵根、灵兽", check_desc = "激活全部灵根、灵兽"},
+            [2] = {key = "realm", name = "修为符文", short = "修为", desc = "修为达到圆满", check_desc = "修为达到圆满"},
+            [3] = {key = "wine", name = "酒仙符文", short = "酒仙", desc = "75槽位穿戴酒仙剑", check_desc = "75槽位穿戴酒仙剑"},
+            [4] = {key = "shendao", name = "神道符文", short = "神道", desc = "完成双神道自证", check_desc = "完成双神道自证"},
+            [5] = {key = "destiny", name = "天命符文", short = "天命", desc = "激活全部天道命盘", check_desc = "激活全部天道命盘"},
+            [6] = {key = "yehuo", name = "业火符文", short = "业火", desc = "参加业火清算", check_desc = "参加业火清算"},
+            [7] = {key = "star", name = "星象符文", short = "星象", desc = "星象达到：帝星", check_desc = "星象达到：帝星"},
+        },
+        -- 符文校验依赖的旧系统兼容取值配置。
+        compat = {
+            wine_items = {"酒仙剑", "酒仙剑1"},
+            shendao_tasks = {"npc_680", "npc_681"},
+            yehuo_flags = {"npc_78", "npc_80", "npc_81"},
         },
     },
     ["npc_72"] = {
@@ -1231,6 +1262,253 @@ teshudata = {
             {name = "灵兽", reward = {{"天道卷轴[天命·复活]",1}}, cost = {{"辉耀水晶",5}}, trial = {fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "≮火烧连营·天命策尊≯", boss_pos = {32,36}, boss_effect = 92, pet_tick_sec = 1, pet_hurt_pct = 4, pet_hint_sec = 5}},
             {name = "灵根", reward = {{"天道卷轴[天命·麻痹]",1}}, cost = {{"辉耀水晶",5}}, trial = {fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "王婆", boss_pos = {32,36}, elite = "暗影打手·精英", elite_count = 3, mob = "暗影打手", mob_count = 10, mob_center = {32,36}}},
             {name = "天书仙法", reward = {{"天道卷轴[天命·神斧]",1}}, cost = {{"辉耀水晶",5}}, trial = {fb_map = "mwsl", fb_time = 90, enter_pos = {29,27}, total_round = 3, round_sec = 20, score_target = 10, score_tick_sec = 1, safe_radius = 3, safe_effect = 92, safe_points = {{29,27},{35,27},{29,35},{35,35},{32,31}}}},
+        },
+    },
+    -- 六大陆功能：残魂商店与火毒值系统。
+    ["npc_83"] = {
+        id = 83,
+        name = "残魂商店",
+        point_name = "残魂值",
+        fire_name = "业火值",
+        -- 界面文案与基础积分获取配置。
+        die_add_point = 10,
+        -- 最终称号规则：目标加成、额外伤害与延迟等级奖励。
+        title_reward = {
+            name = "向死而生",
+            target = "天罚猎杀者",
+            damage_pct = 20,
+            level_need = 150,
+            level_add = 1,
+        },
+        -- 净化道具配置，供 stdmodefunc58 消耗使用。
+        cleanse = {
+            item = "净业符",
+            reduce = 30,
+        },
+        -- 残魂商店内可兑换的条目配置。
+        shop = {
+            [1] = {name = "净业符", cost = 5, limit = 0, reward = {kind = "item", give = {{"净业符",1}}}, desc = "业火值-30"},
+            [2] = {name = "随机装备礼盒（没想好暂定）", cost = 20, limit = 0, reward = {kind = "item", give = {{"六大陆专属装备宝箱",1}}}, desc = "占位奖励：六大陆专属装备宝箱*1"},
+            [3] = {name = "称号：向死而生", cost = 100, limit = 1, reward = {kind = "title", name = "向死而生"}, desc = "对天罚猎杀者额外造成20%伤害，150级后等级+1"},
+        },
+    },
+    -- 六大陆功能：血契之门。
+    ["npc_81"] = {
+        id = 81,
+        name = "血契之门",
+        preview_item = "高阶星尘",
+        -- 基础进入条件、目标地图与界面标题配置。
+        enter_map = "血契之地",
+        enter_pos = {30,30}, -- 临时落点，确认坐标后可直接改这里
+        maps = {"血契之地","血契之地二层"},
+        need_title = "狂暴之力",
+        -- 可选开放时段配置；留空表示始终开放。
+        open_periods = {
+            -- {start = {20,0}, finish = {21,0}},
+        },
+        notice = "血色之门开启，是否前往请自行斟酌！",
+        -- 血契生效期间的复制掉落规则。
+        drop = {
+            normal_extra = 1, -- 小怪双倍：额外补1次同名掉落
+            boss_extra = 2,   -- BOSS三倍：额外补2次同名掉落
+        },
+        -- 仅普通怪物参与的额外预览物掉落配置。
+        extra_drop = {
+            item = "高阶星尘",
+            rate = 3000,
+        },
+        -- 血契地图内的死亡惩罚配置。
+        death = {
+            range = 1,
+            keep_sec = 120,
+            owner = 0,
+            source = "血契之门",
+        },
+        -- 服务端逻辑使用的面板与提示文案包。
+        texts = {
+            open_always = "全天开放",
+            signed = "你已签订血色契约",
+            sign_success = "签订成功，进入血契之地后将承受血契惩罚",
+            need_contract = "进入前需先签订血色契约",
+            need_title = "进入前需先开启狂暴之力",
+            not_open = "血契之门当前未开启",
+            enter_success = "你已进入血契之地",
+            map_error = "血契之地传送点未配置",
+        },
+    },
+    -- 六大陆功能：每日武器性格。
+    ["npc_82"] = {
+        id = 82,
+        name = "武器性格",
+        attr_list_name = "武器性格",
+        temp_attr_list_name = "武器性格_临时",
+        -- 运行态属性列表名与临时状态持续时间配置。
+        temp_relation_sec = 3,
+        personality_order = {1,2,3,4,5},
+        -- 性格池与各性格玩法规则。
+        personalities = {
+            [1] = {key = "baonu", name = "暴怒", desc = "每次击杀玩家获得1层杀戮，最多5层；每层攻击力+2%，持续5分钟，满层额外暴伤+10%，受到额外5%伤害", layer_max = 5, layer_keep_sec = 300, attack_attr = 282, attack_per_layer = 2, full_crit_attr = 22, full_crit_bonus = 10, full_hurt_more = 5},
+            [2] = {key = "lianmin", name = "怜悯", desc = "对低于自身等级的玩家，每高1级获得1%暴伤和伤害增幅，最多5%", gap_max = 5, gap_per_level = 1, crit_damage_attr = 22},
+            [3] = {key = "shixue", name = "嗜血", desc = "同一地图累计击杀100只怪物后，对怪增伤+5%，切换地图后清空", kill_need = 100, mon_damage_attr = 245, mon_damage_bonus = 500},
+            [4] = {key = "tanlan", name = "贪婪", desc = "击杀六大陆怪物额外获得100-200金币，并累计今日贪婪金币", continent = 6, money_id = 3, money_reason = "武器性格", gold_roll = {{min = 100, max = 150, weight = 80}, {min = 150, max = 200, weight = 20}}},
+            [5] = {key = "lumang", name = "鲁莽", desc = "对高于自身等级的玩家，每高1级获得1%暴击抵抗和伤害增幅，最多5%", gap_max = 5, gap_per_level = 1, crit_resist_attr = 23},
+        },
+    },
+    -- 六大陆功能：星象圣图养成与战斗技能。
+    ["npc_85"] = {
+        id = 85,
+        name = "星象圣图",
+        attr_list_name = "星象圣图",
+        -- 运行态属性列表名与触发 Buff 绑定配置。
+        buff = {attack = 561, struck = 562},
+        -- 按顺序推进的阶段配置，包含解锁消耗、节点消耗、属性与奖励。
+        stages = {
+            [1] = {
+                name = "初星",
+                unlock_cost = {
+                    {name = "初阶星尘", num = 30},
+                    {name = "元宝", num = 100000},
+                },
+                reward = {type = "item", give = {{name = "中阶星尘", num = 5}}},
+                nodes = {
+                    {name = "启明", cost = {{name = "初阶星尘", num = 10}, {name = "元宝", num = 300000}}, attr = {{1,10000}}},
+                    {name = "长庚", cost = {{name = "初阶星尘", num = 10}, {name = "元宝", num = 300000}}, attr = {{3,1000},{4,1000}}},
+                    {name = "玉衡", cost = {{name = "初阶星尘", num = 10}, {name = "元宝", num = 300000}}, attr = {{9,200},{10,200},{11,200},{12,200}}},
+                    {name = "天权", cost = {{name = "初阶星尘", num = 15}, {name = "元宝", num = 300000}}, attr = {{13,100}}},
+                    {name = "天玑", cost = {{name = "初阶星尘", num = 15}, {name = "元宝", num = 300000}}, attr = {{14,50}}},
+                },
+            },
+            [2] = {
+                name = "双星",
+                unlock_cost = {
+                    {name = "初阶星尘", num = 50},
+                    {name = "中阶星尘", num = 20},
+                    {name = "元宝", num = 300000},
+                },
+                reward = {type = "item", give = {{name = "万年仙酒", num = 1}}},
+                nodes = {
+                    {name = "日曜", cost = {{name = "初阶星尘", num = 15}, {name = "中阶星尘", num = 5}, {name = "元宝", num = 500000}}, attr = {{1,20000}}},
+                    {name = "月曜", cost = {{name = "初阶星尘", num = 15}, {name = "中阶星尘", num = 5}, {name = "元宝", num = 500000}}, attr = {{3,1500},{4,1500}}},
+                    {name = "火曜", cost = {{name = "初阶星尘", num = 15}, {name = "中阶星尘", num = 5}, {name = "元宝", num = 500000}}, attr = {{9,400},{10,400},{11,400},{12,400}}},
+                    {name = "水曜", cost = {{name = "初阶星尘", num = 20}, {name = "中阶星尘", num = 8}, {name = "元宝", num = 500000}}, attr = {{13,200}}},
+                    {name = "木曜", cost = {{name = "初阶星尘", num = 20}, {name = "中阶星尘", num = 8}, {name = "元宝", num = 500000}}, attr = {{14,100}}},
+                },
+            },
+            [3] = {
+                name = "三星",
+                unlock_cost = {
+                    {name = "中阶星尘", num = 80},
+                    {name = "星晶碎片", num = 30},
+                    {name = "元宝", num = 500000},
+                },
+                reward = {type = "item", give = {{name = "六大陆专属装备宝箱", num = 1}}},
+                nodes = {
+                    {name = "金曜", cost = {{name = "中阶星尘", num = 20}, {name = "星晶碎片", num = 5}, {name = "元宝", num = 880000}}, attr = {{1,30000}}},
+                    {name = "土曜", cost = {{name = "中阶星尘", num = 20}, {name = "星晶碎片", num = 5}, {name = "元宝", num = 880000}}, attr = {{3,2000},{4,2000}}},
+                    {name = "风曜", cost = {{name = "中阶星尘", num = 20}, {name = "星晶碎片", num = 5}, {name = "元宝", num = 880000}}, attr = {{9,600},{10,600},{11,600},{12,600}}},
+                    {name = "雷曜", cost = {{name = "中阶星尘", num = 25}, {name = "星晶碎片", num = 8}, {name = "元宝", num = 880000}}, attr = {{21,10}}},
+                    {name = "电曜", cost = {{name = "中阶星尘", num = 25}, {name = "星晶碎片", num = 8}, {name = "元宝", num = 880000}}, attr = {{23,10}}},
+                },
+            },
+            [4] = {
+                name = "四星",
+                unlock_cost = {
+                    {name = "中阶星尘", num = 120},
+                    {name = "星晶碎片", num = 60},
+                    {name = "高阶星尘", num = 20},
+                    {name = "元宝", num = 1000000},
+                },
+                reward = {type = "item", give = {{name = "六大陆专属装备宝箱", num = 1}}},
+                nodes = {
+                    {name = "青龙", cost = {{name = "中阶星尘", num = 30}, {name = "星晶碎片", num = 10}, {name = "高阶星尘", num = 5}, {name = "元宝", num = 1280000}}, attr = {{1,50000}}},
+                    {name = "白虎", cost = {{name = "中阶星尘", num = 30}, {name = "星晶碎片", num = 10}, {name = "高阶星尘", num = 5}, {name = "元宝", num = 1280000}}, attr = {{3,3000},{4,3000}}},
+                    {name = "朱雀", cost = {{name = "中阶星尘", num = 30}, {name = "星晶碎片", num = 10}, {name = "高阶星尘", num = 5}, {name = "元宝", num = 1280000}}, attr = {{9,800},{10,800},{11,800},{12,800}}},
+                    {name = "玄武", cost = {{name = "中阶星尘", num = 35}, {name = "星晶碎片", num = 15}, {name = "高阶星尘", num = 8}, {name = "元宝", num = 1280000}}, attr = {{21,15}}},
+                    {name = "麒麟", cost = {{name = "中阶星尘", num = 35}, {name = "星晶碎片", num = 15}, {name = "高阶星尘", num = 8}, {name = "元宝", num = 1280000}}, attr = {{23,15}}},
+                },
+            },
+            [5] = {
+                name = "五星",
+                unlock_cost = {
+                    {name = "高阶星尘", num = 180},
+                    {name = "星晶碎片", num = 100},
+                    {name = "完整星晶", num = 30},
+                    {name = "元宝", num = 1500000},
+                },
+                reward = {type = "item", give = {{name = "六大陆专属装备宝箱", num = 2}}},
+                nodes = {
+                    {name = "岁星", cost = {{name = "高阶星尘", num = 40}, {name = "星晶碎片", num = 20}, {name = "完整星晶", num = 5}, {name = "元宝", num = 1580000}}, attr = {{1,80000}}},
+                    {name = "荧惑", cost = {{name = "高阶星尘", num = 40}, {name = "星晶碎片", num = 20}, {name = "完整星晶", num = 5}, {name = "元宝", num = 1580000}}, attr = {{3,4000},{4,4000}}},
+                    {name = "镇星", cost = {{name = "高阶星尘", num = 40}, {name = "星晶碎片", num = 20}, {name = "完整星晶", num = 5}, {name = "元宝", num = 1580000}}, attr = {{9,1000},{10,1000},{11,1000},{12,1000}}},
+                    {name = "太白", cost = {{name = "高阶星尘", num = 50}, {name = "星晶碎片", num = 25}, {name = "完整星晶", num = 8}, {name = "元宝", num = 1580000}}, attr = {{28,10}}},
+                    {name = "辰星", cost = {{name = "高阶星尘", num = 50}, {name = "星晶碎片", num = 25}, {name = "完整星晶", num = 8}, {name = "元宝", num = 1580000}}, attr = {{63,5}}},
+                },
+            },
+            [6] = {
+                name = "耀星",
+                unlock_cost = {
+                    {name = "高阶星尘", num = 250},
+                    {name = "完整星晶", num = 150},
+                    {name = "星核碎片", num = 50},
+                    {name = "元宝", num = 2000000},
+                },
+                reward = {type = "item", give = {{name = {"星辰", "足迹：星辰", "本服唯一足迹：星辰"}, num = 1}}},
+                nodes = {
+                    {name = "天枢", cost = {{name = "高阶星尘", num = 55}, {name = "完整星晶", num = 30}, {name = "星核碎片", num = 10}, {name = "元宝", num = 2000000}}, attr = {{1,100000}}},
+                    {name = "天璇", cost = {{name = "高阶星尘", num = 55}, {name = "完整星晶", num = 30}, {name = "星核碎片", num = 10}, {name = "元宝", num = 2000000}}, attr = {{3,5000},{4,5000}}},
+                    {name = "天玑", cost = {{name = "高阶星尘", num = 55}, {name = "完整星晶", num = 30}, {name = "星核碎片", num = 10}, {name = "元宝", num = 2000000}}, attr = {{9,1500},{10,1500},{11,1500},{12,1500}}},
+                    {name = "天权", cost = {{name = "高阶星尘", num = 65}, {name = "完整星晶", num = 35}, {name = "星核碎片", num = 15}, {name = "元宝", num = 2000000}}, attr = {{21,10},{22,20}}},
+                    {name = "玉衡", cost = {{name = "高阶星尘", num = 65}, {name = "完整星晶", num = 35}, {name = "星核碎片", num = 15}, {name = "元宝", num = 2000000}}, attr = {{23,20},{24,10}}},
+                },
+            },
+            [7] = {
+                name = "圣星",
+                unlock_cost = {
+                    {name = "高阶星尘", num = 350},
+                    {name = "完整星晶", num = 220},
+                    {name = "星核碎片", num = 100},
+                    {name = "圣星核", num = 30},
+                    {name = "元宝", num = 3000000},
+                },
+                reward = {type = "item", give = {{name = {"星陨坠", "时装：星陨坠", "专属时装：星陨坠"}, num = 1}}},
+                nodes = {
+                    {name = "紫微星", cost = {{name = "高阶星尘", num = 75}, {name = "完整星晶", num = 45}, {name = "星核碎片", num = 20}, {name = "圣星核", num = 3}, {name = "元宝", num = 2500000}}, attr = {{1,150000}}},
+                    {name = "天机星", cost = {{name = "高阶星尘", num = 75}, {name = "完整星晶", num = 45}, {name = "星核碎片", num = 20}, {name = "圣星核", num = 3}, {name = "元宝", num = 2500000}}, attr = {{3,8888},{4,8888}}},
+                    {name = "太阳星", cost = {{name = "高阶星尘", num = 75}, {name = "完整星晶", num = 45}, {name = "星核碎片", num = 20}, {name = "圣星核", num = 3}, {name = "元宝", num = 2500000}}, attr = {{9,2000},{10,2000},{11,2000},{12,2000}}},
+                    {name = "太阴星", cost = {{name = "高阶星尘", num = 90}, {name = "完整星晶", num = 55}, {name = "星核碎片", num = 25}, {name = "圣星核", num = 5}, {name = "元宝", num = 2500000}}, attr = {{28,10}}, skill_bonus = 8},
+                    {name = "武曲星", cost = {{name = "高阶星尘", num = 90}, {name = "完整星晶", num = 55}, {name = "星核碎片", num = 25}, {name = "圣星核", num = 5}, {name = "元宝", num = 2500000}}, attr = {{63,8},{206,500}}},
+                },
+            },
+            [8] = {
+                name = "帝星",
+                unlock_cost = {
+                    {name = "高阶星尘", num = 500},
+                    {name = "完整星晶", num = 350},
+                    {name = "星核碎片", num = 200},
+                    {name = "圣星核", num = 30},
+                    {name = "帝星本源", num = 10},
+                    {name = "元宝", num = 5000000},
+                },
+                reward = {type = "title", name = "星空主宰"},
+                nodes = {
+                    {name = "帝星核心", cost = {{name = "高阶星尘", num = 100}, {name = "完整星晶", num = 70}, {name = "星核碎片", num = 40}, {name = "圣星核", num = 10}, {name = "帝星本源", num = 2}, {name = "元宝", num = 3000000}}, attr = {{1,200000}}},
+                    {name = "天威星", cost = {{name = "高阶星尘", num = 100}, {name = "完整星晶", num = 70}, {name = "星核碎片", num = 40}, {name = "圣星核", num = 10}, {name = "帝星本源", num = 2}, {name = "元宝", num = 3000000}}, attr = {{3,15555},{4,15555}}},
+                    {name = "天寿星", cost = {{name = "高阶星尘", num = 100}, {name = "完整星晶", num = 70}, {name = "星核碎片", num = 40}, {name = "圣星核", num = 10}, {name = "帝星本源", num = 2}, {name = "元宝", num = 3000000}}, attr = {{9,5000},{10,5000},{11,5000},{12,5000}}},
+                    {name = "天勇星", cost = {{name = "高阶星尘", num = 150}, {name = "完整星晶", num = 85}, {name = "星核碎片", num = 50}, {name = "圣星核", num = 15}, {name = "帝星本源", num = 3}, {name = "元宝", num = 3000000}}, attr = {{21,15},{22,25}}, skill_bonus = 15},
+                    {name = "天辅星", cost = {{name = "高阶星尘", num = 150}, {name = "完整星晶", num = 85}, {name = "星核碎片", num = 50}, {name = "圣星核", num = 15}, {name = "帝星本源", num = 3}, {name = "元宝", num = 3000000}}, attr = {{23,30},{24,30},{63,8},{206,1000}}},
+                },
+            },
+        },
+        -- 按完成阶段数解锁的战斗技能包。
+        stage_skill = {
+            [1] = {huti = {rate = 10, reduce = 5, duration = 3}},
+            [2] = {huti = {rate = 10, reduce = 8, duration = 3}, mang = {damage = 10000, cd = 20}},
+            [3] = {huti = {rate = 10, reduce = 8, duration = 3}, mang = {damage = 20000, cd = 20}, heal = {value = 5000}},
+            [4] = {huti = {rate = 10, reduce = 8, duration = 3}, mang = {damage = 40000, cd = 20}, heal = {value = 10000}, fan = {rate = 3, reflect = 10}},
+            [5] = {huti = {rate = 10, reduce = 15, duration = 3}, mang = {damage = 40000, cd = 20}, heal = {value = 10000}, fan = {rate = 3, reflect = 15}, burst = {speed = 3000, duration = 3, cd = 45}},
+            [6] = {huti = {rate = 10, reduce = 15, duration = 3}, mang = {damage = 40000, cd = 20}, heal = {value = 10000}, fan = {rate = 3, reflect = 15}, burst = {speed = 3000, duration = 5, cd = 45}, domain = {all_pct = 10, reduce = 0, duration = 10, cd = 90, range = 4}},
+            [7] = {huti = {rate = 30, reduce = 15, duration = 3}, mang = {damage = 40000, cd = 20}, heal = {value = 10000}, fan = {rate = 3, reflect = 15}, burst = {speed = 3000, duration = 5, cd = 45}, domain = {all_pct = 10, reduce = 5, duration = 15, cd = 90, range = 4}},
+            [8] = {huti = {rate = 30, reduce = 15, duration = 3}, mang = {damage = 40000, cd = 20}, heal = {value = 10000}, fan = {rate = 3, reflect = 15}, burst = {speed = 3000, duration = 5, cd = 45}, domain = {all_pct = 10, reduce = 5, duration = 15, cd = 90, range = 4}, emperor = {duration = 15, cd = 120}},
         },
     },
     ---剧情类npc
@@ -1375,7 +1653,7 @@ teshudata = {
     ["npc_679"]  = {id = 679, name = "黑白无常",cost = {{"友情的力量",10}},ch = '世事无常'},
     ["npc_680"]  = {id = 680, name = "真假玉帝",cost = {{"鱼竿",2},{"鱼饵",20}},ch = '愿者上钩'},
     ["npc_681"]  = {id = 681, name = "白蛇传说",cost = {{"白蛇的礼物",1}},max_num = 100,ch = "我是许仙",},
-    -- Story5 task config for npc_682~719 (single source for server/client)
+    -- 第五章 npc_682~719 任务配置（服务端/客户端共用一份数据源）
     ["npc_682"] = { id = 682, name = "灵兽奥秘", shaguai_id = 682, cost = {{"辉耀水晶",100}}, ch = "灵兽奥秘", task_cfg = { chapter = 5, task_type = "story", map = "灵兽谷", kill_count = 100, }, },
     ["npc_683"] = { id = 683, name = "青龙之境", task_cfg = { chapter = 5, task_type = "enter_map", map = "青龙之境", need_task = "npc_682", need_lingshou = 2, need_lingshou_name = "青龙", tp_map = {"青龙之境",23,273}, }, },
     ["npc_684"] = { id = 684, name = "白虎之境", task_cfg = { chapter = 5, task_type = "enter_map", map = "白虎之境", need_task = "npc_682", need_lingshou = 4, need_lingshou_name = "白虎", tp_map = {"白虎之境",239,266}, }, },
@@ -2503,3 +2781,6 @@ teshudata = {
     },   
 }
 return teshudata
+
+
+

@@ -407,6 +407,13 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
                 Damage = Damage + dfdj_damage
             end
         end
+        -- 在基础规则结算后，由武器性格修正最终攻击侧伤害。
+        if weapon_personality_attack_adjust then
+            local adj = weapon_personality_attack_adjust(play, Target, Damage, MagicId, Model)
+            if type(adj) == "number" then
+                Damage = adj
+            end
+        end
 		return Damage
 	else
         GameEvent.push(EventCfg.onAttackDamageMonster, play, Target, Damage, MagicId, Model)
@@ -608,6 +615,13 @@ function struckdamage(play, Hiter, Target, MagicId, Damage)
     -- 天书仙法：双刃剑/诅咒冠冕等被动修正最终伤害
     if xianfa_struck_adjust then
         local adj = xianfa_struck_adjust(play, final, Hiter, MagicId)
+        if type(adj) == "number" then
+            final = adj
+        end
+    end
+    -- 在其他钩子结算后，由武器性格修正最终受击侧伤害。
+    if weapon_personality_struck_adjust then
+        local adj = weapon_personality_struck_adjust(play, final, Hiter, MagicId)
         if type(adj) == "number" then
             final = adj
         end
@@ -1420,4 +1434,5 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
         end
 	end
 end
+
 

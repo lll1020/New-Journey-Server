@@ -140,6 +140,10 @@ function wudalu(play)
 end
 
 function liudalu(play)
+    -- 手动传送入口同样复用第七大陆的统一门槛校验。
+    if not Player.ensureSeventhContinentPass(play, "请先集齐并领取#57|【世界符文】#249|奖励后再前往七大陆#57") then
+        return
+    end
     mapmove(play,"七大陆主城",197,189,5)
 end
 
@@ -171,3 +175,4 @@ function tuo(play)
 end
 
 return npc
+
