@@ -40,6 +40,21 @@ local function _lg_build_attr(attr_list, scale)
     end
     return attrs
 end
+
+local function _lg_take_change_cost(play, cost, slotName)
+    cost = cost or {}
+    if #cost <= 0 then
+        return true
+    end
+    local name, num = Player.checkItemNumByTable(play, cost)
+    if name then
+        Player.sendmsgEx(play, string.format("切换%s需要#57|【%s】#249|x%s", tostring(slotName or "灵根"), tostring(name), tostring(num or 0)))
+        return false
+    end
+    Player.takeItemByTable(play, cost, ",灵根切换", nil)
+    return true
+end
+
 function npc.main(play,npcid)
     local data = {}
     data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
@@ -69,7 +84,15 @@ function npc.link(play,npcid,ew,aid)
         Player.sendmsgEx(play, "提示：你获得了新的|【灵根】#249|，请前往灵根升级界面查看")
         sendluamsg(play,100,npcid,1,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
     elseif ew == 2 then--装配主灵根
+        local oldMain = tonumber(T_data.main or 0) or 0
         if aid == 0 then
+            if oldMain <= 0 then
+                Player.sendmsgEx(play, "提示:当前未装配主灵根#57")
+                return
+            end
+            if not _lg_take_change_cost(play, _config.main_xl_cost, "主灵根") then
+                return
+            end
             T_data.main = nil
             Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
             Player.sendmsgEx(play, "提示:你的主灵根已卸下")
@@ -90,13 +113,24 @@ function npc.link(play,npcid,ew,aid)
             Player.sendmsgEx(play, "提示:该灵根属性已经被装配为副灵根，无法装配为主灵根#57")
             return
         end
+        if oldMain > 0 and not _lg_take_change_cost(play, _config.main_xl_cost, "主灵根") then
+            return
+        end
         T_data.main = aid
         Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
         Player.sendmsgEx(play, "提示：你的|【灵根】#249|装配成功")
         sendluamsg(play,100,npcid,1,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
     elseif ew == 3 then--装配副灵根
+        local oldOther = tonumber(T_data.other or 0) or 0
         T_data.other = T_data.other or 0
         if aid == 0 then
+            if oldOther <= 0 then
+                Player.sendmsgEx(play, "提示:当前未装配副灵根#57")
+                return
+            end
+            if not _lg_take_change_cost(play, _config.other_xl_cost, "副灵根") then
+                return
+            end
             T_data.other = nil
             Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
             Player.sendmsgEx(play, "提示:你的副灵根已卸下")
@@ -114,6 +148,9 @@ function npc.link(play,npcid,ew,aid)
         end
         if T_data.main and T_data.main == aid then
             Player.sendmsgEx(play, "提示:该灵根属性已经被装配为主灵根，无法装配为副灵根#57")
+            return
+        end
+        if oldOther > 0 and not _lg_take_change_cost(play, _config.other_xl_cost, "副灵根") then
             return
         end
         T_data.other = aid

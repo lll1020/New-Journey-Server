@@ -6,7 +6,7 @@ local _back_pos_var = "S$npc103_back"
 local _run_map_var = "S$npc103_map"
 local _effect_prefix = "npc103_fx_"
 local _boss_effect_timer_id = 2
-local _submit_task_map = {[1] = 11,[2] = 13,[3] = 15,[4] = 17}
+local _submit_task_map = {[1] = 3,[2] = 6,[3] = 9,[4] = 12}
 local function _finish_mainline(play, taskId)
     taskId = tonumber(taskId) or 0
     if taskId > 0 and getplaydef(play, VarCfg.U_zxrw[1]) == taskId then
@@ -134,7 +134,7 @@ local function _finish(play)
     Player.sendmsgEx(play, "|【"..((_config and _config.name) or "天书试炼").."】#249|完成，请返回界面领取|【天书】#249|#57")
     sendluamsg(play, 101, 1005, 0, 0, "rwwc")
     sendluamsg(play, 101, 9999, 0, 0, "npc_"..103)
-    _finish_mainline(play, 18)
+    _finish_mainline(play, 13)
 end
 local function _enter_fb(play)
     local runMap = tostring(getplaydef(play, _run_map_var) or "")
@@ -243,6 +243,7 @@ function npc.link(play, npcid, ew, aid, data)
         if _config and _config.reward and #_config.reward > 0 then
             Player.rwjl(play, _config.reward, (_config.name or "天书试炼").."奖励", 1, 0)
         end
+        _finish_mainline(play, 14)
         Player.sendmsgEx(play, "成功领取|【天书】#249|#57")
         sendluamsg(play, 101, 9999, 0, 0, "npc_"..103)
         return

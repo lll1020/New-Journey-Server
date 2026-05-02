@@ -18,10 +18,7 @@ end
 local function _is_huijie_return_map(map_name)
     return type(xilieditu) == "table" and xilieditu[map_name] == 3
 end
-
-    
 function stdmodefunc10(play, item)
-
 local _equip_slots = {0,1,3,4,5,6,7,8,9,10,11,13,14,16,30,31,32,33,34,35,36,37,38,39,40,41}
 local function _has_equip_name(play, itemname)
     if not play or not itemname or itemname == "" then
@@ -34,9 +31,7 @@ local function _has_equip_name(play, itemname)
     end
     return false
 end
-
     setplaydef(play,"S$dtm",getbaseinfo(play, 3))
-
     local du = getbaseinfo(play, 3)
     if getplaydef(play,"N$’Ω∂∑◊¥Ã¨") < os.time() then
         if du == "xtc" or du == "∂˛¥Û¬Ω÷˜≥«" or du == "»˝¥Û¬Ω÷˜≥«" or du == "Àƒ¥Û¬Ω÷˜≥«" or du == "ŒÂ¥Û¬Ω÷˜≥«" or du == "¡˘¥Û¬Ω÷˜≥«" or du == "∆ﬂ¥Û¬Ω÷˜≥«" or du == "∞À¥Û¬Ω÷˜≥«" or du == "æ≈¥Û¬Ω÷˜≥«" then
@@ -68,7 +63,7 @@ end
         elseif daluditu[du] and daluditu[du] == 6 then mapmove(play, "¡˘¥Û¬Ω÷˜≥«",90,69,4) addhpper(play, '=', 100) addmpper(play, '=', 100)
         elseif daluditu[du] and daluditu[du] == 7 then
             --  ¿ΩÁ∑˚Œƒ◊‹Ω±¿¯ «µ⁄∆ﬂ¥Û¬ΩÕ®––µƒÕ≥“ª√≈º˜°£
-            if not Player.ensureSeventhContinentPass(play, "«Îœ»ºØ∆Î≤¢¡Ï»°#57|°æ ¿ΩÁ∑˚Œƒ°ø#249|Ω±¿¯∫Û‘Ÿ«∞Õ˘∆ﬂ¥Û¬Ω#57") then
+            if not Player.ensureSeventhContinentPass(play, "«Îœ»¬˙◊„∆ﬂ¥Û¬ΩΩ¯»ÎÃıº˛∫Û‘Ÿ«∞Õ˘∆ﬂ¥Û¬Ω#57") then
                 return
             end
             mapmove(play, "∆ﬂ¥Û¬Ω÷˜≥«",92,76,5)
@@ -97,7 +92,6 @@ local function _get_use_all_info(play, item)
     end
     return sl, itemName
 end
-
 local function _take_use_all_item(play, item, sl, itemName)
     if sl < 1 then
         return false
@@ -108,16 +102,29 @@ local function _take_use_all_item(play, item, sl, itemName)
         delitembymakeindex(play, getiteminfo(play, item, 1), sl)
     end
 end
-
 function stdmodefunc12(play, item)
     local sl, itemName = _get_use_all_info(play, item)
     if sl < 1 then
         return false
     end
+    if not Player.canGainRoleLevel(play, string.format("µ±«∞µ»º∂“—¥Ô#57|°æ%dº∂°ø#249|£¨æ≠—Èµ§Œﬁ∑®ºÃ–¯ π”√#57", Player.getRoleLevelCap())) then
+        return false
+    end
     local wpid = getiteminfo(play, item, 2)
     local wpjg = getstditeminfo(wpid, 8)
-    changeexp(play, '+', wpjg * sl, false)
-    _take_use_all_item(play, item, sl, itemName)
+    local useCount = 0
+    for i = 1, sl do
+        if not Player.canGainRoleLevel(play, false) then
+            break
+        end
+        changeexp(play, '+', wpjg, false)
+        Player.clampRoleLevel(play, false)
+        useCount = useCount + 1
+    end
+    if useCount <= 0 then
+        return false
+    end
+    _take_use_all_item(play, item, useCount, itemName)
 end
 --------------------À´ª˜ŒÔ∆∑¥•∑¢-------------------∫Ï√˚«Âœ¥æÌ
 function stdmodefunc20(play, item)
@@ -145,7 +152,6 @@ function stdmodefunc21(play, item)
     changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 7 or 8, '+', wpjg * sl, 'À´ª˜ªÒµ√', true)
     _take_use_all_item(play, item, sl, itemName)
 end
-
 --------------------À´ª˜ŒÔ∆∑¥•∑¢-------------------‘™±¶Õ®”√
 function stdmodefunc11(play, item)
     local sl, itemName = _get_use_all_info(play, item)
@@ -164,7 +170,6 @@ function stdmodefunc18(play, item)
     changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', getstditeminfo(getiteminfo(play, item, 2), 8) * sl, 'À´ª˜ªÒµ√', true)
     _take_use_all_item(play, item, sl, itemName)
 end
-
 --------------------À´ª˜ŒÔ∆∑¥•∑¢-------------------‘™±¶∫Ï∞¸
 local itme_13 = {
     ["Ω±“(–°)"] = {100,1000},
@@ -187,7 +192,6 @@ function stdmodefunc13(play, item)
     changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', num, 'À´ª˜ªÒµ√‘™±¶∫Ï∞¸', true)
     _take_use_all_item(play, item, sl, itemName)
 end
-
 --------------------À´ª˜ŒÔ∆∑¥•∑¢-------------------‘™±¶∫Ï∞¸
 local itme_14 = {
     ["‘™±¶∫Ï∞¸(–°)"] = {10,20},
@@ -222,7 +226,6 @@ function stdmodefunc48(play, item) -- ’Ê µ≥‰÷µæÌ
     _take_use_all_item(play, item, sl, itemName)
     --release_print(getiteminfo(play,item,2))
 end
-
 ---«ß¿Ô¥´“Ù
 function stdmodefunc234(play) ---«ß¿Ô¥´“Ù Ã· æ£∫ π”√50º∂
     if checkkuafu(play) then
@@ -270,8 +273,6 @@ function FsendQfPz(actor,str,count)
     end
 end
 ---«ß¿Ô¥´“Ù --end
-
-
 function stdmodefunc30(play, item)
     local exp = getplaydef(play, VarCfg["U_æ≥ΩÁ–ﬁ¡∂"][2])
     if exp >= 10000000 then
@@ -283,28 +284,21 @@ function stdmodefunc30(play, item)
     setplaydef(play, VarCfg["U_æ≥ΩÁ–ﬁ¡∂"][2], exp)
     sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>æ≥ΩÁ–ﬁ¡∂æ≠—È+'..getstditeminfo(getiteminfo(play, item, 2), 8)..'</font>","Type":9}')
 end
-
 function stdmodefunc31(play, item)
     local T_data = Player.getJsonTableByVar(play, VarCfg["T_ÃÏ È"])
     T_data.jf = (T_data.jf or 0) + getstditeminfo(getiteminfo(play, item, 2), 8)
     Player.setJsonVarByTable(play, VarCfg["T_ÃÏ È"], T_data)
-
     local itemobj = linkbodyitem(play, teshudata["npc_24"].where)
     setcustomitemprogressbar(play, itemobj, 1, tbl2json({["cur"] = T_data.jf}))
     refreshitem(play, itemobj)
     sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>ÃÏ È…±“‚÷µ+'..getstditeminfo(getiteminfo(play, item, 2), 8)..'</font>","Type":9}')
 end
-
-
-
-
 function stdmodefunc32(play, item) --…Ò Ø’ŸªΩ
     local config = teshudata["npc_53"]
     if not config or type(config.cost) ~= "table" then
         Player.sendmsgEx(play,"…Ò Ø’ŸªΩ ß∞‹:»±…Ÿ≈‰÷√#57")
         return false
     end
-
     local keyCost = {{"…Ò Ø±¶œ‰‘ø≥◊",1}}
     local name, num = Player.checkItemNumByTable(play, keyCost)
     if name then
@@ -312,10 +306,9 @@ function stdmodefunc32(play, item) --…Ò Ø’ŸªΩ
         return false
     end
     Player.takeItemByTable(play, keyCost, ",…Ò Ø’ŸªΩ",nil)
-
     local rarityPool = {
-        {weight = 7600, list = config.cost[1], tip = "œ°”–"},
-        {weight = 1800, list = config.cost[2], tip = " ∑ ´"},
+        {weight = 8400, list = config.cost[1], tip = "œ°”–"},
+        {weight = 1000, list = config.cost[2], tip = "??"},
         {weight = 500, list = config.cost[3], tip = "…Òª∞"},
         {weight = 100, list = config.cost[4], tip = "¥´Àµ"},
     }
@@ -338,24 +331,19 @@ function stdmodefunc32(play, item) --…Ò Ø’ŸªΩ
         Player.sendmsgEx(play,"…Ò Ø’ŸªΩ ß∞‹:Ω±≥ÿŒ™ø’#57")
         return false
     end
-
     local rewardName = target.list[math.random(#target.list)]
     if not rewardName then
         Player.sendmsgEx(play,"…Ò Ø’ŸªΩ ß∞‹:Ω±∆∑≤ª¥Ê‘⁄#57")
         return false
     end
-
     giveitem(play, rewardName, 1)
     Player.sendmsgEx(play, string.format("…Ò Ø’ŸªΩ#250|œ°”–∂»:%s#249|ªÒµ√:%s#218", target.tip or "", rewardName))
 end
-
 function stdmodefunc33(play, item) --¡È ﬁ •“≈ŒÔ◊‘—°¿Ò∫–
-    
 end
-function stdmodefunc34(play, item) --ø≥ ˜√§∫– 
+function stdmodefunc34(play, item) --ÀÊª˙√§∫–
 end
 function stdmodefunc35(play, item) --≤ÿ±¶Õº
-    
     -- release_print("≤ÿ±¶ÕºŒÔ∆∑ π”√¬ﬂº≠¥˝ µœ÷")
     local name = getiteminfo(play, item, 8)
     local map_info = string.match(name or "", "%[(.-)%]")
@@ -363,19 +351,16 @@ function stdmodefunc35(play, item) --≤ÿ±¶Õº
         release_print("≤ÿ±¶ÕºµÿÕº–≈œ¢Ω‚Œˆ ß∞‹:", name or "")
         return false
     end
-
     local parts = split(map_info, ",")
     local map_name = parts[1]
     local map_x = tonumber(parts[2])
     local map_y = tonumber(parts[3])
-
     release_print("≤ÿ±¶ÕºµÿÕº–≈œ¢:", map_name or "", map_x or 0, map_y or 0)
     if not map_name or not map_x or not map_y then
         release_print("≤ÿ±¶ÕºµÿÕº–≈œ¢≤ªÕÍ’˚:", map_info or "")
         return false
     end
     if getbaseinfo(play, 3) == map_name then
-        
         if math.abs(getbaseinfo(play,4) - map_x) <= 1 and math.abs(getbaseinfo(play,5) - map_y) <= 1 then
             -- ¥•∑¢Õ⁄±¶¬ﬂº≠
             release_print("¥•∑¢Õ⁄±¶¬ﬂº≠")
@@ -385,7 +370,6 @@ function stdmodefunc35(play, item) --≤ÿ±¶Õº
             --     return false
             -- end
             local gw = genmonex(map_name,map_x,map_y,teshudata["npc_47"].details[getstditeminfo(getiteminfo(play, item, 2), 8)].mob_name,1,1,0,54,"",0)
-            
             return true
         else
             Player.sendmsgEx(play, "µ±«∞Œª÷√≤ª «≤ÿ±¶Õº÷∏∂®µƒ◊¯±Í£¨Œﬁ∑® π”√£°#249")
@@ -396,7 +380,6 @@ function stdmodefunc35(play, item) --≤ÿ±¶Õº
         return false
     end
     -- changeitemname(play,-2,detail.item.."["..map.map_name..","..map.map_x..","..map.map_y.."]",itemobj)
-
 end
 function stdmodefunc36(play, item) --∫£µ¡±¶œ‰  ∫£µ¡—€’÷  ∫£µ¡—€’÷ 10%°¢90% Ω±“*1w  10≥È±ÿ≥ˆ“≤÷ªƒ‹≥ˆ“ª∏ˆ∫£µ¡—€’÷
     local rec = json2tbl(getplaydef(play, VarCfg["T_ŒÔ∆∑ π”√º«¬º"]))
@@ -413,7 +396,6 @@ function stdmodefunc36(play, item) --∫£µ¡±¶œ‰  ∫£µ¡—€’÷  ∫£µ¡—€’÷ 10%°¢90% Ω±“*
             giveMask = math.random(100) <= 10
         end
     end
-
     if giveMask then
         rec.box36_mask = 1
         giveitem(play, "∫£µ¡—€’÷", 1)
@@ -421,7 +403,6 @@ function stdmodefunc36(play, item) --∫£µ¡±¶œ‰  ∫£µ¡—€’÷  ∫£µ¡—€’÷ 10%°¢90% Ω±“*
     else
         changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, "+", 10000, "∫£µ¡±¶œ‰", true)
     end
-
     setplaydef(play, VarCfg["T_ŒÔ∆∑ π”√º«¬º"], tbl2json(rec))
     delitembymakeindex(play, getiteminfo(play, item, 1), 1)
     return false
@@ -444,7 +425,6 @@ function stdmodefunc38(play, item) --∫£‘ÙÕı◊∞±∏ÀÊª˙±¶œ‰  ¬∑∑…µƒ≤›√± À˜¬°µƒ≈Âµ∂ Œ
         rec = {}
     end
     rec.box38 = type(rec.box38) == "table" and rec.box38 or {}
-
     local pool = {"¬∑∑…µƒ√±◊”", "À˜¬°µƒµ∂", "Œ⁄À˜∆’µƒµØπ≠"}
     local missing = {}
     for _, name in ipairs(pool) do
@@ -456,7 +436,6 @@ function stdmodefunc38(play, item) --∫£‘ÙÕı◊∞±∏ÀÊª˙±¶œ‰  ¬∑∑…µƒ≤›√± À˜¬°µƒ≈Âµ∂ Œ
         Player.sendmsgEx(play, "“—ªÒµ√»´≤ø∫£‘ÙÕı◊∞±∏£¨Œﬁ∑®‘Ÿø™∆Ù#57")
         return false
     end
-
     local reward = missing[math.random(#missing)]
     giveitem(play, reward, 1)
     rec.box38[reward] = 1
@@ -465,6 +444,11 @@ function stdmodefunc38(play, item) --∫£‘ÙÕı◊∞±∏ÀÊª˙±¶œ‰  ¬∑∑…µƒ≤›√± À˜¬°µƒ≈Âµ∂ Œ
     return false
 end
 function stdmodefunc39(play, item) --Ãÿ ‚µ§“©
+    local itemName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "")
+    local rec = json2tbl(getplaydef(play, VarCfg["T_ŒÔ∆∑ π”√º«¬º"]))
+    if type(rec) ~= "table" then
+        rec = {}
+    end
     local idx = getstditeminfo(getiteminfo(play, item, 2), 8)
     if idx == 1 then
         addbuff(play, 20110)
@@ -491,7 +475,6 @@ local function _apply_dan40_attr(play, rec)
     local v5 = rec["dan40_5"] or 0
     local v6 = rec["dan40_6"] or 0
     local v7 = rec["dan40_7"] or 0
-
     if v1 > 0 then attrs[4] = v1 end                  --π•ª˜
     if v2 > 0 then attrs[36] = v2 end                 --∑¿”˘
     if v3 > 0 then attrs[1] = v3 * 10 end             --…˙√¸
@@ -502,7 +485,6 @@ local function _apply_dan40_attr(play, rec)
         attrs[201] = v6                               --∂‘»Àπ•ÀŸ
     end
     if v7 > 0 then attrs[244] = v7 * 100 end          --«–∏Ó
-
     if next(attrs) then
         local attrsstr = Player.getAttrTableToStr(attrs)
         Player.add_attlist(play, "Ãÿ ‚µ§“©", "=", attrsstr, 1)
@@ -510,10 +492,21 @@ local function _apply_dan40_attr(play, rec)
         Player.del_attlist(play, "Ãÿ ‚µ§“©")
     end
 end
-
 local function Login_dan40(play)
     local rec = json2tbl(getplaydef(play, VarCfg["T_ŒÔ∆∑ π”√º«¬º"]))
     _apply_dan40_attr(play, rec)
+    rec = type(rec) == "table" and rec or {}
+    local jz_count = tonumber(rec.jz_dan_count or 0) or 0
+    if jz_count > 0 then
+        Player.add_attlist(play, "÷˛ª˘µ§", "=", "3#244#" .. tostring(jz_count * 1000) .. "|3#4#" .. tostring(jz_count * 50), 1)
+    else
+        Player.del_attlist(play, "÷˛ª˘µ§")
+    end
+    if Buff and Buff.refreshRechargeBlade then
+        Buff.refreshRechargeBlade(play)
+    else
+        Player.del_attlist(play, "≥‰÷µ«–∏Óµ∂")
+    end
 end
 GameEvent.add(EventCfg.onLogin, Login_dan40, "Login_dan40")
 local function _yybg45_get_rec(play)
@@ -534,11 +527,11 @@ local function _yybg45_apply_full(play, rec)
     if tonumber((rec or {}).yybg45_full) >= 1 then
         _yybg45_clear_temp(play)
         if not hasbuff(play, 20123) then
-            callscriptex(play, "CHANGELEVEL", "+", 1)
+            Player.addRoleLevel(play, 1, false)
             addbuff(play, 20123)
         end
     elseif hasbuff(play, 20123) then
-        callscriptex(play, "CHANGELEVEL", "+", 1)
+        Player.addRoleLevel(play, 1, false)
         delbuff(play, 20123)
     end
 end
@@ -626,7 +619,6 @@ function stdmodefunc40(play, item) --Ãÿ ‚µ§“©
     if type(rec) ~= "table" then
         rec = {}
     end
-
     local max_map = { [1]=1000, [2]=300, [3]=1000, [4]=100, [5]=10, [6]=10, [7]=1000 }
     local key = "dan40_" .. tostring(idx)
     local max = max_map[idx]
@@ -638,7 +630,6 @@ function stdmodefunc40(play, item) --Ãÿ ‚µ§“©
         Player.sendmsgEx(play, "“—¥ÔµΩ∏√µ§“© π”√…œœﬁ#57")
         return true
     end
-
     local count_key = key .. "_count"
     -- «∞4∏ˆµ§“©±£¡Ù¿€º∆≥…≥§£¨◊Ó∫Û3∏ˆµ§“©∏ƒŒ™√ø¥ŒπÃ∂®+1°£
     local use_count = tonumber(rec[count_key] or cur) or 0
@@ -648,7 +639,6 @@ function stdmodefunc40(play, item) --Ãÿ ‚µ§“©
     end
     rec[key] = cur + add_value
     rec[count_key] = use_count + 1
-
     _apply_dan40_attr(play, rec)
     setplaydef(play, VarCfg["T_ŒÔ∆∑ π”√º«¬º"], tbl2json(rec))
     delitembymakeindex(play, getiteminfo(play, item, 1), 1)
@@ -658,7 +648,6 @@ local function _msfc_get_box_pool(poolKey)
     local boxPool = cfg.box_pool or {}
     return boxPool[poolKey] or {}
 end
-
 local function _msfc_reward_label(reward)
     if not reward then
         return ""
@@ -671,12 +660,10 @@ local function _msfc_reward_label(reward)
     end
     return tostring(reward.name or "")
 end
-
 local function _msfc_box_code(poolKey, idx)
     local map = {low = 100, high = 200, super = 300, relic = 400}
     return (map[poolKey] or 0) + (tonumber(idx) or 0)
 end
-
 local function _msfc_parse_box_code(code)
     code = tonumber(code) or 0
     local poolKey = nil
@@ -695,7 +682,6 @@ local function _msfc_parse_box_code(code)
     end
     return poolKey, code
 end
-
 local function _msfc_open_box_say(play, boxName, poolKey)
     local pool = _msfc_get_box_pool(poolKey)
     if not pool or #pool < 1 then
@@ -709,7 +695,6 @@ local function _msfc_open_box_say(play, boxName, poolKey)
         '<Button|id=ui_msfc_close|x=332|y=3|width=26|height=40|nimg=public/1900000510.png|pimg=public/1900000511.png|color=255|size=18|link=@exit>',
         '<Text|id=ui_msfc_title|x=27|y=23|color=251|size=18|text=' .. tostring(boxName) .. '£∫µ„ª˜Ω±¿¯÷±Ω”¡Ï»°>',
     }
-
     for i, reward in ipairs(pool) do
         local y = 60 + (i - 1) * 30
         lines[#lines + 1] = '<Text|id=ui_' .. tostring(i) .. '|x=45|y=' .. tostring(y) .. '|color=255|size=18|text=' .. _msfc_reward_label(reward) .. '|link=@msfcbox,' .. tostring(_msfc_box_code(poolKey, i)) .. '>'
@@ -718,7 +703,6 @@ local function _msfc_open_box_say(play, boxName, poolKey)
     -- release_print("¥Úø™◊‘—°œ‰ΩÁ√Ê£¨Ω±¿¯¡–±Ì≥§∂»:", table.concat(lines, "\r\n"))
     say(play, table.concat(lines, "\r\n"))
 end
-
 local function _msfc_submit_box_choice(play, boxName, poolKey, choiceIdx)
     local pool = _msfc_get_box_pool(poolKey)
     local reward = tonumber(choiceIdx) and pool[tonumber(choiceIdx)] or nil
@@ -738,7 +722,6 @@ local function _msfc_submit_box_choice(play, boxName, poolKey, choiceIdx)
     Player.rwjl(play, reward.give, tostring(boxName), 1)
     Player.sendmsgEx(play, "ø™∆Ù≥…π¶£¨ªÒµ√|" .. _msfc_reward_label(reward) .. "#249")
 end
-
 function msfcbox(play, code)
     local poolKey, choiceIdx = _msfc_parse_box_code(code)
     local boxMap = {
@@ -754,7 +737,6 @@ function msfcbox(play, code)
     end
     _msfc_submit_box_choice(play, boxName, poolKey, choiceIdx)
 end
-
 function stdmodefunc41(play, item) --œ…∑®æÌ÷·≤–“≥  -- 10∫œ“ª  œ…∑®æÌ÷·
     local itemName = getiteminfo(play, item, ConstCfg.iteminfo.name) or "œ…∑®æÌ÷·≤–“≥"
     if getbagitemcount(play, itemName) < 10 then
@@ -766,25 +748,21 @@ function stdmodefunc41(play, item) --œ…∑®æÌ÷·≤–“≥  -- 10∫œ“ª  œ…∑®æÌ÷·
     Player.sendmsgEx(play, "∫œ≥…≥…π¶£¨ªÒµ√|œ…∑®æÌ÷·*1#249")
     return false
 end
-function stdmodefunc42(play, item) --µÕº∂≤ƒ¡œ◊‘—°œ‰  --5∏ˆª˘¥°≤ƒ¡œ  
+function stdmodefunc42(play, item) --µÕº∂≤ƒ¡œ◊‘—°œ‰  --5—°1≤ƒ¡œ
     _msfc_open_box_say(play, "µÕº∂≤ƒ¡œ◊‘—°œ‰", "low")
     return false
-
 end
-function stdmodefunc43(play, item) --∏ﬂº∂≤ƒ¡œ◊‘—°œ‰  --5∏ˆª˘¥°≤ƒ¡œ  
+function stdmodefunc43(play, item) --∏ﬂº∂≤ƒ¡œ◊‘—°œ‰  --5—°1≤ƒ¡œ
     _msfc_open_box_say(play, "∏ﬂº∂≤ƒ¡œ◊‘—°œ‰", "high")
     return false
-
 end
-function stdmodefunc44(play, item) --Ãÿº∂≤ƒ¡œ◊‘—°œ‰  --5∏ˆª˘¥°≤ƒ¡œ  
+function stdmodefunc44(play, item) --Ãÿº∂≤ƒ¡œ◊‘—°œ‰  --5—°1≤ƒ¡œ
     _msfc_open_box_say(play, "Ãÿº∂≤ƒ¡œ◊‘—°œ‰", "super")
     return false
-
 end
 function stdmodefunc52(play, item) --¡È ﬁ •“≈ŒÔ◊‘—°¿Ò∫–
     _msfc_open_box_say(play, "¡È ﬁ •“≈ŒÔ◊‘—°¿Ò∫–", "relic")
     return false
-
 end
 function stdmodefunc45(play, item) --"±≥∞¸µ¿æﬂ£®≤ªø…ªÿ ’≤ªø…∑÷Ω‚≤ªø…∂™∆˙≤ªø…±¨≥ˆ£©
 -- √øÃÏµ⁄“ª¥Œ√‚∑— π”√£¨À´ª˜ π”√ªÒµ√œﬁ ±BUFF8–° ±£®∫œ¿Ìµƒª∞√øÃÏ”√2-3¥Œ£©
@@ -812,7 +790,10 @@ function stdmodefunc45(play, item) --"±≥∞¸µ¿æﬂ£®≤ªø…ªÿ ’≤ªø…∑÷Ω‚≤ªø…∂™∆˙≤ªø…±¨≥ˆ
     return false
 end
 function stdmodefunc46(play, item) --µ»º∂æÌ÷·  µ»º∂ + 1
-    callscriptex(play, "CHANGELEVEL", "+", 1)
+    local ok = select(1, Player.addRoleLevel(play, 1, string.format("µ±«∞µ»º∂“—¥Ô#57|°æ%dº∂°ø#249|£¨µ»º∂æÌ÷·Œﬁ∑®ºÃ–¯ π”√#57", Player.getRoleLevelCap())))
+    if not ok then
+        return false
+    end
 end
 function stdmodefunc47(play, item) --ÃÏµ¿°§∂…ΩŸµ§
     if not Npclib or not Npclib[76] or type(Npclib[76].use_dujie_dan) ~= "function" then
@@ -841,12 +822,10 @@ function stdmodefunc49(play, item)
         Player.sendmsgEx(play, "∏√µ¿æﬂΩˆø…‘⁄Ÿª≈Æ”ƒªÍ∏±±æ÷– π”√#57")
         return false
     end
-
     if type(_G.npc_702_use_item) ~= "function" then
         Player.sendmsgEx(play, "Ÿª≈Æ”ƒªÍ¬ﬂº≠Œ¥º”‘ÿ#57")
         return false
     end
-
     return _G.npc_702_use_item(play, item)
 end
 -- π »À‘∂––’ŸªΩµ¿æﬂ£®‘§¡Ù£©£∫Ωˆ»ŒŒÒΩ¯––÷–≤¢‘⁄÷∏∂®◊¯±Íø…”√
@@ -858,14 +837,12 @@ function stdmodefunc50(play, item)
     end
     return _G.npc_709_use_item(play, item)
 end
-
 local function _refresh_1002_attr(play, T_data)
     local cfg1002 = teshudata and teshudata["npc_1002"]
     local details = cfg1002 and cfg1002.details or {}
     T_data = T_data or Player.getJsonTableByVar(play, VarCfg.T_szjl)
     T_data.yjs = T_data.yjs or {}
     T_data.yjszj = T_data.yjszj or {}
-
     local attrs = {}
     for idx, cfg in ipairs(details.sz or {}) do
         if T_data.yjs[tostring(idx)] == 1 then
@@ -889,7 +866,6 @@ local function _refresh_1002_attr(play, T_data)
             end
         end
     end
-
     local attrsstr = Player.getAttrTableToStr(attrs)
     if attrsstr and attrsstr ~= "" then
         Player.add_attlist(play, " ±◊∞ Ù–‘", "=", attrsstr, 1)
@@ -897,7 +873,6 @@ local function _refresh_1002_attr(play, T_data)
         Player.del_attlist(play, " ±◊∞ Ù–‘")
     end
 end
-
 local function _use_1002_unlock(play, item, keyName, listName, label)
     local idx = tonumber(getstditeminfo(getiteminfo(play, item, 2), 8) or 0) or 0
     local cfg1002 = teshudata and teshudata["npc_1002"]
@@ -907,14 +882,12 @@ local function _use_1002_unlock(play, item, keyName, listName, label)
         Player.sendmsgEx(play, label .. "–Ú∫≈≤ª¥Ê‘⁄#57")
         return false
     end
-
     local T_data = Player.getJsonTableByVar(play, VarCfg.T_szjl)
     T_data[keyName] = T_data[keyName] or {}
     if T_data[keyName][tostring(idx)] == 1 then
         Player.sendmsgEx(play, "ƒ„“—”µ”–∏√" .. label .. "£¨Œﬁ–Ë÷ÿ∏¥ π”√#57")
         return false
     end
-
     T_data[keyName][tostring(idx)] = 1
     Player.setJsonVarByTable(play, VarCfg.T_szjl, T_data)
     GameEvent.push(EventCfg.onUPSkin, play, idx)
@@ -923,26 +896,22 @@ local function _use_1002_unlock(play, item, keyName, listName, label)
     Player.sendmsgEx(play, "πßœ≤ƒ„≥…π¶º§ªÓ|°æ" .. (cfgList[idx].name or label) .. "°ø#249|")
     return false
 end
-
 function stdmodefunc53(play, item)  -- π”√ ±◊∞  getstditeminfo(getiteminfo(play, item, 2), 8)  Õ®π˝’‚∏ˆ¿¥ªÒ»°∂‘”¶µƒ–Ú∫≈
-    _use_1002_unlock(play, item, "yjs", "sz", " ±◊∞")
+    _use_1002_unlock(play, item, "yjs", "sz", "??")
 end
 function stdmodefunc54(play, item)  -- π”√◊„º£  getstditeminfo(getiteminfo(play, item, 2), 8)  Õ®π˝’‚∏ˆ¿¥ªÒ»°∂‘”¶µƒ–Ú∫≈
     _use_1002_unlock(play, item, "yjszj", "zj", "◊„º£")
 end
-
 function stdmodefunc55(play, item) --æªªØ±¶ Ø
     addbuff(play, 20112)
     Player.sendmsgEx(play, " π”√≥…π¶£¨“—ªÒµ√æªªØ±¶ Ø–ßπ˚#57")
     return false
 end
-
 function stdmodefunc56(play, item) --∂®…Ì∑˚
     addbuff(play, 20111)
     Player.sendmsgEx(play, " π”√≥…π¶£¨“—ªÒµ√∂®…Ì∑˚–ßπ˚#57")
     return false
 end
-
 local function _box57_pick_reward(pool)
     if type(pool) ~= "table" or #pool == 0 then
         return nil
@@ -958,7 +927,6 @@ local function _box57_pick_reward(pool)
     if totalWeight <= 0 then
         return nil
     end
-
     local roll = math.random(1, totalWeight)
     local acc = 0
     for _, cfg in ipairs(pool) do
@@ -975,7 +943,6 @@ local function _box57_pick_reward(pool)
     end
     return pool[#pool]
 end
-
 function stdmodefunc57(play, item) --¥Û¬Ω◊® Ù◊∞±∏ÀÊª˙±¶œ‰ getstditeminfo(getiteminfo(play, item, 2), 8)  Õ®π˝’‚∏ˆ¿¥ªÒ»°∂‘”¶µƒ¥Û¬Ω
     local dl = tonumber(getstditeminfo(getiteminfo(play, item, 2), 8) or 0) or 0
     local pool = constant and constant.dalu_zszb_box57 and constant.dalu_zszb_box57[dl]
@@ -987,13 +954,11 @@ function stdmodefunc57(play, item) --¥Û¬Ω◊® Ù◊∞±∏ÀÊª˙±¶œ‰ getstditeminfo(getitem
         Player.sendmsgEx(play, "∏√¥Û¬Ω◊® Ù◊∞±∏Ω±≥ÿŒ¥≈‰÷√#57")
         return false
     end
-
     local rewardCfg = _box57_pick_reward(pool)
     if not rewardCfg then
         Player.sendmsgEx(play, "ÀÊª˙Ω±¿¯ ß∞‹£¨«ÎºÏ≤ÈΩ±≥ÿ≈‰÷√#57")
         return false
     end
-
     local rewardName = rewardCfg
     local rewardNum = 1
     local rewardBind = 0
@@ -1006,19 +971,11 @@ function stdmodefunc57(play, item) --¥Û¬Ω◊® Ù◊∞±∏ÀÊª˙±¶œ‰ getstditeminfo(getitem
         Player.sendmsgEx(play, "ÀÊª˙Ω±¿¯ ß∞‹£¨Ω±¿¯√˚≥∆Œ™ø’#57")
         return false
     end
-
     giveitem(play, rewardName, rewardNum, rewardBind)
     delitembymakeindex(play, getiteminfo(play, item, 1), 1)
     Player.sendmsgEx(play, "πßœ≤ªÒµ√|°æ" .. rewardName .. "°ø#249|")
     return false
 end
-
-
-
-
-
-
-
 -- œ˚∫ƒ∆∑»Îø⁄£∫æª“µ∑˚÷±Ω”◊ﬂ≤–ªÍ…ÃµÍ’Ê µ±‡∫≈¬ﬂº≠°£
 function stdmodefunc58(play, item) --æª“µ∑˚
     local cfg = ((teshudata or {})["npc_83"] or {}).cleanse or {}
@@ -1039,6 +996,111 @@ function stdmodefunc58(play, item) --æª“µ∑˚
     Player.sendmsgEx(play, string.format(" π”√≥…π¶£¨“µª÷µ¥”#57|°æ%d°ø#249|Ωµ÷¡#57|°æ%d°ø#249|", before, tonumber(after) or 0))
     return false
 end
+function stdmodefunc59(play, item) --÷¡◊∫⁄ø®
+    local rec = json2tbl(getplaydef(play, VarCfg["T_ŒÔ∆∑ π”√º«¬º"]))
+    if type(rec) ~= "table" then
+        rec = {}
+    end
+    local today = os.date("%Y%m%d")
+    if tostring(rec.zzhk_date or "") == today then
+        Player.sendmsgEx(play, "÷¡◊∫⁄ø®ΩÒ»’“— π”√π˝#57")
+        return false
+    end
+    rec.zzhk_date = today
+    setplaydef(play, VarCfg["T_ŒÔ∆∑ π”√º«¬º"], tbl2json(rec))
+    Player.rwjl(play, {{"∞Û∂®Ω±“",300000},{"∞Û∂®‘™±¶",3000},{"∞Û∂®¡È Ø",60}}, "÷¡◊∫⁄ø®", 1)
+    Player.sendmsgEx(play, "÷¡◊∫⁄ø® π”√≥…π¶£¨ΩÒ»’Ω±¿¯“—∑¢∑≈#57")
+    return false
+end
+function stdmodefunc60(play, item) --÷˛ª˘µ§ÀÈ∆¨
+    local itemName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "÷˛ª˘µ§ÀÈ∆¨")
+    if getbagitemcount(play, itemName) < 10 then
+        Player.sendmsgEx(play, itemName .. "≤ª◊„10∏ˆ#57")
+        return false
+    end
+    Player.takeItemByTable(play, {{itemName,10}}, ",÷˛ª˘µ§ÀÈ∆¨∫œ≥…", nil)
+    giveitem(play, "÷˛ª˘µ§", 1)
+    Player.sendmsgEx(play, "≥…π¶∫œ≥…#57|°æ÷˛ª˘µ§°ø#249|#57")
+    return false
+end
+function stdmodefunc61(play, item) --÷˛ª˘µ§
+    local rec = json2tbl(getplaydef(play, VarCfg["T_ŒÔ∆∑ π”√º«¬º"]))
+    if type(rec) ~= "table" then
+        rec = {}
+    end
+    local cur = tonumber(rec.jz_dan_count or 0) or 0
+    delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+    if cur >= 3 then
+        Player.sendmsgEx(play, "÷˛ª˘µ§“—¥ÔµΩº∆ ˝…œœﬁ£¨±æ¥ŒΩˆœ˚∫ƒŒÔ∆∑£¨≤ª‘Ÿ‘ˆº” Ù–‘#57")
+        return false
+    end
+    rec.jz_dan_count = cur + 1
+    setplaydef(play, VarCfg["T_ŒÔ∆∑ π”√º«¬º"], tbl2json(rec))
+    Player.add_attlist(play, "÷˛ª˘µ§", "=", "3#244#" .. tostring((tonumber(rec.jz_dan_count) or 0) * 1000) .. "|3#4#" .. tostring((tonumber(rec.jz_dan_count) or 0) * 50), 1)
+    Player.sendmsgEx(play, "÷˛ª˘µ§∑˛”√≥…π¶£¨µ±«∞“—∑˛”√|" .. tostring(rec.jz_dan_count) .. "/3#249")
+    return false
+end
 
+local function _get_zhuji_dan_record(play)
+    local rec = json2tbl(getplaydef(play, VarCfg["T_ŒÔ∆∑ π”√º«¬º"]))
+    if type(rec) ~= "table" then
+        rec = {}
+    end
+    return rec
+end
 
-
+local function _on_kill_mon_drop_zhuji_fragment(play, mon, mobIdx)
+    if not play or not mon then
+        return
+    end
+    local rec = _get_zhuji_dan_record(play)
+    if (tonumber(rec.jz_dan_count) or 0) >= 3 then
+        return
+    end
+    local mapName = tostring(getbaseinfo(play, 3) or "")
+    local dl = tonumber((daluditu and daluditu[mapName]) or 0) or 0
+    if dl ~= 2 and dl ~= 3 then
+        return
+    end
+    local mobName = tostring(getbaseinfo(mon, 1) or "")
+    if mobName == "" or mobName == "µæ≤›»À" then
+        return
+    end
+    local dropData = Player.getJsonTableByVar(play, VarCfg["T_ŒÔ∆∑µÙ¬‰º«¬º"])
+    if type(dropData) ~= "table" then
+        dropData = {}
+    end
+    local key = "kill_pity_÷˛ª˘µ§ÀÈ∆¨"
+    local cur = tonumber(dropData[key] or 0) or 0
+    cur = cur + 1
+    dropData[key] = cur
+    Player.setJsonVarByTable(play, VarCfg["T_ŒÔ∆∑µÙ¬‰º«¬º"], dropData)
+    if cur % 100 ~= 0 then
+        return
+    end
+    if shaguai and shaguai.temp_drop and shaguai.temp_drop(play, mon, "÷˛ª˘µ§ÀÈ∆¨") then
+        Player.sendmsgEx(play, "¥Úπ÷µÙ¬‰°æ÷˛ª˘µ§ÀÈ∆¨°ø#57")
+    end
+end
+GameEvent.add(EventCfg.onKillMon, _on_kill_mon_drop_zhuji_fragment, "÷˛ª˘µ§ÀÈ∆¨¿€º∆µÙ¬‰")
+-- 150 º∂∫Ûæ≠—Èµ§≤ª‘Ÿ±£¡Ùπ÷ŒÔµÙ¬‰£¨±‹√‚ºÃ–¯≤˙≥ˆŒﬁ–ßæ≠—Èµ¿æﬂ°£
+local function _clear_exp_pill_drop_when_level_locked(play, drop_item, mon)
+    if not play or not mon or not drop_item or drop_item == "0" then
+        return
+    end
+    if not Player.isRoleLevelLocked(play) then
+        return
+    end
+    if not Player.isExpPillItemObj(play, drop_item) then
+        return
+    end
+    local itemName = tostring(getiteminfo(play, drop_item, 7) or "")
+    local mapName = tostring(getbaseinfo(mon, 3) or "")
+    local x = tonumber(getbaseinfo(mon, 4) or 0) or 0
+    local y = tonumber(getbaseinfo(mon, 5) or 0) or 0
+    if itemName == "" or mapName == "" or x <= 0 or y <= 0 then
+        return
+    end
+    clearitemmap(mapName, x, y, 4, itemName)
+end
+GameEvent.add(EventCfg.onMondropItemex, _clear_exp_pill_drop_when_level_locked, "150º∂æ≠—Èµ§µÙ¬‰œﬁ÷∆")

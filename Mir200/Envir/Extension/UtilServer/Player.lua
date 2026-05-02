@@ -13,10 +13,8 @@ for index, value in ipairs(bind_money) do
         bind_m_tab[v] = index
     end
 end
-
 -- 属性列表缓存：同一玩家、同一属性名、同一属性串重复下发时直接跳过
 local _attlist_cache = setmetatable({}, {__mode = "k"})
-
 local function _get_attlist_cache(actor)
     local cache = _attlist_cache[actor]
     if not cache then
@@ -25,7 +23,6 @@ local function _get_attlist_cache(actor)
     end
     return cache
 end
-
 local function _build_attlist_cache_value(opt, attrsstr, idx)
     return table.concat({
         tostring(opt or ""),
@@ -33,9 +30,7 @@ local function _build_attlist_cache_value(opt, attrsstr, idx)
         tostring(attrsstr or ""),
     }, "\1")
 end
-
 --- 自定义属性相关方法
-
 --声明自定义个人变量
 function Player.FIniPlayVar(actor, varname, isstr)
     local vartype = isstr and "string" or "integer"
@@ -44,7 +39,6 @@ function Player.FIniPlayVar(actor, varname, isstr)
     end
     iniplayvar(actor, vartype, "HUMAN", varname)
 end
-
 --设置自定义个人变量
 function Player.FSetPlayVar(actor, varname, value, save)
     value = value or 0
@@ -61,7 +55,34 @@ end
 function Player.SetPlayDefEx(actor, varName, value)
     setplaydef(actor, varName, value)
 end
-
+-- 二大陆伏妖录：仅当当前追踪任务属于二大陆时，才在状态变更后自动同步并尝试结算奖励。
+function Player.trySyncSecondContinentXyl(actor)
+    if not actor or not Guard or not Guard.syncXylCurrentTask or Guard._syncingXylCurrentTask then
+        return false
+    end
+    local raw = getplaydef(actor, VarCfg.T_ywl)
+    if raw == nil or raw == "" then
+        return false
+    end
+    local T_ywl = json2tbl(raw)
+    if type(T_ywl) ~= "table" then
+        return false
+    end
+    local dq = tostring(T_ywl.dq or "")
+    if dq:match("^2_%d+_%d+$") == nil then
+        return false
+    end
+    if Guard.syncXylCurrentTask(actor) then
+        if Guard.pushXylCurrentTask then
+            Guard.pushXylCurrentTask(actor)
+        else
+            local latest = json2tbl(getplaydef(actor, VarCfg.T_ywl))
+            sendluamsg(actor, 101, 11, 9, 0, '{"dq":"' .. tostring(latest.dq or "") .. '"}')
+        end
+        return true
+    end
+    return false
+end
 --设置json变量内容，返回table
 ---* actor:人物对象(填写nil获取全局变量)
 ---* varName:变量名
@@ -77,11 +98,11 @@ function Player.setJsonVarByTable(actor, varName, varValue)
     local varStr = tbl2json(varValue)
     if actor then
         setplaydef(actor, varName, varStr)
+        Player.trySyncSecondContinentXyl(actor)
     else
         setsysvar(varName, varStr)
     end
 end
-
 function Player.setJsonTableByVar(actor, varName, varValue)
     if not varValue then
         return
@@ -89,11 +110,11 @@ function Player.setJsonTableByVar(actor, varName, varValue)
     local varStr = tbl2json(varValue)
     if actor then
         setplaydef(actor, varName, varStr)
+        Player.trySyncSecondContinentXyl(actor)
     else
         setsysvar(varName, varStr)
     end
 end
-
 --获取json变量内容，返回table
 ---* actor:人物对象(填写nil获取全局变量)
 ---* varName:变量名
@@ -111,7 +132,6 @@ function Player.getJsonTableByVar(actor, varName)
     if ret == "" or type(ret) ~= "table" then ret = {} end
     return ret
 end
-
 --设置自定义变量json变量内容
 ---* actor:人物对象(填写nil获取全局变量)
 ---* varName:变量名
@@ -127,7 +147,6 @@ function Player.setJsonPlayVarByTable(actor, varName, varValue)
     local varStr = tbl2json(varValue)
     setplayvar(actor, "HUMAN", varName, varStr, 1)
 end
-
 --获取自定义变量json变量内容，返回table
 ---* actor:人物对象(填写nil获取全局变量)
 ---* varName:变量名
@@ -140,22 +159,18 @@ function Player.getJsonTableByPlayVar(actor, varName)
     if ret == "" or type(ret) ~= "table" then ret = {} end
     return ret
 end
-
 --设置全局自定义临时int变量
 function Player.SetGlobalTempInt(varName, value)
     setplaydef(0, "N$" .. varName, value)
 end
-
 --获取全局自定义临时int变量
 function Player.GetGlobalTempInt(varName)
     return getplaydef(0, "N$" .. varName)
 end
-
 --设置全局自定义临时str变量table
 function Player.SetGlobalTempTable2(varName, value)
     setplaydef(0, "S$" .. varName, tbl2json(value))
 end
-
 --获取全局自定义临时str变量table
 function Player.GetGlobalTempTable2(varName)
     local ret = getplaydef(0, "S$" .. varName)
@@ -165,10 +180,6 @@ function Player.GetGlobalTempTable2(varName)
     return {}
 end
 --- 自定义属性相关方法------end
-
-
-
-
 function Player.getMoneyNum(actor, moneytype)
     local moneynum = 0
     if bind_m_tab[moneytype] then
@@ -275,7 +286,6 @@ function Player.giveItemByTable(actor, t, desc, multiple, isbind)
         end
     end
 end
-
 --更新部分属性
 function Player.updateSomeAddr(actor, cur_attr, next_attr)
     local newattr = {}
@@ -288,7 +298,6 @@ function Player.updateSomeAddr(actor, cur_attr, next_attr)
             if newattr[attridx] < 0 then newattr[attridx] = 0 end
         end
     end
-
     if next_attr then
         for _,attr in ipairs(next_attr) do
             local attridx, attrvalue = attr[1], tonumber(attr[2] or 0) or 0
@@ -302,7 +311,6 @@ function Player.updateSomeAddr(actor, cur_attr, next_attr)
         changehumnewvalue(actor, attridx, math.floor(attrvalue), 123456789)
     end
 end
-
 --更新部分属性  --带时间的
 function Player.updateSomeAddr_time(actor, cur_attr, next_attr,time)
     local newattr = {}
@@ -315,7 +323,6 @@ function Player.updateSomeAddr_time(actor, cur_attr, next_attr,time)
             if newattr[attridx] < 0 then newattr[attridx] = 0 end
         end
     end
-
     if next_attr and #next_attr > 0 then
         for _,attr in ipairs(next_attr) do
             local attridx, attrvalue = attr[1], tonumber(attr[2] or 0) or 0
@@ -334,13 +341,10 @@ function Player.updateSomeAddr_time(actor, cur_attr, next_attr,time)
     delaygoto(actor,time * 1000,"updateSomeAddr_time_del,"..buff_time,0)
 end
 function updateSomeAddr_time_del(actor,time)
-
     local next_attr = getplaydef(actor,"S$updateSomeAddr_time_cur_attr_"..time)
     local cur_attr = getplaydef(actor,"S$updateSomeAddr_time_next_attr_"..time)
-
     setplaydef(actor,"S$updateSomeAddr_time_cur_attr_"..time,nil)
     setplaydef(actor,"S$updateSomeAddr_time_next_attr_"..time,nil)
-
     next_attr = (next_attr == "{}" and nil or json2tbl(next_attr))
     cur_attr = (cur_attr == "{}" and nil or json2tbl(cur_attr))
     local newattr = {}
@@ -353,7 +357,6 @@ function updateSomeAddr_time_del(actor,time)
             if newattr[attridx] < 0 then newattr[attridx] = 0 end
         end
     end
-
     if next_attr and #next_attr > 0 then
         for _,attr in ipairs(next_attr) do
             local attridx, attrvalue = attr[1], tonumber(attr[2] or 0) or 0
@@ -367,7 +370,6 @@ function updateSomeAddr_time_del(actor,time)
         changehumnewvalue(actor, attridx, math.floor(attrvalue), 123456789)
     end
 end
-
 function Player.rwjl(actor, t, desc, multiple,gm)
     local str = ""
     if (multiple and multiple >= 1) or not multiple then
@@ -397,7 +399,6 @@ function Player.rwjl(actor, t, desc, multiple,gm)
         release_print("Player.rwjl", desc, str, getbaseinfo(actor,1))
     end
 end
-
 --发送消息个人
 function Player.sendmsg(actor, msg)
     if type(msg) == "string" then
@@ -410,7 +411,6 @@ function Player.sendmsg(actor, msg)
         Player.sendmsgEx(actor, ConstCfg.notice.own, '{"Msg":"' .. MsgStr .. '","Type":9}')
     end
 end
-
 --发送个人消息9
 --* actor：个人对象
 --* str：消息内容 格式 文本#颜色|文本#颜色 (颜色值0-255)
@@ -425,7 +425,6 @@ function Player.sendmsgEx(actor, arg2, arg3)
         sendmsg(actor, channel, payload)
         return
     end
-
     local str = arg2
     if str == nil or str == "" then
         return
@@ -452,17 +451,14 @@ function Player.screffects(actor, effectId, offsetX, offsetY)
     local y = getconst(actor, "<$SCREENHEIGHT>") / 2 + offsetY
     screffects(actor, 1, effectId, x, y, 1, 1, 0)
 end
-
 ---@param actor userdata 玩家对象
 function Player.GetName(actor)
     return getbaseinfo(actor, 1)
 end
-
 --获取人物/怪物当前地图代码
 function Player.MapKey(actor)
     return getbaseinfo(actor, 3)
 end
-
 --获取目标坐标x
 function Player.GetX(actor)
     return getbaseinfo(actor, 4)
@@ -475,16 +471,82 @@ end
 function Player.GetAttr(actor, attrId)
     return getbaseinfo(actor, 51, attrId)
 end
-
 --获取人物唯一ID str
 function Player.GetUUID(actor)
     return getbaseinfo(actor, 2)
 end
-
 ----获得角色等级
 ---@param actor  --玩家对象
 function Player.GetLevel(actor)
     return getbaseinfo(actor, 6)
+end
+
+local _role_level_cap = 150
+local _role_level_fixing = setmetatable({}, {__mode = "k"})
+
+-- 角色等级上限：统一控制所有人物等级成长入口。
+function Player.getRoleLevelCap()
+    return _role_level_cap
+end
+
+-- 经验类道具名称识别：统一给爆率监听、掉落清理、使用限制复用。
+function Player.isExpPillName(itemName)
+    itemName = tostring(itemName or "")
+    if itemName == "" then
+        return false
+    end
+    return string.find(itemName, "经验丹", 1, true) ~= nil
+        or string.find(itemName, "经验卷", 1, true) ~= nil
+end
+
+-- 预留等级锁入口：当前不再使用 setlocklevel，仅保留函数壳避免旧调用报错。
+function Player.applyRoleLevelCap(actor)
+    return false
+end
+
+-- 是否已达到人物等级上限。
+function Player.isRoleLevelLocked(actor)
+    return (tonumber(Player.GetLevel(actor)) or 0) >= _role_level_cap
+end
+
+-- 150 级后经验丹不再保留掉落：按 StdMode=12 与经验丹名称双重识别。
+function Player.isExpPillItemObj(actor, itemobj)
+    if not actor or not itemobj or itemobj == "0" then
+        return false
+    end
+    local itemIdx = tonumber(getiteminfo(actor, itemobj, 2) or 0) or 0
+    if itemIdx <= 0 then
+        return false
+    end
+    local stdmode = tonumber(getstditeminfo(itemIdx, 2) or -1) or -1
+    local itemName = tostring(getiteminfo(actor, itemobj, 7) or "")
+    return stdmode == 12 or Player.isExpPillName(itemName)
+end
+
+-- 检查当前是否还能继续获得人物等级经验；达到上限时返回 false。
+function Player.canGainRoleLevel(actor, tip)
+    if Player.isRoleLevelLocked(actor) then
+        if tip ~= false then
+            Player.sendmsgEx(actor, tip or string.format("当前等级已达#57|【%d级】#249|，无法继续获得人物等级经验#57", _role_level_cap))
+        end
+        return false
+    end
+    return true
+end
+
+-- 统一加人物等级：当前仅负责正向加级，不再限制非经验丹的升级途径。
+function Player.addRoleLevel(actor, add, tip)
+    add = tonumber(add) or 0
+    if add <= 0 then
+        return false, 0
+    end
+    callscriptex(actor, "CHANGELEVEL", "+", add)
+    return true, add
+end
+
+-- 预留封顶入口：当前不再对非经验丹途径做等级回退。
+function Player.clampRoleLevel(actor, tip)
+    return false
 end
 function Player.zxrw_lingqu(actor, zxrw_id, desc) --领取支线任务
     if not json2tbl(getplaydef(actor, VarCfg.T_zxrw))[zxrw_id] then
@@ -604,16 +666,13 @@ end
 local zdl_attr = {
     -- 战士核心输出
     {3, 9.0}, {4, 9.0}, -- 攻击下限/上限
-
     -- 基础生存
     {1, 1}, -- 生命值
     {9, 3.0}, {10, 3.2}, -- 防御下限/上限
-
     -- 基础命中/闪避与攻速
-    {13, 2.5}, -- 准确
+    {13, 2.5}, -- ??
     {14, 2.5}, -- 敏捷
     {20, 120}, -- 攻击速度
-
     -- 暴击与伤害向
     {21, 400.0}, -- 暴击几率增加
     {22, 200.0}, -- 暴击伤害增加
@@ -623,7 +682,6 @@ local zdl_attr = {
     {26, 200.0}, -- 物理伤害减少
     {30, 300.0}, -- 人物体力增加
     {34, 200.0}, -- 攻击吸血
-
     -- 高阶战斗属性
     {63, 2.0}, -- 格挡概率
     {64, 2.0}, -- 格挡伤害
@@ -635,7 +693,6 @@ local zdl_attr = {
     {79, 30}, -- 神圣一击
     {82, 20.0}, -- 受怪减伤
     {89, 30.0}, -- 最终血量
-
     -- 200~300 扩展属性（cfg_att_score）
     {200, 30.0}, -- 对怪攻速
     {201, 30.0}, -- 对人攻速
@@ -648,7 +705,6 @@ local zdl_attr = {
     {208, 3.5}, -- 最大血量
     {209, 4.0}, -- 最大攻击
     {210, 2.8}, -- 对人攻速（扩展）
-
     {242, 2.0}, -- 杀怪爆率
     {243, 2.2}, -- 移动速度
     {244, 1}, -- 打怪切割
@@ -664,7 +720,6 @@ local zdl_attr = {
     {254, 3.5}, -- 职业攻击
     {255, 20.4}, -- 怪物格挡
     {256, 3.0}, -- 技能伤害减免
-
     {280, 100.0}, -- 生命值百分比
     {281, 100.0}, -- 魔法值百分比
     {282, 400.0}, -- 攻击上限百分比
@@ -696,11 +751,15 @@ end
 local function _change_title_level(actor, title_name, op)
     local cfg = constant.title_level_change or {}
     local delta = tonumber(cfg[title_name] or 0) or 0
-    if delta > 0 then
+    if delta <= 0 then
+        return
+    end
+    if op == "+" then
+        Player.addRoleLevel(actor, delta, false)
+    else
         callscriptex(actor, "CHANGELEVEL", op, delta)
     end
 end
-
 function Player.title_give(actor, title_name) --给称号
     if not checktitle(actor, title_name) then
         release_print("给称号",title_name,getbaseinfo(actor,1))
@@ -712,6 +771,10 @@ function Player.title_give(actor, title_name) --给称号
         if idx > 0 then
             Buff[idx](actor,1)
             Buff[idx](actor,5)
+        end
+        Player.trySyncSecondContinentXyl(actor)
+        if title_name == "诸邪退散" and Login and Login.refreshGrayWorldVision then
+            Login.refreshGrayWorldVision(actor)
         end
     end
 end
@@ -726,10 +789,11 @@ function Player.title_del(actor, title_name) --删称号
             Buff[idx](actor,2)
             Buff[idx](actor,6)
         end
+        if title_name == "诸邪退散" and Login and Login.refreshGrayWorldVision then
+            Login.refreshGrayWorldVision(actor)
+        end
     end
-
 end
-
 function Player.clear_attlist_cache(actor, attr_name)
     if not actor then
         return
@@ -744,7 +808,6 @@ function Player.clear_attlist_cache(actor, attr_name)
         _attlist_cache[actor] = nil
     end
 end
-
 function Player.del_attlist(actor, arrt_name) --删属性
     local cache = _get_attlist_cache(actor)
     if cache[arrt_name] == false then
@@ -764,18 +827,12 @@ function Player.add_attlist(actor, title_name,opt, attrsstr,idx) --给属性
     cache[title_name] = cache_value
     -- release_print("给属性",title_name,attrsstr,getbaseinfo(actor,1),opt,idx)
 end
-
-
-
-
-
 function Player.jl_mail(table) --奖励转邮件
     local str = ""
     for v,k in pairs(table) do
         local idx = getstditeminfo(k[1], 0)
         if Item.isCurrency(idx) then        --货币
             str = str .. k[1] .. "#" .. k[2] .. "&"
-            
         else                                    --物品 装备
             str = str .. k[1] .. "#" .. k[2] .. "#850&"
         end
@@ -790,18 +847,42 @@ local function _dl_get_jqd(actor)
     end
     return querymoney(actor, jqd_idx) or 0
 end
-
+-- 五大陆门槛：检查是否已激活全部 10 种灵根。
+local function _dl_has_all_linggen(actor)
+    local data = Player.getJsonTableByVar(actor, VarCfg["T_灵根"]) or {}
+    local levels = type(data.level) == "table" and data.level or {}
+    for i = 1, 10 do
+        if (tonumber(levels[tostring(i)]) or 0) <= 0 then
+            return false
+        end
+    end
+    return true
+end
+-- 六大陆门槛：检查天道命盘是否已全部完成。
+local function _dl_has_all_destiny(actor)
+    local jq_data = Player.getJsonTableByVar(actor, VarCfg.T_dljq) or {}
+    local state = type(jq_data["npc_74"]) == "table" and jq_data["npc_74"] or {}
+    local need = tonumber((((teshudata or {})["npc_74"] or {}).all) or 4) or 4
+    return (tonumber(state.all) or 0) >= need
+end
+-- 大陆门槛：统一读取基础状态。
+local function _dl_get_base_state(actor)
+    return {
+        zslv = tonumber(getplaydef(actor, VarCfg["U_转生等级"]) or 0) or 0,
+        jqd = _dl_get_jqd(actor),
+        level = tonumber(getbaseinfo(actor, 6)) or 0,
+    }
+end
 local function _dl_check(actor, dl)
     if dl == 1 then
         return true
     end
-
-    local zxrw = getplaydef(actor, VarCfg.U_zxrw[1]) or 0
-    local zslv = getplaydef(actor, VarCfg["U_转生等级"]) or 0
-    local jqd = _dl_get_jqd(actor)
-
+    local state = _dl_get_base_state(actor)
+    local zslv = state.zslv
+    local jqd = state.jqd
+    local level = state.level
     if dl == 2 then
-        if zxrw >= 21 then
+        if zslv >= 10 then
             return true
         end
         return false, "需完成主线引导后才可进入二大陆"
@@ -811,29 +892,36 @@ local function _dl_check(actor, dl)
         end
         return false, "需完成二大陆转生且剧情点达到11后才可进入三大陆"
     elseif dl == 4 then
-        if zslv >= 30 and jqd >= 40 then
+        if zslv >= 30 and jqd >= 40 and level >= 150 then
             return true
         end
-        return false, "需完成三大陆转生且剧情点达到40后才可进入四大陆"
+        return false, "需完成三大陆转生且剧情点达到40、玩家等级达到150级后才可进入四大陆"
     elseif dl == 5 then
-        if zslv >= 40 and jqd >= 90 then
+        if zslv >= 40 and jqd >= 90 and _dl_has_all_linggen(actor) then
             return true
         end
         return false, "需完成四大陆转生且剧情点达到90后才可进入五大陆"
     elseif dl == 6 then
-        return true
-    elseif dl == 7 then
-        if Player.hasSeventhContinentPass(actor) then
+        if zslv >= 50 and jqd >= 100 and _dl_has_all_destiny(actor) then
             return true
         end
-        return false, "需集齐并领取#57|【世界符文】#249|奖励后才可进入七大陆"
+        return false, "需完成五大陆转生且剧情点达到100，并完成天道命盘后才可进入六大陆"
+    elseif dl == 7 then
+        if zslv >= 60 and jqd >= 100 and Player.hasSeventhContinentPass(actor) then
+            return true
+        end
+        return false, "需完成六大陆转生且剧情点达到100，并获得#57|【世界符文·[真我]】#249|后才可进入七大陆"
     end
-
     return true
 end
-
 function Player.dl_sz_notip(actor, dl) --大陆限制 -- 无提示
     local ok = _dl_check(actor, dl)
+    if ok and Guard and Guard.syncXylCurrentTask and not Guard._syncingXylCurrentTask then
+        if Guard.syncXylCurrentTask(actor) then
+            local T_ywl = json2tbl(getplaydef(actor, VarCfg.T_ywl))
+            sendluamsg(actor, 101, 11, 9, 0, '{"dq":"' .. (T_ywl.dq or "") .. '"}')
+        end
+    end
     return ok
 end
 function Player.dl_sz(actor, dl) --大陆限制 -- 有提示
@@ -841,15 +929,102 @@ function Player.dl_sz(actor, dl) --大陆限制 -- 有提示
     if not ok and tip then
         Player.sendmsgEx(actor, tip .. "#57")
     end
+    if ok and Guard and Guard.syncXylCurrentTask and not Guard._syncingXylCurrentTask then
+        if Guard.syncXylCurrentTask(actor) then
+            local T_ywl = json2tbl(getplaydef(actor, VarCfg.T_ywl))
+            sendluamsg(actor, 101, 11, 9, 0, '{"dq":"' .. (T_ywl.dq or "") .. '"}')
+        end
+    end
     return ok
 end
-
+local _third_continent_frontier_map = {
+    ["灰界"] = true,
+}
+-- 灰界系列地图统一判断，用于野外压制、视野等共用逻辑。
+local _huijie_maps = {
+    ["灰界"] = true,
+    ["灰界南部"] = true,
+    ["灰界北部"] = true,
+    ["灰界东部"] = true,
+    ["灰界西部"] = true,
+}
+function Player.isHuiJieMap(map_name)
+    return type(map_name) == "string" and _huijie_maps[map_name] == true
+end
+function Player.hasHuiJieImmunity(actor)
+    return checktitle(actor, "诸邪退散")
+end
+-- 灰界压制判定：在灰界且没有【诸邪退散】时，受到灰界环境压制。
+function Player.isHuiJieSuppressed(actor)
+    if not actor then
+        return false
+    end
+    local map_name = tostring(getbaseinfo(actor, 3) or "")
+    return Player.isHuiJieMap(map_name) and not Player.hasHuiJieImmunity(actor)
+end
+-- 灰界压制下：对怪最终伤害降低50%。
+function Player.getHuiJieMonsterDamageRate(actor)
+    return Player.isHuiJieSuppressed(actor) and 0.5 or 1
+end
+-- 灰界压制下：受到怪物最终伤害增加10%。
+function Player.getHuiJieMonsterHurtRate(actor)
+    return Player.isHuiJieSuppressed(actor) and 1.1 or 1
+end
+-- 三大陆正式开启判定：完成“开辟仙府”后，才可进入灰界之外的三大陆地图并使用相关功能。
+-- 兼容旧号：若历史上已经完成过任务、手动开辟等，也同样视为已正式开辟。
+function Player.hasThirdContinentOpen(actor)
+    local jq_data = Player.getJsonTableByVar(actor, VarCfg.T_dljq) or {}
+    if tonumber(jq_data["npc_55"] or 0) >= 2 then
+        return true
+    end
+    local task = jq_data["npc_46"]
+    return type(task) == "table" and tonumber(task.wc) == 1
+end
+-- 三大陆地图限制：未开辟仙府时，只允许进入【灰界】，其余三大陆地图一律拦截。
+function Player.canEnterThirdContinentMap(actor, map_name)
+    if type(map_name) ~= "string" or map_name == "" then
+        return true
+    end
+    if not (type(daluditu) == "table" and daluditu[map_name] == 3) then
+        return true
+    end
+    if _third_continent_frontier_map[map_name] then
+        return true
+    end
+    if Player.hasThirdContinentPass(actor) then
+        return true
+    end
+    if map_name == "三大陆主城" then
+        return false
+    end
+    return true
+    -- return Player.hasThirdContinentOpen(actor)
+end
+-- 三大陆功能限制：完成“开辟仙府”后，才视为正式解锁三大陆功能。
+function Player.ensureThirdContinentOpen(actor, tip)
+    if Player.hasThirdContinentOpen(actor) then
+        return true
+    end
+    Player.sendmsgEx(actor, tip or "请先#57|【开辟仙府】#249|后再使用该功能#57")
+    return false
+end
+-- 三大陆地图限制：处理灰界放行、主城拦截与正式地图进入提示。
+function Player.ensureThirdContinentMapAccess(actor, map_name, tip)
+    if Player.canEnterThirdContinentMap(actor, map_name) then
+        return true
+    end
+    if map_name == "三大陆主城" then
+        Player.sendmsgEx(actor, tip or "请先#57|【开辟仙府】#249|后前往#57|【三大陆主城】#249|#57")
+        return false
+    end
+    Player.sendmsgEx(actor, tip or ("请先#57|【开辟仙府】#249|后前往#57|【" .. map_name .. "】#249|#57"))
+    return false
+end
 function Player.hasThirdContinentPass(actor)
     local jq_data = Player.getJsonTableByVar(actor, VarCfg.T_dljq)
     local task = jq_data and jq_data["npc_46"] or nil
     return type(task) == "table" and tonumber(task.wc) == 1
 end
-
 function Player.ensureThirdContinentPass(actor, tip)
     if Player.hasThirdContinentPass(actor) then
         return true
@@ -857,7 +1032,6 @@ function Player.ensureThirdContinentPass(actor, tip)
     Player.sendmsgEx(actor, tip or "请先完成#57|【灾厄入侵】#249|后再使用该功能#57")
     return false
 end
-
 function Player.moveToThirdContinentFrontier(actor, tip)
     if tip and tip ~= "" then
         Player.sendmsgEx(actor, tip)
@@ -866,25 +1040,37 @@ function Player.moveToThirdContinentFrontier(actor, tip)
     addhpper(actor, '=', 100)
     addmpper(actor, '=', 100)
 end
-
 -- 通用门槛：世界符文总奖励领取后视为已解锁。
-function Player.hasSeventhContinentPass(actor)
-    if checktitle(actor, "世界符文·[真我]") then
-        return true
+-- 兜底保护：通过传图卷轴或传送到非法三大陆地图时，统一拉回灰界。
+local function _third_continent_map_guard(actor)
+    local map_name = tostring(getbaseinfo(actor, 3) or "")
+    if map_name == "" then
+        return
     end
-    local data = Player.getJsonTableByVar(actor, VarCfg["T_世界符文"]) or {}
-    return tonumber(data.claim or data.reward or 0) == 1
+    if Player.canEnterThirdContinentMap(actor, map_name) then
+        return
+    end
+    if map_name == "三大陆主城" then
+        Player.moveToThirdContinentFrontier(actor, "未开#57|【开辟仙府】#249|前暂时只能#57|【灰界】#249|活动#57")
+        return
+    end
+    Player.moveToThirdContinentFrontier(actor, "未开#57|【开辟仙府】#249|前暂时只能#57|【灰界】#249|活动#57")
 end
-
--- 通用辅助：未解锁时拦截第七大陆进入并发送提示。
+GameEvent.add(EventCfg.onLoginEnd, _third_continent_map_guard, "三大陆地图拦截")
+GameEvent.add(EventCfg.goSwitchMap, _third_continent_map_guard, "三大陆地图拦截")
+-- 七大陆通行：获得“世界符文·[真我]”称号后视为解锁。
+function Player.hasSeventhContinentPass(actor)
+    return checktitle(actor, "世界符文·[真我]")
+end
+-- 七大陆通用限制：未满足条件时拦截进入并返回统一提示。
 function Player.ensureSeventhContinentPass(actor, tip)
-    if Player.hasSeventhContinentPass(actor) then
+    local ok, auto_tip = _dl_check(actor, 7)
+    if ok then
         return true
     end
-    Player.sendmsgEx(actor, tip or "请先集齐并领取#57|【世界符文】#249|奖励后再使用该功能#57")
+    Player.sendmsgEx(actor, ((auto_tip or tip or "请先满足七大陆进入条件后再使用该功能") .. "#57"))
     return false
 end
-
 function Player.hasZaiEPrep(actor, npcid)
     local jq_data = Player.getJsonTableByVar(actor, VarCfg.T_dljq)
     local key = "npc_" .. tostring(npcid) .. "_rw"
@@ -909,10 +1095,8 @@ function Player.checkItemNum(actor, t, multiple)
 end
 --回收
 local fd_sjyb = {[10053] = {500,2000},[10054] = {1000,5000},[10055] = {5000,50000},[10056] = {10000,1000000}}
-
 local hs_name_hlsj = "辉耀水晶"
 local hs_name_lingshi = "幻灵石"
-
 -- 自动回收键匹配：按分组区分，并兼容旧前缀。
 local hs_group_prefix = {
     zzhs = "1",
@@ -923,7 +1107,6 @@ local hs_group_prefix = {
     clfj = "6",
     teshuhuihsou = "7",
 }
-
 local hs_group_prefix_compat = {
     zzhs = "1",
     sqhs = "1",
@@ -933,8 +1116,6 @@ local hs_group_prefix_compat = {
     clfj = "7|1",
     teshuhuihsou = "8|1",
 }
-
-
 -- 统一按配置优先级查找物品所属回收组，返回组名和配置。
 local function hs_pick_cfg(idx)
     local cfg = huishou.zzhs[idx]
@@ -953,7 +1134,6 @@ local function hs_pick_cfg(idx)
     if cfg then return "teshuhuihsou", cfg end
     return nil, nil
 end
-
 -- 判定该物品是否命中玩家的自动回收勾选配置。
 -- 兼容顺序：精确 idx -> 新分组键 -> 新数字前缀 -> 旧前缀。
 local function hs_match_pz(pz, idx, group_name, cfg)
@@ -963,20 +1143,17 @@ local function hs_match_pz(pz, idx, group_name, cfg)
     if not cfg then
         return false
     end
-
     local g1 = cfg[1]
     local g2 = cfg[2]
     if not g1 then
         return false
     end
-
     -- 新规则：支持 group_name + [1]/[2] 键，精确匹配自动回收配置。
     local key_group_1 = group_name .. "_" .. g1
     local key_group_2 = key_group_1 .. "_" .. g2
     if pz[key_group_1] or pz[key_group_2] then
         return true
     end
-
     -- 当前数字前缀规则。
     local prefix = hs_group_prefix[group_name]
     if prefix then
@@ -984,7 +1161,6 @@ local function hs_match_pz(pz, idx, group_name, cfg)
             return true
         end
     end
-
     -- 旧前缀兼容兜底（支持多个前缀，例如 "5|2"）。
     local old_prefix = hs_group_prefix_compat[group_name]
     if old_prefix then
@@ -996,10 +1172,8 @@ local function hs_match_pz(pz, idx, group_name, cfg)
             end
         end
     end
-
     return false
 end
-
 local function hs_add_item_reward(reward, item_name, item_num)
     item_num = tonumber(item_num) or 0
     if item_num <= 0 or type(item_name) ~= "string" or item_name == "" then
@@ -1018,14 +1192,11 @@ local function hs_add_item_reward(reward, item_name, item_num)
         reward.items[item_name] = (reward.items[item_name] or 0) + item_num
     end
 end
-
-
 local function hs_get_zsfj_material_name(cfg)
     local direct_name = type(cfg[6]) == "string" and cfg[6] or nil
     if direct_name and direct_name ~= "" then
         return direct_name
     end
-
     -- zsfj 标记位：field5 表示辉耀水晶，field6 表示灵石。
     local flag_hlsj = tonumber(cfg[5]) or 0
     local flag_lingshi = tonumber(cfg[6]) or 0
@@ -1035,10 +1206,8 @@ local function hs_get_zsfj_material_name(cfg)
     if flag_lingshi > 0 then
         return hs_name_lingshi
     end
-
     return nil
 end
-
 -- 按分组把回收产出累计到 reward，最后一次性发放。
 local function hs_collect_reward(reward, group_name, idx, cfg)
     if not cfg then
@@ -1059,7 +1228,6 @@ local function hs_collect_reward(reward, group_name, idx, cfg)
         hs_add_item_reward(reward, material_name, v4)
     end
 end
-
 -- 将累计奖励统一结算到玩家，减少重复调用和提示。
 local function hs_apply_reward(play, reward, gz)
     if reward.coin > 0 then
@@ -1082,7 +1250,6 @@ local function hs_apply_reward(play, reward, gz)
         end
     end
 end
-
 function Player.huishou(play, hs_constant)
     if hs_constant == nil then
         -- 模式1：全背包自动回收（由开关控制）。
@@ -1091,7 +1258,6 @@ function Player.huishou(play, hs_constant)
         local reward = {coin = 0, yb = 0, lingshi = 0, hlsj = 0, items = {}}
         local sq = ''
         local item = getbagitems(play)
-
         for i, v in pairs(item or {}) do
             local idx = getiteminfo(play, v, 2)
             if idx > 10045 and idx <= 10063 then    --yuanbao
@@ -1112,10 +1278,21 @@ function Player.huishou(play, hs_constant)
                 end
             elseif idx > 10006 and idx <= 10021 then    --exp
                 -- 注意：当前代码仅在 kg3 == 3 时生效（保持现有行为）。
-                if kg3 == 3 then
+                if kg3 == 3 and Player.canGainRoleLevel(play, false) then
                     local sl = getiteminfo(play, v, 5)
-                    changeexp(play, '+', getstditeminfo(idx, 8) * sl, false)
-                    delitembymakeindex(play, getiteminfo(play, v, 1), sl)
+                    local useCount = 0
+                    local addExp = getstditeminfo(idx, 8)
+                    for i = 1, sl do
+                        if not Player.canGainRoleLevel(play, false) then
+                            break
+                        end
+                        changeexp(play, '+', addExp, false)
+                        Player.clampRoleLevel(play, false)
+                        useCount = useCount + 1
+                    end
+                    if useCount > 0 then
+                        delitembymakeindex(play, getiteminfo(play, v, 1), useCount)
+                    end
                 end
             else
                 -- 普通回收：命中开关+配置后，先记录 makeindex，最后批量删除。
@@ -1159,9 +1336,7 @@ function Player.huishou(play, hs_constant)
         hs_apply_reward(play, reward, gz)
         Login_msg(play,10,reward.coin,reward.yb)
     end
-
 end
-
 function Player.addteshuhuihsou(play, t)
     local T_tshs = json2tbl(getplaydef(play, VarCfg.T_tshs))
     local hspz = json2tbl(getplaydef(play,VarCfg.T_hsdg))
@@ -1175,10 +1350,7 @@ function Player.addteshuhuihsou(play, t)
     setplaydef(play, VarCfg.T_tshs, tbl2json(T_tshs))
     setplaydef(play,VarCfg.T_hsdg,tbl2json(hspz))
 end
-
-
 -----------自定义属性相关---------
-
 --增加修改自定义属性
 ---* actor：个人对象
 ---* itemobj：物品对象
@@ -1218,7 +1390,6 @@ function Player.addModifyCustomAttributes(actor, itemobj, group, attrIndex, attr
     changecustomitemvalue(actor, itemobj, attrIndex, "=", attrValue, group)
     refreshitem(actor, itemobj)
 end
-
 --获取自定义属性值
 function Player.getModifyCustomAttributes(actor, equipObj, index, childIndex)
     local t = json2tbl(getitemcustomabil(actor, equipObj))
@@ -1234,14 +1405,11 @@ function Player.getModifyCustomAttributes(actor, equipObj, index, childIndex)
     if not t["abil"][index]["v"] then
         return 0
     end
-
     if not t["abil"][index]["v"][childIndex] then
         return 0
     end
-
     return t["abil"][index]["v"][childIndex][3] or 0
 end
-
 --获取全部自定义属性值
 function Player.getAllModifyCustomAttributes(actor, equipObj, index)
     local t = json2tbl(getitemcustomabil(actor, equipObj))
@@ -1264,7 +1432,6 @@ function Player.getAllModifyCustomAttributes(actor, equipObj, index)
     end
     return result
 end
-
 --获取数学组属性到字符串
 function Player.getAttListToTable(actor, str)
     if not str or str == "" then
@@ -1284,7 +1451,6 @@ function Player.getAttListToTable(actor, str)
     end
     return newt
 end
-
 --数组属性变为字符串
 function Player.getAttrTableToStr(attrs)
     local attrStr = ""
@@ -1296,7 +1462,6 @@ function Player.getAttrTableToStr(attrs)
     attrStr = table.concat(attrList, "|")
     return attrStr
 end
-
 --获取装备位idx
 function Player.getEquipIdxByPos(actor, pos)
     local itemobj = linkbodyitem(actor, pos)
@@ -1304,7 +1469,6 @@ function Player.getEquipIdxByPos(actor, pos)
     local idx = getiteminfo(actor, itemobj, ConstCfg.iteminfo.idx)
     return idx
 end
-
 --通过位置获取装备名字
 function Player.getEquipNameByPos(actor, pos)
     local itemobj = linkbodyitem(actor, pos)
@@ -1312,7 +1476,6 @@ function Player.getEquipNameByPos(actor, pos)
     local name = getiteminfo(actor, itemobj, ConstCfg.iteminfo.name)
     return name
 end
-
 --通过位置获取字段
 function Player.getEquipFieldByPos(actor, pos, type)
     local name = Player.getEquipNameByPos(actor, pos)
@@ -1339,7 +1502,6 @@ function Player.countArtifactEquipSlots(actor)
     end
     return n
 end
-
 --查询背包神器位是否有对应装备
 function Player.hasEquipInArtifactSlot(actor, itemname)
     for i = 77, 88 do
@@ -1353,7 +1515,6 @@ function Player.hasEquipInArtifactSlot(actor, itemname)
     end
     return nil
 end
-
 -- 检查指定装备位是否穿戴了某件装备。
 function Player.hasEquipOnPos(actor, pos, itemname)
     if not actor or not pos or not itemname or itemname == "" then
@@ -1363,5 +1524,18 @@ function Player.hasEquipOnPos(actor, pos, itemname)
     return name == itemname
 end
 
-return Player
+-- 登录预留：当前不再做人物等级封顶，仅保留函数壳避免旧事件报错。
+local function _player_level_cap_on_login(actor)
+    return
+end
 
+-- 升级预留：当前不再拦截非经验丹的升级来源。
+local function _player_level_cap_on_level(actor, curLevel)
+    return
+end
+
+GameEvent.add(EventCfg.onLogin, _player_level_cap_on_login, "角色等级上限")
+GameEvent.add(EventCfg.onKFLogin, _player_level_cap_on_login, "角色等级上限")
+GameEvent.add(EventCfg.onPlayLevelUp, _player_level_cap_on_level, "角色等级上限")
+
+return Player

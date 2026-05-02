@@ -48,99 +48,66 @@ end
 local _admin_test_monsters = {
     -- "测试怪物名",
 ---灰界---
--- "枯沫伥",
 -- "灰纹·潜噬者",
 -- "霾息·巡界使",
--- "腐沼怪",
 -- "南荒·狩影者",
 -- "★南境荒王★",
--- "霜痕魅",
 -- "北霜·裂牙者",
 -- "≮北寒碎霜王≯",
--- "斑风怪",
 -- "东纱·巡风者",
 -- "「灰翼风痕主」",
--- "海骨魅",
 -- "西潮·深潜者",
 -- "★西海古皇★[道法合一]",
 "---藏星海---",
-"潮纹兽",
 "星潮·逐星者",
 "≮群星渊皇≯",
-"海咬怪",
 "外渊·巡海者",
 "☆溟海咒皇☆[沉寂]",
-"古藤魅",
 "岛影·窥行者",
 "★岛心梦主★[沉寂]",
 "暮蝠",
 "暗渊·裂壁者",
 "≮黑洞魔皇≯",
-"船咒灵",
-"黑纱魅",
 "「幽航鬼主」[通灵]",
 "舱鼠",
 "舱影·疾行者",
 "≮水手怨皇≯[通灵]",
-"静潮兽",
 "溟光·摄海使",
 "「玄溟古君」",
-"七星鸦",
-"星沙怪",
 "七星·巡星者",
 "★七星海皇★[至高神灵]",
-"星痕魅",
-"殁羽妖",
 "葬城·殓灵者",
 "≮葬星皇≯",
-"砂潮怪",
-"海咒兽",
 "海滩·觅潮者",
 "咒砂·潜灵将",
 "「海殇巨皇」[至高神灵]",
 "海盗头目",
 -- "---苍云城--",
--- "城影客",
 -- "红尘·夜巡者",
 -- "「红幕法皇」[咆哮]",
--- "藤裂怪",
--- "荒镜魅",
 -- "外郊·影渡者",
 -- "雾裂·狩行将",
 -- "≮红尘荒皇≯·赤虚[掌控]",
 -- "「外廓冥君」",
--- "内街俑",
--- "红痕妖",
 -- "内殿·巡禁者",
 -- "☆红殿古皇☆命运之神",
--- "木偶俑",
 -- "客栈·巡夜者",
 -- "★红尘店主★",
--- "塔隙兽",
--- "石翼怪",
 -- "通塔·巡禁者",
 -- "≮通天塔主≯",
 -- "「通天夜皇」",
--- "底隙怪",
 -- "深基·巡守者",
 -- "☆塔底冥皇☆·≮巨龙之魂≯",
--- "风痕妖",
--- "塔翼魅",
 -- "塔巅·巡天者",
 -- "★塔巅天皇★",
 -- "「天极古君」[魔狱]",
 -- "---草药谷---",
--- "灵草伥",
--- "藤骨怪",
 -- "仙田·潜灵者",
 -- "草纹·巡守使",
 -- "☆仙草大妖☆",
 -- "「田中药皇」[神话]",
--- "深藤魅",
 -- "古谷·巡林者",
 -- "★古谷药皇★",
--- "丹影兽",
--- "灰火怪",
 -- "丹炉·巡执者",
 -- "≮丹藏古皇≯[神话]",
 -- "---三大陆boss---",
@@ -149,10 +116,7 @@ local _admin_test_monsters = {
 -- "来自其他位面的强者",
 -- "大天使安提罗科斯·命运之神",
 -- "沉迷暗黑世界的神·魔神降临",
-
-
 }
-
 local function _admin_spawn_test_monsters(play)
     if type(_admin_test_monsters) ~= "table" or #_admin_test_monsters <= 0 then
         Player.sendmsgEx(play, "测试怪物列表为空#57")
@@ -189,11 +153,9 @@ local function _admin_simple_activity_start(play, idx, name, minutes)
     sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《" .. actName .. "》已开启奖励丰厚,请尽快参加活动...")
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《" .. actName .. "》已开启奖励丰厚,请尽快参加活动...")
     for _, playerObj in ipairs(getplayerlst() or {}) do
-        sendluamsg(playerObj, 101, 12, 1, idx, '{"sk":' .. minutes .. ',"kf":2,"idx":' .. idx .. '}')
     end
     Player.sendmsgEx(play, actName .. "测试开始#249")
 end
-
 local function _admin_simple_activity_finish(play, idx, name)
     idx = tonumber(idx) or 0
     local actName = tostring(name or "测试活动")
@@ -204,11 +166,9 @@ local function _admin_simple_activity_finish(play, idx, name)
     end
     Player.sendmsgEx(play, actName .. "测试结束#249")
 end
-
 local function _admin_not_ready(play, name)
     _admin_simple_activity_start(play, 0, tostring(name or "测试活动"), 5)
 end
-
 local function _admin_qmdk_start(play)
     local cfg = QmdkApi and QmdkApi.get_cfg and QmdkApi.get_cfg() or nil
     if not cfg then
@@ -244,14 +204,12 @@ local function _admin_qmdk_start(play)
     sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《全民夺矿》已开启，10秒后开始采矿搬运...")
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《全民夺矿》已开启，10秒后开始采矿搬运...")
     for _, playerObj in ipairs(getplayerlst() or {}) do
-        sendluamsg(playerObj, 101, 12, 1, 2, '{"sk":' .. (tonumber(cfg.duration_min) or 20) .. ',"kf":2,"idx":2}')
         if QmdkApi and QmdkApi.refresh_actor then
             QmdkApi.refresh_actor(playerObj)
         end
     end
     Player.sendmsgEx(play, "全民夺矿已立即开启#249")
 end
-
 local function _admin_qmdk_finish(play)
     local cfg = QmdkApi and QmdkApi.get_cfg and QmdkApi.get_cfg() or nil
     if not cfg then
@@ -289,7 +247,6 @@ local function _admin_qmdk_finish(play)
     setsysvar(VarCfg["G_全民夺矿状态"], 0)
     Player.sendmsgEx(play, "全民夺矿已立即关闭#249")
 end
-
 local function _admin_qmdt_build_prompt(q, qidx, total)
     local lines = {"第" .. tostring(qidx) .. "/" .. tostring(total) .. "题：" .. tostring(q.title or "")}
     for i, one in ipairs(q.options or {}) do
@@ -298,7 +255,6 @@ local function _admin_qmdt_build_prompt(q, qidx, total)
     lines[#lines + 1] = "请输入答案序号或完整答案"
     return table.concat(lines, "\n")
 end
-
 local function _admin_qmdt_start(play)
     local cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].qmdt or nil
     if type(cfg) ~= "table" or type(cfg.questions) ~= "table" or #cfg.questions <= 0 then
@@ -319,13 +275,11 @@ local function _admin_qmdt_start(play)
     setsysvar(VarCfg["G_全民答题状态"], 1)
     setsysvar(VarCfg["A_全民答题json"], tbl2json(state))
     for _, playerObj in ipairs(getplayerlst() or {}) do
-        sendluamsg(playerObj, 101, 12, 1, 3, '{"sk":2,"kf":2,"idx":3}')
     end
     sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《全民答题》已开启，请通过活动面板输入答案...")
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《全民答题》已开启，请通过活动面板输入答案...")
     Player.sendmsgEx(play, _admin_qmdt_build_prompt(cfg.questions[qidx], qidx, math.min(tonumber(cfg.question_count) or #cfg.questions, #cfg.questions)))
 end
-
 local function _admin_qmdt_finish(play)
     local raw = getsysvar(VarCfg["A_全民答题json"])
     local state = raw ~= "" and json2tbl(raw) or {}
@@ -337,40 +291,32 @@ local function _admin_qmdt_finish(play)
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《全民答题》已结束,本次第一名为【测试玩家】...")
     Player.sendmsgEx(play, "全民答题已手动关闭#249")
 end
-
 local function _admin_wlmz_start(play)
     setenvirontimer("比武大会", 2, 10, "@hd_tcppk,比武大会")
     sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《武林盟主》已开启奖励丰厚,请尽快参加活动...")
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《武林盟主》已开启奖励丰厚,请尽快参加活动...")
     for _, playerObj in ipairs(getplayerlst() or {}) do
-        sendluamsg(playerObj, 101, 12, 1, 9, '{"sk":5,"kf":2,"idx":9}')
     end
     Player.sendmsgEx(play, "武林盟主测试开始#249")
 end
-
 local function _admin_wlmz_finish(play)
     setenvirofftimer("比武大会", 2)
     sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《武林盟主》已关闭,本次活动第一名为【测试玩家】...")
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《武林盟主》已关闭,本次活动第一名为【测试玩家】...")
     Player.sendmsgEx(play, "武林盟主测试结束#249")
 end
-
 local function _admin_tcppk_start(play)
-    setenvirontimer("xtc", 1, 3, "@hd_tcppk,xtc")
     for _, playerObj in ipairs(getplayerlst() or {}) do
         sendluamsg(playerObj, 101, 1000, 1, 0, "")
         setplaydef(playerObj, "N$上次坐标x", 0)
         setplaydef(playerObj, "N$上次坐标y", 0)
-        sendluamsg(playerObj, 101, 12, 1, 5, '{"sk":3,"kf":2,"idx":5}')
     end
     sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《土城跑酷》已开启奖励丰厚,请尽快参加活动...")
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《土城跑酷》已开启奖励丰厚,请尽快参加活动...")
     sendmovemsg("0", 1, 254, 0, 240, 1, "活动：活动《土城跑酷》已开启奖励丰厚,请尽快参加活动...")
     Player.sendmsgEx(play, "土城跑酷测试开始#249")
 end
-
 local function _admin_tcppk_finish(play)
-    setenvirofftimer("xtc", 1)
     for _, playerObj in ipairs(getplayerlst() or {}) do
         sendluamsg(playerObj, 101, 1000, 2, 0, "")
         sendluamsg(playerObj, 101, 12, 4, 3, "")
@@ -381,32 +327,26 @@ local function _admin_tcppk_finish(play)
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《土城跑酷》已关闭...")
     Player.sendmsgEx(play, "土城跑酷测试结束#249")
 end
-
 local function _admin_txzr_start(play)
     sendmovemsg("0", 1, 253, 0, 300, 1, "天选之人：活动《天选之人》已开启,请玩家尽快参与...")
     sendmovemsg("0", 1, 249, 0, 250, 1, "天选之人：活动《天选之人》已开启,请玩家尽快参与...")
     for _, playerObj in ipairs(getplayerlst() or {}) do
-        sendluamsg(playerObj, 101, 12, 1, 7, '{"sk":120,"kf":2,"idx":7}')
     end
     Player.sendmsgEx(play, "天选之人测试开始#249")
 end
-
 local function _admin_txzr_finish(play)
     sendmovemsg("0", 1, 253, 0, 300, 1, "天选之人：测试轮次已结束...")
     sendmovemsg("0", 1, 249, 0, 250, 1, "天选之人：测试轮次已结束...")
     Player.sendmsgEx(play, "天选之人测试结束#249")
 end
-
 local function _admin_sbk_start(play)
     repaircastle()
     addattacksabakall()
     Player.sendmsgEx(play, "攻沙测试开始#249")
 end
-
 local function _admin_sbk_finish(play)
     Player.sendmsgEx(play, "攻沙测试结束#249")
 end
-
 local function _admin_sjdb_start(play)
     local cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].sjdb or {}
     local keepSec = tonumber(cfg.keep_sec) or 180
@@ -417,7 +357,6 @@ local function _admin_sjdb_start(play)
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《随机夺宝》已开启奖励丰厚,请尽快参加活动...")
     sendmovemsg("0", 1, 254, 0, 240, 1, "活动：活动《随机夺宝》已开启奖励丰厚,请尽快参加活动...")
     for _, playerObj in ipairs(getplayerlst() or {}) do
-        sendluamsg(playerObj, 101, 12, 1, 13, '{"sk":' .. keepMin .. ',"kf":2,"idx":13}')
     end
     for _, circle in ipairs(cfg.circles or {}) do
         local range = tonumber(circle and circle.range) or 200
@@ -431,7 +370,6 @@ local function _admin_sjdb_start(play)
     end
     Player.sendmsgEx(play, "随机夺宝测试开始#249")
 end
-
 local function _admin_sjdb_finish(play)
     sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《随机夺宝》已关闭...")
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《随机夺宝》已关闭...")
@@ -452,12 +390,10 @@ function npc.main(play,npcid)
             <EquipShow|id=ui_30|x=150|y=500|index=17|showtips=1|link=@脚本命令>
             <EquipShow|id=ui_300|x=200|y=500|index=87|showtips=1|link=@脚本命令>
             <EquipShow|id=ui_301|x=250|y=500|index=104|showtips=1|link=@脚本命令>
-
             <Button|id=ui_100|x=150|y=450|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=llxf测试|link=@ggna,24>
             <Button|id=ui_101|x=350|y=450|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=测试装备|link=@ggna,23>
             <Button|id=ui_102|x=550|y=450|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=大陆全解锁|link=@ggna,25>
             <Button|id=ui_103|x=550|y=400|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=灰界全任务|link=@ggna,54>
-
             <Button|id=ui_39|x=18|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=村庄开始|link=@ggna,32>
             <Button|id=ui_40|x=130|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=村庄结束|link=@ggna,33>
             <Button|id=ui_41|x=242|y=100|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=夺矿开始|link=@ggna,26>
@@ -487,12 +423,9 @@ function npc.main(play,npcid)
             <Button|id=ui_66|x=242|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=成就测试|link=@ggna,52>
             <Button|id=ui_67|x=354|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=刷怪测试|link=@ggna,53>
             <Button|id=ui_65|x=578|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=飘字测试|link=@ggna,14>
-
                 ]])
     end
-
 end
-
 function ggna(play,id)
     if id == "1" then
         local item = linkbodyitem(play,73)
@@ -797,38 +730,31 @@ function ggna(play,id)
         local target_task = 21
         local target_zs = 40
         local target_jqd = 200
-
+        local jqd_idx = getstditeminfo("剧情点", 0)
         local cur_task = tonumber(getplaydef(play, VarCfg.U_zxrw[1])) or 0
         if cur_task < target_task then
             setplaydef(play, VarCfg.U_zxrw[1], target_task)
         end
-
         local cur_zs_var = tonumber(getplaydef(play, VarCfg["U_转生等级"])) or 0
         if cur_zs_var < target_zs then
             setplaydef(play, VarCfg["U_转生等级"], target_zs)
         end
-
         local cur_zs_base = tonumber(getbaseinfo(play, 39)) or 0
         if cur_zs_base < target_zs then
             setbaseinfo(play, 39, target_zs)
         end
-
-        local jqd_idx = tonumber(getstditeminfo("剧情点", 0)) or 0
         if jqd_idx > 0 then
             local cur_jqd = tonumber(querymoney(play, jqd_idx)) or 0
             if cur_jqd < target_jqd then
                 changemoney(play, jqd_idx, "+", target_jqd - cur_jqd, "测试-大陆全解锁", true)
             end
         end
-
-        Player.sendmsgEx(play, "大陆条件已一键解锁：主线>=21，转生>=40，剧情点>=100")
+        Player.sendmsgEx(play, "大陆条件已一键解锁：主线>=21，转生>=40，剧情点>=200")
     elseif id == "23" then
         release_print("测试装备")
         local cailiao = {
 "兰姐的信物",
-"无相镜",
 "诅咒傀儡",
-"定风珠",
 "破妄之瞳",
 "阴阳玉佩",
 "胖娃的肚兜",
@@ -837,28 +763,17 @@ function ggna(play,id)
 "索隆的刀",
 "乌索普的弹弓",
 "海盗眼罩",
-"金箍棒",
-"芭蕉扇",
 "地狱使者之剑",
-"屠龙刀",
 "真·屠龙刀",
 "天选之子",
 "光速起步",
 "策划的手机",
 "技术的电脑",
 "美术的画笔",
-"切割刀",
 "至尊战刃",
 "炼丹许可证",
 "真视之眼",
 "古刹魔瓶",
-
-
-
-
-
-
-
         }
         for k, v in pairs(cailiao) do
             giveitem(play,v,1)
@@ -866,25 +781,17 @@ function ggna(play,id)
     elseif id == "24" then
         -- 测试脚本：调整地图怪物密度（逐图刷小怪，9x9检测饱和）
 --         local map_list = {
---             -- "山庄",
+--             -- "??",
 --             -- "幽谷",
 --             -- "洞穴",
 --             -- "古殿",
---             -- "山庄一",
---             -- "幽谷一",
---             -- "洞穴一",
---             -- "古殿一",
 --             -- "隐藏地图二",
---             -- "野火帮",
 --             -- "野火帮大营",
 --             -- "极光城郊",
 --             -- "神秘森林",
 --             -- "兵道古藏",
---             -- "乱葬岗",
---             -- "夜魔洞",
 --             -- "洞穴深处",
 --             -- "洞穴秘境",
-
 -- --             "灰界",
 -- -- "灰界南部",
 -- -- "灰界北部",
@@ -894,42 +801,24 @@ function ggna(play,id)
 -- -- "鬼嘲深渊",
 -- -- "叹息旷野",
 -- -- "禁忌之海",
--- -- "藏星海",
 -- -- "藏星外海",
 -- -- "神秘岛屿",
 -- -- "黑暗洞窟",
 -- -- "千年沉船",
--- -- "船长室",
--- -- "水手舱",
 -- -- "藏星内海",
--- -- "七星岛",
--- -- "葬星城",
 -- -- "葬星海滩",
 -- -- "葬星海滩1",
--- -- "苍云城",
 -- -- "苍云城郊外",
 -- -- "苍云内城",
 -- -- "苍云客栈",
--- -- "草药谷",
--- -- "仙草田",
 -- -- "草药古深处",
 -- -- "丹道古藏",
 -- -- "酆都鬼城",
--- -- "鬼门关",
--- -- "黄泉路",
--- -- "奈何桥",
 -- -- "罗酆六天",
 -- -- "十八层地狱",
 -- -- "六道轮回",
 -- -- "大唐·长安城",
 -- -- "东海龙宫",
--- -- "黑风山",
--- -- "黄风岭",
--- -- "女儿国",
--- -- "通天河",
--- -- "狮驼岭",
--- -- "天竺山",
--- -- "火焰山",
 -- -- "生肖灵域",
 -- -- "灵域·一层",
 -- -- "子鼠灵域",
@@ -950,13 +839,11 @@ function ggna(play,id)
 -- -- "传说之地",
 -- -- "盘古开天",
 -- -- "羿射九日",
--- -- "不周山",
 -- -- "女娲补天",
 -- -- "黑白无常",
 -- -- "后土娘娘",
 -- -- "真假玉帝",
 -- -- "白蛇传说",
--- -- "灵兽谷",
 -- -- "青龙之境",
 -- -- "朱雀之境",
 -- -- "玄武之境",
@@ -964,14 +851,9 @@ function ggna(play,id)
 -- -- "麒麟之境",
 -- -- "时空裂隙",
 -- -- "倚天江湖",
--- -- "冰火岛",
--- -- "光明顶",
 -- -- "三国乱世",
--- -- "虎牢关",
 -- -- "赤壁",
 -- -- "水浒再临",
--- -- "景阳冈",
--- -- "狮子楼",
 -- -- "生命边界",
 -- -- "白骨神庙",
 -- -- "神庙暗廊",
@@ -982,15 +864,10 @@ function ggna(play,id)
 -- -- "赤焰焚殿三层",
 -- -- "葬天旧土",
 -- -- "聊斋志异",
--- "兰若寺",
 -- "画壁",
 -- "崂山",
 -- "罗刹海市",
 -- "敦煌遗梦",
--- "莫高窟",
--- "月牙泉",
--- "玉门关",
--- "阳关道",
 -- "世界禁墟",
 -- "大地禁墟一层",
 -- "大地禁墟二层",
@@ -1005,33 +882,26 @@ function ggna(play,id)
 -- "青铜禁墟二层",
 -- "青铜禁墟三层",
 --         } -- TODO: 填入要调整的地图名
---         local normal_mobs = {"枯灯客"} -- TODO: 普通怪列表
-
 --         local range = 3 -- 刷怪点随机半径
 --         local check_range = 6 -- 9x9检测半径(2*4+1)
 --         local max_fail = 40 -- 连续失败上限(饱和)
 --         local tries_per_spawn = 10 -- 每次刷怪找点尝试次数
 --         local spawn_limit = 5000 -- 每张地图单次补怪上限
-
 --         for _, map in ipairs(map_list) do
 --             local w = getmapinfo(map, 0) or 0
 --             local h = getmapinfo(map, 1) or 0
 --             if w > 0 and h > 0 then
 --                 -- 检测前先清空地图怪物
 --                 killmonsters(map, "*", 0, false)
-
 --                 local counter = {n = 0}
 --                 local added_normal = 0
 --                 local sample_count = 0
 --                 local total_ncnt = 0
-
 --                 local fail_streak = 0
 --                 local used_points = {}
-
 --                 while fail_streak < max_fail do
 --                     local rx = math.random(1, w)
 --                     local ry = math.random(1, h)
-
 --                     local key = rx.."_"..ry
 --                     if used_points[key] then
 --                         fail_streak = fail_streak + 1
@@ -1048,7 +918,6 @@ function ggna(play,id)
 --                                 end
 --                             end
 --                         end
-
 --                         if ok then
 --                             genmonex(map, rx, ry, normal_mobs[math.random(1, #normal_mobs)], 1, 1, 0, 54, "", 0)
 --                             used_points[key] = true
@@ -1059,20 +928,15 @@ function ggna(play,id)
 --                             fail_streak = fail_streak + 1
 --                         end
 --                     end
-
 --                     sample_count = sample_count + 1
 --                     total_ncnt = total_ncnt + (used_points[key] and 1 or 0)
-
 --                     if counter.n >= spawn_limit then
 --                         break
 --                     end
 --                 end
 --                     local avg_n = math.floor(total_ncnt / math.max(1, sample_count) + 0.5)
---                     sendmsg(play, 1, "{\"Msg\":\"<font color=\\\"#00ff00\\\">地图["..map.."] 小怪补："..added_normal.." 当前平均："..avg_n.."</font>\",\"Type\":9}")
---                     release_print("地图["..map.."] 小怪补："..added_normal)
 --                     release_print("当前平均 小怪："..avg_n)
 --             else
---                 sendmsg(play, 1, '{"Msg":"<font color=\"#ff0000\">地图['..map..']尺寸获取失败</font>","Type":9}')
 --             end
 --         end
 --         return
@@ -1083,12 +947,9 @@ function ggna(play,id)
         -- sg_data["npc_696"] = sg_data["npc_696"] + 100
         -- Player.setJsonTableByVar(play, VarCfg["T_各剧情杀怪"], sg_data)
         		-- sendmsgnew(play, 255, 0, '狂暴之力：玩家{《' .. getbaseinfo(play, 1) .. '》/FCOLOR=251}成功开启{[狂暴之力]/FCOLOR=250},击杀此人可获得额外奖励...', 1, 3)
-
-        ---文字测试 
+        ---称号部分
         -- 飘字测试请点上方按钮：@ggn,14
         -- Npclib[654].link(play, 654, 1, 0, "")
-
-        -- local where = Player.hasEquipInArtifactSlot(play, "金箍棒")
         -- -- release_print(where)
         -- if not where then
         --     Player.sendmsgEx(play, "你需要装备金箍棒才能完成任务#57")
@@ -1099,7 +960,6 @@ function ggna(play,id)
         -- release_print(item_json)
         -- item_json = json2tbl(item_json)
         -- if item_json then
-        --     item_json = json2tbl('{"abil":[{"i":0,"t":"[附加属性]","c":251,"v":[]}],"name":""}')
         -- end
         -- item_json.abil[1].v[1] = {1,253,200,1,13,1,1}
         -- item_json.abil[1].v[2] = {1,200,300,1,14,2,2}
@@ -1114,14 +974,11 @@ function ggna(play,id)
         -- Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], {})
         -- setplaydef(play, VarCfg.T_czlb,"{}")
         -- setplaydef(play,VarCfg.U_zxrw[1],21)
-        -- setplaydef(play,VarCfg.T_hsdg, '{"1_1_1":1,"1_1_2":1,"1_1_3":1,"1_1_4":1,"1_1_5":1,"1_1_6":1,"1_1_7":1,"1_1_8":1,"1_1_9":1,"1_1_10":1,"1_1_11":1,"1_1_12":1}')--回收打勾
-        local _cfg_key = "npc_705"
+        -- local _cfg_key = "npc_705"
         -- local _config = Guard.getConfig(_cfg_key)
         -- local _task_cfg = (_config and _config.task_cfg) or {}
-
         -- local _choice_key = _cfg_key .. "_choice" -- 1=赤血花，2=紫梦花
         -- local _step_key = _cfg_key .. "_step" -- 1=击杀阶段提交完成
-
         -- local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
         -- local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
         -- local state = tonumber(jq_data[_cfg_key] or 0) or 0
@@ -1134,38 +991,19 @@ function ggna(play,id)
         -- jq_data[_cfg_key] = nil
         --     jq_data[_step_key] = nil
         --     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-
         --     -- 清理击杀进度
         -- sg_data[key_small] = nil
         -- sg_data[key_boss] = nil
         -- Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
-
-        local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
-        local key_small = _cfg_key .. "_small"
-        local key_boss = _cfg_key .. "_boss"
-        sg_data[key_small] = 200
-        sg_data[key_boss] = 2
-        Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
-
+        -- local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+        -- local key_small = _cfg_key .. "_small"
+        -- local key_boss = _cfg_key .. "_boss"
+        -- sg_data[key_small] = 200
+        -- sg_data[key_boss] = 2
+        -- Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
+        local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+        jq_data["npc_55"] = nil
+        Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
     end
-
 end
-
 return npc
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

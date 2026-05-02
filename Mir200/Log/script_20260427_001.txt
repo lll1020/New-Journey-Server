@@ -1,0 +1,13 @@
+[2026-04-27 17:11:08:648] LuaNPC: ID:999999999 执行 startup player: 耗时：31; NpcThreadId: 134004, CurPlayThreadId: 134004
+
+[2026-04-27 17:12:08:698] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：32; NpcThreadId: 134004, CurPlayThreadId: 134004
+
+[2026-04-27 17:12:49:544] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：46; NpcThreadId: 134004, CurPlayThreadId: 134004
+
+[2026-04-27 18:35:26:053] LuaNPC:玩家名字 ID:999999999 执行 entermap player:玩家名字 耗时：141; NpcThreadId: 134004, CurPlayThreadId: 134004
+[2026-04-27 18:35:26:053] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：312; NpcThreadId: 134004, CurPlayThreadId: 134004
+[2026-04-27 18:35:26:053] [玩家名字]Lua执行耗时过高:312ms msgid:100 501 1 0 
+
+[2026-04-28 00:27:21:953] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：47; NpcThreadId: 134004, CurPlayThreadId: 134004
+[2026-04-28 00:27:21:953] [玩家名字]Lua执行耗时过高:47ms msgid:100 101 4 1 {"count":1}
+

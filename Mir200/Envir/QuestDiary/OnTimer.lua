@@ -873,19 +873,22 @@ local _WLMZ_EVENT_NAME = "武林盟主"
 local _WLMZ_MAP_NAME = "比武大会"
 local _WLMZ_SCORE_VAR = "比武大会"
 function ontimerex1()
-    if getsysvar(VarCfg["G_新区验证"]) > 0 and not checkkuafuserver() then
-        local dqfz = getsysvar(VarCfg["G_开区分钟"]) + 1
+    local xqyz = tonumber(getsysvar(VarCfg["G_新区验证"])) or 0
+    if xqyz > 0 and not checkkuafuserver() then
+        local dqfz = (tonumber(getsysvar(VarCfg["G_开区分钟"])) or 0) + 1
         setsysvar(VarCfg["G_开区分钟"], dqfz)
         -- 在全局每分钟心跳中轮询血契之门真实编号的开放提示。
         if Npclib and Npclib[81] and Npclib[81].roll_open_notice then
             pcall(Npclib[81].roll_open_notice)
         end
-        if getsysvar(VarCfg["G_天选之人"][2]) < 4 then
-            local txsj = getsysvar(VarCfg["G_天选之人"][1]) + 1
+        local txzr_round = tonumber(getsysvar(VarCfg["G_天选之人"][2])) or 0
+        if txzr_round < 4 then
+            local txsj = (tonumber(getsysvar(VarCfg["G_天选之人"][1])) or 0) + 1
             if txsj >= 30 then--30分钟一轮
                 setsysvar(VarCfg["G_天选之人"][1], 0)
-                setsysvar(VarCfg["G_天选之人"][2], getsysvar(VarCfg["G_天选之人"][2]) + 1)
-                local djl = getsysvar(VarCfg["G_天选之人"][2])
+                txzr_round = txzr_round + 1
+                setsysvar(VarCfg["G_天选之人"][2], txzr_round)
+                local djl = txzr_round
                 local wjlb, lins = getplayerlst(), {}
                 for i, v in pairs(wjlb or {}) do
                     local sc_data = Player.getJsonTableByVar(v, VarCfg["T_首冲礼包"])
@@ -894,7 +897,7 @@ function ontimerex1()
                         table.insert(lins, {getbaseinfo(v, 1), _txzr_get_roll_point(v, djl)})
                     end
                 end
-                local txzz_data = getsysvar(VarCfg["A_天选之人json"])
+                local txzz_data = getsysvar(VarCfg["A_天选之人json"]) or ""
                 txzz_data = txzz_data == "" and {} or json2tbl(txzz_data)
                 txzz_data["md" .. djl] = {}
                 table.sort(lins, function(a, b)
@@ -1177,7 +1180,7 @@ function ontimer6(play)
         end
     end
     if not can_fldt then
-        local qqsb = Player.getJsonTableByVar(nil, VarCfg["A_????json"]) or {}
+        local qqsb = Player.getJsonTableByVar(nil, VarCfg["A_全区首曝json"]) or {}
         local fldt_self = Player.getJsonTableByVar(play, VarCfg.T_qrbq) or {}
         local qqsb_claim = type(fldt_self["qqsb_claim"]) == "table" and fldt_self["qqsb_claim"] or {}
         local grqqsb = Player.getJsonTableByVar(play, VarCfg.T_grqqsb) or {}
@@ -1235,18 +1238,12 @@ function ontimer6(play)
         end
     end
     local can_jbp = false
-    local jbp_data = Player.getJsonTableByVar(play, "T44") or {}
-    local jbp_level = tonumber(jbp_data.level or 1) or 1
-    local jbp_cfg_all = (teshudata["anniu_517"] and teshudata["anniu_517"].details) or {}
-    local jbp_cfg = jbp_cfg_all[jbp_level]
-    if jbp_cfg then
-        local jbp_jf = tonumber(getplaydef(play, "U42") or 0) or 0
-        local jbp_cs = tonumber(getplaydef(play, "J22") or 0) or 0
-        local need_jf = tonumber(jbp_cfg.jf or 999999999) or 999999999
-        local max_cs = tonumber(jbp_cfg.maxcs or 0) or 0
-        if jbp_cs < max_cs and jbp_jf >= need_jf then
-            can_jbp = true
-        end
+    local jbp_cfg = teshudata["npc_106"] or {}
+    local jbp_state = Player.getJsonTableByVar(play, VarCfg["T_聚宝盆"]) or {}
+    local jbp_need = tonumber(jbp_cfg.fragment_count or 20) or 20
+    local jbp_item = tostring(jbp_cfg.fragment_item or "聚宝盆碎片")
+    if (tonumber(jbp_state.rebuilt or 0) or 0) < 1 and getbagitemcount(play, jbp_item) >= jbp_need then
+        can_jbp = true
     end
     -- 仙途奇缘顶部红点：存在任一里程碑奖励可领取时点亮。
     local can_ff = false
@@ -1430,7 +1427,4 @@ function hd_tcppk(xx,ditu)
         end
     end
 end
-
-
-
 

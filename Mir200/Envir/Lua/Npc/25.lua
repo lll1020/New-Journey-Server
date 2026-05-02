@@ -1,6 +1,5 @@
 npc = {}
 
-
 --幸运强化
 
 local _config = Guard.getConfig("npc_25")
@@ -10,6 +9,9 @@ function npc.main(play,npcid)
 
     local data = {}
     data["level"] = getplaydef(play, VarCfg["U_幸运强化"])
+    -- 二大陆异闻录：记录玩家已查看过幸运强化界面。
+    setplaydef(play, "N$XYL2_LUCKY_VIEW", 1)
+    Player.trySyncSecondContinentXyl(play)
     sendluamsg(play,100,npcid,0,0,tbl2json(data))
 end
 
@@ -85,9 +87,5 @@ function Login_xxqh(play)
 end
 GameEvent.add(EventCfg.onLogin, Login_xxqh, "Login_xxqh")
 
-
-
 return npc
-
-
 

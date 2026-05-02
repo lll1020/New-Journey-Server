@@ -66,6 +66,8 @@ function npc.link(play,npcid,ew,aid)
                 setaddnewabil(play, -2, "=",attrsstr, itemobj)
                 refreshitem(play, itemobj)
                 recalcabilitys(play)
+                -- 二大陆伏妖录：装备强化成功后立即尝试自动结算当前任务。
+                Player.trySyncSecondContinentXyl(play)
                 if FairyFate and FairyFate.touch then FairyFate.touch(play, "strength_success") end
                 sendluamsg(play,100,npcid,1,aid,"")
 

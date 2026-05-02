@@ -1,18 +1,37 @@
 npc = {}
 
-
 --境界提升
 
 local _config = Guard.getConfig("npc_21")
 local FairyFate = include("lua/LuaLib/fairy_fate.lua")
 
-function npc.main(play,npcid)
+local function _get_jz_dan_count(play)
+    local rec = json2tbl(getplaydef(play, VarCfg["T_物品使用记录"]))
+    if type(rec) ~= "table" then
+        rec = {}
+    end
+    return tonumber(rec.jz_dan_count or 0) or 0
+end
 
+local function _build_sync_data(play)
     local data = {}
+    local jz_count = _get_jz_dan_count(play)
     --{等级,经验}
     data["level"] = getplaydef(play, VarCfg["U_境界修炼"][1])
     data["exp"] = getplaydef(play, VarCfg["U_境界修炼"][2])
-    sendluamsg(play,100,npcid,0,0,tbl2json(data))
+    data["jz_dan_count"] = jz_count
+    data["jz_dan_ready"] = jz_count >= 1 and 1 or 0
+    data["jz_dan_text"] = jz_count >= 1 and "已服用" or "未服用"
+    data["jz_dan_color"] = jz_count >= 1 and 250 or 249
+    return data
+end
+
+local function _send_sync_data(play, npcid, p2)
+    sendluamsg(play,100,npcid,p2 or 0,0,tbl2json(_build_sync_data(play)))
+end
+
+function npc.main(play,npcid)
+    _send_sync_data(play, npcid, 0)
     openhyperlink(play, 1, 2)
 end
 
@@ -48,6 +67,10 @@ function npc.link(play,npcid,ew,aid)
         end
 
         if exp >= config.need_xxz then
+            if level == 10 and _get_jz_dan_count(play) < 1 then
+                Player.sendmsgEx(play, "你的#57|【筑基丹】#249|不足，需要服用#57|【1颗筑基丹】#249|后方可突破")
+                return
+            end
             local name, num = Player.checkItemNumByTable(play, config.cost)
             if name then
                 Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
@@ -61,9 +84,10 @@ function npc.link(play,npcid,ew,aid)
             end
 
             setplaydef(play, VarCfg["U_境界修炼"][1], level)
+            -- 二大陆伏妖录：境界突破成功后立即尝试自动结算当前任务。
+            Player.trySyncSecondContinentXyl(play)
             Player.sendmsgEx(play,  "恭喜你，境界提升成功，当前境界等级为|【".._config.details[level].title.."级】#249|")
             if FairyFate and FairyFate.touch then FairyFate.touch(play, "realm_up") end
-            sendluamsg(play,100,npcid,1,0,"")
             Player.del_attlist(play, "境界修为")
             Login_jjxw(play)
             if level == 9 then
@@ -72,6 +96,7 @@ function npc.link(play,npcid,ew,aid)
             end
 
             sendluamsg(play,101,1005,0,0,"tpcg")
+            _send_sync_data(play, npcid, 1)
         else
             Player.sendmsgEx(play,  "你的境界经验不足，无法提升境界#57")
             return
@@ -97,7 +122,5 @@ function Login_jjxw(play)
     Player.add_attlist(play, "境界修为", "=", attrsstr, 1)
 end
 GameEvent.add(EventCfg.onLogin, Login_jjxw, "Login_jjxw")
-
-
 
 return npc

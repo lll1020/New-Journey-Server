@@ -57,8 +57,12 @@ local function _try_grant_level_bonus(play, data)
     end
     data.level_bonus = 1
     _save_data(play, data)
-    callscriptex(play, "CHANGELEVEL", "+", add)
-    Player.sendmsgEx(play, string.format("你已获得称号#57|【%s】#249|的等级奖励，额外获得#57|【%d级】#249|", _title_name, add))
+    local _, realAdd = Player.addRoleLevel(play, add, false)
+    if realAdd > 0 then
+        Player.sendmsgEx(play, string.format("你已获得称号#57|【%s】#249|的等级奖励，额外获得#57|【%d级】#249|", _title_name, realAdd))
+    else
+        Player.sendmsgEx(play, string.format("你已获得称号#57|【%s】#249|的等级奖励，但当前等级已达#57|【%d级】#249|上限，未获得额外等级#57", _title_name, Player.getRoleLevelCap()))
+    end
     return true
 end
 

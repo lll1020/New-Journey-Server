@@ -1,22 +1,17 @@
 npc = {}
-
-
 --地图跳转npc
-
 local _config = {
     --{"地图名",x,y,限制fun,提示文字,所属大陆}
     [201] = {"山庄",0,0,nil,nil,1, mob_name = "枯灯客", mob_shape = 631, min_map = "000100"},
     [202] = {"幽谷",0,0,nil,nil,1, mob_name = "青苔妖", mob_shape = 200, min_map = "000100"},
     [203] = {"洞穴",0,0,nil,nil,1, mob_name = "石牙兽", mob_shape = 45, min_map = "000100"},
     [204] = {"古殿",0,0,nil,nil,1, mob_name = "破面俑", mob_shape = 12052, min_map = "000100"},
-
     -- [205] = {"隐藏地图二",0,0,nil,nil,2, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
     [206] = {"野火帮",100,100,nil,nil,2, mob_name = "「焚骨统领·赤狱」", mob_shape = 16236, min_map = "000100"},
     [207] = {"极光城郊",100,100,nil,nil,2, mob_name = "「辉域守护者·冰霄」", mob_shape = 12015, min_map = "000100"},
     [208] = {"杀伐道场",100,100,nil,nil,2, mob_name = "古兵执戟者", mob_shape = 16192, min_map = "000100",other_name = "兵道古藏"},
     [209] = {"夜魔洞",100,100,nil,nil,2, mob_name = "「深夜魔君·漆渊」", mob_shape = 12011, min_map = "000100"},
     -- [210] = {"特殊秘境副本二",0,0,nil,nil,2, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
-
     -- [211] = {"隐藏地图三",0,0,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
     [212] = {"灰界",201,199,nil,nil,3, mob_name = "灰纹·潜噬者", mob_shape = 12033, min_map = "000100"},
     [213] = {"藏星海",100,100,nil,nil,3, mob_name = "≮群星渊皇≯", mob_shape = 16206, min_map = "000100",other_name = "葬星海"},
@@ -24,12 +19,10 @@ local _config = {
     -- [215] = {"无主深渊",100,100,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
     [216] = {"草药谷",100,100,nil,nil,3, mob_name = "☆仙草大妖☆", mob_shape = 12079, min_map = "000100"},
     -- [217] = {"特殊秘境副本三",0,0,nil,nil,3, mob_name = "银爪收割者", mob_shape = 221, min_map = "000100"},
-
     [218] = {"酆都鬼城",100,100,nil,nil,4, mob_name = "「酆都之主·万魂冥君」", mob_shape = 16322, min_map = "000100"},
     [219] = {"大唐·长安城",100,100,nil,nil,4, mob_name = "「盛世暗面·长安城主」", mob_shape = 16247, min_map = "000100"},
     [220] = {"生肖灵域",100,100,nil,nil,4, mob_name = "★十二命相·生肖主宰★", mob_shape = 16251, min_map = "000100"},
     [221] = {"传说之地",100,100,nil,nil,4, mob_name = "≮万古传说·时代见证者≯", mob_shape = 16263, min_map = "000100"},
-
     [222] = {"灵兽谷",100,100,nil,nil,5, mob_name = "≮太古血脉·灵兽皇≯", mob_shape = 12100, min_map = "000100"},
     [223] = {"时空裂隙",100,100,nil,nil,5, mob_name = "★时空崩坏·裂界主★", mob_shape = 12100, min_map = "000100"},
     [224] = {"生命边界",100,100,nil,nil,5, mob_name = "≮生命终章·边界尊≯", mob_shape = 16121, min_map = "000100"},
@@ -46,7 +39,6 @@ local _config_spa = {
     [304] = {"葬星海滩", 184, 40,nil,nil,3, mob_name = "「海殇巨皇」[至高神灵]", mob_shape = 16166, min_map = "000100"},
     [305] = {"船长室", 40, 46,nil,nil,3, mob_name = "「幽航鬼主」[通灵]", mob_shape = 16147, min_map = "000100"},
     [306] = {"水手舱", 59, 11,nil,nil,3, mob_name = "≮水手怨皇≯[通灵]", mob_shape = 16150, min_map = "000100"},
-
     [307] = {"黄泉路", 49, 29,nil,nil,4, mob_name = "「黄泉尽头·忘川主宰」", mob_shape = 16131, min_map = "000100"},
     [308] = {"罗酆六天", 71, 78,nil,nil,4, mob_name = "★罗酆六天·冥律至尊★", mob_shape = 16131, min_map = "000100"},
     [309] = {"东海龙宫", 31, 83,nil,nil,4, mob_name = "≮东海真主·覆海龙皇≯", mob_shape = 16167, min_map = "000100"},
@@ -59,13 +51,21 @@ local _config_spa = {
     [316] = {"灵域·二层", 72, 25,nil,nil,4, mob_name = "≮灵域二层·秩序主宰≯", mob_shape = 16149, min_map = "000100"},
     [317] = {"灵域·三层", 63, 61,nil,nil,4, mob_name = "≮灵域三层·终序主宰≯", mob_shape = 16149, min_map = "000100"},
     [318] = {"灵域·秘境", 21, 20,nil,nil,4, mob_name = "★灵域秘境·原初主宰★", mob_shape = 16149, min_map = "000100"},
-
 }
-
+-- 三大陆地图统一拦截：未开辟仙府时，只允许通过 NPC 200 进入灰界。
+local function _ensure_continent_map_access(play, continent, map_name)
+    if continent == 3 then
+        return Player.ensureThirdContinentMapAccess(
+            play,
+            map_name,
+            "未开#57|【开辟仙府】#249|前，三大陆目前只能进入#57|【灰界】#249|#57"
+        )
+    end
+    return true
+end
 function npc.main(play,npcid)
     sendluamsg(play,100,npcid,0,0,"")
 end
-
 function npc.link(play,npcid,ew,aid)
     -- npc_guard: 入参校验
     if not Guard.ensurePlayer(play, npcid) then
@@ -81,13 +81,19 @@ function npc.link(play,npcid,ew,aid)
     if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
         return
     end
-
     if ew == 1 then
         if _config[npcid] then
             if not Player.dl_sz(play, _config[npcid][6]) then
                 return
             end
-            mapmove(play,_config[npcid][1] .. (aid == 1 and "一" or ""),_config[npcid][2],_config[npcid][3],5)
+            local target_map = _config[npcid][1] .. (aid == 1 and "?" or "")
+            if not _ensure_continent_map_access(play, _config[npcid][6], target_map) then
+                return
+            end
+            if not _ensure_continent_map_access(play, _config[npcid][6], _config[npcid][1]) then
+                return
+            end
+            mapmove(play,target_map,_config[npcid][2],_config[npcid][3],5)
             delaygoto(play,200,"npc_200_fbjs",0)
         end
         if _config_spa[npcid] then
@@ -191,16 +197,15 @@ function npc.link(play,npcid,ew,aid)
                     return
                 end
             end
+            if not _ensure_continent_map_access(play, config[6], config[1]) then
+                return
+            end
             mapmove(play,config[1],config[2],config[3],5)
         end
-
     end
 end
----- 
+----
 function npc_200_fbjs(play)
     startautoattack(play) --自动攻击
 end
-
 return npc
-
-

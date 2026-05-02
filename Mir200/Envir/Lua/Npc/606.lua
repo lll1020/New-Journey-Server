@@ -1,8 +1,5 @@
 npc = {}
-
-
 --讨伐夜魔（剧）
-
 local _config = Guard.getConfig("npc_606")
 function npc.main(play,npcid)
     if not _config then
@@ -13,7 +10,6 @@ function npc.main(play,npcid)
     data["jq_data"] = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     sendluamsg(play,100,npcid,0,0,tbl2json(data))
 end
-
 function npc.link(play,npcid,ew,aid)
     if not _config then
         return
@@ -32,12 +28,9 @@ function npc.link(play,npcid,ew,aid)
     if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
         return
     end
-
     local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     local key = "npc_606"
-    local key_a = key.."_a"
-    local key_b = key.."_b"
     if jq_data[key] and jq_data[key] >= 2 then
         Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
         return
@@ -56,7 +49,7 @@ function npc.link(play,npcid,ew,aid)
         Guard.closeNpcAndAuto(play, npcid)
     elseif ew == 2 then
         if jq_data[key] and jq_data[key] == 1 then
-            if (sg_data[key_a] or 0) >= (_config.num_a or 0) and (sg_data[key_b] or 0) >= (_config.num_b or 0) then
+            if (sg_data[key] or 0) >= (_config.num or 0) then
                 jq_data[key] = 2
                 if (jq_data[key] or 0) >= 2 then
                     Guard.clearTaskTemp(jq_data, key)
@@ -83,6 +76,4 @@ function npc.link(play,npcid,ew,aid)
         end
     end
 end
-
 return npc
-

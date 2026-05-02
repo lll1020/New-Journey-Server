@@ -3,22 +3,20 @@ local function _zxrw_get_equip_level(play, pos)
     local lv = Player.getEquipFieldByPos(play, pos, 1) or 0
     return tonumber(lv) or 0
 end
-
 local function _zxrw_get_trial_data(play)
     local t = Player.getJsonTableByVar(play, VarCfg["T_天书试炼"])
     t = type(t) == "table" and t or {}
     t.submit = type(t.submit) == "table" and t.submit or {}
     t.finish = tonumber(t.finish) or 0
+    t.claimed = tonumber(t.claimed) or 0
     return t
 end
-
 local function _zxrw_get_xiantian_data(play)
     local t = Player.getJsonTableByVar(play, VarCfg["T_天书先天"])
     t = type(t) == "table" and t or {}
     t.saved = type(t.saved) == "table" and t.saved or {}
     return t
 end
-
 local function _zxrw_get_task_npc_xy(rwid)
     local cfg = constant.rw_syb[rwid] or {}
     local xx = tonumber(cfg[4]) or 0
@@ -37,40 +35,34 @@ local function _zxrw_get_task_npc_xy(rwid)
     end
     return xx, yy
 end
-
 -- handle pre-completed mainline tasks
 local function _zxrw_is_precompleted(play, rwid)
-    if rwid == 2 then
+    if rwid == 4 then
         local t = Player.getJsonTableByVar(play, VarCfg["T_免费赞助"])
         return t and (tonumber(t["zzlb_1"] or 0) or 0) >= 1
-    elseif rwid == 4 then
-        return _zxrw_get_equip_level(play, 9) >= 2
-    elseif rwid == 5 then
-        return _zxrw_get_equip_level(play, 15) >= 2
-    elseif rwid == 6 then
-        return _zxrw_get_equip_level(play, 13) >= 2
     elseif rwid == 7 then
-        return _zxrw_get_equip_level(play, 12) >= 2 or _zxrw_get_equip_level(play, 14) >= 2
-    elseif rwid == 8 then
-        return _zxrw_get_equip_level(play, 16) >= 2
-    elseif rwid == 11 or rwid == 13 or rwid == 15 or rwid == 17 then
+        return (tonumber(getplaydef(play, VarCfg["U_兰姐好感度"]) or 0) or 0) >= 1
+    elseif rwid == 10 then
+        local T_qrbq = Player.getJsonTableByVar(play, VarCfg.T_qrbq) or {}
+        return (tonumber(T_qrbq["7rqd"] or 0) or 0) >= 1
+    elseif rwid == 3 or rwid == 6 or rwid == 9 or rwid == 12 then
         local trial = _zxrw_get_trial_data(play)
-        local submitMap = {[11] = "1", [13] = "2", [15] = "3", [17] = "4"}
+        local submitMap = {[3] = "1", [6] = "2", [9] = "3", [12] = "4"}
         return tonumber(trial.submit[submitMap[rwid]] or 0) >= 1
-    elseif rwid == 18 then
+    elseif rwid == 13 then
         local trial = _zxrw_get_trial_data(play)
         return tonumber(trial.finish or 0) >= 1
-    elseif rwid == 19 then
-        local xt = _zxrw_get_xiantian_data(play)
-        return tostring((xt.saved or {}).name or "") ~= ""
-    elseif rwid == 20 then
-        return (tonumber(getplaydef(play, VarCfg["U_境界修炼"][1]) or 0) or 0) >= 9
-    elseif rwid == 21 then
+    elseif rwid == 14 then
+        local trial = _zxrw_get_trial_data(play)
+        return tonumber(trial.claimed or 0) >= 1
+    elseif rwid == 15 then
         return (tonumber(getplaydef(play, VarCfg["U_转生等级"]) or 0) or 0) >= 10
     end
     return false
 end
-
+local function _zxrw_block_click_during_xyl_guide(play)
+    return false
+end
 function task_login(play)
     ---------------------------------------------------任务初始化
     local rwid = getplaydef(play,VarCfg.U_zxrw[1])
@@ -147,9 +139,7 @@ function task_login(play)
         --newpicktask(play,51,getplaydef(play,VarCfg.U_zxrw[2]))
     end
 end
-
 GameEvent.add(EventCfg.onLogin, task_login, "task")
-
 function picktask(play,rwid)
     if constant.rw_syb[rwid] then
         local lx = constant.rw_syb[rwid][1]
@@ -224,6 +214,9 @@ function moni_dj_rw(actor, rwid) --模拟点击任务
 end
 --------------------点击任务触发-------------------
 function clicknewtask(play,rwid)
+    if _zxrw_block_click_during_xyl_guide(play) then
+        return
+    end
     if rwid < 500 and getplaydef(play,VarCfg.U_zxrw[1]) ~= rwid then
         return
     end
@@ -279,7 +272,6 @@ function clicknewtask(play,rwid)
         end
         local lx = constant.rw_syb[rwid][1]
         if lx == 0 then
-
         elseif lx == 1 then--点击按钮
             sendluamsg(play, 101, 0, 1, 1,'{"lx":1,"fx":1,"an":'..constant.rw_syb[rwid][2]..',"ms":"点击按钮"}')
         elseif lx == 2 then--引导任务  npc类
@@ -412,11 +404,12 @@ function clicknewtask(play,rwid)
         end
     end
 end
-
-
 --------------------删除任务触发-------------------
 function deletetask(play,rwid)
     setplaydef(play,VarCfg.N_rwlg,0)
+    if constant.rw_syb[rwid+1] and constant.rw_syb[rwid+1].istg then
+        rwid = rwid + 1
+    end
     if rwid < 40 then
         setplaydef(play,VarCfg.U_zxrw[1],rwid+1)
         setplaydef(play,VarCfg.U_zxrw[2],0)
@@ -424,7 +417,6 @@ function deletetask(play,rwid)
     if rwid == 19 then
         setplaydef(play, VarCfg["U_境界修炼"][2], 900)
     end
-
     if constant.rw_syb[rwid+1] and rwid < 1000 then
         local lx = constant.rw_syb[rwid+1][1]
         if rwid < 1000 then
@@ -538,44 +530,30 @@ function deletetask(play,rwid)
         end
     end
 end
-
 rwcf = {
-    [6] = {4},
-    [7] = {5},
-    [8] = {6},
-    [9] = {7},
-    [10] = {8},
-    [21] = {20},
-    [32] = {21},
-
-    [516] = {2},
-    [502] = {22},
-    [503] = {24},
+    [32] = {15},
+    [516] = {4},
+    [502] = {16},
+    [503] = {18},
 }
-
 rwcf.jia = function(play, id)
     local chuli = json2tbl(getplaydef(play, VarCfg.T_zxrw))
     chuli[""..id] = true
     setplaydef(play, VarCfg.T_zxrw, tbl2json(chuli))
 end
-
 rwcf.jian = function(play, id)
     local chuli = json2tbl(getplaydef(play, VarCfg.T_zxrw))
     chuli[""..id] = nil
     setplaydef(play, VarCfg.T_zxrw, tbl2json(chuli))
 end
-
 rwcf.wpjia = function(play, id,rwid,sl)
     local chuli = json2tbl(getplaydef(play, VarCfg.T_rwwp))
     chuli[""..id] = {rwid,sl}
     setplaydef(play, VarCfg.T_rwwp, tbl2json(chuli))
 end
-
 rwcf.wpjian = function(play, id)
     local chuli = json2tbl(getplaydef(play, VarCfg.T_rwwp))
     chuli[""..id] = nil
     setplaydef(play, VarCfg.T_rwwp, tbl2json(chuli))
 end
-
 return rwcf
-

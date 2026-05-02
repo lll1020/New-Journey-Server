@@ -1,14 +1,20 @@
 npc = {}
-
-
 --灵根使者
-
 local _config = Guard.getConfig("npc_68")
-
 local function _check_trial_limit(play, aid)
     local cfg = _config and _config.details and _config.details[aid]
     if not cfg then
         Player.sendmsgEx(play, "试炼配置缺失#57")
+        return false
+    end
+    local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
+    T_data.level = T_data.level or {}
+    local needLv = tonumber(_config.need_low_level or 0) or 0
+    local lowLv = tonumber(T_data.level[tostring(aid)] or 0) or 0
+    if needLv > 0 and lowLv < needLv then
+        local rootCfg = (((Guard.getConfig("npc_22") or {}).main_r or {})[aid]) or {}
+        local rootName = tostring(rootCfg.name or ("第" .. tostring(aid) .. "个灵根"))
+        Player.sendmsgEx(play, "挑战高阶灵根需要先将|【"..rootName.."】#249|提升到Lv."..needLv)
         return false
     end
     local need = cfg.itme
@@ -24,14 +30,12 @@ local function _check_trial_limit(play, aid)
     Player.sendmsgEx(play, "进入该灵根试炼需要先拥有称号或背包神器位装备：#57|【"..need.."】#249|")
     return false
 end
-
 function npc.main(play,npcid)
     local data = {}
     data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
     data["T_dljq"] = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     sendluamsg(play,100,npcid,0,0,tbl2json(data))
 end
-
 function npc.link(play,npcid,ew,aid)
     -- npc_guard: 入参校验
     if not Guard.ensurePlayer(play, npcid) then
@@ -47,7 +51,6 @@ function npc.link(play,npcid,ew,aid)
     if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
         return
     end
-
     if ew == 1 then--进入副本
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
         local T_dljq = Player.getJsonTableByVar(play, VarCfg.T_dljq)
@@ -99,17 +102,14 @@ function syt_jrdt_602(play,idx)
     --设置玩家进入镜像地图
     mapmove(play,dtm,29,27,2)
     local gw = genmonex(dtm,29,31,_config.details[idx].mob_name,2,1,0,54,"",0)
-
     startautoattack(play)
     delaygoto(play,100,"@npc_68_fbjs")
     shaguai.jia(play,30)
 end
-
 --------------------天梯副本脚本-------------------
 function npc_68_fbjs(play)
     senddelaymsg(play,"距离副本通关剩余%s",180,250,1,"@npc_68_fb_end")
 end
-
 --------------------天梯副本脚本-------------------
 function npc_68_fb_end(play)
     local dtm = getbaseinfo(play,1).."_lgsz"
@@ -122,5 +122,4 @@ function npc_68_fb_end(play)
         end
     end
 end
-
 return npc

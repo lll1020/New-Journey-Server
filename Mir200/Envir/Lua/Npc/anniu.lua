@@ -89,12 +89,6 @@ npc[2] = function(play, p2, p3, msgData) --背包  面板
             local hs = json2tbl(msgData)
             Player.huishou(play, hs)
         end
-        
-        if 10 == getplaydef(play,VarCfg.U_zxrw[1]) then 
-            Player.zxrw_wancheng(play, 10, "")
-            sendluamsg(play, 101, 9999, 0, 0, "npc_huishou")
-            openhyperlink(play, 7, 2)
-        end
     elseif p2 == 6 then --销毁
         local hs = json2tbl(msgData)
         Player.huishou(play, hs)
@@ -304,34 +298,205 @@ local function _ywl_can_transfer(play, sj, shuju)
     end
     return true
 end
-local function _ywl_send_current_task(play)
-    local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
-    local dq = T_ywl.dq or ""
-    sendluamsg(play, 101, 11, 9, 0, '{"dq":"' .. dq .. '"}')
+-- 二大陆异闻录改为自动维护当前任务；章节奖励入口取消，仅保留章节完成标记。
+local function _ywl_is_auto_current_continent(i)
+    return tonumber(i) == 2
 end
-local function _ywl_set_current_task(play, sj)
-    local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
-    T_ywl.dq = sj.i .. "_" .. sj.j .. "_" .. sj.z
+local function _ywl_build_task_key(i, j, z)
+    return tostring(i) .. "_" .. tostring(j) .. "_" .. tostring(z)
+end
+local function _ywl_set_current_task_value(T_ywl, sj)
+    T_ywl.dq = _ywl_build_task_key(sj.i, sj.j, sj.z)
     T_ywl.dq_i = nil
     T_ywl.dq_j = nil
     T_ywl.dq_z = nil
     T_ywl.dq_id = nil
+end
+local function _ywl_clear_current_task_value(T_ywl)
+    T_ywl.dq = ""
+    T_ywl.dq_i = nil
+    T_ywl.dq_j = nil
+    T_ywl.dq_z = nil
+    T_ywl.dq_id = nil
+end
+local function _ywl_is_current_task_in_continent(T_ywl, i)
+    local dq = tostring(T_ywl and T_ywl.dq or "")
+    return dq:match("^" .. tostring(i) .. "_%d+_%d+$") ~= nil
+end
+local function _ywl_find_first_unfinished_task(play, T_ywl, i)
+    local chapters = npc_xyl[i] or {}
+    for j = 1, #chapters do
+        if not _ywl_is_chapter_open(play, i, j) then
+            break
+        end
+        if T_ywl["jl_" .. i .. "_" .. j] ~= 1 then
+            local tasks = chapters[j].jq or {}
+            for z = 1, #tasks do
+                if T_ywl["jl_" .. i .. "_" .. j .. "_" .. z] ~= 1 then
+                    return {i = i, j = j, z = z}
+                end
+            end
+        end
+    end
+    return nil
+end
+local function _ywl_is_all_tasks_finished_in_continent(play, T_ywl, i)
+    T_ywl = T_ywl or json2tbl(getplaydef(play, VarCfg.T_ywl))
+    local chapters = npc_xyl[i] or {}
+    if #chapters <= 0 then
+        return false
+    end
+    for j = 1, #chapters do
+        if not _ywl_is_chapter_open(play, i, j) then
+            return false
+        end
+        local tasks = chapters[j].jq or {}
+        if #tasks <= 0 then
+            return false
+        end
+        for z = 1, #tasks do
+            if T_ywl["jl_" .. i .. "_" .. j .. "_" .. z] ~= 1 then
+                return false
+            end
+        end
+    end
+    return true
+end
+local function _ywl_try_auto_finish_chapter_reward(play, T_ywl, i, j)
+    if not _ywl_is_auto_current_continent(i) then
+        return false
+    end
+    local chapterCfg = npc_xyl[i] and npc_xyl[i][j]
+    if not chapterCfg or T_ywl["jl_" .. i .. "_" .. j] == 1 then
+        return false
+    end
+    if not _ywl_is_chapter_open(play, i, j) then
+        return false
+    end
+    local tasks = chapterCfg.jq or {}
+    for z = 1, #tasks do
+        if T_ywl["jl_" .. i .. "_" .. j .. "_" .. z] ~= 1 then
+            return false
+        end
+    end
+    T_ywl["jl_" .. i .. "_" .. j] = 1
+    return true
+end
+local _ywl_try_clear_current_task
+local function _ywl_finish_single_task_state(play, T_ywl, sj, shuju)
+    T_ywl["jl_" .. sj.i .. "_" .. sj.j .. "_" .. sj.z] = 1
+    T_ywl = select(1, _ywl_try_clear_current_task(play, T_ywl, sj))
+    local taskReward = _ywl_filter_rewards(play, shuju.jl)
+    if taskReward and #taskReward > 0 then
+        Player.rwjl(play, taskReward, "xyl", 1, 0)
+    end
+    return T_ywl
+end
+local function _ywl_try_auto_finish_ready_tasks_in_continent(play, T_ywl, i)
+    local changed = false
+    local completedTask = false
+    local safe = 0
+    while safe < 30 do
+        safe = safe + 1
+        local nextTask = _ywl_find_first_unfinished_task(play, T_ywl, i)
+        if not nextTask then
+            break
+        end
+        local nextKey = _ywl_build_task_key(nextTask.i, nextTask.j, nextTask.z)
+        if tostring(T_ywl.dq or "") ~= nextKey then
+            _ywl_set_current_task_value(T_ywl, nextTask)
+            changed = true
+        end
+        local shuju = npc_xyl[nextTask.i] and npc_xyl[nextTask.i][nextTask.j] and npc_xyl[nextTask.i][nextTask.j].jq and npc_xyl[nextTask.i][nextTask.j].jq[nextTask.z]
+        if not (type(shuju) == "table" and shuju.id == 999 and shuju.fwdjy) then
+            break
+        end
+        if not shuju.fwdjy(play, shuju.tk, shuju) then
+            break
+        end
+        T_ywl = _ywl_finish_single_task_state(play, T_ywl, nextTask, shuju)
+        changed = true
+        completedTask = true
+    end
+    return T_ywl, changed, completedTask
+end
+local function _ywl_sync_auto_current_task(play)
+    local autoContinent = 2
+    if Guard._syncingXylCurrentTask then
+        return false
+    end
+    Guard._syncingXylCurrentTask = true
+    if not Player.dl_sz(play, autoContinent) then
+        Guard._syncingXylCurrentTask = false
+        return false
+    end
+    local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
+    local changed = false
+    local completedTask = false
+    local chapters = npc_xyl[autoContinent] or {}
+    T_ywl, changed, completedTask = _ywl_try_auto_finish_ready_tasks_in_continent(play, T_ywl, autoContinent)
+    for j = 1, #chapters do
+        if not _ywl_is_chapter_open(play, autoContinent, j) then
+            break
+        end
+        if _ywl_try_auto_finish_chapter_reward(play, T_ywl, autoContinent, j) then
+            changed = true
+        end
+    end
+    local nextTask = _ywl_find_first_unfinished_task(play, T_ywl, autoContinent)
+    if nextTask then
+        local nextKey = _ywl_build_task_key(nextTask.i, nextTask.j, nextTask.z)
+        if tostring(T_ywl.dq or "") ~= nextKey then
+            _ywl_set_current_task_value(T_ywl, nextTask)
+            changed = true
+        end
+    elseif _ywl_is_current_task_in_continent(T_ywl, autoContinent) then
+        _ywl_clear_current_task_value(T_ywl)
+        changed = true
+    end
+    if changed then
+        setplaydef(play, VarCfg.T_ywl, tbl2json(T_ywl))
+    end
+    if completedTask and _ywl_is_all_tasks_finished_in_continent(play, T_ywl, autoContinent) then
+        local currentMainline = tonumber(getplaydef(play, VarCfg.U_zxrw[1])) or 0
+        if currentMainline > 0 then
+            Player.zxrw_wancheng(play, currentMainline, "xyl")
+        end
+    end
+    Guard._syncingXylCurrentTask = false
+    return changed
+end
+Guard.syncXylCurrentTask = _ywl_sync_auto_current_task
+local function _ywl_refresh_clicknewtask_block(play)
+    setplaydef(play, "N$XYL2_BlockClickNewTask", 0)
+end
+local function _ywl_push_current_task(play)
+    local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
+    local dq = T_ywl.dq or ""
+    sendluamsg(play, 101, 11, 9, 0, '{"dq":"' .. dq .. '"}')
+end
+local function _ywl_send_current_task(play)
+    _ywl_sync_auto_current_task(play)
+    _ywl_refresh_clicknewtask_block(play)
+    _ywl_push_current_task(play)
+end
+Guard.pushXylCurrentTask = _ywl_push_current_task
+Guard.sendXylCurrentTask = _ywl_send_current_task
+local function _ywl_set_current_task(play, sj)
+    local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
+    _ywl_set_current_task_value(T_ywl, sj)
     setplaydef(play, VarCfg.T_ywl, tbl2json(T_ywl))
     _ywl_send_current_task(play)
 end
-local function _ywl_try_clear_current_task(play, T_ywl, sj)
+_ywl_try_clear_current_task = function(play, T_ywl, sj)
     T_ywl = T_ywl or json2tbl(getplaydef(play, VarCfg.T_ywl))
     if not sj or not sj.i or not sj.j or not sj.z then
         return T_ywl, false
     end
     local cur = T_ywl.dq or ""
-    local taskKey = tostring(sj.i) .. "_" .. tostring(sj.j) .. "_" .. tostring(sj.z)
+    local taskKey = _ywl_build_task_key(sj.i, sj.j, sj.z)
     if cur == taskKey then
-        T_ywl.dq = ""
-        T_ywl.dq_i = nil
-        T_ywl.dq_j = nil
-        T_ywl.dq_z = nil
-        T_ywl.dq_id = nil
+        _ywl_clear_current_task_value(T_ywl)
         return T_ywl, true
     end
     return T_ywl, false
@@ -339,6 +504,8 @@ end
 npc[11] = function(play, p2, p3, data) --异闻录
     -- sj.i 大陆  sj.j 章节  sj.k 暂时不用  sj.z 剧情
     if p2 == 0 then
+        _ywl_sync_auto_current_task(play)
+        _ywl_refresh_clicknewtask_block(play)
         sendluamsg(play, 101, 11, 0, 0, '{"dljq":' .. getplaydef(play, VarCfg.T_dljq) .. ',"zxrw":' .. getplaydef(play, VarCfg.T_zxrw) .. ',"ywl":' .. getplaydef(play, VarCfg.T_ywl) .. "}")
         _ywl_send_current_task(play)
     elseif p2 == 1 then
@@ -413,6 +580,12 @@ npc[11] = function(play, p2, p3, data) --异闻录
     elseif p2 == 2 then --一页任务奖励
         local sj = json2tbl(data)
         if sj.i and sj.j and sj.i > 0 and sj.j > 0 and sj.i <= #npc_xyl and sj.j <= #npc_xyl[sj.i] then
+            if _ywl_is_auto_current_continent(sj.i) then
+                _ywl_sync_auto_current_task(play)
+                sendluamsg(play, 101, 11, 0, 0, '{"dljq":' .. getplaydef(play, VarCfg.T_dljq) .. ',"zxrw":' .. getplaydef(play, VarCfg.T_zxrw) .. ',"ywl":' .. getplaydef(play, VarCfg.T_ywl) .. "}")
+                _ywl_send_current_task(play)
+                return
+            end
             if not _ywl_is_chapter_open(play, sj.i, sj.j) then
                 sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>剧情点不足...</font>","Type":9}')
                 return
@@ -480,15 +653,22 @@ npc[11] = function(play, p2, p3, data) --异闻录
             end
             if shuju.id == 999 then
                 if shuju.fwdjy(play, shuju.tk, shuju) then
-                    --可以完成
-                    T_ywl["jl_" .. sj.i .. "_" .. sj.j .. "_" .. sj.z] = 1
-                    T_ywl = select(1, _ywl_try_clear_current_task(play, T_ywl, sj))
+                    T_ywl = _ywl_finish_single_task_state(play, T_ywl, sj, shuju)
                     setplaydef(play, VarCfg.T_ywl, tbl2json(T_ywl))
-                    if shuju.jl then
-                        Player.rwjl(play, shuju.jl, "剧情jl", 1,0)
+                    if _ywl_is_auto_current_continent(sj.i) then
+                        local currentMainline = tonumber(getplaydef(play, VarCfg.U_zxrw[1])) or 0
+                        _ywl_sync_auto_current_task(play)
+                        local afterSyncMainline = tonumber(getplaydef(play, VarCfg.U_zxrw[1])) or 0
+                        local latestT_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
+                        if afterSyncMainline == currentMainline and currentMainline > 0 and _ywl_is_all_tasks_finished_in_continent(play, latestT_ywl, sj.i) then
+                            Player.zxrw_wancheng(play, currentMainline, "xyl")
+                        end
+                        sendluamsg(play, 101, 11, 0, 0, '{"dljq":' .. getplaydef(play, VarCfg.T_dljq) .. ',"zxrw":' .. getplaydef(play, VarCfg.T_zxrw) .. ',"ywl":' .. getplaydef(play, VarCfg.T_ywl) .. "}")
+                        _ywl_send_current_task(play)
+                    else
+                        sendluamsg(play, 101, 11, 2, 3, tbl2json(sj) )
+                        _ywl_send_current_task(play)
                     end
-                    sendluamsg(play, 101, 11, 2, 3, tbl2json(sj) )
-                    _ywl_send_current_task(play)
                 else
                     Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>未完成[' .. shuju[1] .. ']剧情...</font>","Type":9}')
                     return
@@ -768,71 +948,115 @@ end
 npc[31] = function(play, p2, p3, data) --马上发财
     Npclib[101].main(play, 101)
 end
+local function _sc_get_cfg()
+    return teshudata["anniu_501"] or {}
+end
+local function _sc_get_slot_list()
+    local cfg = _sc_get_cfg()
+    local details = cfg.details or {}
+    return details.slots or {}
+end
+local function _sc_get_welfare_list()
+    local cfg = _sc_get_cfg()
+    local details = cfg.details or {}
+    return details.welfare or {}
+end
+function _sc_get_data(play)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
+    data.main_claimed = tonumber(data.main_claimed or data.other_lb or 0) or 0
+    data.welfare_select = tonumber(data.welfare_select or 0) or 0
+    data.welfare_claimed = tonumber(data.welfare_claimed or 0) or 0
+    data.welfare_start = tonumber(data.welfare_start or 0) or 0
+    return data
+end
+local function _sc_set_data(play, data)
+    data.other_lb = tonumber(data.main_claimed or 0) or 0
+    Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], data)
+end
+local function _sc_get_wait_left(data, idx)
+    local welfare = _sc_get_welfare_list()
+    local cfg = welfare[idx]
+    if not cfg then
+        return 0
+    end
+    local startTs = tonumber(data.welfare_start or 0) or 0
+    if startTs <= 0 then
+        return tonumber(cfg.wait_sec or 0) or 0
+    end
+    local left = startTs + (tonumber(cfg.wait_sec or 0) or 0) - os.time()
+    return left > 0 and left or 0
+end
+local function _sc_sync_flags(play, data)
+    local has_main = (tonumber(data.main_claimed or 0) or 0) >= 1
+    setflagstatus(play, VarCfg.BS_sckg, has_main and 1 or 0)
+    if not has_main then
+        local json = json2tbl(getplaydef(play, VarCfg.T_aigj))
+        json = type(json) == "table" and json or {}
+        if json.gjkg or getflagstatus(play, VarCfg.BS_AIgj) == 1 then
+            json.gjkg = nil
+            setplaydef(play, VarCfg.T_aigj, tbl2json(json))
+            setflagstatus(play, VarCfg.BS_AIgj, 0)
+            stopautoattack(play)
+        end
+    end
+end
+local function _sc_apply_main_reward(play, data)
+    Buff[73](play, 1) -- 护体光环
+    local halfMoon = getskillindex and getskillindex("半月弯刀") or 25
+    if tonumber(halfMoon or 0) > 0 then
+        addskill(play, halfMoon, 3)
+    end
+    local poisonGroup = getskillindex and getskillindex("群体施毒术") or 0
+    if tonumber(poisonGroup or 0) > 0 then
+        addskill(play, poisonGroup, 3)
+    end
+    local sz_data = Player.getJsonTableByVar(play, VarCfg.T_szjl)
+    sz_data.yjs = sz_data.yjs or {}
+    sz_data.yjs["1"] = 1
+    Player.setJsonVarByTable(play, VarCfg.T_szjl, sz_data)
+    GameEvent.push(EventCfg.onUPSkin, play, 1)
+    _refreshFashionAttr(play, sz_data)
+    _sc_sync_flags(play, data)
+    if Buff and Buff.refreshHuTiGuangHuan then
+        Buff.refreshHuTiGuangHuan(play)
+    end
+end
+local function _sc_build_open_payload(play)
+    local data = _sc_get_data(play)
+    _sc_sync_flags(play, data)
+    local welfare = _sc_get_welfare_list()
+    return {
+        T_data = data,
+        server_time = os.time(),
+        slot_count = #_sc_get_slot_list(),
+        welfare_count = #welfare,
+        wait_left = _sc_get_wait_left(data, tonumber(data.welfare_select or 0) or 0),
+    }
+end
 ---首充礼包
 npc[501] = function(play, p2, p3, data) --首充礼包
     if p2 == 0 then
-        local tmp_data = {}
-        tmp_data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
-        local list = ((teshudata["anniu_501"] or {}).details or {})["首充"] or {}
-        local dl_progress = 1
-        for i = 2, #list do
-            if Player.dl_sz_notip(play, i) then
-                dl_progress = i
-            else
-                break
-            end
-        end
-        tmp_data["dl_progress"] = dl_progress
-        tmp_data["time_data"] = dl_progress
-        sendluamsg(play, 101, 501, 0, 0, tbl2json(tmp_data))
-    elseif p2 == 1 then
-        local cfg = teshudata["anniu_501"]
-        local T_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
-        local time_data = getsysvar(VarCfg["G_开区天数"])
-        if not (T_data["ok"] and T_data["ok"] == 1) then
-            sendluamsg(play, 101, 999, 6, 21, "")
+        sendluamsg(play, 101, 501, 0, 0, tbl2json(_sc_build_open_payload(play)))
+        return
+    end
+    local T_data = _sc_get_data(play)
+    if not (T_data["ok"] and T_data["ok"] == 1) then
+        sendluamsg(play, 101, 999, 6, 21, "")
+        return
+    end
+    if p2 == 1 then
+        if tonumber(T_data.main_claimed or 0) >= 1 then
+            Player.sendmsgEx(play, "首充礼包已经领取#57")
             return
         end
-        if T_data["首充"] == 1 then
-            local list = cfg and cfg.details and cfg.details["首充"] or {}
-            local max = #list
-            if max <= 0 then
-                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>礼包配置异常...</font>","Type":9}')
-                return
-            end
-            local claimed = tonumber(T_data["other_lb"] or 0) or 0
-            local idx = claimed + 1
-            if idx > max then
-                Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>首充礼包已领取...</font>","Type":9}')
-                return
-            end
-            if not Player.dl_sz(play, idx) then
-                return
-            end
-            T_data["other_lb"] = idx
-            T_data["jq_time"] = time_data
-            Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
-            local reward = list[idx].jl
-            if reward and #reward > 0 then
-                Player.rwjl(play, reward, "首充礼包", 1, 1000)
-            end
-            if idx == 1 then
-                addskill(play, 25, 3)
-                -- 飞剑功能临时下线：首充不再改动飞剑参数
-                -- local T_data_fj = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
-                -- T_data_fj.ratio = 2
-                -- Player.setJsonVarByTable(play, VarCfg["T_飞剑"], T_data_fj)
-                local T_data = Player.getJsonTableByVar(play, VarCfg.T_szjl)
-                T_data.yjs = T_data.yjs or {}
-                T_data.yjs[""..1] = 1
-                Player.setJsonVarByTable(play, VarCfg.T_szjl, T_data)
-                GameEvent.push(EventCfg.onUPSkin, play, 1)
-                _refreshFashionAttr(play, T_data)
-            end
-            sendluamsg(play, 101, 1005, 0, 0, "lqcg")
-            return
-        end
-        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>未满足领取条件...</font>","Type":9}')
+        T_data.main_claimed = 1
+        _sc_apply_main_reward(play, T_data)
+        _sc_set_data(play, T_data)
+        sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>天选资格、自动巡航等首充联动功能已解锁...</font>","Type":9}')
+        sendluamsg(play, 101, 501, 1, 0, tbl2json(_sc_build_open_payload(play)))
+        return
+    elseif p2 == 2 or p2 == 3 then
+        Player.sendmsgEx(play, "限时福利请前往#57|【105NPC】#249|领取")
     end
 end
 ---在线充值
@@ -866,7 +1090,7 @@ npc[502] = function(play, p2, p3, data) --在线充值
         end
     elseif p3 == 4 then
         local json = json2tbl(getplaydef(play, VarCfg.T_czlb))
-        if json.cz4 then
+        if json.cz5 then
             if json.jskg then
                 json.jskg = nil
                 Buff[71](play, 2)
@@ -893,7 +1117,11 @@ npc[504] = function(play, p2, p3, data) --快人一步
     end
 end
 local function _aigj_has_privilege(play)
-    return getflagstatus(play, VarCfg.BS_mztq) == 1
+    if getflagstatus(play, VarCfg.BS_sckg) == 1 then
+        return true
+    end
+    local sc_data = _sc_get_data(play)
+    return (tonumber(sc_data.main_claimed or sc_data.other_lb or 0) or 0) >= 1
 end
 
 local function _aigj_get_json(play)
@@ -912,7 +1140,7 @@ local function _aigj_close(play, json)
 end
 
 local function _aigj_send_privilege_msg(play)
-    sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[自动巡航]</font><font color=\'#ff0500\'>未激活特权，无法使用自动巡航...</font>","Type":9}')
+    sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[自动巡航]</font><font color=\'#ff0500\'>未领取首充礼包，无法使用自动巡航...</font>","Type":9}')
 end
 
 ---自动巡航
@@ -1783,6 +2011,9 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
                 Player.rwjl(play, { { "绑定元宝", finalAwardToGive } }, "七日翻牌幸运奖励", 1)
             end
             sendluamsg(play, 101, 511, 1, 1, tbl2json(T_qrbq))
+            if getplaydef(play, VarCfg.U_zxrw[1]) == 10 then
+                Player.zxrw_wancheng(play, 10, "福利")
+            end
         elseif p3 == 2 then --在线奖励
             -- 累计在线分钟数存储在 VarCfg.J_zxsj，对应配置 teshudata["fldt"]["zxjl"]
             local jsonData = json2tbl(msgData)
@@ -2031,14 +2262,28 @@ local function _zz516_get_charge(play)
     local realCharge = tonumber(getplaydef(play, VarCfg["U_真实充值"]) or 0) or 0
     return math.max(charge23, realCharge), charge23
 end
+-- 根据在线充值档位检测，对应需要购买的礼包档位。
+local function _zz516_get_cz502_requirement(config)
+    local needIdx = tonumber((config or {}).need_cz502_idx or 0) or 0
+    if needIdx > 0 then
+        local rechargeList = (teshudata["anniu_502"] and teshudata["anniu_502"].fj) or {}
+        return tonumber(rechargeList[needIdx] or 0) or 0, needIdx
+    end
+    return tonumber((config or {}).need_cz502 or 0) or 0, 0
+end
 local function _zz516_check_cfg(play, config)
-    local needCz502 = tonumber((config or {}).need_cz502 or 0) or 0
+    local needCz502 = _zz516_get_cz502_requirement(config)
     if needCz502 > 0 then
         local czlb = json2tbl(getplaydef(play, VarCfg.T_czlb))
         if type(czlb) ~= "table" then
             czlb = {}
         end
         return tonumber(czlb["cz502_" .. needCz502] or 0) == 1
+    end
+    local needPay21 = tonumber((config or {}).need_pay21 or 0) or 0
+    if needPay21 > 0 then
+        local T_data = _zz516_get_data(play)
+        return tonumber((T_data or {})["pay21_" .. needPay21] or 0) == 1
     end
     local totalCharge, charge23 = _zz516_get_charge(play)
     local needCharge = tonumber((config or {}).need_charge or (config or {}).sgsl or 0) or 0
@@ -2113,7 +2358,19 @@ npc[516] = function(play, p2, p3, msgData) --至尊赞助
         end
         local canClaim = _zz516_check_cfg(play, config)
         if not canClaim then
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[至尊赞助]</font><font color=\'#ff0500\'>当前条件不足,无法领取...</font>","Type":9}')
+            local autoPay = tonumber(config.auto_pay or 0) or 0
+            local payMoneyId = tonumber(config.pay_moneyid or 7) or 7
+            if autoPay > 0 then
+                if payMoneyId == 7 and constant.cz_jeyz[autoPay] then
+                    setplaydef(play, VarCfg.U_czyz, constant.cz_jeyz[autoPay])
+                    sendluamsg(play, 101, 999, autoPay, 7, "")
+                    return
+                elseif payMoneyId ~= 7 then
+                    sendluamsg(play, 101, 999, autoPay, payMoneyId, "")
+                    return
+                end
+            end
+            sendluamsg(play, 101, 9999, 0, 0, "npc_anniu_516")
             return
         end
         T_data[key] = 1
@@ -2130,89 +2387,17 @@ npc[516] = function(play, p2, p3, msgData) --至尊赞助
         _zz516_send_panel(play, 1, idx)
     end
 end
---聚宝盆
-npc[517] = function(play, p2, p3, msgData) --聚宝盆
+-- 聚宝盆：界面与逻辑已抽离到独立 106 NPC，这里仅兼容旧的福利按钮入口。
+local TreasureBasin = rawget(_G, "__treasure_basin_module") or dofile("Envir/Lua/LuaLib/treasure_basin.lua")
+npc[517] = function(play, p2, p3, msgData)
     if p2 == 0 then
-        local data = {}
-        data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_聚宝盆"])
-        data["T_data"].level = data["T_data"].level or 1
-        data["jf"] = getplaydef(play, VarCfg["U_聚宝盆积分"])
-        data["cs"] = getplaydef(play, VarCfg["J_聚宝盆领取次数"])
-        sendluamsg(play, 101, 517, 0, 0, tbl2json(data))
-    elseif p2 == 1 then
-        -- 聚宝盆升级
-        local T_data = Player.getJsonTableByVar(play, VarCfg["T_聚宝盆"])
-        T_data.level = T_data.level or 1
-        if T_data.level == 1 then
-            local T_sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"])
-            if T_sc_data["首充"] == 1 then
-                T_data.level = 2
-                Player.setJsonVarByTable(play, VarCfg["T_聚宝盆"], T_data)
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#28ef01\'>升级成功...</font>","Type":9}' )
-                sendluamsg(play, 101, 517, 1, 2, "")
-            else
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#ff0500\'>只有首充后才可升级聚宝盆...</font>","Type":9}' )
-                return
-            end
-        elseif T_data.level == 2 then
-            if getflagstatus(play, VarCfg.BS_mztq) == 1 then
-                T_data.level = 3
-                Player.setJsonVarByTable(play, VarCfg["T_聚宝盆"], T_data)
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#28ef01\'>升级成功...</font>","Type":9}' )
-                sendluamsg(play, 101, 517, 1, 3, "")
-            else
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#ff0500\'>未激活【超级特权】,无法升级聚宝盆...</font>","Type":9}' )
-                return
-            end
-        elseif T_data.level == 3 then --累计充值 200
-            if querymoney(play, 23) >= 200 then
-                T_data.level = 4
-                Player.setJsonVarByTable(play, VarCfg["T_聚宝盆"], T_data)
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#28ef01\'>升级成功...</font>","Type":9}' )
-                sendluamsg(play, 101, 517, 1, 4, "")
-            else
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#ff0500\'>累计充值200元才能升级聚宝盆...</font>","Type":9}' )
-                return
-            end
-        elseif T_data.level == 4 then --累计充值 300
-            if querymoney(play, 23) >= 300 then
-                T_data.level = 5
-                Player.setJsonVarByTable(play, VarCfg["T_聚宝盆"], T_data)
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#28ef01\'>升级成功...</font>","Type":9}' )
-                sendluamsg(play, 101, 517, 1, 5, "")
-            else
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#ff0500\'>累计充值300元才能升级聚宝盆...</font>","Type":9}' )
-                return
-            end
-        elseif T_data.level == 5 then --满级
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#ff0500\'>聚宝盆已经满级...</font>","Type":9}')
-            return
-        end
-    elseif p2 == 2 then -- 聚宝盆领取奖励
-        local T_data = Player.getJsonTableByVar(play, VarCfg["T_聚宝盆"])
-        T_data.level = T_data.level or 1
-        local config = Guard.getConfig("anniu_517").details[T_data.level]
-        local jf = getplaydef(play, VarCfg["U_聚宝盆积分"])
-        local cs = getplaydef(play, VarCfg["J_聚宝盆领取次数"])
-        if cs < config.maxcs then
-            if jf >= config.jf then
-                setplaydef(play, VarCfg["U_聚宝盆积分"], 0)
-                setplaydef(play, VarCfg["J_聚宝盆领取次数"], cs + 1)
-                Player.rwjl(play, config.give, "聚宝盆奖励", 1)
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#28ef01\'>领取成功...</font>","Type":9}' )
-                sendluamsg(play, 101, 517, 2, 0, "")
-            else
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#ff0500\'>积分不足,无法领取奖励...</font>","Type":9}' )
-                return
-            end
-        else
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[聚宝盆]</font><font color=\'#ff0500\'>当前等级领取次数已达上限...</font>","Type":9}')
-            return
-        end
+        TreasureBasin.main(play, 106)
+        return
     end
+    TreasureBasin.link(play, 106, p2, p3, msgData)
 end
 local xlxl =
-    { { 1, 2, 3, 4, 7, 8, 23, 22, 24, 25, 26 }, constant.cz_je, { 98, 6, 3 } }
+    { { 1, 2, 3, 4, 7, 8, 23, 22, 24, 25, 26 }, constant.cz_je, { 98, 6, 3, 18 } }
 npc[998] = function(play, p2, p3, msg) --后台
     local qfmz = getconst(play, "<$SERVERNAME>")
     if getplaydef(play, VarCfg.S_houtaibf) ~= "" or (qfmz == "" or qfmz == "测试区") then
@@ -2461,4 +2646,3 @@ for npcId, handler in pairs(npc) do
     end
 end
 return npc
-

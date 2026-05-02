@@ -37,7 +37,8 @@ function login(play)
         Login.main(play)
         setontimer(play, 10, 3)
     else
-        if getsysvar(VarCfg["G_开区分钟"]) >= 1440 and linkbodyitem(play,71) == "0" then
+        local open_minutes = tonumber(getsysvar(VarCfg["G_开区分钟"])) or 0
+        if open_minutes >= 1440 and linkbodyitem(play,71) == "0" then
             --TODO
             if quming ~= "" and quming ~= "测试区" and quming ~= "直播区" and quming ~= "审核区1区" then
                 if not constant.pz_htqx[tonumber(getconst(play,"<$USERACCOUNT>"))] then
@@ -81,12 +82,19 @@ function resetday(play)
             break
         end
     end
+    -- 聚宝盆每日进度：跨天清空击杀积分与自动发放标记。
+    setplaydef(play, VarCfg["U_聚宝盆积分"], 0)
+    setplaydef(play, VarCfg["J_聚宝盆领取次数"], 0)
+end
+local function _sc_has_patrol_privilege(play)
+    local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
+    return (tonumber(sc_data.main_claimed or sc_data.other_lb or 0) or 0) >= 1
 end
 --------------------传送戒指传送前触发触发-------------------
 function beginteleport(play)
     setplaydef(play,"S$dtm",getbaseinfo(play, 3))
     local sj  = os.time()
-    local cd = 5
+    local cd = _sc_has_patrol_privilege(play) and 3 or 5
     if getplaydef(play,"N$buff310") == 1 then
         cd = math.max(0, cd - 5) -- 来去自如：传送冷却-5秒
     end
@@ -109,7 +117,7 @@ end
 function ai_qhdt(play)
 	local json, lins = json2tbl(getplaydef(play, VarCfg.T_aigj)), {}
     json = type(json) == "table" and json or {}
-    if getflagstatus(play, VarCfg.BS_mztq) ~= 1 then
+    if not _sc_has_patrol_privilege(play) then
         if json.gjkg or getflagstatus(play, VarCfg.BS_AIgj) == 1 then
             json.gjkg = nil
             setplaydef(play, VarCfg.T_aigj, tbl2json(json))
@@ -158,7 +166,7 @@ function entermap(play)
         setplaydef(play,VarCfg.N_tyecmb,0)
     end
     if getflagstatus(play, VarCfg.BS_AIgj) == 1 then
-        if getflagstatus(play, VarCfg.BS_mztq) == 1 and not getbaseinfo(play, 48) then
+        if _sc_has_patrol_privilege(play) and not getbaseinfo(play, 48) then
             startautoattack(play)
         else
             local ai_json = json2tbl(getplaydef(play, VarCfg.T_aigj))
@@ -169,7 +177,11 @@ function entermap(play)
             stopautoattack(play)
         end
     end
+    -- 切图时立即刷新灰界视野限制，避免必须重登才生效。
     -- 切换地图触发：用于刷新天书仙法等模块状态
+    if Login and Login.refreshGrayWorldVision then
+        Login.refreshGrayWorldVision(play)
+    end
     GameEvent.push(EventCfg.goSwitchMap, play)
 end
 -- 进入/离开队伍触发（引擎回调入口）
@@ -291,9 +303,22 @@ function pickupitemex(play, item)
         end
     end
 	if idx > 10006 and idx < 10022 then    --经验丹
-        local sl = getiteminfo(play, item, 5)
-        changeexp(play, '+', getstditeminfo(idx, 8) * sl, false)
-        delitembymakeindex(play, getiteminfo(play, item, 1), sl)
+        if Player.canGainRoleLevel(play, false) then
+            local sl = getiteminfo(play, item, 5)
+            local useCount = 0
+            local addExp = getstditeminfo(idx, 8)
+            for i = 1, sl do
+                if not Player.canGainRoleLevel(play, false) then
+                    break
+                end
+                changeexp(play, '+', addExp, false)
+                Player.clampRoleLevel(play, false)
+                useCount = useCount + 1
+            end
+            if useCount > 0 then
+                delitembymakeindex(play, getiteminfo(play, item, 1), useCount)
+            end
+        end
     elseif idx > 10022 and idx < 10040 then    --金币
         local sl = getiteminfo(play, item, 5)
         changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, '+', getstditeminfo(idx, 8) * sl, '捡物自动吃', true)
@@ -417,17 +442,28 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
 		return Damage
 	else
         GameEvent.push(EventCfg.onAttackDamageMonster, play, Target, Damage, MagicId, Model)
+        -- 灰界压制：无【诸邪退散】时，对灰界怪物的所有输出统一按50%结算。
+        local huijie_damage_rate = 1
+        if Player and Player.getHuiJieMonsterDamageRate then
+            huijie_damage_rate = tonumber(Player.getHuiJieMonsterDamageRate(play) or 1) or 1
+        end
         ---------------------------------------------对怪切割计算
 		local zd = getbaseinfo(Target, 12)
 		local sy = -1
 		if zd == 0 or true then
 			local zhi = getbaseinfo(play, 51, 244)
 			if zhi > 0 then
-				humanhp(Target, '-', zhi, 106, 0, play, 1)
+                zhi = math.floor(zhi * huijie_damage_rate)
+                if zhi > 0 then
+					humanhp(Target, '-', zhi, 106, 0, play, 1)
+                end
 			end
 			zhi = getbaseinfo(play, 51, 245)
 			if zhi > 0 then
-				humanhp(Target, '-', Damage / 10000 * zhi, 108, 0, play, 1)
+                local extra_damage = math.floor((Damage / 10000 * zhi) * huijie_damage_rate)
+                if extra_damage > 0 then
+					humanhp(Target, '-', extra_damage, 108, 0, play, 1)
+                end
 			end
 		else
 			if zd > Damage then
@@ -464,6 +500,12 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
 			local isy = tonumber(k)
 			if isy then
 				local ew = Buff[isy](play, 3, Damage, Target, MagicId)
+                if ew and ew > 0 then
+                    ew = math.floor(ew * huijie_damage_rate)
+                    if ew <= 0 then
+                        ew = nil
+                    end
+                end
 				if ew and ew > 0 then
 					if sy == -1 then
 						buffsh = buffsh + ew
@@ -483,6 +525,12 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
 			local isy = tonumber(k)
 			if isy then
 				local ew = Buff[isy](play, 3, Damage, Target, MagicId)
+                if ew and ew > 0 then
+                    ew = math.floor(ew * huijie_damage_rate)
+                    if ew <= 0 then
+                        ew = nil
+                    end
+                end
 				if ew and ew > 0 then
 					if sy == -1 then
 						buffsh = buffsh + ew
@@ -499,6 +547,9 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
 		if buffsh > 0 then
 			humanhp(Target, '-', buffsh, 110, 0, play, 1)
 		end
+        if huijie_damage_rate ~= 1 then
+            Damage = math.floor(Damage * huijie_damage_rate)
+        end
 		return Damage
 	end
 end
@@ -626,6 +677,13 @@ function struckdamage(play, Hiter, Target, MagicId, Damage)
             final = adj
         end
     end
+    -- 灰界压制：无【诸邪退散】时，受到灰界怪物伤害按110%结算。
+    if Hiter and (not getbaseinfo(Hiter, -1)) and Player and Player.getHuiJieMonsterHurtRate and final > 0 then
+        local huijie_hurt_rate = tonumber(Player.getHuiJieMonsterHurtRate(play) or 1) or 1
+        if huijie_hurt_rate ~= 1 then
+            final = math.floor(final * huijie_hurt_rate)
+        end
+    end
     local realDamage = final > 0 and final or 1
     GameEvent.push(EventCfg.onProHarm, play, realDamage, Hiter, Target, MagicId)
     return realDamage
@@ -714,7 +772,7 @@ function killmon(play, mob)
     else
         setplaydef(play,VarCfg.J_jsgw[2],getplaydef(play,VarCfg.J_jsgw[2])+1)
     end
-    setplaydef(play,VarCfg["U_聚宝盆积分"],getplaydef(play,VarCfg["U_聚宝盆积分"])+math.random(1,4))
+    -- 聚宝盆改为独立监听累计，这里不再走旧的随机积分逻辑。
     setplaydef(play,VarCfg.U_fldt[2],getplaydef(play,VarCfg.U_fldt[2])+1)
     local mz = getbaseinfo(mob, 1, 1)
     local T_grss = Player.getJsonTableByVar(play, VarCfg.T_grss)
@@ -928,7 +986,9 @@ function _cz502_apply_reward(play, amount, idx, lb_json)
             end
         end
         if all and config.ch then
+            -- 在线充值全购买奖励：授予全购买称号，并永久解锁全部仙法槽位。
             lb_json.cz502_all = 1
+            lb_json.xianfa_all_unlock = 1
             if not checktitle(play, config.ch) then
                 Player.title_give(play, config.ch)
             end
@@ -1003,7 +1063,14 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
             end
             Login_msg(play,18,Gold,Gold*10)
         elseif MoneyId == 21 then  --直拉礼包
-            if Gold == 88 then
+            if Gold == 18 then
+                local zz_data = Player.getJsonTableByVar(play, VarCfg["T_免费赞助"]) or {}
+                if tonumber(zz_data["pay21_18"] or 0) ~= 1 then
+                    zz_data["pay21_18"] = 1
+                    Player.setJsonVarByTable(play, VarCfg["T_免费赞助"], zz_data)
+                    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>18元礼包支付成功，当前角色已满足高级玩家领取条件...</font>","Type":9}')
+                end
+            elseif Gold == 88 then
                 if getflagstatus(play,constant.BS_mztq) == 0 then
                     Player.title_give(play, teshudata["anniu_504"].ch,1)
                     Player.rwjl(play, teshudata["anniu_504"].give, "快人一步",1,1000)
@@ -1029,11 +1096,13 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
                     T_data["ok"] = 1
                     T_data["首充"] = 1
                     Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
-                    setflagstatus(play, VarCfg.BS_sckg, 1)
                     if Buff and Buff.refreshHuTiGuangHuan then
                         Buff.refreshHuTiGuangHuan(play)
+                        if Buff[73] then
+                            Buff[73](play, 1)
+                        end
                     end
-                    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>天选之人：已达成首充礼包，自动报名成功...</font>","Type":9}')
+                    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>首充礼包已激活，当前角色已可领取相关奖励...</font>","Type":9}')
                 end
             end
         end
@@ -1434,5 +1503,4 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
         end
 	end
 end
-
 

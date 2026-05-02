@@ -1,11 +1,12 @@
 ;==============================================城市地图==============================
 ;[新手地图|12       新手地图] day NOALLOWUSEITEMS(盟重回城石) safe RUNMON(1) NEEDSET_OFF(300)
-[比武大会|D3804_2 比武大会]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) SECRET(47|神秘人|2|21) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[天降财宝|xbsl	天降财宝] noreconnect(0159) RUNHUMAN(1) NOTALLOWUSEMAGIC(擒龙手|十步一杀|野蛮冲撞)
-[全民夺矿|cymj	全民夺矿] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[讨伐boss|dhzj	讨伐boss] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[天材地宝|PVP002	天材地宝] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[黑暗禁地|zzmj	黑暗禁地] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
+[比武大会|D3804_2 比武大会]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) SECRET(47|神秘人|2|21) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[天降财宝|xbsl	天降财宝] noreconnect(0159) RUNHUMAN(1) NOTALLOWUSEMAGIC(擒龙手|十步一杀|野蛮冲撞) FIGHT5
+[全民夺矿|cymj	全民夺矿] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[讨伐boss|dhzj	讨伐boss] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[天材地宝|PVP002	天材地宝] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[黑暗禁地|zzmj	黑暗禁地] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+
 
 [gm|q004 GM地图] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
@@ -112,17 +113,17 @@ kfhg 23 26 -> kfhjsbk 86 102
 [特殊秘境副本三|new_44   特殊秘境副本三] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 ;灰界
-[灰界|D3703   灰界] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[灰界南部|D3802_S3   灰界南部] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[灰界北部|D5000   灰界北部] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[灰界东部|D5073   灰界东部] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[灰界西部|D11032   灰界西部] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[灰界|D3703   灰界] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) dark
+[灰界南部|D3802_S3   灰界南部] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) dark
+[灰界北部|D5000   灰界北部] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) dark
+[灰界东部|D5073   灰界东部] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) dark
+[灰界西部|D11032   灰界西部] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) dark
 
 
-[虚妄山脉|14   虚妄山脉] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[鬼嘲深渊|D4307_S2   鬼嘲深渊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[叹息旷野|D4102   叹息旷野] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[禁忌之海|D4308   禁忌之海] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[虚妄山脉|14   虚妄山脉] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) dark
+[鬼嘲深渊|D4307_S2   鬼嘲深渊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) dark
+[叹息旷野|D4102   叹息旷野] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) dark 
+[禁忌之海|D4308   禁忌之海] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) dark 
 
 灰界 200 378 -> 灰界南部 22 308
 灰界 204 25 -> 灰界北部 23 24

@@ -172,7 +172,12 @@ teshudata = {
         name = "好感度",
         max_level = 10,
         attrID = 244,
-        half_give = "兰姐的信物",
+        -- 好感度拉满后补发背包神器奖励。
+        final_give = "兰姐赠礼",
+        -- 客户端按百分比展示好感度进度。
+        show_percent = true,
+        -- 达到满百分比时触发最终奖励。
+        reward_percent = 100,
         config = {
             --配置
             [0] = {ratio = 0},
@@ -219,7 +224,7 @@ teshudata = {
         id = 20,
         name = "冠名",
         ch = "冠名",
-        cost = 2666,
+        cost = 588,
         -- jl = { { "龙纹铜钱", 100 },{3,10000000,"绑定金币"},{4,2000000,"绑定元宝"}},
     },
     ["npc_21"] = {
@@ -305,8 +310,10 @@ teshudata = {
             wz2 = "【金汤】：主灵根效果生效期间，自身伤害减免+[%s%%*%s+0.8%%]。",value2 = 2,
             attr = {{285,1,"人物防御"},{286,1},{290,1},{291,1}}},
         },
-        --main_xl_cost = { {"灵根卷轴",1},{"灵石",500} },
-        --other_xl_cost = { {"灵根卷轴",1},{"灵石",500} },
+        -- 更换/卸下主灵根时消耗。
+        main_xl_cost = { {"卸灵咒",1} },
+        -- 更换/卸下副灵根时消耗。
+        other_xl_cost = { {"卸灵咒",1} },
         main_updata = {
             max_level = 10,
             details = {
@@ -1141,12 +1148,14 @@ teshudata = {
         ch = "生肖守护神"
     },
     ["npc_68"] = {
+        -- 高级灵根挑战要求：对应低级灵根等级达到指定等级。
+        need_low_level = 3,
         details = {
-            {mob_name= "雷灵根守护兽",mob_shape = 12034,scale = 0.7,time = 300,nandu = "ss",yq = "无",jl = "激活雷灵根", itme = nil,},
-            {mob_name= "风灵根守护兽",mob_shape = 12035,time = 300,nandu = "ss",yq = "无",jl = "激活风灵根", itme = "定风珠",},
-            {mob_name= "冰灵根守护兽",mob_shape = 12036,time = 300,nandu = "ss",yq = "无",jl = "激活冰灵根", itme = "深情的家伙",},
-            {mob_name= "焚灵根守护兽",mob_shape = 12037,time = 300,nandu = "ss",yq = "无",jl = "激活焚灵根", itme = "芭蕉扇",},
-            {mob_name= "岩灵根守护兽",mob_shape = 12038,time = 300,nandu = "ss",yq = "无",jl = "激活岩灵根", itme = "后土之力",},
+            {mob_name= "雷灵根守护兽",mob_shape = 12034,scale = 0.7,time = 300,nandu = "ss",yq = "金灵根达到Lv.3",jl = "激活雷灵根", itme = nil,},
+            {mob_name= "风灵根守护兽",mob_shape = 12035,time = 300,nandu = "ss",yq = "木灵根达到Lv.3",jl = "激活风灵根", itme = "新月之风",},
+            {mob_name= "冰灵根守护兽",mob_shape = 12036,time = 300,nandu = "ss",yq = "水灵根达到Lv.3",jl = "激活冰灵根", itme = "冰霜群雨",},
+            {mob_name= "焚灵根守护兽",mob_shape = 12037,time = 300,nandu = "ss",yq = "火灵根达到Lv.3",jl = "激活焚灵根", itme = "九转金丹",},
+            {mob_name= "岩灵根守护兽",mob_shape = 12038,time = 300,nandu = "ss",yq = "土灵根达到Lv.3",jl = "激活岩灵根", itme = "磐岩之心",},
         },
     },
     ["npc_70"] = {
@@ -1534,9 +1543,9 @@ teshudata = {
         },
     },
     ["npc_603"] = {id = 603,name = "扫荡野火帮",level = 2,map = "野火帮",desc = "击杀30只怪物",shaguai_id = 603,num = 30,rwjl = {},ch = "野火燎原"},
-    ["npc_604"] = {id = 604,name = "剿灭恶徒",level = 2,map = "极光城郊",desc = "击杀怪物A、B各15只",shaguai_id = 604,num_a = 15,num_b = 15,mob_a = "寒霜狐",mob_b = "冰羽雀",rwjl = {{"绑定金币",150000},{"二大陆专属装备随机宝箱",1}},},
+    -- ["npc_604"] = {id = 604,name = "剿灭恶徒",level = 2,map = "极光城郊",desc = "击杀怪物 A、B 各 15 只",shaguai_id = 604,num_a = 15,num_b = 15,mob_a = "寒霜狼",mob_b = "烈焰雀",rwjl = {{"绑定金币",150000},{"二大陆专属装备自选箱",1}},},
     ["npc_605"] = {id = 605,name = "杀伐之路",level = 2,map = "杀伐道场",desc = "击杀怪物30只",shaguai_id = 605,num = 30,rwjl = {{"绑定金币",300000},{"千年玄铁",30}},},
-    ["npc_606"] = {id = 606,name = "讨伐夜魔",level = 2,map = "夜魔洞",desc = "击杀A、B怪各20只",shaguai_id = 606,num_a = 20,num_b = 20,mob_a = "夜蝠魇",mob_b = "地腔鼠",rwjl = {{"绑定金币",150000},{"玫瑰花",50}},},
+    ["npc_606"] = {id = 606,name = "讨伐夜魔",level = 2,map = "夜魔洞",desc = "击杀10只精英怪",shaguai_id = 606,num = 10,mob_type = 1,rwjl = {{"绑定金币",150000},{"玫瑰花",50}},},
     ["npc_607"] = {id = 607,name = "深入野火",level = 2,map = "野火大本营",desc = "提交：野火帮罪证*10",cost = {{"野火帮罪证",10}},rwjl = {},ch = "除魔卫道"},
     ["npc_608"] = {id = 608,name = "守护森林",level = 2,map = "神秘森林",desc = "击杀怪物50只",shaguai_id = 608,num = 50,rwjl = {{"绑定金币",200000},{"称号卷轴",5}},},
     ["npc_609"] = {id = 609,name = "古刹之谜",level = 2,map = "洞穴秘境",desc = "提交：杀意碎片*5、煞气*5",cost = {{"杀意碎片",5},{"煞气",5}},rwjl = {{"绑定金币",150000},{"古刹魔瓶",1}},},
@@ -1716,8 +1725,9 @@ teshudata = {
         id = 104,
         name = "天书使者",
         where = 90,
-        max_refresh = 10,
-        cost = {{"先天石",1}},
+        max_refresh = 999999,
+        cost = {{"辉耀水晶",5},{"金币",500000}},
+        reward_title = {name = "天书使者", attr = {{25,10},{255,2000}}},
         custom_tag = "附魔属性",
         custom_index = 1,
         pool = {
@@ -2368,7 +2378,7 @@ teshudata = {
                     [7] = {
                         {tag = "神石宝箱", give = {{"神石宝箱", 1}}, weight = 100},
                         {tag = "神石宝箱钥匙", give = {{"神石宝箱钥匙", 1}}, weight = 100},
-                        {tag = "仙品仙法卷轴", give = {{"仙品仙法卷轴", 1}}, weight = 100},
+                        {tag = "极品仙法卷轴", give = {{"极品仙法卷轴", 1}}, weight = 100},
                     },
                     default = {
                         {tag = "神秘奖励占位", give = {{"绑定元宝", 8888}}, weight = 100},
@@ -2438,12 +2448,20 @@ teshudata = {
     },
     ["anniu_501"] = {
         id = "anniu_501",
-        name = "首冲礼包",
+        name = "首充礼包",
+        -- slots: 四格首充奖励；welfare：限时福利，领取后才开始计时下一档
         details = {
-            ["首充"] = {
-                {jl ={},show = {{"半月弯刀",1},{"天选资格",1},{"时装：小小裁决战士",1},{"护体光环激活",1},{"巡航功能",1}}},
-                {jl ={{"二重转生石",10},{"金币",580000},{"仙法卷轴",1},{"1元真实充值",3}},show = {{"二重转生石",10},{"金币",580000},{"仙法卷轴",1},{"1元真实充值",3}}},
-                {jl ={{"千年玄铁",38},{"五行石",10},{"辉耀水晶",5},{"书页",20}},show = {{"千年玄铁",38},{"五行石",10},{"辉耀水晶",5},{"书页",20}}},
+            slots = {
+                [1] = {value = 12, show = {{"天选资格",1},{"刀刀绿毒",1}}},
+                [2] = {value = 32, show = {{"智能巡航",1},{"传送3秒CD",1}}},
+                [3] = {value = 52, show = {{"半月弯刀",1},{"护体光环",1}}},
+                [4] = {value = 92, show = {{"群体施毒术",1},{"时装：小小裁决战士",1}}},
+            },
+            welfare = {
+                [1] = {wait_sec = 20 * 60, reward = {{"金币",880000}}, label = "金币*88W"},
+                [2] = {wait_sec = 30 * 60, reward = {{"聚宝盆碎片",20}}, label = "聚宝盆碎片*20"},
+                [3] = {wait_sec = 45 * 60, reward = {{"五行石",10}}, label = "五行石*10"},
+                [4] = {wait_sec = 60 * 60, reward = {{"辉耀水晶",10}}, label = "辉耀水晶*10"},
             },
         },
         endtime = 3,
@@ -2452,8 +2470,8 @@ teshudata = {
         id = 504,
         name = "超级特权",
         ch = "超级特权",
-        give = {{"金币",2000000},{"元宝",180000},{"千年玄铁",88}},
-        show = {{"超级特权[称号]",1},{"金币",2000000},{"元宝",180000},{"千年玄铁",88},{"激活仙府自动砍树功能",1},{"激活自动巡航功能",1}},
+        give = {{"元宝",180000},{"灵石",880}},
+        show = {{"超级特权[称号]",1},{"元宝",180000},{"灵石",880},{"自动砍树",1}},
     },
     ["anniu_502"] = {
         id = 502,
@@ -2461,14 +2479,14 @@ teshudata = {
         ---充值档位
         fj = {10,30,68,128,198,328,648,998},
         jl = {
-            {give = {{"灵石",100},{"元宝",50000},{"千年玄铁",388}},ch = "来去自如"},
-            {give = {{"灵石",300},{"金币",10000000},{"炼丹许可证",1}},token_count = 5},
+            {give = {{"灵石",100},{"元宝",50000},{"千年玄铁",388},{"筑基丹",1}}},
+            {give = {{"灵石",300},{"金币",10000000},{"开辟许可证",1},{"切割刀",1}},show = {{"击杀怪物额外累计切割",1},{"最高88888",1}},token_count = 5},
             {give = {{"灵石",680},{"元宝",300000},{"斗笠之魂",1}},ch = "恭喜发财"},
             {give = {{"灵石",1280},{"金币",35000000},{"千年玄铁",1388}},show = {{"至尊吊坠",1}}},
             {give = {{"灵石",1980},{"元宝",500000},{"辉耀水晶",188}},skill = "魔法盾"},
-            {give = {{"灵石",3280},{"金币",55000000},{"仙品仙法卷轴",2}},show = {{"独享首曝特权",1}}},
+            {give = {{"灵石",3280},{"金币",55000000},{"极品仙法卷轴",2}},show = {{"独享首曝特权",1}}},
             {give = {{"灵石",6480},{"元宝",1000000},{"阴阳八卦境",1}},token_count = 188},
-            {give = {{"灵石",9980},{"元宝",2000000},{"仙品仙法卷轴",3},{"雷霆双子剑",1}},},
+            {give = {{"灵石",9980},{"元宝",2000000},{"极品仙法卷轴",3}},show = {{"解锁全部仙法槽位",1}},},
         },
         ch = "九五至尊"
     },
@@ -2504,7 +2522,7 @@ teshudata = {
         buy_cost = {{"灵石",30}}, -- 购买1次的消耗
         draw_once_cost = 1, -- 单抽消耗次数
         draw_ten_cost = 10, -- 十连消耗次数
-        crown_cost = 2666, -- 冠名充值门槛
+        crown_cost = 588, -- 冠名累计充值
         day_card = {need_charge = 28, title = "日卡", rewards = {{"元宝",100000},{"灵石",280}}, token_count = 10}, -- 日卡礼包：今日累计充值达到金额后可领取
         duplicate_fashion_reward = {{"元宝",660000}}, -- 时装重复补偿
         title_reward = {
@@ -2549,9 +2567,9 @@ teshudata = {
         box_pool = {
             low = {
                 {kind = "item", give = {{"千年玄铁",88}}, label = "千年玄铁*88"},
-                {kind = "item", give = {{"五行石",5}}, label = "五行石*5"},
-                {kind = "item", give = {{"修为丹（小）",5}}, label = "修为丹小*5"},
-                {kind = "item", give = {{"杀伐神石[小]",5}}, label = "杀伐神石小*5"},
+                {kind = "item", give = {{"五行石",10}}, label = "五行石*10"},
+                {kind = "item", give = {{"强化石",20}}, label = "强化石*20"},
+                {kind = "item", give = {{"杀伐神石[小]",20}}, label = "杀伐神石[小]*20"},
                 {kind = "item", give = {{"强化石",20}}, label = "强化石*20"},
             },
             high = {
@@ -2563,7 +2581,7 @@ teshudata = {
             super = {
                 {kind = "item", give = {{"圣星核",1}}, label = "圣星核*1"},
                 {kind = "item", give = {{"灵兽蛋",6}}, label = "灵兽蛋*6"},
-                {kind = "item", give = {{"天道·渡劫丹",6}}, label = "天道·渡劫丹*3"},
+                {kind = "item", give = {{"鉴古符",3}}, label = "鉴古符*3"},
                 {kind = "item", give = {{"鉴古符",3}}, label = "鉴古符*3"},
             },
             relic = {
@@ -2575,15 +2593,15 @@ teshudata = {
             },
         },
         milestones = {
-            [1] = {draw = 10, normal = {main = {kind = "item", give = {{"仙法卷轴",5}}, label = "仙法卷轴*5"}}, crown = {main = {kind = "item", give = {{"绑定金币",380000}}, label = "绑定金币*380000"}}},
+            [1] = {draw = 10, normal = {main = {kind = "item", give = {{"仙法卷轴",5}}, label = "仙法卷轴*5"}}, crown = {main = {kind = "item", give = {{"千年玄铁",188}}, label = "千年玄铁*188"}}},
             [2] = {draw = 30, normal = {main = {kind = "item", give = {{"绑定金币",1280000}}, label = "绑定金币*1280000"}}, crown = {main = {kind = "item", give = {{"仙法卷轴",15}}, label = "仙法卷轴*15"}}},
             [3] = {draw = 50, normal = {main = {kind = "item", give = {{"斗笠之魄",1}}, label = "斗笠之魄*1"}}, crown = {main = {kind = "item", give = {{"绑定金币",8880000}}, label = "绑定金币*8880000"}}},
             [4] = {draw = 100, normal = {main = {kind = "item", give = {{"神石宝箱钥匙",5}}, label = "神石宝箱钥匙*5"}}, crown = {main = {kind = "footstep", idx = 1, name = "累抽足迹1", label = "累抽足迹1"}}},
             [5] = {draw = 150, normal = {main = {kind = "item", give = {{"辉耀水晶",88}}, label = "辉耀水晶*88"}}, crown = {main = {kind = "item", give = {{"辉耀水晶",188}}, label = "辉耀水晶*188"}}},
-            [6] = {draw = 200, normal = {main = {kind = "item", give = {{"仙法卷轴",100}}, label = "仙法卷轴*100"}}, crown = {main = {kind = "item", give = {{"仙品仙法卷轴",1}}, label = "仙品仙法卷轴*1"}}},
+            [6] = {draw = 200, normal = {main = {kind = "item", give = {{"仙法卷轴",100}}, label = "仙法卷轴*100"}}, crown = {main = {kind = "item", give = {{"极品仙法卷轴",1}}, label = "极品仙法卷轴*1"}}},
             [7] = {draw = 250, normal = {main = {kind = "item", give = {{"高阶强化石",100}}, label = "高阶强化石*100"}}, crown = {main = {kind = "item", give = {{"绑定元宝",1280000}}, label = "绑定元宝*1280000"}}},
             [8] = {draw = 300, normal = {main = {kind = "item", give = {{"灵兽蛋",10}}, label = "灵兽蛋*10"}}, crown = {main = {kind = "footstep", idx = 2, name = "累抽足迹2", label = "累抽足迹2"}}},
-            [9] = {draw = 400, normal = {main = {kind = "item", give = {{"仙法卷轴",200}}, label = "仙法卷轴*200"}}, crown = {main = {kind = "item", give = {{"仙品仙法卷轴",2}}, label = "仙品仙法卷轴*2"}}},
+            [9] = {draw = 400, normal = {main = {kind = "item", give = {{"仙法卷轴",200}}, label = "仙法卷轴*200"}}, crown = {main = {kind = "item", give = {{"极品仙法卷轴",2}}, label = "极品仙法卷轴*2"}}},
             [10] = {draw = 600, normal = {main = {kind = "item", give = {{"时光鉴定石",50}}, label = "时光鉴定石*50"}}, crown = {main = {kind = "footstep", idx = 3, name = "累抽足迹3", label = "累抽足迹3"}}},
             [11] = {draw = 1000, normal = {main = {kind = "footstep", idx = 4, name = "累抽足迹4", label = "累抽足迹4"}}, crown = {main = {kind = "item", give = {{"帝星本源",2}}, label = "帝星本源*2"}}},
             [12] = {draw = 1888, normal = {main = {kind = "item", give = {{"帝星本源",1}}, label = "帝星本源*1"}}, crown = {main = {kind = "footstep", idx = 5, name = "累抽足迹5", label = "累抽足迹5"}}},
@@ -2749,21 +2767,32 @@ teshudata = {
         id = "anniu_516",
         name = "至尊赞助",
         details = {
-            {ch = "入门玩家", sgsl = 0, need_charge = 0, salary = {{"绑定金币",50000},{"绑定元宝",500}}},
-            {ch = "高级玩家", sgsl = 0, need_charge = 10, need_money23 = 10, salary = {{"绑定金币",100000},{"绑定元宝",1000},{"绑定灵石",10}},jl = {{"切割刀",1}}},
-            {ch = "至尊玩家", sgsl = 0, need_charge = 128, need_cz502 = 128, salary = {{"绑定金币",200000},{"绑定元宝",2000},{"绑定灵石",50}},jl = {{"至尊战刃",1}}},
+            {ch = "入门玩家", sgsl = 0, need_charge = 0},
+            {ch = "诸邪退散", sgsl = 0, need_pay21 = 18, auto_pay = 18, pay_moneyid = 21, jl = {}},
+            {ch = "至尊黑卡", sgsl = 0, need_cz502_idx = 4, salary = {{"绑定金币",300000},{"绑定元宝",3000},{"绑定灵石",60}},jl = {{"至尊黑卡",1}}},
         },
     },
-    ["anniu_517"] = {
-        id = "anniu_517",
+        ["npc_106"] = {
+        id = 106,
         name = "聚宝盆",
-        details = {
-            [1] = {jf = 500,give = {{"绑定灵石",10}},maxcs = 1,tiaojian = "免费获取"},
-            [2] = {jf = 1000,give = {{"绑定灵石",30}},maxcs = 2,tiaojian = "首充礼包"},
-            [3] = {jf = 1200,give = {{"绑定灵石",50}},maxcs = 3,tiaojian = "激活【超级特权】"},
-            [4] = {jf = 1500,give = {{"绑定灵石",80}},maxcs = 4,tiaojian = "累计充值200元"},
-            [5] = {jf = 1800,give = {{"绑定灵石",100}},maxcs = 5,tiaojian = "累计充值300元"},
-        },
+        -- 修复聚宝盆所需碎片名称。
+        fragment_item = "聚宝盆碎片",
+        -- 修复聚宝盆所需碎片数量。
+        fragment_count = 20,
+        -- 聚宝盆实际背包神器名；用于发放实体神器与穿戴校验。
+        artifact_name = "聚宝盆",
+        -- 界面统一展示名称。
+        artifact_display_name = "聚宝盆",
+        -- 兼容旧数据时额外允许识别的名称。
+        artifact_check_names = {},
+        -- 修复完成后发放的实际背包神器。
+        artifact_reward = {{"聚宝盆",1}},
+        -- 聚宝盆穿戴在背包神器位后生效的属性。
+        attr = {{66,1000,"打怪经验"},{204,1000,"金币回收"}},
+        -- 每日自动发奖所需击杀数量。
+        daily_kill = 1000,
+        -- 每日达标后自动发放的奖励。
+        daily_reward = {{"金币",2000000}},
     },
     ["sjdt"] = {
         id = 500,
@@ -2781,6 +2810,3 @@ teshudata = {
     },   
 }
 return teshudata
-
-
-

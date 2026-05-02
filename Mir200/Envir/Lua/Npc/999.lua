@@ -1,7 +1,4 @@
 npc = {}
-
-
-
 function npc.main(play,npcid)
     local zhid = tonumber(getconst(play,"<$USERACCOUNT>"))
     if constant.pz_htqx[zhid] or getconst(play, '<$SERVERNAME>') == "" or getconst(play, '<$SERVERNAME>') == "测试区" then
@@ -9,31 +6,25 @@ function npc.main(play,npcid)
 <Text|id=ui_4|x=85|y=360|color=255|size=18|text=发送充值礼包和人物变量查询，发送物品>
 <Layout|id=ui_2|x=801.0|y=0.0|width=80|height=80|link=@exit>
 <Button|id=ui_3|x=794|y=0.0|width=26|height=40|nimg=public/1900000510.png|pimg=public/1900000511.png|color=255|size=18|link=@exit>
-<Button|id=ui_32|x=32|y=27|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=10转|link=@jjlggna,1>
+<Button|id=ui_32|x=32|y=27|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=10?|link=@jjlggna,1>
 <Button|id=ui_33|x=147|y=27|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=200级|link=@jjlggna,2>
 <Button|id=ui_37|x=148|y=90|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=完成当前任务|link=@jjlggna,3>
 <Button|id=ui_14|x=31|y=173|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=+10级|link=@jjlggna,14>
 <Button|id=ui_15|x=152|y=174|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=-10级|link=@jjlggna,15>
 <Button|id=ui_23|x=81|y=312|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=后台|link=@jjlggna,23>
 <Button|id=ui_5|x=80|y=426|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=装备|link=@jjlggna,24>
-
 <Button|id=ui_6|x=19|y=475|width=106|height=40|nimg=public/1900000660.png|color=249|size=16|text=三大陆|link=@sandalu>
 <Button|id=ui_7|x=140|y=475|width=106|height=40|nimg=public/1900000660.png|color=249|size=16|text=四大陆|link=@sidalu>
 <Button|id=ui_9|x=253|y=475|width=106|height=40|nimg=public/1900000660.png|color=249|size=16|text=五大陆|link=@wudalu>
 <Button|id=ui_10|x=377|y=475|width=106|height=40|nimg=public/1900000660.png|color=249|size=16|text=六大陆|link=@liudalu>
 <Button|id=ui_11|x=500|y=475|width=106|height=40|nimg=public/1900000660.png|color=249|size=16|text=限制全解锁|link=@buff>
-
 <Button|id=ui_12|x=24|y=539|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=脱下身上|link=@tuo>
 <Button|id=ui_13|x=140|y=539|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=清理背包|link=@qing>
 <Button|id=ui_16|x=255|y=539|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=货币全满|link=@jhb>
 <Button|id=ui_17|x=374|y=539|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=货币清零|link=@qhb>
-
-
 	]])
     end
-
 end
-
 function jjlggna(play,id)
     if id == "1" then
         setbaseinfo(play,39,36)
@@ -47,7 +38,6 @@ function jjlggna(play,id)
             playeffect(play,4011,25,-50,1,0,0)
         end
     elseif id == "4" then
-
     elseif id == "5" then
     elseif id == "6" then
     elseif id == "7" then
@@ -75,29 +65,23 @@ function jjlggna(play,id)
     elseif id == "24" then
         Npclib[666].main(play, 0, 0, "")
     end
-
-
 end
-
 function qing(play)
     gmexecute(play,"qq")
     giveitem(play,"盟重回城石")
     giveitem(play,"随机传送石")
 end
-
 function sandalu(play)
+    if not Player.dl_sz(play, 4) then
+        return
+    end
     mapmove(play,"四大陆主城",643,175,4)
 end
-
 function buff(play)
-
     setplaydef(play,VarCfg.U_zxrw[1],18)
     Player.zxrw_wancheng(play, 18, "")
-
     renewlevel(play,5,0,0)
     GameEvent.push(EventCfg.onRenewlevelUP, play, 5)
-
-
     local item = linkbodyitem(play, 71)
     local sx = json2tbl(getitemcustomabil(play, item))
     local dj = sx.abil[rwxw.attr[1][1] + 1].v[rwxw.attr[1][2] + 1][3] / rwxw.attr[1][3]
@@ -130,29 +114,29 @@ function buff(play)
     T_zzsj.sh[""..T_zzsj.dqzy] = 1
     setplaydef(play,VarCfg.T_zzsj,tbl2json(T_zzsj))
 end
-
 function sidalu(play)
+    if not Player.dl_sz(play, 5) then
+        return
+    end
     mapmove(play,"五大陆主城",47,46,4)
 end
-
 function wudalu(play)
+    if not Player.dl_sz(play, 6) then
+        return
+    end
     mapmove(play,"六大陆主城",53,43,4)
 end
-
 function liudalu(play)
-    -- 手动传送入口同样复用第七大陆的统一门槛校验。
-    if not Player.ensureSeventhContinentPass(play, "请先集齐并领取#57|【世界符文】#249|奖励后再前往七大陆#57") then
+    if not Player.dl_sz(play, 7) then
         return
     end
     mapmove(play,"七大陆主城",197,189,5)
 end
-
 function jhb(play)
     changemoney(play,1,"=",2000000000,"",true)
     changemoney(play,2,"=",2000000000,"",true)
     changemoney(play,3,"=",2000000000,"",true)
     changemoney(play,4,"=",2000000000,"",true)
-
     changemoney(play,7,"=",2000000000,"",true)
     changemoney(play,8,"=",2000000000,"",true)
 end
@@ -161,11 +145,9 @@ function qhb(play)
     changemoney(play,2,"=",0,"",true)
     changemoney(play,3,"=",0,"",true)
     changemoney(play,4,"=",0,"",true)
-
     changemoney(play,7,"=",0,"",true)
     changemoney(play,8,"=",0,"",true)
 end
-
 function tuo(play)
     local dx = linkbodyitem(play,1)
     delitembymakeindex(play,getiteminfo(play,dx,1))
@@ -173,6 +155,4 @@ function tuo(play)
         callscriptex(play,"TakeOffItem",i)
     end
 end
-
 return npc
-

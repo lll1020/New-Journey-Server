@@ -149,7 +149,7 @@ local function _grant_placeholder(play, T_data, reward)
     local key = tostring(reward.name or reward.label or "placeholder")
     local num = tonumber(reward.num) or 1
     T_data.placeholder[key] = (tonumber(T_data.placeholder[key]) or 0) + num
-    return key .. "*" .. tostring(num) .. "(占位)"
+    return key .. "*" .. tostring(num) .. "(?λ)"
 end
 local function _grant_fashion(play, T_data, reward, reason)
     local idx = tostring(tonumber(reward.idx) or 0)
@@ -468,7 +468,6 @@ function npc.link(play, npcid, p2, p3, msgData)
             Player.sendmsgEx(play, "累计抽奖次数不足#57|，暂时无法领取#57")
             return
         end
-
         local claimedCount, labels = _claim_milestone_range(play, T_data, p2, milestoneIdx)
         if claimedCount <= 0 then
             Player.sendmsgEx(play, "该档位及此前奖励已领取，无需重复领取#57")
@@ -507,4 +506,3 @@ end
 GameEvent.add(EventCfg.onLoginEnd, _on_login, _token_name)
 GameEvent.add(EventCfg.onKFLogin, _on_login, _token_name)
 return npc
-

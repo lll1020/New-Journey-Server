@@ -142,8 +142,12 @@ local function _try_grant_all_level_bonus(play, T_data, state)
     end
     state.level_bonus = 1
     _save_dljq_data(play, T_data)
-    callscriptex(play, "CHANGELEVEL", "+", _config.all_level_add or 5)
-    Player.sendmsgEx(play, string.format("你已激活全部|【天道命盘】#249|，额外获得|【%d级】#249|", _config.all_level_add or 5))
+    local _, realAdd = Player.addRoleLevel(play, _config.all_level_add or 5, false)
+    if realAdd > 0 then
+        Player.sendmsgEx(play, string.format("你已激活全部|【天道命盘】#249|，额外获得|【%d级】#249|", realAdd))
+    else
+        Player.sendmsgEx(play, string.format("你已激活全部|【天道命盘】#249|，但当前等级已达|【%d级】#249|上限，未获得额外等级#57", Player.getRoleLevelCap()))
+    end
     return true
 end
 

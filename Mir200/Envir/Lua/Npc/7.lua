@@ -1,16 +1,11 @@
 npc = {}
-
-
 --npc名称：升级切割
 --npc功能：
 local _config = Guard.getConfig("npc_7")
-
 function npc.main(play,npcid)
     sendluamsg(play,100,npcid,0,0,"")
 end
-
 function npc.link(play, npcid, p2, p3, msgData)
-
     -- npc_guard: 入参校验
     if not Guard.ensurePlayer(play, npcid) then
         return
@@ -25,7 +20,6 @@ function npc.link(play, npcid, p2, p3, msgData)
     if not Guard.ensureActionAllowed(play, npcid, p2, __guardAllowedActions) then
         return
     end
-
     if p2 == 1 then
         local equipLevel = Player.getEquipFieldByPos(play, _config.where, 1) or 0
         if equipLevel == 0 then
@@ -44,26 +38,17 @@ function npc.link(play, npcid, p2, p3, msgData)
             return
         end
         Player.takeItemByTable(play, config.cost, ",升级攻速",nil)
-
         changeitemidx(play,getiteminfo(play,linkbodyitem(play,_config.where),1),getstditeminfo(config.give, ConstCfg.stditeminfo.idx))
         Player.sendmsgEx(play,  "恭喜你，装备提升成功，当前装备等级为|【"..(equipLevel + 1).."级】#249|")
         sendluamsg(play,100,npcid,1,0,"")
         sendluamsg(play,101,1005,0,0,"qhcg")
-        if rwcf[npcid][1] == getplaydef(play,VarCfg.U_zxrw[1]) then 
-            Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
-            sendluamsg(play, 101, 9999, 0, 0, "npc_"..npcid)
-        end
-
         if (equipLevel + 1) == 15 then
             Player.title_give(play, _config.title)
             Player.sendmsgEx(play,  "恭喜你，获得称号：|【".._config.title.."】#249|")
         end
-
     elseif p2 == 2 and false then
         giveonitem(play,_config.where,"攻速之镰[lv1]",1)
         sendluamsg(play,100,npcid,1,0,"")
     end
 end
-
-
 return npc

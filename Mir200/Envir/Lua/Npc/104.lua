@@ -4,11 +4,7 @@ local _tianshu_cfg = Guard.getConfig("npc_24") or {}
 local _tag_prefix = tostring((_config and _config.custom_tag) or "附魔属性")
 local _tag_index = tonumber((_config and _config.custom_index) or 1) or 1
 local _legacy_tag_prefix = "先天词条"
-local function _finish_mainline(play)
-    if getplaydef(play, VarCfg.U_zxrw[1]) == 19 then
-        Player.zxrw_wancheng(play, 19, "任务")
-    end
-end
+local _title_attr_list_name = "天书使者称号属性"
 
 local function _get_tianshu_item(play)
     local where = tonumber((_config and _config.where) or _tianshu_cfg.where or 90) or 90
@@ -110,7 +106,7 @@ local function _build_preview(play, refresh_times)
     if count <= 0 then
         return {}
     end
-    local idx = ((tonumber(refresh_times) or 1) - 1) % count + 1
+    local idx = math.random(1, count) -- 当前洗炼出的属性概率均等
     return _roll_one(pool[idx])
 end
 
@@ -211,6 +207,29 @@ local function _apply_choice(play, choice)
     return true
 end
 
+local function _refresh_title_attr(play)
+    local reward = (_config and _config.reward_title) or {}
+    local title_name = tostring(reward.name or "")
+    local attrs = reward.attr or {}
+    if title_name ~= "" and checktitle(play, title_name) and #attrs > 0 then
+        Player.add_attlist(play, _title_attr_list_name, "=", Player.getAttrTableToStr(attrs), 1)
+    else
+        Player.del_attlist(play, _title_attr_list_name)
+    end
+end
+
+local function _grant_refresh_title(play)
+    local reward = (_config and _config.reward_title) or {}
+    local title_name = tostring(reward.name or "")
+    if title_name == "" or checktitle(play, title_name) then
+        return
+    end
+    Player.title_give(play, title_name, 1)
+    _refresh_title_attr(play)
+    recalcabilitys(play)
+    Player.sendmsgEx(play, "恭喜你获得称号：|【" .. title_name .. "】#249|")
+end
+
 local function _build_panel_data(play)
     local T_data = _get_data(play)
     local data = {}
@@ -229,6 +248,7 @@ function npc.main(play, npcid)
         Player.sendmsgEx(play, "请先装备#57|【天书】#249|后再操作#57")
         return
     end
+    _refresh_title_attr(play)
     sendluamsg(play, 100, npcid, 0, 0, tbl2json(_build_panel_data(play)))
 end
 
@@ -256,12 +276,12 @@ function npc.link(play, npcid, ew, aid, msgData)
 
     local T_data = _get_data(play)
     if ew == 1 then
-        local max_refresh = tonumber((_config and _config.max_refresh) or 10) or 10
+        local max_refresh = tonumber((_config and _config.max_refresh) or 20) or 20
         if T_data.refresh_times >= max_refresh then
             Player.sendmsgEx(play, string.format("先天词条最多只能刷新#57|【%d次】#249|", max_refresh))
             return
         end
-        local cost = (_config and _config.cost) or {{"先天石",1}}
+        local cost = (_config and _config.cost) or {{"辉耀水晶",5},{"金币",500000}}
         local name, num = Player.checkItemNumByTable(play, cost)
         if name then
             Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, tonumber(num) or 0))
@@ -270,7 +290,12 @@ function npc.link(play, npcid, ew, aid, msgData)
         Player.takeItemByTable(play, cost, ",天书先天词条", nil)
         T_data.refresh_times = T_data.refresh_times + 1
         T_data.preview = _build_preview(play, T_data.refresh_times)
+        setplaydef(play, "N$XYL2_TIANSHU_REFINE", 1)
+        Player.trySyncSecondContinentXyl(play)
         _save_data(play, T_data)
+        if T_data.refresh_times >= max_refresh then
+            _grant_refresh_title(play)
+        end
         Player.sendmsgEx(play, "刷新成功，当前获得1条先天词条，可选择保留替换到天书上#57")
         sendluamsg(play, 100, npcid, 1, 0, tbl2json(_build_panel_data(play)))
         return
@@ -288,14 +313,16 @@ function npc.link(play, npcid, ew, aid, msgData)
     T_data.saved = choice
     T_data.preview = {}
     _save_data(play, T_data)
-    
+
     Player.sendmsgEx(play, "附魔成功：|【" .. tostring(choice.name or "先天词条") .. "】#249| " .. tostring(choice.desc or "") .. "，已替换天书当前词条#57")
-    if 19 == getplaydef(play,VarCfg.U_zxrw[1]) then 
-        _finish_mainline(play)
-        sendluamsg(play, 101, 9999, 0, 0, "npc_"..npcid)
-    else
-        sendluamsg(play, 100, npcid, 2, 0, tbl2json(_build_panel_data(play)))
-    end
+    sendluamsg(play, 100, npcid, 2, 0, tbl2json(_build_panel_data(play)))
 end
+
+local function _on_login_104(play)
+    _refresh_title_attr(play)
+end
+
+GameEvent.add(EventCfg.onLoginEnd, _on_login_104, "天书使者")
+GameEvent.add(EventCfg.goSwitchMap, _on_login_104, "天书使者")
 
 return npc
