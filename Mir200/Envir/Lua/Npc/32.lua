@@ -1,13 +1,13 @@
 npc = {}
 
---è½¬ç”Ÿ
+--×ªÉú
 
 local _config = Guard.getConfig("npc_32")
 local FairyFate = include("lua/LuaLib/fairy_fate.lua")
 
 function npc.main(play,npcid)
     local data = {}
-    local level = getplaydef(play, VarCfg["U_è½¬ç”Ÿç­‰çº§"])
+    local level = tonumber(getplaydef(play, VarCfg["U_×ªÉúµÈ¼¶"])) or 0
     data["level"] = level
     if level > 0 then
         local config = _config.details[level]
@@ -23,7 +23,7 @@ function npc.main(play,npcid)
 end
 
 function npc.link(play,npcid,ew,aid)
-    -- npc_guard: å…¥å‚æ ¡éªŒ
+    -- npc_guard: Èë²ÎĞ£Ñé
     if not Guard.ensurePlayer(play, npcid) then
         return
     end
@@ -32,37 +32,37 @@ function npc.link(play,npcid,ew,aid)
         return
     end
     ew = __guardAction
-    -- npc_guard: æ“ä½œç™½åå•ï¼ˆä¼˜åŒ–ï¼šé™å®šåˆæ³•æ“ä½œç¼–å·ï¼‰
+    -- npc_guard: ²Ù×÷°×Ãûµ¥£¨ÓÅ»¯£ºÏŞ¶¨ºÏ·¨²Ù×÷±àºÅ£©
     local __guardAllowedActions = Guard.newActionSet({1})
     if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
         return
     end
 
     if ew == 1 then
-        local level = getplaydef(play, VarCfg["U_è½¬ç”Ÿç­‰çº§"])
+        local level = tonumber(getplaydef(play, VarCfg["U_×ªÉúµÈ¼¶"])) or 0
         if level >= _config.max_level then
-            Player.sendmsgEx(play, "å·²ç»æ»¡çº§")
+            Player.sendmsgEx(play, "ÒÑ¾­Âú¼¶")
             return
         end
         level = level + 1
         local config = _config.details[level]
         if not config then
-            Player.sendmsgEx(play, "é…ç½®å¼‚å¸¸ï¼Œè¯·è”ç³»ç®¡ç†å‘˜#57")
+            Player.sendmsgEx(play, "ÅäÖÃÒì³££¬ÇëÁªÏµ¹ÜÀíÔ±#57")
             return
         end
         local stage = config.level or math.floor((level - 1) / 10) + 1
         local step = config.x_level or ((level - 1) % 10) + 1
-        -- è½¬ç”Ÿç°åœ¨åªæ ¡éªŒå½“å‰ç­‰çº§å¯¹åº”çš„ææ–™ä¸ä¸‹ä¸€çº§é…ç½®ï¼Œä¸å†è¿½åŠ å…¶ä»–é˜¶æ®µå‰ç½®ã€‚
+        -- ×ªÉúÏÖÔÚÖ»Ğ£Ñéµ±Ç°µÈ¼¶¶ÔÓ¦µÄ²ÄÁÏÓëÏÂÒ»¼¶ÅäÖÃ£¬²»ÔÙ×·¼ÓÆäËû½×¶ÎÇ°ÖÃ¡£
         local name, num = Player.checkItemNumByTable(play, config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("ä½ çš„#57|ã€%sã€‘#249|ä¸è¶³ï¼š#57|ã€%dã€‘#249|", name, num))
+            Player.sendmsgEx(play, string.format("ÄãµÄ#57|¡¾%s¡¿#249|²»×ã£º#57|¡¾%d¡¿#249|", name, num))
             return
         end
-        Player.takeItemByTable(play, config.cost, ",è½¬ç”Ÿ",nil)
-        setplaydef(play, VarCfg["U_è½¬ç”Ÿç­‰çº§"], level)
-        Player.sendmsgEx(play, "å‡çº§æˆåŠŸï¼Œå½“å‰è½¬ç”Ÿä¸º|ã€"..stage.."é˜¶"..step.."çº§ã€‘#249|")
+        Player.takeItemByTable(play, config.cost, ",×ªÉú",nil)
+        setplaydef(play, VarCfg["U_×ªÉúµÈ¼¶"], level)
+        Player.sendmsgEx(play, "Éı¼¶³É¹¦£¬µ±Ç°×ªÉúÎª|¡¾"..stage.."½×"..step.."¼¶¡¿#249|")
         if FairyFate and FairyFate.touch then FairyFate.touch(play) end
-        Player.del_attlist(play, "è½¬ç”Ÿ")
+        Player.del_attlist(play, "×ªÉú")
         Login_zsattr(play)
         if Buff and Buff.refreshHuTiGuangHuan then
             Buff.refreshHuTiGuangHuan(play)
@@ -71,9 +71,9 @@ function npc.link(play,npcid,ew,aid)
         if step == 10 then
             renewlevel(play,1,0,0)
             GameEvent.push(EventCfg.onRenewlevelUP, play, 1)
-            Player.sendmsgEx(play, "è½¬ç”ŸæˆåŠŸï¼Œå½“å‰è½¬ç”Ÿä¸º|ã€"..stage.."é˜¶ã€‘#249|")
+            Player.sendmsgEx(play, "×ªÉú³É¹¦£¬µ±Ç°×ªÉúÎª|¡¾"..stage.."½×¡¿#249|")
             if rwcf[npcid] then
-                Player.zxrw_wancheng(play, rwcf[npcid][1], "ä»»åŠ¡") --å®Œæˆä»»åŠ¡
+                Player.zxrw_wancheng(play, rwcf[npcid][1], "ÈÎÎñ") --Íê³ÉÈÎÎñ
             end
             sendluamsg(play, 101, 9999, 0, 0, "npc_"..npcid)
         end
@@ -81,7 +81,7 @@ function npc.link(play,npcid,ew,aid)
 end
 
 function Login_zsattr(play)
-    local level = getplaydef(play, VarCfg["U_è½¬ç”Ÿç­‰çº§"])
+    local level = tonumber(getplaydef(play, VarCfg["U_×ªÉúµÈ¼¶"])) or 0
     local attrs = {}
     local attrsstr = ""
     if level <= 0 then
@@ -96,7 +96,7 @@ function Login_zsattr(play)
         end
     end
     attrsstr = Player.getAttrTableToStr(attrs)
-    Player.add_attlist(play, "è½¬ç”Ÿ", "=", attrsstr, 1)
+    Player.add_attlist(play, "×ªÉú", "=", attrsstr, 1)
 end
 GameEvent.add(EventCfg.onLogin, Login_zsattr, "Login_zsattr")
 

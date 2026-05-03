@@ -406,6 +406,9 @@ function clicknewtask(play,rwid)
 end
 --------------------删除任务触发-------------------
 function deletetask(play,rwid)
+    if rwid == 19 then
+        return
+    end
     setplaydef(play,VarCfg.N_rwlg,0)
     if constant.rw_syb[rwid+1] and constant.rw_syb[rwid+1].istg then
         rwid = rwid + 1
@@ -414,9 +417,9 @@ function deletetask(play,rwid)
         setplaydef(play,VarCfg.U_zxrw[1],rwid+1)
         setplaydef(play,VarCfg.U_zxrw[2],0)
     end
-    if rwid == 19 then
-        setplaydef(play, VarCfg["U_境界修炼"][2], 900)
-    end
+    -- if rwid == 19 then
+    --     setplaydef(play, VarCfg["U_境界修炼"][2], 900)
+    -- end
     if constant.rw_syb[rwid+1] and rwid < 1000 then
         local lx = constant.rw_syb[rwid+1][1]
         if rwid < 1000 then

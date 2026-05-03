@@ -17,9 +17,11 @@ local DecorateplaceCfg = _config.DecorateplaceCfg or {}
 local TitleCfg = _config.TitleCfg or {}
 local PetCfg = _config.PetCfg or {}
 local ShopCfg = _config.ShopCfg or {}
+local DollCfg = _config.DollCfg or {}
 local maxShopBuy = _config.shopMaxBuy or 9999
 local visitorLimit = _config.visitorLogLimit or 20
 local gridSize = _config.gridSize or 9
+local DollAttrListName = tostring(DollCfg.attr_list_name or "仙府娃娃属性")
 
 local function buildDecoPlaceIndex(cfg)
     local idx = {}
@@ -173,6 +175,14 @@ local function summarizeReward(reward)
     return table.concat(parts, "/")
 end
 
+local function cloneSimpleTable(src)
+    local result = {}
+    for key, value in pairs(src or {}) do
+        result[key] = value
+    end
+    return result
+end
+
 ---------------------------------------------------------------------
 -- Storage: 玩家数据读写
 ---------------------------------------------------------------------
@@ -260,6 +270,17 @@ function Storage.ensureRecord(play, opts)
     record.pet.beasts = record.pet.beasts or {}
     record.pet.bestiary = record.pet.bestiary or {}
     record.pet.materials = record.pet.materials or {essence = 0}
+    record.doll = record.doll or {
+        draw_total = 0,
+        pity_progress = 0,
+        hidden_count = 0,
+        owned = {},
+        quality_count = {normal = 0, red = 0, hidden = 0},
+        last_result = "",
+        last_draw_time = 0,
+    }
+    record.doll.owned = record.doll.owned or {}
+    record.doll.quality_count = record.doll.quality_count or {normal = 0, red = 0, hidden = 0}
     record.visitor = record.visitor or {log = {}}
     record.visitor.log = record.visitor.log or {}
     record.stats = record.stats or {xiangHua = 0}
@@ -317,7 +338,7 @@ local Planting = {}
 function Planting.plant(play, record, params, now)
     local gridId = tonumber(params.gridId)
     if not gridId or gridId < 1 or gridId > gridSize then
-        return false, "?????"
+        return false, "参数错误"
     end
     local seedId = params.seedId
     local cfg = PlantCfg[seedId]
@@ -504,7 +525,6 @@ local function splitStealReward(plot)
     return reward, left
 end
 
-
 function Steal.try(play, thiefRecord, targetRecord, now, gridId)
     if thiefRecord.meta.key == targetRecord.meta.key then
         return false, "不能偷取自己"
@@ -654,7 +674,6 @@ local function refineCostWithBuff(play, cost)
     return out
 end
 
-
 local function hasRefinePermit(play)
     local needEquip = RefineCfg.needEquip
     if not needEquip or needEquip == "" then
@@ -791,10 +810,236 @@ end
 --     return true, {pet = pet}
 -- end
 
-
 ---------------------------------------------------------------------
 -- 状态加载 / 持久化
 ---------------------------------------------------------------------
+
+---------------------------------------------------------------------
+-- Doll: 仙府娃娃机 / 收藏柜
+---------------------------------------------------------------------
+local Doll = {}
+
+local function dollResultCfg(resultId)
+    return (DollCfg.results or {})[resultId]
+end
+
+local function dollPercentAttrMap()
+    return DollCfg.percent_attrs or {}
+end
+
+local function dollSummaryLabel(attrId)
+    return (DollCfg.summary_labels or {})[tonumber(attrId)]
+end
+
+local function dollRoll(base)
+    base = tonumber(base) or 10000
+    return math.random(1, base)
+end
+
+local function dollCopyOwned(owned)
+    local result = {}
+    for _, resultId in ipairs(DollCfg.cabinet_order or {}) do
+        local count = tonumber((owned or {})[resultId]) or 0
+        if count > 0 then
+            result[resultId] = count
+        end
+    end
+    return result
+end
+
+local function dollBuildSummary(record)
+    local attrs = {}
+    local owned = ((record or {}).doll or {}).owned or {}
+    for resultId, count in pairs(owned) do
+        count = tonumber(count) or 0
+        local cfg = dollResultCfg(resultId)
+        if cfg and count > 0 then
+            for _, attr in ipairs(cfg.attr or {}) do
+                local attrId = tonumber(attr[1])
+                local attrValue = tonumber(attr[2]) or 0
+                if attrId and attrValue ~= 0 then
+                    attrs[attrId] = (attrs[attrId] or 0) + attrValue * count
+                end
+            end
+        end
+    end
+    return attrs
+end
+
+local function dollCountOwnedByPool(record, pool)
+    local total = 0
+    local owned = ((record or {}).doll or {}).owned or {}
+    for _, resultId in ipairs(pool or {}) do
+        if (tonumber(owned[resultId]) or 0) > 0 then
+            total = total + 1
+        end
+    end
+    return total
+end
+
+local function dollRefreshAttr(play, record)
+    Player.del_attlist(play, DollAttrListName)
+    local attrs = dollBuildSummary(record)
+    if next(attrs) then
+        Player.add_attlist(play, DollAttrListName, "=", Player.getAttrTableToStr(attrs), 1)
+    end
+end
+
+local function dollBuildSummaryList(record)
+    local attrs = dollBuildSummary(record)
+    local result = {}
+    for attrId, value in pairs(attrs) do
+        local label = dollSummaryLabel(attrId)
+        if label then
+            result[#result + 1] = {
+                attr = tonumber(attrId),
+                name = label,
+                value = tonumber(value) or 0,
+                percent = dollPercentAttrMap()[tonumber(attrId)] and true or false,
+            }
+        end
+    end
+    table.sort(result, function(a, b)
+        return (a.attr or 0) < (b.attr or 0)
+    end)
+    return result
+end
+
+local function dollPickFromPool(pool)
+    if type(pool) ~= "table" or #pool <= 0 then
+        return nil
+    end
+    return pool[math.random(1, #pool)]
+end
+
+local function dollHiddenPool()
+    return (DollCfg.hidden and DollCfg.hidden.pool) or {}
+end
+
+local function dollCanRollHidden(record)
+    local hiddenCfg = DollCfg.hidden or {}
+    local maxCount = tonumber(hiddenCfg.max_count) or 0
+    if maxCount <= 0 then
+        return false
+    end
+    return dollCountOwnedByPool(record, dollHiddenPool()) < maxCount
+end
+
+local function dollResolveCost(record)
+    local drawTotal = tonumber(((record or {}).doll or {}).draw_total) or 0
+    local firstCount = tonumber(DollCfg.first_draw_count) or 0
+    if drawTotal < firstCount then
+        return cloneRewardList(DollCfg.first_draw_cost or {})
+    end
+    return cloneRewardList(DollCfg.normal_draw_cost or {})
+end
+
+local function dollPickHidden(record)
+    local pool = dollHiddenPool()
+    local unowned = {}
+    local owned = ((record or {}).doll or {}).owned or {}
+    for _, resultId in ipairs(pool) do
+        if (tonumber(owned[resultId]) or 0) <= 0 then
+            unowned[#unowned + 1] = resultId
+        end
+    end
+    if #unowned > 0 then
+        return dollPickFromPool(unowned)
+    end
+    return dollPickFromPool(pool)
+end
+
+local function dollRollResult(record)
+    local hiddenCfg = DollCfg.hidden or {}
+    if dollCanRollHidden(record) then
+        local hiddenBase = tonumber(hiddenCfg.rate_base) or 10000
+        local hiddenRate = tonumber(hiddenCfg.rate) or 0
+        if hiddenRate > 0 and dollRoll(hiddenBase) <= hiddenRate then
+            return dollPickHidden(record), "hidden"
+        end
+    end
+    local pityNeed = tonumber(DollCfg.pity_need) or 0
+    local pityProgress = tonumber((((record or {}).doll or {}).pity_progress) or 0) or 0
+    if pityNeed > 0 and pityProgress + 1 >= pityNeed then
+        return dollPickFromPool(DollCfg.red_pool or {}), "pity"
+    end
+    local redBase = tonumber(DollCfg.red_rate_base) or 10000
+    local redRate = tonumber(DollCfg.red_rate) or 0
+    if redRate > 0 and dollRoll(redBase) <= redRate then
+        return dollPickFromPool(DollCfg.red_pool or {}), "red"
+    end
+    return dollPickFromPool(DollCfg.normal_pool or {}), "normal"
+end
+
+local function dollBuildView(record)
+    local doll = ((record or {}).doll or {})
+    local drawTotal = tonumber(doll.draw_total) or 0
+    local firstCount = tonumber(DollCfg.first_draw_count) or 0
+    local qualityCount = cloneSimpleTable(doll.quality_count or {})
+    qualityCount.normal = tonumber(qualityCount.normal) or 0
+    qualityCount.red = tonumber(qualityCount.red) or 0
+    qualityCount.hidden = tonumber(qualityCount.hidden) or 0
+    return {
+        draw_total = drawTotal,
+        pity_progress = tonumber(doll.pity_progress) or 0,
+        pity_need = tonumber(DollCfg.pity_need) or 0,
+        hidden_count = dollCountOwnedByPool(record, dollHiddenPool()),
+        owned = dollCopyOwned(doll.owned),
+        quality_count = qualityCount,
+        last_result = tostring(doll.last_result or ""),
+        last_draw_time = tonumber(doll.last_draw_time) or 0,
+        newbie_left = math.max(0, firstCount - drawTotal),
+        current_cost = dollResolveCost(record),
+        summary = dollBuildSummaryList(record),
+    }
+end
+
+function Doll.draw(play, record, now)
+    if type(DollCfg) ~= "table" or type(DollCfg.results) ~= "table" then
+        return false, "娃娃机配置缺失"
+    end
+    local cost = dollResolveCost(record)
+    local ok, lack = Common.checkCost(play, cost)
+    if not ok then
+        return false, string.format("%s不足", lack or "cost")
+    end
+    Common.payCost(play, cost, "xianfu_doll_draw")
+    local resultId, drawType = dollRollResult(record)
+    local resultCfg = dollResultCfg(resultId)
+    if not resultId or not resultCfg then
+        return false, "娃娃机配置异常"
+    end
+    local fixedReward = cloneRewardList(DollCfg.every_draw_reward or {})
+    if #fixedReward > 0 then
+        Player.rwjl(play, fixedReward, "仙府娃娃机", 1, 0)
+    end
+    local doll = record.doll or {}
+    doll.draw_total = (tonumber(doll.draw_total) or 0) + 1
+    doll.owned = doll.owned or {}
+    doll.quality_count = doll.quality_count or {normal = 0, red = 0, hidden = 0}
+    doll.owned[resultId] = (tonumber(doll.owned[resultId]) or 0) + 1
+    doll.last_result = resultId
+    doll.last_draw_time = tonumber(now) or Common.now()
+    local quality = tostring(resultCfg.quality or "normal")
+    doll.quality_count[quality] = (tonumber(doll.quality_count[quality]) or 0) + 1
+    if quality == "hidden" or quality == "red" then
+        doll.pity_progress = 0
+    else
+        doll.pity_progress = (tonumber(doll.pity_progress) or 0) + 1
+    end
+    doll.hidden_count = dollCountOwnedByPool(record, dollHiddenPool())
+    record.doll = doll
+    dollRefreshAttr(play, record)
+    return true, {
+        resultId = resultId,
+        name = resultCfg.name or resultId,
+        quality = quality,
+        qualityName = resultCfg.quality_name or quality,
+        attrDesc = resultCfg.attr_desc or "",
+        drawType = drawType,
+    }
+end
+
 local function loadState(play)
     local now = Common.now()
     local record = Storage.ensureRecord(play, {name = Player.GetName(play), now = now})
@@ -825,6 +1070,7 @@ local function buildSnapshot(state)
             decoration = state.record.decoration,
             refine = state.record.refine,
             pet = state.record.pet,
+            doll = dollBuildView(state.record),
             visitor = state.record.visitor,
         },
     }
@@ -859,6 +1105,7 @@ end
 local ActionHandler = {}
 
 function ActionHandler.sync(play, npcid, state)
+    dollRefreshAttr(play, state.record)
     persistState(state)
     pushAction(play, npcid, "sync", true, "", state)
 end
@@ -983,6 +1230,17 @@ end
 --     pushAction(play, npcid, "identify", true, "鉴定完成", state, res)
 -- end
 
+function ActionHandler.dollDraw(play, npcid, state)
+    local ok, res = Doll.draw(play, state.record, state.now)
+    persistState(state)
+    if not ok then
+        Player.sendmsgEx(play, res or "抓娃娃失败#57")
+        return
+    end
+    Player.sendmsgEx(play, string.format("抓取成功：%s", tostring(res.name or "娃娃")))
+    pushAction(play, npcid, "dollDraw", true, "抓取成功", state, res)
+end
+
 local function handleVisit(play, npcid, state, params, fn)
     local targetName = params and params.targetName
     if not targetName or targetName == "" then
@@ -1044,6 +1302,30 @@ end
 ---------------------------------------------------------------------
 -- NPC 入口
 ---------------------------------------------------------------------
+function npc.refreshDollAttr(play)
+    local state = loadState(play)
+    dollRefreshAttr(play, state.record)
+    persistState(state)
+end
+
+function npc.getDollPanelPayload(play)
+    local state = loadState(play)
+    dollRefreshAttr(play, state.record)
+    persistState(state)
+    return {
+        doll = dollBuildView(state.record),
+    }
+end
+
+function npc.drawDollFromWoodcut(play)
+    local state = loadState(play)
+    local ok, res = Doll.draw(play, state.record, state.now)
+    persistState(state)
+    return ok, res, {
+        doll = dollBuildView(state.record),
+        extra = ok and res or nil,
+    }
+end
 function npc.main(play, npcid)
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     if not (jq_data["npc_55"] and jq_data["npc_55"] >= 2) then
@@ -1051,6 +1333,7 @@ function npc.main(play, npcid)
         return
     end
     local state = loadState(play)
+    dollRefreshAttr(play, state.record)
     persistState(state)
     sendluamsg(play, 100, npcid, 0, 0, tbl2json(buildSnapshot(state)))
     openhyperlink(play, 1, 2)
@@ -1084,20 +1367,3 @@ function npc.link(play, npcid, p2, p3, msgData)
 end
 
 return npc
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

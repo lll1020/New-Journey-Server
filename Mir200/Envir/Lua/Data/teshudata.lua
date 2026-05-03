@@ -879,6 +879,60 @@ teshudata = {
                 {id = "essence", name = "妖怪精魄", cost = {{"仙府币", 8000}}},
             },
         },
+        DollCfg = {                                -- 仙府娃娃机 / 收藏柜
+            attr_list_name = "仙府娃娃属性",        -- 娃娃属性挂载名
+            first_draw_count = 10,                 -- 前 10 次新手价
+            first_draw_cost = {{"仙府币", 10}},    -- 新手单抽消耗
+            normal_draw_cost = {{"仙府币", 5000}}, -- 常规单抽消耗
+            every_draw_reward = {{"金币", 50000}}, -- 每次抽取固定奖励
+            pity_need = 35,                        -- 每 35 抽保底 1 个红款
+            red_rate = 500,                        -- 红款总概率 5.00%
+            red_rate_base = 10000,
+            hidden = {
+                pool = {"hidden_1", "hidden_2", "hidden_3", "hidden_4", "hidden_5"},
+                rate = 3,                          -- 隐藏款总概率 0.03%
+                rate_base = 10000,
+                max_count = 5,                     -- 每个角色最多获得 5 个隐藏款
+            },
+            cabinet_order = {                      -- 收藏柜展示顺序
+                "normal_1", "normal_2", "normal_3", "normal_4", "normal_5",
+                "red_1", "red_2", "red_3", "red_4", "red_5",
+                "hidden_1", "hidden_2", "hidden_3", "hidden_4", "hidden_5",
+            },
+            normal_pool = {"normal_1", "normal_2", "normal_3", "normal_4", "normal_5"},
+            red_pool = {"red_1", "red_2", "red_3", "red_4", "red_5"},
+            results = {
+                normal_1 = {id = "normal_1", name = "普通品娃娃1", quality = "normal", quality_name = "普通", asset_group = 1, attr = {{1,100}}, attr_desc = "固定生命+100"},
+                normal_2 = {id = "normal_2", name = "普通品娃娃2", quality = "normal", quality_name = "普通", asset_group = 2, attr = {{4,20}}, attr_desc = "固定攻击+20"},
+                normal_3 = {id = "normal_3", name = "普通品娃娃3", quality = "normal", quality_name = "普通", asset_group = 3, attr = {{10,5},{12,5}}, attr_desc = "固定双防+5"},
+                normal_4 = {id = "normal_4", name = "普通品娃娃4", quality = "normal", quality_name = "普通", asset_group = 4, attr = {{81,20}}, attr_desc = "对怪吸血+20"},
+                normal_5 = {id = "normal_5", name = "普通品娃娃5", quality = "normal", quality_name = "普通", asset_group = 5, attr = {{244,100}}, attr_desc = "打怪切割+100"},
+                red_1 = {id = "red_1", name = "红品质娃娃1", quality = "red", quality_name = "红", asset_group = 1, attr = {{1,1000}}, attr_desc = "固定生命+1000"},
+                red_2 = {id = "red_2", name = "红品质娃娃2", quality = "red", quality_name = "红", asset_group = 2, attr = {{4,200}}, attr_desc = "固定攻击+200"},
+                red_3 = {id = "red_3", name = "红品质娃娃3", quality = "red", quality_name = "红", asset_group = 3, attr = {{10,50},{12,50}}, attr_desc = "固定双防+50"},
+                red_4 = {id = "red_4", name = "红品质娃娃4", quality = "red", quality_name = "红", asset_group = 4, attr = {{81,200}}, attr_desc = "对怪吸血+200"},
+                red_5 = {id = "red_5", name = "红品质娃娃5", quality = "red", quality_name = "红", asset_group = 5, attr = {{244,1000}}, attr_desc = "打怪切割+1000"},
+                hidden_1 = {id = "hidden_1", name = "隐藏款娃娃1", quality = "hidden", quality_name = "隐藏", asset_group = 1, attr = {{242,5000},{300,5},{280,5},{281,5},{282,5},{283,5},{284,5},{285,5},{286,5},{287,5},{288,5},{289,5},{290,5},{291,5}}, attr_desc = "全属性+5% / 打怪爆率+50%"},
+                hidden_2 = {id = "hidden_2", name = "隐藏款娃娃2", quality = "hidden", quality_name = "隐藏", asset_group = 2, attr = {{242,5000},{300,5},{280,5},{281,5},{282,5},{283,5},{284,5},{285,5},{286,5},{287,5},{288,5},{289,5},{290,5},{291,5}}, attr_desc = "全属性+5% / 打怪爆率+50%"},
+                hidden_3 = {id = "hidden_3", name = "隐藏款娃娃3", quality = "hidden", quality_name = "隐藏", asset_group = 3, attr = {{242,5000},{300,5},{280,5},{281,5},{282,5},{283,5},{284,5},{285,5},{286,5},{287,5},{288,5},{289,5},{290,5},{291,5}}, attr_desc = "全属性+5% / 打怪爆率+50%"},
+                hidden_4 = {id = "hidden_4", name = "隐藏款娃娃4", quality = "hidden", quality_name = "隐藏", asset_group = 4, attr = {{242,5000},{300,5},{280,5},{281,5},{282,5},{283,5},{284,5},{285,5},{286,5},{287,5},{288,5},{289,5},{290,5},{291,5}}, attr_desc = "全属性+5% / 打怪爆率+50%"},
+                hidden_5 = {id = "hidden_5", name = "隐藏款娃娃5", quality = "hidden", quality_name = "隐藏", asset_group = 5, attr = {{242,5000},{300,5},{280,5},{281,5},{282,5},{283,5},{284,5},{285,5},{286,5},{287,5},{288,5},{289,5},{290,5},{291,5}}, attr_desc = "全属性+5% / 打怪爆率+50%"},
+            },
+            summary_labels = {
+                [1] = "固定生命",
+                [4] = "固定攻击",
+                [10] = "固定物防",
+                [12] = "固定魔防",
+                [81] = "对怪吸血",
+                [242] = "打怪爆率",
+                [244] = "打怪切割",
+                [300] = "全属性",
+            },
+            percent_attrs = {
+                [242] = true,
+                [300] = true,
+            },
+        },
     },
     ["npc_46"] = {
         id = 46,

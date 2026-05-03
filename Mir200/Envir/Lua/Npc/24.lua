@@ -1,23 +1,23 @@
 npc = {}
 
---å¤©ä¹¦
+--ÌìÊé
 
 local _config = Guard.getConfig("npc_24")
 
 local function _get_jf_need_kill_text(jf)
     jf = tonumber(jf) or 0
     if jf > 130000 then
-        return "å·²è¾¾ä¸Šé™"
+        return "ÒÑ´ïÉÏÏŞ"
     elseif jf >= 36001 then
-        return "éœ€å‡»æ€äº”å¤§é™†åŠä»¥ä¸Šæ€ªç‰©"
+        return "Ğè»÷É±Îå´óÂ½¼°ÒÔÉÏ¹ÖÎï"
     elseif jf >= 16001 then
-        return "éœ€å‡»æ€å››å¤§é™†åŠä»¥ä¸Šæ€ªç‰©"
+        return "Ğè»÷É±ËÄ´óÂ½¼°ÒÔÉÏ¹ÖÎï"
     elseif jf >= 6001 then
-        return "éœ€å‡»æ€ä¸‰å¤§é™†åŠä»¥ä¸Šæ€ªç‰©"
+        return "Ğè»÷É±Èı´óÂ½¼°ÒÔÉÏ¹ÖÎï"
     elseif jf >= 1001 then
-        return "éœ€å‡»æ€äºŒå¤§é™†åŠä»¥ä¸Šæ€ªç‰©"
+        return "Ğè»÷É±¶ş´óÂ½¼°ÒÔÉÏ¹ÖÎï"
     else
-        return "éœ€å‡»æ€ä¸€å¤§é™†åŠä»¥ä¸Šæ€ªç‰©"
+        return "Ğè»÷É±Ò»´óÂ½¼°ÒÔÉÏ¹ÖÎï"
     end
 end
 local function _tianshu_fix_data(T_data)
@@ -36,11 +36,11 @@ local function _get_tianshu_jf_max(level)
 end
 local function _get_tianshu_prompt_text(T_data)
     T_data = _tianshu_fix_data(T_data)
-    return string.format("æç¤ºï¼š%s æ€æ°”ï¼š%d/%d", _get_jf_need_kill_text(T_data.jf), T_data.shaqi, tonumber(_config.shaqi_max) or 1000)
+    return string.format("ÌáÊ¾£º%s É±Æø£º%d/%d", _get_jf_need_kill_text(T_data.jf), T_data.shaqi, tonumber(_config.shaqi_max) or 1000)
 end
 
 local function _xianfa_unlock_all_slots(actor)
-    -- åœ¨çº¿å……å€¼å…¨éƒ¨æ¡£ä½é¢†å–å®Œæˆåï¼Œä»™æ³•10ä¸ªæ§½ä½å…¨éƒ¨è§£é”ã€‚
+    -- ÔÚÏß³äÖµÈ«²¿µµÎ»ÁìÈ¡Íê³Éºó£¬ÏÉ·¨10¸ö²ÛÎ»È«²¿½âËø¡£
     local czlb = json2tbl(getplaydef(actor, VarCfg.T_czlb))
     if type(czlb) ~= "table" then
         return false
@@ -191,13 +191,13 @@ local function _set_tianshu_shaqi_customabil(play, itemobj, T_data)
     local ok, item_json = pcall(json2tbl, getitemcustomabil(play, itemobj))
     item_json = ok and type(item_json) == "table" and item_json or nil
     if not item_json or type(item_json.abil) ~= "table" then
-        item_json = json2tbl('{"abil":[{"i":0,"t":"[æ€æ°”å±æ€§]","c":251,"v":[]}],"name":""}')
+        item_json = json2tbl('{"abil":[{"i":0,"t":"[É±ÆøÊôĞÔ]","c":251,"v":[]}],"name":""}')
     end
     item_json.name = tostring(item_json.name or "")
     local idx = nil
     local abil_i = nil
     for i, v in ipairs(item_json.abil) do
-        if type(v) == "table" and tostring(v.t or "") == "[æ€æ°”å±æ€§]" then
+        if type(v) == "table" and tostring(v.t or "") == "[É±ÆøÊôĞÔ]" then
             idx = i
             abil_i = tonumber(v.i) or (i - 1)
             break
@@ -225,7 +225,7 @@ local function _set_tianshu_shaqi_customabil(play, itemobj, T_data)
     if hp_value > 0 then
         table.insert(attr_list, {254, tonumber(_config.shaqi_hp_attr) or 1, hp_value, 0, 21, 2, 2})
     end
-    item_json.abil[idx] = {i = abil_i or (idx - 1), t = "[æ€æ°”å±æ€§]", c = 251, v = attr_list}
+    item_json.abil[idx] = {i = abil_i or (idx - 1), t = "[É±ÆøÊôĞÔ]", c = 251, v = attr_list}
     setitemcustomabil(play, itemobj, tbl2json(item_json))
 end
 function tianshu_refresh_item(play, T_data, itemobj)
@@ -237,14 +237,14 @@ function tianshu_refresh_item(play, T_data, itemobj)
     setcustomitemprogressbar(play, itemobj, 0, tbl2json({
         ["open"] = 1,
         ["show"] = 0,
-        ["name"] = string.format("å¤©ä¹¦ç­‰çº§ï¼š%dçº§", T_data.level),
+        ["name"] = string.format("ÌìÊéµÈ¼¶£º%d¼¶", T_data.level),
         ["color"] = 223,
         ["imgcount"] = 1,
     }))
     setcustomitemprogressbar(play, itemobj, 1, tbl2json({
         ["open"] = 1,
         ["show"] = 2,
-        ["name"] = "æ€æ„å€¼",
+        ["name"] = "É±ÒâÖµ",
         ["color"] = 249,
         ["imgcount"] = 1,
         ["cur"] = T_data.jf,
@@ -265,16 +265,16 @@ end
 function npc.main(play,npcid)
     local itemobj = linkbodyitem(play, _config.where)
     if not itemobj or itemobj == "0" then
-        Player.sendmsgEx(play, "è¯·å…ˆè£…å¤‡#57|ã€å¤©ä¹¦ã€‘#249|åå†æ‰“å¼€#57")
+        Player.sendmsgEx(play, "ÇëÏÈ×°±¸#57|¡¾ÌìÊé¡¿#249|ºóÔÙ´ò¿ª#57")
         return
     end
-    local T_data = _tianshu_fix_data(Player.getJsonTableByVar(play, VarCfg["T_å¤©ä¹¦"]))
+    local T_data = _tianshu_fix_data(Player.getJsonTableByVar(play, VarCfg["T_ÌìÊé"]))
     sendluamsg(play,100,npcid,0,0,tbl2json(_build_npc24_payload(play, T_data)))
     openhyperlink(play, 1, 2)
 end
 
 function npc.link(play,npcid,ew,aid,data)
-    -- npc_guard: å…¥å‚æ ¡éªŒ
+    -- npc_guard: Èë²ÎĞ£Ñé
     if not Guard.ensurePlayer(play, npcid) then
         return
     end
@@ -283,7 +283,7 @@ function npc.link(play,npcid,ew,aid,data)
         return
     end
     ew = __guardAction
-    -- npc_guard: æ“ä½œç™½åå•ï¼ˆä¼˜åŒ–ï¼šé™å®šåˆæ³•æ“ä½œç¼–å·ï¼‰
+    -- npc_guard: ²Ù×÷°×Ãûµ¥£¨ÓÅ»¯£ºÏŞ¶¨ºÏ·¨²Ù×÷±àºÅ£©
     local __guardAllowedActions = Guard.newActionSet({1, 2})
     if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
         return
@@ -291,31 +291,31 @@ function npc.link(play,npcid,ew,aid,data)
 
     local itemobj = linkbodyitem(play, _config.where)
     if not itemobj or itemobj == "0" then
-        Player.sendmsgEx(play, "è¯·å…ˆè£…å¤‡#57|ã€å¤©ä¹¦ã€‘#249|åå†æ“ä½œ#57")
+        Player.sendmsgEx(play, "ÇëÏÈ×°±¸#57|¡¾ÌìÊé¡¿#249|ºóÔÙ²Ù×÷#57")
         return
     end
-    local T_data = _tianshu_fix_data(Player.getJsonTableByVar(play, VarCfg["T_å¤©ä¹¦"]))
+    local T_data = _tianshu_fix_data(Player.getJsonTableByVar(play, VarCfg["T_ÌìÊé"]))
     local json_data = json2tbl(data)
-    if ew == 1 then -- å¼ºåŒ–
+    if ew == 1 then -- Ç¿»¯
         local itemobj = linkbodyitem(play, _config.where)
         if itemobj then
             T_data.level = (T_data.level or 0) + 1
             if T_data.level > _config.details[1].max_level then
-                Player.sendmsgEx(play, "å¤©ä¹¦å·²è¾¾åˆ°#57|ã€æœ€é«˜ç­‰çº§ã€‘#249|ï¼Œæ— éœ€å†å¼ºåŒ–#57")
+                Player.sendmsgEx(play, "ÌìÊéÒÑ´ïµ½#57|¡¾×î¸ßµÈ¼¶¡¿#249|£¬ÎŞĞèÔÙÇ¿»¯#57")
                 return
             end
             local config = _config.details[1].details[T_data.level]
-            -- release_print("å¤©ä¹¦å¼ºåŒ–é…ç½®:", T_data.level)
-            -- release_print("å¤©ä¹¦å¼ºåŒ–é…ç½®:", tbl2json(config))
+            -- release_print("ÌìÊéÇ¿»¯ÅäÖÃ:", T_data.level)
+            -- release_print("ÌìÊéÇ¿»¯ÅäÖÃ:", tbl2json(config))
             if (T_data.jf or 0) < config.jf then
-                Player.sendmsgEx(play, "ä½ çš„#57|ã€å¤©ä¹¦æ€æ„å€¼ã€‘#249|ä¸è¶³ï¼Œæ— æ³•è¿›è¡Œå¼ºåŒ–#57")
+                Player.sendmsgEx(play, "ÄãµÄ#57|¡¾ÌìÊéÉ±ÒâÖµ¡¿#249|²»×ã£¬ÎŞ·¨½øĞĞÇ¿»¯#57")
                 return
             end
-            Player.sendmsgEx(play, "æ­å–œä½ ï¼Œå¤©ä¹¦å¼ºåŒ–æˆåŠŸï¼Œå½“å‰å¤©ä¹¦ç­‰çº§ä¸º|ã€"..T_data.level.."çº§ã€‘#249|")
-            Player.setJsonVarByTable(play, VarCfg["T_å¤©ä¹¦"], T_data)
+            Player.sendmsgEx(play, "¹§Ï²Äã£¬ÌìÊéÇ¿»¯³É¹¦£¬µ±Ç°ÌìÊéµÈ¼¶Îª|¡¾"..T_data.level.."¼¶¡¿#249|")
+            Player.setJsonVarByTable(play, VarCfg["T_ÌìÊé"], T_data)
             xianfa_refresh(play)
             tianshu_refresh_item(play, T_data, itemobj)
-            --å¼ºåŒ–å±æ€§
+            --Ç¿»¯ÊôĞÔ
             local attrs = {}
             local attrsstr = ""
             for k,v in ipairs(config.attr) do
@@ -328,10 +328,10 @@ function npc.link(play,npcid,ew,aid,data)
 
             sendluamsg(play,100,npcid,1,0,tbl2json(_build_npc24_payload(play, T_data)))
         else
-            Player.sendmsgEx(play, "è¯·å…ˆç©¿æˆ´#57|ã€å¯¹åº”éƒ¨ä½è£…å¤‡ã€‘#249|")
+            Player.sendmsgEx(play, "ÇëÏÈ´©´÷#57|¡¾¶ÔÓ¦²¿Î»×°±¸¡¿#249|")
             return
         end
-    elseif ew == 2 then --ä»™æ³•
+    elseif ew == 2 then --ÏÉ·¨
         if json_data["caowei"] then
             local slot = tonumber(json_data["caowei"]) or 0
             if slot < 1 or slot > 10 then
@@ -342,7 +342,7 @@ function npc.link(play,npcid,ew,aid,data)
             local need_lv, unlock_by_artifact = _xianfa_get_slot_need_lv(play, cfg, slot)
             local cur_lv = T_data.level or 0
             if not unlock_by_artifact and cur_lv < need_lv then
-                Player.sendmsgEx(play, string.format("å¤©ä¹¦ç­‰çº§è¾¾åˆ°#57|ã€%dçº§ã€‘#249|æ‰å¯è§£é”è¯¥ä»™æ³•æ§½ä½#57", need_lv))
+                Player.sendmsgEx(play, string.format("ÌìÊéµÈ¼¶´ïµ½#57|¡¾%d¼¶¡¿#249|²Å¿É½âËø¸ÃÏÉ·¨²ÛÎ»#57", need_lv))
                 return
             end
 
@@ -354,7 +354,7 @@ function npc.link(play,npcid,ew,aid,data)
             if getplaydef(play, "N$buff311") == 1 then
                 local wmap = _xianfa_parse_weight_map(weight)
                 if next(wmap) ~= nil then
-                    wmap[5] = (wmap[5] or 0) + 20 -- çº¢è‰²ä»™æ³•æ¦‚ç‡+20%
+                    wmap[5] = (wmap[5] or 0) + 20 -- ºìÉ«ÏÉ·¨¸ÅÂÊ+20%
                     local parts = {}
                     for i = 1, 5 do
                         if wmap[i] then
@@ -368,18 +368,18 @@ function npc.link(play,npcid,ew,aid,data)
             local max_group = (getplaydef(play, "N$buff311") == 1) and 5 or 3
             local randomNum, idx = _xianfa_roll_non_repeat(T_data, slot, weight, max_group, force_xianpin and 5 or nil)
             if not randomNum or not idx then
-                Player.sendmsgEx(play, "å½“å‰å·²æ²¡æœ‰å¯æŠ½å–çš„æ–°ä»™æ³•ï¼Œè¯·å…ˆæ›´æ¢æ§½ä½æˆ–è°ƒæ•´å·²æœ‰ä»™æ³•#57")
+                Player.sendmsgEx(play, "µ±Ç°ÒÑÃ»ÓĞ¿É³éÈ¡µÄĞÂÏÉ·¨£¬ÇëÏÈ¸ü»»²ÛÎ»»òµ÷ÕûÒÑÓĞÏÉ·¨#57")
                 return
             end
 
             if force_xianpin then
-                local need = {{"æå“ä»™æ³•å·è½´",1}}
+                local need = {{"¼«Æ·ÏÉ·¨¾íÖá",1}}
                 local name, num = Player.checkItemNumByTable(play, need)
                 if name then
-                    Player.sendmsgEx(play, string.format("ä½ çš„#57|ã€%sã€‘#249|ä¸è¶³ï¼š#57|ã€%dã€‘#249|", name, num))
+                    Player.sendmsgEx(play, string.format("ÄãµÄ#57|¡¾%s¡¿#249|²»×ã£º#57|¡¾%d¡¿#249|", name, num))
                     return
                 end
-                Player.takeItemByTable(play, need, ",å¤©ä¹¦ä»™æ³•", nil)
+                Player.takeItemByTable(play, need, ",ÌìÊéÏÉ·¨", nil)
             else
                 local cost_cfg = cfg.cost
                 if cost_cfg then
@@ -387,20 +387,20 @@ function npc.link(play,npcid,ew,aid,data)
                     if name then
                         local name2, num2 = Player.checkItemNumByTable(play, cost_cfg[2])
                         if name2 then
-                            Player.sendmsgEx(play, string.format("ä½ çš„#57|ã€%sã€‘#249|ä¸è¶³ï¼š#57|ã€%dã€‘#249|", name2, num2))
+                            Player.sendmsgEx(play, string.format("ÄãµÄ#57|¡¾%s¡¿#249|²»×ã£º#57|¡¾%d¡¿#249|", name2, num2))
                             return
                         end
-                        Player.sendmsgEx(play, "#57|ã€ä»™æ³•å·è½´ã€‘#249|ä¸è¶³ï¼Œæ”¹ç”¨|ã€çµçŸ³ã€‘#249|æ¶ˆè€—#57")
-                        Player.takeItemByTable(play, cost_cfg[2], ",å¤©ä¹¦ä»™æ³•", nil)
+                        Player.sendmsgEx(play, "#57|¡¾ÏÉ·¨¾íÖá¡¿#249|²»×ã£¬¸ÄÓÃ|¡¾ÁéÊ¯¡¿#249|ÏûºÄ#57")
+                        Player.takeItemByTable(play, cost_cfg[2], ",ÌìÊéÏÉ·¨", nil)
                     else
-                        Player.takeItemByTable(play, cost_cfg[1], ",å¤©ä¹¦ä»™æ³•", nil)
+                        Player.takeItemByTable(play, cost_cfg[1], ",ÌìÊéÏÉ·¨", nil)
                     end
                 end
             end
 
             local list_cfg = cfg.details and cfg.details[randomNum]
             if not list_cfg or not list_cfg[idx] then
-                Player.sendmsgEx(play, "é…ç½®å¼‚å¸¸ï¼Œè¯·è”ç³»ç®¡ç†å‘˜#57")
+                Player.sendmsgEx(play, "ÅäÖÃÒì³££¬ÇëÁªÏµ¹ÜÀíÔ±#57")
                 return
             end
             if T_data["caowei"][slot_key] then
@@ -410,7 +410,7 @@ function npc.link(play,npcid,ew,aid,data)
             T_data["tj"] = T_data["tj"] or {}
             T_data["tj"][randomNum.."_"..idx] = 1
             T_data.last_xianfa_draw = {randomNum,idx}
-            Player.setJsonVarByTable(play, VarCfg["T_å¤©ä¹¦"], T_data)
+            Player.setJsonVarByTable(play, VarCfg["T_ÌìÊé"], T_data)
             xianfa_refresh(play)
 
             xianfa_add(play,randomNum,idx)
@@ -422,36 +422,36 @@ function npc.link(play,npcid,ew,aid,data)
 end
 
 function npc.wangshi(play,idx,data)
-    local T_data = Player.getJsonTableByVar(play, VarCfg["T_å¤©ä¹¦"])
+    local T_data = Player.getJsonTableByVar(play, VarCfg["T_ÌìÊé"])
     T_data.wangshi = T_data.wangshi or {}
     if T_data.wangshi[""..idx] then
-        -- Player.sendmsgEx(play, "ä½ å·²ç»è®°å½•è¿‡è¯¥å¾€äº‹#57")
+        -- Player.sendmsgEx(play, "ÄãÒÑ¾­¼ÇÂ¼¹ı¸ÃÍùÊÂ#57")
         return
     end
     T_data.wangshi[""..idx] = data
-    Player.setJsonVarByTable(play, VarCfg["T_å¤©ä¹¦"], T_data)
+    Player.setJsonVarByTable(play, VarCfg["T_ÌìÊé"], T_data)
 end
 
--- å¤©ä¹¦ä»™æ³•ç³»ç»Ÿï¼šç»Ÿä¸€ç®¡ç†å¸¸é‡/æ ‡è®°/BUFF IDï¼Œä¾›åç»­é€»è¾‘å¤ç”¨
-local XIANFA_ATTR_NAME = "å¤©ä¹¦ä»™æ³•"
-local XIANFA_REVIVE_ATTR_NAME = "å¤©ä¹¦ä»™æ³•_å¤æ´»"
-local XIANFA_HP_ATTR_NAME = "å¤©ä¹¦ä»™æ³•_ä½è¡€é‡"
+-- ÌìÊéÏÉ·¨ÏµÍ³£ºÍ³Ò»¹ÜÀí³£Á¿/±ê¼Ç/BUFF ID£¬¹©ºóĞøÂß¼­¸´ÓÃ
+local XIANFA_ATTR_NAME = "ÌìÊéÏÉ·¨"
+local XIANFA_REVIVE_ATTR_NAME = "ÌìÊéÏÉ·¨_¸´»î"
+local XIANFA_HP_ATTR_NAME = "ÌìÊéÏÉ·¨_µÍÑªÁ¿"
 local XIANFA_ATTACK_BUFF = 301
 local XIANFA_REVIVE_BUFF = 302
 local XIANFA_STEAL_MONEY_ID = 1
 local XIANFA_STEAL_DAILY_MAX = 20000000
 local XIANFA_STEAL_ONCE_MAX = 1000000
-local XIANFA_HP_TIMER_FLAG = "N$å¤©ä¹¦ä½è¡€ç›‘æ§"
-local XIANFA_INVIS_FLAG = "N$å¤©ä¹¦å…­å¨ƒ"
-local XIANFA_DROP_DATE = "S$å¤©ä¹¦å®ˆè´¢å¥´æ—¥æœŸ"
-local XIANFA_DROP_USED = "N$å¤©ä¹¦å®ˆè´¢å¥´å·²ç”¨"
-local XIANFA_DROP_ACTIVE = "N$å¤©ä¹¦å®ˆè´¢å¥´ä¿æŠ¤"
-local XIANFA_YUANSHEN_NAME = "å…ƒç¥"
-local XIANFA_YUANSHEN_CD = "N$å¤©ä¹¦å…ƒç¥CD"
+local XIANFA_HP_TIMER_FLAG = "N$ÌìÊéµÍÑª¼à¿Ø"
+local XIANFA_INVIS_FLAG = "N$ÌìÊéÁùÍŞ"
+local XIANFA_DROP_DATE = "S$ÌìÊéÊØ²ÆÅ«ÈÕÆÚ"
+local XIANFA_DROP_USED = "N$ÌìÊéÊØ²ÆÅ«ÒÑÓÃ"
+local XIANFA_DROP_ACTIVE = "N$ÌìÊéÊØ²ÆÅ«±£»¤"
+local XIANFA_YUANSHEN_NAME = "ÔªÉñ"
+local XIANFA_YUANSHEN_CD = "N$ÌìÊéÔªÉñCD"
 
--- æ”¶é›†ç©å®¶å·²æ¿€æ´»çš„ä»™æ³•åˆ—è¡¨ï¼ˆgroup/idx/cfgï¼‰ï¼Œå¹¶è¿”å›å¤©ä¹¦æ•°æ®
+-- ÊÕ¼¯Íæ¼ÒÒÑ¼¤»îµÄÏÉ·¨ÁĞ±í£¨group/idx/cfg£©£¬²¢·µ»ØÌìÊéÊı¾İ
 local function _xianfa_iter(actor)
-    local T_data = _tianshu_fix_data(Player.getJsonTableByVar(actor, VarCfg["T_å¤©ä¹¦"]))
+    local T_data = _tianshu_fix_data(Player.getJsonTableByVar(actor, VarCfg["T_ÌìÊé"]))
     local list = {}
     for _, v in pairs(T_data["caowei"]) do
         if type(v) == "table" then
@@ -466,7 +466,7 @@ local function _xianfa_iter(actor)
     return list, T_data
 end
 
--- æŒ‰åç§°åˆ¤æ–­æ˜¯å¦æ‹¥æœ‰æŸä»™æ³•ï¼Œè¿”å›é…ç½®ï¼ˆå­˜åœ¨ï¼‰æˆ– nilï¼ˆä¸å­˜åœ¨ï¼‰
+-- °´Ãû³ÆÅĞ¶ÏÊÇ·ñÓµÓĞÄ³ÏÉ·¨£¬·µ»ØÅäÖÃ£¨´æÔÚ£©»ò nil£¨²»´æÔÚ£©
 local function _xianfa_has(actor, name)
     local list = _xianfa_iter(actor)
     for _, it in ipairs(list) do
@@ -477,14 +477,14 @@ local function _xianfa_has(actor, name)
     return nil
 end
 
--- å±æ€§å åŠ å·¥å…·ï¼šç´¯åŠ åˆ° attrs è¡¨ï¼ˆid -> valueï¼‰
+-- ÊôĞÔµş¼Ó¹¤¾ß£ºÀÛ¼Óµ½ attrs ±í£¨id -> value£©
 local function _add_attr(attrs, id, val)
     if id and val and val ~= 0 then
         attrs[id] = (attrs[id] or 0) + val
     end
 end
 
--- æ‰¹é‡å åŠ å±æ€§åˆ—è¡¨ï¼Œæ”¯æŒå€æ•°ç³»æ•°ï¼ˆç”¨äºéšæ¡ä»¶æ”¾å¤§ï¼‰
+-- ÅúÁ¿µş¼ÓÊôĞÔÁĞ±í£¬Ö§³Ö±¶ÊıÏµÊı£¨ÓÃÓÚËæÌõ¼ş·Å´ó£©
 local function _add_attr_list(attrs, list, mult)
     if not list then
         return
@@ -495,11 +495,11 @@ local function _add_attr_list(attrs, list, mult)
     end
 end
 
--- æŠ€èƒ½ä¼¤å®³åŠ æˆï¼šåœ¨æŠ€èƒ½å‡çº§åŸºç¡€å€¼ä¸Šå åŠ ä»™æ³•é¢å¤–ç™¾åˆ†æ¯”ï¼Œå¹¶åˆ·æ–°å¼•æ“å€ç‡
+-- ¼¼ÄÜÉËº¦¼Ó³É£ºÔÚ¼¼ÄÜÉı¼¶»ù´¡ÖµÉÏµş¼ÓÏÉ·¨¶îÍâ°Ù·Ö±È£¬²¢Ë¢ĞÂÒıÇæ±¶ÂÊ
 local function _xianfa_apply_skill_bonus(actor, bonus)
-    local skill_data = Player.getJsonTableByVar(actor, VarCfg["T_æŠ€èƒ½å‡çº§"])
+    local skill_data = Player.getJsonTableByVar(actor, VarCfg["T_¼¼ÄÜÉı¼¶"])
     skill_data.level = skill_data.level or {}
-    -- åœ¨åŸºç¡€ä»™æ³•å€ç‡ä¸Šå åŠ æ˜Ÿè±¡åœ£å›¾åŠ æˆã€‚
+    -- ÔÚ»ù´¡ÏÉ·¨±¶ÂÊÉÏµş¼ÓĞÇÏóÊ¥Í¼¼Ó³É¡£
     local extra_bonus = 0
     if star_chart_skill_bonus_get then
         extra_bonus = tonumber(star_chart_skill_bonus_get(actor)) or 0
@@ -510,7 +510,7 @@ local function _xianfa_apply_skill_bonus(actor, bonus)
     end
     Login_jnsh(actor)
 end
--- åå­—é•¿åº¦è®¡ç®—ï¼šä¼˜å…ˆä½¿ç”¨ GBK å­—èŠ‚é•¿åº¦ï¼Œä¿è¯ä¸­è‹±æ··æ’æ¯”è¾ƒæ›´å…¬å¹³
+-- Ãû×Ö³¤¶È¼ÆËã£ºÓÅÏÈÊ¹ÓÃ GBK ×Ö½Ú³¤¶È£¬±£Ö¤ÖĞÓ¢»ìÅÅ±È½Ï¸ü¹«Æ½
 local function _xianfa_name_len(name)
     if not name then
         return 0
@@ -520,7 +520,7 @@ local function _xianfa_name_len(name)
     end
     return string.len(name)
 end
--- æ–¹å‘è®¡ç®—ï¼šæ ¹æ®åæ ‡å·®å€¼æ¨æ–­8æ–¹å‘ï¼ˆ0ä¸Š 1å³ä¸Š 2å³ 3å³ä¸‹ 4ä¸‹ 5å·¦ä¸‹ 6å·¦ 7å·¦ä¸Šï¼‰
+-- ·½Ïò¼ÆËã£º¸ù¾İ×ø±ê²îÖµÍÆ¶Ï8·½Ïò£¨0ÉÏ 1ÓÒÉÏ 2ÓÒ 3ÓÒÏÂ 4ÏÂ 5×óÏÂ 6×ó 7×óÉÏ£©
 local function _xianfa_dir_to(dx, dy)
     if dx == 0 and dy == 0 then
         return nil
@@ -552,7 +552,7 @@ local function _xianfa_dir_to(dx, dy)
     return nil
 end
 
--- èƒŒåæ”»å‡»åˆ¤å®šï¼šæ”»å‡»è€…åœ¨ç›®æ ‡â€œèƒŒåæ‰‡åŒºâ€æ—¶è¿”å› true
+-- ±³ºó¹¥»÷ÅĞ¶¨£º¹¥»÷ÕßÔÚÄ¿±ê¡°±³ºóÉÈÇø¡±Ê±·µ»Ø true
 local function _xianfa_is_back_attack(attacker, target)
     if not attacker or not target or not ConstCfg or not ConstCfg.gbase then
         return false
@@ -578,7 +578,7 @@ local function _xianfa_is_back_attack(attacker, target)
     end
 
     local back_dir = (tdir + 4) % 8
-    -- æ”¾å®½ä¸ºèƒŒåæ‰‡åŒºï¼ˆèƒŒåæ–¹å‘åŠå…¶ç›¸é‚»æ–¹å‘ï¼‰
+    -- ·Å¿íÎª±³ºóÉÈÇø£¨±³ºó·½Ïò¼°ÆäÏàÁÚ·½Ïò£©
     if dir_to_attacker == back_dir then
         return true
     end
@@ -591,7 +591,7 @@ local function _xianfa_is_back_attack(attacker, target)
     return false
 end
 
--- æ”»æ²™åˆ¤å®šï¼šå¤„äºæ²™å·´å…‹çŠ¶æ€ä¸”åœ¨æ”»æ²™åœ°å›¾å†…
+-- ¹¥É³ÅĞ¶¨£º´¦ÓÚÉ³°Í¿Ë×´Ì¬ÇÒÔÚ¹¥É³µØÍ¼ÄÚ
 local function _xianfa_in_siege(actor)
     if castleinfo and castleinfo(5) then
         if getbaseinfo(actor, ConstCfg.gbase.issbk) then
@@ -601,7 +601,7 @@ local function _xianfa_in_siege(actor)
     return false
 end
 
--- æˆ‘æ˜¯å…­å¨ƒéšèº«å¤„ç†ï¼šåªåœ¨çŠ¶æ€å˜åŒ–æ—¶åˆ‡æ¢æ¨¡å¼ï¼Œé¿å…é¢‘ç¹è®¾ç½®
+-- ÎÒÊÇÁùÍŞÒşÉí´¦Àí£ºÖ»ÔÚ×´Ì¬±ä»¯Ê±ÇĞ»»Ä£Ê½£¬±ÜÃâÆµ·±ÉèÖÃ
 local function _xianfa_set_invis(actor, enable)
     if enable then
         if getplaydef(actor, XIANFA_INVIS_FLAG) ~= 1 then
@@ -620,15 +620,15 @@ local function _xianfa_set_invis(actor, enable)
     end
 end
 
--- ä½è¡€é‡æ•ˆæœå¤„ç†ï¼šæ„ˆæˆ˜æ„ˆå‹‡(50%ä»¥ä¸‹åŠ åŒé˜²)ï¼Œä¸æ­»æ—(30%ä»¥ä¸‹æ¯ç§’å›è¡€)
--- è¿”å›å€¼ï¼šæ˜¯å¦è¿˜éœ€è¦æŒç»­ç›‘æ§
+-- µÍÑªÁ¿Ğ§¹û´¦Àí£ºÓúÕ½ÓúÓÂ(50%ÒÔÏÂ¼ÓË«·À)£¬²»ËÀ×å(30%ÒÔÏÂÃ¿Ãë»ØÑª)
+-- ·µ»ØÖµ£ºÊÇ·ñ»¹ĞèÒª³ÖĞø¼à¿Ø
 local function _xianfa_apply_hp_state(actor)
     if getbaseinfo(actor, ConstCfg.gbase.isdie) then
         Player.del_attlist(actor, XIANFA_HP_ATTR_NAME)
-        return _xianfa_has(actor, "ä¸æ­»æ—") or _xianfa_has(actor, "æ„ˆæˆ˜æ„ˆå‹‡")
+        return _xianfa_has(actor, "²»ËÀ×å") or _xianfa_has(actor, "ÓúÕ½ÓúÓÂ")
     end
-    local has_undead = _xianfa_has(actor, "ä¸æ­»æ—")
-    local has_berserk = _xianfa_has(actor, "æ„ˆæˆ˜æ„ˆå‹‡")
+    local has_undead = _xianfa_has(actor, "²»ËÀ×å")
+    local has_berserk = _xianfa_has(actor, "ÓúÕ½ÓúÓÂ")
     if not has_undead and not has_berserk then
         Player.del_attlist(actor, XIANFA_HP_ATTR_NAME)
         return false
@@ -656,7 +656,7 @@ local function _xianfa_apply_hp_state(actor)
     return true
 end
 
--- å¯åŠ¨ä½è¡€é‡ç›‘æ§å®šæ—¶å™¨ï¼ˆæ¯ç§’å›è°ƒä¸€æ¬¡ï¼‰
+-- Æô¶¯µÍÑªÁ¿¼à¿Ø¶¨Ê±Æ÷£¨Ã¿Ãë»Øµ÷Ò»´Î£©
 local function _xianfa_start_hp_timer(actor)
     if getplaydef(actor, XIANFA_HP_TIMER_FLAG) == 1 then
         return
@@ -665,7 +665,7 @@ local function _xianfa_start_hp_timer(actor)
     delaygoto(actor, 1000, "@xianfa_hp_tick")
 end
 
--- å®šæ—¶å™¨å›è°ƒï¼šæŒç»­ç›‘æ§ä½è¡€é‡æ•ˆæœï¼Œç›´åˆ°æ— éœ€ç›‘æ§ä¸ºæ­¢
+-- ¶¨Ê±Æ÷»Øµ÷£º³ÖĞø¼à¿ØµÍÑªÁ¿Ğ§¹û£¬Ö±µ½ÎŞĞè¼à¿ØÎªÖ¹
 function xianfa_hp_tick(actor)
     if _xianfa_apply_hp_state(actor) then
         delaygoto(actor, 1000, "@xianfa_hp_tick")
@@ -674,17 +674,17 @@ function xianfa_hp_tick(actor)
     end
 end
 
--- å¯¹å¤–æŸ¥è¯¢æ¥å£ï¼šå…¶å®ƒè„šæœ¬å¯ç›´æ¥åˆ¤æ–­æ˜¯å¦æ‹¥æœ‰æŸä»™æ³•
+-- ¶ÔÍâ²éÑ¯½Ó¿Ú£ºÆäËü½Å±¾¿ÉÖ±½ÓÅĞ¶ÏÊÇ·ñÓµÓĞÄ³ÏÉ·¨
 function xianfa_has(actor, name)
     return _xianfa_has(actor, name) ~= nil
 end
 
--- ä»™æ³•åˆ·æ–°å…¥å£ï¼š
--- 1) æ¸…ç©ºæ—§å±æ€§
--- 2) é‡æ–°è®¡ç®—å¸¸é©»/æ¡ä»¶å±æ€§
--- 3) å¤„ç†ä¸€æ¬¡æ€§è§¦å‘ï¼ˆæ¡é’±å•¦/å¤©é™æ¨ªè´¢ï¼‰
--- 4) ç»´æŠ¤BUFFå¼€å…³ã€éšèº«ã€ä½è¡€ç›‘æ§ã€ç­‰çº§ä¸Šé™ã€æŠ€èƒ½ä¼¤å®³ç­‰
--- new_group/new_idx ç”¨äºåˆ¤æ–­æœ¬æ¬¡æ–°é€‰æ‹©çš„ä»™æ³•
+-- ÏÉ·¨Ë¢ĞÂÈë¿Ú£º
+-- 1) Çå¿Õ¾ÉÊôĞÔ
+-- 2) ÖØĞÂ¼ÆËã³£×¤/Ìõ¼şÊôĞÔ
+-- 3) ´¦ÀíÒ»´ÎĞÔ´¥·¢£¨¼ñÇ®À²/Ìì½µºá²Æ£©
+-- 4) Î¬»¤BUFF¿ª¹Ø¡¢ÒşÉí¡¢µÍÑª¼à¿Ø¡¢µÈ¼¶ÉÏÏŞ¡¢¼¼ÄÜÉËº¦µÈ
+-- new_group/new_idx ÓÃÓÚÅĞ¶Ï±¾´ÎĞÂÑ¡ÔñµÄÏÉ·¨
 function xianfa_refresh(actor, new_group, new_idx)
     local list, T_data = _xianfa_iter(actor)
     T_data = _tianshu_fix_data(T_data)
@@ -697,7 +697,7 @@ function xianfa_refresh(actor, new_group, new_idx)
     local cap_bonus = 0
     local need_invis = false
     local need_hp_timer = false
-    -- æ¡ä»¶è®¡ç®—ï¼šç»„é˜Ÿ/æŒ‚æœº/å¼€æœå¤©æ•°/å¤©ä¹¦ç­‰çº§/ä»™æ³•å“è´¨è®¡æ•°/æ”»æ²™çŠ¶æ€
+    -- Ìõ¼ş¼ÆËã£º×é¶Ó/¹Ò»ú/¿ª·şÌìÊı/ÌìÊéµÈ¼¶/ÏÉ·¨Æ·ÖÊ¼ÆÊı/¹¥É³×´Ì¬
 
     local in_group = (#(getgroupmember(actor) or {})) > 0
     local auto_hang = false
@@ -728,7 +728,7 @@ function xianfa_refresh(actor, new_group, new_idx)
         if lg_count5 ~= nil then
             return lg_count5
         end
-        local T_lg = Player.getJsonTableByVar(actor, VarCfg["T_çµæ ¹"])
+        local T_lg = Player.getJsonTableByVar(actor, VarCfg["T_Áé¸ù"])
         local cnt = 0
         if T_lg and T_lg.level then
             for _, v in pairs(T_lg.level) do
@@ -742,7 +742,7 @@ function xianfa_refresh(actor, new_group, new_idx)
     end
 
     local function get_ls_count(min_star)
-        local T_ls = Player.getJsonTableByVar(actor, VarCfg["T_çµå…½"])
+        local T_ls = Player.getJsonTableByVar(actor, VarCfg["T_ÁéÊŞ"])
         local cnt = 0
         if T_ls and T_ls.ls_sp then
             for _, v in pairs(T_ls.ls_sp) do
@@ -769,84 +769,84 @@ function xianfa_refresh(actor, new_group, new_idx)
         end
         local name = cfg.name or ""
 
-        if name == "æ¡é’±å•¦" then
+        if name == "¼ñÇ®À²" then
             if new_group == item.group and new_idx == item.idx then
-                changemoney(actor, XIANFA_STEAL_MONEY_ID, "+", 100000, "å¤©ä¹¦ä»™æ³•", true)
+                changemoney(actor, XIANFA_STEAL_MONEY_ID, "+", 100000, "ÌìÊéÏÉ·¨", true)
             end
-        elseif name == "å¤©é™æ¨ªè´¢" then
+        elseif name == "Ìì½µºá²Æ" then
             if new_group == item.group and new_idx == item.idx then
-                changemoney(actor, 3, "+", 30000000, "å¤©ä¹¦ä»™æ³•", true)
+                changemoney(actor, 3, "+", 30000000, "ÌìÊéÏÉ·¨", true)
             end
-        elseif name == "ç‹‚æš´åˆ°åº•" then
-            if checktitle(actor, "ç‹‚æš´ä¹‹åŠ›") then
+        elseif name == "¿ñ±©µ½µ×" then
+            if checktitle(actor, "¿ñ±©Ö®Á¦") then
                 _add_attr_list(attrs, cfg.spa_attr)
             end
-        elseif name == "æºœäº†æºœäº†" then
+        elseif name == "ÁïÁËÁïÁË" then
             need_revive_buff = true
-        elseif name == "æœ‹å‹å¤šå¤š" then
+        elseif name == "ÅóÓÑ¶à¶à" then
             if in_group then
                 _add_attr_list(attrs, cfg.spa_attr)
             end
-        elseif name == "æŒ‚æœºä½¬" then
+        elseif name == "¹Ò»úÀĞ" then
             if auto_hang then
                 _add_attr_list(attrs, cfg.spa_attr)
             end
-        elseif name == "å¼€æœå…ƒè€" then
+        elseif name == "¿ª·şÔªÀÏ" then
             local days = open_day
             if days > 40 then
                 days = 40
             end
             _add_attr_list(attrs, cfg.spa_attr, days)
-        elseif name == "çµæ ¹ä¹‹ä¸»" then
+        elseif name == "Áé¸ùÖ®Ö÷" then
             local cnt = get_lg_count5()
             if cnt > 0 then
                 _add_attr_list(attrs, cfg.spa_attr, cnt)
             end
-        elseif name == "çµå…½ä¹‹ç‹" then
+        elseif name == "ÁéÊŞÖ®Íõ" then
             ls_count2 = ls_count2 or get_ls_count(2)
             if ls_count2 > 0 then
                 _add_attr(attrs, 1, 1000 * ls_count2)
                 _add_attr(attrs, 3, 100 * ls_count2)
                 _add_attr(attrs, 4, 100 * ls_count2)
             end
-        elseif name == "ç¥å…½å¤§å¸" then
+        elseif name == "ÉñÊŞ´óµÛ" then
             ls_count3 = ls_count3 or get_ls_count(3)
             _add_attr(attrs, 73, 300 + (ls_count3 * 500))
             _add_attr(attrs, 89, 300 + (ls_count3 * 500))
-        elseif name == "ç‹¬ç‹¼" then
+        elseif name == "¶ÀÀÇ" then
             if not in_group then
                 _add_attr(attrs, 245, 1000)
             end
-        elseif name == "æ„ˆæˆ˜æ„ˆå‹‡" or name == "ä¸æ­»æ—" then
+        elseif name == "ÓúÕ½ÓúÓÂ" or name == "²»ËÀ×å" then
             need_hp_timer = true
-        elseif name == "è¯»ä¹¦äºº" then
+        elseif name == "¶ÁÊéÈË" then
             if ts_level > 0 then
                 _add_attr(attrs, 242, ts_level * 200)
             end
-        elseif name == "å¤©èƒ¡" then
+        elseif name == "Ììºú" then
             if level > 0 then
                 _add_attr(attrs, 244, level * 100)
             end
-        elseif name == "ç†Ÿèƒ½ç”Ÿå·§" then
+        elseif name == "ÊìÄÜÉúÇÉ" then
             skill_bonus = skill_bonus + 3
-        elseif name == "æŠ€èƒ½å¯¼å¸ˆ" then
+        elseif name == "¼¼ÄÜµ¼Ê¦" then
             skill_bonus = skill_bonus + 20
-        elseif name == "è¯…å’’å† å†•" then
+        elseif name == "×çÖä¹ÚÃá" then
             cap_bonus = cap_bonus + 2
-        elseif name == "æ‰“ç ´æ·é”" then
+        elseif name == "´òÆÆ¼ÏËø" then
             if level >= 150 then
                 cap_bonus = cap_bonus + 5
             end
-        elseif name == "æˆ‘æ˜¯å…­å¨ƒ" then
+        elseif name == "ÎÒÊÇÁùÍŞ" then
             need_invis = true
-        elseif name == "æ²™è€å¤§" then
+        elseif name == "É³ÀÏ´ó" then
             if in_siege then
                 _add_attr(attrs, 76, 5000)
                 _add_attr(attrs, 77, 5000)
             end
-        elseif name == "ä»™æ³•å¤§ä½¬" then
+        elseif name == "ÏÉ·¨´óÀĞ" then
             if high_count > 1 then
-                -- 300ä»…å±•ç¤ºï¼Œå…¨å±æ€§ç™¾åˆ†æ¯”éœ€å åŠ  280-291
+                -- 300½öÕ¹Ê¾£¬È«ÊôĞÔ°Ù·Ö±ÈĞèµş¼Ó 280-291
                 local all_pct = 2 * (high_count - 1)
                 _add_attr(attrs, 300, all_pct)
                 _add_attr(attrs, 280, all_pct)
@@ -862,18 +862,18 @@ function xianfa_refresh(actor, new_group, new_idx)
                 _add_attr(attrs, 290, all_pct)
                 _add_attr(attrs, 291, all_pct)
             end
-        elseif name == "å¯Œå¯æ•Œå›½" or name == "æ¬ºè´Ÿå¼±å°" or name == "æ‰¼é›·æŒ‡" or name == "ç¥å·" or name == "é­…æƒ‘" or name == "å’’æœ¯å›å“" or name == "å¸è“åˆ€" or name == "è·ªä¸‹" or name == "åå­—é•¿å°±ç‰›æ¯”" or name == "åå­—çŸ­å°±ç‰›æ¯”" or name == "çšçœ¦å¿…æŠ¥" or name == "èœ˜è››ä¾ " or name == "åˆºå®¢ä¿¡æ¡" or name == "å…ƒç¥åŠ©æˆ˜" then
+        elseif name == "¸»¿ÉµĞ¹ú" or name == "ÆÛ¸ºÈõĞ¡" or name == "¶óÀ×Ö¸" or name == "ÉñÍµ" or name == "÷È»ó" or name == "ÖäÊõ»ØÏì" or name == "ÎüÀ¶µ¶" or name == "¹òÏÂ" or name == "Ãû×Ö³¤¾ÍÅ£±È" or name == "Ãû×Ö¶Ì¾ÍÅ£±È" or name == "íıíö±Ø±¨" or name == "Ö©ÖëÏÀ" or name == "´Ì¿ÍĞÅÌõ" or name == "ÔªÉñÖúÕ½" then
             need_attack_buff = true
         end
     end
 
-    local prev_bonus = getplaydef(actor, "N$å¤©ä¹¦ç­‰çº§ä¸Šé™åŠ æˆ")
-    local base_cap = getplaydef(actor, VarCfg["U_ç­‰çº§ä¸Šé™"]) - prev_bonus
+    local prev_bonus = getplaydef(actor, "N$ÌìÊéµÈ¼¶ÉÏÏŞ¼Ó³É")
+    local base_cap = getplaydef(actor, VarCfg["U_µÈ¼¶ÉÏÏŞ"]) - prev_bonus
     if base_cap < 0 then
         base_cap = 0
     end
-    setplaydef(actor, VarCfg["U_ç­‰çº§ä¸Šé™"], base_cap + cap_bonus)
-    setplaydef(actor, "N$å¤©ä¹¦ç­‰çº§ä¸Šé™åŠ æˆ", cap_bonus)
+    setplaydef(actor, VarCfg["U_µÈ¼¶ÉÏÏŞ"], base_cap + cap_bonus)
+    setplaydef(actor, "N$ÌìÊéµÈ¼¶ÉÏÏŞ¼Ó³É", cap_bonus)
 
     _xianfa_apply_skill_bonus(actor, skill_bonus)
 
@@ -902,9 +902,9 @@ function xianfa_refresh(actor, new_group, new_idx)
     tianshu_refresh_item(actor, T_data)
 end
 
--- å¤æ´»è§¦å‘ï¼šæºœäº†æºœäº†ï¼Œç»™äºˆä¸´æ—¶ç§»é€ŸåŠ æˆï¼ˆ30ç§’ï¼‰
+-- ¸´»î´¥·¢£ºÁïÁËÁïÁË£¬¸øÓèÁÙÊ±ÒÆËÙ¼Ó³É£¨30Ãë£©
 function xianfa_revive_trigger(play)
-    if not _xianfa_has(play, "æºœäº†æºœäº†") then
+    if not _xianfa_has(play, "ÁïÁËÁïÁË") then
         return
     end
     Player.del_attlist(play, XIANFA_REVIVE_ATTR_NAME)
@@ -916,8 +916,8 @@ function xianfa_revive_remove(play)
     Player.del_attlist(play, XIANFA_REVIVE_ATTR_NAME)
 end
 
--- æ”»å‡»è§¦å‘ï¼šç”± Buff[301] å›è°ƒï¼Œè¿”å›é¢å¤–ä¼¤å®³å€¼ï¼ˆå åŠ åˆ°æœ€ç»ˆä¼¤å®³ï¼‰
--- åŒæ—¶å¯æ–½åŠ æ§åˆ¶/å·é’±/å¬å”¤ç­‰é™„åŠ æ•ˆæœ
+-- ¹¥»÷´¥·¢£ºÓÉ Buff[301] »Øµ÷£¬·µ»Ø¶îÍâÉËº¦Öµ£¨µş¼Óµ½×îÖÕÉËº¦£©
+-- Í¬Ê±¿ÉÊ©¼Ó¿ØÖÆ/ÍµÇ®/ÕÙ»½µÈ¸½¼ÓĞ§¹û
 function xianfa_attack_trigger(play, Damage, Target, MagicId, Model)
     local list = _xianfa_iter(play)
     if not list or #list == 0 then
@@ -934,7 +934,7 @@ function xianfa_attack_trigger(play, Damage, Target, MagicId, Model)
     local dmg = Damage or 0
     local is_player = getbaseinfo(Target, ConstCfg.gbase.isplayer)
 
-    if has["æ¬ºè´Ÿå¼±å°"] and not is_player then
+    if has["ÆÛ¸ºÈõĞ¡"] and not is_player then
         local cur = getbaseinfo(Target, ConstCfg.gbase.curhp)
         local max = getbaseinfo(Target, ConstCfg.gbase.maxhp)
         if max > 0 and cur / max <= 0.3 then
@@ -942,13 +942,13 @@ function xianfa_attack_trigger(play, Damage, Target, MagicId, Model)
         end
     end
 
-    if has["æ‰¼é›·æŒ‡"] then
+    if has["¶óÀ×Ö¸"] then
         if math.random(100) <= 3 then
             extra = extra + math.floor(getbaseinfo(play, ConstCfg.gbase.dc2) * 0.5)
         end
     end
 
-    if has["å¯Œå¯æ•Œå›½"] then
+    if has["¸»¿ÉµĞ¹ú"] then
         local gold = querymoney(play, XIANFA_STEAL_MONEY_ID) or 0
         local pct = math.floor(gold / 10000000)
         if pct > 10 then
@@ -959,8 +959,8 @@ function xianfa_attack_trigger(play, Damage, Target, MagicId, Model)
         end
     end
 
-    if has["åˆºå®¢ä¿¡æ¡"] then
-        -- èƒŒåæ”»å‡»åˆ¤å®šï¼šä»…åœ¨èƒŒåæ‰‡åŒºæ—¶è§¦å‘å¢ä¼¤
+    if has["´Ì¿ÍĞÅÌõ"] then
+        -- ±³ºó¹¥»÷ÅĞ¶¨£º½öÔÚ±³ºóÉÈÇøÊ±´¥·¢ÔöÉË
         if _xianfa_is_back_attack(play, Target) then
             if MagicId and MagicId > 0 then
                 extra = extra + math.floor(dmg * 0.5)
@@ -970,7 +970,7 @@ function xianfa_attack_trigger(play, Damage, Target, MagicId, Model)
         end
     end
 
-    if has["èœ˜è››ä¾ "] then
+    if has["Ö©ÖëÏÀ"] then
         if math.random(100) <= 2 then
             if ConstCfg and ConstCfg.pmode and ConstCfg.pmode.stick then
                 changemode(Target, ConstCfg.pmode.stick, 3)
@@ -978,25 +978,25 @@ function xianfa_attack_trigger(play, Damage, Target, MagicId, Model)
         end
     end
 
-    if has["å’’æœ¯å›å“"] then
+    if has["ÖäÊõ»ØÏì"] then
         if MagicId and MagicId > 0 then
-            setplaydef(play, "N$å¤©ä¹¦å’’æœ¯å›å“", 1)
+            setplaydef(play, "N$ÌìÊéÖäÊõ»ØÏì", 1)
         else
-            if getplaydef(play, "N$å¤©ä¹¦å’’æœ¯å›å“") == 1 then
-                setplaydef(play, "N$å¤©ä¹¦å’’æœ¯å›å“", 0)
+            if getplaydef(play, "N$ÌìÊéÖäÊõ»ØÏì") == 1 then
+                setplaydef(play, "N$ÌìÊéÖäÊõ»ØÏì", 0)
                 extra = extra + math.floor(dmg * 0.3)
             end
         end
     end
 
     if is_player then
-        if has["ç¥å·"] then
+        if has["ÉñÍµ"] then
             local today = os.date("%Y%m%d")
-            if getplaydef(play, "S$å¤©ä¹¦ç¥å·æ—¥æœŸ") ~= today then
-                setplaydef(play, "S$å¤©ä¹¦ç¥å·æ—¥æœŸ", today)
-                setplaydef(play, "N$å¤©ä¹¦ç¥å·é‡‘é¢", 0)
+            if getplaydef(play, "S$ÌìÊéÉñÍµÈÕÆÚ") ~= today then
+                setplaydef(play, "S$ÌìÊéÉñÍµÈÕÆÚ", today)
+                setplaydef(play, "N$ÌìÊéÉñÍµ½ğ¶î", 0)
             end
-            local stolen = tonumber(getplaydef(play, "N$å¤©ä¹¦ç¥å·é‡‘é¢")) or 0
+            local stolen = tonumber(getplaydef(play, "N$ÌìÊéÉñÍµ½ğ¶î")) or 0
             if stolen < XIANFA_STEAL_DAILY_MAX and math.random(100) <= 1 then
                 local target_gold = querymoney(Target, XIANFA_STEAL_MONEY_ID) or 0
                 local steal = math.floor(target_gold * 0.01)
@@ -1009,26 +1009,26 @@ function xianfa_attack_trigger(play, Damage, Target, MagicId, Model)
                     end
                 end
                 if steal > 0 then
-                    changemoney(Target, XIANFA_STEAL_MONEY_ID, "-", steal, "å¤©ä¹¦ç¥å·", true)
-                    changemoney(play, XIANFA_STEAL_MONEY_ID, "+", steal, "å¤©ä¹¦ç¥å·", true)
-                    setplaydef(play, "N$å¤©ä¹¦ç¥å·é‡‘é¢", stolen + steal)
+                    changemoney(Target, XIANFA_STEAL_MONEY_ID, "-", steal, "ÌìÊéÉñÍµ", true)
+                    changemoney(play, XIANFA_STEAL_MONEY_ID, "+", steal, "ÌìÊéÉñÍµ", true)
+                    setplaydef(play, "N$ÌìÊéÉñÍµ½ğ¶î", stolen + steal)
                 end
             end
         end
 
-        if has["é­…æƒ‘"] then
+        if has["÷È»ó"] then
             local now = os.time()
-            if now - getplaydef(play, "N$å¤©ä¹¦é­…æƒ‘CD") >= 60 then
+            if now - getplaydef(play, "N$ÌìÊé÷È»óCD") >= 60 then
                 if getbaseinfo(Target, ConstCfg.gbase.level) < getbaseinfo(play, ConstCfg.gbase.level) then
                     if math.random(100) <= 1 then
-                        setplaydef(play, "N$å¤©ä¹¦é­…æƒ‘CD", now)
+                        setplaydef(play, "N$ÌìÊé÷È»óCD", now)
                         changemode(Target, ConstCfg.pmode.ban_act, 3)
                     end
                 end
             end
         end
 
-        if has["å¸è“åˆ€"] then
+        if has["ÎüÀ¶µ¶"] then
             local maxmp = getbaseinfo(Target, ConstCfg.gbase.maxmp)
             if maxmp > 0 then
                 local mp = math.floor(maxmp * 0.03)
@@ -1039,7 +1039,7 @@ function xianfa_attack_trigger(play, Damage, Target, MagicId, Model)
             end
         end
 
-        if has["è·ªä¸‹"] then
+        if has["¹òÏÂ"] then
             if math.random(100) <= 2 then
                 changemode(Target, ConstCfg.pmode.trap, 2, 1)
             end
@@ -1049,22 +1049,22 @@ function xianfa_attack_trigger(play, Damage, Target, MagicId, Model)
         local tname = getbaseinfo(Target, ConstCfg.gbase.name)
         local plen = _xianfa_name_len(pname)
         local tlen = _xianfa_name_len(tname)
-        if has["åå­—é•¿å°±ç‰›æ¯”"] and plen > tlen then
+        if has["Ãû×Ö³¤¾ÍÅ£±È"] and plen > tlen then
             extra = extra + math.floor(dmg * 0.2)
         end
-        if has["åå­—çŸ­å°±ç‰›æ¯”"] and plen < tlen then
+        if has["Ãû×Ö¶Ì¾ÍÅ£±È"] and plen < tlen then
             extra = extra + math.floor(dmg * 0.2)
         end
 
-        if has["çšçœ¦å¿…æŠ¥"] then
-            local veng = getplaydef(play, "N$å¤©ä¹¦ä»‡äºº")
+        if has["íıíö±Ø±¨"] then
+            local veng = getplaydef(play, "N$ÌìÊé³ğÈË")
             if veng ~= "" and veng == tname then
                 extra = extra + math.floor(dmg * 0.2)
             end
         end
     end
 
-    if has["å…ƒç¥åŠ©æˆ˜"] then
+    if has["ÔªÉñÖúÕ½"] then
         if math.random(100) <= 2 then
             local now = os.time()
             local last = tonumber(getplaydef(play, XIANFA_YUANSHEN_CD)) or 0
@@ -1079,16 +1079,16 @@ function xianfa_attack_trigger(play, Damage, Target, MagicId, Model)
     return extra
 end
 
--- è¢«æ”»å‡»æœ€ç»ˆä¼¤å®³ä¿®æ­£ï¼šåŒåˆƒå‰‘/è¯…å’’å† å†•å‰¯ä½œç”¨åœ¨æ­¤å åŠ 
+-- ±»¹¥»÷×îÖÕÉËº¦ĞŞÕı£ºË«ÈĞ½£/×çÖä¹ÚÃá¸±×÷ÓÃÔÚ´Ëµş¼Ó
 function xianfa_struck_adjust(play, Damage, Hiter, MagicId)
     if not Damage or Damage <= 0 then
         return Damage
     end
     local mult = 1
-    if _xianfa_has(play, "åŒåˆƒå‰‘") then
+    if _xianfa_has(play, "Ë«ÈĞ½£") then
         mult = mult + 0.08
     end
-    if _xianfa_has(play, "è¯…å’’å† å†•") then
+    if _xianfa_has(play, "×çÖä¹ÚÃá") then
         mult = mult + 0.10
     end
     if mult == 1 then
@@ -1097,14 +1097,14 @@ function xianfa_struck_adjust(play, Damage, Hiter, MagicId)
     return math.floor(Damage * mult)
 end
 
--- å®ˆè´¢å¥´ä¿æŠ¤ç»“æŸï¼ˆç”¨äºé™åˆ¶ä¸€æ¬¡æ‰è½çª—å£ï¼‰
+-- ÊØ²ÆÅ«±£»¤½áÊø£¨ÓÃÓÚÏŞÖÆÒ»´ÎµôÂä´°¿Ú£©
 function xianfa_drop_protect_end(play)
     setplaydef(play, XIANFA_DROP_ACTIVE, 0)
 end
 
--- å®ˆè´¢å¥´ï¼šæ¯å¤©ä¸€æ¬¡é˜²æ‰è½ï¼Œè§¦å‘åçŸ­æš‚ä¿æŠ¤ä»¥é¿å…å¤šä»¶æ‰è½
+-- ÊØ²ÆÅ«£ºÃ¿ÌìÒ»´Î·ÀµôÂä£¬´¥·¢ºó¶ÌÔİ±£»¤ÒÔ±ÜÃâ¶à¼şµôÂä
 function xianfa_check_drop(play)
-    if not _xianfa_has(play, "å®ˆè´¢å¥´") then
+    if not _xianfa_has(play, "ÊØ²ÆÅ«") then
         return true
     end
     local today = os.date("%Y%m%d")
@@ -1126,73 +1126,73 @@ function xianfa_check_drop(play)
     end
     return true
 end
--- å‡»æ€ç©å®¶è§¦å‘ï¼šé¥®è¡€å‰‘/ä¿®ç½—è¡€è¡£å›è¡€
+-- »÷É±Íæ¼Ò´¥·¢£ºÒûÑª½£/ĞŞÂŞÑªÒÂ»ØÑª
 local function _xianfa_on_killplay(play, hiter)
     local maxhp = getbaseinfo(play, ConstCfg.gbase.maxhp)
     if maxhp > 0 then
-        if _xianfa_has(play, "é¥®è¡€å‰‘") then
+        if _xianfa_has(play, "ÒûÑª½£") then
             humanhp(play, "+", math.floor(maxhp * 0.05))
         end
-        if _xianfa_has(play, "ä¿®ç½—è¡€è¡£") then
+        if _xianfa_has(play, "ĞŞÂŞÑªÒÂ") then
             humanhp(play, "+", math.floor(maxhp * 0.20))
         end
     end
 end
 
--- ç©å®¶æ­»äº¡è§¦å‘ï¼šè‡ªçˆ†ä¼¤å®³ã€è®°å½•ä»‡äººã€åˆ·æ–°ä»™æ³•çŠ¶æ€
+-- Íæ¼ÒËÀÍö´¥·¢£º×Ô±¬ÉËº¦¡¢¼ÇÂ¼³ğÈË¡¢Ë¢ĞÂÏÉ·¨×´Ì¬
 local function _xianfa_on_playdie(play, hiter)
     if hiter and getbaseinfo(hiter, ConstCfg.gbase.isplayer) then
-        if _xianfa_has(play, "è‡ªçˆ†") then
+        if _xianfa_has(play, "×Ô±¬") then
             local maxhp = getbaseinfo(hiter, ConstCfg.gbase.maxhp)
             if maxhp > 0 then
                 humanhp(hiter, "-", math.floor(maxhp * 0.30), 107, 0, play, 1)
             end
         end
-        if _xianfa_has(play, "çšçœ¦å¿…æŠ¥") then
-            setplaydef(play, "N$å¤©ä¹¦ä»‡äºº", getbaseinfo(hiter, ConstCfg.gbase.name))
+        if _xianfa_has(play, "íıíö±Ø±¨") then
+            setplaydef(play, "N$ÌìÊé³ğÈË", getbaseinfo(hiter, ConstCfg.gbase.name))
         end
     end
     xianfa_refresh(play)
 end
 
--- ç™»å½•/ç»„é˜Ÿ/å‡çº§/åˆ‡å›¾ç­‰ç»Ÿä¸€åˆ·æ–°å…¥å£
+-- µÇÂ¼/×é¶Ó/Éı¼¶/ÇĞÍ¼µÈÍ³Ò»Ë¢ĞÂÈë¿Ú
 local function _xianfa_on_login(play)
     xianfa_refresh(play)
 end
 
--- äº‹ä»¶ç»‘å®šï¼šç™»å½•/ç»„é˜Ÿ/å‡çº§/åˆ‡å›¾/ç‹‚æš´/å‡»æ€/æ­»äº¡ç­‰è§¦å‘åˆ·æ–°æˆ–ç‰¹æ®Šæ•ˆæœ
--- onLogin: ç™»å½•åˆå§‹åŒ–åˆ·æ–°
--- onEnterGroup/onLeaveGroup: ç»„é˜ŸçŠ¶æ€å˜åŒ–åˆ·æ–°ï¼ˆæœ‹å‹å¤šå¤š/ç‹¬ç‹¼ç­‰æ¡ä»¶ï¼‰
--- onPlayLevelUp: ç­‰çº§å˜åŒ–åˆ·æ–°ï¼ˆå¤©èƒ¡/æ‰“ç ´æ·é”ç­‰æ¡ä»¶ï¼‰
--- goSwitchMap: åˆ‡æ¢åœ°å›¾åˆ·æ–°ï¼ˆæ”»æ²™/éšèº«/ä½è¡€ç›‘æ§ç­‰ï¼‰
--- onkillplay/onPlaydie: å‡»æ€/æ­»äº¡è§¦å‘å›è¡€ã€ä»‡äººæ ‡è®°ã€åä¼¤ç­‰
--- goKuangBao/OpenKuangBao: ç‹‚æš´çŠ¶æ€å˜åŒ–åˆ·æ–°ï¼ˆç‹‚æš´åˆ°åº•ç­‰ï¼‰
-GameEvent.add(EventCfg.onLogin, _xianfa_on_login, "å¤©ä¹¦ä»™æ³•")
-GameEvent.add(EventCfg.onEnterGroup, _xianfa_on_login, "å¤©ä¹¦ä»™æ³•")
-GameEvent.add(EventCfg.onLeaveGroup, _xianfa_on_login, "å¤©ä¹¦ä»™æ³•")
-GameEvent.add(EventCfg.onPlayLevelUp, _xianfa_on_login, "å¤©ä¹¦ä»™æ³•")
-GameEvent.add(EventCfg.goSwitchMap, _xianfa_on_login, "å¤©ä¹¦ä»™æ³•")
-GameEvent.add(EventCfg.onkillplay, _xianfa_on_killplay, "å¤©ä¹¦ä»™æ³•")
-GameEvent.add(EventCfg.onPlaydie, _xianfa_on_playdie, "å¤©ä¹¦ä»™æ³•")
-GameEvent.add(EventCfg.goKuangBao, _xianfa_on_login, "å¤©ä¹¦ä»™æ³•")
-GameEvent.add(EventCfg.OpenKuangBao, _xianfa_on_login, "å¤©ä¹¦ä»™æ³•")
+-- ÊÂ¼ş°ó¶¨£ºµÇÂ¼/×é¶Ó/Éı¼¶/ÇĞÍ¼/¿ñ±©/»÷É±/ËÀÍöµÈ´¥·¢Ë¢ĞÂ»òÌØÊâĞ§¹û
+-- onLogin: µÇÂ¼³õÊ¼»¯Ë¢ĞÂ
+-- onEnterGroup/onLeaveGroup: ×é¶Ó×´Ì¬±ä»¯Ë¢ĞÂ£¨ÅóÓÑ¶à¶à/¶ÀÀÇµÈÌõ¼ş£©
+-- onPlayLevelUp: µÈ¼¶±ä»¯Ë¢ĞÂ£¨Ììºú/´òÆÆ¼ÏËøµÈÌõ¼ş£©
+-- goSwitchMap: ÇĞ»»µØÍ¼Ë¢ĞÂ£¨¹¥É³/ÒşÉí/µÍÑª¼à¿ØµÈ£©
+-- onkillplay/onPlaydie: »÷É±/ËÀÍö´¥·¢»ØÑª¡¢³ğÈË±ê¼Ç¡¢·´ÉËµÈ
+-- goKuangBao/OpenKuangBao: ¿ñ±©×´Ì¬±ä»¯Ë¢ĞÂ£¨¿ñ±©µ½µ×µÈ£©
+GameEvent.add(EventCfg.onLogin, _xianfa_on_login, "ÌìÊéÏÉ·¨")
+GameEvent.add(EventCfg.onEnterGroup, _xianfa_on_login, "ÌìÊéÏÉ·¨")
+GameEvent.add(EventCfg.onLeaveGroup, _xianfa_on_login, "ÌìÊéÏÉ·¨")
+GameEvent.add(EventCfg.onPlayLevelUp, _xianfa_on_login, "ÌìÊéÏÉ·¨")
+GameEvent.add(EventCfg.goSwitchMap, _xianfa_on_login, "ÌìÊéÏÉ·¨")
+GameEvent.add(EventCfg.onkillplay, _xianfa_on_killplay, "ÌìÊéÏÉ·¨")
+GameEvent.add(EventCfg.onPlaydie, _xianfa_on_playdie, "ÌìÊéÏÉ·¨")
+GameEvent.add(EventCfg.goKuangBao, _xianfa_on_login, "ÌìÊéÏÉ·¨")
+GameEvent.add(EventCfg.OpenKuangBao, _xianfa_on_login, "ÌìÊéÏÉ·¨")
 
--- æ¸…ç©ºä»™æ³•å±æ€§ä¸çŠ¶æ€ï¼ˆåˆ‡æ¢/é‡æŠ½æ—¶è°ƒç”¨ï¼‰
+-- Çå¿ÕÏÉ·¨ÊôĞÔÓë×´Ì¬£¨ÇĞ»»/ÖØ³éÊ±µ÷ÓÃ£©
 function xianfa_del(actor, group ,idx)
     Player.del_attlist(actor, XIANFA_ATTR_NAME)
     Player.del_attlist(actor, XIANFA_REVIVE_ATTR_NAME)
     Player.del_attlist(actor, XIANFA_HP_ATTR_NAME)
     setplaydef(actor, XIANFA_HP_TIMER_FLAG, 0)
     _xianfa_set_invis(actor, false)
-    -- åˆ é™¤ä»™æ³•æ—¶å›æ”¶ç­‰çº§ä¸Šé™åŠ æˆï¼ˆå¦‚ï¼šæ‰“ç ´æ·é”/è¯…å’’å† å†•ï¼‰
-    local prev_bonus = getplaydef(actor, "N$å¤©ä¹¦ç­‰çº§ä¸Šé™åŠ æˆ")
+    -- É¾³ıÏÉ·¨Ê±»ØÊÕµÈ¼¶ÉÏÏŞ¼Ó³É£¨Èç£º´òÆÆ¼ÏËø/×çÖä¹ÚÃá£©
+    local prev_bonus = getplaydef(actor, "N$ÌìÊéµÈ¼¶ÉÏÏŞ¼Ó³É")
     if prev_bonus and prev_bonus ~= 0 then
-        local base_cap = getplaydef(actor, VarCfg["U_ç­‰çº§ä¸Šé™"]) - prev_bonus
+        local base_cap = getplaydef(actor, VarCfg["U_µÈ¼¶ÉÏÏŞ"]) - prev_bonus
         if base_cap < 0 then
             base_cap = 0
         end
-        setplaydef(actor, VarCfg["U_ç­‰çº§ä¸Šé™"], base_cap)
-        setplaydef(actor, "N$å¤©ä¹¦ç­‰çº§ä¸Šé™åŠ æˆ", 0)
+        setplaydef(actor, VarCfg["U_µÈ¼¶ÉÏÏŞ"], base_cap)
+        setplaydef(actor, "N$ÌìÊéµÈ¼¶ÉÏÏŞ¼Ó³É", 0)
     end
     if Buff and Buff[XIANFA_ATTACK_BUFF] then
         Buff[XIANFA_ATTACK_BUFF](actor, 2)
@@ -1201,19 +1201,19 @@ function xianfa_del(actor, group ,idx)
         Buff[XIANFA_REVIVE_BUFF](actor, 2)
     end
 end
--- æ·»åŠ ä»™æ³•ï¼šç»Ÿä¸€èµ°åˆ·æ–°æµç¨‹ï¼ˆåŒ…å«ä¸€æ¬¡æ€§å¥–åŠ±åˆ¤æ–­ï¼‰
+-- Ìí¼ÓÏÉ·¨£ºÍ³Ò»×ßË¢ĞÂÁ÷³Ì£¨°üº¬Ò»´ÎĞÔ½±ÀøÅĞ¶Ï£©
 function xianfa_add(actor, group ,idx)
     xianfa_refresh(actor, group, idx)
 end
 
--- ç©¿æˆ´å¤©ä¹¦æ—¶åˆ·æ–°è¿›åº¦æ¡æ˜¾ç¤ºï¼ˆç­‰çº§/æ€æ„å€¼ï¼‰
+-- ´©´÷ÌìÊéÊ±Ë¢ĞÂ½ø¶ÈÌõÏÔÊ¾£¨µÈ¼¶/É±ÒâÖµ£©
 local function _onTakeOnEx(actor, itemobj, where, itemname, makeid)
     if where == _config.where then
-        local T_data = _tianshu_fix_data(Player.getJsonTableByVar(actor, VarCfg["T_å¤©ä¹¦"]))
+        local T_data = _tianshu_fix_data(Player.getJsonTableByVar(actor, VarCfg["T_ÌìÊé"]))
         tianshu_refresh_item(actor, T_data, itemobj)
     end
 end
---ç©¿è£…å¤‡è§¦å‘
-GameEvent.add(EventCfg.onTakeOnEx, _onTakeOnEx, "å¤©ä¹¦åˆå§‹åŒ–")
+--´©×°±¸´¥·¢
+GameEvent.add(EventCfg.onTakeOnEx, _onTakeOnEx, "ÌìÊé³õÊ¼»¯")
 
 return npc

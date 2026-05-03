@@ -929,20 +929,17 @@ npc[30] = function(play, p2, p3, data) --砍树系统
         --     sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>自动砍树已关闭...</font>","Type":9}')
         --     setplaydef(play,"N$自动砍树",os.time())
         end
-    elseif p2 == 4 then --兑换盲盒
-        local config = teshudata["anniu_30"]
-        local T_data = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
-        T_data.dh_num = T_data.dh_num or 1
-        local name, num = Player.checkItemNumByTable(play, T_data.dh_num > #config.dh.details and config.dh.cost or config.dh.details[T_data.dh_num].cost)
-        if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
+    elseif p2 == 4 then --打开砍树子界面中的抓娃娃机
+        local payload = Npclib[44].getDollPanelPayload(play)
+        sendluamsg(play, 101, 30, 4, 0, tbl2json(payload or {}))
+    elseif p2 == 5 then --砍树子界面抓娃娃机执行抓取
+        local ok, res, payload = Npclib[44].drawDollFromWoodcut(play)
+        if not ok then
+            Player.sendmsgEx(play, (res or "抓取失败") .. "#57")
             return
         end
-        Player.takeItemByTable(play, T_data.dh_num > #config.dh.details and config.dh.cost or config.dh.details[T_data.dh_num].cost, ",砍树系统",nil)
-        T_data.dh_num = T_data.dh_num + 1
-        Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
-        Player.rwjl(play, {{"砍树盲盒",1}}, "砍树系统盲盒兑换", 1,1000)
-        sendluamsg(play, 101, 30, 4, 0, tbl2json({T_data = T_data}))
+        Player.sendmsgEx(play, string.format("抓取成功：%s", tostring((res or {}).name or "娃娃")))
+        sendluamsg(play, 101, 30, 5, 0, tbl2json(payload or {}))
     end
 end
 npc[31] = function(play, p2, p3, data) --马上发财

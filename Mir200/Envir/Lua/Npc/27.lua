@@ -32,7 +32,7 @@ function npc.link(play,npcid,ew,aid)
     if ew == 1 then
         local idx = tonumber(aid)
         if not idx or not _config.details[idx] or not VarCfg.N_jnsh[idx] then
-            Player.sendmsgEx(play, "????#57")
+            Player.sendmsgEx(play, "²ÎÊý´íÎó#57")
             return
         end
         aid = idx

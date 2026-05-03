@@ -38,7 +38,7 @@ function npc.link(play,npcid,ew,aid,data)
         end
         local nextLevel = dj_num + 1
         if not (_config.cost and _config.cost[nextLevel] and _config.ch and _config.ch[nextLevel]) then
-            Player.sendmsgEx(play, "???????????#57")
+            Player.sendmsgEx(play, "称号配置缺失，请联系管理员#57")
             return
         end
         local name, num = Player.checkItemNumByTable(play, _config.cost[nextLevel])

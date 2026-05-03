@@ -2,7 +2,7 @@
 npc = {}
 
 
---å åœ
+--Õ¼²·
 
 local _config = Guard.getConfig("npc_26")
 
@@ -15,12 +15,12 @@ end
 function npc.main(play,npcid)
 
     local data = {}
-    data["U_num"] = getplaydef(play, VarCfg["U_å åœæ¬¡æ•°"])
+    data["U_num"] = getplaydef(play, VarCfg["U_Õ¼²·´ÎÊı"])
     sendluamsg(play,100,npcid,0,0,tbl2json(data))
 end
 
 function npc.link(play,npcid,ew,aid)
-    -- npc_guard: å…¥å‚æ ¡éªŒ
+    -- npc_guard: Èë²ÎĞ£Ñé
     if not Guard.ensurePlayer(play, npcid) then
         return
     end
@@ -29,22 +29,22 @@ function npc.link(play,npcid,ew,aid)
         return
     end
     ew = __guardAction
-    -- npc_guard: æ“ä½œç™½åå•ï¼ˆä¼˜åŒ–ï¼šé™å®šåˆæ³•æ“ä½œç¼–å·ï¼‰
+    -- npc_guard: ²Ù×÷°×Ãûµ¥£¨ÓÅ»¯£ºÏŞ¶¨ºÏ·¨²Ù×÷±àºÅ£©
     local __guardAllowedActions = Guard.newActionSet({1})
     if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
         return
     end
 
     if ew == 1 then
-        local U_num = getplaydef(play, VarCfg["U_å åœæ¬¡æ•°"])
+        local U_num = getplaydef(play, VarCfg["U_Õ¼²·´ÎÊı"])
 
         if checktitle(play, _config.details[_config.max_level]) then
-            Player.sendmsgEx(play, "ä½ å·²æ‹¥æœ‰æœ€é«˜ç­‰çº§#57|ã€ç§°å·ã€‘#249|ï¼Œæ— æ³•ç»§ç»­å åœ#57")
+            Player.sendmsgEx(play, "ÄãÒÑÓµÓĞ×î¸ßµÈ¼¶#57|¡¾³ÆºÅ¡¿#249|£¬ÎŞ·¨¼ÌĞøÕ¼²·#57")
             return
         end
 
         local weight = ""
-        --20æ¬¡ä»¥ä¸‹ä¸å‡º5
+        --20´ÎÒÔÏÂ²»³ö5
         if U_num < 20 then
             weight = "1#40|2#40|3#25|4#10"
         else
@@ -52,7 +52,7 @@ function npc.link(play,npcid,ew,aid)
         end
 
         local randomNum = nil
-        -- ç¬¬ä¸€æ¬¡å åœå›ºå®šåªå‡ºç¬¬ä¸€ä¸ªæ¡£ä½ï¼Œé¿å…å¼€å±€ç›´æ¥è·³é«˜æ¡£
+        -- µÚÒ»´ÎÕ¼²·¹Ì¶¨Ö»³öµÚÒ»¸öµµÎ»£¬±ÜÃâ¿ª¾ÖÖ±½ÓÌø¸ßµµ
         if tonumber(U_num or 0) <= 0 then
             randomNum = 1
         else
@@ -64,24 +64,24 @@ function npc.link(play,npcid,ew,aid)
         end
         local cfg = _config.details[randomNum]
         if not cfg then
-            Player.sendmsgEx(play, "å‚æ•°é”™è¯¯!#57")
+            Player.sendmsgEx(play, "²ÎÊı´íÎó!#57")
             return
         end
         if tonumber(U_num or 0) > 0 then
             local name, num = Player.checkItemNumByTable(play, _config.cost)
             if name then
-                Player.sendmsgEx(play, string.format("ä½ çš„#57|ã€%sã€‘#249|ä¸è¶³ï¼š#57|ã€%dã€‘#249|", name, num))
+                Player.sendmsgEx(play, string.format("ÄãµÄ#57|¡¾%s¡¿#249|²»×ã£º#57|¡¾%d¡¿#249|", name, num))
                 return
             end
-            Player.takeItemByTable(play, _config.cost, ",å åœ",nil)
+            Player.takeItemByTable(play, _config.cost, ",Õ¼²·",nil)
         end
         DeleteAllTitle(play)
         local titileName = cfg
         Player.title_give(play, titileName)
-        setplaydef(play, VarCfg["U_å åœæ¬¡æ•°"], U_num + 1)
-        -- äºŒå¤§é™†ä¼å¦–å½•ï¼šå åœæˆåŠŸåç«‹å³å°è¯•è‡ªåŠ¨ç»“ç®—å½“å‰ä»»åŠ¡ã€‚
+        setplaydef(play, VarCfg["U_Õ¼²·´ÎÊı"], U_num + 1)
+        -- ¶ş´óÂ½·üÑıÂ¼£ºÕ¼²·³É¹¦ºóÁ¢¼´³¢ÊÔ×Ô¶¯½áËãµ±Ç°ÈÎÎñ¡£
         Player.trySyncSecondContinentXyl(play)
-        -- Player.sendmsgEx(play, string.format("ä½ è·å¾—äº†|ã€%sã€‘#249", titileName))
+        -- Player.sendmsgEx(play, string.format("Äã»ñµÃÁË|¡¾%s¡¿#249", titileName))
         sendluamsg(play,100,npcid,1,0,"")
     end
 end

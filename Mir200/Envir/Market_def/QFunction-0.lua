@@ -35,6 +35,12 @@ function login(play)
     local quming = getconst(play, '<$SERVERNAME>')
     if callcheckscriptex(play,"ISDUMMY") then
         Login.main(play)
+        pcall(function()
+            local xianfuNpc = dofile('Envir/Lua/Npc/44.lua')
+            if xianfuNpc and xianfuNpc.refreshDollAttr then
+                xianfuNpc.refreshDollAttr(play)
+            end
+        end)
         setontimer(play, 10, 3)
     else
         local open_minutes = tonumber(getsysvar(VarCfg["G_开区分钟"])) or 0
@@ -49,6 +55,12 @@ function login(play)
             end
         end
         Login.main(play)
+        pcall(function()
+            local xianfuNpc = dofile('Envir/Lua/Npc/44.lua')
+            if xianfuNpc and xianfuNpc.refreshDollAttr then
+                xianfuNpc.refreshDollAttr(play)
+            end
+        end)
         setontimer(play, 1, 3, 0, 1)
         --红点系统定时器
         setontimer(play,6,60,0,1)
@@ -85,6 +97,12 @@ function resetday(play)
     -- 聚宝盆每日进度：跨天清空击杀积分与自动发放标记。
     setplaydef(play, VarCfg["U_聚宝盆积分"], 0)
     setplaydef(play, VarCfg["J_聚宝盆领取次数"], 0)
+    pcall(function()
+        local xianfuNpc = dofile('Envir/Lua/Npc/44.lua')
+        if xianfuNpc and xianfuNpc.refreshDollAttr then
+            xianfuNpc.refreshDollAttr(play)
+        end
+    end)
 end
 local function _sc_has_patrol_privilege(play)
     local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
