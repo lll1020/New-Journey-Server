@@ -91,7 +91,10 @@ function npc.link(play,npcid,ew,aid)
             Player.del_attlist(play, "境界修为")
             Login_jjxw(play)
             if level == 9 then
-                Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
+                -- 兼容未配置主线映射的场景，避免完成境界时直接索引空表报错。
+                if rwcf and rwcf[npcid] then
+                    Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
+                end
                 sendluamsg(play, 101, 9999, 0, 0, "npc_"..npcid)
             end
 
@@ -124,3 +127,4 @@ end
 GameEvent.add(EventCfg.onLogin, Login_jjxw, "Login_jjxw")
 
 return npc
+

@@ -198,7 +198,42 @@ local function _ywl_filter_rewards(play, list)
     end
     return out
 end
---功能:检查章节是否解锁（仅校验剧情点）
+local function _ywl_to_pre_list(pre)
+    if type(pre) ~= "table" then
+        return nil
+    end
+    if pre[1] ~= nil then
+        return pre
+    end
+    if pre.l or pre.i or pre.zj or pre.j or pre.idx or pre.k or pre.tip or pre.check then
+        return { pre }
+    end
+    return nil
+end
+local function _ywl_check_chapter_pre(play, pre)
+    if type(pre) ~= "table" then
+        return true
+    end
+    if type(pre.check) == "function" then
+        return pre.check(play) and true or false
+    end
+    local l = tonumber(pre.l or pre.i)
+    local zj = tonumber(pre.zj or pre.j)
+    local idx = tonumber(pre.idx or pre.k) or 1
+    if not l or not zj then
+        return false
+    end
+    local cfg = npc_xyl[l] and npc_xyl[l][zj]
+    local task = cfg and cfg.jq and cfg.jq[idx]
+    if not task then
+        return false
+    end
+    if type(task.fwdjy) == "function" then
+        return task.fwdjy(play, task.tk, task) and true or false
+    end
+    return false
+end
+--功能:检查章节是否解锁（校验剧情点与章节前置）
 local function _ywl_is_chapter_open(play, i, j)
     if not i or not j or i <= 0 or j <= 0 then
         return false
@@ -207,11 +242,19 @@ local function _ywl_is_chapter_open(play, i, j)
         return false
     end
     local need_jqd = tonumber(npc_xyl[i][j].jqd) or 0
-    if need_jqd <= 0 then
-        return true
-    end
     local cur_jqd = querymoney(play, getstditeminfo("剧情点", 0))
-    return cur_jqd >= need_jqd
+    if cur_jqd < need_jqd then
+        return false
+    end
+    local preList = _ywl_to_pre_list(npc_xyl[i][j].pre) or _ywl_to_pre_list(npc_xyl[i][j].unlock_pre)
+    if preList then
+        for _, pre in ipairs(preList) do
+            if not _ywl_check_chapter_pre(play, pre) then
+                return false
+            end
+        end
+    end
+    return true
 end
 local function _ywl_get_target_dl(sj, shuju)
     if type(shuju) == "table" and type(shuju.yd) == "table" then
@@ -884,6 +927,9 @@ npc[30] = function(play, p2, p3, data) --砍树系统
                 T_data.num = T_data.num + 1
                 Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
                 if FairyFate and FairyFate.touch then FairyFate.touch(play, "woodcut", 1) end
+                if Npclib and Npclib[44] and Npclib[44].touchGrowth then
+                    Npclib[44].touchGrowth(play, "woodcut", 1)
+                end
                 sendluamsg(play, 101, 30, 1, 0, tbl2json({T_data = T_data}))
                 Player.rwjl(play, {{jl,1}}, "砍树系统自动奖励", 1,0)
                 sendluamsg(play, 101, 30, 3, 0, tbl2json({{jl,1}}))   
@@ -900,6 +946,9 @@ npc[30] = function(play, p2, p3, data) --砍树系统
             T_data.num = T_data.num + 1
             Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
             if FairyFate and FairyFate.touch then FairyFate.touch(play, "woodcut", 1) end
+            if Npclib and Npclib[44] and Npclib[44].touchGrowth then
+                Npclib[44].touchGrowth(play, "woodcut", 1)
+            end
             sendluamsg(play, 101, 30, 1, 0, tbl2json({T_data = T_data}))
             local jl = ransjstr(config.updata[1].details[T_data.axe].jl, 1, 3)
             release_print("砍树系统奖励:",tbl2json(jl))
@@ -2643,3 +2692,4 @@ for npcId, handler in pairs(npc) do
     end
 end
 return npc
+

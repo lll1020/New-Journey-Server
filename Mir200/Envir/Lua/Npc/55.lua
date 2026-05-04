@@ -43,6 +43,9 @@ local function _finish_open(play, npcid, jq_data, sg_data, open_way)
     sg_data["npc_55"] = nil
     Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
     shaguai.jian(play, _config.shaguai_id)
+    if Npclib and Npclib[44] and Npclib[44].markOpened then
+        Npclib[44].markOpened(play)
+    end
     Player.sendmsgEx(play, "开辟成功#57")
     sendluamsg(play,101,1005,0,0,"rwwc")
     Player.rwjl(play, _config.rwjl, "开辟仙府任务奖励",1)

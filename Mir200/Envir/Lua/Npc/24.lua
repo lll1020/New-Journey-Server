@@ -40,12 +40,12 @@ local function _get_tianshu_prompt_text(T_data)
 end
 
 local function _xianfa_unlock_all_slots(actor)
-    -- 在线充值全部档位领取完成后，仙法10个槽位全部解锁。
+    -- 在线充值全购买称号【九五至尊】激活后，仙法10个槽位全部解锁。
     local czlb = json2tbl(getplaydef(actor, VarCfg.T_czlb))
     if type(czlb) ~= "table" then
         return false
     end
-    return tonumber(czlb.cz502_all or 0) == 1
+    return checktitle(actor, "九五至尊")
 end
 
 local function _xianfa_get_slot_need_lv(actor, cfg, slot)

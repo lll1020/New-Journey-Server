@@ -173,7 +173,7 @@ teshudata = {
         max_level = 10,
         attrID = 244,
         -- 好感度拉满后补发背包神器奖励。
-        final_give = "兰姐赠礼",
+        final_give = "兰姐的信物",
         -- 客户端按百分比展示好感度进度。
         show_percent = true,
         -- 达到满百分比时触发最终奖励。
@@ -776,125 +776,106 @@ teshudata = {
         ch = {"初入江湖","崭露头角","名动一方","闯荡四海","一战成名","威震八荒","纵横天下","一代宗师","盖世英豪","武林至尊","天外飞仙","破虚登仙","通天战神","超凡入圣","至尊无敌"},
     },
     ["npc_44"] = {
-        id = 44,                                   -- NPC 编号
-        name = "仙府",                             -- 功能名称
-        gridSize = 9,                              -- 菜园地块数量
-        visitorLogLimit = 30,                      -- 访客石最大保留条数
-        PlantCfg = {                               -- 灵草种植配置
+        id = 44,
+        name = "仙府",
+        gridSize = 9,
+        visitorLogLimit = 30,
+        level_max = 4,
+        growth_daily_limit = 300,
+        level_cfg = {
+            [1] = {level = 1, plot_unlock = 1, open_slots = 2},
+            [2] = {level = 2, plot_unlock = 3, open_slots = 4, need_growth = 100, need_harvest = 25, need_refine_low = 5},
+            [3] = {level = 3, plot_unlock = 6, open_slots = 6, need_growth = 300, need_harvest = 35, need_refine_mid = 10, need_frag = 10},
+            [4] = {level = 4, plot_unlock = 9, open_slots = 8, need_growth = 600, need_harvest = 50, need_refine_low = 10, need_frag = 150},
+        },
+        growth_rules = {
+            woodcut = {value = 1, daily_limit = 100},
+            harvest = {value = 5, daily_limit = 60},
+            visit = {value = 3, daily_limit = 60},
+            like = {value = 3, daily_limit = 60},
+            refine = {value = 5, daily_limit = 50},
+            steal = {value = 3, daily_limit = 30},
+        },
+        PlantCfg = {
             Low = {
-                name = "仙草",                 -- 名称
-                cost = {{"仙草种子",1}},       --种子名称
-                matureTime = 30 *60,              -- 成熟时间(秒)
-                canSteal = true,                   -- 是否可被偷
-                product = {{"仙草",20}},              -- 收获
+                id = 1,
+                name = "低阶灵草",
+                need_level = 1,
+                matureTime = 10 * 60,
+                canSteal = true,
+                product = {
+                    {rate = 80, give = {{"下品丹材",10}}},
+                    {rate = 100, give = {{"仙府币",10}}},
+                },
             },
-            -- High = {
-            --     name = "高阶灵草",
-            --     cost = {{"高阶灵草种子",1}},       --种子名称
-            --     matureTime = 16 *60,
-            --     canSteal = false,
-            --     product = {{"高阶灵草",20}},              -- 收获
-            -- },
+            Mid = {
+                id = 2,
+                name = "中阶灵草",
+                need_level = 2,
+                matureTime = 30 * 60,
+                canSteal = true,
+                product = {
+                    {rate = 50, give = {{"中品丹材",10}}},
+                    {rate = 100, give = {{"仙府币",100}}},
+                    {rate = 100, give = {{"神石碎片",5}}},
+                },
+            },
+            High = {
+                id = 3,
+                name = "高阶灵草",
+                need_level = 3,
+                matureTime = 120 * 60,
+                canSteal = false,
+                product = {
+                    {rate = 30, give = {{"上品丹材",10}}},
+                    {rate = 100, give = {{"仙府币",500}}},
+                    {rate = 100, give = {{"神石碎片",15}}},
+                },
+            },
         },
-        StealCfg = {                               -- 偷菜规则
-            dailyStealLimit = 10,                  -- 每日偷菜总次数
-            perTargetDailyLimit = 2,               -- 同一目标每日可被偷次数
-            cooldown = 5 * 60,                     -- 偷同一目标冷却(秒)
-            stealAmount = 1,                       -- 单次偷取株数
+        StealCfg = {
+            dailyStealLimit = 10,
+            perTargetDailyLimit = 2,
+            cooldown = 5 * 60,
+            stealAmount = 1,
         },
-        LikeCfg = {                                -- 点赞规则
-            dailyLikePerTarget = 1,                -- 每人每日对同一目标点赞次数
-            likeValue = 1,                         -- 每次点赞增加的仙华值
+        LikeCfg = {
+            dailyLikePerTarget = 1,
+            likeValue = 1,
         },
-        RefineCfg = {                              -- 炼丹配置
-            furnaceCd = 2,                        -- 炼丹炉冷却
-            needEquip = "炼丹许可证",              -- 炼丹时必须装备的凭证
+        RefineCfg = {
+            furnaceCd = 2,
             recipes = {
---             无相丹	仙草*50	金币*50w	仙府币*50	使得嘲灾无法反弹玩家的伤害
---             定身丹	仙草*50	金币*50w	仙府币*50	攻击时：可将息灾困在原地，无法逃离
---             破瘴丹	仙草*50	金币*50w	仙府币*50	（免疫诅咒效果，持续5分钟）
---             破妄丹	仙草*50	金币*50w	仙府币*50	（可看见妄灾，持续5分钟）
---             杀伐丹	仙草*10	金币*10w	仙府币*50	每次服用固定攻击+1，可服用1000次
---             玄御丹	仙草*10	金币*10w	仙府币*50	每次服用固定防御+1，可服用300次
---             体魄丹	仙草*10	金币*10w	仙府币*50	每次服用固定生命+10，可服用1000次
---             爆率丹	仙草*30	元宝*10w	仙府币*50	每次服用打怪爆率+1%，可服用100次
---             暴击丹	仙草*100	金币*100w	仙府币*50	每次服用暴击伤害+0.5%，可服用20次
---             攻速丹	仙草*50	金币*50w	仙府币*50	每次服用攻击速度+0.1%，可服用100次
---             切割丹	仙草*10	金币*10w	仙府币*50	每次服用固定切割+100，可服用1000次
---             若水宝玉	仙草*50	金币*50w	仙府币*50	喂养灵兽用的
-                -- ["无相丹"] = {cost = {{"仙草",50},{"金币",500000},{"仙府币", 50}},},
-                -- ["定身丹"] = {cost = {{"仙草",50},{"金币",500000},{"仙府币", 50}},},
-                -- ["破瘴丹"] = {cost = {{"仙草",50},{"金币",500000},{"仙府币", 50}},},
-                -- ["破妄丹"] = {cost = {{"仙草",50},{"金币",500000},{"仙府币", 50}},},
-                ["杀伐丹"] = {cost = {{"仙草",10},{"金币",100000},{"仙府币", 50}},},
-                ["玄御丹"] = {cost = {{"仙草",10},{"金币",100000},{"仙府币", 50}},},
-                ["体魄丹"] = {cost = {{"仙草",10},{"金币",100000},{"仙府币", 50}},},
-                ["爆率丹"] = {cost = {{"仙草",30},{"元宝",100000},{"仙府币", 50}},},
-                ["暴击丹"] = {cost = {{"仙草",200},{"金币",2000000},{"仙府币", 100}},},
-                ["攻速丹"] = {cost = {{"仙草",500},{"金币",5000000},{"仙府币", 500}},},
-                ["切割丹"] = {cost = {{"仙草",10},{"金币",100000},{"仙府币", 50}},},
+                ["稳固丹"] = {cost = {{"下品丹材",10},{"金币",500000}}, product = {{"稳固丹",1}}, stat_key = "refine_low"},
+                ["幸运丹"] = {cost = {{"中品丹材",10},{"金币",1000000}}, product = {{"幸运丹",1}}, stat_key = "refine_mid"},
+                ["凝萃神丹"] = {cost = {{"上品丹材",10},{"金币",2000000}}, product = {{"凝萃神丹",1}}, stat_key = "refine_high"},
             },
         },
-        DecorateCfg = {                            -- 府邸装扮
-            [101] = {id = 101, name = "竹林雅院", xiangHua = 20, cost = {{"仙府币", 50000}}},
-            [102] = {id = 102, name = "桃花居", xiangHua = 50, cost = {{"仙府币", 50000}}},
-            [201] = {id = 201, name = "烟雨轻岚", xiangHua = 80, cost = {{"仙府币", 50000}}},
-            [301] = {id = 301, name = "烟雨轻岚1", xiangHua = 80, cost = {{"仙府币", 50000}}},
-            [401] = {id = 401, name = "烟雨轻岚2", xiangHua = 80, cost = {{"仙府币", 50000}}},
-            [501] = {id = 501, name = "烟雨轻岚3", xiangHua = 80, cost = {{"仙府币", 50000}}},
+        DecorateCfg = {},
+        DecorateplaceCfg = {},
+        ShopCfg = {
+            seeds = {},
+            eggs = {},
+            materials = {},
         },
-        DecorateplaceCfg = {
-            statue = {posX = 50, posY = 50,list = {201}},        -- 雕像装饰位置
-            cave = {posX = 300, posY = 100,list = {301}},  -- 洞府装饰位置
-            welcome = {posX = 300, posY = 100,list = {401}},  -- 欢迎语装饰位置
-            spring = {posX = 300, posY = 100,list = {501}},  -- 灵泉装饰位置
-            wall = {posX = 50, posY = 200,list = {101,102}},        -- 祥云装饰位置
-        },
-        -- TitleCfg = {                               -- 称号配置
-        --     DanMaster = {id = 1, name = "极品炼丹师"},
-        --     BeastMaster = {id = 2, name = "极品御兽师"},
-        --     XianHuaRank1 = {id = 3, name = "荣华天下"},
-        -- },
-        -- PetCfg = {                                 -- 灵兽设置
-        --     -- eggs = {
-        --     --     wooden = {id = "wooden", name = "木灵蛋", cost = {{"金币", 20000}}, beast = {type = "wood", maxLevel = 3}},
-        --     --     jade = {id = "jade", name = "玉兽蛋", cost = {{"元宝", 60}}, beast = {type = "jade", maxLevel = 5}},
-        --     -- },
-        --     -- feed = {resource = "essence", perFeed = 1, exp = 10}, -- 喂养材料/经验
-        --     -- identify = {
-        --     --     cost = {{"元宝", 5}},                -- 鉴定消耗
-        --     --     bloodlinePool = {"坚韧", "灵动", "迅捷", "护主"}, -- 血脉词条
-        --     -- },
-        -- },
-        ShopCfg = {                                -- 仙府商城
-            seeds = {
-                {id = "Low", seed = "仙草种子", name = "仙草种子", cost = {{"仙府币", 1000}}},
-                -- {id = "High", seed = "高阶灵草种子", name = "高阶灵草种子", cost = {{"元宝", 100}}},
-            },
-            -- eggs = {
-            --     {id = "wooden", name = "木灵蛋", cost = {{"金币", 20000}}},
-            --     {id = "jade", name = "玉兽蛋", cost = {{"元宝", 60}}},
-            -- },
-            materials = {
-                {id = "essence", name = "妖怪精魄", cost = {{"仙府币", 8000}}},
-            },
-        },
-        DollCfg = {                                -- 仙府娃娃机 / 收藏柜
-            attr_list_name = "仙府娃娃属性",        -- 娃娃属性挂载名
-            first_draw_count = 10,                 -- 前 10 次新手价
-            first_draw_cost = {{"仙府币", 10}},    -- 新手单抽消耗
-            normal_draw_cost = {{"仙府币", 5000}}, -- 常规单抽消耗
-            every_draw_reward = {{"金币", 50000}}, -- 每次抽取固定奖励
-            pity_need = 35,                        -- 每 35 抽保底 1 个红款
-            red_rate = 500,                        -- 红款总概率 5.00%
+        DollCfg = {
+            attr_list_name = "仙府娃娃属性",
+            first_draw_count = 10,
+            first_draw_cost = {{"仙府币",10}},
+            normal_draw_cost = {{"仙府币",5000}},
+            every_draw_reward = {{"金币",50000}},
+            pity_need = 35,
+            red_rate = 500,
             red_rate_base = 10000,
+            extra_box_rate = 1000,
+            extra_box_rate_base = 10000,
             hidden = {
                 pool = {"hidden_1", "hidden_2", "hidden_3", "hidden_4", "hidden_5"},
-                rate = 3,                          -- 隐藏款总概率 0.03%
+                rate = 3,
                 rate_base = 10000,
-                max_count = 5,                     -- 每个角色最多获得 5 个隐藏款
+                max_count = 5,
             },
-            cabinet_order = {                      -- 收藏柜展示顺序
+            cabinet_order = {
                 "normal_1", "normal_2", "normal_3", "normal_4", "normal_5",
                 "red_1", "red_2", "red_3", "red_4", "red_5",
                 "hidden_1", "hidden_2", "hidden_3", "hidden_4", "hidden_5",
@@ -1006,8 +987,18 @@ teshudata = {
     ["npc_53"] = {
         id = 53,
         needitemnum = 10,
+        extra_cost = {
+            [3] = {{"高阶神石卷轴",1}},
+        },
+        open_rate = {
+            rare = 8400,
+            epic = 1000,
+            legendary = 250,
+            myth = 30,
+            base = 9680,
+        },
         cost = {
-           {
+            {
                 "山川神石【稀有】",
                 "海洋神石【稀有】",
                 "天空神石【稀有】",
@@ -1016,8 +1007,8 @@ teshudata = {
                 "满月神石【稀有】",
                 "大地神石【稀有】",
                 "雷电神石【稀有】",
-           },
-           {
+            },
+            {
                 "山川神石【史诗】",
                 "海洋神石【史诗】",
                 "天空神石【史诗】",
@@ -1026,18 +1017,8 @@ teshudata = {
                 "满月神石【史诗】",
                 "大地神石【史诗】",
                 "雷电神石【史诗】",
-           },
-           {
-                "山川神石【神话】",
-                "海洋神石【神话】",
-                "天空神石【神话】",
-                "清风神石【神话】",
-                "火焰神石【神话】",
-                "满月神石【神话】",
-                "大地神石【神话】",
-                "雷电神石【神话】",
-           },
-           {
+            },
+            {
                 "山川神石【传说】",
                 "海洋神石【传说】",
                 "天空神石【传说】",
@@ -1046,7 +1027,17 @@ teshudata = {
                 "满月神石【传说】",
                 "大地神石【传说】",
                 "雷电神石【传说】",
-           },
+            },
+            {
+                "山川神石【神话】",
+                "海洋神石【神话】",
+                "天空神石【神话】",
+                "清风神石【神话】",
+                "火焰神石【神话】",
+                "满月神石【神话】",
+                "大地神石【神话】",
+                "雷电神石【神话】",
+            },
         },
     },
     ["npc_54"] = {
@@ -2539,8 +2530,8 @@ teshudata = {
             {give = {{"灵石",1280},{"金币",35000000},{"千年玄铁",1388}},show = {{"至尊吊坠",1}}},
             {give = {{"灵石",1980},{"元宝",500000},{"辉耀水晶",188}},skill = "魔法盾"},
             {give = {{"灵石",3280},{"金币",55000000},{"极品仙法卷轴",2}},show = {{"独享首曝特权",1}}},
-            {give = {{"灵石",6480},{"元宝",1000000},{"阴阳八卦境",1}},token_count = 188},
-            {give = {{"灵石",9980},{"元宝",2000000},{"极品仙法卷轴",3}},show = {{"解锁全部仙法槽位",1}},},
+            {give = {{"灵石",6480},{"元宝",1000000},{"阴阳八卦境",1}},token_count = 188,show = {{"鹤嘴锄",188}}},
+            {give = {{"灵石",9980},{"元宝",2000000},{"极品仙法卷轴",3}},show = {{"雷霆双子剑",1}},},
         },
         ch = "九五至尊"
     },
@@ -2568,7 +2559,7 @@ teshudata = {
         id = 101,
         name = "马上发财",
         attr_list_name = "马上发财活动属性", -- 活动附加属性列表名
-        token_name = "锄子", -- 抽奖次数显示名
+        token_name = "鹤嘴锄", -- 抽奖次数显示名
         crown_title = "冠名", -- 冠名判定称号
         skill_name = "十步一杀", -- 足迹套装影响技能
         kill_per_exchange = 188, -- 每188杀兑换1次
@@ -2823,7 +2814,7 @@ teshudata = {
         details = {
             {ch = "入门玩家", sgsl = 0, need_charge = 0},
             {ch = "诸邪退散", sgsl = 0, need_pay21 = 18, auto_pay = 18, pay_moneyid = 21, jl = {}},
-            {ch = "至尊黑卡", sgsl = 0, need_cz502_idx = 4, salary = {{"绑定金币",300000},{"绑定元宝",3000},{"绑定灵石",60}},jl = {{"至尊黑卡",1}}},
+            {ch = "至尊玩家", sgsl = 0, need_cz502_idx = 4, salary = {{"绑定金币",300000},{"绑定元宝",3000},{"绑定灵石",60}},jl = {{"至尊黑卡",1}}},
         },
     },
         ["npc_106"] = {
@@ -2833,6 +2824,8 @@ teshudata = {
         fragment_item = "聚宝盆碎片",
         -- 修复聚宝盆所需碎片数量。
         fragment_count = 20,
+        -- 伏妖录等通用任务显示用提交需求。
+        cost = {{"聚宝盆碎片",20}},
         -- 聚宝盆实际背包神器名；用于发放实体神器与穿戴校验。
         artifact_name = "聚宝盆",
         -- 界面统一展示名称。

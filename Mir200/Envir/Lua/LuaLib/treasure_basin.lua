@@ -343,6 +343,7 @@ function TreasureBasin.link(play, npcid, p2, p3, msgData)
     local haveNum = getbagitemcount(play, itemName)
     if haveNum < needNum then
         Player.sendmsgEx(play, string.format("»¹ÐèÒª#57|¡¾%s¡¿#249|£º#57|¡¾%d/%d¡¿#249|", itemName, haveNum, needNum))
+        Guard.closeNpcAndAuto(play, npcid)
         return
     end
 

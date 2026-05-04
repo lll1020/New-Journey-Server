@@ -161,6 +161,7 @@ function npc.link(play,npcid,ew,aid)
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
             shaguai.jia(play, 628)
             Player.sendmsgEx(play, "领取任务：#57|"..item_name.."#249|在#57|"..((_config.prep_task and _config.prep_task.map) or "虚妄山脉").."#249|分别找回左右眼")
+            if npcid then Guard.closeNpcAndAuto(play, npcid) end
             sendluamsg(play,100,npcid,1,1,"")
             return
         end
@@ -302,5 +303,6 @@ function npc_628_finish(play)
 end
 
 return npc
+
 
 

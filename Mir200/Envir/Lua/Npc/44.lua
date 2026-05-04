@@ -2,9 +2,9 @@ npc = {}
 
 --[[
 仙府总览：
-1. 所有玩法参数都来自 teshudata["npc_44"]，这里会读取 gridSize、currencyMap、PlantCfg 等子表，确保策划调表即可改玩法。
-2. 玩家个人数据单独存放在 VarCfg.T_XianFuData，对他人访问时从在线角色实时拉取，避免历史全服大表。
-3. 当前仅保留仙府基础玩法，不再维护仙府排行榜数据。
+1. 所有玩法参数都来自 teshudata["npc_44"]，这里只读取配置并执行逻辑。
+2. 玩家个人数据单独存放在 VarCfg.T_XianFuData，避免维护历史全服大表。
+3. 当前仅保留新版仙府基础玩法，不再维护旧版排行榜逻辑。
 ]]
 
 local _config = Guard.getConfig("npc_44")
@@ -22,6 +22,76 @@ local maxShopBuy = _config.shopMaxBuy or 9999
 local visitorLimit = _config.visitorLogLimit or 20
 local gridSize = _config.gridSize or 9
 local DollAttrListName = tostring(DollCfg.attr_list_name or "仙府娃娃属性")
+local levelMax = tonumber(_config.level_max or 4) or 4
+local growthDailyLimit = tonumber(_config.growth_daily_limit or 300) or 300
+local XIANFU_DAN_LOW_EXPIRE = "N$xf_dan_low_expire"
+local XIANFU_DAN_MID_EXPIRE = "N$xf_dan_mid_expire"
+local XIANFU_DAN_HIGH_EXPIRE = "N$xf_dan_high_expire"
+
+---------------------------------------------------------------------
+-- Common: 基础工具
+---------------------------------------------------------------------
+local Common = {}
+
+function Common.now()
+    return os.time()
+end
+
+function Common.today(ts)
+    return os.date("%Y-%m-%d", ts or Common.now())
+end
+
+function Common.ensureDailyCounter(counter, today)
+    counter = counter or {}
+    if counter.date ~= today then
+        counter.date = today
+        counter.count = 0
+        counter.map = {}
+    end
+    counter.map = counter.map or {}
+    return counter
+end
+
+function Common.checkCost(play, cost)
+    if not cost or #cost == 0 then
+        return true
+    end
+    local name, num = Player.checkItemNumByTable(play, cost)
+    if name then
+        return false, name, num
+    end
+    return true
+end
+
+function Common.payCost(play, cost, reason)
+    if not cost or #cost == 0 then
+        return
+    end
+    Player.takeItemByTable(play, cost, reason or ",npc_44", nil)
+end
+
+-- 仙府等级固定解锁 1/3/6/9 块地，与神石槽位解锁分开维护。
+local function getPlotUnlockCount(level)
+    level = tonumber(level or 1) or 1
+    if level >= 4 then
+        return 9
+    elseif level >= 3 then
+        return 6
+    elseif level >= 2 then
+        return 3
+    end
+    return 1
+end
+
+local function getLevelCfg(level)
+    return (_config.level_cfg or {})[tonumber(level or 1) or 1] or {}
+end
+
+local function getGrowthRule(key)
+    return (_config.growth_rules or {})[tostring(key or "")] or {}
+end
+
+local buildPlantReward
 
 local function buildDecoPlaceIndex(cfg)
     local idx = {}
@@ -80,49 +150,70 @@ local function ensureHerbCount(record, herbName)
     return record.herbs[herbName]
 end
 
+local function ensureGrowth(record, now)
+    local today = Common.today(now)
+    record.growth = record.growth or {total = 0, daily_total = {date = today, count = 0}, daily = {}}
+    record.growth.total = tonumber(record.growth.total or 0) or 0
+    record.growth.daily_total = Common.ensureDailyCounter(record.growth.daily_total, today)
+    record.growth.daily = record.growth.daily or {}
+    return record.growth
+end
+
+local function ensureLevelStats(record)
+    record.level_stats = record.level_stats or {
+        harvest_low = 0,
+        refine_low = 0,
+        refine_mid = 0,
+        refine_high = 0,
+    }
+    for key, _ in pairs(record.level_stats) do
+        record.level_stats[key] = tonumber(record.level_stats[key] or 0) or 0
+    end
+    return record.level_stats
+end
+
+local function isDanActive(play, expireVar)
+    if play == nil or play == 0 then
+        return false, 0
+    end
+    local expireAt = tonumber(getplaydef(play, expireVar) or 0) or 0
+    return expireAt > Common.now(), expireAt
+end
+
+local function applyGrowth(record, key, times, now)
+    times = tonumber(times or 1) or 1
+    if times <= 0 then
+        return 0
+    end
+    local rule = getGrowthRule(key)
+    local value = tonumber(rule.value or 0) or 0
+    local dailyLimit = tonumber(rule.daily_limit or 0) or 0
+    if value <= 0 or dailyLimit <= 0 then
+        return 0
+    end
+    local growth = ensureGrowth(record, now)
+    local today = Common.today(now)
+    growth.daily[key] = Common.ensureDailyCounter(growth.daily[key], today)
+    local totalCounter = Common.ensureDailyCounter(growth.daily_total, today)
+    local added = 0
+    for _ = 1, times do
+        local curDailyValue = tonumber(growth.daily[key].count or 0) or 0
+        local curTotalValue = tonumber(totalCounter.count or 0) or 0
+        if curDailyValue + value > dailyLimit then
+            break
+        end
+        if curTotalValue + value > growthDailyLimit then
+            break
+        end
+        growth.daily[key].count = curDailyValue + value
+        totalCounter.count = curTotalValue + value
+        growth.total = (tonumber(growth.total or 0) or 0) + value
+        added = added + value
+    end
+    return added
+end
+
 local PLAYER_DATA_VAR = VarCfg.T_XianFuData or "T47"
-
----------------------------------------------------------------------
--- Common: 基础工具
----------------------------------------------------------------------
-local Common = {}
-
-function Common.now()
-    return os.time()
-end
-
-function Common.today(ts)
-    return os.date("%Y-%m-%d", ts or Common.now())
-end
-
-function Common.ensureDailyCounter(counter, today)
-    counter = counter or {}
-    if counter.date ~= today then
-        counter.date = today
-        counter.count = 0
-        counter.map = {}
-    end
-    counter.map = counter.map or {}
-    return counter
-end
-
-function Common.checkCost(play, cost)
-    if not cost or #cost == 0 then
-        return true
-    end
-    local name, num = Player.checkItemNumByTable(play, cost)
-    if name then
-        return false, name, num
-    end
-    return true
-end
-
-function Common.payCost(play, cost, reason)
-    if not cost or #cost == 0 then
-        return
-    end
-    Player.takeItemByTable(play, cost, reason or ",npc_44", nil)
-end
 
 local function hasHerbCost(record, herbCost)
     for _, item in ipairs(herbCost or {}) do
@@ -196,6 +287,7 @@ local function normalizeInventory(container)
         end
     end
     container.Low = tonumber(container.Low) or container.Low or 0
+    container.Mid = tonumber(container.Mid) or container.Mid or 0
     container.High = tonumber(container.High) or container.High or 0
     return container
 end
@@ -255,6 +347,15 @@ function Storage.ensureRecord(play, opts)
     record.meta.key = playerName
     record.meta.name = playerName
     record.meta.lastActive = opts and opts.now or Common.now()
+    record.meta.play = nil
+    record.opened = tonumber(record.opened or 0) or 0
+    record.level = tonumber(record.level or 1) or 1
+    if record.level < 1 then
+        record.level = 1
+    elseif record.level > levelMax then
+        record.level = levelMax
+    end
+    record.plot_unlock = tonumber(record.plot_unlock or getPlotUnlockCount(record.level)) or getPlotUnlockCount(record.level)
     record.herbs = normalizeInventory(record.herbs)
     record.seeds = {}
     record.fields = record.fields or {}
@@ -284,6 +385,9 @@ function Storage.ensureRecord(play, opts)
     record.visitor = record.visitor or {log = {}}
     record.visitor.log = record.visitor.log or {}
     record.stats = record.stats or {xiangHua = 0}
+    record.stats.likenum = tonumber(record.stats.likenum or 0) or 0
+    ensureGrowth(record, opts and opts.now)
+    ensureLevelStats(record)
     Storage.ensurePlots(record)
     return record
 end
@@ -296,7 +400,14 @@ function Storage.ensurePlots(record)
             record.fields[i] = plot
         end
         plot.gridId = i
-        plot.state = plot.state or "empty"
+        if i > (tonumber(record.plot_unlock or 0) or 0) then
+            if plot.state ~= "locked" then
+                resetPlot(plot, i)
+                plot.state = "locked"
+            end
+        else
+            plot.state = plot.state or "empty"
+        end
         if plot.state == "empty" then
             resetPlot(plot, i)
         end
@@ -305,11 +416,12 @@ end
 
 function Storage.syncGrowth(record, now)
     now = now or Common.now()
+    ensureGrowth(record, now)
     for _, plot in pairs(record.fields) do
         if plot.state == "growing" and plot.finishAt and now >= plot.finishAt then
             plot.state = "mature"
         end
-        if plot.state ~= "empty" and plot.seedId and not PlantCfg[plot.seedId] then
+        if plot.state ~= "empty" and plot.state ~= "locked" and plot.seedId and not PlantCfg[plot.seedId] then
             resetPlot(plot, plot.gridId)
         end
     end
@@ -322,6 +434,8 @@ function Storage.buildPublicSnapshot(record)
         xiangHua = record.stats.xiangHua or 0,
         herbs = record.herbs,
         fields = record.fields,
+        level = record.level or 1,
+        plot_unlock = record.plot_unlock or getPlotUnlockCount(record.level or 1),
         decoration = record.decoration,
         pet = {
             beasts = record.pet.beasts,
@@ -335,6 +449,28 @@ end
 ---------------------------------------------------------------------
 local Planting = {}
 
+buildPlantReward = function(play, plantCfg)
+    local reward = {}
+    -- 稳固丹生效时，种植产出的仙府币/神石碎片额外增加 20%。
+    local lowDanActive = isDanActive(play, XIANFU_DAN_LOW_EXPIRE)
+    for _, entry in ipairs(plantCfg.product or {}) do
+        local rate = tonumber(entry.rate or 0) or 0
+        if rate >= 100 or (rate > 0 and math.random(100) <= rate) then
+            for _, info in ipairs(entry.give or {}) do
+                local itemName = tostring(info[1] or "")
+                local itemNum = tonumber(info[2] or 0) or 0
+                if lowDanActive and (itemName == "仙府币" or itemName == "神石碎片") and itemNum > 0 then
+                    itemNum = math.max(itemNum + math.floor(itemNum * 0.2), itemNum + 1)
+                end
+                if itemName ~= "" and itemNum > 0 then
+                    reward[#reward + 1] = {itemName, itemNum}
+                end
+            end
+        end
+    end
+    return reward
+end
+
 function Planting.plant(play, record, params, now)
     local gridId = tonumber(params.gridId)
     if not gridId or gridId < 1 or gridId > gridSize then
@@ -343,28 +479,30 @@ function Planting.plant(play, record, params, now)
     local seedId = params.seedId
     local cfg = PlantCfg[seedId]
     if not cfg then
-        return false, "种子配置不存在"
+        return false, "灵草配置不存在"
     end
     local plot = record.fields[gridId]
     if not plot then
         return false, "地块不存在"
     end
     Storage.syncGrowth(record, now)
+    if plot.state == "locked" then
+        return false, "该地块尚未解锁"
+    end
     if plot.state ~= "empty" then
         return false, "当前地块已占用"
     end
-    local ok, lack = Common.checkCost(play, cfg.cost)
-    if not ok then
-        return false, string.format("%s不足", lack or "cost")
+    local needLevel = tonumber(cfg.need_level or 1) or 1
+    if (tonumber(record.level or 1) or 1) < needLevel then
+        return false, string.format("仙府等级达到#57|【%d级】#249|后解锁该灵草", needLevel)
     end
-    Common.payCost(play, cfg.cost, "xianfu_seed")
     local startAt = now or Common.now()
     plot.seedId = seedId
     plot.state = "growing"
     plot.plantedAt = startAt
     local mature = (cfg.matureTime or 0)
     if mature > 0 and getplaydef(play,"N$buff306") == 1 then
-        -- 黑化肥会挥发：仙草成熟时间加快30%
+        -- 黑化肥会挥发：仙草成熟时间加快 30%。
         mature = math.ceil(mature * 0.7)
         if mature < 1 then
             mature = 1
@@ -372,7 +510,7 @@ function Planting.plant(play, record, params, now)
     end
     plot.finishAt = startAt + mature
     plot.canSteal = cfg.canSteal and true or false
-    plot.product = cloneRewardList(cfg.product)
+    plot.product = nil
     return true, {plot = plot}
 end
 
@@ -386,14 +524,29 @@ function Planting.harvest(play, record, params, now)
     if plot.state ~= "mature" then
         return false, "尚未成熟"
     end
-    if not plot.product or #plot.product == 0 then
+    local plantCfg = PlantCfg[plot.seedId]
+    if not plantCfg then
         resetPlot(plot, gridId)
-        return false, "没有可收获的灵草"
+        return false, "灵草配置不存在"
     end
-    Player.rwjl(play, plot.product, "仙府收获", 1, 0)
-    addProductStat(record, plot.product)
+    local reward = cloneRewardList(plot.product or {})
+    if #reward <= 0 then
+        reward = buildPlantReward(play, plantCfg)
+        plot.product = cloneRewardList(reward)
+    end
+    if #reward <= 0 then
+        resetPlot(plot, gridId)
+        return false, "本次未收获到物品"
+    end
+    Player.rwjl(play, reward, "仙府收获", 1, 0)
+    addProductStat(record, reward)
+    local stats = ensureLevelStats(record)
+    if plot.seedId == "Low" then
+        stats.harvest_low = (tonumber(stats.harvest_low or 0) or 0) + 1
+    end
+    applyGrowth(record, "harvest", 1, now)
     resetPlot(plot, gridId)
-    return true, {herbs = record.herbs, plot = plot}
+    return true, {herbs = record.herbs, plot = plot, reward = reward, growth = record.growth, level_stats = record.level_stats}
 end
 
 ---------------------------------------------------------------------
@@ -438,14 +591,8 @@ local function purchase(play, entry, amount, reason)
 end
 
 function Shop.buySeed(play, record, params)
-    local entry = ShopIndex.seeds[params.id]
-    local ok, amountOrErr = purchase(play, entry, params.amount, "xianfu_seed_shop")
-    if not ok then
-        return false, amountOrErr
-    end
-    local reward = {{entry.seed, amountOrErr}}
-    Player.rwjl(play, reward, "仙府购种", 1, 0)
-    return true, {reward = reward}
+    -- 新版仙府已取消种子购买，空地可直接播种对应等级灵草。
+    return false, "仙草种子功能已停用"
 end
 
 function Shop.buyEgg(play, record, params)
@@ -560,6 +707,7 @@ function Steal.try(play, thiefRecord, targetRecord, now, gridId)
     thiefRecord.steal.daily.count = thiefRecord.steal.daily.count + 1
     targetRecord.guard.daily.count = targetRecord.guard.daily.count + 1
     bucket[targetRecord.meta.key] = now + (StealCfg.cooldown or 0)
+    applyGrowth(thiefRecord, "steal", 1, now)
     if left and #left > 0 then
         plot.product = left
         plot.state = "mature"
@@ -602,6 +750,7 @@ function Like.perform(play, actorRecord, targetRecord, now)
     targetRecord.likes.received.total = (targetRecord.likes.received.total or 0) + 1
     targetRecord.stats.xiangHua = (targetRecord.stats.xiangHua or 0) + (LikeCfg.likeValue or 0)
     targetRecord.stats.likenum = (targetRecord.stats.likenum or 0) + 1
+    applyGrowth(actorRecord, "like", 1, now)
     return true, {xiangHua = targetRecord.stats.xiangHua, likenum = targetRecord.stats.likenum}
 end
 
@@ -661,7 +810,7 @@ local function refineCostWithBuff(play, cost)
     if getplaydef(play,"N$buff306") ~= 1 then
         return cost
     end
-    -- 黑化肥会挥发：炼丹消耗-50%
+    -- 黑化肥会挥发：炼丹消耗减少 50%。
     local out = {}
     for _, info in ipairs(cost or {}) do
         local name, num = info[1], info[2] or 0
@@ -721,11 +870,81 @@ function Refine.start(play, record, params, now)
     record.refine.collection[params.recipeId] = true
     local reward = cloneRewardList(recipe.product or {{params.recipeId, 1}})
     Player.rwjl(play, reward, "仙府炼丹", 1, 0)
+    local stats = ensureLevelStats(record)
+    local statKey = tostring(recipe.stat_key or "")
+    if statKey == "refine_low" then
+        stats.refine_low = (tonumber(stats.refine_low or 0) or 0) + 1
+    elseif statKey == "refine_mid" then
+        stats.refine_mid = (tonumber(stats.refine_mid or 0) or 0) + 1
+    elseif statKey == "refine_high" then
+        stats.refine_high = (tonumber(stats.refine_high or 0) or 0) + 1
+    end
+    applyGrowth(record, "refine", 1, now)
     --暂时不用称号
     -- if hasAllRecipes(record) and TitleCfg.DanMaster then
     --     Player.title_give(play, TitleCfg.DanMaster.name)
     -- end
-    return true, {reward = reward, collection = record.refine.collection, lastTime = record.refine.lastTime}
+    return true, {reward = reward, collection = record.refine.collection, lastTime = record.refine.lastTime, growth = record.growth, level_stats = record.level_stats}
+end
+
+local function getOpenSlotCount(record)
+    local cfg = getLevelCfg(record.level)
+    return tonumber(cfg.open_slots or 0) or 0
+end
+
+local function checkLevelUp(play, record)
+    local currentLevel = tonumber(record.level or 1) or 1
+    if currentLevel >= levelMax then
+        return false, "已达最高等级"
+    end
+    local nextCfg = getLevelCfg(currentLevel + 1)
+    local growth = ensureGrowth(record)
+    local stats = ensureLevelStats(record)
+    if (tonumber(growth.total or 0) or 0) < (tonumber(nextCfg.need_growth or 0) or 0) then
+        return false, "成长值不足"
+    end
+    if (tonumber(stats.harvest_low or 0) or 0) < (tonumber(nextCfg.need_harvest or 0) or 0) then
+        return false, "低阶仙草收获次数不足"
+    end
+    local needRefineLow = tonumber(nextCfg.need_refine_low or 0) or 0
+    local needRefineMid = tonumber(nextCfg.need_refine_mid or 0) or 0
+    if (tonumber(stats.refine_low or 0) or 0) < needRefineLow then
+        return false, "下品丹药炼制次数不足"
+    end
+    if (tonumber(stats.refine_mid or 0) or 0) < needRefineMid then
+        return false, "中品丹药炼制次数不足"
+    end
+    local needFrag = tonumber(nextCfg.need_frag or 0) or 0
+    if needFrag > 0 then
+        local name, _ = Player.checkItemNumByTable(play, {{"神石碎片", needFrag}})
+        if name then
+            return false, "神石碎片不足"
+        end
+    end
+    return true
+end
+
+local function levelUp(play, record)
+    local ok, err = checkLevelUp(play, record)
+    if not ok then
+        return false, err
+    end
+    local nextLevel = (tonumber(record.level or 1) or 1) + 1
+    local nextCfg = getLevelCfg(nextLevel)
+    local needFrag = tonumber(nextCfg.need_frag or 0) or 0
+    if needFrag > 0 then
+        Player.takeItemByTable(play, {{"神石碎片", needFrag}}, ",仙府升级", nil)
+    end
+    record.level = nextLevel
+    record.plot_unlock = getPlotUnlockCount(nextLevel)
+    Storage.ensurePlots(record)
+    return true, {
+        level = record.level,
+        plot_unlock = record.plot_unlock,
+        open_slots = getOpenSlotCount(record),
+        growth = record.growth,
+        level_stats = record.level_stats,
+    }
 end
 
 local Pet = {}
@@ -741,7 +960,7 @@ end
 -- function Pet.hatch(play, record, params, now)
 --     local cfg = getEggCfg(params.eggId)
 --     if not cfg then
---         return false, "灵蛋不存在"
+--         return false, "灵蛋不存??
 --     end
 --     record.pet.eggs[params.eggId] = record.pet.eggs[params.eggId] or 0
 --     if record.pet.eggs[params.eggId] <= 0 then
@@ -771,7 +990,7 @@ end
 -- function Pet.feed(play, record, params)
 --     local pet = record.pet.beasts[params.petId]
 --     if not pet then
---         return false, "灵兽不存在"
+--         return false, "灵兽不存??
 --     end
 --     local feedCfg = PetCfg.feed or {}
 --     local need = (params.amount or 1) * (feedCfg.perFeed or 1)
@@ -793,7 +1012,7 @@ end
 -- function Pet.identify(play, record, params)
 --     local pet = record.pet.beasts[params.petId]
 --     if not pet then
---         return false, "灵兽不存在"
+--         return false, "灵兽不存??
 --     end
 --     local cost = PetCfg.identify and PetCfg.identify.cost
 --     local ok, lack = Common.checkCost(play, cost)
@@ -811,11 +1030,11 @@ end
 -- end
 
 ---------------------------------------------------------------------
--- 状态加载 / 持久化
+-- 状态加??/ 持久??
 ---------------------------------------------------------------------
 
 ---------------------------------------------------------------------
--- Doll: 仙府娃娃机 / 收藏柜
+-- Doll: 仙府娃娃??/ 收藏??
 ---------------------------------------------------------------------
 local Doll = {}
 
@@ -971,6 +1190,16 @@ local function dollRollResult(record)
     return dollPickFromPool(DollCfg.normal_pool or {}), "normal"
 end
 
+local function dollTryExtraBox(play)
+    local rate = tonumber(DollCfg.extra_box_rate or 0) or 0
+    local base = tonumber(DollCfg.extra_box_rate_base or 10000) or 10000
+    if rate > 0 and math.random(base) <= rate then
+        giveitem(play, "神石宝箱", 1)
+        return {{"神石宝箱", 1}}
+    end
+    return nil
+end
+
 local function dollBuildView(record)
     local doll = ((record or {}).doll or {})
     local drawTotal = tonumber(doll.draw_total) or 0
@@ -1030,6 +1259,7 @@ function Doll.draw(play, record, now)
     doll.hidden_count = dollCountOwnedByPool(record, dollHiddenPool())
     record.doll = doll
     dollRefreshAttr(play, record)
+    local extraReward = dollTryExtraBox(play)
     return true, {
         resultId = resultId,
         name = resultCfg.name or resultId,
@@ -1037,6 +1267,7 @@ function Doll.draw(play, record, now)
         qualityName = resultCfg.quality_name or quality,
         attrDesc = resultCfg.attr_desc or "",
         drawType = drawType,
+        extra_reward = extraReward,
     }
 end
 
@@ -1072,6 +1303,24 @@ local function buildSnapshot(state)
             pet = state.record.pet,
             doll = dollBuildView(state.record),
             visitor = state.record.visitor,
+            level = state.record.level,
+            plot_unlock = state.record.plot_unlock,
+            growth = state.record.growth,
+            level_stats = state.record.level_stats,
+            opened = state.record.opened,
+            open_slots = getOpenSlotCount(state.record),
+        },
+        cfg = {
+            plant = PlantCfg,
+            steal = StealCfg,
+            like = LikeCfg,
+            refine = RefineCfg,
+            shop = ShopCfg,
+            doll = DollCfg,
+            level_cfg = _config.level_cfg or {},
+            growth_rules = _config.growth_rules or {},
+            level_max = levelMax,
+            growth_daily_limit = growthDailyLimit,
         },
     }
 end
@@ -1130,6 +1379,17 @@ function ActionHandler.harvest(play, npcid, state, params)
     end
     Player.sendmsgEx(play, "收获完成#57")
     pushAction(play, npcid, "harvest", true, "收获完成", state, res)
+end
+
+function ActionHandler.levelUp(play, npcid, state, params)
+    local ok, res = levelUp(play, state.record)
+    persistState(state)
+    if not ok then
+        Player.sendmsgEx(play, res or "升级失败#57")
+        return
+    end
+    Player.sendmsgEx(play, "仙府升级成功#57")
+    pushAction(play, npcid, "levelUp", true, "仙府升级成功", state, res)
 end
 
 function ActionHandler.buySeed(play, npcid, state, params)
@@ -1291,6 +1551,7 @@ end
 
 function ActionHandler.visit(play, npcid, state, params)
     handleVisit(play, npcid, state, params or {}, function(actor, targetRecord)
+        applyGrowth(state.record, "visit", 1, state.now)
         local snapshot = Storage.buildPublicSnapshot(targetRecord)
         snapshot.isGuest = true
         Storage.savePlayer(actor, targetRecord)
@@ -1306,6 +1567,27 @@ function npc.refreshDollAttr(play)
     local state = loadState(play)
     dollRefreshAttr(play, state.record)
     persistState(state)
+end
+
+-- 供外部功能在玩家真正开府时显式标记，避免仅因砍树或抓娃娃写入数据就被判定为已开辟仙府。
+function npc.markOpened(play)
+    local state = loadState(play)
+    state.record.opened = 1
+    persistState(state)
+end
+
+-- 供外部（砍树、拜访等）复用成长值累计。
+function npc.touchGrowth(play, reason, times)
+    local state = loadState(play)
+    applyGrowth(state.record, tostring(reason or ""), tonumber(times or 1) or 1, state.now)
+    persistState(state)
+    return state.record.growth
+end
+
+function npc.getState(play)
+    local state = loadState(play)
+    persistState(state)
+    return state.record
 end
 
 function npc.getDollPanelPayload(play)

@@ -293,51 +293,147 @@ function stdmodefunc31(play, item)
     refreshitem(play, itemobj)
     sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>ÃÏ È…±“‚÷µ+'..getstditeminfo(getiteminfo(play, item, 2), 8)..'</font>","Type":9}')
 end
-function stdmodefunc32(play, item) --…Ò Ø’ŸªΩ
-    local config = teshudata["npc_53"]
-    if not config or type(config.cost) ~= "table" then
-        Player.sendmsgEx(play,"…Ò Ø’ŸªΩ ß∞‹:»±…Ÿ≈‰÷√#57")
+-- œ…∏Æµ§“©Õ≥“ª π”√µΩ∆⁄ ±º‰«˝∂Ø£¨±‹√‚‘Ÿ“¿¿µæ… buff ±‡∫≈°£
+local function _xianfu_dan_set_expire(play, varName, seconds)
+    seconds = tonumber(seconds or 0) or 0
+    if seconds <= 0 then
+        setplaydef(play, varName, 0)
+        return 0
+    end
+    local expireAt = os.time() + seconds
+    setplaydef(play, varName, expireAt)
+    return expireAt
+end
+
+local function _xianfu_dan_left(play, varName)
+    local expireAt = tonumber(getplaydef(play, varName) or 0) or 0
+    local left = expireAt - os.time()
+    return left > 0 and left or 0
+end
+
+local function _xianfu_dan_is_active(play, varName)
+    return _xianfu_dan_left(play, varName) > 0
+end
+
+local function _xianfu_dan_format_left(seconds)
+    seconds = tonumber(seconds or 0) or 0
+    if seconds <= 0 then
+        return "0√Î"
+    end
+    local minute = math.floor(seconds / 60)
+    local sec = seconds % 60
+    if minute <= 0 then
+        return tostring(sec) .. "√Î"
+    end
+    if sec <= 0 then
+        return tostring(minute) .. "∑÷÷”"
+    end
+    return string.format("%d∑÷%d√Î", minute, sec)
+end
+
+local function _godstone_pick_quality_config(boxName)
+    local cfg = teshudata["npc_53"] or {}
+    local cost = cfg.cost or {}
+    local openRate = cfg.open_rate or {}
+    if boxName == "…Ò Ø±¶œ‰[ ∑ ´º∂]" then
+        return {
+            title = " ∑ ´",
+            list = cost[2] or {},
+        }
+    end
+    if boxName == "…Ò Ø±¶œ‰[¥´Àµº∂]" then
+        return {
+            title = "¥´Àµ",
+            list = cost[3] or {},
+        }
+    end
+    return {
+        title = nil,
+        pool = {
+            {weight = tonumber(openRate.rare or 0) or 0, list = cost[1] or {}, title = "œ°”–"},
+            {weight = tonumber(openRate.epic or 0) or 0, list = cost[2] or {}, title = " ∑ ´"},
+            {weight = tonumber(openRate.legendary or 0) or 0, list = cost[3] or {}, title = "¥´Àµ"},
+            {weight = tonumber(openRate.myth or 0) or 0, list = cost[4] or {}, title = "…Òª∞"},
+        },
+    }
+end
+
+local function _godstone_pick_reward(boxName)
+    local qualityCfg = _godstone_pick_quality_config(boxName)
+    if qualityCfg.list then
+        if #qualityCfg.list <= 0 then
+            return nil, qualityCfg.title
+        end
+        return qualityCfg.list[math.random(#qualityCfg.list)], qualityCfg.title
+    end
+    local pool = qualityCfg.pool or {}
+    local totalWeight = 0
+    for _, entry in ipairs(pool) do
+        if entry.list and #entry.list > 0 and (tonumber(entry.weight or 0) or 0) > 0 then
+            totalWeight = totalWeight + (tonumber(entry.weight or 0) or 0)
+        end
+    end
+    if totalWeight <= 0 then
+        return nil, nil
+    end
+    local roll = math.random(totalWeight)
+    local acc = 0
+    for _, entry in ipairs(pool) do
+        local weight = tonumber(entry.weight or 0) or 0
+        if entry.list and #entry.list > 0 and weight > 0 then
+            acc = acc + weight
+            if roll <= acc then
+                return entry.list[math.random(#entry.list)], entry.title
+            end
+        end
+    end
+    local last = pool[#pool]
+    if last and last.list and #last.list > 0 then
+        return last.list[math.random(#last.list)], last.title
+    end
+    return nil, nil
+end
+
+local function _is_godstone_red_boss(mon)
+    local mobName = tostring(getbaseinfo(mon, 1) or "")
+    if mobName == "" then
         return false
     end
-    local keyCost = {{"…Ò Ø±¶œ‰‘ø≥◊",1}}
+    return string.find(mobName, "°Ô", 1, true) ~= nil
+        or string.find(mobName, "°⁄", 1, true) ~= nil
+        or string.find(mobName, "∫Ï", 1, true) ~= nil
+end
+
+local function _is_kuafu_boss(mon)
+    local mapName = tostring(getbaseinfo(mon, 3) or "")
+    if mapName == "" then
+        return false
+    end
+    return string.find(mapName, "øÁ∑˛", 1, true) ~= nil
+        or string.find(mapName, "kuafu", 1, true) ~= nil
+end
+
+function stdmodefunc32(play, item) --…Ò Ø’ŸªΩ
+    local boxName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "…Ò Ø±¶œ‰")
+    local keyCost = {{"…Ò Ø±¶œ‰‘ø≥◊", 1}}
     local name, num = Player.checkItemNumByTable(play, keyCost)
     if name then
         Player.sendmsgEx(play, string.format("»±…Ÿ|%s#249| ˝¡ø|%d#249", name, num))
         return false
     end
-    Player.takeItemByTable(play, keyCost, ",…Ò Ø’ŸªΩ",nil)
-    local rarityPool = {
-        {weight = 8400, list = config.cost[1], tip = "œ°”–"},
-        {weight = 1000, list = config.cost[2], tip = "??"},
-        {weight = 500, list = config.cost[3], tip = "…Òª∞"},
-        {weight = 100, list = config.cost[4], tip = "¥´Àµ"},
-    }
-    local rand = math.random(1,10000)
-    local acc = 0
-    local target
-    for _, entry in ipairs(rarityPool) do
-        if entry.list and #entry.list > 0 and entry.weight > 0 then
-            acc = acc + entry.weight
-            if rand <= acc then
-                target = entry
-                break
-            end
-        end
-    end
-    if not target then
-        target = rarityPool[#rarityPool]
-    end
-    if not target or not target.list or #target.list == 0 then
-        Player.sendmsgEx(play,"…Ò Ø’ŸªΩ ß∞‹:Ω±≥ÿŒ™ø’#57")
-        return false
-    end
-    local rewardName = target.list[math.random(#target.list)]
+    local rewardName, qualityTitle = _godstone_pick_reward(boxName)
     if not rewardName then
-        Player.sendmsgEx(play,"…Ò Ø’ŸªΩ ß∞‹:Ω±∆∑≤ª¥Ê‘⁄#57")
+        Player.sendmsgEx(play, "…Ò Ø±¶œ‰ø™∆Ù ß∞‹£∫Ω±≥ÿŒ™ø’#57")
         return false
     end
+    Player.takeItemByTable(play, keyCost, ",…Ò Ø±¶œ‰ø™∆Ù", nil)
+    delitembymakeindex(play, getiteminfo(play, item, 1), 1)
     giveitem(play, rewardName, 1)
-    Player.sendmsgEx(play, string.format("…Ò Ø’ŸªΩ#250|œ°”–∂»:%s#249|ªÒµ√:%s#218", target.tip or "", rewardName))
+    if Npclib and Npclib[53] and Npclib[53].markOwned then
+        Npclib[53].markOwned(play, rewardName)
+    end
+    Player.sendmsgEx(play, string.format("ø™∆Ù|%s#249|≥…π¶£¨ªÒµ√#57|°æ%s°ø#249|%s#57", boxName, rewardName, qualityTitle and ("£®" .. qualityTitle .. "£©") or ""))
+    return false
 end
 function stdmodefunc33(play, item) --¡È ﬁ •“≈ŒÔ◊‘—°¿Ò∫–
 end
@@ -445,20 +541,25 @@ function stdmodefunc38(play, item) --∫£‘ÙÕı◊∞±∏ÀÊª˙±¶œ‰  ¬∑∑…µƒ≤›√± À˜¬°µƒ≈Âµ∂ Œ
 end
 function stdmodefunc39(play, item) --Ãÿ ‚µ§“©
     local itemName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "")
-    local rec = json2tbl(getplaydef(play, VarCfg["T_ŒÔ∆∑ π”√º«¬º"]))
-    if type(rec) ~= "table" then
-        rec = {}
+    if itemName == "Œ»πÃµ§" then
+        local expireAt = _xianfu_dan_set_expire(play, "N$xf_dan_low_expire", 10 * 60)
+        delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+        Player.sendmsgEx(play, string.format("“—∑˛”√#57|°æŒ»πÃµ§°ø#249|£¨≥÷–¯÷¡#57|°æ%s°ø#249|#57", os.date("%H:%M:%S", expireAt)))
+        return false
+    elseif itemName == "–“‘Àµ§" then
+        local expireAt = _xianfu_dan_set_expire(play, "N$xf_dan_mid_expire", 10 * 60)
+        Player.add_attlist(play, "œ…∏Æ–“‘Àµ§", "=", Player.getAttrTableToStr({[246] = 1000, [245] = 500}), 1)
+        delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+        Player.sendmsgEx(play, string.format("“—∑˛”√#57|°æ–“‘Àµ§°ø#249|£¨≥÷–¯÷¡#57|°æ%s°ø#249|#57", os.date("%H:%M:%S", expireAt)))
+        return false
+    elseif itemName == "ƒ˝›Õ…Òµ§" then
+        local expireAt = _xianfu_dan_set_expire(play, "N$xf_dan_high_expire", 10 * 60)
+        delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+        Player.sendmsgEx(play, string.format("“—∑˛”√#57|°æƒ˝›Õ…Òµ§°ø#249|£¨≥÷–¯÷¡#57|°æ%s°ø#249|#57", os.date("%H:%M:%S", expireAt)))
+        return false
     end
     local idx = getstditeminfo(getiteminfo(play, item, 2), 8)
-    if idx == 1 then
-        addbuff(play, 20110)
-    elseif idx == 2 then
-        addbuff(play, 20111)
-    elseif idx == 3 then
-        addbuff(play, 20112)
-    elseif idx == 4 then
-        addbuff(play, 20113)
-    elseif idx == 5 and Npclib and Npclib[76] and Npclib[76].use_dujie_dan then
+    if idx == 5 and Npclib and Npclib[76] and Npclib[76].use_dujie_dan then
         return Npclib[76].use_dujie_dan(play, item)
     end
 end
@@ -506,6 +607,11 @@ local function Login_dan40(play)
         Buff.refreshRechargeBlade(play)
     else
         Player.del_attlist(play, "≥‰÷µ«–∏Óµ∂")
+    end
+    if _xianfu_dan_is_active(play, "N$xf_dan_mid_expire") then
+        Player.add_attlist(play, "œ…∏Æ–“‘Àµ§", "=", Player.getAttrTableToStr({[246] = 1000, [245] = 500}), 1)
+    else
+        Player.del_attlist(play, "œ…∏Æ–“‘Àµ§")
     end
 end
 GameEvent.add(EventCfg.onLogin, Login_dan40, "Login_dan40")
@@ -1040,6 +1146,17 @@ function stdmodefunc61(play, item) --÷˛ª˘µ§
     Player.sendmsgEx(play, "÷˛ª˘µ§∑˛”√≥…π¶£¨µ±«∞“—∑˛”√|" .. tostring(rec.jz_dan_count) .. "/3#249")
     return false
 end
+function stdmodefunc62(play, item) --…Ò ØÀÈ∆¨
+    local itemName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "…Ò ØÀÈ∆¨")
+    if getbagitemcount(play, itemName) < 88 then
+        Player.sendmsgEx(play, itemName .. "≤ª◊„88∏ˆ#57")
+        return false
+    end
+    Player.takeItemByTable(play, {{itemName, 88}}, ",…Ò ØÀÈ∆¨∫œ≥…", nil)
+    giveitem(play, "…Ò Ø±¶œ‰", 1)
+    Player.sendmsgEx(play, "≥…π¶∫œ≥…#57|°æ…Ò Ø±¶œ‰°ø#249|#57")
+    return false
+end
 
 local function _get_zhuji_dan_record(play)
     local rec = json2tbl(getplaydef(play, VarCfg["T_ŒÔ∆∑ π”√º«¬º"]))
@@ -1083,6 +1200,73 @@ local function _on_kill_mon_drop_zhuji_fragment(play, mon, mobIdx)
     end
 end
 GameEvent.add(EventCfg.onKillMon, _on_kill_mon_drop_zhuji_fragment, "÷˛ª˘µ§ÀÈ∆¨¿€º∆µÙ¬‰")
+
+-- …Ò Ø±¶œ‰µÙ¬‰º‡Ã˝£∫≤ª≥‘»´æ÷±¨¬ £¨Õ≥“ª◊ﬂ∂¿¡¢º‡Ã˝°£
+local function _on_kill_mon_drop_godstone_box(play, mon, mobIdx)
+    if not play or not mon then
+        return
+    end
+    local mapName = tostring(getbaseinfo(play, 3) or "")
+    local dl = tonumber((daluditu and daluditu[mapName]) or 0) or 0
+    if dl < 3 then
+        return
+    end
+    local mobName = tostring(getbaseinfo(mon, 1) or "")
+    if mobName == "" or mobName == "µæ≤›»À" then
+        return
+    end
+    local guaiType = tonumber((guaiwutype and guaiwutype[mobName]) or 0) or 0
+    local isBoss = guaiType >= 2
+    local isKuafuBoss = isBoss and _is_kuafu_boss(mon)
+    local isRedBoss = isBoss and _is_godstone_red_boss(mon)
+    -- Œ»πÃµ§…˙–ß ±£¨ΩˆÃ·…˝…Ò Øœ‰∂¿¡¢º‡Ã˝∏≈¬  10%£¨≤ª”∞œÏ»´æ÷±¨¬ °£
+    local lowDanActive = _xianfu_dan_is_active(play, "N$xf_dan_low_expire")
+    if isKuafuBoss then
+        if shaguai and shaguai.temp_drop then
+            shaguai.temp_drop(play, mon, "…Ò Ø±¶œ‰")
+            shaguai.temp_drop(play, mon, "…Ò Ø±¶œ‰")
+            shaguai.temp_drop(play, mon, "…Ò Ø±¶œ‰")
+            shaguai.temp_drop(play, mon, "…Ò Ø±¶œ‰")
+            shaguai.temp_drop(play, mon, "…Ò Ø±¶œ‰")
+            shaguai.temp_drop(play, mon, "…Ò Ø±¶œ‰")
+            shaguai.temp_drop(play, mon, "…Ò Ø±¶œ‰")
+            shaguai.temp_drop(play, mon, "…Ò Ø±¶œ‰")
+            shaguai.temp_drop(play, mon, "…Ò Ø±¶œ‰")
+            shaguai.temp_drop(play, mon, "…Ò Ø±¶œ‰")
+            shaguai.temp_drop(play, mon, "…Ò Ø±¶œ‰‘ø≥◊")
+            local legendRate = lowDanActive and 1.1 or 1
+            if math.random(10000) <= math.floor(100 * legendRate) then
+                shaguai.temp_drop(play, mon, "…Ò Ø±¶œ‰[¥´Àµº∂]")
+            end
+        end
+        return
+    end
+    if isBoss then
+        if shaguai and shaguai.temp_drop then
+            shaguai.temp_drop(play, mon, "…Ò Ø±¶œ‰")
+            shaguai.temp_drop(play, mon, "…Ò Ø±¶œ‰")
+            shaguai.temp_drop(play, mon, "…Ò Ø±¶œ‰")
+            shaguai.temp_drop(play, mon, "…Ò Ø±¶œ‰")
+            shaguai.temp_drop(play, mon, "…Ò Ø±¶œ‰")
+            local legendRate = lowDanActive and 1.1 or 1
+            if math.random(10000) <= math.floor(100 * legendRate) then
+                shaguai.temp_drop(play, mon, "…Ò Ø±¶œ‰[¥´Àµº∂]")
+            end
+        end
+        if isRedBoss and shaguai and shaguai.temp_drop then
+            local rate = _xianfu_dan_is_active(play, "N$xf_dan_high_expire") and 240 or 288
+            if math.random(rate) == 1 then
+                shaguai.temp_drop(play, mon, "…Ò Ø±¶œ‰[ ∑ ´º∂]")
+            end
+        end
+        return
+    end
+    local normalBase = lowDanActive and math.floor(188 / 1.1) or 188
+    if math.random(math.max(1, normalBase)) == 1 and shaguai and shaguai.temp_drop then
+        shaguai.temp_drop(play, mon, "…Ò Ø±¶œ‰")
+    end
+end
+GameEvent.add(EventCfg.onKillMon, _on_kill_mon_drop_godstone_box, "…Ò Ø±¶œ‰µÙ¬‰º‡Ã˝")
 -- 150 º∂∫Ûæ≠—Èµ§≤ª‘Ÿ±£¡Ùπ÷ŒÔµÙ¬‰£¨±‹√‚ºÃ–¯≤˙≥ˆŒﬁ–ßæ≠—Èµ¿æﬂ°£
 local function _clear_exp_pill_drop_when_level_locked(play, drop_item, mon)
     if not play or not mon or not drop_item or drop_item == "0" then
