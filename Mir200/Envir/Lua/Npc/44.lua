@@ -914,11 +914,11 @@ local function checkLevelUp(play, record)
     if (tonumber(stats.refine_mid or 0) or 0) < needRefineMid then
         return false, "中品丹药炼制次数不足"
     end
-    local needFrag = tonumber(nextCfg.need_frag or 0) or 0
-    if needFrag > 0 then
-        local name, _ = Player.checkItemNumByTable(play, {{"神石碎片", needFrag}})
+    local needCost = nextCfg.cost or {}
+    if #needCost > 0 then
+        local name, _ = Player.checkItemNumByTable(play, needCost)
         if name then
-            return false, "神石碎片不足"
+            return false, tostring(name) .. "不足"
         end
     end
     return true
@@ -931,13 +931,11 @@ local function levelUp(play, record)
     end
     local nextLevel = (tonumber(record.level or 1) or 1) + 1
     local nextCfg = getLevelCfg(nextLevel)
-    local needFrag = tonumber(nextCfg.need_frag or 0) or 0
-    if needFrag > 0 then
-        Player.takeItemByTable(play, {{"神石碎片", needFrag}}, ",仙府升级", nil)
+    local needCost = nextCfg.cost or {}
+    if #needCost > 0 then
+        Player.takeItemByTable(play, needCost, ",仙府升级", nil)
     end
-    record.level = nextLevel
-    record.plot_unlock = getPlotUnlockCount(nextLevel)
-    Storage.ensurePlots(record)
+
     return true, {
         level = record.level,
         plot_unlock = record.plot_unlock,
@@ -945,6 +943,31 @@ local function levelUp(play, record)
         growth = record.growth,
         level_stats = record.level_stats,
     }
+end
+
+local function tryAutoLevelUp(play, record)
+    local startLevel = tonumber(record.level or 1) or 1
+    local upgraded = false
+    while true do
+        local currentLevel = tonumber(record.level or 1) or 1
+        if currentLevel >= levelMax then
+            break
+        end
+        local ok = checkLevelUp(play, record)
+        if not ok then
+            break
+        end
+        local success = levelUp(play, record)
+        if not success then
+            break
+        end
+        upgraded = true
+    end
+    if upgraded then
+        Player.sendmsgEx(play, string.format("仙府自动升级至#57|【%d级】#249|", tonumber(record.level or startLevel) or startLevel))
+        return true
+    end
+    return false
 end
 
 local Pet = {}
@@ -1310,18 +1333,6 @@ local function buildSnapshot(state)
             opened = state.record.opened,
             open_slots = getOpenSlotCount(state.record),
         },
-        cfg = {
-            plant = PlantCfg,
-            steal = StealCfg,
-            like = LikeCfg,
-            refine = RefineCfg,
-            shop = ShopCfg,
-            doll = DollCfg,
-            level_cfg = _config.level_cfg or {},
-            growth_rules = _config.growth_rules or {},
-            level_max = levelMax,
-            growth_daily_limit = growthDailyLimit,
-        },
     }
 end
 
@@ -1354,6 +1365,7 @@ end
 local ActionHandler = {}
 
 function ActionHandler.sync(play, npcid, state)
+    tryAutoLevelUp(play, state.record)
     dollRefreshAttr(play, state.record)
     persistState(state)
     pushAction(play, npcid, "sync", true, "", state)
@@ -1361,6 +1373,9 @@ end
 
 function ActionHandler.plant(play, npcid, state, params)
     local ok, res = Planting.plant(play, state.record, params or {}, state.now)
+    if ok then
+        tryAutoLevelUp(play, state.record)
+    end
     persistState(state)
     if not ok then
         Player.sendmsgEx(play, res or "播种失败#57")
@@ -1372,6 +1387,9 @@ end
 
 function ActionHandler.harvest(play, npcid, state, params)
     local ok, res = Planting.harvest(play, state.record, params or {}, state.now)
+    if ok then
+        tryAutoLevelUp(play, state.record)
+    end
     persistState(state)
     if not ok then
         Player.sendmsgEx(play, res or "尚未成熟#57")
@@ -1379,17 +1397,6 @@ function ActionHandler.harvest(play, npcid, state, params)
     end
     Player.sendmsgEx(play, "收获完成#57")
     pushAction(play, npcid, "harvest", true, "收获完成", state, res)
-end
-
-function ActionHandler.levelUp(play, npcid, state, params)
-    local ok, res = levelUp(play, state.record)
-    persistState(state)
-    if not ok then
-        Player.sendmsgEx(play, res or "升级失败#57")
-        return
-    end
-    Player.sendmsgEx(play, "仙府升级成功#57")
-    pushAction(play, npcid, "levelUp", true, "仙府升级成功", state, res)
 end
 
 function ActionHandler.buySeed(play, npcid, state, params)
@@ -1427,6 +1434,9 @@ end
 
 function ActionHandler.refine(play, npcid, state, params)
     local ok, res = Refine.start(play, state.record, params or {}, state.now)
+    if ok then
+        tryAutoLevelUp(play, state.record)
+    end
     persistState(state)
     if not ok then
         Player.sendmsgEx(play, res or "炼丹失败#57")
@@ -1521,6 +1531,7 @@ function ActionHandler.like(play, npcid, state, params)
         if ok then
             Visitor.push(targetRecord, state.record.meta.name, "like", "+" .. (LikeCfg.likeValue or 0), state.now)
             Storage.savePlayer(actor, targetRecord)
+            tryAutoLevelUp(play, state.record)
         end
         persistState(state)
         if not ok then
@@ -1538,6 +1549,7 @@ function ActionHandler.steal(play, npcid, state, params)
         if ok then
             Visitor.push(targetRecord, state.record.meta.name, "steal", "-" .. summarizeReward(res.product), state.now)
             Storage.savePlayer(actor, targetRecord)
+            tryAutoLevelUp(play, state.record)
         end
         persistState(state)
         if not ok then
@@ -1552,6 +1564,7 @@ end
 function ActionHandler.visit(play, npcid, state, params)
     handleVisit(play, npcid, state, params or {}, function(actor, targetRecord)
         applyGrowth(state.record, "visit", 1, state.now)
+        tryAutoLevelUp(play, state.record)
         local snapshot = Storage.buildPublicSnapshot(targetRecord)
         snapshot.isGuest = true
         Storage.savePlayer(actor, targetRecord)
@@ -1580,6 +1593,7 @@ end
 function npc.touchGrowth(play, reason, times)
     local state = loadState(play)
     applyGrowth(state.record, tostring(reason or ""), tonumber(times or 1) or 1, state.now)
+    tryAutoLevelUp(play, state.record)
     persistState(state)
     return state.record.growth
 end
@@ -1615,6 +1629,7 @@ function npc.main(play, npcid)
         return
     end
     local state = loadState(play)
+    tryAutoLevelUp(play, state.record)
     dollRefreshAttr(play, state.record)
     persistState(state)
     sendluamsg(play, 100, npcid, 0, 0, tbl2json(buildSnapshot(state)))

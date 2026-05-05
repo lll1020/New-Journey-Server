@@ -1267,24 +1267,4 @@ local function _on_kill_mon_drop_godstone_box(play, mon, mobIdx)
     end
 end
 GameEvent.add(EventCfg.onKillMon, _on_kill_mon_drop_godstone_box, "神石宝箱掉落监听")
--- 150 级后经验丹不再保留怪物掉落，避免继续产出无效经验道具。
-local function _clear_exp_pill_drop_when_level_locked(play, drop_item, mon)
-    if not play or not mon or not drop_item or drop_item == "0" then
-        return
-    end
-    if not Player.isRoleLevelLocked(play) then
-        return
-    end
-    if not Player.isExpPillItemObj(play, drop_item) then
-        return
-    end
-    local itemName = tostring(getiteminfo(play, drop_item, 7) or "")
-    local mapName = tostring(getbaseinfo(mon, 3) or "")
-    local x = tonumber(getbaseinfo(mon, 4) or 0) or 0
-    local y = tonumber(getbaseinfo(mon, 5) or 0) or 0
-    if itemName == "" or mapName == "" or x <= 0 or y <= 0 then
-        return
-    end
-    clearitemmap(mapName, x, y, 4, itemName)
-end
-GameEvent.add(EventCfg.onMondropItemex, _clear_exp_pill_drop_when_level_locked, "150级经验丹掉落限制")
+

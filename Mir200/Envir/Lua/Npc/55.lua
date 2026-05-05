@@ -3,7 +3,7 @@ local _config = {
     id = 55,
     shaguai_id = 3,
     name = "开辟仙府",
-    rwjl = {{"仙草种子",9},{"绑定元宝",200000}},
+    -- rwjl = {{"仙草种子",9},{"绑定元宝",200000}},
     permit_item = "开辟许可证",   -- 许可证开辟：消耗 1 个开辟许可证
     force_cost = {{"碎岩锤",2}},  -- 强行开辟：消耗碎岩锤*2
 }
@@ -48,7 +48,7 @@ local function _finish_open(play, npcid, jq_data, sg_data, open_way)
     end
     Player.sendmsgEx(play, "开辟成功#57")
     sendluamsg(play,101,1005,0,0,"rwwc")
-    Player.rwjl(play, _config.rwjl, "开辟仙府任务奖励",1)
+    -- Player.rwjl(play, _config.rwjl, "开辟仙府任务奖励",1)
     sendluamsg(play,100,npcid,1,2,tbl2json(_build_main_data(play)))
     sendluamsg(play, 101, 9999, 0, 0, "npc_"..npcid)
     Npclib[44].main(play, 44)

@@ -784,9 +784,9 @@ teshudata = {
         growth_daily_limit = 300,
         level_cfg = {
             [1] = {level = 1, plot_unlock = 1, open_slots = 2},
-            [2] = {level = 2, plot_unlock = 3, open_slots = 4, need_growth = 100, need_harvest = 25, need_refine_low = 5},
-            [3] = {level = 3, plot_unlock = 6, open_slots = 6, need_growth = 300, need_harvest = 35, need_refine_mid = 10, need_frag = 10},
-            [4] = {level = 4, plot_unlock = 9, open_slots = 8, need_growth = 600, need_harvest = 50, need_refine_low = 10, need_frag = 150},
+            [2] = {level = 2, plot_unlock = 3, open_slots = 4, need_growth = 100, need_harvest = 25, need_refine_low = 5, cost = {{"下品丹材",25},{"稳固丹",5}}},
+            [3] = {level = 3, plot_unlock = 6, open_slots = 6, need_growth = 300, need_harvest = 35, need_refine_mid = 10, cost = {{"中品丹材",35},{"幸运丹",10},{"神石碎片",10}}},
+            [4] = {level = 4, plot_unlock = 9, open_slots = 8, need_growth = 600, need_harvest = 50, need_refine_low = 10, cost = {{"上品丹材",50},{"稳固丹",10},{"神石碎片",150}}},
         },
         growth_rules = {
             woodcut = {value = 1, daily_limit = 100},

@@ -222,3 +222,28 @@ function bl_zyjhl12(play,mingzi)
     end
     return not Player.isRoleLevelLocked(play)
 end
+--------------------爆率监听触发-------------------二大陆修为丹额外一次掉落
+function bl_zyjhl13(play,mingzi)
+    if mingzi ~= "修为丹（小）" and mingzi ~= "修为丹（大）" then
+        return false
+    end
+    local cur_map = tostring(getbaseinfo(play, 3) or "")
+    local dl = 0
+    if cur_map ~= "" and daluditu then
+        dl = tonumber(daluditu[cur_map] or 0) or 0
+    end
+    if dl ~= 2 then
+        return false
+    end
+    local data = Player.getJsonTableByVar(play, VarCfg["T_物品掉落记录"])
+    if not data then
+        data = {}
+    end
+    local key = mingzi == "修为丹（小）" and "once_drop_修为丹小" or "once_drop_修为丹大"
+    if tonumber(data[key] or 0) >= 1 then
+        return false
+    end
+    data[key] = 1
+    Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
+    return true
+end

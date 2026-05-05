@@ -405,16 +405,6 @@ local function _on_take_on_sync(play, itemobj, where, itemname, makeid)
     if not _is_godstone_slot(where) then
         return
     end
-    local open_count = _get_open_slot_count(play)
-    if open_count <= 0 then
-        Player.sendmsgEx(play, "当前仙府等级尚未解锁神石槽位#57")
-        return false
-    end
-    local equipped = _get_godstone_equipped_count(play)
-    if equipped > open_count then
-        Player.sendmsgEx(play, string.format("当前仙府等级仅开放%d个神石槽位#57", open_count))
-        return false
-    end
     if itemobj and itemobj ~= "0" then
         local item_name = itemname or getiteminfo(play, itemobj, ConstCfg.iteminfo.name)
         _mark_owned(play, item_name)

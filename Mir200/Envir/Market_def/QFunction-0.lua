@@ -377,7 +377,6 @@ function pickupitemex(play, item)
         end
     end
 end
---------------------穿戴前触发-------------------
 function takeonbeforeex(play,item,where,makeIndex)
     -- if where == 22 then
     --     if getiteminfo(play,item,2) > 21043 then
@@ -390,6 +389,32 @@ function takeonbeforeex(play,item,where,makeIndex)
     --         return false
     --     end
     -- end
+    if where >= 103 and where <= 110 then
+        local xianfuVar = VarCfg.T_XianFuData or "T47"
+        local xianfuCfg = Guard.getConfig("npc_44") or {}
+        local xianfuData = Player.getJsonTableByVar(play, xianfuVar) or {}
+        local level = tonumber(xianfuData.level or 1) or 1
+        local levelCfg = (xianfuCfg.level_cfg or {})[level] or {}
+        local openCount = tonumber(levelCfg.open_slots or 0) or 0
+        if openCount <= 0 then
+            Player.sendmsgEx(play, "当前仙府等级尚未解锁神石槽位#57")
+            return false
+        end
+        local targetItem = linkbodyitem(play, where)
+        if not targetItem or targetItem == "0" then
+            local equipped = 0
+            for pos = 103, 110 do
+                local bodyItem = linkbodyitem(play, pos)
+                if bodyItem and bodyItem ~= "0" then
+                    equipped = equipped + 1
+                end
+            end
+            if equipped >= openCount then
+                Player.sendmsgEx(play, string.format("当前仙府等级仅开放%d个神石槽位#57", openCount))
+                return false
+            end
+        end
+    end
     return true
 end
 --穿套装
