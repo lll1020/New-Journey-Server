@@ -485,6 +485,16 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
 		return Damage
 	else
         GameEvent.push(EventCfg.onAttackDamageMonster, play, Target, Damage, MagicId, Model)
+        if BwczApi and BwczApi.get_cfg then
+            local bwcz_cfg = BwczApi.get_cfg()
+            if bwcz_cfg and getsysvar(VarCfg["G_保卫村庄状态"]) == 1 then
+                local targetMap = tostring(getbaseinfo(Target, 3) or "")
+                local targetName = tostring(getbaseinfo(Target, 1) or "")
+                if targetMap == tostring(bwcz_cfg.map or "") and BwczApi.is_event_mon and BwczApi.is_event_mon(targetName, bwcz_cfg) then
+                    return tonumber(bwcz_cfg.fixed_damage) or 1
+                end
+            end
+        end
         -- 灰界压制：无【诸邪退散】时，对灰界怪物的所有输出统一按50%结算。
         local huijie_damage_rate = 1
         if Player and Player.getHuiJieMonsterDamageRate then
@@ -728,6 +738,16 @@ function struckdamage(play, Hiter, Target, MagicId, Damage)
         end
     end
     local realDamage = final > 0 and final or 1
+    if Hiter and (not getbaseinfo(Hiter, -1)) and BwczApi and BwczApi.get_cfg then
+        local bwcz_cfg = BwczApi.get_cfg()
+        if bwcz_cfg and getsysvar(VarCfg["G_保卫村庄状态"]) == 1 then
+            local hitMap = tostring(getbaseinfo(Hiter, 3) or "")
+            local hitName = tostring(getbaseinfo(Hiter, 1) or "")
+            if hitMap == tostring(bwcz_cfg.map or "") and BwczApi.is_event_mon and BwczApi.is_event_mon(hitName, bwcz_cfg) then
+                realDamage = math.max(0, math.floor(realDamage * (tonumber(bwcz_cfg.player_hurt_scale) or 0)))
+            end
+        end
+    end
     GameEvent.push(EventCfg.onProHarm, play, realDamage, Hiter, Target, MagicId)
     return realDamage
 end
@@ -740,6 +760,24 @@ end
 --------------------杀怪触发-------------------
 function killmon(play, mob)
     GameEvent.push(EventCfg.onKillMon, play, mob, getbaseinfo(mob, ConstCfg.gbase.idx))
+    if BwczApi and BwczApi.get_cfg then
+        local bwcz_cfg = BwczApi.get_cfg()
+        if bwcz_cfg and getsysvar(VarCfg["G_保卫村庄状态"]) == 1 then
+            local mapName = tostring(getbaseinfo(mob, 3) or "")
+            local monName = tostring(getbaseinfo(mob, 1) or "")
+            if mapName == tostring(bwcz_cfg.map or "") and BwczApi.is_event_mon and BwczApi.is_event_mon(monName, bwcz_cfg) then
+                local state = BwczApi.get_state and BwczApi.get_state() or {}
+                if type(state) == "table" and tonumber(state.open) == 1 and BwczApi.build_rank_data then
+                    if getmapmon and BwczApi.build_rank_data then
+                        state.spawn_done = 0
+                        if BwczApi.save_state then
+                            BwczApi.save_state(state)
+                        end
+                    end
+                end
+            end
+        end
+    end
     if FairyFate and FairyFate.touch then
         FairyFate.touch(play, "kill_mon", getbaseinfo(play, 3))
     end
@@ -1187,6 +1225,16 @@ function jqr_qingli() -- 每日0点清理
     -- 每日重置全民夺矿状态，防止异常跨天残留
     setsysvar(VarCfg["G_全民夺矿状态"], 0)
     setsysvar(VarCfg["A_全民夺矿json"], "")
+    -- 每日重置黑暗禁地状态，防止跨天后残留宝箱与开启标记。
+    local hdjdCfg = HdjdApi and HdjdApi.get_cfg and HdjdApi.get_cfg() or nil
+    local hdjdState = HdjdApi and HdjdApi.get_state and HdjdApi.get_state() or {}
+    if hdjdCfg and HdjdApi and HdjdApi.clear_map_chests then
+        HdjdApi.clear_map_chests(hdjdCfg, hdjdState)
+    elseif hdjdCfg and hdjdCfg.map and hdjdCfg.chest_mob and hdjdCfg.chest_mob ~= "" then
+        killmonsters(hdjdCfg.map, hdjdCfg.chest_mob, 0, false)
+    end
+    setsysvar(VarCfg["G_黑暗禁地状态"], 0)
+    setsysvar(VarCfg["A_黑暗禁地json"], "")
 end
 --------------------机器人触发脚本-------------------全民夺矿开始
 function jqr_qmdk_start()
@@ -1261,20 +1309,35 @@ function updateguildnotice(play)
     sendmsg(play,1,'{"Msg":"<font color=\'#00ff00\'>禁止修改行会通告</font>","Type":9}')
 end
 --点击采集
+-- 采集类活动统一走这里分发，当前包含全民夺矿与黑暗禁地。
+local function _collect_activity_handlers()
+    local handlers = {}
+    if QmdkApi then
+        handlers[#handlers + 1] = QmdkApi
+    end
+    if HdjdApi then
+        handlers[#handlers + 1] = HdjdApi
+    end
+    if MskhApi then
+        handlers[#handlers + 1] = MskhApi
+    end
+    return handlers
+end
 function collectmonex(play,monIDX,monName,monMakeIndex)
-    local qmdkStatus, qmdkCollectSec = "pass", 0
-    if QmdkApi and QmdkApi.before_collect then
-        qmdkStatus, qmdkCollectSec = QmdkApi.before_collect(play, monName)
-    end
-    if qmdkStatus == "blocked" then
-        return
-    end
-    if qmdkStatus == "start" then
-        showprogressbardlg(play, qmdkCollectSec, "@func_cjcg", "采集中%s..", 1, "@func_cjsb")
-        setplaydef(play,"S$采集目标",monMakeIndex)
-        setplaydef(play,"S$采集目标名字",monName)
-        setplaydef(play,"N$iscaiji",1)
-        return
+    for _, api in ipairs(_collect_activity_handlers()) do
+        if api and api.before_collect then
+            local status, collectSec = api.before_collect(play, monName, monMakeIndex)
+            if status == "blocked" then
+                return
+            end
+            if status == "start" then
+                showprogressbardlg(play, collectSec, "@func_cjcg", "采集中%s..", 1, "@func_cjsb")
+                setplaydef(play,"S$采集目标",monMakeIndex)
+                setplaydef(play,"S$采集目标名字",monName)
+                setplaydef(play,"N$iscaiji",1)
+                return
+            end
+        end
     end
     if not Bag.checkBagEmptyNum(play, 5) then
         Player.sendmsgEx(play, "采集失败,你的背包格子不足!")
@@ -1294,10 +1357,12 @@ function func_cjcg(play)
         setplaydef(play, "S$采集目标名字", "")
         return
     end
-    if QmdkApi and QmdkApi.on_collect_success and QmdkApi.on_collect_success(play, monName, monMakeIndex) then
-        setplaydef(play, "S$采集目标", "")
-        setplaydef(play, "S$采集目标名字", "")
-        return
+    for _, api in ipairs(_collect_activity_handlers()) do
+        if api and api.on_collect_success and api.on_collect_success(play, monName, monMakeIndex) then
+            setplaydef(play, "S$采集目标", "")
+            setplaydef(play, "S$采集目标名字", "")
+            return
+        end
     end
     local mapid = getbaseinfo(play, ConstCfg.gbase.mapid)
     local monobj = getmonbyuserid(mapid, monMakeIndex)
@@ -1345,8 +1410,10 @@ end
 function func_cjsb(play)
     setplaydef(play,"N$iscaiji",0)
     local monName = getplaydef(play,"S$采集目标名字")
-    if QmdkApi and QmdkApi.on_collect_fail then
-        QmdkApi.on_collect_fail(play, monName)
+    for _, api in ipairs(_collect_activity_handlers()) do
+        if api and api.on_collect_fail then
+            api.on_collect_fail(play, monName)
+        end
     end
     setplaydef(play,"S$采集目标","")
     setplaydef(play,"S$采集目标名字","")
@@ -1408,6 +1475,16 @@ end
 --------------------怪物掉落物品触发--------------------
 function mondropitemex(play,DropItem,mon,x,y)
     local dt = getbaseinfo(play,3)
+    if BwczApi and BwczApi.get_cfg then
+        local bwcz_cfg = BwczApi.get_cfg()
+        if bwcz_cfg and getsysvar(VarCfg["G_保卫村庄状态"]) == 1 then
+            local mapName = tostring(getbaseinfo(mon, 3) or "")
+            local monName = tostring(getbaseinfo(mon, 1) or "")
+            if mapName == tostring(bwcz_cfg.map or "") and BwczApi.is_event_mon and BwczApi.is_event_mon(monName, bwcz_cfg) then
+                return false
+            end
+        end
+    end
      --2024-4-1 lxf  开服1400分钟以后  第一大陆不再掉落装备
      if getsysvar(VarCfg["G_开区分钟"]) > 1440 then
          local quming = getconst(play, '<$SERVERNAME>')

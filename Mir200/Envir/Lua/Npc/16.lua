@@ -87,10 +87,12 @@ local function _set_claimed(play, is_kf, value)
         setplaydef(play, _get_claim_var(false), _toint(value))
     end
 end
+local _calculate_guild_points
+local _add_player_points
 --刷新攻沙面板运行数据
 local function _refresh_panel(play, npcid, is_kf)
     local cfg = _get_reward_cfg(is_kf)
-    local winnerGuildName, winnerPoints, loserPoints = npc.calculateGuildPoints(is_kf)
+    local winnerGuildName, winnerPoints, loserPoints = _calculate_guild_points(is_kf)
     local data = {
         is_kf = is_kf and 1 or 0,
         minimum = cfg.minimum,
@@ -130,7 +132,7 @@ local function _claim_reward(play, is_kf)
         Player.sendmsgEx(play, "你的攻沙活跃度小于" .. tostring(cfg.minimum) .. "，无法领取奖励#57")
         return
     end
-    local winnerGuildName, winnerPoints, loserPoints = npc.calculateGuildPoints(is_kf)
+    local winnerGuildName, winnerPoints, loserPoints = _calculate_guild_points(is_kf)
     if winnerGuildName == "" then
         Player.sendmsgEx(play, "当前尚未产生沙巴克胜利行会#57")
         return
@@ -221,7 +223,7 @@ function npc.link(play, npcid, ew, aid)
     end
 end
 --统计达标成员后的胜负双方总积分
-function npc.calculateGuildPoints(is_kf)
+function _calculate_guild_points(is_kf)
     local cfg = _get_reward_cfg(is_kf)
     local winnerGuildName = _tostr(castleinfo(2))
     local winnerPoints = 0
@@ -248,8 +250,9 @@ function npc.calculateGuildPoints(is_kf)
     end
     return winnerGuildName, winnerPoints, loserPoints
 end
+npc.calculateGuildPoints = _calculate_guild_points
 --写入个人积分并同步到对应的行会榜
-function npc.addPlayerPoints(guildName, playerName, points, is_kf)
+function _add_player_points(guildName, playerName, points, is_kf)
     local guildPoints = Player.getJsonTableByVar(nil, _get_guild_var(is_kf))
     if type(guildPoints) ~= "table" then
         guildPoints = {}
@@ -263,6 +266,7 @@ function npc.addPlayerPoints(guildName, playerName, points, is_kf)
         synzvar(2, "A5", "A5", 1)
     end
 end
+npc.addPlayerPoints = _add_player_points
 --攻城开始前清空个人攻沙状态
 local function _reset_actor_state(actor, is_kf)
     _set_points(actor, is_kf, 0)
@@ -319,7 +323,7 @@ local function _Castlewaring(actor)
     local points = _get_points(actor, is_kf)
     local nextPoints = points + cfg.guaJiPoint
     _set_points(actor, is_kf, nextPoints)
-    npc.addPlayerPoints(getbaseinfo(actor, ConstCfg.gbase.guild), getbaseinfo(actor, ConstCfg.gbase.name), nextPoints, is_kf)
+    _add_player_points(getbaseinfo(actor, ConstCfg.gbase.guild), getbaseinfo(actor, ConstCfg.gbase.name), nextPoints, is_kf)
 end
 --本服登录时补开攻沙个人定时器
 local function _onLoginEnd(actor)
@@ -358,11 +362,11 @@ local function _Castlewarkill(actor, play)
     local points = _get_points(actor, is_kf)
     local nextPoints = points + cfg.killPoint
     _set_points(actor, is_kf, nextPoints)
-    npc.addPlayerPoints(getbaseinfo(actor, ConstCfg.gbase.guild), getbaseinfo(actor, ConstCfg.gbase.name), nextPoints, is_kf)
+    _add_player_points(getbaseinfo(actor, ConstCfg.gbase.guild), getbaseinfo(actor, ConstCfg.gbase.name), nextPoints, is_kf)
     local killedPoints = _get_points(play, is_kf)
     local killedNextPoints = killedPoints + cfg.killedPoint
     _set_points(play, is_kf, killedNextPoints)
-    npc.addPlayerPoints(getbaseinfo(play, ConstCfg.gbase.guild), getbaseinfo(play, ConstCfg.gbase.name), killedNextPoints, is_kf)
+    _add_player_points(getbaseinfo(play, ConstCfg.gbase.guild), getbaseinfo(play, ConstCfg.gbase.name), killedNextPoints, is_kf)
 end
 --跨服服返回奖励预览时刷新面板
 local function _onKFGongShaRewardSync(actor)

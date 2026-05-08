@@ -1,0 +1,13 @@
+[2026-05-07 08:22:40:308] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：766; NpcThreadId: 36996, CurPlayThreadId: 36996
+
+[2026-05-07 10:52:02:261] LuaNPC:玩家名字k ID:999999999 执行 pickupitemex player:玩家名字k 耗时：31; NpcThreadId: 36996, CurPlayThreadId: 36996
+
+[2026-05-07 20:07:00:899] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：125; NpcThreadId: 33852, CurPlayThreadId: 33852
+
+[2026-05-07 22:58:05:500] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：109; NpcThreadId: 33852, CurPlayThreadId: 33852
+
+[2026-05-07 22:58:44:478] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 33852, CurPlayThreadId: 33852
+[2026-05-07 22:58:44:478] [玩家名字]Lua执行耗时过高:31ms msgid:100 503 1 0 
+
+[2026-05-08 13:23:55:069] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：31; NpcThreadId: 33852, CurPlayThreadId: 33852
+

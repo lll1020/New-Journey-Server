@@ -208,14 +208,8 @@ local function _apply_choice(play, choice)
 end
 
 local function _refresh_title_attr(play)
-    local reward = (_config and _config.reward_title) or {}
-    local title_name = tostring(reward.name or "")
-    local attrs = reward.attr or {}
-    if title_name ~= "" and checktitle(play, title_name) and #attrs > 0 then
-        Player.add_attlist(play, _title_attr_list_name, "=", Player.getAttrTableToStr(attrs), 1)
-    else
-        Player.del_attlist(play, _title_attr_list_name)
-    end
+    -- 称号属性已统一写入真实称号表，这里只清理旧版脚本附加属性，避免重复叠加。
+    Player.del_attlist(play, _title_attr_list_name)
 end
 
 local function _grant_refresh_title(play)

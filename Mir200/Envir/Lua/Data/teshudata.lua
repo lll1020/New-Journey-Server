@@ -776,12 +776,12 @@ teshudata = {
         ch = {"初入江湖","崭露头角","名动一方","闯荡四海","一战成名","威震八荒","纵横天下","一代宗师","盖世英豪","武林至尊","天外飞仙","破虚登仙","通天战神","超凡入圣","至尊无敌"},
     },
     ["npc_44"] = {
-        id = 44,
-        name = "仙府",
-        gridSize = 9,
-        visitorLogLimit = 30,
-        level_max = 4,
-        growth_daily_limit = 300,
+        id = 44,                                   -- NPC 编号
+        name = "仙府",                             -- 功能名称
+        gridSize = 9,                              -- 菜园地块数量
+        visitorLogLimit = 30,                      -- 访客日志最大保留条数
+        level_max = 4,                             -- 仙府最高等级
+        growth_daily_limit = 300,                  -- 每日总成长值上限
         level_cfg = {
             [1] = {level = 1, plot_unlock = 1, open_slots = 2},
             [2] = {level = 2, plot_unlock = 3, open_slots = 4, need_growth = 100, need_harvest = 25, need_refine_low = 5, cost = {{"下品丹材",25},{"稳固丹",5}}},
@@ -833,15 +833,15 @@ teshudata = {
                 },
             },
         },
-        StealCfg = {
-            dailyStealLimit = 10,
-            perTargetDailyLimit = 2,
-            cooldown = 5 * 60,
-            stealAmount = 1,
+        StealCfg = {                               -- 偷菜规则
+            dailyStealLimit = 10,                  -- 每日偷菜总次数
+            perTargetDailyLimit = 2,               -- 同一目标每日可被偷次数
+            cooldown = 5 * 60,                     -- 偷同一目标冷却(秒)
+            stealAmount = 1,                       -- 单次偷取株数
         },
-        LikeCfg = {
-            dailyLikePerTarget = 1,
-            likeValue = 1,
+        LikeCfg = {                                -- 点赞规则
+            dailyLikePerTarget = 1,                -- 每人每日对同一目标点赞次数
+            likeValue = 1,                         -- 每次点赞增加的仙华值
         },
         RefineCfg = {
             furnaceCd = 2,
@@ -851,31 +851,58 @@ teshudata = {
                 ["凝萃神丹"] = {cost = {{"上品丹材",10},{"金币",2000000}}, product = {{"凝萃神丹",1}}, stat_key = "refine_high"},
             },
         },
-        DecorateCfg = {},
-        DecorateplaceCfg = {},
+        DecorateCfg = {                            -- 府邸装扮
+            [101] = {id = 101, name = "竹林雅院", xiangHua = 20, cost = {{"仙府币", 50000}}},
+            [102] = {id = 102, name = "桃花居", xiangHua = 50, cost = {{"仙府币", 50000}}},
+            [201] = {id = 201, name = "烟雨轻岚", xiangHua = 80, cost = {{"仙府币", 50000}}},
+            [301] = {id = 301, name = "烟雨轻岚1", xiangHua = 80, cost = {{"仙府币", 50000}}},
+            [401] = {id = 401, name = "烟雨轻岚2", xiangHua = 80, cost = {{"仙府币", 50000}}},
+            [501] = {id = 501, name = "烟雨轻岚3", xiangHua = 80, cost = {{"仙府币", 50000}}},
+        },
+        DecorateplaceCfg = {
+            statue = {posX = 50, posY = 50,list = {201}},        -- 雕像装饰位置
+            cave = {posX = 300, posY = 100,list = {301}},  -- 洞府装饰位置
+            welcome = {posX = 300, posY = 100,list = {401}},  -- 欢迎语装饰位置
+            spring = {posX = 300, posY = 100,list = {501}},  -- 灵泉装饰位置
+            wall = {posX = 50, posY = 200,list = {101,102}},        -- 祥云装饰位置
+        },
+        -- TitleCfg = {                               -- 称号配置
+        --     DanMaster = {id = 1, name = "极品炼丹师"},
+        --     BeastMaster = {id = 2, name = "极品御兽师"},
+        --     XianHuaRank1 = {id = 3, name = "荣华天下"},
+        -- },
+        -- PetCfg = {                                 -- 灵兽设置
+        --     -- eggs = {
+        --     --     wooden = {id = "wooden", name = "木灵蛋", cost = {{"金币", 20000}}, beast = {type = "wood", maxLevel = 3}},
+        --     --     jade = {id = "jade", name = "玉兽蛋", cost = {{"元宝", 60}}, beast = {type = "jade", maxLevel = 5}},
+        --     -- },
+        --     -- feed = {resource = "essence", perFeed = 1, exp = 10}, -- 喂养材料/经验
+        --     -- identify = {
+        --     --     cost = {{"元宝", 5}},                -- 鉴定消耗
+        --     --     bloodlinePool = {"坚韧", "灵动", "迅捷", "护主"}, -- 血脉词条
+        --     -- },
+        -- },
         ShopCfg = {
             seeds = {},
             eggs = {},
             materials = {},
         },
-        DollCfg = {
+        DollCfg = {                                -- 仙府娃娃机 / 收藏柜
             attr_list_name = "仙府娃娃属性",
             first_draw_count = 10,
-            first_draw_cost = {{"仙府币",10}},
-            normal_draw_cost = {{"仙府币",5000}},
-            every_draw_reward = {{"金币",50000}},
+            first_draw_cost = {{"仙府币", 10}},
+            normal_draw_cost = {{"仙府币", 5000}},
+            every_draw_reward = {{"金币", 50000}},
             pity_need = 35,
             red_rate = 500,
             red_rate_base = 10000,
-            extra_box_rate = 1000,
-            extra_box_rate_base = 10000,
             hidden = {
                 pool = {"hidden_1", "hidden_2", "hidden_3", "hidden_4", "hidden_5"},
-                rate = 3,
+                rate = 3,                          -- 隐藏款总概率 0.03%
                 rate_base = 10000,
-                max_count = 5,
+                max_count = 5,                     -- 每个角色最多获得 5 个隐藏款
             },
-            cabinet_order = {
+            cabinet_order = {                      -- 收藏柜展示顺序
                 "normal_1", "normal_2", "normal_3", "normal_4", "normal_5",
                 "red_1", "red_2", "red_3", "red_4", "red_5",
                 "hidden_1", "hidden_2", "hidden_3", "hidden_4", "hidden_5",
@@ -998,7 +1025,7 @@ teshudata = {
             base = 9680,
         },
         cost = {
-            {
+           {
                 "山川神石【稀有】",
                 "海洋神石【稀有】",
                 "天空神石【稀有】",
@@ -1007,8 +1034,8 @@ teshudata = {
                 "满月神石【稀有】",
                 "大地神石【稀有】",
                 "雷电神石【稀有】",
-            },
-            {
+           },
+           {
                 "山川神石【史诗】",
                 "海洋神石【史诗】",
                 "天空神石【史诗】",
@@ -1017,27 +1044,27 @@ teshudata = {
                 "满月神石【史诗】",
                 "大地神石【史诗】",
                 "雷电神石【史诗】",
-            },
-            {
-                "山川神石【传说】",
-                "海洋神石【传说】",
-                "天空神石【传说】",
-                "清风神石【传说】",
-                "火焰神石【传说】",
-                "满月神石【传说】",
-                "大地神石【传说】",
-                "雷电神石【传说】",
-            },
-            {
-                "山川神石【神话】",
-                "海洋神石【神话】",
-                "天空神石【神话】",
-                "清风神石【神话】",
-                "火焰神石【神话】",
-                "满月神石【神话】",
-                "大地神石【神话】",
-                "雷电神石【神话】",
-            },
+           },
+             {
+                  "山川神石【传说】",
+                  "海洋神石【传说】",
+                  "天空神石【传说】",
+                  "清风神石【传说】",
+                  "火焰神石【传说】",
+                  "满月神石【传说】",
+                  "大地神石【传说】",
+                  "雷电神石【传说】",
+             },
+             {
+                  "山川神石【神话】",
+                  "海洋神石【神话】",
+                  "天空神石【神话】",
+                  "清风神石【神话】",
+                  "火焰神石【神话】",
+                  "满月神石【神话】",
+                  "大地神石【神话】",
+                  "雷电神石【神话】",
+             },
         },
     },
     ["npc_54"] = {
@@ -1921,6 +1948,9 @@ teshudata = {
             [1077] = { name = '霜风踏雪者', give = { {'绑定金币',30000} } },
             [1078] = { name = '「辉域守护者·冰霄」', give = { {'绑定金币',30000} } },
             [1079] = { name = '灵叶鹿', give = { {'绑定金币',30000} } },
+            [7044] = { name = '羊', give = { {'绑定金币',30000} } },
+            [7045] = { name = '鹿', give = { {'绑定金币',30000} } },
+            [7046] = { name = '鸡', give = { {'绑定金币',30000} } },
             [1080] = { name = '菌雾怪', give = { {'绑定金币',30000} } },
             [1081] = { name = '森语守望者', give = { {'绑定金币',30000} } },
             [1082] = { name = '幽藤缠心者', give = { {'绑定金币',30000} } },
@@ -2723,7 +2753,113 @@ teshudata = {
             },
             join_reward = {{"绑定金币", 100000}},
         },
+        -- 黑暗禁地（全图随机刷新黑暗宝箱，采集后直接发奖）
+        hdjd = {
+            map = "黑暗禁地",
+            chest_mob = "黑暗宝箱",
+            collect_sec = 3,
+            duration_min = 20,
+            score_tick_sec = 1,
+            initial_chest_count = 18,
+            respawn_sec = 8,
+            spawn_try_count = 40,
+            center_pos = {36, 36},
+            spawn_radius = 32,
+            mail_title = "黑暗禁地",
+            min_open_day = 2,
+            start_hour = 19,
+            start_minute_clock = 30,
+            vision = 1,
+            rewards = {
+                {rate = 6500, base = 10000, give = {{"金币", 380000}}, tip = "金币*38W"},
+                {rate = 700, base = 10000, give = {{"元宝", {2000, 8000}}}, tip = "元宝*2000-8000"},
+                {rate = 300, base = 10000, give = {{"1元真充红包", 1}}, tip = "1元真充红包*1"},
+                {rate = 2500, base = 10000, random_one = {
+                    {{"五行石", 1}},
+                    {{"杀伐神石", 2}},
+                    {{"千年玄铁", 10}},
+                }, tip = "材料随机一份"},
+            },
+        },
         -- 土城跑酷（开服5分钟开启，持续3分钟）        -- 随机夺宝（三圈投放，持续3分钟）
+        bwcz = {
+            map = "村庄",
+            display_map = "村庄",
+            duration_min = 30,
+            min_open_day = 2,
+            start_hour = 18,
+            start_minute_clock = 0,
+            score_var = "保卫村庄",
+            score_per_join = 10,
+            prepare_notice_min = 5,
+            enter_pos = {108, 105},
+            center_pos = {108, 105},
+            spawn_pos = {67, 76},
+            spawn_radius = 24,
+            spawn_try_count = 60,
+            fixed_damage = 1,
+            player_hurt_scale = 0,
+            activity_desc = "参加保卫村庄活动，杀怪赢功勋，晋升称号！",
+            rank_notice_title = "前三名达到镇境武侯的玩家！每人奖励50元真实充值！",
+            mail_title = "保卫村庄",
+            rank_reward_need_title = "镇境武侯",
+            kill_reward = {
+                small = {{"金币", 180000}},
+                elite = {{"金币", 880000}},
+                boss = {{"元宝", 50000}},
+            },
+            rank_rewards = {
+                {rank = 1, items = {{"50元真实充值", 1}}},
+                {rank = 2, items = {{"50元真实充值", 1}}},
+                {rank = 3, items = {{"50元真实充值", 1}}},
+            },
+            title_levels = {
+                {idx = 1, name = "菜鸟护村兵", need = 10, attr_desc = "生命+100、防御+10-10、GMD+1-50", tip = "生命+100、GMD+1-50、防御+10-10"},
+                {idx = 2, name = "敢死小队Lv.1", need = 20, attr_desc = "生命+120、防御+15-10、GMD+1-60", tip = "生命+120、GMD+1-60、防御+15-10"},
+                {idx = 3, name = "敢死小队Lv.2", need = 30, attr_desc = "生命+140、防御+20-10、GMD+1-70", tip = "生命+140、GMD+1-70、防御+20-10"},
+                {idx = 4, name = "敢死小队Lv.3", need = 40, attr_desc = "生命+160、防御+25-10、GMD+1-80", tip = "生命+160、GMD+1-80、防御+25-10"},
+                {idx = 5, name = "敢死小队Lv.4", need = 50, attr_desc = "生命+180、防御+30-10、GMD+1-90", tip = "生命+180、GMD+1-90、防御+30-10"},
+                {idx = 6, name = "敢死小队Lv.5", need = 60, attr_desc = "生命+200、防御+35-10、GMD+1-100", tip = "生命+200、GMD+1-100、防御+35-10"},
+                {idx = 7, name = "敢死小队Lv.6", need = 70, attr_desc = "生命+220、防御+40-10、GMD+1-110", tip = "生命+220、GMD+1-110、防御+40-10"},
+                {idx = 8, name = "敢死小队Lv.7", need = 80, attr_desc = "生命+240、防御+45-10、GMD+1-120", tip = "生命+240、GMD+1-120、防御+45-10"},
+                {idx = 9, name = "敢死小队Lv.8", need = 90, attr_desc = "生命+260、防御+50-10、GMD+1-130", tip = "生命+260、GMD+1-130、防御+50-10"},
+                {idx = 10, name = "敢死小队Lv.9", need = 100, attr_desc = "生命+280、防御+55-10、GMD+1-140", tip = "生命+280、GMD+1-140、防御+55-10"},
+                {idx = 11, name = "敢死小队Lv.10", need = 110, attr_desc = "生命+300、防御+60-10、GMD+1-150", tip = "生命+300、GMD+1-150、防御+60-10"},
+                {idx = 12, name = "村口一霸", need = 200, attr_desc = "生命+500、防御+70-70、GMD+1-200", tip = "生命+500、GMD+1-200、防御+70-70"},
+                {idx = 13, name = "硬刚先锋", need = 400, attr_desc = "生命+600、防御+80-70、GMD+1-250", tip = "生命+600、GMD+1-250、防御+80-70"},
+                {idx = 14, name = "血战豪杰", need = 600, attr_desc = "生命+700、防御+90-70、GMD+1-300", tip = "生命+700、GMD+1-300、防御+90-70"},
+                {idx = 15, name = "横扫村外路", need = 800, attr_desc = "生命+800、防御+100-70、GMD+1-350", tip = "生命+800、GMD+1-350、防御+100-70"},
+                {idx = 16, name = "无畏战魂", need = 1000, attr_desc = "生命+900、防御+110-70、GMD+1-400", tip = "生命+900、GMD+1-400、防御+110-70"},
+                {idx = 17, name = "护村霸主", need = 1500, attr_desc = "生命+1200、防御+120-70、GMD+1-450", tip = "生命+1200、GMD+1-450、防御+120-70"},
+                {idx = 18, name = "镇境武侯", need = 2000, attr_desc = "生命+2888、防御+200-200、GMD+1-888", tip = "生命+2888、GMD+1-888、防御+200-200"},
+            },
+            waves = {
+                {
+                    name = "烈焰军团",
+                    spawn = {
+                        {name = "焦木兵", count = 17, hp = 100, merit = 1, type = "small"},
+                        {name = "赤焰先锋", count = 4, hp = 200, merit = 5, type = "elite"},
+                        {name = "「焚营军魁·铁炎」", count = 1, hp = 500, merit = 20, type = "boss"},
+                    },
+                },
+                {
+                    name = "寒霜军团",
+                    spawn = {
+                        {name = "寒霜狐", count = 17, hp = 100, merit = 1, type = "small"},
+                        {name = "冰羽雀", count = 4, hp = 200, merit = 5, type = "elite"},
+                        {name = "「辉域守护者·冰霄」", count = 1, hp = 500, merit = 20, type = "boss"},
+                    },
+                },
+                {
+                    name = "灵木军团",
+                    spawn = {
+                        {name = "灵叶鹿", count = 17, hp = 100, merit = 1, type = "small"},
+                        {name = "薄辉魅", count = 4, hp = 200, merit = 5, type = "elite"},
+                        {name = "霜风踏雪者", count = 1, hp = 500, merit = 20, type = "boss"},
+                    },
+                },
+            },
+        },
         sjdb = {
             map = "天降财宝",
             center = {x = 28, y = 35},
@@ -2755,6 +2891,63 @@ teshudata = {
                         {item = "元宝[10000]", count = 5},
                         {item = "10元真实充值", count = 5},
                     },
+                },
+            },
+        },
+        mskh = {
+            map = "天材地宝",
+            start_hour = 16,
+            start_minute_clock = 0,
+            duration_min = 30,
+            score_per_join = 10,
+            collect_sec = 8,
+            title_collect_sec = 4,
+            map_notice = "美食狂欢进行中，击杀动物会直接掉落对应肉类。",
+            center_pos = {18, 18},
+            spawn_radius = 16,
+            spawn_try_count = 40,
+            respawn_sec = 8,
+            initial_spawn = {
+                {name = "鸡", count = 10},
+                {name = "羊", count = 5},
+                {name = "鹿", count = 1},
+            },
+            mon = {
+                ["鸡"] = {hp_hits = 10, meat = "鸡肉", point = 1, ratio = 10},
+                ["羊"] = {hp_hits = 50, meat = "羊肉", point = 5, ratio = 5},
+                ["鹿"] = {hp_hits = 100, meat = "鹿肉", point = 10, ratio = 1},
+            },
+            meats = {
+                ["鸡肉"] = {point = 1},
+                ["羊肉"] = {point = 5},
+                ["鹿肉"] = {point = 10},
+            },
+            title_name = "美食家",
+            title_buff_desc = "打怪爆率+10%，生命偷取+10%，每次攻击动物伤害+1",
+            shop = {
+                {
+                    idx = 1,
+                    name = "美食家",
+                    cost = 100,
+                    limit = 1,
+                    reward = {kind = "title", name = "美食家"},
+                    desc = "打怪爆率+10%，生命偷取+10%，每次攻击动物伤害+1",
+                },
+                {
+                    idx = 2,
+                    name = "时光之杖",
+                    cost = 100,
+                    limit = 10,
+                    reward = {kind = "item", give = {{"时光之杖", 1}}},
+                    desc = "可重复获得，每次获得时光之杖等级+1，上限10级",
+                },
+                {
+                    idx = 3,
+                    name = "时光鉴定石",
+                    cost = 10,
+                    limit = 0,
+                    reward = {kind = "item", give = {{"时光鉴定石", 1}}},
+                    desc = "消耗 10 点美食积分兑换 1 个时光鉴定石",
                 },
             },
         },
@@ -2808,6 +3001,19 @@ teshudata = {
             [43] = {tt = "独步武林",wz = "连续称霸战力榜一周",tip = "这只是你传奇之路的开始！"},
         },
     },
+    ["npc_108"] = {
+        id = 108,
+        name = "屠夫",
+        title = "屠夫",
+        default_tab = "sell",
+    },
+    ["npc_107"] = {
+        id = 107,
+        name = "功勋称号",
+        title = "功勋称号",
+        desc = "参加保卫村庄活动，杀怪赢功勋，晋升称号！",
+        top_notice = "前三名达到镇境武侯的玩家！每人奖励50元真实充值！",
+    },
     ["anniu_516"] = {
         id = "anniu_516",
         name = "至尊赞助",
@@ -2857,3 +3063,4 @@ teshudata = {
     },   
 }
 return teshudata
+

@@ -247,6 +247,34 @@ local function _admin_qmdk_finish(play)
     setsysvar(VarCfg["G_全民夺矿状态"], 0)
     Player.sendmsgEx(play, "全民夺矿已立即关闭#249")
 end
+local function _admin_bwcz_start(play)
+    local cfg = BwczApi and BwczApi.get_cfg and BwczApi.get_cfg() or nil
+    if not cfg then
+        Player.sendmsgEx(play, "保卫村庄配置缺失#57")
+        return
+    end
+    if getsysvar(VarCfg["G_保卫村庄状态"]) == 1 then
+        Player.sendmsgEx(play, "保卫村庄当前已开启#57")
+        return
+    end
+    local dqfz = tonumber(getsysvar(VarCfg["G_开区分钟"]) or 0) or 0
+    BwczApi.start(dqfz, cfg, true)
+    Player.sendmsgEx(play, "保卫村庄已立即开启#249")
+end
+
+local function _admin_bwcz_finish(play)
+    local cfg = BwczApi and BwczApi.get_cfg and BwczApi.get_cfg() or nil
+    if not cfg then
+        Player.sendmsgEx(play, "保卫村庄配置缺失#57")
+        return
+    end
+    if getsysvar(VarCfg["G_保卫村庄状态"]) ~= 1 then
+        Player.sendmsgEx(play, "保卫村庄当前未开启#57")
+        return
+    end
+    BwczApi.finish(cfg, true)
+    Player.sendmsgEx(play, "保卫村庄已立即关闭#249")
+end
 local function _admin_qmdt_build_prompt(q, qidx, total)
     local lines = {"第" .. tostring(qidx) .. "/" .. tostring(total) .. "题：" .. tostring(q.title or "")}
     for i, one in ipairs(q.options or {}) do
@@ -310,6 +338,7 @@ local function _admin_tcppk_start(play)
         sendluamsg(playerObj, 101, 1000, 1, 0, "")
         setplaydef(playerObj, "N$上次坐标x", 0)
         setplaydef(playerObj, "N$上次坐标y", 0)
+        sendluamsg(playerObj, 101, 12, 1, 5, '{"sk":3,"kf":2,"idx":5}')
     end
     sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《土城跑酷》已开启奖励丰厚,请尽快参加活动...")
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《土城跑酷》已开启奖励丰厚,请尽快参加活动...")
@@ -374,6 +403,72 @@ local function _admin_sjdb_finish(play)
     sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《随机夺宝》已关闭...")
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《随机夺宝》已关闭...")
     Player.sendmsgEx(play, "随机夺宝测试结束#249")
+end
+local function _admin_mskh_start(play)
+    local cfg = MskhApi and MskhApi.get_cfg and MskhApi.get_cfg() or nil
+    if not cfg then
+        Player.sendmsgEx(play, "美食狂欢配置缺失#57")
+        return
+    end
+    if getsysvar(VarCfg["G_美食狂欢状态"]) == 1 then
+        Player.sendmsgEx(play, "美食狂欢当前已开启#57")
+        return
+    end
+    local dqfz = tonumber(getsysvar(VarCfg["G_开区分钟"]) or 0) or 0
+    if MskhApi and MskhApi.start and MskhApi.start(dqfz, cfg, true) then
+        Player.sendmsgEx(play, "美食狂欢已立即开启#249")
+    else
+        Player.sendmsgEx(play, "美食狂欢开启失败#57")
+    end
+end
+local function _admin_mskh_finish(play)
+    local cfg = MskhApi and MskhApi.get_cfg and MskhApi.get_cfg() or nil
+    if not cfg then
+        Player.sendmsgEx(play, "美食狂欢配置缺失#57")
+        return
+    end
+    if getsysvar(VarCfg["G_美食狂欢状态"]) ~= 1 then
+        Player.sendmsgEx(play, "美食狂欢当前未开启#57")
+        return
+    end
+    if MskhApi and MskhApi.finish and MskhApi.finish(cfg, true) then
+        Player.sendmsgEx(play, "美食狂欢已立即关闭#249")
+    else
+        Player.sendmsgEx(play, "美食狂欢关闭失败#57")
+    end
+end
+local function _admin_hdjd_start(play)
+    local cfg = HdjdApi and HdjdApi.get_cfg and HdjdApi.get_cfg() or nil
+    if not cfg then
+        Player.sendmsgEx(play, "黑暗禁地配置缺失#57")
+        return
+    end
+    if getsysvar(VarCfg["G_黑暗禁地状态"]) == 1 then
+        Player.sendmsgEx(play, "黑暗禁地当前已开启#57")
+        return
+    end
+    local dqfz = tonumber(getsysvar(VarCfg["G_开区分钟"]) or 0) or 0
+    if HdjdApi and HdjdApi.start and HdjdApi.start(dqfz, cfg, true) then
+        Player.sendmsgEx(play, "黑暗禁地已立即开启#249")
+    else
+        Player.sendmsgEx(play, "黑暗禁地开启失败#57")
+    end
+end
+local function _admin_hdjd_finish(play)
+    local cfg = HdjdApi and HdjdApi.get_cfg and HdjdApi.get_cfg() or nil
+    if not cfg then
+        Player.sendmsgEx(play, "黑暗禁地配置缺失#57")
+        return
+    end
+    if getsysvar(VarCfg["G_黑暗禁地状态"]) ~= 1 then
+        Player.sendmsgEx(play, "黑暗禁地当前未开启#57")
+        return
+    end
+    if HdjdApi and HdjdApi.finish and HdjdApi.finish(cfg, true) then
+        Player.sendmsgEx(play, "黑暗禁地已立即关闭#249")
+    else
+        Player.sendmsgEx(play, "黑暗禁地关闭失败#57")
+    end
 end
 function npc.main(play,npcid)
     local zhid = tonumber(getconst(play,"<$USERACCOUNT>"))
@@ -666,9 +761,9 @@ function ggna(play,id)
     elseif id == "31" then
         _admin_wlmz_finish(play)
     elseif id == "32" then
-        _admin_simple_activity_start(play, 1, "保卫村庄", 5)
+        _admin_bwcz_start(play)
     elseif id == "33" then
-        _admin_simple_activity_finish(play, 1, "保卫村庄")
+        _admin_bwcz_finish(play)
     elseif id == "34" then
         _admin_simple_activity_start(play, 4, "勇夺镖车", 5)
     elseif id == "35" then
@@ -678,9 +773,9 @@ function ggna(play,id)
     elseif id == "37" then
         _admin_tcppk_finish(play)
     elseif id == "38" then
-        _admin_simple_activity_start(play, 6, "天才地宝", 5)
+        _admin_mskh_start(play)
     elseif id == "39" then
-        _admin_simple_activity_finish(play, 6, "天才地宝")
+        _admin_mskh_finish(play)
     elseif id == "40" then
         _admin_txzr_start(play)
     elseif id == "41" then
@@ -702,9 +797,9 @@ function ggna(play,id)
     elseif id == "49" then
         _admin_sjdb_finish(play)
     elseif id == "50" then
-        _admin_simple_activity_start(play, 14, "黑暗禁地", 5)
+        _admin_hdjd_start(play)
     elseif id == "51" then
-        _admin_simple_activity_finish(play, 14, "黑暗禁地")
+        _admin_hdjd_finish(play)
     elseif id == "52" then
         _ff9999_random_finish(play)
     elseif id == "53" then
@@ -753,27 +848,27 @@ function ggna(play,id)
     elseif id == "23" then
         release_print("测试装备")
         local cailiao = {
-"兰姐的信物",
-"诅咒傀儡",
-"破妄之瞳",
-"阴阳玉佩",
-"胖娃的肚兜",
-"酒仙剑1",
-"路飞的帽子",
-"索隆的刀",
-"乌索普的弹弓",
-"海盗眼罩",
-"地狱使者之剑",
-"真·屠龙刀",
-"天选之子",
-"光速起步",
-"策划的手机",
-"技术的电脑",
-"美术的画笔",
-"至尊战刃",
-"炼丹许可证",
-"真视之眼",
-"古刹魔瓶",
+"天书使者[称号]",
+"美食家[称号]",
+"菜鸟护村兵[称号]",
+"敢死小队Lv.1[称号]",
+"敢死小队Lv.2[称号]",
+"敢死小队Lv.3[称号]",
+"敢死小队Lv.4[称号]",
+"敢死小队Lv.5[称号]",
+"敢死小队Lv.6[称号]",
+"敢死小队Lv.7[称号]",
+"敢死小队Lv.8[称号]",
+"敢死小队Lv.9[称号]",
+"敢死小队Lv.10[称号]",
+"村口一霸[称号]",
+"硬刚先锋[称号]",
+"血战豪杰[称号]",
+"横扫村外路[称号]",
+"无畏战魂[称号]",
+"护村霸主[称号]",
+"镇境武侯[称号]",
+
         }
         for k, v in pairs(cailiao) do
             giveitem(play,v,1)

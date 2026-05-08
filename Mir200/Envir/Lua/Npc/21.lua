@@ -90,7 +90,7 @@ function npc.link(play,npcid,ew,aid)
             if FairyFate and FairyFate.touch then FairyFate.touch(play, "realm_up") end
             Player.del_attlist(play, "境界修为")
             Login_jjxw(play)
-            if level == 9 then
+            if level == 10 then
                 -- 兼容未配置主线映射的场景，避免完成境界时直接索引空表报错。
                 if rwcf and rwcf[npcid] then
                     Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务

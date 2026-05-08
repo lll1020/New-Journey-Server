@@ -1526,7 +1526,11 @@ local function _activity507_enter_notice(play, actIdx, actName)
 end
 local function _activity507_is_open(p3)
     local dqfz = tonumber(getsysvar(VarCfg["G_开区分钟"]) or 0) or 0
-    if p3 == 2 then
+    if p3 == 1 then
+        local state = getsysvar(VarCfg["A_保卫村庄json"])
+        local tb = state ~= "" and json2tbl(state) or {}
+        return getsysvar(VarCfg["G_保卫村庄状态"]) == 1 and type(tb) == "table" and tonumber(tb.open) == 1
+    elseif p3 == 2 then
         local state = getsysvar(VarCfg["A_全民夺矿json"])
         local tb = state ~= "" and json2tbl(state) or {}
         return getsysvar(VarCfg["G_全民夺矿状态"]) == 1 and type(tb) == "table" and tonumber(tb.open) == 1
@@ -1536,28 +1540,37 @@ local function _activity507_is_open(p3)
         local idx = tonumber(state.current_idx) or 0
         return cfg and tonumber(state.open) == 1 and idx > 0 and _qmdt_is_active_507(state, cfg, idx)
     elseif p3 == 5 then
-        -- 土城跑酷：OnTimer 在开服第 5 分钟开启，第 8 分钟关闭。
         return dqfz >= 5 and dqfz < 8
+    elseif p3 == 6 then
+        local state = getsysvar(VarCfg["A_美食狂欢json"])
+        local tb = state ~= "" and json2tbl(state) or {}
+        return getsysvar(VarCfg["G_美食狂欢状态"]) == 1 and type(tb) == "table" and tonumber(tb.open) == 1
     elseif p3 == 9 then
-        -- 武林盟主：OnTimer 在开服第 25 分钟开启，第 30 分钟关闭。
         return dqfz >= 25 and dqfz < 30
     elseif p3 == 13 then
         local cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].sjdb or {}
         local keepMin = math.max(1, math.ceil((tonumber(cfg.keep_sec) or 300) / 60))
         return dqfz >= 15 and dqfz < (15 + keepMin)
+    elseif p3 == 14 then
+        local state = getsysvar(VarCfg["A_黑暗禁地json"])
+        local tb = state ~= "" and json2tbl(state) or {}
+        return getsysvar(VarCfg["G_黑暗禁地状态"]) == 1 and type(tb) == "table" and tonumber(tb.open) == 1
     end
     return false
 end
 local function _activity507_open_state_payload()
     return tbl2json({
+        [1] = _activity507_is_open(1) and 1 or 0,
         [2] = _activity507_is_open(2) and 1 or 0,
         [3] = _activity507_is_open(3) and 1 or 0,
         [5] = _activity507_is_open(5) and 1 or 0,
+        [6] = _activity507_is_open(6) and 1 or 0,
         [9] = _activity507_is_open(9) and 1 or 0,
         [13] = _activity507_is_open(13) and 1 or 0,
+        [14] = _activity507_is_open(14) and 1 or 0,
     })
 end
-npc[507] = function(play, p2, p3, msgData) --游戏活动
+npc[507] = function(play, p2, p3, msgData) --活动面板
     if p2 == 0 then
         local qmdt_state = getsysvar(VarCfg["A_全民答题json"])
         if qmdt_state == "" then
@@ -1580,14 +1593,54 @@ npc[507] = function(play, p2, p3, msgData) --游戏活动
             qmdk_tb.grjf = 0
             qmdk_tb.pmsj = {}
         end
-        qmdk_state = tbl2json(qmdk_tb)
-        sendluamsg(play, 101, 507, 0, 0, '{"kqfz":' .. getsysvar(VarCfg["G_开区分钟"]) .. ',"hdjl":' .. getplaydef(play, VarCfg.T_hdjl) .. ',"qmdt":' .. qmdt_state .. ',"qmdk":' .. qmdk_state .. ',"open_state":' .. _activity507_open_state_payload() .. "}")
+        local bwcz_tb = {}
+        local mskh_tb = {}
+        if MskhApi and MskhApi.get_cfg then
+            local mskh_cfg = MskhApi.get_cfg()
+            if mskh_cfg then
+                local scoreVar = tostring(mskh_cfg.score_var or "美食狂欢")
+                mskh_tb.grjf = tonumber(getplayvar(play, "HUMAN", scoreVar) or 0) or 0
+                mskh_tb.pmsj = sorthumvar(scoreVar, 1, 1, 5)
+                local mskh_data = MskhApi.get_player_data and MskhApi.get_player_data(play) or {}
+                mskh_tb.point = tonumber(mskh_data.point or 0) or 0
+                mskh_tb.collect_total = tonumber(mskh_data.collect_total or 0) or 0
+                mskh_tb.weapon_level = MskhApi.get_weapon_level and MskhApi.get_weapon_level(play) or 0
+                mskh_tb.has_title = MskhApi.has_title and (MskhApi.has_title(play, mskh_cfg) and 1 or 0) or 0
+            end
+        end
+        if BwczApi and BwczApi.get_cfg then
+            local bwcz_cfg = BwczApi.get_cfg()
+            if bwcz_cfg then
+                local scoreVar = tostring(bwcz_cfg.score_var or "保卫村庄")
+                bwcz_tb.grjf = tonumber(getplayvar(play, "HUMAN", scoreVar) or 0) or 0
+                bwcz_tb.pmsj = sorthumvar(scoreVar, 1, 1, 5)
+                local bwcz_data = BwczApi.get_player_data and BwczApi.get_player_data(play) or {}
+                bwcz_tb.gx = tonumber(bwcz_data.total_merit or 0) or 0
+                bwcz_tb.title = tostring(bwcz_data.title or "")
+            end
+        end
+        local payload = {
+            kqfz = tonumber(getsysvar(VarCfg["G_开区分钟"]) or 0) or 0,
+            hdjl = Player.getJsonTableByVar(play, VarCfg.T_hdjl),
+            qmdt = json2tbl(qmdt_state) or {},
+            qmdk = qmdk_tb,
+            bwcz = bwcz_tb,
+            mskh = mskh_tb,
+            open_state = json2tbl(_activity507_open_state_payload()) or {},
+        }
+        sendluamsg(play, 101, 507, 0, 0, tbl2json(payload))
     elseif p2 == 1 then
         if p3 == 1 then
-            Player.sendmsgEx(play, "保卫村庄暂未接入活动入口#57")
+            local bwcz_cfg = BwczApi and BwczApi.get_cfg and BwczApi.get_cfg() or (teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].bwcz or {})
+            local enter_pos = type(bwcz_cfg.enter_pos) == "table" and bwcz_cfg.enter_pos or {126, 107}
+            mapmove(play, tostring(bwcz_cfg.map or "村庄"), tonumber(enter_pos[1]) or 126, tonumber(enter_pos[2]) or 107, 2)
+            if BwczApi and BwczApi.add_activity_score then
+                BwczApi.add_activity_score(play, bwcz_cfg)
+            end
+            _activity507_enter_notice(play, 1, "保卫村庄")
         elseif p3 == 2 then
             if not _activity507_is_open(p3) then
-                Player.sendmsgEx(play, "不是活动时间，无法进入#57")
+                Player.sendmsgEx(play, "全民夺矿当前未开启#57")
                 return
             end
             local qmdk_cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].qmdk or {}
@@ -1596,7 +1649,7 @@ npc[507] = function(play, p2, p3, msgData) --游戏活动
             _activity507_enter_notice(play, 2, "全民夺矿")
         elseif p3 == 3 then
             if not _activity507_is_open(p3) then
-                Player.sendmsgEx(play, "不是活动时间，无法进入#57")
+                Player.sendmsgEx(play, "全民答题当前未开启#57")
                 return
             end
             local cfg = _qmdt_get_cfg_507()
@@ -1608,47 +1661,62 @@ npc[507] = function(play, p2, p3, msgData) --游戏活动
                     say(play, sayText)
                 end
             elseif cfg and tonumber(state.open) == 1 and idx > 0 and cfg.questions[idx] then
-                Player.sendmsgEx(play, "本题答题时间已结束，请等待下一题#57")
+                Player.sendmsgEx(play, "当前答题已进入结算阶段#57")
             else
-                Player.sendmsgEx(play, "全民答题当前未开启#57")
+                Player.sendmsgEx(play, "当前暂无可答题目#57")
             end
         elseif p3 == 4 then
-            Player.sendmsgEx(play, "勇夺镖车暂未接入活动入口#57")
+            Player.sendmsgEx(play, "勇夺镖车暂未开放#57")
         elseif p3 == 5 then
             if not _activity507_is_open(p3) then
-                Player.sendmsgEx(play, "不是活动时间，无法进入#57")
+                Player.sendmsgEx(play, "土城跑酷当前未开启#57")
                 return
             end
             mapmove(play, "xtc",137,138)
             _activity507_enter_notice(play, 5, "土城跑酷")
         elseif p3 == 6 then
-            Player.sendmsgEx(play, "天才地宝暂未接入活动入口#57")
+            local mskh_cfg = MskhApi and MskhApi.get_cfg and MskhApi.get_cfg() or (teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].mskh or {})
+            map(play, tostring(mskh_cfg.map or "天材地宝"))
+            if MskhApi and MskhApi.add_activity_score then
+                MskhApi.add_activity_score(play, mskh_cfg)
+            end
+            _activity507_enter_notice(play, 6, "美食狂欢")
         elseif p3 == 7 then
             Npclib["anniu"][506](play, 0, 0, "")
         elseif p3 == 8 then
-            Player.sendmsgEx(play, "正邪大战暂未接入活动入口#57")
+            Player.sendmsgEx(play, "正邪大战暂未开放#57")
         elseif p3 == 9 then
             if not _activity507_is_open(p3) then
-                Player.sendmsgEx(play, "不是活动时间，无法进入#57")
+                Player.sendmsgEx(play, "武林盟主当前未开启#57")
                 return
             end
             map(play, "比武大会")
             _activity507_enter_notice(play, 9, "武林盟主")
         elseif p3 == 10 then
-            Player.sendmsgEx(play, "该活动入口暂未开放#57")
+            Player.sendmsgEx(play, "该活动尚未开放#57")
         elseif p3 == 11 then
-            Player.sendmsgEx(play, "沙巴克请通过专用入口参与#57")
+            Player.sendmsgEx(play, "请通过沙巴克专属入口参与#57")
         elseif p3 == 12 then
-            Player.sendmsgEx(play, "讨伐BOSS暂未接入活动入口#57")
+            Player.sendmsgEx(play, "讨伐BOSS活动暂未开放#57")
         elseif p3 == 13 then
             if not _activity507_is_open(p3) then
-                Player.sendmsgEx(play, "不是活动时间，无法进入#57")
+                Player.sendmsgEx(play, "随机夺宝当前未开启#57")
                 return
             end
             map(play, "天降财宝")
             _activity507_enter_notice(play, 13, "随机夺宝")
         elseif p3 == 14 then
-            Player.sendmsgEx(play, "黑暗禁地暂未接入活动入口#57")
+            if not _activity507_is_open(p3) then
+                Player.sendmsgEx(play, "黑暗禁地当前未开启#57")
+                return
+            end
+            local hdjd_cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].hdjd or {}
+            local hdjd_map = hdjd_cfg.map or "黑暗禁地"
+            map(play, hdjd_map)
+            if HdjdApi and HdjdApi.refresh_actor then
+                HdjdApi.refresh_actor(play)
+            end
+            _activity507_enter_notice(play, 14, "黑暗禁地")
         end
     elseif p2 == 2 then
         local data = json2tbl(msgData or "") or {}
@@ -1668,20 +1736,41 @@ local function _qmdk_event_refresh(play)
     if QmdkApi and QmdkApi.refresh_actor then
         QmdkApi.refresh_actor(play)
     end
+    if HdjdApi and HdjdApi.refresh_actor then
+        HdjdApi.refresh_actor(play)
+    end
 end
 local function _qmdk_event_hurt(play)
     if QmdkApi and QmdkApi.on_actor_hurt then
         QmdkApi.on_actor_hurt(play, "你受到攻击，采集中断")
+    end
+    if HdjdApi and HdjdApi.on_actor_hurt then
+        HdjdApi.on_actor_hurt(play, "你受到攻击，采集中断")
+    end
+    if MskhApi and MskhApi.on_actor_hurt then
+        MskhApi.on_actor_hurt(play, "你受到攻击，割肉中断")
     end
 end
 local function _qmdk_event_move(play)
     if QmdkApi and QmdkApi.on_actor_move then
         QmdkApi.on_actor_move(play)
     end
+    if HdjdApi and HdjdApi.on_actor_move then
+        HdjdApi.on_actor_move(play)
+    end
+    if MskhApi and MskhApi.on_actor_move then
+        MskhApi.on_actor_move(play)
+    end
 end
 local function _qmdk_event_die(play)
     if QmdkApi and QmdkApi.on_actor_die then
         QmdkApi.on_actor_die(play)
+    end
+    if HdjdApi and HdjdApi.on_actor_die then
+        HdjdApi.on_actor_die(play)
+    end
+    if MskhApi and MskhApi.on_actor_die then
+        MskhApi.on_actor_die(play)
     end
 end
 GameEvent.add(EventCfg.onLogin, _qmdk_event_refresh, "全民夺矿")
