@@ -1101,6 +1101,11 @@ function czlb_pz(play,sy)
     local lb_json = json2tbl(getplaydef(play, VarCfg.T_czlb))
     lb_json = _cz502_apply_reward(play, nil, sy, lb_json)
     setplaydef(play, VarCfg.T_czlb, tbl2json(lb_json))
+    local config = teshudata["anniu_502"] or {}
+    local amount = config.fj and config.fj[sy]
+    if amount then
+        PackageBuy_msg(play, tostring(amount) .. "元礼包")
+    end
     if getplaydef(play,VarCfg.N_lbyz) == 1 then
         setplaydef(play,VarCfg.N_lbyz,0)
     end
@@ -1149,12 +1154,14 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
                     zz_data["pay21_18"] = 1
                     Player.setJsonVarByTable(play, VarCfg["T_免费赞助"], zz_data)
                     sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>18元礼包支付成功，当前角色已满足高级玩家领取条件...</font>","Type":9}')
+                    PackageBuy_msg(play, "18元礼包")
                 end
             elseif Gold == 88 then
                 if getflagstatus(play,constant.BS_mztq) == 0 then
                     Player.title_give(play, teshudata["anniu_504"].ch,1)
                     Player.rwjl(play, teshudata["anniu_504"].give, "快人一步",1,1000)
                     setflagstatus(play,constant.BS_mztq,1)
+                    PackageBuy_msg(play, "88元礼包")
                     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
                     if jq_data["npc_55"] and jq_data["npc_55"] >= 2 then
                         if Npclib and Npclib["anniu"] and Npclib["anniu"][30] then
@@ -1183,6 +1190,7 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
                         end
                     end
                     sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>首充礼包已激活，当前角色已可领取相关奖励...</font>","Type":9}')
+                    PackageBuy_msg(play, "首充礼包")
                 end
             end
         end
@@ -1565,6 +1573,7 @@ local qf_teshunpc = {
     [1002] = 1002,[1003] = 1003,[1004] = 1003,[1005] = 1003,[1006] = 1003,[1007] = 1003, -- 各大陆时装兑换
     [69] = 64, -- 神兽圣遗物 --这个是特殊的 前端不要的
     [6] = 6,[7] = 7,[8] = 8,[9] = 9,[10] = 10,[11] = 11,[13] = 13,[14] = 14,[24] = 24,[22] = 22,[43] = 43,[26] = 26,[28] = 28,[25] = 25,[54] = 54,[27] = 27,[44] = 44,[64] = 64,[65] = 65,[70] = 70,--小提升
+    [1] = 6,[2] = 7,
     [101] = 101,
     [46] = 46, -- 灾厄入侵
 }

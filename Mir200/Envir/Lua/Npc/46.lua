@@ -63,7 +63,7 @@ local function _get_missing_task_name(jq_data)
 end
 
 local function _guide_to_npc(play, map_name, target_id, xx, yy)
-    mapmove(play, map_name, xx, yy, 5)
+    mapmove(play, map_name, xx, yy, 2)
     sendluamsg(play, 101, 0, 1, 1, '{"lx":2,"npcdt":"' .. map_name .. '","npcid":' .. target_id .. ',"xx":' .. xx .. ',"yy":' .. yy .. '}')
 end
 

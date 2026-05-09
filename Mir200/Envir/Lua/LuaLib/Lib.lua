@@ -33,6 +33,11 @@ function Login_msg(play, id, msg, leve)
     end
 end
 
+function PackageBuy_msg(play, pkgName)
+    local playerName = tostring(getbaseinfo(play, 1) or "玩家")
+    local title = tostring(pkgName or "礼包")
+    sendmovemsg("0", 1, 253, 0, 150, 1, "【礼包公告】玩家【" .. playerName .. "】购买了【" .. title .. "】")
+end
 local jnsh_data = {"攻杀剑术","刺杀剑术","半月弯刀","烈火剑法","开天斩","逐日剑法"}
 function Login_jnsh(play)
     for i, v in ipairs(VarCfg.N_jnsh) do

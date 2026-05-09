@@ -464,6 +464,7 @@ local function _on_kill_mon(play, mob)
     end
     _try_extra_small_drop(play, mob)
 end
+npc.onKillMon = _on_kill_mon
 
 -- 玩家处于血契状态死亡时触发掉装。
 local function _on_play_die(play)
@@ -474,7 +475,6 @@ local function _on_play_die(play)
 end
 
 GameEvent.add(EventCfg.onMondropItemex, _on_mon_drop, "血契之门")
-GameEvent.add(EventCfg.onKillMon, _on_kill_mon, "血契之门")
 GameEvent.add(EventCfg.onPlaydie, _on_play_die, "血契之门")
 
 return npc

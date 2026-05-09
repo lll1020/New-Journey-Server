@@ -334,6 +334,7 @@ local function _admin_wlmz_finish(play)
     Player.sendmsgEx(play, "武林盟主测试结束#249")
 end
 local function _admin_tcppk_start(play)
+    Player.SetGlobalTempInt("TCPPK_ROUND", (tonumber(Player.GetGlobalTempInt("TCPPK_ROUND") or 0) or 0) + 1)
     for _, playerObj in ipairs(getplayerlst() or {}) do
         sendluamsg(playerObj, 101, 1000, 1, 0, "")
         setplaydef(playerObj, "N$上次坐标x", 0)
@@ -821,14 +822,19 @@ function ggna(play,id)
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         Player.sendmsgEx(play, "灰界任务已一键完成#249")
     elseif id == "25" then
-        -- 大陆进入条件一键达成：主线进度、转生等级、剧情点
+        -- 大陆全解锁：一次性补齐主线、人物等级、转生、剧情点、灵根、天道命盘与七大陆称号门槛。
         local target_task = 21
-        local target_zs = 40
+        local target_level = 150
+        local target_zs = 70
         local target_jqd = 200
         local jqd_idx = getstditeminfo("剧情点", 0)
         local cur_task = tonumber(getplaydef(play, VarCfg.U_zxrw[1])) or 0
         if cur_task < target_task then
             setplaydef(play, VarCfg.U_zxrw[1], target_task)
+        end
+        local cur_level = tonumber(getbaseinfo(play, 6)) or 0
+        if cur_level < target_level then
+            callscriptex(play, "CHANGELEVEL", "=", target_level)
         end
         local cur_zs_var = tonumber(getplaydef(play, VarCfg["U_转生等级"])) or 0
         if cur_zs_var < target_zs then
@@ -844,7 +850,28 @@ function ggna(play,id)
                 changemoney(play, jqd_idx, "+", target_jqd - cur_jqd, "测试-大陆全解锁", true)
             end
         end
-        Player.sendmsgEx(play, "大陆条件已一键解锁：主线>=21，转生>=40，剧情点>=200")
+        local linggen_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"]) or {}
+        linggen_data.level = type(linggen_data.level) == "table" and linggen_data.level or {}
+        for i = 1, 10 do
+            if (tonumber(linggen_data.level[tostring(i)]) or 0) <= 0 then
+                linggen_data.level[tostring(i)] = 1
+            end
+        end
+        linggen_data.main = tonumber(linggen_data.main or 4) or 4
+        linggen_data.other = tonumber(linggen_data.other or 3) or 3
+        Player.setJsonVarByTable(play, VarCfg["T_灵根"], linggen_data)
+        local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
+        local destiny_state = type(jq_data["npc_74"]) == "table" and jq_data["npc_74"] or {}
+        local destiny_need = tonumber((((teshudata or {})["npc_74"] or {}).all) or 4) or 4
+        for i = 1, destiny_need do
+            destiny_state[tostring(i)] = 1
+        end
+        destiny_state.all = destiny_need
+        destiny_state.level_bonus = 1
+        jq_data["npc_74"] = destiny_state
+        Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+        Player.title_give(play, "世界符文·[真我]")
+        Player.sendmsgEx(play, "大陆条件已一键解锁：主线>=21、等级>=150、转生>=70、剧情点>=200、全灵根、天道命盘、世界符文·[真我]")
     elseif id == "23" then
         release_print("测试装备")
         local cailiao = {

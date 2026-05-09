@@ -116,6 +116,7 @@ local function _get_state(play)
     local data = Player.getJsonTableByVar(play, VarCfg["T_¾Û±¦Åè"]) or {}
     data.rebuilt = _toint(data.rebuilt)
     data.granted_item = _toint(data.granted_item)
+    data.task_started = _toint(data.task_started)
     return data
 end
 
@@ -124,6 +125,36 @@ local function _save_state(play, data)
 end
 
 -- Ã¿ÈÕ¾Û±¦Åè½ø¶ÈÉÏÏÞ£ºÂúºó×Ô¶¯·¢·Å½±Àø¡£
+
+-- ¾Û±¦ÅèËéÆ¬¿¨µã´ÓÒìÎÅÂ¼ÈÎÎñ½Óµ½ÕâÒ»¿Ì¿ªÊ¼¼ÆÊ±¡£
+function TreasureBasin.markTaskStarted(play)
+    if not play then
+        return false
+    end
+    local data = _get_state(play)
+    if data.rebuilt >= 1 then
+        return false
+    end
+    if shaguai and shaguai.jia then
+        shaguai.jia(play, 33)
+    end
+    if data.task_started >= 1 then
+        return false
+    end
+    data.task_started = 1
+    _save_state(play, data)
+    local dropData = Player.getJsonTableByVar(play, VarCfg["T_ÎïÆ·µôÂä¼ÇÂ¼"])
+    if type(dropData) ~= "table" then
+        dropData = {}
+    end
+    dropData["kill_pity_¾Û±¦ÅèËéÆ¬"] = 0
+    Player.setJsonVarByTable(play, VarCfg["T_ÎïÆ·µôÂä¼ÇÂ¼"], dropData)
+    return true
+end
+
+function TreasureBasin.isTaskStarted(play)
+    return (_get_state(play).task_started or 0) >= 1
+end
 local function _progress_need()
     local need = _toint(_config.daily_kill or 1000)
     if need <= 0 then
@@ -350,6 +381,12 @@ function TreasureBasin.link(play, npcid, p2, p3, msgData)
     Player.takeItemByTable(play, {{itemName, needNum}}, ",¾Û±¦ÅèÖØÖý", nil)
     data.rebuilt = 1
     _save_state(play, data)
+    if shaguai and shaguai.jian then
+        shaguai.jian(play, 33)
+    end
+    if shaguai and shaguai.jia then
+        shaguai.jia(play, 34)
+    end
     data = _grant_artifact_if_needed(play, data)
     _refresh_attr(play)
     _refresh_item_bar(play)
@@ -392,6 +429,7 @@ local function _on_kill_mon(play, mob)
     _try_auto_reward(play, 106)
     _refresh_item_bar(play)
 end
+TreasureBasin.onKillMon = _on_kill_mon
 
 local function _on_take_on(actor, itemobj, where, itemname, makeid)
     if not _is_artifact_name(itemname) and not _equipped_where(actor) then
@@ -413,7 +451,6 @@ end
 GameEvent.add(EventCfg.onLogin, _on_login, "¾Û±¦Åè")
 GameEvent.add(EventCfg.onKFLogin, _on_login, "¾Û±¦Åè")
 GameEvent.add(EventCfg.goDailyUpdate, _on_daily, "¾Û±¦Åè")
-GameEvent.add(EventCfg.onKillMon, _on_kill_mon, "¾Û±¦Åè")
 GameEvent.add(EventCfg.onTakeOnEx, _on_take_on, "¾Û±¦Åè")
 GameEvent.add(EventCfg.onTakeOffEx, _on_take_off, "¾Û±¦Åè")
 

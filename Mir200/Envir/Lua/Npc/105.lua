@@ -64,6 +64,22 @@ local function _build_payload(play, data)
     }
 end
 
+
+local function _grant_reward(play, reward)
+    if type(reward) ~= "table" or #reward <= 0 then
+        return
+    end
+    local itemName = tostring((reward[1] or {})[1] or "")
+    if itemName == "群体施毒术" then
+        local skillId = getskillindex and getskillindex("群体施毒术") or 0
+        if tonumber(skillId or 0) > 0 then
+            addskill(play, skillId, 3)
+            Player.sendmsgEx(play, "成功领取#57|【群体施毒术】#249|#57")
+        end
+        return
+    end
+    Player.rwjl(play, reward, "限时福利", 1, 1000)
+end
 function npc.main(play, npcid)
     local data = _get_data(play)
     _ensure_stage_time(play, data)
@@ -106,7 +122,7 @@ function npc.link(play, npcid, ew, aid)
 
         local reward = welfare[idx] and welfare[idx].reward or {}
         if type(reward) == "table" and #reward > 0 then
-            Player.rwjl(play, reward, "限时福利", 1, 1000)
+            _grant_reward(play, reward)
         end
         data.welfare_claimed = idx
         if not _has_first_charge(data) and idx < #welfare then

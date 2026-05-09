@@ -568,8 +568,6 @@ local function _on_kill_mon_danjie(play, mob)
         Player.sendmsgEx(play, "´ò¹ÖµôÂä¡¾" .. drop_item .. "¡¿#57")
     end
 end
-
-GameEvent.add(EventCfg.onKillMon, _on_kill_mon_danjie, "npc_76_danjie_drop")
-
+npc.onKillMonDanjie = _on_kill_mon_danjie
 
 return npc

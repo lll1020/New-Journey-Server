@@ -32,7 +32,7 @@ function Login.main(play)
         setflagstatus(play,VarCfg.BS_huishou[4],1)
         setflagstatus(play,VarCfg.BS_huishou[5],1)
         setplaydef(play,VarCfg.T_sgcf,"{}")--杀怪触发
-        setplaydef(play,VarCfg.T_hsdg, '{"1_1_1":1,"1_1_2":1,"1_1_3":1,"1_1_4":1,"1_1_5":1,"1_1_6":1,"1_1_7":1,"1_1_8":1,"1_1_9":1,"1_1_10":1,"1_1_11":1,"1_1_12":1}')--回收打勾
+        setplaydef(play,VarCfg.T_hsdg,"{}")--回收打勾
         setplaydef(play,VarCfg.T_dljq,"{}")--各剧情JSON
         setplaydef(play,VarCfg.T_czlb,"{}")--各种礼包
         setplaydef(play,VarCfg["T_首冲礼包"],"{}")--首冲礼包
@@ -72,6 +72,8 @@ function Login.main(play)
         setbaseinfo(play,57,0)
         sendluamsg(play, 101, 18, 0, 0, "")
     end
+    -- 统一迁移自动回收勾选，保证新区默认项和旧号兼容规则一致。
+    Player.ensureRecycleSelectConfig(play)
     -- 首充礼包状态：领取任意 1 格后同步天选资格。
     local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首充礼包"]) or {}
     local sc_claimed = tonumber(sc_data.main_claimed or sc_data.other_lb or 0) or 0
@@ -85,6 +87,15 @@ function Login.main(play)
     --天书  杀意值
     shaguai.jia(play,25)
     shaguai.jia(play,32)
+    shaguai.jia(play,33)
+    shaguai.jia(play,34)
+    shaguai.jia(play,35)
+    shaguai.jia(play,36)
+    shaguai.jia(play,37)
+    shaguai.jia(play,38)
+    shaguai.jia(play,39)
+    shaguai.jia(play,40)
+    shaguai.jia(play,41)
     --全区通报登录
     if checktitle(play,"踏月主宰") then
         sendmovemsg("0", 1, 253, 0, 200, 1,"[冠名]玩家《"..getbaseinfo(play, 1).."》登录，全服瞩目...")

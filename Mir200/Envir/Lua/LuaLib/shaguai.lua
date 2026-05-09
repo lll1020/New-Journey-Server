@@ -54,6 +54,66 @@ local function _story5_kill_progress(play, mob, task_id)
 		messagebox(play,"任务完成,立即前往提交")
 	end
 end
+local function _sg_drop_record_get(play)
+	local dropData = Player.getJsonTableByVar(play, VarCfg["T_物品掉落记录"])
+	if type(dropData) ~= "table" then
+		dropData = {}
+	end
+	return dropData
+end
+local function _sg_drop_record_save(play, dropData)
+	Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], dropData or {})
+end
+local function _sg_drop_record_inc(play, key)
+	local dropData = _sg_drop_record_get(play)
+	local cur = (tonumber(dropData[key] or 0) or 0) + 1
+	dropData[key] = cur
+	_sg_drop_record_save(play, dropData)
+	return cur, dropData
+end
+local function _sg_drop_record_set(play, key, value, dropData)
+	dropData = type(dropData) == "table" and dropData or _sg_drop_record_get(play)
+	dropData[key] = tonumber(value) or 0
+	_sg_drop_record_save(play, dropData)
+end
+local function _sg_can_count_common_mon(play, mob)
+	if not play or not mob then
+		return false
+	end
+	local mobName = tostring(getbaseinfo(mob,1) or "")
+	if mobName == "" or mobName == "稻草人" then
+		return false
+	end
+	return true
+end
+local function _sg_tb_state(play)
+	local state = Player.getJsonTableByVar(play, VarCfg["T_聚宝盆"]) or {}
+	return {
+		rebuilt = tonumber(state.rebuilt or 0) or 0,
+		task_started = tonumber(state.task_started or 0) or 0,
+	}
+end
+local function _sg_xianfu_dan_is_active(play, varName)
+	local expireAt = tonumber(getplaydef(play, varName) or 0) or 0
+	return expireAt > os.time()
+end
+local function _sg_is_godstone_red_boss(mob)
+	local mobName = tostring(getbaseinfo(mob, 1) or "")
+	if mobName == "" then
+		return false
+	end
+	return string.find(mobName, "★", 1, true) ~= nil
+		or string.find(mobName, "≮", 1, true) ~= nil
+		or string.find(mobName, "红", 1, true) ~= nil
+end
+local function _sg_is_kuafu_boss(mob)
+	local mapName = tostring(getbaseinfo(mob, 3) or "")
+	if mapName == "" then
+		return false
+	end
+	return string.find(mapName, "跨服", 1, true) ~= nil
+		or string.find(mapName, "kuafu", 1, true) ~= nil
+end
 shaguai = {
 	["1"] = function(play,mob)      --任务1：杀怪任务
 		if getbaseinfo(mob,1) == "恶狼" or true then
@@ -1470,6 +1530,166 @@ shaguai = {
 		if drop_item ~= "" and drop_rate > 0 and math.random(drop_rate) == 1 then
 			shaguai.temp_drop(play, mob, drop_item)
 			Player.sendmsgEx(play, "打怪掉落【"..drop_item.."】#57")
+		end
+	end,
+		["33"] = function(play,mob)      --聚宝盆碎片：接到聚宝盆任务后，极光城郊普通怪按 1/150 + 30 杀保底掉落
+		local state = _sg_tb_state(play)
+		if state.rebuilt >= 1 or state.task_started < 1 then
+			return
+		end
+		if getbaseinfo(play,3) ~= "极光城郊" then
+			return
+		end
+		if not _sg_can_count_common_mon(play, mob) then
+			return
+		end
+		local cfg = teshudata["npc_106"] or {}
+		local itemName = tostring(cfg.fragment_item or "聚宝盆碎片")
+		local needNum = tonumber(cfg.fragment_count or 20) or 20
+		if getbagitemcount(play, itemName) >= needNum then
+			return
+		end
+		local key = "kill_pity_聚宝盆碎片"
+		local cur, dropData = _sg_drop_record_inc(play, key)
+		local dropped = false
+		if math.random(150) == 1 then
+			dropped = shaguai.temp_drop(play, mob, itemName)
+		elseif cur >= 30 then
+			dropped = shaguai.temp_drop(play, mob, itemName)
+		end
+		if dropped then
+			_sg_drop_record_set(play, key, 0, dropData)
+			Player.sendmsgEx(play, "打怪掉落【"..itemName.."】#57")
+		end
+	end,
+	["34"] = function(play,mob)      --筑基丹碎片：聚宝盆修复后，二三大陆普通怪每累计 100 只保底掉落
+		local state = _sg_tb_state(play)
+		if state.rebuilt < 1 then
+			return
+		end
+		local record = Player.getJsonTableByVar(play, "T39") or {}
+		local jz_count = tonumber(record.jz_dan_count or 0) or 0
+		if jz_count >= 3 then
+			return
+		end
+		local mapName = tostring(getbaseinfo(play,3) or "")
+		local dl = tonumber((daluditu and daluditu[mapName]) or 0) or 0
+		if dl ~= 2 and dl ~= 3 then
+			return
+		end
+		if not _sg_can_count_common_mon(play, mob) then
+			return
+		end
+		local key = "kill_pity_筑基丹碎片"
+		local cur, dropData = _sg_drop_record_inc(play, key)
+		if cur % 100 ~= 0 then
+			return
+		end
+		if shaguai.temp_drop(play, mob, "筑基丹碎片") then
+			_sg_drop_record_set(play, key, 0, dropData)
+			Player.sendmsgEx(play, "打怪掉落【筑基丹碎片】#57")
+		end
+	end,
+	["35"] = function(play,mob)      --修为丹独立掉落：不吃全局爆率，小丹二大陆起掉，大丹需真实充值大于 100
+		if not _sg_can_count_common_mon(play, mob) then
+			return
+		end
+		local mapName = tostring(getbaseinfo(mob, 3) or "")
+		local dl = tonumber((daluditu and daluditu[mapName]) or 0) or 0
+		if dl < 2 then
+			return
+		end
+		if math.random(100) == 1 then
+			shaguai.temp_drop(play, mob, "修为丹（小）")
+		end
+		local realCharge = math.max(tonumber(querymoney(play, 23) or 0) or 0, tonumber(getplaydef(play, VarCfg["U_真实充值"]) or 0) or 0)
+		if realCharge > 100 and math.random(1000) == 1 then
+			shaguai.temp_drop(play, mob, "修为丹（大）")
+		end
+	end,
+	["36"] = function(play,mob)      --神石宝箱：统一走 shaguai 杀怪掉落监听
+		if not play or not mob then
+			return
+		end
+		local mapName = tostring(getbaseinfo(play, 3) or "")
+		local dl = tonumber((daluditu and daluditu[mapName]) or 0) or 0
+		if dl < 3 then
+			return
+		end
+		local mobName = tostring(getbaseinfo(mob, 1) or "")
+		if mobName == "" or mobName == "稻草人" then
+			return
+		end
+		local guaiType = tonumber((guaiwutype and guaiwutype[mobName]) or 0) or 0
+		local isBoss = guaiType >= 2
+		local isKuafuBoss = isBoss and _sg_is_kuafu_boss(mob)
+		local isRedBoss = isBoss and _sg_is_godstone_red_boss(mob)
+		local lowDanActive = _sg_xianfu_dan_is_active(play, "N$xf_dan_low_expire")
+		if isKuafuBoss then
+			shaguai.temp_drop(play, mob, "神石宝箱")
+			shaguai.temp_drop(play, mob, "神石宝箱")
+			shaguai.temp_drop(play, mob, "神石宝箱")
+			shaguai.temp_drop(play, mob, "神石宝箱")
+			shaguai.temp_drop(play, mob, "神石宝箱")
+			shaguai.temp_drop(play, mob, "神石宝箱")
+			shaguai.temp_drop(play, mob, "神石宝箱")
+			shaguai.temp_drop(play, mob, "神石宝箱")
+			shaguai.temp_drop(play, mob, "神石宝箱")
+			shaguai.temp_drop(play, mob, "神石宝箱")
+			shaguai.temp_drop(play, mob, "神石宝箱钥匙")
+			local legendRate = lowDanActive and 1.1 or 1
+			if math.random(10000) <= math.floor(100 * legendRate) then
+				shaguai.temp_drop(play, mob, "神石宝箱[传说级]")
+			end
+			return
+		end
+		if isBoss then
+			shaguai.temp_drop(play, mob, "神石宝箱")
+			shaguai.temp_drop(play, mob, "神石宝箱")
+			shaguai.temp_drop(play, mob, "神石宝箱")
+			shaguai.temp_drop(play, mob, "神石宝箱")
+			shaguai.temp_drop(play, mob, "神石宝箱")
+			local legendRate = lowDanActive and 1.1 or 1
+			if math.random(10000) <= math.floor(100 * legendRate) then
+				shaguai.temp_drop(play, mob, "神石宝箱[传说级]")
+			end
+			if isRedBoss then
+				local rate = _sg_xianfu_dan_is_active(play, "N$xf_dan_high_expire") and 240 or 288
+				if math.random(rate) == 1 then
+					shaguai.temp_drop(play, mob, "神石宝箱[史诗级]")
+				end
+			end
+			return
+		end
+		local normalBase = lowDanActive and math.floor(188 / 1.1) or 188
+		if math.random(math.max(1, normalBase)) == 1 then
+			shaguai.temp_drop(play, mob, "神石宝箱")
+		end
+	end,
+	["37"] = function(play,mob)      --聚宝盆：统一走 shaguai 杀怪进度
+		local mod = rawget(_G, "__treasure_basin_module")
+		if mod and mod.onKillMon then
+			mod.onKillMon(play, mob)
+		end
+	end,
+	["38"] = function(play,mob)      --天命试炼：统一走 shaguai 渡劫丹掉落
+		if Npclib and Npclib[76] and Npclib[76].onKillMonDanjie then
+			Npclib[76].onKillMonDanjie(play, mob)
+		end
+	end,
+	["39"] = function(play,mob)      --血契之门：统一走 shaguai 杀怪额外掉落
+		if Npclib and Npclib[81] and Npclib[81].onKillMon then
+			Npclib[81].onKillMon(play, mob)
+		end
+	end,
+	["40"] = function(play,mob)      --武器性格：统一走 shaguai 杀怪状态更新
+		if Npclib and Npclib[82] and Npclib[82].onKillMon then
+			Npclib[82].onKillMon(play, mob)
+		end
+	end,
+	["41"] = function(play,mob)      --保卫村庄：统一走 shaguai 击杀结算
+		if BwczApi and BwczApi.onKillMon then
+			BwczApi.onKillMon(play, mob)
 		end
 	end,
 	["32"] = function(play,mob)      --转生材料掉落（按大陆，固定击杀区间，越接近越容易掉）

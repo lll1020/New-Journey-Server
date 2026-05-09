@@ -28,18 +28,19 @@ end
 npc[2] = function(play, p2, p3, msgData) --背包  面板
     if p2 == 0 then
         -- 回收面板
-        sendluamsg(play, 101, 2, 2, 0, '{"xz":' .. getplaydef(play, VarCfg.T_hsdg) .. ',"kg":[' .. getflagstatus(play, VarCfg.BS_huishou[1]) .. "," .. getflagstatus(play, VarCfg.BS_huishou[2]) .. "," .. getflagstatus(play, VarCfg.BS_huishou[3]) .. "," .. getflagstatus(play, VarCfg.BS_huishou[4]) .. "," .. getflagstatus(play, VarCfg.BS_huishou[5]) .. "]}")
+        local hspz = Player.ensureRecycleSelectConfig(play) or {}
+        sendluamsg(play, 101, 2, 2, 0, '{"xz":' .. tbl2json(hspz) .. ',"kg":[' .. getflagstatus(play, VarCfg.BS_huishou[1]) .. "," .. getflagstatus(play, VarCfg.BS_huishou[2]) .. "," .. getflagstatus(play, VarCfg.BS_huishou[3]) .. "," .. getflagstatus(play, VarCfg.BS_huishou[4]) .. "," .. getflagstatus(play, VarCfg.BS_huishou[5]) .. "]}")
     elseif p2 == 1 then
-        if p3 > 0 and p2 < 5 then
-            msgData = tonumber(msgData)
-            if msgData > 0 and msgData < 50 then
-                local hspz = json2tbl(getplaydef(play, VarCfg.T_hsdg))
-                hspz[p3 .. "_" .. msgData] = 1
-                setplaydef(play, VarCfg.T_hsdg, tbl2json(hspz))
-            end
+        local groupIdx = tonumber(p3)
+        local subGroupIdx = tonumber(msgData)
+        -- 回收分组整组勾选：客户端可能传空值，服务端这里做数值保护，避免直接比较报错。
+        if groupIdx and groupIdx > 0 and groupIdx < 5 and subGroupIdx and subGroupIdx > 0 and subGroupIdx < 50 then
+            local hspz = Player.ensureRecycleSelectConfig(play) or {}
+            hspz[groupIdx .. "_" .. subGroupIdx] = 1
+            setplaydef(play, VarCfg.T_hsdg, tbl2json(hspz))
         end
     elseif p2 == 2 then
-        local hspz = json2tbl(getplaydef(play, VarCfg.T_hsdg))
+        local hspz = Player.ensureRecycleSelectConfig(play) or {}
         if hspz[msgData] and hspz[msgData] == 1 then
             hspz[msgData] = nil
         else
@@ -448,6 +449,9 @@ local function _ywl_try_auto_finish_ready_tasks_in_continent(play, T_ywl, i)
         local nextKey = _ywl_build_task_key(nextTask.i, nextTask.j, nextTask.z)
         if tostring(T_ywl.dq or "") ~= nextKey then
             _ywl_set_current_task_value(T_ywl, nextTask)
+            if nextTask.i == 2 and nextTask.j == 2 and nextTask.z == 2 and rawget(_G, "__treasure_basin_module") and type(__treasure_basin_module.markTaskStarted) == "function" then
+                __treasure_basin_module.markTaskStarted(play)
+            end
             changed = true
         end
         local shuju = npc_xyl[nextTask.i] and npc_xyl[nextTask.i][nextTask.j] and npc_xyl[nextTask.i][nextTask.j].jq and npc_xyl[nextTask.i][nextTask.j].jq[nextTask.z]
@@ -491,6 +495,9 @@ local function _ywl_sync_auto_current_task(play)
         local nextKey = _ywl_build_task_key(nextTask.i, nextTask.j, nextTask.z)
         if tostring(T_ywl.dq or "") ~= nextKey then
             _ywl_set_current_task_value(T_ywl, nextTask)
+            if nextTask.i == 2 and nextTask.j == 2 and nextTask.z == 2 and rawget(_G, "__treasure_basin_module") and type(__treasure_basin_module.markTaskStarted) == "function" then
+                __treasure_basin_module.markTaskStarted(play)
+            end
             changed = true
         end
     elseif _ywl_is_current_task_in_continent(T_ywl, autoContinent) then
@@ -1052,10 +1059,9 @@ local function _sc_apply_main_reward(play, data)
     if tonumber(halfMoon or 0) > 0 then
         addskill(play, halfMoon, 3)
     end
-    local poisonGroup = getskillindex and getskillindex("群体施毒术") or 0
-    if tonumber(poisonGroup or 0) > 0 then
-        addskill(play, poisonGroup, 3)
-    end
+    -- 群体施毒术已调整到 105 限时福利发放，这里改为首充直接补发聚宝盆碎片。
+    Player.rwjl(play, {{"聚宝盆碎片", 20}}, "首充礼包", 1)
+
     local sz_data = Player.getJsonTableByVar(play, VarCfg.T_szjl)
     sz_data.yjs = sz_data.yjs or {}
     sz_data.yjs["1"] = 1
@@ -1121,6 +1127,7 @@ npc[502] = function(play, p2, p3, data) --在线充值
                 czlb = _cz502_apply_reward(play, je, nil, czlb)
                 setplaydef(play, VarCfg.T_czlb, tbl2json(czlb))
                 sendluamsg(play, 101, 502, 0, 0, getplaydef(play, VarCfg.T_czlb))
+                PackageBuy_msg(play, tostring(je) .. "元礼包")
             else
                 setplaydef(play, VarCfg.U_czyz, constant.cz_jeyz[je])
                 sendluamsg(play, 101, 999, je, 7, "")
@@ -2444,6 +2451,19 @@ local function _zz516_clear_titles(play, keep_title)
         end
     end
 end
+local function _zz516_apply_extra_titles(play, T_data)
+    local cfg = _zz516_get_cfg()
+    for i = 1, #cfg do
+        if tonumber((T_data or {})["zzlb_" .. i] or 0) == 1 then
+            for _, titleName in ipairs((cfg[i] or {}).extra_titles or {}) do
+                titleName = tostring(titleName or "")
+                if titleName ~= "" and not checktitle(play, titleName) then
+                    Player.title_give(play, titleName)
+                end
+            end
+        end
+    end
+end
 local function _zz516_apply_title(play, T_data)
     local _, cfg = _zz516_get_claim_tier(T_data or _zz516_get_data(play))
     local keep_title = cfg and tostring(cfg.ch or "") or ""
@@ -2451,6 +2471,7 @@ local function _zz516_apply_title(play, T_data)
     if keep_title ~= "" and not checktitle(play, keep_title) then
         Player.title_give(play, keep_title)
     end
+    _zz516_apply_extra_titles(play, T_data)
 end
 local function _zz516_panel_data(play)
     local data = {}

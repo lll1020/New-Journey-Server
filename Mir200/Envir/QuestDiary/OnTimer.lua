@@ -50,6 +50,79 @@ local function _txzr_get_notice_cfg()
     return {}
 end
 -- 为指定玩家抽取未重复的背包神器
+local _TCPPK_ROUND_VAR = "TCPPK_ROUND"
+local _TCPPK_EQUIP_COUNT_VAR = "N$tcppk_equip_reward_count"
+local _TCPPK_REWARD_CACHE = nil
+
+local function _tcppk_begin_round()
+    local round = tonumber(Player.GetGlobalTempInt(_TCPPK_ROUND_VAR) or 0) or 0
+    round = round + 1
+    Player.SetGlobalTempInt(_TCPPK_ROUND_VAR, round)
+    return round
+end
+
+local function _tcppk_get_round()
+    return tonumber(Player.GetGlobalTempInt(_TCPPK_ROUND_VAR) or 0) or 0
+end
+
+local function _tcppk_get_reward_cache()
+    if _TCPPK_REWARD_CACHE then
+        return _TCPPK_REWARD_CACHE.normal, _TCPPK_REWARD_CACHE.equip, _TCPPK_REWARD_CACHE.all, _TCPPK_REWARD_CACHE.equipSet
+    end
+    local cfg = type(paokujl) == "table" and paokujl or {}
+    local normal = type(cfg.normal) == "table" and cfg.normal or {}
+    local equip = type(cfg.equip) == "table" and cfg.equip or {}
+    local all = {}
+    local equipSet = {}
+    for _, rewardName in ipairs(normal) do
+        all[#all + 1] = rewardName
+    end
+    for _, rewardName in ipairs(equip) do
+        all[#all + 1] = rewardName
+        equipSet[rewardName] = true
+    end
+    _TCPPK_REWARD_CACHE = {normal = normal, equip = equip, all = all, equipSet = equipSet}
+    return normal, equip, all, equipSet
+end
+
+local function _tcppk_get_player_equip_count(play)
+    local round = _tcppk_get_round()
+    local raw = tostring(getplaydef(play, _TCPPK_EQUIP_COUNT_VAR) or "")
+    local savedRound, savedCount = string.match(raw, "^(%d+):(%d+)$")
+    savedRound = tonumber(savedRound or 0) or 0
+    savedCount = tonumber(savedCount or 0) or 0
+    if savedRound ~= round then
+        return 0
+    end
+    return savedCount
+end
+
+local function _tcppk_set_player_equip_count(play, count)
+    local round = _tcppk_get_round()
+    count = math.max(0, tonumber(count) or 0)
+    setplaydef(play, _TCPPK_EQUIP_COUNT_VAR, tostring(round) .. ":" .. tostring(count))
+end
+
+local function _tcppk_pick_reward(play)
+    local normal, _, all, equipSet = _tcppk_get_reward_cache()
+    if #all <= 0 then
+        return nil
+    end
+    local equipCount = _tcppk_get_player_equip_count(play)
+    local pool = all
+    if equipCount >= 2 and #normal > 0 then
+        pool = normal
+    end
+    if #pool <= 0 then
+        return nil
+    end
+    local rewardName = pool[math.random(#pool)]
+    if equipSet[rewardName] then
+        _tcppk_set_player_equip_count(play, equipCount + 1)
+    end
+    return rewardName
+end
+
 local function _txzr_pick_unique_shenqi(txzz_data, playerName)
     local shenqi_cfg = _txzr_get_shenqi_cfg()
     if #shenqi_cfg <= 0 then
@@ -1769,10 +1842,10 @@ local function _bwcz_on_kill_mon(play, mob)
     _bwcz_add_merit(play, monName, cfg)
     _bwcz_give_kill_reward(play, monName, cfg)
 end
+BwczApi.onKillMon = _bwcz_on_kill_mon
 
 GameEvent.add(EventCfg.onLogin, _bwcz_on_login_event, "保卫村庄登录修正")
 GameEvent.add(EventCfg.onKFLogin, _bwcz_on_login_event, "保卫村庄跨服登录修正")
-GameEvent.add(EventCfg.onKillMon, _bwcz_on_kill_mon, "保卫村庄击杀结算")
 local _MSKH_EVENT_NAME = "美食狂欢"
 local _MSKH_SCORE_VAR = "美食狂欢"
 local _MSKH_WEAPON_LEVEL_VAR = VarCfg["T_时光之杖等级"] or "T57"
@@ -2496,6 +2569,7 @@ function ontimerex1()
                 end
             end
             if dqfz == 5 then
+                _tcppk_begin_round()
                 setenvirontimer("xtc",1,3,"@hd_tcppk,xtc")
                 local t = getplayerlst()
                 for _, v in pairs(t) do
@@ -2626,6 +2700,11 @@ function ontimer4(play)
     local zxsj = getplaydef(play, VarCfg.U_fldt[1])
     setplaydef(play, VarCfg.U_fldt[1], zxsj + 1)
     setplaydef(play, VarCfg.J_zxsj,getplaydef(play, VarCfg.J_zxsj) + 1)
+    local midExpire = tonumber(getplaydef(play, "N$xf_dan_mid_expire") or 0) or 0
+    if midExpire > 0 and midExpire <= os.time() then
+        setplaydef(play, "N$xf_dan_mid_expire", 0)
+        Player.del_attlist(play, "仙府幸运丹")
+    end
 end
 -----------------个人5号定时器----------------1秒定时器AI挂机开启
 function ontimer5(play)
@@ -2933,10 +3012,12 @@ function hd_tcppk(xx,ditu)
                 if getplaydef(v, "N$上次坐标x") ~= x and getplaydef(v, "N$上次坐标y") ~= y then
                     setplaydef(v, "N$上次坐标x", x)
                     setplaydef(v, "N$上次坐标y", y)
-                    local wpmz = paokujl[math.random(#paokujl)]
-                    sendmsg(v,1,'{"Msg":"<font color=\'#ff7700\'>[土城跑酷]</font><font color=\'#00ff00\'>恭喜你获得了['..wpmz..']...</font>","Type":9}')
-                    sendmsg(v, 2, '{"BColor":249,"FColor":255,"Msg":"[土城跑酷]<font color=\'#00ff00\'>恭喜'..getbaseinfo(v, 1)..'获得了['..wpmz..']...</font>","Type":1}')
-                    giveitem(v, wpmz,1,getflagstatus(v,VarCfg.BS_mztq) == 0 and 0 or 850)
+                    local wpmz = _tcppk_pick_reward(v)
+                    if wpmz and wpmz ~= "" then
+                        sendmsg(v,1,'{"Msg":"<font color=\'#ff7700\'>[土城跑酷]</font><font color=\'#00ff00\'>恭喜你获得了['..wpmz..']...</font>","Type":9}')
+                        sendmsg(v, 2, '{"BColor":249,"FColor":255,"Msg":"[土城跑酷]<font color=\'#00ff00\'>恭喜'..getbaseinfo(v, 1)..'获得了['..wpmz..']...</font>","Type":1}')
+                        giveitem(v, wpmz,1,getflagstatus(v,VarCfg.BS_mztq) == 0 and 0 or 850)
+                    end
                 end
             end
         end

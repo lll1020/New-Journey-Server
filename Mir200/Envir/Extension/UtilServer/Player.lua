@@ -900,7 +900,7 @@ local function _dl_check(actor, dl)
         if zslv >= 40 and jqd >= 90 and _dl_has_all_linggen(actor) then
             return true
         end
-        return false, "需完成四大陆转生且剧情点达到90后才可进入五大陆"
+        return false, "需完成四大陆转生且剧情点达到90后才可进入五大陆,并且激活所有的灵根"
     elseif dl == 6 then
         if zslv >= 50 and jqd >= 100 and _dl_has_all_destiny(actor) then
             return true
@@ -1116,6 +1116,72 @@ local hs_group_prefix_compat = {
     clfj = "7|1",
     teshuhuihsou = "8|1",
 }
+local hs_default_recycle_keys = {"1_1_1", "1_1_2", "1_1_3", "3_3_1"}
+local function hs_map_old_zzhs_key(subgroup)
+    subgroup = tonumber(subgroup or 0) or 0
+    if subgroup >= 1 and subgroup <= 5 then
+        return "1_1_1"
+    elseif subgroup >= 6 and subgroup <= 10 then
+        return "1_1_2"
+    elseif subgroup >= 11 and subgroup <= 15 then
+        return "1_1_3"
+    elseif subgroup >= 16 and subgroup <= 20 then
+        return "1_1_4"
+    elseif subgroup >= 21 then
+        return "1_1_5"
+    end
+    return nil
+end
+-- 自动回收勾选配置迁移：
+-- 1. 旧版制式装备 1~22 小组统一折算到新版大陆分组。
+-- 2. 默认补齐前三组制式装备与生肖1，避免新旧配置错位。
+function Player.ensureRecycleSelectConfig(play)
+    local hspz = json2tbl(getplaydef(play, VarCfg.T_hsdg))
+    if type(hspz) ~= "table" then
+        hspz = {}
+    end
+    if tonumber(hspz.__hs_group_v2 or 0) == 1 then
+        return hspz
+    end
+    local new_pz = {}
+    local has_any_selection = false
+    local has_old_zzhs = false
+    for key, value in pairs(hspz) do
+        if value == 1 then
+            local old_subgroup = tostring(key):match("^1_1_(%d+)$")
+            if old_subgroup then
+                has_old_zzhs = true
+                local new_key = hs_map_old_zzhs_key(old_subgroup)
+                if new_key then
+                    new_pz[new_key] = 1
+                    has_any_selection = true
+                end
+            else
+                new_pz[key] = 1
+                has_any_selection = true
+            end
+        end
+    end
+    if not has_any_selection then
+        for _, key in ipairs(hs_default_recycle_keys) do
+            new_pz[key] = 1
+        end
+    else
+        if new_pz["3_3_1"] == nil then
+            new_pz["3_3_1"] = 1
+        end
+        if (not has_old_zzhs)
+            and new_pz["1_1_1"] == nil and new_pz["1_1_2"] == nil
+            and new_pz["1_1_3"] == nil and new_pz["1_1_4"] == nil and new_pz["1_1_5"] == nil then
+            new_pz["1_1_1"] = 1
+            new_pz["1_1_2"] = 1
+            new_pz["1_1_3"] = 1
+        end
+    end
+    new_pz.__hs_group_v2 = 1
+    setplaydef(play, VarCfg.T_hsdg, tbl2json(new_pz))
+    return new_pz
+end
 -- 统一按配置优先级查找物品所属回收组，返回组名和配置。
 local function hs_pick_cfg(idx)
     local cfg = huishou.zzhs[idx]
@@ -1254,7 +1320,7 @@ function Player.huishou(play, hs_constant)
     if hs_constant == nil then
         -- 模式1：全背包自动回收（由开关控制）。
         local kg1, kg2, kg3, kg4, kg5 = getflagstatus(play, VarCfg.BS_huishou[1]), getflagstatus(play, VarCfg.BS_huishou[2]), getflagstatus(play, VarCfg.BS_huishou[3]), getflagstatus(play, VarCfg.BS_huishou[4]), getflagstatus(play, VarCfg.BS_huishou[5])
-        local pz = json2tbl(getplaydef(play, VarCfg.T_hsdg)) or {}
+        local pz = Player.ensureRecycleSelectConfig(play) or {}
         local reward = {coin = 0, yb = 0, lingshi = 0, hlsj = 0, items = {}}
         local sq = ''
         local item = getbagitems(play)

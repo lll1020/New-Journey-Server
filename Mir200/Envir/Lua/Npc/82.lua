@@ -513,12 +513,12 @@ local function _on_attack_damage_player(play, target)
         end
     end
 end
+npc.onKillMon = _on_kill_mon
 
 GameEvent.add(EventCfg.onLogin, _on_login, "武器性格")
 GameEvent.add(EventCfg.goDailyUpdate, _on_daily, "武器性格")
 GameEvent.add(EventCfg.goSwitchMap, _on_switch_map, "武器性格")
 GameEvent.add(EventCfg.onkillplay, _on_kill_play, "武器性格")
-GameEvent.add(EventCfg.onKillMon, _on_kill_mon, "武器性格")
 GameEvent.add(EventCfg.onAttackDamagePlayer, _on_attack_damage_player, "武器性格")
 
 return npc

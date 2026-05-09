@@ -293,14 +293,17 @@ function stdmodefunc31(play, item)
     refreshitem(play, itemobj)
     sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>天书杀意值+'..getstditeminfo(getiteminfo(play, item, 2), 8)..'</font>","Type":9}')
 end
--- 仙府丹药统一使用到期时间驱动，避免再依赖旧 buff 编号。
+-- 仙府丹药统一使用到期时间驱动；同类丹药只延长持续时间，不重复叠加效果。
 local function _xianfu_dan_set_expire(play, varName, seconds)
     seconds = tonumber(seconds or 0) or 0
     if seconds <= 0 then
         setplaydef(play, varName, 0)
         return 0
     end
-    local expireAt = os.time() + seconds
+    local now = os.time()
+    local currentExpire = tonumber(getplaydef(play, varName) or 0) or 0
+    local startAt = currentExpire > now and currentExpire or now
+    local expireAt = startAt + seconds
     setplaydef(play, varName, expireAt)
     return expireAt
 end
@@ -413,8 +416,22 @@ local function _is_kuafu_boss(mon)
         or string.find(mapName, "kuafu", 1, true) ~= nil
 end
 
+--[[
+stdmodefunc32(play, item)
+用途：神石宝箱双击使用入口，优先转发到 npc_53.openBoxByName，保证“背包双击开箱”和“NPC 界面开箱”走同一套概率、扣除和回包逻辑。
+参数：
+1. play：玩家对象。
+2. item：当前双击使用的神石宝箱物品对象。
+说明：
+1. 若 npc_53 已加载，则直接调用统一开箱接口。
+2. 若 npc_53 未加载，则继续走本地兜底开奖逻辑，避免物品失效。
+]]
 function stdmodefunc32(play, item) --神石召唤
     local boxName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "神石宝箱")
+    if Npclib and Npclib[53] and Npclib[53].openBoxByName then
+        Npclib[53].openBoxByName(play, boxName)
+        return false
+    end
     local keyCost = {{"神石宝箱钥匙", 1}}
     local name, num = Player.checkItemNumByTable(play, keyCost)
     if name then
@@ -542,18 +559,18 @@ end
 function stdmodefunc39(play, item) --特殊丹药
     local itemName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "")
     if itemName == "稳固丹" then
-        local expireAt = _xianfu_dan_set_expire(play, "N$xf_dan_low_expire", 10 * 60)
+        local expireAt = _xianfu_dan_set_expire(play, "N$xf_dan_low_expire", 30 * 60)
         delitembymakeindex(play, getiteminfo(play, item, 1), 1)
         Player.sendmsgEx(play, string.format("已服用#57|【稳固丹】#249|，持续至#57|【%s】#249|#57", os.date("%H:%M:%S", expireAt)))
         return false
     elseif itemName == "幸运丹" then
-        local expireAt = _xianfu_dan_set_expire(play, "N$xf_dan_mid_expire", 10 * 60)
+        local expireAt = _xianfu_dan_set_expire(play, "N$xf_dan_mid_expire", 30 * 60)
         Player.add_attlist(play, "仙府幸运丹", "=", Player.getAttrTableToStr({[246] = 1000, [245] = 500}), 1)
         delitembymakeindex(play, getiteminfo(play, item, 1), 1)
         Player.sendmsgEx(play, string.format("已服用#57|【幸运丹】#249|，持续至#57|【%s】#249|#57", os.date("%H:%M:%S", expireAt)))
         return false
     elseif itemName == "凝萃神丹" then
-        local expireAt = _xianfu_dan_set_expire(play, "N$xf_dan_high_expire", 10 * 60)
+        local expireAt = _xianfu_dan_set_expire(play, "N$xf_dan_high_expire", 30 * 60)
         delitembymakeindex(play, getiteminfo(play, item, 1), 1)
         Player.sendmsgEx(play, string.format("已服用#57|【凝萃神丹】#249|，持续至#57|【%s】#249|#57", os.date("%H:%M:%S", expireAt)))
         return false
@@ -1166,105 +1183,4 @@ local function _get_zhuji_dan_record(play)
     return rec
 end
 
-local function _on_kill_mon_drop_zhuji_fragment(play, mon, mobIdx)
-    if not play or not mon then
-        return
-    end
-    local rec = _get_zhuji_dan_record(play)
-    if (tonumber(rec.jz_dan_count) or 0) >= 3 then
-        return
-    end
-    local mapName = tostring(getbaseinfo(play, 3) or "")
-    local dl = tonumber((daluditu and daluditu[mapName]) or 0) or 0
-    if dl ~= 2 and dl ~= 3 then
-        return
-    end
-    local mobName = tostring(getbaseinfo(mon, 1) or "")
-    if mobName == "" or mobName == "稻草人" then
-        return
-    end
-    local dropData = Player.getJsonTableByVar(play, VarCfg["T_物品掉落记录"])
-    if type(dropData) ~= "table" then
-        dropData = {}
-    end
-    local key = "kill_pity_筑基丹碎片"
-    local cur = tonumber(dropData[key] or 0) or 0
-    cur = cur + 1
-    dropData[key] = cur
-    Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], dropData)
-    if cur % 100 ~= 0 then
-        return
-    end
-    if shaguai and shaguai.temp_drop and shaguai.temp_drop(play, mon, "筑基丹碎片") then
-        Player.sendmsgEx(play, "打怪掉落【筑基丹碎片】#57")
-    end
-end
-GameEvent.add(EventCfg.onKillMon, _on_kill_mon_drop_zhuji_fragment, "筑基丹碎片累计掉落")
-
--- 神石宝箱掉落监听：不吃全局爆率，统一走独立监听。
-local function _on_kill_mon_drop_godstone_box(play, mon, mobIdx)
-    if not play or not mon then
-        return
-    end
-    local mapName = tostring(getbaseinfo(play, 3) or "")
-    local dl = tonumber((daluditu and daluditu[mapName]) or 0) or 0
-    if dl < 3 then
-        return
-    end
-    local mobName = tostring(getbaseinfo(mon, 1) or "")
-    if mobName == "" or mobName == "稻草人" then
-        return
-    end
-    local guaiType = tonumber((guaiwutype and guaiwutype[mobName]) or 0) or 0
-    local isBoss = guaiType >= 2
-    local isKuafuBoss = isBoss and _is_kuafu_boss(mon)
-    local isRedBoss = isBoss and _is_godstone_red_boss(mon)
-    -- 稳固丹生效时，仅提升神石箱独立监听概率 10%，不影响全局爆率。
-    local lowDanActive = _xianfu_dan_is_active(play, "N$xf_dan_low_expire")
-    if isKuafuBoss then
-        if shaguai and shaguai.temp_drop then
-            shaguai.temp_drop(play, mon, "神石宝箱")
-            shaguai.temp_drop(play, mon, "神石宝箱")
-            shaguai.temp_drop(play, mon, "神石宝箱")
-            shaguai.temp_drop(play, mon, "神石宝箱")
-            shaguai.temp_drop(play, mon, "神石宝箱")
-            shaguai.temp_drop(play, mon, "神石宝箱")
-            shaguai.temp_drop(play, mon, "神石宝箱")
-            shaguai.temp_drop(play, mon, "神石宝箱")
-            shaguai.temp_drop(play, mon, "神石宝箱")
-            shaguai.temp_drop(play, mon, "神石宝箱")
-            shaguai.temp_drop(play, mon, "神石宝箱钥匙")
-            local legendRate = lowDanActive and 1.1 or 1
-            if math.random(10000) <= math.floor(100 * legendRate) then
-                shaguai.temp_drop(play, mon, "神石宝箱[传说级]")
-            end
-        end
-        return
-    end
-    if isBoss then
-        if shaguai and shaguai.temp_drop then
-            shaguai.temp_drop(play, mon, "神石宝箱")
-            shaguai.temp_drop(play, mon, "神石宝箱")
-            shaguai.temp_drop(play, mon, "神石宝箱")
-            shaguai.temp_drop(play, mon, "神石宝箱")
-            shaguai.temp_drop(play, mon, "神石宝箱")
-            local legendRate = lowDanActive and 1.1 or 1
-            if math.random(10000) <= math.floor(100 * legendRate) then
-                shaguai.temp_drop(play, mon, "神石宝箱[传说级]")
-            end
-        end
-        if isRedBoss and shaguai and shaguai.temp_drop then
-            local rate = _xianfu_dan_is_active(play, "N$xf_dan_high_expire") and 240 or 288
-            if math.random(rate) == 1 then
-                shaguai.temp_drop(play, mon, "神石宝箱[史诗级]")
-            end
-        end
-        return
-    end
-    local normalBase = lowDanActive and math.floor(188 / 1.1) or 188
-    if math.random(math.max(1, normalBase)) == 1 and shaguai and shaguai.temp_drop then
-        shaguai.temp_drop(play, mon, "神石宝箱")
-    end
-end
-GameEvent.add(EventCfg.onKillMon, _on_kill_mon_drop_godstone_box, "神石宝箱掉落监听")
 
