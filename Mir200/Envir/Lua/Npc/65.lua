@@ -67,7 +67,7 @@ local function _check_cost(play, cost)
     end
     local name, num = Player.checkItemNumByTable(play, cost)
     if name then
-        Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
+        Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
         return false
     end
     return true
@@ -241,7 +241,7 @@ function npc.link(play,npcid,ew,aid,data)
         _consume_cost(play, cost, "古玩鉴定")
         local item_name = _give_antique(play, base_name, state.era)
         _clear_state(play)
-        Player.sendmsgEx(play, string.format("你获得了|【%s】#249|", item_name))
+        Player.sendmsgEx(play, string.format("你获得了|【%s】#218|", item_name))
         sendluamsg(play,100,npcid,1,0,tbl2json({stage=2,result="conservative",item=item_name,era=state.era,idx=state.idx}))
         return
     elseif ew == 3 then -- 断代鉴定（初次升级）
@@ -320,7 +320,7 @@ function npc.link(play,npcid,ew,aid,data)
         end
         local item_name = _give_antique(play, base_name, state.era)
         _clear_state(play)
-        Player.sendmsgEx(play, string.format("你获得了|【%s】#249|", item_name))
+        Player.sendmsgEx(play, string.format("你获得了|【%s】#218|", item_name))
         sendluamsg(play,100,npcid,1,0,tbl2json({stage=3,result="collect",item=item_name,era=state.era,idx=state.idx}))
         return
     end

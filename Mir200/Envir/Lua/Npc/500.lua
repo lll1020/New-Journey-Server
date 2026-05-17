@@ -30,7 +30,7 @@ function npc.link(play,npcid,ew,aid)
                         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
                         shaguai.jia(play,3)
                     end
-                    Player.moveToThirdContinentFrontier(play, "未完成#57|【灾厄入侵】#249|，传送至#57|【灰界】#249|")
+                    Player.moveToThirdContinentFrontier(play, "未完成#57|【灾厄入侵】#218|，传送至#57|【灰界】#218|")
                     sendluamsg(play,101,9999,0,0,"npc_sjdt")
                     return
                 end

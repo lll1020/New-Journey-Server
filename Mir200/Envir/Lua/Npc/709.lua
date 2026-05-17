@@ -61,14 +61,14 @@ local function _check_use_pos(play)
     local map, x, y, r = _use_pos()
     local cur_map = getbaseinfo(play, 3)
     if cur_map ~= map then
-        Player.sendmsgEx(play, "请前往#57|【"..map.."】#249|指定位置使用#57")
+        Player.sendmsgEx(play, "请前往#57|【"..map.."】#218|指定位置使用#57")
         return false
     end
     if x > 0 and y > 0 then
         local px = tonumber(getbaseinfo(play,4) or 0) or 0
         local py = tonumber(getbaseinfo(play,5) or 0) or 0
         if math.abs(px - x) > r or math.abs(py - y) > r then
-            Player.sendmsgEx(play, string.format("请在坐标|【(%d,%d)】#249|附近使用，容差|【%d格】#249|#57", x, y, r))
+            Player.sendmsgEx(play, string.format("请在坐标|【(%d,%d)】#218|附近使用，容差|【%d格】#218|#57", x, y, r))
             return false
         end
     end
@@ -112,7 +112,7 @@ function npc.link(play,npcid,ew,aid)
     local need = _need_kill()
 
     if state >= 2 then
-        Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
+        Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#218|")
         return
     end
 
@@ -120,7 +120,7 @@ function npc.link(play,npcid,ew,aid)
     if state < 1 then
         local req_map = _task_cfg.map or "阳关道"
         if getbaseinfo(play,3) ~= req_map and getbaseinfo(play,3) ~= "xtc" then
-            Player.sendmsgEx(play, "请前往#57|【"..req_map.."】#249|接取该任务#57")
+            Player.sendmsgEx(play, "请前往#57|【"..req_map.."】#218|接取该任务#57")
             return
         end
 
@@ -138,7 +138,7 @@ function npc.link(play,npcid,ew,aid)
         giveitem(play, _use_item_name(), 1)
         shaguai.jia(play, 709)
 
-        Player.sendmsgEx(play, "已提交|【裂开的酒壶】#249|，获得|【".._use_item_name().."】#249|")
+        Player.sendmsgEx(play, "已提交|【裂开的酒壶】#218|，获得|【".._use_item_name().."】#218|")
         Player.sendmsgEx(play, "请前往指定坐标使用道具召唤BOSS（完好的酒壶可重复使用）#57")
         sendluamsg(play,101,1005,0,0,"rwjs")
         sendluamsg(play,100,npcid,1,0,"")
@@ -147,7 +147,7 @@ function npc.link(play,npcid,ew,aid)
 
     -- 第二步/第三步：未击杀前提示去使用；击杀后复命完成
     if kill_cur < need then
-        Player.sendmsgEx(play, "请先在指定坐标使用#57|【".._use_item_name().."】#249|召唤并击杀BOSS#57")
+        Player.sendmsgEx(play, "请先在指定坐标使用#57|【".._use_item_name().."】#218|召唤并击杀BOSS#57")
         return
     end
 
@@ -155,7 +155,7 @@ function npc.link(play,npcid,ew,aid)
     jq_data[_cfg_key] = 2
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
 
-    Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+    Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成#57")
     if npcid then Guard.closeNpc(play, npcid) end
     sendluamsg(play,101,1005,0,0,"rwwc")
     Guard.giveTaskReward(play, _config, (_config.name or "剧情任务").."奖励")
@@ -220,7 +220,7 @@ function npc_709_use_item(play, item)
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
     shaguai.jia(play, 709)
 
-    Player.sendmsgEx(play, "你使用#57|【".._use_item_name().."】#249|召唤了BOSS【#57"..boss.."】#57")
+    Player.sendmsgEx(play, "你使用#57|【".._use_item_name().."】#218|召唤了BOSS【#57"..boss.."】#57")
     return true
 end
 

@@ -400,6 +400,7 @@ function takeonbeforeex(play,item,where,makeIndex)
             Player.sendmsgEx(play, "当前仙府等级尚未解锁神石槽位#57")
             return false
         end
+
         local targetItem = linkbodyitem(play, where)
         if not targetItem or targetItem == "0" then
             local equipped = 0
@@ -412,6 +413,24 @@ function takeonbeforeex(play,item,where,makeIndex)
             if equipped >= openCount then
                 Player.sendmsgEx(play, string.format("当前仙府等级仅开放%d个神石槽位#57", openCount))
                 return false
+            end
+        end
+
+        local itemName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "")
+        local baseName = string.match(itemName, "^(.-)【") or itemName
+        if baseName ~= "" then
+            for pos = 103, 110 do
+                if pos ~= where then
+                    local bodyItem = linkbodyitem(play, pos)
+                    if bodyItem and bodyItem ~= "0" then
+                        local bodyName = tostring(getiteminfo(play, bodyItem, ConstCfg.iteminfo.name) or "")
+                        local bodyBaseName = string.match(bodyName, "^(.-)【") or bodyName
+                        if bodyBaseName ~= "" and bodyBaseName == baseName then
+                            Player.sendmsgEx(play, string.format("同名神石仅可装备一个：%s#57", baseName))
+                            return false
+                        end
+                    end
+                end
             end
         end
     end
@@ -481,6 +500,9 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
             if type(adj) == "number" then
                 Damage = adj
             end
+        end
+        if TianMingDaoPanAdjustPlayerDamage then
+            Damage = TianMingDaoPanAdjustPlayerDamage(play, Target, Damage)
         end
 		return Damage
 	else
@@ -945,7 +967,7 @@ function killplay(play,hiter)
     GameEvent.push(EventCfg.onkillplay, play, hiter)
     setplaydef(play,VarCfg.U_srsl,getplaydef(play,VarCfg.U_srsl)+1)
     login_fhsx(play)
-    if getsysvar(constant.G_kqfz) >= 40 and getsysvar(constant.G_kqfz) <= 50 then
+    if getsysvar(VarCfg.G_kqfz) >= 40 and getsysvar(VarCfg.G_kqfz) <= 50 then
         local jf = getplayvar(play, "HUMAN", "比武大会") + 50
         setplayvar(play, "HUMAN", "比武大会", jf, 1)
         sendmsg(play,1,'{"Msg":"比武大会：当前积分:'..jf..'","FColor":253,"BColor":255,"Type":1}')
@@ -1113,7 +1135,7 @@ end
 --------------------累计充值改变触发-------------------冠名称号
 function moneychange23(play)
     setplaydef(play,VarCfg["U_真实充值"],querymoney(play,23))
-    if querymoney(play,23) >= teshudata["npc_20"].cost and not checktitle(play,"冠名") then
+    if querymoney(play,23) >= teshudata["npc_20"].cost and not checktitle(play,"天下谁人不识君") then
         messagebox(play,"累计充值数量已达到,可以去领取冠名奖励了")
         Npclib[20].link(play, 20, 1)
     end
@@ -1157,10 +1179,10 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
                     PackageBuy_msg(play, "18元礼包")
                 end
             elseif Gold == 88 then
-                if getflagstatus(play,constant.BS_mztq) == 0 then
+                if getflagstatus(play,VarCfg.BS_mztq) == 0 then
                     Player.title_give(play, teshudata["anniu_504"].ch,1)
                     Player.rwjl(play, teshudata["anniu_504"].give, "快人一步",1,1000)
-                    setflagstatus(play,constant.BS_mztq,1)
+                    setflagstatus(play,VarCfg.BS_mztq,1)
                     PackageBuy_msg(play, "88元礼包")
                     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
                     if jq_data["npc_55"] and jq_data["npc_55"] >= 2 then
@@ -1557,6 +1579,60 @@ function showfashion(actor)
 end
 function notshowfashion(actor)
     GameEvent.push(EventCfg.onNotShowFashion, actor)
+end
+local function _rename_card_finish(actor, refund)
+    if not actor then
+        return
+    end
+    local itemName = tostring(getplaydef(actor, "S$改名卡道具") or "改名卡")
+    if itemName == "" then
+        itemName = "改名卡"
+    end
+    if refund and tonumber(getplaydef(actor, "N$改名卡处理中") or 0) == 1 then
+        giveitem(actor, itemName, 1)
+    end
+    setplaydef(actor, "N$改名卡处理中", 0)
+    setplaydef(actor, "S$改名卡目标名称", "")
+end
+
+--正在查询玩家名称
+function queryinghumname(actor)
+    sendmsg(actor, 1, '{"Msg":"<font color=\'#ff0000\'>正在查询请稍后。。。</font>","Type":9}')
+end
+
+--名称被过滤
+function humnamefilter(actor)
+    _rename_card_finish(actor, true)
+    sendmsg(actor, 1, '{"Msg":"<font color=\'#ff0000\'>名称被过滤。。。</font>","Type":9}')
+end
+
+--长度不符合要求
+function namelengthfail(actor)
+    _rename_card_finish(actor, true)
+    sendmsg(actor, 1, '{"Msg":"<font color=\'#ff0000\'>长度不符合要求</font>","Type":9}')
+end
+
+--名称已经存在
+function humnameexists(actor)
+    _rename_card_finish(actor, true)
+    sendmsg(actor, 1, '{"Msg":"<font color=\'#ff0000\'>名称已经存在</font>","Type":9}')
+end
+
+--正在执行改名操作
+function changeinghumname(actor)
+    sendmsg(actor, 1, '{"Msg":"<font color=\'#ff0000\'>正在修改请稍后。。。</font>","Type":9}')
+end
+
+--改名成功
+function changehumnameok(actor)
+    _rename_card_finish(actor, false)
+    sendmsg(actor, 1, '{"Msg":"<font color=\'#ff0000\'>'..parsetext("你的名字修改成功，旧名称：<$USERNAME> 新名称：<$USERNEWNAME>！",actor)..'</font>","Type":9}')
+end
+
+--改名失败
+function changehumnamefail(actor)
+    _rename_card_finish(actor, true)
+    sendmsg(actor, 1, '{"Msg":"<font color=\'#ff0000\'>修改名称失败</font>","Type":9}')
 end
 --------------------NPC点击触发--------------------
 local qf_teshunpc = {

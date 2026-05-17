@@ -58,17 +58,17 @@ function npc.link(play,npcid,ew,aid)
 
     if ew == 1 then
         if jq_data[key] and jq_data[key] >= 2 then
-            Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
+            Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#218|")
             return
         end
         if jq_data[key] and jq_data[key] == 1 then
-            Player.sendmsgEx(play, "你已经领取#57|【"..(_config.name or "该任务").."】#249|")
+            Player.sendmsgEx(play, "你已经领取#57|【"..(_config.name or "该任务").."】#218|")
             return
         end
         jq_data[key] = 1
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         shaguai.jia(play, _config.shaguai_id or 678)
-        Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#249|")
+        Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#218|")
         if npcid then Guard.closeNpcAndAuto(play, npcid) end
         sendluamsg(play,101,1005,0,0,"rwjs")
         sendluamsg(play,100,npcid,1,1,"")
@@ -90,7 +90,7 @@ function npc.link(play,npcid,ew,aid)
                 jq_data[key] = 2
             end
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-            Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+            Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成#57")
             if npcid then Guard.closeNpc(play, npcid) end
             if _config.ch then
                 Player.title_give(play, _config.ch)
@@ -102,7 +102,7 @@ function npc.link(play,npcid,ew,aid)
             end
             sendluamsg(play,100,npcid,1,2,"")
         else
-            Player.sendmsgEx(play, string.format("进度：|【%d/%d】#249|", done, #details))
+            Player.sendmsgEx(play, string.format("进度：|【%d/%d】#218|", done, #details))
         end
         return
     end
@@ -127,7 +127,7 @@ function npc.link(play,npcid,ew,aid)
         end
 
         if cfg.num and (sg_data[key] or 0) < cfg.num then
-            Player.sendmsgEx(play, string.format("击杀不足：#57|【%d/%d】#249|", (sg_data[key] or 0), cfg.num))
+            Player.sendmsgEx(play, string.format("击杀不足：#57|【%d/%d】#218|", (sg_data[key] or 0), cfg.num))
             return
         end
         if cfg.cost and not Guard.ensureCost(play, cfg.cost) then

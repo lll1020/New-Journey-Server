@@ -336,7 +336,7 @@ local function _drop_one_equip(play)
     delitembymakeindex(play, makeindex, 1, "ÑªÆõÖ®ÃÅËÀÍöµôÂä")
     setplaydef(play, VarCfg.Die_Drop_item, name)
     _touch_drop_death(play)
-    Player.sendmsgEx(play, string.format("ÑªÆõÉúĞ§£¬ÄãµôÂäÁË#57|¡¾%s¡¿#249|", name))
+    Player.sendmsgEx(play, string.format("ÑªÆõÉúĞ§£¬ÄãµôÂäÁË#57|¡¾%s¡¿#218|", name))
     return true
 end
 
@@ -450,7 +450,7 @@ local function _try_extra_small_drop(play, mob)
     end
     if math.random(rate) == 1 and shaguai.temp_drop(play, mob, item) then
         _touch_drop_kill(play)
-        Player.sendmsgEx(play, "ÑªÆõ¶îÍâµôÂä#57|¡¾" .. item .. "¡¿#249|")
+        Player.sendmsgEx(play, "ÑªÆõ¶îÍâµôÂä#57|¡¾" .. item .. "¡¿#218|")
     end
 end
 

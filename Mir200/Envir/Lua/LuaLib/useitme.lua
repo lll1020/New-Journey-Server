@@ -107,7 +107,7 @@ function stdmodefunc12(play, item)
     if sl < 1 then
         return false
     end
-    if not Player.canGainRoleLevel(play, string.format("当前等级已达#57|【%d级】#249|，经验丹无法继续使用#57", Player.getRoleLevelCap())) then
+    if not Player.canGainRoleLevel(play, string.format("当前等级已达#57|【%d级】#218|，经验丹无法继续使用#57", Player.getRoleLevelCap())) then
         return false
     end
     local wpid = getiteminfo(play, item, 2)
@@ -274,24 +274,48 @@ function FsendQfPz(actor,str,count)
 end
 ---千里传音 --end
 function stdmodefunc30(play, item)
-    local exp = getplaydef(play, VarCfg["U_境界修炼"][2])
-    if exp >= 10000000 then
+    local sl, itemName = _get_use_all_info(play, item)
+    if sl < 1 then
+        return false
+    end
+    local exp = tonumber(getplaydef(play, VarCfg["U_境界修炼"][2]) or 0) or 0
+    local maxExp = 10000000
+    if exp >= maxExp then
         sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>境界修炼已满级</font>","Type":9}')
         return false
     end
-    exp = exp + getstditeminfo(getiteminfo(play, item, 2), 8)
-    if exp > 10000000 then exp = 10000000 end
-    setplaydef(play, VarCfg["U_境界修炼"][2], exp)
-    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>境界修炼经验+'..getstditeminfo(getiteminfo(play, item, 2), 8)..'</font>","Type":9}')
+    local addOne = tonumber(getstditeminfo(getiteminfo(play, item, 2), 8) or 0) or 0
+    if addOne <= 0 then
+        return false
+    end
+    local useCount = math.min(sl, math.ceil((maxExp - exp) / addOne))
+    local addTotal = math.min(maxExp - exp, addOne * useCount)
+    setplaydef(play, VarCfg["U_境界修炼"][2], exp + addTotal)
+    _take_use_all_item(play, item, useCount, itemName)
+    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>境界修炼【修为】+'..addTotal..'</font>","Type":9}')
+    return false
 end
 function stdmodefunc31(play, item)
+    local sl, itemName = _get_use_all_info(play, item)
+    if sl < 1 then
+        return false
+    end
+    local addOne = tonumber(getstditeminfo(getiteminfo(play, item, 2), 8) or 0) or 0
+    if addOne <= 0 then
+        return false
+    end
+    local addTotal = addOne * sl
     local T_data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
-    T_data.jf = (T_data.jf or 0) + getstditeminfo(getiteminfo(play, item, 2), 8)
+    T_data.jf = (tonumber(T_data.jf or 0) or 0) + addTotal
     Player.setJsonVarByTable(play, VarCfg["T_天书"], T_data)
     local itemobj = linkbodyitem(play, teshudata["npc_24"].where)
-    setcustomitemprogressbar(play, itemobj, 1, tbl2json({["cur"] = T_data.jf}))
-    refreshitem(play, itemobj)
-    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>天书杀意值+'..getstditeminfo(getiteminfo(play, item, 2), 8)..'</font>","Type":9}')
+    if itemobj and itemobj ~= "0" then
+        setcustomitemprogressbar(play, itemobj, 1, tbl2json({["cur"] = T_data.jf}))
+        refreshitem(play, itemobj)
+    end
+    _take_use_all_item(play, item, sl, itemName)
+    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>天书杀意值+'..addTotal..'</font>","Type":9}')
+    return false
 end
 -- 仙府丹药统一使用到期时间驱动；同类丹药只延长持续时间，不重复叠加效果。
 local function _xianfu_dan_set_expire(play, varName, seconds)
@@ -435,7 +459,7 @@ function stdmodefunc32(play, item) --神石召唤
     local keyCost = {{"神石宝箱钥匙", 1}}
     local name, num = Player.checkItemNumByTable(play, keyCost)
     if name then
-        Player.sendmsgEx(play, string.format("缺少|%s#249|数量|%d#249", name, num))
+        Player.sendmsgEx(play, string.format("缺少|%s#218|数量|%d#218", name, num))
         return false
     end
     local rewardName, qualityTitle = _godstone_pick_reward(boxName)
@@ -449,7 +473,7 @@ function stdmodefunc32(play, item) --神石召唤
     if Npclib and Npclib[53] and Npclib[53].markOwned then
         Npclib[53].markOwned(play, rewardName)
     end
-    Player.sendmsgEx(play, string.format("开启|%s#249|成功，获得#57|【%s】#249|%s#57", boxName, rewardName, qualityTitle and ("（" .. qualityTitle .. "）") or ""))
+    Player.sendmsgEx(play, string.format("开启|%s#218|成功，获得#57|【%s】#218|%s#57", boxName, rewardName, qualityTitle and ("（" .. qualityTitle .. "）") or ""))
     return false
 end
 function stdmodefunc33(play, item) --灵兽圣遗物自选礼盒
@@ -479,17 +503,17 @@ function stdmodefunc35(play, item) --藏宝图
             release_print("触发挖宝逻辑")
             -- local name, num = Player.checkItemNumByTable(play, {{"铲子",1}})
             -- if name then
-            --     Player.sendmsgEx(play, string.format("你的|%s#249|不足|%d#249", name, num))
+            --     Player.sendmsgEx(play, string.format("你的|%s#218|不足|%d#218", name, num))
             --     return false
             -- end
             local gw = genmonex(map_name,map_x,map_y,teshudata["npc_47"].details[getstditeminfo(getiteminfo(play, item, 2), 8)].mob_name,1,1,0,54,"",0)
             return true
         else
-            Player.sendmsgEx(play, "当前位置不是藏宝图指定的坐标，无法使用！#249")
+            Player.sendmsgEx(play, "当前位置不是藏宝图指定的坐标，无法使用！#218")
             return false
         end
     else
-        Player.sendmsgEx(play, "当前地图不是藏宝图指定的地图，无法使用！#249")
+        Player.sendmsgEx(play, "当前地图不是藏宝图指定的地图，无法使用！#218")
         return false
     end
     -- changeitemname(play,-2,detail.item.."["..map.map_name..","..map.map_x..","..map.map_y.."]",itemobj)
@@ -561,18 +585,18 @@ function stdmodefunc39(play, item) --特殊丹药
     if itemName == "稳固丹" then
         local expireAt = _xianfu_dan_set_expire(play, "N$xf_dan_low_expire", 30 * 60)
         delitembymakeindex(play, getiteminfo(play, item, 1), 1)
-        Player.sendmsgEx(play, string.format("已服用#57|【稳固丹】#249|，持续至#57|【%s】#249|#57", os.date("%H:%M:%S", expireAt)))
+        Player.sendmsgEx(play, string.format("已服用#57|【稳固丹】#218|，持续至#57|【%s】#218|#57", os.date("%H:%M:%S", expireAt)))
         return false
     elseif itemName == "幸运丹" then
         local expireAt = _xianfu_dan_set_expire(play, "N$xf_dan_mid_expire", 30 * 60)
         Player.add_attlist(play, "仙府幸运丹", "=", Player.getAttrTableToStr({[246] = 1000, [245] = 500}), 1)
         delitembymakeindex(play, getiteminfo(play, item, 1), 1)
-        Player.sendmsgEx(play, string.format("已服用#57|【幸运丹】#249|，持续至#57|【%s】#249|#57", os.date("%H:%M:%S", expireAt)))
+        Player.sendmsgEx(play, string.format("已服用#57|【幸运丹】#218|，持续至#57|【%s】#218|#57", os.date("%H:%M:%S", expireAt)))
         return false
     elseif itemName == "凝萃神丹" then
         local expireAt = _xianfu_dan_set_expire(play, "N$xf_dan_high_expire", 30 * 60)
         delitembymakeindex(play, getiteminfo(play, item, 1), 1)
-        Player.sendmsgEx(play, string.format("已服用#57|【凝萃神丹】#249|，持续至#57|【%s】#249|#57", os.date("%H:%M:%S", expireAt)))
+        Player.sendmsgEx(play, string.format("已服用#57|【凝萃神丹】#218|，持续至#57|【%s】#218|#57", os.date("%H:%M:%S", expireAt)))
         return false
     end
     local idx = getstditeminfo(getiteminfo(play, item, 2), 8)
@@ -843,7 +867,7 @@ local function _msfc_submit_box_choice(play, boxName, poolKey, choiceIdx)
     end
     takeitem(play, boxName, 1)
     Player.rwjl(play, reward.give, tostring(boxName), 1)
-    Player.sendmsgEx(play, "开启成功，获得|" .. _msfc_reward_label(reward) .. "#249")
+    Player.sendmsgEx(play, "开启成功，获得|" .. _msfc_reward_label(reward) .. "#218")
 end
 function msfcbox(play, code)
     local poolKey, choiceIdx = _msfc_parse_box_code(code)
@@ -861,14 +885,17 @@ function msfcbox(play, code)
     _msfc_submit_box_choice(play, boxName, poolKey, choiceIdx)
 end
 function stdmodefunc41(play, item) --仙法卷轴残页  -- 10合一  仙法卷轴
-    local itemName = getiteminfo(play, item, ConstCfg.iteminfo.name) or "仙法卷轴残页"
-    if getbagitemcount(play, itemName) < 10 then
-        Player.sendmsgEx(play, itemName .. "不足10个#57")
+    local sl, itemName = _get_use_all_info(play, item)
+    itemName = itemName or "仙法卷轴残页"
+    local needNum = 10
+    if sl < needNum then
+        Player.sendmsgEx(play, itemName .. "不足" .. needNum .. "个#57")
         return false
     end
-    takeitem(play, itemName, 10)
-    Player.rwjl(play, {{"仙法卷轴",1}}, "仙法卷轴残页合成", 1)
-    Player.sendmsgEx(play, "合成成功，获得|仙法卷轴*1#249")
+    local makeCount = math.floor(sl / needNum)
+    _take_use_all_item(play, item, makeCount * needNum, itemName)
+    Player.rwjl(play, {{"仙法卷轴", makeCount}}, "仙法卷轴残页合成", 1)
+    Player.sendmsgEx(play, "合成成功，获得|仙法卷轴*" .. makeCount .. "#218")
     return false
 end
 function stdmodefunc42(play, item) --低级材料自选箱  --5选1材料
@@ -913,10 +940,23 @@ function stdmodefunc45(play, item) --"背包道具（不可回收不可分解不可丢弃不可爆出
     return false
 end
 function stdmodefunc46(play, item) --等级卷轴  等级 + 1
-    local ok = select(1, Player.addRoleLevel(play, 1, string.format("当前等级已达#57|【%d级】#249|，等级卷轴无法继续使用#57", Player.getRoleLevelCap())))
-    if not ok then
+    local sl, itemName = _get_use_all_info(play, item)
+    if sl < 1 then
         return false
     end
+    local useCount = 0
+    for i = 1, sl do
+        local ok = select(1, Player.addRoleLevel(play, 1, i == 1 and string.format("当前等级已达#57|【%d级】#218|，等级卷轴无法继续使用#57", Player.getRoleLevelCap()) or false))
+        if not ok then
+            break
+        end
+        useCount = useCount + 1
+    end
+    if useCount > 0 then
+        _take_use_all_item(play, item, useCount, itemName)
+        Player.sendmsgEx(play, "等级卷轴使用成功，等级提升#57|【" .. useCount .. "】#218|级#57")
+    end
+    return false
 end
 function stdmodefunc47(play, item) --天道·渡劫丹
     if not Npclib or not Npclib[76] or type(Npclib[76].use_dujie_dan) ~= "function" then
@@ -1016,7 +1056,7 @@ local function _use_1002_unlock(play, item, keyName, listName, label)
     GameEvent.push(EventCfg.onUPSkin, play, idx)
     _refresh_1002_attr(play, T_data)
     delitembymakeindex(play, getiteminfo(play, item, 1), 1)
-    Player.sendmsgEx(play, "恭喜你成功激活|【" .. (cfgList[idx].name or label) .. "】#249|")
+    Player.sendmsgEx(play, "恭喜你成功激活|【" .. (cfgList[idx].name or label) .. "】#218|")
     return false
 end
 function stdmodefunc53(play, item)  --使用时装  getstditeminfo(getiteminfo(play, item, 2), 8)  通过这个来获取对应的序号
@@ -1096,7 +1136,7 @@ function stdmodefunc57(play, item) --大陆专属装备随机宝箱 getstditeminfo(getitem
     end
     giveitem(play, rewardName, rewardNum, rewardBind)
     delitembymakeindex(play, getiteminfo(play, item, 1), 1)
-    Player.sendmsgEx(play, "恭喜获得|【" .. rewardName .. "】#249|")
+    Player.sendmsgEx(play, "恭喜获得|【" .. rewardName .. "】#218|")
     return false
 end
 -- 消耗品入口：净业符直接走残魂商店真实编号逻辑。
@@ -1116,7 +1156,7 @@ function stdmodefunc58(play, item) --净业符
     end
     local after = shopNpc.reduce_fire(play, reduce) or 0
     delitembymakeindex(play, getiteminfo(play, item, 1), 1)
-    Player.sendmsgEx(play, string.format("使用成功，业火值从#57|【%d】#249|降至#57|【%d】#249|", before, tonumber(after) or 0))
+    Player.sendmsgEx(play, string.format("使用成功，业火值从#57|【%d】#218|降至#57|【%d】#218|", before, tonumber(after) or 0))
     return false
 end
 function stdmodefunc59(play, item) --至尊黑卡
@@ -1136,14 +1176,18 @@ function stdmodefunc59(play, item) --至尊黑卡
     return false
 end
 function stdmodefunc60(play, item) --筑基丹碎片
-    local itemName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "筑基丹碎片")
-    if getbagitemcount(play, itemName) < 10 then
-        Player.sendmsgEx(play, itemName .. "不足10个#57")
+    local sl, itemName = _get_use_all_info(play, item)
+    itemName = itemName or "筑基丹碎片"
+    local needNum = 3
+    if sl < needNum then
+        Player.sendmsgEx(play, itemName .. "不足" .. needNum .. "个#57")
         return false
     end
-    Player.takeItemByTable(play, {{itemName,10}}, ",筑基丹碎片合成", nil)
-    giveitem(play, "筑基丹", 1)
-    Player.sendmsgEx(play, "成功合成#57|【筑基丹】#249|#57")
+    local makeCount = math.min(math.floor(sl / needNum), 3)
+    local takeCount = makeCount >= 3 and sl or makeCount * needNum
+    _take_use_all_item(play, item, takeCount, itemName)
+    giveitem(play, "筑基丹", makeCount)
+    Player.sendmsgEx(play, "成功合成#57|【筑基丹*" .. makeCount .. "】#218|#57")
     return false
 end
 function stdmodefunc61(play, item) --筑基丹
@@ -1160,21 +1204,114 @@ function stdmodefunc61(play, item) --筑基丹
     rec.jz_dan_count = cur + 1
     setplaydef(play, VarCfg["T_物品使用记录"], tbl2json(rec))
     Player.add_attlist(play, "筑基丹", "=", "3#244#" .. tostring((tonumber(rec.jz_dan_count) or 0) * 1000) .. "|3#4#" .. tostring((tonumber(rec.jz_dan_count) or 0) * 50), 1)
-    Player.sendmsgEx(play, "筑基丹服用成功，当前已服用|" .. tostring(rec.jz_dan_count) .. "/3#249")
+    Player.sendmsgEx(play, "筑基丹服用成功，当前已服用|" .. tostring(rec.jz_dan_count) .. "/3#218")
     return false
 end
 function stdmodefunc62(play, item) --神石碎片
-    local itemName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "神石碎片")
-    if getbagitemcount(play, itemName) < 88 then
-        Player.sendmsgEx(play, itemName .. "不足88个#57")
+    local sl, itemName = _get_use_all_info(play, item)
+    itemName = itemName or "神石碎片"
+    local needNum = 88
+    if sl < needNum then
+        Player.sendmsgEx(play, itemName .. "不足" .. needNum .. "个#57")
         return false
     end
-    Player.takeItemByTable(play, {{itemName, 88}}, ",神石碎片合成", nil)
-    giveitem(play, "神石宝箱", 1)
-    Player.sendmsgEx(play, "成功合成#57|【神石宝箱】#249|#57")
+    local makeCount = math.floor(sl / needNum)
+    _take_use_all_item(play, item, makeCount * needNum, itemName)
+    giveitem(play, "神石宝箱", makeCount)
+    Player.sendmsgEx(play, "成功合成#57|【神石宝箱*" .. makeCount .. "】#218|#57")
     return false
 end
 
+function stdmodefunc63(play, item) --仙酒：使用后增加醉意值
+    local itemName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "")
+    local cfg = Guard.getConfig("npc_70") or {}
+    local addzuiyi = 0
+    for _, detail in ipairs(cfg.details or {}) do
+        local reward = detail.cost and detail.cost[1]
+        if reward and tostring(reward[1] or "") == itemName then
+            addzuiyi = tonumber(detail.num or 0) or 0
+            break
+        end
+    end
+    if addzuiyi <= 0 then
+        Player.sendmsgEx(play, "该酒水配置异常，无法使用#57")
+        return false
+    end
+    local maxZuiyi = tonumber(cfg.max_zuiyi or 100) or 100
+    local cur = tonumber(getplaydef(play, VarCfg["J_醉意值"]) or 0) or 0
+    if cur >= maxZuiyi then
+        Player.sendmsgEx(play, string.format("你的醉意值已达上限#57|【%d】#218|，无法继续饮用酒水#57", maxZuiyi))
+        return false
+    end
+    local newValue = math.min(maxZuiyi, cur + addzuiyi)
+    local realAdd = newValue - cur
+    delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+    setplaydef(play, VarCfg["J_醉意值"], newValue)
+    Player.sendmsgEx(play, string.format("你饮用了|【%s】#218|，醉意值增加了|【%d】#218|，当前醉意值为|【%d】#218", itemName, realAdd, newValue))
+    -- sendluamsg(play,100,70,1,0,tbl2json({num = newValue}))
+    return false
+end
+function stdmodefunc64(play, item) --改名卡
+    local itemName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "改名卡")
+    if itemName == "" then
+        itemName = "改名卡"
+    end
+    if getbagitemcount(play, itemName) < 1 then
+        Player.sendmsgEx(play, itemName .. "不足#57")
+        return false
+    end
+    if tonumber(getplaydef(play, "N$改名卡处理中") or 0) == 1 then
+        Player.sendmsgEx(play, "正在处理改名请求，请稍后#57")
+        return false
+    end
+    setplaydef(play, "S$改名卡道具", itemName)
+    say(play, "<确认改名/@@InputString68(请输入新的角色名称：)>\\")
+    return false
+end
+
+local function _rename_card_submit(play, inputText, inputVar)
+    local newName = tostring(inputText or "")
+    if newName == "" and inputVar and inputVar ~= "" then
+        newName = tostring(getplaydef(play, inputVar) or "")
+    end
+    if newName == "" then
+        newName = tostring(getconst(play, "<$NPCPARAMS(1,S68)>") or "")
+    end
+    if newName == "" then
+        newName = tostring(getplaydef(play, "S68") or getplaydef(play, "S64") or "")
+    end
+    if newName == "" then
+        Player.sendmsgEx(play, "请输入新的角色名称#57")
+        return false
+    end
+    if tonumber(getplaydef(play, "N$改名卡处理中") or 0) == 1 then
+        Player.sendmsgEx(play, "正在处理改名请求，请稍后#57")
+        return false
+    end
+    local itemName = tostring(getplaydef(play, "S$改名卡道具") or "改名卡")
+    if itemName == "" then
+        itemName = "改名卡"
+    end
+    if getbagitemcount(play, itemName) < 1 then
+        Player.sendmsgEx(play, itemName .. "不足#57")
+        return false
+    end
+    takeitem(play, itemName, 1)
+    setplaydef(play, "N$改名卡处理中", 1)
+    setplaydef(play, "S$改名卡道具", itemName)
+    setplaydef(play, "S$改名卡目标名称", newName)
+    changehumname(play, newName)
+    return false
+end
+
+
+function inputstring68(play, inputText)
+    return _rename_card_submit(play, inputText, "S68")
+end
+
+function inputstring64(play, inputText)
+    return _rename_card_submit(play, inputText, "S64")
+end
 local function _get_zhuji_dan_record(play)
     local rec = json2tbl(getplaydef(play, VarCfg["T_物品使用记录"]))
     if type(rec) ~= "table" then
@@ -1182,5 +1319,4 @@ local function _get_zhuji_dan_record(play)
     end
     return rec
 end
-
 

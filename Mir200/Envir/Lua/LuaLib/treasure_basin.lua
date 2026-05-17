@@ -274,7 +274,7 @@ local function _grant_artifact_if_needed(play, data)
         Player.rwjl(play, _artifact_reward(), "聚宝盆重铸", 1)
         data.granted_item = 1
         changed = true
-        Player.sendmsgEx(play, "获得背包神器：|【".._artifact_show_name().."】#249|")
+        Player.sendmsgEx(play, "获得背包神器：|【".._artifact_show_name().."】#218|")
     end
     if changed then
         _save_state(play, data)
@@ -361,7 +361,7 @@ function TreasureBasin.link(play, npcid, p2, p3, msgData)
 
     local data = _grant_artifact_if_needed(play, _get_state(play))
     if data.rebuilt >= 1 or _has_artifact(play) then
-        Player.sendmsgEx(play, "你已拥有#57|【".._artifact_show_name().."】#249|")
+        Player.sendmsgEx(play, "你已拥有#57|【".._artifact_show_name().."】#218|")
         _refresh_attr(play)
         _refresh_item_bar(play)
         _try_auto_reward(play, npcid)
@@ -373,7 +373,7 @@ function TreasureBasin.link(play, npcid, p2, p3, msgData)
     local needNum = _toint(_config.fragment_count or 20)
     local haveNum = getbagitemcount(play, itemName)
     if haveNum < needNum then
-        Player.sendmsgEx(play, string.format("还需要#57|【%s】#249|：#57|【%d/%d】#249|", itemName, haveNum, needNum))
+        Player.sendmsgEx(play, string.format("还需要#57|【%s】#218|：#57|【%d/%d】#218|", itemName, haveNum, needNum))
         Guard.closeNpcAndAuto(play, npcid)
         return
     end
@@ -390,7 +390,7 @@ function TreasureBasin.link(play, npcid, p2, p3, msgData)
     data = _grant_artifact_if_needed(play, data)
     _refresh_attr(play)
     _refresh_item_bar(play)
-    Player.sendmsgEx(play, "成功重铸#57|【".._artifact_show_name().."】#249|，已发放实体背包神器#57")
+    Player.sendmsgEx(play, "成功重铸#57|【".._artifact_show_name().."】#218|，已发放实体背包神器#57")
     _send_panel(play, 1, npcid)
 end
 

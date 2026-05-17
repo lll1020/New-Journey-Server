@@ -42,7 +42,7 @@ function npc.link(play,npcid,ew,aid)
         local max_num = _config.max_num or 1
         local cnt = jq_data[key] or 0
         if cnt >= max_num then
-            Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
+            Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#218|")
             return
         end
 
@@ -55,7 +55,7 @@ function npc.link(play,npcid,ew,aid)
         cnt = cnt + add
         jq_data[key] = cnt
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, string.format("本次进度+|【%d】#249|，当前：|【%d/%d】#249|", add, cnt, max_num))
+        Player.sendmsgEx(play, string.format("本次进度+|【%d】#218|，当前：|【%d/%d】#218|", add, cnt, max_num))
 
         if cnt >= max_num then
             if (jq_data[key] or 0) >= max_num then
@@ -63,7 +63,7 @@ function npc.link(play,npcid,ew,aid)
                 jq_data[key] = cnt
                 Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
             end
-            Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+            Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成#57")
             if npcid then Guard.closeNpc(play, npcid) end
             if _config.ch then
                 Player.title_give(play, _config.ch)

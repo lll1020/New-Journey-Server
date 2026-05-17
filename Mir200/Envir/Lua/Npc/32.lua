@@ -55,12 +55,12 @@ function npc.link(play,npcid,ew,aid)
         -- 转生现在只校验当前等级对应的材料与下一级配置，不再追加其他阶段前置。
         local name, num = Player.checkItemNumByTable(play, config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
             return
         end
         Player.takeItemByTable(play, config.cost, ",转生",nil)
         setplaydef(play, VarCfg["U_转生等级"], level)
-        Player.sendmsgEx(play, "升级成功，当前转生为|【"..stage.."阶"..step.."级】#249|")
+        Player.sendmsgEx(play, "升级成功，当前转生为|【"..stage.."阶"..step.."级】#218|")
         if FairyFate and FairyFate.touch then FairyFate.touch(play) end
         Player.del_attlist(play, "转生")
         Login_zsattr(play)
@@ -71,7 +71,7 @@ function npc.link(play,npcid,ew,aid)
         if step == 10 then
             renewlevel(play,1,0,0)
             GameEvent.push(EventCfg.onRenewlevelUP, play, 1)
-            Player.sendmsgEx(play, "转生成功，当前转生为|【"..stage.."阶】#249|")
+            Player.sendmsgEx(play, "转生成功，当前转生为|【"..stage.."阶】#218|")
             if rwcf[npcid] then
                 Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
             end

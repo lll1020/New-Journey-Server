@@ -39,7 +39,7 @@ function npc.link(play,npcid,ew,aid)
         local U_num = getplaydef(play, VarCfg["U_占卜次数"])
 
         if checktitle(play, _config.details[_config.max_level]) then
-            Player.sendmsgEx(play, "你已拥有最高等级#57|【称号】#249|，无法继续占卜#57")
+            Player.sendmsgEx(play, "你已拥有最高等级#57|【称号】#218|，无法继续占卜#57")
             return
         end
 
@@ -70,7 +70,7 @@ function npc.link(play,npcid,ew,aid)
         if tonumber(U_num or 0) > 0 then
             local name, num = Player.checkItemNumByTable(play, _config.cost)
             if name then
-                Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
+                Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
                 return
             end
             Player.takeItemByTable(play, _config.cost, ",占卜",nil)
@@ -81,7 +81,7 @@ function npc.link(play,npcid,ew,aid)
         setplaydef(play, VarCfg["U_占卜次数"], U_num + 1)
         -- 二大陆伏妖录：占卜成功后立即尝试自动结算当前任务。
         Player.trySyncSecondContinentXyl(play)
-        -- Player.sendmsgEx(play, string.format("你获得了|【%s】#249", titileName))
+        -- Player.sendmsgEx(play, string.format("你获得了|【%s】#218", titileName))
         sendluamsg(play,100,npcid,1,0,"")
     end
 end

@@ -55,7 +55,7 @@ function npc.link(play,npcid,ew,aid)
         local level = getplaydef(play, VarCfg["U_境界修炼"][1])
         local exp = getplaydef(play, VarCfg["U_境界修炼"][2])
         if level >= _config.max_level then
-            Player.sendmsgEx(play,  "你的境界已达到#57|【".._config.details[level].title.."级】#249|，无需再提升#57")
+            Player.sendmsgEx(play,  "你的境界已达到#57|【".._config.details[level].title.."级】#218|，无需再提升#57")
             return
         end
         level = level + 1
@@ -68,12 +68,12 @@ function npc.link(play,npcid,ew,aid)
 
         if exp >= config.need_xxz then
             if level == 10 and _get_jz_dan_count(play) < 1 then
-                Player.sendmsgEx(play, "你的#57|【筑基丹】#249|不足，需要服用#57|【1颗筑基丹】#249|后方可突破")
+                Player.sendmsgEx(play, "你的#57|【筑基丹】#218|不足，需要服用#57|【1颗筑基丹】#218|后方可突破")
                 return
             end
             local name, num = Player.checkItemNumByTable(play, config.cost)
             if name then
-                Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
+                Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
                 return
             end
             Player.takeItemByTable(play, config.cost, ",境界提升",nil)
@@ -86,7 +86,7 @@ function npc.link(play,npcid,ew,aid)
             setplaydef(play, VarCfg["U_境界修炼"][1], level)
             -- 二大陆伏妖录：境界突破成功后立即尝试自动结算当前任务。
             Player.trySyncSecondContinentXyl(play)
-            Player.sendmsgEx(play,  "恭喜你，境界提升成功，当前境界等级为|【".._config.details[level].title.."级】#249|")
+            Player.sendmsgEx(play,  "恭喜你，境界提升成功，当前境界等级为|【".._config.details[level].title.."级】#218|")
             if FairyFate and FairyFate.touch then FairyFate.touch(play, "realm_up") end
             Player.del_attlist(play, "境界修为")
             Login_jjxw(play)
@@ -101,7 +101,7 @@ function npc.link(play,npcid,ew,aid)
             sendluamsg(play,101,1005,0,0,"tpcg")
             _send_sync_data(play, npcid, 1)
         else
-            Player.sendmsgEx(play,  "你的境界经验不足，无法提升境界#57")
+            Player.sendmsgEx(play,  "你的修为不足，无法提升境界#57")
             return
         end
     end

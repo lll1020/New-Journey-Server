@@ -221,7 +221,7 @@ local function _grant_refresh_title(play)
     Player.title_give(play, title_name, 1)
     _refresh_title_attr(play)
     recalcabilitys(play)
-    Player.sendmsgEx(play, "恭喜你获得称号：|【" .. title_name .. "】#249|")
+    Player.sendmsgEx(play, "恭喜你获得称号：|【" .. title_name .. "】#218|")
 end
 
 local function _build_panel_data(play)
@@ -239,7 +239,7 @@ function npc.main(play, npcid)
     end
     local itemobj = _get_tianshu_item(play)
     if not itemobj then
-        Player.sendmsgEx(play, "请先装备#57|【天书】#249|后再操作#57")
+        Player.sendmsgEx(play, "请先装备#57|【天书】#218|后再操作#57")
         return
     end
     _refresh_title_attr(play)
@@ -264,7 +264,7 @@ function npc.link(play, npcid, ew, aid, msgData)
     end
     local itemobj = _get_tianshu_item(play)
     if not itemobj then
-        Player.sendmsgEx(play, "请先装备#57|【天书】#249|后再操作#57")
+        Player.sendmsgEx(play, "请先装备#57|【天书】#218|后再操作#57")
         return
     end
 
@@ -272,13 +272,13 @@ function npc.link(play, npcid, ew, aid, msgData)
     if ew == 1 then
         local max_refresh = tonumber((_config and _config.max_refresh) or 20) or 20
         if T_data.refresh_times >= max_refresh then
-            Player.sendmsgEx(play, string.format("先天词条最多只能刷新#57|【%d次】#249|", max_refresh))
+            Player.sendmsgEx(play, string.format("先天词条最多只能刷新#57|【%d次】#218|", max_refresh))
             return
         end
         local cost = (_config and _config.cost) or {{"辉耀水晶",5},{"金币",500000}}
         local name, num = Player.checkItemNumByTable(play, cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, tonumber(num) or 0))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, tonumber(num) or 0))
             return
         end
         Player.takeItemByTable(play, cost, ",天书先天词条", nil)
@@ -308,7 +308,7 @@ function npc.link(play, npcid, ew, aid, msgData)
     T_data.preview = {}
     _save_data(play, T_data)
 
-    Player.sendmsgEx(play, "附魔成功：|【" .. tostring(choice.name or "先天词条") .. "】#249| " .. tostring(choice.desc or "") .. "，已替换天书当前词条#57")
+    Player.sendmsgEx(play, "附魔成功：|【" .. tostring(choice.name or "先天词条") .. "】#218| " .. tostring(choice.desc or "") .. "，已替换天书当前词条#57")
     sendluamsg(play, 100, npcid, 2, 0, tbl2json(_build_panel_data(play)))
 end
 

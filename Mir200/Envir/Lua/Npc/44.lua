@@ -72,15 +72,7 @@ end
 
 -- 仙府等级固定解锁 1/3/6/9 块地，与神石槽位解锁分开维护。
 local function getPlotUnlockCount(level)
-    level = tonumber(level or 1) or 1
-    if level >= 4 then
-        return 9
-    elseif level >= 3 then
-        return 6
-    elseif level >= 2 then
-        return 3
-    end
-    return 1
+    return gridSize
 end
 
 local function getLevelCfg(level)
@@ -393,20 +385,19 @@ function Storage.ensureRecord(play, opts)
 end
 
 function Storage.ensurePlots(record)
+    record.plot_unlock = getPlotUnlockCount(record.level)
     for i = 1, gridSize do
         local plot = record.fields[i]
+        local oldState = type(plot) == "table" and plot.state or nil
         if type(plot) ~= "table" then
             plot = {gridId = i}
             record.fields[i] = plot
         end
         plot.gridId = i
-        if i > (tonumber(record.plot_unlock or 0) or 0) then
-            if plot.state ~= "locked" then
-                resetPlot(plot, i)
-                plot.state = "locked"
-            end
+        if oldState == "growing" or oldState == "mature" then
+            plot.state = oldState
         else
-            plot.state = plot.state or "empty"
+            plot.state = "empty"
         end
         if plot.state == "empty" then
             resetPlot(plot, i)
@@ -471,21 +462,15 @@ buildPlantReward = function(play, plantCfg)
     return reward
 end
 
-function Planting.plant(play, record, params, now)
-    local gridId = tonumber(params.gridId)
-    if not gridId or gridId < 1 or gridId > gridSize then
-        return false, "参数错误"
-    end
-    local seedId = params.seedId
+-- 播种共用逻辑：单块播种与一键种植都复用这里，确保成熟时间与可偷状态一致。
+local function applyPlantToPlot(play, record, plot, seedId, now)
     local cfg = PlantCfg[seedId]
     if not cfg then
         return false, "灵草配置不存在"
     end
-    local plot = record.fields[gridId]
     if not plot then
         return false, "地块不存在"
     end
-    Storage.syncGrowth(record, now)
     if plot.state == "locked" then
         return false, "该地块尚未解锁"
     end
@@ -494,13 +479,13 @@ function Planting.plant(play, record, params, now)
     end
     local needLevel = tonumber(cfg.need_level or 1) or 1
     if (tonumber(record.level or 1) or 1) < needLevel then
-        return false, string.format("仙府等级达到#57|【%d级】#249|后解锁该灵草", needLevel)
+        return false, string.format("仙府等级达到#57|【%d级】#218|后解锁该灵草", needLevel)
     end
     local startAt = now or Common.now()
     plot.seedId = seedId
     plot.state = "growing"
     plot.plantedAt = startAt
-    local mature = (cfg.matureTime or 0)
+    local mature = tonumber(cfg.matureTime or 0) or 0
     if mature > 0 and getplaydef(play,"N$buff306") == 1 then
         -- 黑化肥会挥发：仙草成熟时间加快 30%。
         mature = math.ceil(mature * 0.7)
@@ -512,6 +497,53 @@ function Planting.plant(play, record, params, now)
     plot.canSteal = cfg.canSteal and true or false
     plot.product = nil
     return true, {plot = plot}
+end
+
+function Planting.plant(play, record, params, now)
+    local gridId = tonumber(params.gridId)
+    if not gridId or gridId < 1 or gridId > gridSize then
+        return false, "参数错误"
+    end
+    local plot = record.fields[gridId]
+    if not plot then
+        return false, "地块不存在"
+    end
+    Storage.syncGrowth(record, now)
+    return applyPlantToPlot(play, record, plot, params.seedId, now)
+end
+
+-- 一键种植：玩家选定灵草后，将当前所有已解锁空地一次性播满。
+function Planting.plantAll(play, record, params, now)
+    local seedId = tostring(params.seedId or "")
+    local cfg = PlantCfg[seedId]
+    if not cfg then
+        return false, "灵草配置不存在"
+    end
+    local needLevel = tonumber(cfg.need_level or 1) or 1
+    if (tonumber(record.level or 1) or 1) < needLevel then
+        return false, string.format("仙府等级达到#57|【%d级】#218|后解锁该灵草", needLevel)
+    end
+    Storage.syncGrowth(record, now)
+    local count = 0
+    local plantedGridIds = {}
+    for gridId = 1, gridSize do
+        local plot = record.fields[gridId]
+        if plot and plot.state == "empty" then
+            local ok = applyPlantToPlot(play, record, plot, seedId, now)
+            if ok then
+                count = count + 1
+                plantedGridIds[#plantedGridIds + 1] = gridId
+            end
+        end
+    end
+    if count <= 0 then
+        return false, "当前没有可种植空地"
+    end
+    return true, {
+        count = count,
+        seedId = seedId,
+        plantedGridIds = plantedGridIds,
+    }
 end
 
 function Planting.harvest(play, record, params, now)
@@ -854,7 +886,7 @@ function Refine.start(play, record, params, now)
         return false, "丹方不存在"
     end
     if not hasRefinePermit(play) then
-        return false, string.format("请先装备#249|%s#255|后再炼丹", RefineCfg.needEquip or "炼丹许可证")
+        return false, string.format("请先装备#218|%s#255|后再炼丹", RefineCfg.needEquip or "炼丹许可证")
     end
     local cd = RefineCfg.furnaceCd or 0
     if (record.refine.lastTime or 0) + cd > now then
@@ -935,6 +967,10 @@ local function levelUp(play, record)
     if #needCost > 0 then
         Player.takeItemByTable(play, needCost, ",仙府升级", nil)
     end
+    record.level = nextLevel
+    record.plot_unlock = getPlotUnlockCount(record.level)
+    Storage.ensurePlots(record)
+
 
     return true, {
         level = record.level,
@@ -946,27 +982,6 @@ local function levelUp(play, record)
 end
 
 local function tryAutoLevelUp(play, record)
-    local startLevel = tonumber(record.level or 1) or 1
-    local upgraded = false
-    while true do
-        local currentLevel = tonumber(record.level or 1) or 1
-        if currentLevel >= levelMax then
-            break
-        end
-        local ok = checkLevelUp(play, record)
-        if not ok then
-            break
-        end
-        local success = levelUp(play, record)
-        if not success then
-            break
-        end
-        upgraded = true
-    end
-    if upgraded then
-        Player.sendmsgEx(play, string.format("仙府自动升级至#57|【%d级】#249|", tonumber(record.level or startLevel) or startLevel))
-        return true
-    end
     return false
 end
 
@@ -1294,6 +1309,113 @@ function Doll.draw(play, record, now)
     }
 end
 
+
+-- count: 本次需要累计的抽取次数，用于十连前一次性汇总消耗。
+local function dollMergeCost(totalCost, cost)
+    totalCost = totalCost or {}
+    if type(cost) ~= "table" then
+        return totalCost
+    end
+    local indexMap = {}
+    for idx, entry in ipairs(totalCost) do
+        if type(entry) == "table" and entry[1] then
+            indexMap[tostring(entry[1])] = idx
+        end
+    end
+    for _, entry in ipairs(cost) do
+        if type(entry) == "table" and entry[1] then
+            local itemName = tostring(entry[1])
+            local itemCount = tonumber(entry[2] or 0) or 0
+            local existed = indexMap[itemName]
+            if existed then
+                totalCost[existed][2] = (tonumber(totalCost[existed][2] or 0) or 0) + itemCount
+            else
+                totalCost[#totalCost + 1] = {itemName, itemCount}
+                indexMap[itemName] = #totalCost
+            end
+        end
+    end
+    return totalCost
+end
+
+-- count: 连抽次数。这里按真实抽取顺序汇总成本，确保新手价与常规价切换一致。
+local function dollBuildBatchCost(record, count)
+    local totalCost = {}
+    local drawTotal = tonumber((((record or {}).doll or {}).draw_total) or 0) or 0
+    local firstCount = tonumber(DollCfg.first_draw_count) or 0
+    local drawCount = math.max(1, tonumber(count) or 1)
+    for _ = 1, drawCount do
+        local cost = nil
+        if drawTotal < firstCount then
+            cost = cloneRewardList(DollCfg.first_draw_cost or {})
+        else
+            cost = cloneRewardList(DollCfg.normal_draw_cost or {})
+        end
+        totalCost = dollMergeCost(totalCost, cost)
+        drawTotal = drawTotal + 1
+    end
+    return totalCost
+end
+
+-- play: 玩家对象；record: 仙府记录；now: 当前时间；count: 连抽次数。
+function Doll.drawBatch(play, record, now, count)
+    if type(DollCfg) ~= "table" or type(DollCfg.results) ~= "table" then
+        return false, "娃娃机配置缺失"
+    end
+    local drawCount = math.max(1, tonumber(count) or 1)
+    local totalCost = dollBuildBatchCost(record, drawCount)
+    local ok, lack = Common.checkCost(play, totalCost)
+    if not ok then
+        return false, string.format("%s不足", lack or "cost")
+    end
+    Common.payCost(play, totalCost, drawCount > 1 and "xianfu_doll_draw_batch" or "xianfu_doll_draw")
+    local results = {}
+    local doll = record.doll or {}
+    doll.owned = doll.owned or {}
+    doll.quality_count = doll.quality_count or {normal = 0, red = 0, hidden = 0}
+    record.doll = doll
+    for _ = 1, drawCount do
+        local resultId, drawType = dollRollResult(record)
+        local resultCfg = dollResultCfg(resultId)
+        if not resultId or not resultCfg then
+            return false, "娃娃机配置异常"
+        end
+        local fixedReward = cloneRewardList(DollCfg.every_draw_reward or {})
+        if #fixedReward > 0 then
+            Player.rwjl(play, fixedReward, "仙府娃娃机", 1, 0)
+        end
+        doll.draw_total = (tonumber(doll.draw_total) or 0) + 1
+        doll.owned[resultId] = (tonumber(doll.owned[resultId]) or 0) + 1
+        doll.last_result = resultId
+        doll.last_draw_time = tonumber(now) or Common.now()
+        local quality = tostring(resultCfg.quality or "normal")
+        doll.quality_count[quality] = (tonumber(doll.quality_count[quality]) or 0) + 1
+        if quality == "hidden" or quality == "red" then
+            doll.pity_progress = 0
+        else
+            doll.pity_progress = (tonumber(doll.pity_progress) or 0) + 1
+        end
+        local extraReward = dollTryExtraBox(play)
+        results[#results + 1] = {
+            resultId = resultId,
+            name = resultCfg.name or resultId,
+            quality = quality,
+            qualityName = resultCfg.quality_name or quality,
+            attrDesc = resultCfg.attr_desc or "",
+            drawType = drawType,
+            extra_reward = extraReward,
+        }
+    end
+    doll.hidden_count = dollCountOwnedByPool(record, dollHiddenPool())
+    record.doll = doll
+    dollRefreshAttr(play, record)
+    return true, {
+        count = drawCount,
+        results = results,
+        total_cost = totalCost,
+    }
+end
+
 local function loadState(play)
     local now = Common.now()
     local record = Storage.ensureRecord(play, {name = Player.GetName(play), now = now})
@@ -1336,16 +1458,67 @@ local function buildSnapshot(state)
     }
 end
 
+local function buildPartialSnapshot(state, playerFields)
+    local snapshot = {player = {}}
+    if type(playerFields) ~= "table" then
+        return snapshot
+    end
+    for _, fieldName in ipairs(playerFields) do
+        if fieldName == "open_slots" then
+            snapshot.player.open_slots = getOpenSlotCount(state.record)
+        elseif fieldName == "doll" then
+            snapshot.player.doll = dollBuildView(state.record)
+        elseif fieldName == "key" then
+            snapshot.player.key = state.record.meta.key
+        elseif fieldName == "name" then
+            snapshot.player.name = state.record.meta.name
+        elseif fieldName == "xiangHua" then
+            snapshot.player.xiangHua = state.record.stats.xiangHua or 0
+        elseif fieldName == "likenum" then
+            snapshot.player.likenum = state.record.stats.likenum or 0
+        else
+            snapshot.player[fieldName] = state.record[fieldName]
+        end
+    end
+    return snapshot
+end
+
+local ACTION_SNAPSHOT_FIELDS = {
+    sync = {
+        "key", "name", "xiangHua", "likenum", "herbs", "fields", "steal", "guard",
+        "likes", "decoration", "refine", "pet", "doll", "visitor", "level",
+        "plot_unlock", "growth", "level_stats", "opened", "open_slots",
+    },
+    plant = {"fields", "herbs", "growth", "level_stats"},
+    plantAll = {"fields", "herbs", "growth", "level_stats"},
+    harvest = {"fields", "herbs", "growth", "level_stats"},
+    buySeed = {"herbs"},
+    buyEgg = {"pet", "herbs"},
+    buyMaterial = {"pet", "herbs"},
+    refine = {"refine", "herbs", "growth", "level_stats"},
+    levelUp = {"level", "plot_unlock", "growth", "level_stats", "opened", "open_slots", "fields", "herbs"},
+    buyDecoration = {"decoration", "xiangHua"},
+    equipDecoration = {"decoration", "xiangHua"},
+    hatch = {"pet", "herbs"},
+    dollDraw = {"doll", "herbs"},
+    like = {"likes", "visitor", "growth", "likenum"},
+    steal = {"herbs", "steal", "growth"},
+    visit = {"growth"},
+}
+
 local function pushAction(play, npcid, action, ok, msg, state, extra)
+    local fields = ACTION_SNAPSHOT_FIELDS[action]
+    local partial = (fields ~= nil and action ~= "sync") and 1 or 0
+    local snapshot = partial == 1 and buildPartialSnapshot(state, fields) or buildSnapshot(state)
     sendluamsg(play, 100, npcid, 1, 0, tbl2json({
         action = action,
         ok = ok,
         message = msg or "",
         extra = extra,
-        state = buildSnapshot(state),
+        partial = partial,
+        state = snapshot,
     }))
 end
-
 local function findOnlineTargetByName(targetName)
     if not targetName or targetName == "" then
         return nil, nil, "请输入玩家名字"
@@ -1365,7 +1538,6 @@ end
 local ActionHandler = {}
 
 function ActionHandler.sync(play, npcid, state)
-    tryAutoLevelUp(play, state.record)
     dollRefreshAttr(play, state.record)
     persistState(state)
     pushAction(play, npcid, "sync", true, "", state)
@@ -1373,9 +1545,6 @@ end
 
 function ActionHandler.plant(play, npcid, state, params)
     local ok, res = Planting.plant(play, state.record, params or {}, state.now)
-    if ok then
-        tryAutoLevelUp(play, state.record)
-    end
     persistState(state)
     if not ok then
         Player.sendmsgEx(play, res or "播种失败#57")
@@ -1385,11 +1554,21 @@ function ActionHandler.plant(play, npcid, state, params)
     pushAction(play, npcid, "plant", true, "播种成功", state, res)
 end
 
+function ActionHandler.plantAll(play, npcid, state, params)
+    local ok, res = Planting.plantAll(play, state.record, params or {}, state.now)
+    persistState(state)
+    if not ok then
+        Player.sendmsgEx(play, res or "一键种植失败#57")
+        return
+    end
+    local seedName = tostring((PlantCfg[tostring((params or {}).seedId or "")] or {}).name or "灵草")
+    local msg = string.format("一键种植完成，已播种%s块%s", tostring(res.count or 0), seedName)
+    Player.sendmsgEx(play, msg)
+    pushAction(play, npcid, "plantAll", true, msg, state, res)
+end
+
 function ActionHandler.harvest(play, npcid, state, params)
     local ok, res = Planting.harvest(play, state.record, params or {}, state.now)
-    if ok then
-        tryAutoLevelUp(play, state.record)
-    end
     persistState(state)
     if not ok then
         Player.sendmsgEx(play, res or "尚未成熟#57")
@@ -1434,9 +1613,6 @@ end
 
 function ActionHandler.refine(play, npcid, state, params)
     local ok, res = Refine.start(play, state.record, params or {}, state.now)
-    if ok then
-        tryAutoLevelUp(play, state.record)
-    end
     persistState(state)
     if not ok then
         Player.sendmsgEx(play, res or "炼丹失败#57")
@@ -1444,6 +1620,18 @@ function ActionHandler.refine(play, npcid, state, params)
     end
     Player.sendmsgEx(play, "炼丹完成#57")
     pushAction(play, npcid, "refine", true, "炼丹完成", state, res)
+end
+
+function ActionHandler.levelUp(play, npcid, state, params)
+    local ok, res = levelUp(play, state.record)
+    persistState(state)
+    if not ok then
+        Player.sendmsgEx(play, tostring(res or "仙府升级失败") .. "#57")
+        pushAction(play, npcid, "levelUp", false, tostring(res or "仙府升级失败"), state)
+        return
+    end
+    Player.sendmsgEx(play, string.format("仙府升级成功，当前#57|【%d级】#218|", tonumber(state.record.level or 1) or 1))
+    pushAction(play, npcid, "levelUp", true, "仙府升级成功", state, res)
 end
 
 function ActionHandler.buyDecoration(play, npcid, state, params)
@@ -1531,7 +1719,6 @@ function ActionHandler.like(play, npcid, state, params)
         if ok then
             Visitor.push(targetRecord, state.record.meta.name, "like", "+" .. (LikeCfg.likeValue or 0), state.now)
             Storage.savePlayer(actor, targetRecord)
-            tryAutoLevelUp(play, state.record)
         end
         persistState(state)
         if not ok then
@@ -1549,7 +1736,6 @@ function ActionHandler.steal(play, npcid, state, params)
         if ok then
             Visitor.push(targetRecord, state.record.meta.name, "steal", "-" .. summarizeReward(res.product), state.now)
             Storage.savePlayer(actor, targetRecord)
-            tryAutoLevelUp(play, state.record)
         end
         persistState(state)
         if not ok then
@@ -1564,7 +1750,6 @@ end
 function ActionHandler.visit(play, npcid, state, params)
     handleVisit(play, npcid, state, params or {}, function(actor, targetRecord)
         applyGrowth(state.record, "visit", 1, state.now)
-        tryAutoLevelUp(play, state.record)
         local snapshot = Storage.buildPublicSnapshot(targetRecord)
         snapshot.isGuest = true
         Storage.savePlayer(actor, targetRecord)
@@ -1593,7 +1778,6 @@ end
 function npc.touchGrowth(play, reason, times)
     local state = loadState(play)
     applyGrowth(state.record, tostring(reason or ""), tonumber(times or 1) or 1, state.now)
-    tryAutoLevelUp(play, state.record)
     persistState(state)
     return state.record.growth
 end
@@ -1610,6 +1794,7 @@ function npc.getDollPanelPayload(play)
     persistState(state)
     return {
         doll = dollBuildView(state.record),
+        ten_cost = dollBuildBatchCost(state.record, 10),
     }
 end
 
@@ -1622,6 +1807,37 @@ function npc.drawDollFromWoodcut(play)
         extra = ok and res or nil,
     }
 end
+
+-- count: 砍树娃娃机请求的抽取次数，当前只会传 1 或 10。
+function npc.drawDollBatchFromWoodcut(play, count)
+    local state = loadState(play)
+    local ok, res = Doll.drawBatch(play, state.record, state.now, count)
+    persistState(state)
+    local extra = nil
+    if ok and type(res) == "table" then
+        local results = res.results or {}
+        local last = results[#results]
+        extra = {
+            count = tonumber(res.count) or 1,
+            results = results,
+        }
+        if type(last) == "table" then
+            extra.resultId = last.resultId
+            extra.name = last.name
+            extra.quality = last.quality
+            extra.qualityName = last.qualityName
+            extra.attrDesc = last.attrDesc
+            extra.drawType = last.drawType
+            extra.extra_reward = last.extra_reward
+        end
+    end
+    return ok, res, {
+        doll = dollBuildView(state.record),
+        ten_cost = dollBuildBatchCost(state.record, 10),
+        extra = extra,
+    }
+end
+
 function npc.main(play, npcid)
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     if not (jq_data["npc_55"] and jq_data["npc_55"] >= 2) then
@@ -1629,7 +1845,6 @@ function npc.main(play, npcid)
         return
     end
     local state = loadState(play)
-    tryAutoLevelUp(play, state.record)
     dollRefreshAttr(play, state.record)
     persistState(state)
     sendluamsg(play, 100, npcid, 0, 0, tbl2json(buildSnapshot(state)))

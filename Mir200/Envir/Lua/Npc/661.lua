@@ -45,7 +45,7 @@ function npc.link(play,npcid,ew,aid)
         local limit = _config.time or 0
 
         if jq_data[key] and jq_data[key] >= 2 then
-            Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
+            Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#218|")
             return
         end
 
@@ -56,7 +56,7 @@ function npc.link(play,npcid,ew,aid)
             sg_data[key] = 0
             Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-            Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#249|")
+            Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#218|")
             if npcid then Guard.closeNpcAndAuto(play, npcid) end
             if limit and limit > 0 then
                 senddelaymsg(play, "任务剩余时间：%s", limit, 250, 1, "@npc_661_timeout")
@@ -75,7 +75,7 @@ function npc.link(play,npcid,ew,aid)
                     jq_data[key] = 2
                 end
                 Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-                Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成")
+                Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成")
                 if npcid then Guard.closeNpc(play, npcid) end
                 if _config.ch then
                     Player.title_give(play, _config.ch)
@@ -95,11 +95,11 @@ function npc.link(play,npcid,ew,aid)
                 Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
                 local left = limit > 0 and (limit - (now - start)) or 0
                 if left < 0 then left = 0 end
-                Player.sendmsgEx(play, string.format("任务失败，已超时（剩余：#57|【%d秒】#249|）#57", left))
+                Player.sendmsgEx(play, string.format("任务失败，已超时（剩余：#57|【%d秒】#218|）#57", left))
                 return
             end
 
-            Player.sendmsgEx(play, "你还没有完成#57|【"..(_config.name or "该任务").."】#249|")
+            Player.sendmsgEx(play, "你还没有完成#57|【"..(_config.name or "该任务").."】#218|")
             if npcid then Guard.closeNpcAndAuto(play, npcid) end
         end
     end

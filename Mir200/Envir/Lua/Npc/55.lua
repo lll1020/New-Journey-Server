@@ -5,7 +5,7 @@ local _config = {
     name = "开辟仙府",
     -- rwjl = {{"仙草种子",9},{"绑定元宝",200000}},
     permit_item = "开辟许可证",   -- 许可证开辟：消耗 1 个开辟许可证
-    force_cost = {{"碎岩锤",2}},  -- 强行开辟：消耗碎岩锤*2
+    force_cost = {{"碎岩锤",20}},  -- 强行开辟：消耗碎岩锤*2
 }
 local function _has_permit(play)
     return getbagitemcount(play, _config.permit_item) > 0
@@ -77,18 +77,18 @@ function npc.link(play, npcid, p2, p3, msgData)
     end
     if p2 == 1 then
         if not _has_permit(play) then
-            Player.sendmsgEx(play, "未拥有#57|【".._config.permit_item.."】#249|，无法进行许可证开辟#57")
+            Player.sendmsgEx(play, "未拥有#57|【".._config.permit_item.."】#218|，无法进行许可证开辟#57")
             return
         end
         if not _consume_permit(play) then
-            Player.sendmsgEx(play, "扣除#57|【".._config.permit_item.."】#249|失败，请检查物品状态#57")
+            Player.sendmsgEx(play, "扣除#57|【".._config.permit_item.."】#218|失败，请检查物品状态#57")
             return
         end
         _finish_open(play, npcid, jq_data, sg_data, 1)
     elseif p2 == 2 then
         local name, num = Player.checkItemNumByTable(play, _config.force_cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
             return
         end
         Player.takeItemByTable(play, _config.force_cost, ",强行开辟仙府", nil)

@@ -51,14 +51,14 @@ function npc.link(play,npcid,ew,aid)
         end
         local name, num = Player.checkItemNumByTable(play, skill_config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
             return
         end
         Player.takeItemByTable(play, skill_config.cost, ",技能升级",nil)
         T_data.level[""..aid] = next_level
         Player.setJsonVarByTable(play, VarCfg["T_技能升级"], T_data)
         sendluamsg(play,100,npcid,1,aid,"")
-        Player.sendmsgEx(play, string.format("恭喜你，|【%s】#249|技能提升到了|【%d级】#249|",skill_config.name, next_level) )
+        Player.sendmsgEx(play, string.format("恭喜你，|【%s】#218|技能提升到了|【%d级】#218|",skill_config.name, next_level) )
         sendluamsg(play,101,1005,0,0,"qhcg")
 
         setplaydef(play,VarCfg.N_jnsh[aid],next_level*2)

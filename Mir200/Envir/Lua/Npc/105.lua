@@ -74,7 +74,7 @@ local function _grant_reward(play, reward)
         local skillId = getskillindex and getskillindex("群体施毒术") or 0
         if tonumber(skillId or 0) > 0 then
             addskill(play, skillId, 3)
-            Player.sendmsgEx(play, "成功领取#57|【群体施毒术】#249|#57")
+            Player.sendmsgEx(play, "成功领取#57|【群体施毒术】#218|#57")
         end
         return
     end

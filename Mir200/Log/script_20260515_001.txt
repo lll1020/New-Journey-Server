@@ -1,0 +1,29 @@
+[2026-05-15 05:28:01:398] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：63; NpcThreadId: 32716, CurPlayThreadId: 32716
+
+[2026-05-15 05:35:21:624] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：46; NpcThreadId: 32716, CurPlayThreadId: 32716
+[2026-05-15 05:35:21:624] [玩家名字]Lua执行耗时过高:46ms msgid:100 44 1 0 {"action":"harvest","param":{"gridId":7}}
+
+[2026-05-15 17:50:13:056] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 32716, CurPlayThreadId: 32716
+[2026-05-15 17:50:13:056] [玩家名字]Lua执行耗时过高:31ms msgid:100 503 1 0 
+
+[2026-05-15 18:00:09:089] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：32; NpcThreadId: 32716, CurPlayThreadId: 32716
+
+[2026-05-15 18:01:09:121] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：47; NpcThreadId: 32716, CurPlayThreadId: 32716
+
+[2026-05-15 19:00:09:985] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：906; NpcThreadId: 32716, CurPlayThreadId: 32716
+
+[2026-05-15 19:20:09:142] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：79; NpcThreadId: 32716, CurPlayThreadId: 32716
+
+[2026-05-15 19:34:57:289] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：235; NpcThreadId: 32716, CurPlayThreadId: 32716
+[2026-05-15 19:34:57:289] [玩家名字]Lua执行耗时过高:235ms msgid:101 507 1 14 
+
+[2026-05-15 19:35:03:923] LuaNPC:玩家名字 ID:999999999 执行 collectmonex player:玩家名字 耗时：1016; NpcThreadId: 32716, CurPlayThreadId: 32716
+
+[2026-05-15 21:44:32:118] LuaNPC:玩家名字 ID:999999999 执行 stdmodefunc10 player:玩家名字 耗时：313; NpcThreadId: 32716, CurPlayThreadId: 32716
+
+[2026-05-15 21:44:55:306] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 32716, CurPlayThreadId: 32716
+
+[2026-05-16 01:07:02:369] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：63; NpcThreadId: 32716, CurPlayThreadId: 32716
+
+[2026-05-16 02:43:09:515] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 32716, CurPlayThreadId: 32716
+

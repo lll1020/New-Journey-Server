@@ -117,7 +117,7 @@ function npc.link(play,npcid,ew,aid,data)
 
         local missing_name = _get_missing_task_name(T_data)
         if missing_name then
-            Player.sendmsgEx(play, "请先完成#57|【"..missing_name.."】#249|后再来提交灾厄入侵#57")
+            Player.sendmsgEx(play, "请先完成#57|【"..missing_name.."】#218|后再来提交灾厄入侵#57")
             return
         end
 
@@ -129,7 +129,7 @@ function npc.link(play,npcid,ew,aid,data)
         T_data["npc_46"]["wc"] = 1
         Player.setJsonVarByTable(play, VarCfg["T_dljq"], T_data)
         Player.title_give(play, _config.ch)
-        Player.sendmsgEx(play,  "恭喜你，获得称号：|【".._config.ch.."】#249|")
+        Player.sendmsgEx(play,  "恭喜你，获得称号：|【".._config.ch.."】#218|")
         sendluamsg(play,100,npcid,1,0,"")
     elseif ew == 2 then
         _jump_to_route(play, tonumber(aid or 0) or 0)

@@ -139,6 +139,7 @@ function jhb(play)
     changemoney(play,4,"=",2000000000,"",true)
     changemoney(play,7,"=",2000000000,"",true)
     changemoney(play,8,"=",2000000000,"",true)
+    changemoney(play,30,"=",2000000000,"",true)
 end
 function qhb(play)
     changemoney(play,1,"=",0,"",true)

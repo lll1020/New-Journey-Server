@@ -63,7 +63,7 @@ function npc.link(play,npcid,ew,aid)
                 jq_data[key] = 2
             end
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, string.format("提交进度：#57|【%d/%d】#249|", cnt, max_num))
+        Player.sendmsgEx(play, string.format("提交进度：#57|【%d/%d】#218|", cnt, max_num))
 
         local reward = _config.jl or _config.rwjl
         if reward then
@@ -71,7 +71,7 @@ function npc.link(play,npcid,ew,aid)
         end
 
         if first_complete then
-            Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+            Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成#57")
             if npcid then Guard.closeNpc(play, npcid) end
             sendluamsg(play,101,1005,0,0,"rwwc")
             if _config.ch then

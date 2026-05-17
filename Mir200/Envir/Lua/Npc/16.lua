@@ -164,7 +164,7 @@ local function _claim_reward(play, is_kf)
             GameEvent.push(EventCfg.GetCastleRewards, play)
         end
     end
-    Player.sendmsgEx(play, "奖励已发送到邮件,请到邮件查收!#249")
+    Player.sendmsgEx(play, "奖励已发送到邮件,请到邮件查收!#218")
     _refresh_panel(play, _NPC_ID, is_kf)
 end
 function npc.main(play, npcid)

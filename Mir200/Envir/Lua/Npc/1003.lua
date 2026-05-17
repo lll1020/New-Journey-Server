@@ -63,7 +63,7 @@
 --         end
 --         local name, num = Player.checkItemNumByTable(play, _config.cost)
 --         if name then
---             Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
+--             Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
 --             return
 --         end
 --         Player.takeItemByTable(play, _config.cost, ",时装解锁",nil)
@@ -72,7 +72,7 @@
 --         GameEvent.push(EventCfg.onUPSkin, play, _config.idx)
 --         if FairyFate and FairyFate.touch then FairyFate.touch(play, "fashion_unlock", _config.idx) end
 --         _refreshFashionAttr(play, T_data)
---         Player.sendmsgEx(play, "恭喜你，时装解锁成功，已解锁|【对应时装】#249|")
+--         Player.sendmsgEx(play, "恭喜你，时装解锁成功，已解锁|【对应时装】#218|")
 --         local data = {}
 --         data["T_data"] = T_data
 --         sendluamsg(play,100,npcid,1,0,tbl2json(data))

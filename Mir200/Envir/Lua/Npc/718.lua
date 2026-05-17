@@ -109,7 +109,7 @@ local function _on_pass(play)
     shaguai.jian(play, 718)
 
     sendluamsg(play,101,1005,0,0,"rwwc")
-    Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+    Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成#57")
     if npcid then Guard.closeNpc(play, npcid) end
     Guard.giveTaskReward(play, _config, (_config.name or "剧情任务").."奖励")
 end
@@ -150,7 +150,7 @@ function npc_718_enter(play)
     startautoattack(play)
     setenvirontimer(dtm, 1, 1, "@npc_718_dsq,"..play..","..dtm)
     senddelaymsg(play, "距离副本结束剩余%s", cfg.fb_time, 250, 1, "@npc_718_timeout")
-    Player.sendmsgEx(play, "击杀#57|【"..cfg.boss.."】#249|即可完成任务#57")
+    Player.sendmsgEx(play, "击杀#57|【"..cfg.boss.."】#218|即可完成任务#57")
 end
 
 function npc.main(play,npcid)
@@ -201,14 +201,14 @@ function npc.link(play,npcid,ew,aid)
     local state = tonumber(jq_data[_cfg_key] or 0) or 0
     if state >= 2 then
         shaguai.jian(play, 718)
-        Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|已完成，不能再次提交进入副本#57")
+        Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|已完成，不能再次提交进入副本#57")
         return
     end
 
     if state < 1 then
         jq_data[_cfg_key] = 1
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#249|")
+        Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#218|")
         if npcid then Guard.closeNpcAndAuto(play, npcid) end
         sendluamsg(play,101,1005,0,0,"rwjs")
     end

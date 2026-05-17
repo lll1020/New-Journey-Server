@@ -5,7 +5,7 @@ local _config = Guard.getConfig("npc_10")
 function npc.main(play,npcid)
     local equipLevel = Player.getEquipFieldByPos(play, _config.where, 1) or 0
     if equipLevel == 0 then
-        Player.sendmsgEx(play, "请先装备#57|【酒葫芦】#249|后再操作#57")
+        Player.sendmsgEx(play, "请先装备#57|【酒葫芦】#218|后再操作#57")
         return
     end
     sendluamsg(play,100,npcid,0,0,"")
@@ -28,23 +28,23 @@ function npc.link(play, npcid, p2, p3, msgData)
     if p2 == 1 then
         local equipLevel = Player.getEquipFieldByPos(play, _config.where, 1) or 0
         if equipLevel == 0 then
-            Player.sendmsgEx(play, "请先装备#57|【酒葫芦】#249|后再操作#57")
+            Player.sendmsgEx(play, "请先装备#57|【酒葫芦】#218|后再操作#57")
             return
         end
         equipLevel = tonumber(equipLevel)
         if equipLevel >= _config.max_level then
-            Player.sendmsgEx(play, "你的酒葫芦已达到#57|【"..equipLevel.."级】#249|，无需再提升#57")
+            Player.sendmsgEx(play, "你的酒葫芦已达到#57|【"..equipLevel.."级】#218|，无需再提升#57")
             return
         end
         local config = _config.config[equipLevel]
         local name, num = Player.checkItemNumByTable(play, config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足，需求数量：#57|【%d】#249|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
             return
         end
         Player.takeItemByTable(play, config.cost, ",升级酒葫芦",nil)
         changeitemidx(play,getiteminfo(play,linkbodyitem(play,_config.where),1),getstditeminfo(config.give, ConstCfg.stditeminfo.idx))
-        Player.sendmsgEx(play, "恭喜你，酒葫芦提升成功，当前等级：|【"..(equipLevel + 1).."级】#249|")
+        Player.sendmsgEx(play, "恭喜你，酒葫芦提升成功，当前等级：|【"..(equipLevel + 1).."级】#218|")
         sendluamsg(play,100,npcid,1,0,"")
         sendluamsg(play,101,1005,0,0,"qhcg")
     elseif p2 == 2 and false then

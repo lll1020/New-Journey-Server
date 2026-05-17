@@ -672,7 +672,7 @@ local function _qmdk_try_deliver(play, cfg, state)
     local jf = _safe_getplayvar_num(play, "HUMAN", scoreVar) + cfg.deliver_score
     setplayvar(play, "HUMAN", scoreVar, jf, 1)
     _qmdk_clear_carry(play, cfg, false)
-    Player.sendmsgEx(play, "成功运回一块矿石，积分+" .. cfg.deliver_score .. "#249")
+    Player.sendmsgEx(play, "成功运回一块矿石，积分+" .. cfg.deliver_score .. "#218")
     _qmdk_send_rank_to_map(cfg, state)
     return true
 end
@@ -814,7 +814,7 @@ QmdkApi.on_collect_success = function(play, monName, monMakeIndex)
     if tonumber(cfg.carry_buff or 0) > 0 and not hasbuff(play, cfg.carry_buff) then
         addbuff(play, cfg.carry_buff)
     end
-    Player.sendmsgEx(play, "采集成功，运回矿石可获得" .. cfg.deliver_score .. "积分#249")
+    Player.sendmsgEx(play, "采集成功，运回矿石可获得" .. cfg.deliver_score .. "积分#218")
     _qmdk_send_rank(play, cfg, state)
     return true
 end
@@ -1239,7 +1239,7 @@ HdjdApi.on_collect_success = function(play, monName, monMakeIndex)
     local rewardList, rewardDesc = _hdjd_roll_reward(cfg)
     if type(rewardList) == "table" and #rewardList > 0 then
         Player.rwjl(play, rewardList, _HDJD_EVENT_NAME, 1, 0)
-        Player.sendmsgEx(play, "采集黑暗宝箱成功，获得#249|" .. rewardDesc .. "#57")
+        Player.sendmsgEx(play, "采集黑暗宝箱成功，获得#218|" .. rewardDesc .. "#57")
     else
         Player.sendmsgEx(play, "采集黑暗宝箱成功，但奖励配置为空#57")
     end
@@ -2284,7 +2284,7 @@ local function _mskh_gain_meat(play, monName, cfg)
     local data = _mskh_get_player_data(play)
     data.collect_total = (tonumber(data.collect_total) or 0) + 1
     _mskh_save_player_data(play, data)
-    Player.sendmsgEx(play, "掉落获得#249|" .. meatName .. "*1#57")
+    Player.sendmsgEx(play, "掉落获得#218|" .. meatName .. "*1#57")
     return true
 end
 
@@ -2300,7 +2300,7 @@ local function _mskh_add_point(play, itemName, count, cfg)
     local data = _mskh_get_player_data(play)
     data.point = (tonumber(data.point) or 0) + addPoint
     _mskh_save_player_data(play, data)
-    Player.sendmsgEx(play, "成功出售#249|" .. tostring(itemName) .. "*" .. tostring(count) .. "#57，获得#249|美食积分*" .. tostring(addPoint) .. "#57")
+    Player.sendmsgEx(play, "成功出售#218|" .. tostring(itemName) .. "*" .. tostring(count) .. "#57，获得#218|美食积分*" .. tostring(addPoint) .. "#57")
     return true
 end
 
@@ -2366,7 +2366,7 @@ local function _mskh_buy_shop(play, idx, cfg)
     buyMap[tostring(idx)] = buyNum + 1
     data.shop_buy = buyMap
     _mskh_save_player_data(play, data)
-    Player.sendmsgEx(play, "兑换成功#249")
+    Player.sendmsgEx(play, "兑换成功#218")
     return true
 end
 

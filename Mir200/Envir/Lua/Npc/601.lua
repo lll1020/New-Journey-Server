@@ -38,14 +38,14 @@ function npc.link(play,npcid,ew,aid)
         if not checktitle(play, _config.details.ch) then
             local name, num = Player.checkItemNumByTable(play, _config.cost)
             if name then
-                Player.sendmsgEx(play, string.format("ÄãµÄ#57|¡¾%s¡¿#249|²»×ã£º#57|¡¾%d¡¿#249|", name, num))
+                Player.sendmsgEx(play, string.format("ÄãµÄ#57|¡¾%s¡¿#218|²»×ã£º#57|¡¾%d¡¿#218|", name, num))
                 return
             end
             Player.takeItemByTable(play, _config.cost, ",ÐÞ¸´ÐùÔ¯½£",nil)
 
 
             Player.title_give(play, _config.details.ch)
-            Player.sendmsgEx(play, "ÐùÔ¯½£ÐÞ¸´³É¹¦£¬»ñµÃ³ÆºÅ|¡¾".._config.details.ch.."¡¿#249|")
+            Player.sendmsgEx(play, "ÐùÔ¯½£ÐÞ¸´³É¹¦£¬»ñµÃ³ÆºÅ|¡¾".._config.details.ch.."¡¿#218|")
             sendluamsg(play,101,1005,0,0,"rwwc")
             sendluamsg(play,100,npcid,1,0,"")
             Guard.closeNpc(play, npcid)

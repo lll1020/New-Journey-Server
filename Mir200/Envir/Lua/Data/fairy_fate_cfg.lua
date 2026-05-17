@@ -151,7 +151,7 @@ local cfg = {
         {id = 133, group = "其他", name = "西游之路", cond = "完成剧情[重走西游]", rule = {kind = "story_complete", name = "重走西游"}, reward = "攻击+10", attr = {{4,10}}, jl = {}},
         {id = 134, group = "其他", name = "生肖守护", cond = "完成剧情[生肖守护]", rule = {kind = "story_complete", name = "生肖守护"}, reward = "攻击+20", attr = {{4,20}}, jl = {}},
         {id = 135, group = "其他", name = "修复传说", cond = "完成剧情[传说修复局]", rule = {kind = "story_complete", name = "传说修复局"}, reward = "攻击+30", attr = {{4,30}}, jl = {}},
-        {id = 136, group = "其他", name = "好看不？", cond = "仙府仙华值达到：1000", rule = {kind = "xianfu_xianghua", target = 1000}, reward = "魅力+999", attr = {{"charm",999,"魅力",""}}, jl = {}},
+        {id = 136, group = "其他", name = "好看不？", cond = "仙府等级达到4级", rule = {kind = "xianfu_level", target = 4}, reward = "魅力+999", attr = {{"charm",999,"魅力",""}}, jl = {}},
         {id = 137, group = "其他", name = "炼丹大师", cond = "炼制全部丹药各1次", rule = {kind = "xianfu_refine_all"}, reward = "金币回收+1%", attr = {{204,100}}, jl = {}},
         {id = 138, group = "其他", name = "御兽师Lv.1", cond = "灵兽全部1星", rule = {kind = "pet_all_star", target = 1}, reward = "对怪增伤+1%", attr = {{245,100}}, jl = {}},
         {id = 139, group = "其他", name = "御兽师Lv.2", cond = "灵兽全部2星", rule = {kind = "pet_all_star", target = 2}, reward = "对怪增伤+2%", attr = {{245,200}}, jl = {}},

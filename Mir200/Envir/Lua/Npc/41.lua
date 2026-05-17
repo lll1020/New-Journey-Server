@@ -6,7 +6,16 @@ npc = {}
 local _config = Guard.getConfig("npc_41")
 
 function npc.main(play,npcid)
-    sendluamsg(play,100,npcid,0,0,"")
+    local equipLevel = Player.getEquipFieldByPos(play, _config.where, 1) or 0
+    if equipLevel < 11 then
+        Player.sendmsgEx(play,  "请先装备#57|【".._config.now.."】#218|进行升级#57")
+        return
+    elseif equipLevel == 11 then
+        sendluamsg(play,100,npcid,0,0,"")
+    elseif equipLevel > 11 then
+        Player.sendmsgEx(play,  "你的斗笠已经升级了，当前斗笠为#57|【".._config.give.."】#218|")
+        return
+    end
 end
 
 function npc.link(play,npcid,ew,aid,data)
@@ -32,17 +41,17 @@ function npc.link(play,npcid,ew,aid,data)
             return
         end
         if equipname ~= _config.now then
-            Player.sendmsgEx(play, "请先装备#57|【".._config.now.."】#249|进行升级#57")
+            Player.sendmsgEx(play, "请先装备#57|【".._config.now.."】#218|进行升级#57")
             return
         end
         local name, num = Player.checkItemNumByTable(play, _config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
             return
         end
         Player.takeItemByTable(play, _config.cost, ",升级斗笠",nil)
         changeitemidx(play,getiteminfo(play,linkbodyitem(play,_config.where),1),getstditeminfo(_config.give, ConstCfg.stditeminfo.idx))
-        Player.sendmsgEx(play,  "恭喜你，斗笠升级成功，当前斗笠为|【".._config.give.."】#249|")
+        Player.sendmsgEx(play,  "恭喜你，斗笠升级成功，当前斗笠为|【".._config.give.."】#218|")
         sendluamsg(play,100,npcid,1,0,"")
         sendluamsg(play,101,1005,0,0,"qhcg")
     end

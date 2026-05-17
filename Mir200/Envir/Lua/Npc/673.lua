@@ -40,7 +40,7 @@ function npc.link(play,npcid,ew,aid)
         local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
         local key = "npc_673"
         if jq_data[key] and jq_data[key] >= 2 then
-            Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
+            Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#218|")
             return
         end
 
@@ -67,7 +67,7 @@ function npc.link(play,npcid,ew,aid)
                 jq_data[key] = 2
             end
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-            Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+            Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成#57")
             if npcid then Guard.closeNpc(play, npcid) end
             if _config.ch then
                 Player.title_give(play, _config.ch)
@@ -81,7 +81,7 @@ function npc.link(play,npcid,ew,aid)
             return
         end
 
-        local msg = string.format("进度：|【%d/%d】#249|", done, total)
+        local msg = string.format("进度：|【%d/%d】#218|", done, total)
         if #undone > 0 then
             msg = msg.."\n未完成："..table.concat(undone, "、")
         end

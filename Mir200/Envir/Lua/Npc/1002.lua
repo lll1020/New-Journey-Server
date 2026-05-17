@@ -51,9 +51,28 @@ local function refreshFashionAttr(play)
 end
 
 
+local function buildBodyAuraData(play)
+    local zs_level = tonumber(getplaydef(play, VarCfg["U_转生等级"]) or 0) or 0
+    local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
+    local active = tonumber(getplaydef(play, VarCfg["U_护体光环激活"]) or 0) or 0
+    local aura = {
+        [1] = {open = zs_level >= 10 and 1 or 0},
+        [2] = {open = tonumber(sc_data["首充"] or 0) == 1 and 1 or 0},
+        [3] = {open = getflagstatus(play, VarCfg.BS_mztq) == 1 and 1 or 0},
+    }
+    if active < 1 or active > 3 or aura[active].open ~= 1 then
+        active = 0
+    end
+    for idx = 1, 3 do
+        aura[idx].active = active == idx and 1 or 0
+    end
+    return {aura = aura, active = active}
+end
+
 function npc.main(play,npcid)
     local data = {}
     data["T_data"] = Player.getJsonTableByVar(play, VarCfg.T_szjl)
+    data["body_aura"] = buildBodyAuraData(play)
     sendluamsg(play,100,npcid,0,0,tbl2json(data))
 end
 
@@ -98,9 +117,10 @@ function npc.link(play,npcid,ew,aid,data)
             refreshitem(play, equipObj)
             T_data.dqzb = aid
             Player.setJsonVarByTable(play, VarCfg.T_szjl, T_data)
-            Player.sendmsgEx(play, "更换装扮成功，已切换到|【当前装扮】#249|")
+            Player.sendmsgEx(play, "更换装扮成功，已切换到|【当前装扮】#218|")
             local data = {}
             data["T_data"] = T_data
+            data["body_aura"] = buildBodyAuraData(play)
             sendluamsg(play,100,npcid,1,0,tbl2json(data))
         end
     elseif ew == 2 then ----更换足迹
@@ -126,9 +146,10 @@ function npc.link(play,npcid,ew,aid,data)
 
             setmoveeff(play,_config.details.zj[T_data.dqzj].sEffect,0)
             Player.setJsonVarByTable(play, VarCfg.T_szjl, T_data)
-            Player.sendmsgEx(play, "更换足迹成功，已切换到|【当前足迹】#249|")
+            Player.sendmsgEx(play, "更换足迹成功，已切换到|【当前足迹】#218|")
             local data = {}
             data["T_data"] = T_data
+            data["body_aura"] = buildBodyAuraData(play)
             sendluamsg(play,100,npcid,1,0,tbl2json(data))
         end
     end

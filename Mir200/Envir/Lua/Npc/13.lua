@@ -62,14 +62,14 @@ function npc.link(play, npcid, p2, p3, msgData)
     if p2 == 1 then
         local dj_data = getplaydef(play, VarCfg["U_兰姐好感度"])
         if dj_data >= _config.max_level then
-            Player.sendmsgEx(play,  "好感度已达到#57|【".._get_goodwill_percent(dj_data).."%】#249|，无需继续提升#57")
+            Player.sendmsgEx(play,  "好感度已达到#57|【".._get_goodwill_percent(dj_data).."%】#218|，无需继续提升#57")
             return
         end
         dj_data = dj_data + 1
         local config = _config.config[dj_data]
         local name, num = Player.checkItemNumByTable(play, config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
             return
         end
         Player.takeItemByTable(play, config.cost, ",兰姐好感度",nil)
@@ -88,9 +88,9 @@ function npc.link(play, npcid, p2, p3, msgData)
             sendluamsg(play, 101, 9999, 0, 0, "npc_"..npcid)
         end
         if dj_data == _config.max_level then
-            Player.sendmsgEx(play, "恭喜你，你的好感度已提升至|【"..percent.."%】#249|，并获得最终奖励")
+            Player.sendmsgEx(play, "恭喜你，你的好感度已提升至|【"..percent.."%】#218|，并获得最终奖励")
         else
-            Player.sendmsgEx(play, "恭喜你，你的好感度已提升至|【"..percent.."%】#249|")
+            Player.sendmsgEx(play, "恭喜你，你的好感度已提升至|【"..percent.."%】#218|")
         end
     elseif p2 == 2 then
     end

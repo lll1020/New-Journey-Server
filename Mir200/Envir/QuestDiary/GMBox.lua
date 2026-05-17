@@ -172,7 +172,7 @@ function usercmd6(actor, param1, param2, param3, param4, param5)
     if not lualib:checkPwd(actor) then return end
     param1 = tonumber(param1) or 0
     setgmlevel(actor,param1)
-    Player.sendmsgEx(actor,"设置成功,当前权限|".. param1.."#249")
+    Player.sendmsgEx(actor,"设置成功,当前权限|".. param1.."#218")
 end
 
 function open_gm_admin(actor)

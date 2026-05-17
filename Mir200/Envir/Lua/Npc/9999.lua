@@ -43,7 +43,7 @@ local function _ff9999_random_finish(play) -- 9999测试：随机完成一个未完成成就
     end
     if FairyFate and FairyFate.touch then FairyFate.touch(play, "title") end
     sendluamsg(play, 101, 515, 2, tonumber(detail.id) or 0, tbl2json({tp = "cjdc", id = detail.id, name = detail.name, tip = "达成成就[" .. tostring(detail.name or detail.id) .. "]"}))
-    -- Player.sendmsgEx(play, "已随机完成|【" .. tostring(detail.name or detail.id) .. "】#249|成就")
+    -- Player.sendmsgEx(play, "已随机完成|【" .. tostring(detail.name or detail.id) .. "】#218|成就")
 end
 local _admin_test_monsters = {
     -- "测试怪物名",
@@ -144,7 +144,7 @@ local function _admin_spawn_test_monsters(play)
             spawned = spawned + 1
         end
     end
-    Player.sendmsgEx(play, "已清空当前地图怪物，并刷出|【" .. tostring(spawned) .. "】#249|只测试怪")
+    Player.sendmsgEx(play, "已清空当前地图怪物，并刷出|【" .. tostring(spawned) .. "】#218|只测试怪")
 end
 local function _admin_simple_activity_start(play, idx, name, minutes)
     idx = tonumber(idx) or 0
@@ -154,7 +154,7 @@ local function _admin_simple_activity_start(play, idx, name, minutes)
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《" .. actName .. "》已开启奖励丰厚,请尽快参加活动...")
     for _, playerObj in ipairs(getplayerlst() or {}) do
     end
-    Player.sendmsgEx(play, actName .. "测试开始#249")
+    Player.sendmsgEx(play, actName .. "测试开始#218")
 end
 local function _admin_simple_activity_finish(play, idx, name)
     idx = tonumber(idx) or 0
@@ -164,7 +164,7 @@ local function _admin_simple_activity_finish(play, idx, name)
     for _, playerObj in ipairs(getplayerlst() or {}) do
         sendluamsg(playerObj, 101, 12, 4, idx, "")
     end
-    Player.sendmsgEx(play, actName .. "测试结束#249")
+    Player.sendmsgEx(play, actName .. "测试结束#218")
 end
 local function _admin_not_ready(play, name)
     _admin_simple_activity_start(play, 0, tostring(name or "测试活动"), 5)
@@ -208,7 +208,7 @@ local function _admin_qmdk_start(play)
             QmdkApi.refresh_actor(playerObj)
         end
     end
-    Player.sendmsgEx(play, "全民夺矿已立即开启#249")
+    Player.sendmsgEx(play, "全民夺矿已立即开启#218")
 end
 local function _admin_qmdk_finish(play)
     local cfg = QmdkApi and QmdkApi.get_cfg and QmdkApi.get_cfg() or nil
@@ -245,7 +245,7 @@ local function _admin_qmdk_finish(play)
         setsysvar(VarCfg["A_全民夺矿json"], tbl2json(state))
     end
     setsysvar(VarCfg["G_全民夺矿状态"], 0)
-    Player.sendmsgEx(play, "全民夺矿已立即关闭#249")
+    Player.sendmsgEx(play, "全民夺矿已立即关闭#218")
 end
 local function _admin_bwcz_start(play)
     local cfg = BwczApi and BwczApi.get_cfg and BwczApi.get_cfg() or nil
@@ -259,7 +259,7 @@ local function _admin_bwcz_start(play)
     end
     local dqfz = tonumber(getsysvar(VarCfg["G_开区分钟"]) or 0) or 0
     BwczApi.start(dqfz, cfg, true)
-    Player.sendmsgEx(play, "保卫村庄已立即开启#249")
+    Player.sendmsgEx(play, "保卫村庄已立即开启#218")
 end
 
 local function _admin_bwcz_finish(play)
@@ -273,7 +273,7 @@ local function _admin_bwcz_finish(play)
         return
     end
     BwczApi.finish(cfg, true)
-    Player.sendmsgEx(play, "保卫村庄已立即关闭#249")
+    Player.sendmsgEx(play, "保卫村庄已立即关闭#218")
 end
 local function _admin_qmdt_build_prompt(q, qidx, total)
     local lines = {"第" .. tostring(qidx) .. "/" .. tostring(total) .. "题：" .. tostring(q.title or "")}
@@ -317,7 +317,7 @@ local function _admin_qmdt_finish(play)
     setsysvar(VarCfg["G_全民答题状态"], 0)
     sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《全民答题》已结束,本次第一名为【测试玩家】...")
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《全民答题》已结束,本次第一名为【测试玩家】...")
-    Player.sendmsgEx(play, "全民答题已手动关闭#249")
+    Player.sendmsgEx(play, "全民答题已手动关闭#218")
 end
 local function _admin_wlmz_start(play)
     setenvirontimer("比武大会", 2, 10, "@hd_tcppk,比武大会")
@@ -325,13 +325,13 @@ local function _admin_wlmz_start(play)
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《武林盟主》已开启奖励丰厚,请尽快参加活动...")
     for _, playerObj in ipairs(getplayerlst() or {}) do
     end
-    Player.sendmsgEx(play, "武林盟主测试开始#249")
+    Player.sendmsgEx(play, "武林盟主测试开始#218")
 end
 local function _admin_wlmz_finish(play)
     setenvirofftimer("比武大会", 2)
     sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《武林盟主》已关闭,本次活动第一名为【测试玩家】...")
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《武林盟主》已关闭,本次活动第一名为【测试玩家】...")
-    Player.sendmsgEx(play, "武林盟主测试结束#249")
+    Player.sendmsgEx(play, "武林盟主测试结束#218")
 end
 local function _admin_tcppk_start(play)
     Player.SetGlobalTempInt("TCPPK_ROUND", (tonumber(Player.GetGlobalTempInt("TCPPK_ROUND") or 0) or 0) + 1)
@@ -344,7 +344,7 @@ local function _admin_tcppk_start(play)
     sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《土城跑酷》已开启奖励丰厚,请尽快参加活动...")
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《土城跑酷》已开启奖励丰厚,请尽快参加活动...")
     sendmovemsg("0", 1, 254, 0, 240, 1, "活动：活动《土城跑酷》已开启奖励丰厚,请尽快参加活动...")
-    Player.sendmsgEx(play, "土城跑酷测试开始#249")
+    Player.sendmsgEx(play, "土城跑酷测试开始#218")
 end
 local function _admin_tcppk_finish(play)
     for _, playerObj in ipairs(getplayerlst() or {}) do
@@ -355,27 +355,27 @@ local function _admin_tcppk_finish(play)
     end
     sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《土城跑酷》已关闭...")
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《土城跑酷》已关闭...")
-    Player.sendmsgEx(play, "土城跑酷测试结束#249")
+    Player.sendmsgEx(play, "土城跑酷测试结束#218")
 end
 local function _admin_txzr_start(play)
     sendmovemsg("0", 1, 253, 0, 300, 1, "天选之人：活动《天选之人》已开启,请玩家尽快参与...")
     sendmovemsg("0", 1, 249, 0, 250, 1, "天选之人：活动《天选之人》已开启,请玩家尽快参与...")
     for _, playerObj in ipairs(getplayerlst() or {}) do
     end
-    Player.sendmsgEx(play, "天选之人测试开始#249")
+    Player.sendmsgEx(play, "天选之人测试开始#218")
 end
 local function _admin_txzr_finish(play)
     sendmovemsg("0", 1, 253, 0, 300, 1, "天选之人：测试轮次已结束...")
     sendmovemsg("0", 1, 249, 0, 250, 1, "天选之人：测试轮次已结束...")
-    Player.sendmsgEx(play, "天选之人测试结束#249")
+    Player.sendmsgEx(play, "天选之人测试结束#218")
 end
 local function _admin_sbk_start(play)
     repaircastle()
     addattacksabakall()
-    Player.sendmsgEx(play, "攻沙测试开始#249")
+    Player.sendmsgEx(play, "攻沙测试开始#218")
 end
 local function _admin_sbk_finish(play)
-    Player.sendmsgEx(play, "攻沙测试结束#249")
+    Player.sendmsgEx(play, "攻沙测试结束#218")
 end
 local function _admin_sjdb_start(play)
     local cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].sjdb or {}
@@ -398,12 +398,12 @@ local function _admin_sjdb_start(play)
             end
         end
     end
-    Player.sendmsgEx(play, "随机夺宝测试开始#249")
+    Player.sendmsgEx(play, "随机夺宝测试开始#218")
 end
 local function _admin_sjdb_finish(play)
     sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《随机夺宝》已关闭...")
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《随机夺宝》已关闭...")
-    Player.sendmsgEx(play, "随机夺宝测试结束#249")
+    Player.sendmsgEx(play, "随机夺宝测试结束#218")
 end
 local function _admin_mskh_start(play)
     local cfg = MskhApi and MskhApi.get_cfg and MskhApi.get_cfg() or nil
@@ -417,7 +417,7 @@ local function _admin_mskh_start(play)
     end
     local dqfz = tonumber(getsysvar(VarCfg["G_开区分钟"]) or 0) or 0
     if MskhApi and MskhApi.start and MskhApi.start(dqfz, cfg, true) then
-        Player.sendmsgEx(play, "美食狂欢已立即开启#249")
+        Player.sendmsgEx(play, "美食狂欢已立即开启#218")
     else
         Player.sendmsgEx(play, "美食狂欢开启失败#57")
     end
@@ -433,7 +433,7 @@ local function _admin_mskh_finish(play)
         return
     end
     if MskhApi and MskhApi.finish and MskhApi.finish(cfg, true) then
-        Player.sendmsgEx(play, "美食狂欢已立即关闭#249")
+        Player.sendmsgEx(play, "美食狂欢已立即关闭#218")
     else
         Player.sendmsgEx(play, "美食狂欢关闭失败#57")
     end
@@ -450,7 +450,7 @@ local function _admin_hdjd_start(play)
     end
     local dqfz = tonumber(getsysvar(VarCfg["G_开区分钟"]) or 0) or 0
     if HdjdApi and HdjdApi.start and HdjdApi.start(dqfz, cfg, true) then
-        Player.sendmsgEx(play, "黑暗禁地已立即开启#249")
+        Player.sendmsgEx(play, "黑暗禁地已立即开启#218")
     else
         Player.sendmsgEx(play, "黑暗禁地开启失败#57")
     end
@@ -466,7 +466,7 @@ local function _admin_hdjd_finish(play)
         return
     end
     if HdjdApi and HdjdApi.finish and HdjdApi.finish(cfg, true) then
-        Player.sendmsgEx(play, "黑暗禁地已立即关闭#249")
+        Player.sendmsgEx(play, "黑暗禁地已立即关闭#218")
     else
         Player.sendmsgEx(play, "黑暗禁地关闭失败#57")
     end
@@ -529,7 +529,7 @@ function ggna(play,id)
             Player.sendmsgEx(play, "数据异常#57")
         else
             if checktitle(play,"狂暴之力") then
-                Player.sendmsgEx(play, "你已经开启过#57|【狂暴之力】#249|了#57")
+                Player.sendmsgEx(play, "你已经开启过#57|【狂暴之力】#218|了#57")
             else
                 confertitle(play,"狂暴之力")
                 changecustomitemvalue(play,linkbodyitem(play,73),0,"=",20,1)
@@ -579,7 +579,7 @@ function ggna(play,id)
     elseif id == "4" then
         local zs = getbaseinfo(play,39)
         if zs > 5 then
-            Player.sendmsgEx(play, "【转生】#249|你转生在我这已经满级了#57")
+            Player.sendmsgEx(play, "【转生】#218|你转生在我这已经满级了#57")
         else
             setbaseinfo(play,39,6)
             confertitle(play,"6重转生")
@@ -820,7 +820,7 @@ function ggna(play,id)
             Guard.clearTaskTemp(jq_data, "npc_55")
         end
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, "灰界任务已一键完成#249")
+        Player.sendmsgEx(play, "灰界任务已一键完成#218")
     elseif id == "25" then
         -- 大陆全解锁：一次性补齐主线、人物等级、转生、剧情点、灵根、天道命盘与七大陆称号门槛。
         local target_task = 21
@@ -875,26 +875,38 @@ function ggna(play,id)
     elseif id == "23" then
         release_print("测试装备")
         local cailiao = {
-"天书使者[称号]",
-"美食家[称号]",
-"菜鸟护村兵[称号]",
-"敢死小队Lv.1[称号]",
-"敢死小队Lv.2[称号]",
-"敢死小队Lv.3[称号]",
-"敢死小队Lv.4[称号]",
-"敢死小队Lv.5[称号]",
-"敢死小队Lv.6[称号]",
-"敢死小队Lv.7[称号]",
-"敢死小队Lv.8[称号]",
-"敢死小队Lv.9[称号]",
-"敢死小队Lv.10[称号]",
-"村口一霸[称号]",
-"硬刚先锋[称号]",
-"血战豪杰[称号]",
-"横扫村外路[称号]",
-"无畏战魂[称号]",
-"护村霸主[称号]",
-"镇境武侯[称号]",
+"山川神石【稀有】",
+"海洋神石【稀有】",
+"天空神石【稀有】",
+"清风神石【稀有】",
+"火焰神石【稀有】",
+"满月神石【稀有】",
+"大地神石【稀有】",
+"雷电神石【稀有】",
+"山川神石【史诗】",
+"海洋神石【史诗】",
+"天空神石【史诗】",
+"清风神石【史诗】",
+"火焰神石【史诗】",
+"满月神石【史诗】",
+"大地神石【史诗】",
+"雷电神石【史诗】",
+"山川神石【传说】",
+"海洋神石【传说】",
+"天空神石【传说】",
+"清风神石【传说】",
+"火焰神石【传说】",
+"满月神石【传说】",
+"大地神石【传说】",
+"雷电神石【传说】",
+"山川神石【神话】",
+"海洋神石【神话】",
+"天空神石【神话】",
+"清风神石【神话】",
+"火焰神石【神话】",
+"满月神石【神话】",
+"大地神石【神话】",
+"雷电神石【神话】",
 
         }
         for k, v in pairs(cailiao) do

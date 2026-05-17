@@ -108,7 +108,7 @@ npc[2] = function(play, p2, p3, msgData) --背包  面板
             Player.sendmsgEx(play, "物品销毁失败,请检查!#57")
         else
             if itemName then
-                Player.sendmsgEx(play, "|【"..itemName.."】#249|物品销毁成功!")
+                Player.sendmsgEx(play, "|【"..itemName.."】#218|物品销毁成功!")
             end
         end
     elseif p2 == 998 then --屏蔽全服掉落信息
@@ -166,7 +166,7 @@ local function _ywl_activate_linggen(play, idx)
         Player.updateSomeAddr(play, nil, addAttrs)
     end
     -- 按 602 的激活逻辑，这里只做激活与提示，不走副本流程
-    Player.sendmsgEx(play, "恭喜你，成功激活|【灵根】#249|")
+    Player.sendmsgEx(play, "恭喜你，成功激活|【灵根】#218|")
     return true
 end
 local function _ywl_apply_special_reward(play, name, count)
@@ -315,7 +315,7 @@ local function _ywl_check_map_gate(play, shuju)
     if ok then
         return true
     end
-    Player.sendmsgEx(play, "请先完成#57|【" .. cfg.tip .. "】#249|")
+    Player.sendmsgEx(play, "请先完成#57|【" .. cfg.tip .. "】#218|")
     return false
 end
 local function _ywl_can_transfer(play, sj, shuju)
@@ -328,7 +328,7 @@ local function _ywl_can_transfer(play, sj, shuju)
     if need_dl == 3 and not Player.hasThirdContinentPass(play) then
         local targetNpc = shuju and shuju.yd and shuju.yd[3] or 0
         if targetNpc ~= 44 and targetNpc ~= 46 and targetNpc ~= 55 then
-            Player.sendmsgEx(play, "请先真正完成#57|【灾厄入侵】#249|并进入#57|【三大陆】#249|后再使用该异闻录功能")
+            Player.sendmsgEx(play, "请先真正完成#57|【灾厄入侵】#218|并进入#57|【三大陆】#218|后再使用该异闻录功能")
             return false
         end
     end
@@ -337,7 +337,7 @@ local function _ywl_can_transfer(play, sj, shuju)
     end
     if shuju.ydtk and shuju.fwdjy and not shuju.fwdjy(play, shuju.ydtk, shuju) then
         local ydtip = shuju.ydtip or "进入地图前置任务"
-        Player.sendmsgEx(play, "请先完成#57|【" .. ydtip .. "】#249|")
+        Player.sendmsgEx(play, "请先完成#57|【" .. ydtip .. "】#218|")
         return false
     end
     return true
@@ -894,13 +894,13 @@ npc[30] = function(play, p2, p3, data) --砍树系统
             end
             local name, num = Player.checkItemNumByTable(play, config.updata[1].details[T_data.axe].cost)
             if name then
-                Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
+                Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
                 return
             end
             Player.takeItemByTable(play, config.updata[1].details[T_data.axe].cost, ",砍树系统",nil)
             T_data.axe = T_data.axe + 1
             Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
-            Player.sendmsgEx(play, "斧子升级成功，当前斧子等级为|【"..T_data.axe.."】#249|")
+            Player.sendmsgEx(play, "斧子升级成功，当前斧子等级为|【"..T_data.axe.."】#218|")
             sendluamsg(play, 101, 30, 2, 1, tbl2json({T_data = T_data}))
         elseif p3 == 2 then--升级自动升级
             T_data.auto = T_data.auto or 1
@@ -910,13 +910,13 @@ npc[30] = function(play, p2, p3, data) --砍树系统
             end
             local name, num = Player.checkItemNumByTable(play, config.updata[2].details[T_data.auto].cost)
             if name then
-                Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
+                Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
                 return
             end
             Player.takeItemByTable(play, config.updata[2].details[T_data.auto].cost, ",砍树系统",nil)
             T_data.auto = T_data.auto + 1
             Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
-            Player.sendmsgEx(play, "自动砍树升级成功，当前自动砍树等级为|【"..T_data.auto.."】#249|")
+            Player.sendmsgEx(play, "自动砍树升级成功，当前自动砍树等级为|【"..T_data.auto.."】#218|")
             sendluamsg(play, 101, 30, 2, 2, tbl2json({T_data = T_data}))
         end
     elseif p2 == 2 then --获得奖励
@@ -946,7 +946,7 @@ npc[30] = function(play, p2, p3, data) --砍树系统
         elseif p3 == 2 then -- 打开页面时手动点击的奖励
             local name, num = Player.checkItemNumByTable(play, config.click.cost)
             if name then
-                Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
+                Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
                 return
             end
             Player.takeItemByTable(play, config.click.cost, ",砍树系统",nil)
@@ -989,12 +989,19 @@ npc[30] = function(play, p2, p3, data) --砍树系统
         local payload = Npclib[44].getDollPanelPayload(play)
         sendluamsg(play, 101, 30, 4, 0, tbl2json(payload or {}))
     elseif p2 == 5 then --砍树子界面抓娃娃机执行抓取
-        local ok, res, payload = Npclib[44].drawDollFromWoodcut(play)
+        local msgData = type(data) == "string" and data ~= "" and json2tbl(data) or {}
+        local drawCount = tonumber((msgData or {}).count) or 1
+        if drawCount ~= 10 then
+            drawCount = 1
+        end
+        local ok, res, payload = Npclib[44].drawDollBatchFromWoodcut(play, drawCount)
         if not ok then
             Player.sendmsgEx(play, (res or "抓取失败") .. "#57")
             return
         end
-        Player.sendmsgEx(play, string.format("抓取成功：%s", tostring((res or {}).name or "娃娃")))
+        local lastResult = (((payload or {}).extra or {}).results or {})
+        lastResult = lastResult[#lastResult] or ((payload or {}).extra or {})
+        Player.sendmsgEx(play, string.format("抓取成功：%s", tostring((lastResult or {}).name or "娃娃")))
         sendluamsg(play, 101, 30, 5, 0, tbl2json(payload or {}))
     end
 end
@@ -1108,7 +1115,7 @@ npc[501] = function(play, p2, p3, data) --首充礼包
         sendluamsg(play, 101, 501, 1, 0, tbl2json(_sc_build_open_payload(play)))
         return
     elseif p2 == 2 or p2 == 3 then
-        Player.sendmsgEx(play, "限时福利请前往#57|【105NPC】#249|领取")
+        Player.sendmsgEx(play, "限时福利请前往#57|【105NPC】#218|领取")
     end
 end
 ---在线充值
@@ -1499,7 +1506,7 @@ local function _qmdt_submit_answer_507(play, answerRaw, p3)
     _qmdt_save_state_507(state)
     if isRight == 1 then
         sendluamsg(play, 101, 12, 4, 3, "")
-        Player.sendmsgEx(play, "回答正确，当前积分+|【"..tostring(gainScore) .. "（基础" .. tostring(baseScore) .. "+时间奖励" .. tostring(timeBonus).."）】#249|")
+        Player.sendmsgEx(play, "回答正确，当前积分+|【"..tostring(gainScore) .. "（基础" .. tostring(baseScore) .. "+时间奖励" .. tostring(timeBonus).."）】#218|")
     else
         Player.sendmsgEx(play, "回答错误，可继续作答直到本题结束#57")
     end
@@ -2553,7 +2560,7 @@ npc[517] = function(play, p2, p3, msgData)
     TreasureBasin.link(play, 106, p2, p3, msgData)
 end
 local xlxl =
-    { { 1, 2, 3, 4, 7, 8, 23, 22, 24, 25, 26 }, constant.cz_je, { 98, 6, 3, 18 } }
+    { { 1, 2, 3, 4, 7, 8, 23, 22, 24, 25, 26 }, constant.cz_je, { 88, 6, 3, 18 } }
 npc[998] = function(play, p2, p3, msg) --后台
     local qfmz = getconst(play, "<$SERVERNAME>")
     if getplaydef(play, VarCfg.S_houtaibf) ~= "" or (qfmz == "" or qfmz == "测试区") then

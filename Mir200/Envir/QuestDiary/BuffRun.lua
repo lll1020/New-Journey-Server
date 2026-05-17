@@ -10,7 +10,7 @@ function buffchufa(play, buffid, zid)
     elseif buffid == 20103 then
         local curzuiyi = getplaydef(play, VarCfg["J_醉意值"])
         if curzuiyi < 100 then
-            Player.sendmsgEx(play, string.format("你的醉意值未达上限|%d#249|，无法维持|醉酒狂魔舞#57", _config.max_zuiyi))
+            Player.sendmsgEx(play, string.format("你的醉意值未达上限|%d#218|，无法维持|醉酒狂魔舞#57", _config.max_zuiyi))
             delbuff(play, 20103)
             return
         end
@@ -91,7 +91,7 @@ function buffchange(play, buffid, zid, lx)
     elseif buffid == 20103 then
         if getbaseinfo(play,1) == "酒仙秘境" then
             mapmove(play, "xtc",137,138,5)
-            Player.sendmsgEx(play, "醉酒狂魔舞已失效#57|,已离开|酒仙秘境#249")
+            Player.sendmsgEx(play, "醉酒狂魔舞已失效#57|,已离开|酒仙秘境#218")
         end
     elseif buffid == 20104 and lx == 4 then
         setobjintvar(play,22041,0)

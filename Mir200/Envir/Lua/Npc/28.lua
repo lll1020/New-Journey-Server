@@ -49,7 +49,7 @@ function npc.link(play,npcid,ew,aid)
                 if not isFree then
                     local name, num = Player.checkItemNumByTable(play, cfg.cost)
                     if name then
-                        Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
+                        Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
                         return
                     end
                     Player.takeItemByTable(play, cfg.cost, ",装备强化",nil)
@@ -72,14 +72,14 @@ function npc.link(play,npcid,ew,aid)
                 sendluamsg(play,100,npcid,1,aid,"")
 
                 if nextLevel == 10 or nextLevel == 20 or nextLevel == 30 then
-                    Player.sendmsgEx(play, "恭喜你，|【".._config.where[aid][1].."】#249|部位的装备强化提升到了【"..nextLevel.."级】，属性大幅提升！")
+                    Player.sendmsgEx(play, "恭喜你，|【".._config.where[aid][1].."】#218|部位的装备强化提升到了【"..nextLevel.."级】，属性大幅提升！")
                     Player.del_attlist(play, "装备强化")
                     Login_zbqh(play)
                 else
-                    Player.sendmsgEx(play, "恭喜你，|【".._config.where[aid][1].."】#249|部位的装备强化提升到了【"..nextLevel.."级】")
+                    Player.sendmsgEx(play, "恭喜你，|【".._config.where[aid][1].."】#218|部位的装备强化提升到了【"..nextLevel.."级】")
                 end
             else
-                Player.sendmsgEx(play, "请先穿戴#57|【对应部位装备】#249|")
+                Player.sendmsgEx(play, "请先穿戴#57|【对应部位装备】#218|")
                 return
             end
         else

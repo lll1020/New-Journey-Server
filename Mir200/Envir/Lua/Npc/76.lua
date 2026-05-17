@@ -260,7 +260,7 @@ local function _finish_trial(play, idx, dtm)
     state[tostring(idx)] = 1
     _save_data(play, T_data)
     Player.rwjl(play, _config.details[idx].reward or {}, "天命试炼", 1)
-    Player.sendmsgEx(play, string.format("你完成了|【%s】#249|试炼#57", _config.details[idx].name or "天命试炼"))
+    Player.sendmsgEx(play, string.format("你完成了|【%s】#218|试炼#57", _config.details[idx].name or "天命试炼"))
     _back(play)
     _close_map(dtm)
     _refresh_panel(play, 3, idx)

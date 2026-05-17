@@ -39,12 +39,12 @@ local function _try_upgrade_artifact(play)
     end
 
     if getbagitemcount(play, dst_item) >= 1 then
-        Player.sendmsgEx(play, "你已拥有#57|【"..dst_item.."】#249|，无需重复升级#57")
+        Player.sendmsgEx(play, "你已拥有#57|【"..dst_item.."】#218|，无需重复升级#57")
         return
     end
 
     if getbagitemcount(play, src_item) < 1 then
-        Player.sendmsgEx(play, "缺少背包神器：#57|【"..src_item.."】#249|")
+        Player.sendmsgEx(play, "缺少背包神器：#57|【"..src_item.."】#218|")
         return
     end
 
@@ -56,7 +56,7 @@ local function _try_upgrade_artifact(play)
     Guard.consumeCost(play, costs, ","..(_config.name or "剧情任务").."升级")
     giveitem(play, dst_item, 1)
 
-    Player.sendmsgEx(play, "升级成功：|【"..src_item.."】#249| -> |【"..dst_item.."】#249|")
+    Player.sendmsgEx(play, "升级成功：|【"..src_item.."】#218| -> |【"..dst_item.."】#218|")
 end
 
 function npc.main(play,npcid)
@@ -105,14 +105,14 @@ function npc.link(play,npcid,ew,aid)
         if _shaguai_id > 0 then
             shaguai.jia(play, _shaguai_id)
         end
-        Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
+        Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#218|")
         return
     end
 
     if state < 1 then
         jq_data[_cfg_key] = 1
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#249|")
+        Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#218|")
         if npcid then Guard.closeNpcAndAuto(play, npcid) end
         if _shaguai_id > 0 then
             shaguai.jia(play, _shaguai_id)
@@ -124,7 +124,7 @@ function npc.link(play,npcid,ew,aid)
 
     local req_map = _req_map()
     if getbaseinfo(play,3) ~= req_map and getbaseinfo(play,3) ~= "xtc" then
-        Player.sendmsgEx(play, "请前往#57|【"..req_map.."】#249|完成后再提交#57")
+        Player.sendmsgEx(play, "请前往#57|【"..req_map.."】#218|完成后再提交#57")
         if npcid then Guard.closeNpc(play, npcid) end
         return
     end
@@ -132,26 +132,26 @@ function npc.link(play,npcid,ew,aid)
     local need = _need_kill()
     local kill_cur = tonumber(sg_data[_cfg_key] or 0) or 0
     if kill_cur < need then
-        Player.sendmsgEx(play, string.format("击杀不足：#57|【%d/%d】#249|", kill_cur, need))
+        Player.sendmsgEx(play, string.format("击杀不足：#57|【%d/%d】#218|", kill_cur, need))
         return
     end
 
     cnt = cnt + 1
     jq_data[prog_key] = cnt
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-    Player.sendmsgEx(play, string.format("提交进度：#57|【%d/%d】#249|", cnt, max_num))
+    Player.sendmsgEx(play, string.format("提交进度：#57|【%d/%d】#218|", cnt, max_num))
 
     if cnt >= max_num then
         Guard.clearTaskTemp(jq_data, _cfg_key)
         jq_data[_cfg_key] = 2
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+        Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成#57")
         if npcid then Guard.closeNpc(play, npcid) end
         sendluamsg(play,101,1005,0,0,"rwwc")
 
         -- 任务完成固定发放背包神器：屠龙刀
         giveitem(play, _artifact_item(), 1)
-        Player.sendmsgEx(play, "获得背包神器：|【".._artifact_item().."】#249|")
+        Player.sendmsgEx(play, "获得背包神器：|【".._artifact_item().."】#218|")
 
         Guard.giveTaskReward(play, _config, (_config.name or "剧情任务").."奖励")
     end

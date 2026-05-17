@@ -64,6 +64,36 @@ local function _count_red_xianfa(play)
     return count, tonumber(T_data.level) or 0
 end
 
+function TianMingDaoPanHasPath(play, idx)
+    local T_data = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
+    local state = T_data[_npc_key] or {}
+    return tonumber(state[tostring(idx)] or 0) == 1
+end
+
+function TianMingDaoPanAdjustPlayerDamage(play, target, damage)
+    damage = tonumber(damage) or 0
+    if damage <= 0 or not play or not target then
+        return damage
+    end
+    local attackerDone = TianMingDaoPanHasPath(play, 3)
+    local targetDone = TianMingDaoPanHasPath(target, 3)
+    if attackerDone and not targetDone then
+        damage = math.floor(damage * 110 / 100)
+    end
+    if targetDone and not attackerDone then
+        damage = math.floor(damage * 90 / 100)
+    end
+    return damage
+end
+
+local function _refresh_tmlp_extra_effects(play)
+    if TMLP_refresh_linggen_bonus then
+        TMLP_refresh_linggen_bonus(play)
+    end
+    if TMLP_refresh_pet_bonus then
+        TMLP_refresh_pet_bonus(play)
+    end
+end
 local function _check_task_condition(play, idx)
     if idx == 1 then
         local count = _count_full_lingshou(play)
@@ -80,16 +110,16 @@ local function _check_task_condition(play, idx)
     elseif idx == 3 then
         local level = _get_realm_level(play)
         if level < _realm_need_level then
-            return false, "需要境界达到|【元婴境】#249|后才可激活#57"
+            return false, "需要境界达到|【元婴境】#218|后才可激活#57"
         end
         return true
     elseif idx == 4 then
         local red_count, book_level = _count_red_xianfa(play)
         if book_level < 30 then
-            return false, string.format("需要天书达到|【LV30】#249|后才可激活，当前等级为|【%d】#249|#57", book_level)
+            return false, string.format("需要天书达到|【LV30】#218|后才可激活，当前等级为|【%d】#218|#57", book_level)
         end
         if red_count < 3 then
-            return false, string.format("需要拥有|【3条红色仙法】#249|后才可激活，当前仅有|【%d条】#249|#57", red_count)
+            return false, string.format("需要拥有|【3条红色仙法】#218|后才可激活，当前仅有|【%d条】#218|#57", red_count)
         end
         return true
     end
@@ -144,9 +174,9 @@ local function _try_grant_all_level_bonus(play, T_data, state)
     _save_dljq_data(play, T_data)
     local _, realAdd = Player.addRoleLevel(play, _config.all_level_add or 5, false)
     if realAdd > 0 then
-        Player.sendmsgEx(play, string.format("你已激活全部|【天道命盘】#249|，额外获得|【%d级】#249|", realAdd))
+        Player.sendmsgEx(play, string.format("你已激活全部|【天道命盘】#218|，额外获得|【%d级】#218|", realAdd))
     else
-        Player.sendmsgEx(play, string.format("你已激活全部|【天道命盘】#249|，但当前等级已达|【%d级】#249|上限，未获得额外等级#57", Player.getRoleLevelCap()))
+        Player.sendmsgEx(play, string.format("你已激活全部|【天道命盘】#218|，但当前等级已达|【%d级】#218|上限，未获得额外等级#57", Player.getRoleLevelCap()))
     end
     return true
 end
@@ -196,7 +226,7 @@ function npc.link(play, npcid, p2, p3, msgData)
 
         local name, num = Player.checkItemNumByTable(play, detail.cost or {})
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
             return
         end
         Player.takeItemByTable(play, detail.cost or {}, ",天道命盘", nil)
@@ -206,11 +236,11 @@ function npc.link(play, npcid, p2, p3, msgData)
         _save_dljq_data(play, T_data)
         _rebuild_tmlp_attr(play)
 
-        Player.sendmsgEx(play, string.format("你完成了|【%s】#249|命盘激活", detail.name))
+        Player.sendmsgEx(play, string.format("你完成了|【%s】#218|命盘激活", detail.name))
         if (state.all or 0) >= (_config.all or 0) then
             if not _try_grant_all_level_bonus(play, T_data, state) then
                 if (tonumber(getbaseinfo(play, 6)) or 0) < (_config.all_level_need or 150) then
-                    Player.sendmsgEx(play, string.format("你已激活全部|【天道命盘】#249|，达到|【%d级】#249|后可额外获得|【%d级】#249|", _config.all_level_need or 150, _config.all_level_add or 5))
+                    Player.sendmsgEx(play, string.format("你已激活全部|【天道命盘】#218|，达到|【%d级】#218|后可额外获得|【%d级】#218|", _config.all_level_need or 150, _config.all_level_add or 5))
                 end
             end
         end

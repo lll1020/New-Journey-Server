@@ -23,7 +23,7 @@ function npc.main(play,npcid)
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     local pre_state = tonumber(jq_data[_pre_key] or 0) or 0
     if pre_state < 2 then
-        Player.sendmsgEx(play, "请先完成#57|【是非难辨】#249|再来#57")
+        Player.sendmsgEx(play, "请先完成#57|【是非难辨】#218|再来#57")
         return
     end
     local data = {}
@@ -54,19 +54,19 @@ function npc.link(play,npcid,ew,aid)
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     local pre_state = tonumber(jq_data[_pre_key] or 0) or 0
     if pre_state < 2 then
-        Player.sendmsgEx(play, "请先完成#57|【是非难辨】#249|再来#57")
+        Player.sendmsgEx(play, "请先完成#57|【是非难辨】#218|再来#57")
         return
     end
 
     local state = tonumber(jq_data[_cfg_key] or 0) or 0
     if state >= 2 then
-        Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
+        Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#218|")
         return
     end
 
     local choice = _get_choice(play)
     if choice ~= 1 and choice ~= 2 then
-        Player.sendmsgEx(play, "提交分支数据缺失，请返回#57|【是非难辨】#249|确认#57")
+        Player.sendmsgEx(play, "提交分支数据缺失，请返回#57|【是非难辨】#218|确认#57")
         return
     end
 
@@ -82,7 +82,7 @@ function npc.link(play,npcid,ew,aid)
 
     jq_data[_cfg_key] = 2
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-    Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+    Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成#57")
     sendluamsg(play,101,1005,0,0,"rwwc")
     sendluamsg(play,100,npcid,1,0,"")
 end

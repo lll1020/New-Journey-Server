@@ -14,7 +14,7 @@ local function _check_trial_limit(play, aid)
     if needLv > 0 and lowLv < needLv then
         local rootCfg = (((Guard.getConfig("npc_22") or {}).main_r or {})[aid]) or {}
         local rootName = tostring(rootCfg.name or ("第" .. tostring(aid) .. "个灵根"))
-        Player.sendmsgEx(play, "挑战高阶灵根需要先将|【"..rootName.."】#249|提升到Lv."..needLv)
+        Player.sendmsgEx(play, "挑战高阶灵根需要先将|【"..rootName.."】#218|提升到Lv."..needLv)
         return false
     end
     local need = cfg.itme
@@ -27,7 +27,7 @@ local function _check_trial_limit(play, aid)
     if Player.hasEquipInArtifactSlot(play, need) then
         return true
     end
-    Player.sendmsgEx(play, "进入该灵根试炼需要先拥有称号或背包神器位装备：#57|【"..need.."】#249|")
+    Player.sendmsgEx(play, "进入该灵根试炼需要先拥有称号或背包神器位装备：#57|【"..need.."】#218|")
     return false
 end
 function npc.main(play,npcid)
@@ -84,7 +84,7 @@ function npc.link(play,npcid,ew,aid)
         if T_dljq["npc_68"][""..aid] and T_dljq["npc_68"][""..aid] == 1 then
             T_data.level[""..aid + 5] = 0
             Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
-            Player.sendmsgEx(play, "恭喜你，成功激活|【灵根】#249|")
+            Player.sendmsgEx(play, "恭喜你，成功激活|【灵根】#218|")
             sendluamsg(play,100,npcid,2,aid,"")
             sendluamsg(play,101,1005,0,0,"rwwc")
         else

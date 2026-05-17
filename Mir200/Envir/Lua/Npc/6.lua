@@ -23,28 +23,28 @@ function npc.link(play, npcid, p2, p3, msgData)
     if p2 == 1 then
         local equipLevel = Player.getEquipFieldByPos(play, _config.where, 1) or 0
         if equipLevel == 0 then
-            Player.sendmsgEx(play,  "请先装备#57|【对应装备】#249|")
+            Player.sendmsgEx(play,  "请先装备#57|【对应装备】#218|")
             return
         end
         equipLevel = tonumber(equipLevel)
         if equipLevel >= _config.max_level then
-            Player.sendmsgEx(play,  "你的装备等级已达到#57|【"..equipLevel.."级】#249|，无需再提升#57")
+            Player.sendmsgEx(play,  "你的装备等级已达到#57|【"..equipLevel.."级】#218|，无需再提升#57")
             return
         end
         local config = _config.config[equipLevel]
         local name, num = Player.checkItemNumByTable(play, config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
             return
         end
         Player.takeItemByTable(play, config.cost, ",升级切割",nil)
         changeitemidx(play,getiteminfo(play,linkbodyitem(play,_config.where),1),getstditeminfo(config.give, ConstCfg.stditeminfo.idx))
-        Player.sendmsgEx(play,  "恭喜你，装备提升成功，当前装备等级为|【"..(equipLevel + 1).."级】#249|")
+        Player.sendmsgEx(play,  "恭喜你，装备提升成功，当前装备等级为|【"..(equipLevel + 1).."级】#218|")
         sendluamsg(play,100,npcid,1,0,"")
         sendluamsg(play,101,1005,0,0,"qhcg")
         if (equipLevel + 1) == 15 then
             Player.title_give(play, _config.title)
-            Player.sendmsgEx(play,  "恭喜你，获得称号：|【".._config.title.."】#249|")
+            Player.sendmsgEx(play,  "恭喜你，获得称号：|【".._config.title.."】#218|")
         end
         sendluamsg(play,100,npcid,1,0,"")
     end

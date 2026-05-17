@@ -76,18 +76,141 @@ local _box_name_order = {"神石宝箱", "神石宝箱[史诗级]", "神石宝箱[传说级]"}
     用途：凝萃神丹生效时，尝试发放额外暴击神石奖励。
     参数：play=玩家对象。
 17. _filter_box_list_by_open_slots(play, item_list)
-    用途：按玩家当前已开放的神石槽位过滤开箱候选列表。
+    用途：整理宝箱候选列表；神石宝箱现在不再按已解锁槽位过滤。
     参数：play=玩家对象；item_list=待过滤的神石列表。
 ]]
 
--- 神石临时属性统一挂在物品自身，当前先保留切割成长显示。
-local function _build_item_attr_by_level(level)
-    local attrs = {}
-    level = tonumber(level or 0) or 0
-    if level > 0 then
-        attrs[244] = level * 100
+-- 神石效果按“神石类型 + 品质”生效，不做低阶效果累加。
+local _godstone_effect_cfg = {
+    ["山川神石"] = {
+        attrs = {
+            [1] = {[82] = 500},
+            [2] = {[82] = 800},
+            [3] = {[82] = 1200},
+            [4] = {[82] = 1800},
+        },
+        mark = "mountain",
+    },
+    ["海洋神石"] = {attrs = {}, mark = "ocean"},
+    ["天空神石"] = {
+        attrs = {
+            [1] = {[242] = 3000},
+            [2] = {[242] = 10000},
+            [3] = {[242] = 20000},
+            [4] = {[242] = 30000, [24] = 30},
+        },
+        mark = "sky",
+    },
+    ["清风神石"] = {
+        attrs = {
+            [1] = {[243] = 1},
+            [2] = {[243] = 3},
+            [3] = {[243] = 5},
+            [4] = {[243] = 10},
+        },
+        mark = "wind",
+    },
+    ["火焰神石"] = {
+        attrs = {
+            [1] = {[245] = 600},
+            [2] = {[245] = 1000},
+            [3] = {[245] = 1500},
+            [4] = {[245] = 2200},
+        },
+        mark = "fire",
+    },
+    ["满月神石"] = {
+        attrs = {
+            [1] = {[300] = 10},
+            [2] = {[300] = 20},
+            [3] = {[300] = 30},
+            [4] = {[300] = 50, [23] = 35},
+        },
+        mark = "moon",
+    },
+    ["大地神石"] = {
+        attrs = {
+            [1] = {[204] = 500},
+            [2] = {[204] = 1000, [205] = 300},
+            [3] = {[204] = 1500, [205] = 500},
+            [4] = {},
+        },
+        mark = "earth",
+    },
+    ["雷电神石"] = {attrs = {}, mark = "thunder"},
+}
+local _godstone_mark_keys = {"mountain", "ocean", "sky", "wind", "fire", "moon", "earth", "thunder"}
+
+local function _resolve_godstone_info(item_name)
+    item_name = tostring(item_name or "")
+    if item_name == "" then
+        return nil, nil, nil
     end
-    return attrs
+    for level, list in pairs(_config.cost or {}) do
+        for _, cfg_name in ipairs(list or {}) do
+            if cfg_name == item_name then
+                local base = string.match(item_name, "^(.-)【") or item_name
+                return base, tonumber(level) or 0, _godstone_effect_cfg[base]
+            end
+        end
+    end
+    return nil, nil, nil
+end
+
+local function _merge_attr(dst, src)
+    for attr, value in pairs(src or {}) do
+        dst[attr] = (tonumber(dst[attr] or 0) or 0) + (tonumber(value or 0) or 0)
+    end
+end
+
+local function _build_item_attr_by_item(item_name)
+    local _, level, effect = _resolve_godstone_info(item_name)
+    local attrs = {}
+    if effect and effect.attrs then
+        _merge_attr(attrs, effect.attrs[level] or {})
+    end
+    return attrs, level
+end
+
+local function _toggle_godstone_buff_var(play, varName, buffId, enable)
+    local bl = getplaydef(play, varName)
+    local data = json2tbl(bl == "" and {} or bl)
+    local key = tostring(buffId)
+    if enable then
+        data[key] = true
+    else
+        data[key] = nil
+    end
+    setplaydef(play, varName, tbl2json(data))
+end
+
+local function _sync_godstone_effect_marks(play)
+    local marks = {}
+    for _, key in ipairs(_godstone_mark_keys) do
+        marks[key] = 0
+    end
+    for _, where in ipairs(_slot_pos) do
+        local itemobj = linkbodyitem(play, where)
+        if itemobj and itemobj ~= "0" then
+            local item_name = tostring(getiteminfo(play, itemobj, ConstCfg.iteminfo.name) or "")
+            local _, level, effect = _resolve_godstone_info(item_name)
+            if effect and effect.mark then
+                marks[effect.mark] = math.max(tonumber(marks[effect.mark] or 0) or 0, tonumber(level or 0) or 0)
+            end
+        end
+    end
+    local hasEffect = false
+    for _, key in ipairs(_godstone_mark_keys) do
+        local value = tonumber(marks[key] or 0) or 0
+        setplaydef(play, "N$godstone_" .. key, value)
+        if value > 0 then
+            hasEffect = true
+        end
+    end
+    _toggle_godstone_buff_var(play, VarCfg.S_buffgwq, 565, hasEffect)
+    _toggle_godstone_buff_var(play, VarCfg.S_buffrwq, 565, hasEffect)
+    _toggle_godstone_buff_var(play, VarCfg.S_buffbgwq, 566, hasEffect)
+    _toggle_godstone_buff_var(play, VarCfg.S_buffbrwq, 566, hasEffect)
 end
 
 -- 凝萃神丹生效时，合成神石有 30% 几率额外暴击出 1 颗稀有/史诗神石。
@@ -177,7 +300,7 @@ local function _take_extra_cost(play, level)
     end
     local name, num = Player.checkItemNumByTable(play, extra)
     if name then
-        Player.sendmsgEx(play, string.format("合成失败：缺少|%s#249|数量|%d#249", name, num))
+        Player.sendmsgEx(play, string.format("合成失败：缺少|%s#218|数量|%d#218", name, num))
         return false
     end
     Player.takeItemByTable(play, extra, ",神石合成", nil)
@@ -282,10 +405,11 @@ local function _refresh_godstone_item(play, itemobj, item_name)
         return
     end
     setitemaddvalue(play, itemobj, 2, 3, level_found)
-    local attrs = _build_item_attr_by_level(level_found)
+    local attrs = _build_item_attr_by_item(item_name_real)
     local attr_str = Player.getAttrTableToStr(attrs)
     setaddnewabil(play, -2, "=", attr_str, itemobj)
     refreshitem(play, itemobj)
+    _sync_godstone_effect_marks(play)
 end
 
 local function _sync_equipped_items(play)
@@ -329,17 +453,17 @@ local function _try_bonus_compose_reward(play)
     return reward_name
 end
 
--- 宝箱只能开出玩家当前已开放槽位对应的神石，避免提前产出未解锁槽位奖励。
+-- 神石宝箱不再按已解锁槽位过滤，所有神石都可以正常开出。
 local function _filter_box_list_by_open_slots(play, item_list)
-    local open_slots = _get_open_slot_count(play)
     local out = {}
-    for slot_idx, item_name in ipairs(item_list or {}) do
-        if slot_idx <= open_slots and tostring(item_name or "") ~= "" then
+    for _, item_name in ipairs(item_list or {}) do
+        if tostring(item_name or "") ~= "" then
             out[#out + 1] = item_name
         end
     end
     return out
 end
+
 
 --[[
 服务端面板、开奖与交互方法说明：
@@ -350,7 +474,7 @@ end
    用途：向客户端发送神石主界面数据。
    参数：play=玩家对象；npcid=当前 NPC 编号；p2=消息类型；p3=预留参数。
 3. _pick_box_reward(play, box_name)
-   用途：根据宝箱名称、配置概率与已开放槽位，抽取本次开箱奖励。
+   用途：根据宝箱名称与配置概率抽取本次开箱奖励。
    参数：play=玩家对象；box_name=宝箱名称。
 4. _open_box_by_name(play, npcid, box_name)
    用途：统一处理 NPC 开箱和背包双击开箱逻辑。
@@ -433,6 +557,35 @@ end
 local function _send_panel(play, npcid, p2, p3)
     sendluamsg(play, 100, npcid or 53, p2 or 0, p3 or 0, tbl2json(_build_panel_payload(play)))
 end
+local function _box_pending_key()
+    return "S$godstone_box_pending"
+end
+
+local function _set_pending_box_reward(play, data)
+    setplaydef(play, _box_pending_key(), tbl2json(data or {}))
+end
+
+local function _get_pending_box_reward(play)
+    local raw = getplaydef(play, _box_pending_key())
+    if not raw or raw == "" then
+        return nil
+    end
+    local ok, data = pcall(json2tbl, raw)
+    if not ok or type(data) ~= "table" then
+        return nil
+    end
+    return data
+end
+
+local function _clear_pending_box_reward(play)
+    setplaydef(play, _box_pending_key(), "")
+    setplaydef(play, "N$godstone_box_pending", 0)
+end
+
+local function _gen_box_claim_token(play)
+    local seed = tostring(os.time()) .. tostring(math.random(100000, 999999))
+    return string.format("%s_%s", tostring(getbaseinfo(play, 1) or "0"), seed)
+end
 
 -- 神石宝箱开启规则与物品使用保持同源，避免 UI 开启与背包双击开启结果不一致。
 local function _pick_box_reward(play, box_name)
@@ -486,12 +639,12 @@ local function _open_box_by_name(play, npcid, box_name)
         box_name = _box_name_order[1]
     end
     if (tonumber(getbagitemcount(play, box_name) or 0) or 0) < 1 then
-        Player.sendmsgEx(play, string.format("背包中没有|%s#249|#57", box_name))
+        Player.sendmsgEx(play, string.format("背包中没有|%s#218|#57", box_name))
         return false
     end
     local missing_name, missing_num = Player.checkItemNumByTable(play, {{"神石宝箱钥匙", 1}})
     if missing_name then
-        Player.sendmsgEx(play, string.format("缺少|%s#249|数量|%d#249", missing_name, missing_num))
+        Player.sendmsgEx(play, string.format("缺少|%s#218|数量|%d#218", missing_name, missing_num))
         return false
     end
     local reward_name, quality_title = _pick_box_reward(play, box_name)
@@ -500,19 +653,48 @@ local function _open_box_by_name(play, npcid, box_name)
         return false
     end
     Player.takeItemByTable(play, {{box_name, 1}, {"神石宝箱钥匙", 1}}, ",神石宝箱开启", nil)
-    giveitem(play, reward_name, 1)
-    _mark_owned(play, reward_name)
-    _try_grant_collection_reward(play)
+    local token = _gen_box_claim_token(play)
+    _set_pending_box_reward(play, {
+        token = token,
+        box_name = box_name,
+        reward_name = reward_name,
+        quality_title = quality_title,
+        create_time = os.time(),
+    })
     sendluamsg(play, 100, npcid or 53, 10, 0, tbl2json({
+        token = token,
         box_name = box_name,
         reward_name = reward_name,
         quality_title = quality_title,
         panel = _build_panel_payload(play),
     }))
-    Player.sendmsgEx(play, string.format("开启|%s#249|成功，获得#57|【%s】#249|%s#57", box_name, reward_name, quality_title and ("（" .. quality_title .. "）") or ""))
     return true
 end
 
+local function _claim_pending_box_reward(play, npcid, token)
+    local pending = _get_pending_box_reward(play)
+    if not pending then
+        Player.sendmsgEx(play, "神石宝箱奖励领取失败：没有待领取奖励#57")
+        return false
+    end
+    if tostring(pending.token or "") ~= tostring(token or "") then
+        Player.sendmsgEx(play, "神石宝箱奖励领取失败：请求已过期#57")
+        return false
+    end
+    local reward_name = tostring(pending.reward_name or "")
+    if reward_name == "" then
+        _clear_pending_box_reward(play)
+        Player.sendmsgEx(play, "神石宝箱奖励领取失败：奖励异常#57")
+        return false
+    end
+    giveitem(play, reward_name, 1)
+    _mark_owned(play, reward_name)
+    _try_grant_collection_reward(play)
+    _clear_pending_box_reward(play)
+    _send_panel(play, npcid, 1, 0)
+    Player.sendmsgEx(play, string.format("开启|%s#218|成功，获得#57|【%s】#218|%s#57", tostring(pending.box_name or "神石宝箱"), reward_name, pending.quality_title and ("（" .. tostring(pending.quality_title) .. "）") or ""))
+    return true
+end
 -- 一键卸下当前已装配的全部神石，便于玩家直接切回合成页操作。
 local function _take_off_all_godstone(play)
     local changed = 0
@@ -526,6 +708,96 @@ local function _take_off_all_godstone(play)
     return changed
 end
 
+local function _get_godstone_slot_index_by_name(item_name)
+    item_name = tostring(item_name or "")
+    if item_name == "" then
+        return nil
+    end
+    for _, list in pairs(_config.cost or {}) do
+        for idx, name in ipairs(list or {}) do
+            if name == item_name then
+                return idx
+            end
+        end
+    end
+    return nil
+end
+
+local function _find_open_godstone_where(play, item_name)
+    local slot_idx = _get_godstone_slot_index_by_name(item_name)
+    if not slot_idx then
+        return nil, "穿戴失败：不是神石#57"
+    end
+    for _, list in pairs(_config.cost or {}) do
+        local same_name = list and list[slot_idx]
+        if same_name and same_name ~= "" then
+            for _, where in ipairs(_slot_pos) do
+                local itemobj = linkbodyitem(play, where)
+                if itemobj and itemobj ~= "0" then
+                    local equipped_name = tostring(getiteminfo(play, itemobj, ConstCfg.iteminfo.name) or "")
+                    if equipped_name == same_name then
+                        return nil, "同名神石已经穿戴#57"
+                    end
+                end
+            end
+        end
+    end
+    for _, where in ipairs(_slot_pos) do
+        local body_item = linkbodyitem(play, where)
+        if not body_item or body_item == "0" then
+            return where, nil
+        end
+    end
+    return nil, "当前没有空余神石槽位#57"
+end
+
+local function _handle_take_on_godstone(play, npcid, data)
+    local ok, jsondata = pcall(json2tbl, data or "{}")
+    if not ok or type(jsondata) ~= "table" then
+        Player.sendmsgEx(play, "穿戴失败：请求数据错误#57")
+        return
+    end
+    local make_idx = tostring(jsondata.makeIndex or "")
+    if make_idx == "" then
+        Player.sendmsgEx(play, "穿戴失败：未找到物品#57")
+        return
+    end
+    local itemobj = getitembymakeindex(play, make_idx)
+    if not itemobj then
+        Player.sendmsgEx(play, "穿戴失败：物品不存在#57")
+        return
+    end
+    local item_name = tostring(getiteminfo(play, itemobj, ConstCfg.iteminfo.name) or "")
+    local where, err = _find_open_godstone_where(play, item_name)
+    if not where then
+        Player.sendmsgEx(play, err or "穿戴失败：没有可用槽位#57")
+        return
+    end
+    callscriptex(play, "TAKEONMAKEINDEX", where, make_idx)
+    _mark_owned(play, item_name)
+    _refresh_godstone_item(play, itemobj, item_name)
+    _send_panel(play, npcid, 1, 0)
+end
+
+local function _handle_take_off_godstone(play, npcid, data)
+    local ok, jsondata = pcall(json2tbl, data or "{}")
+    if not ok or type(jsondata) ~= "table" then
+        Player.sendmsgEx(play, "卸下失败：请求数据错误#57")
+        return
+    end
+    local where = tonumber(jsondata.where or 0) or 0
+    if not _is_godstone_slot(where) then
+        Player.sendmsgEx(play, "卸下失败：槽位无效#57")
+        return
+    end
+    local itemobj = linkbodyitem(play, where)
+    if not itemobj or itemobj == "0" then
+        Player.sendmsgEx(play, "卸下失败：该槽位没有神石#57")
+        return
+    end
+    callscriptex(play, "TakeOffItem", where)
+    _send_panel(play, npcid, 1, 0)
+end
 local function _handle_compose(play, npcid, data)
     local ok, jsondata = pcall(json2tbl, data or "{}")
     if not ok or type(jsondata) ~= "table" then
@@ -601,9 +873,9 @@ local function _handle_compose(play, npcid, data)
     _try_grant_collection_reward(play)
     local tip = guaranteed and "（100%）" or string.format("（%d/%d）", tonumber(slot_weight or 0) or 0, _config.needitemnum or 10)
     if bonus_reward then
-        Player.sendmsgEx(play, string.format("合成成功，获得：|%s#249|%s；凝萃神丹额外暴击获得：|%s#249|#57", reward_name, tip, bonus_reward))
+        Player.sendmsgEx(play, string.format("合成成功，获得：|%s#218|%s；凝萃神丹额外暴击获得：|%s#218|#57", reward_name, tip, bonus_reward))
     else
-        Player.sendmsgEx(play, string.format("合成成功，获得：|%s#249|%s#57", reward_name, tip))
+        Player.sendmsgEx(play, string.format("合成成功，获得：|%s#218|%s#57", reward_name, tip))
     end
     _send_panel(play, npcid, 1, 0)
 end
@@ -620,7 +892,7 @@ function npc.link(play, npcid, ew, aid, data)
     if action == nil then
         return
     end
-    if not Guard.ensureActionAllowed(play, npcid, action, Guard.newActionSet({1, 2, 3})) then
+    if not Guard.ensureActionAllowed(play, npcid, action, Guard.newActionSet({1, 2, 3, 4, 5, 6})) then
         return
     end
     if action == 1 then
@@ -639,6 +911,24 @@ function npc.link(play, npcid, ew, aid, data)
     if action == 3 then
         _take_off_all_godstone(play)
         _send_panel(play, npcid, 1, 0)
+        return
+    end
+    if action == 4 then
+        local ok, jsondata = pcall(json2tbl, data or "{}")
+        if not ok or type(jsondata) ~= "table" then
+            Player.sendmsgEx(play, "神石宝箱奖励领取失败：请求数据错误#57")
+            return
+        end
+        _claim_pending_box_reward(play, npcid, jsondata.token)
+        return
+    end
+    if action == 5 then
+        _handle_take_on_godstone(play, npcid, data)
+        return
+    end
+    if action == 6 then
+        _handle_take_off_godstone(play, npcid, data)
+        return
     end
 end
 
@@ -658,6 +948,7 @@ local function _on_take_on_sync(play, itemobj, where, itemname, makeid)
         _refresh_godstone_item(play, itemobj, item_name)
         _try_grant_collection_reward(play)
     end
+    _sync_godstone_effect_marks(play)
 end
 GameEvent.add(EventCfg.onTakeOnEx, _on_take_on_sync, "godstone_sync_takeon")
 
@@ -669,9 +960,32 @@ local function _on_take_off_sync(play, itemobj, where, itemname, makeid)
         setitemaddvalue(play, itemobj, 2, 3, 0)
         refreshitem(play, itemobj)
     end
+    _sync_godstone_effect_marks(play)
 end
 GameEvent.add(EventCfg.onTakeOffEx, _on_take_off_sync, "godstone_sync_takeoff")
 
+local function _on_kill_mon_godstone_effect(play, mob)
+    if not play or not mob then
+        return
+    end
+    if (tonumber(getplaydef(play, "N$godstone_fire") or 0) or 0) < 4 then
+        return
+    end
+    local mob_name = tostring(getbaseinfo(mob, 1) or "")
+    local mon_type = tonumber((guaiwutype and guaiwutype[mob_name]) or 0) or 0
+    if mon_type < 2 then
+        return
+    end
+    local is_red = string.find(mob_name, "★", 1, true) ~= nil
+        or string.find(mob_name, "≮", 1, true) ~= nil
+        or string.find(mob_name, "红", 1, true) ~= nil
+    if not is_red then
+        return
+    end
+    giveitem(play, "神石宝箱", 1)
+    Player.sendmsgEx(play, "火焰神石触发：击杀红名BOSS获得|神石宝箱#218|*1#57")
+end
+GameEvent.add(EventCfg.onKillMon, _on_kill_mon_godstone_effect, "godstone_fire_kill_box")
 function npc.markOwned(play, item_name)
     local changed = _mark_owned(play, item_name)
     _try_grant_collection_reward(play)
@@ -701,4 +1015,3 @@ function npc.openBoxByName(play, box_name)
 end
 
 return npc
-

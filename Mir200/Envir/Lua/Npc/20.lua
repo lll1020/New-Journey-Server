@@ -48,7 +48,7 @@ local function _grant_guanming_fashion(play)
     local szList = (_fashionConfig and _fashionConfig.details and _fashionConfig.details.sz) or {}
     local fashionIdx = 0
     for idx, cfg in ipairs(szList) do
-        if cfg.name == "时装：冠名" then
+        if cfg.name == "时装：天下谁人不识君" then
             fashionIdx = idx
             break
         end
@@ -123,10 +123,10 @@ function npc.link(play,npcid,ew,aid)
                 _set_first_guanming_player(play)
                 sendluamsg(play,100,npcid,0,0,tbl2json(_get_guanming_panel_data(play)))
             else
-                Player.sendmsgEx(play, "您已拥有#57|【冠名称号】#249|，无需重复领取#57")
+                Player.sendmsgEx(play, "您已拥有#57|【冠名称号】#218|，无需重复领取#57")
             end
         else
-            Player.sendmsgEx(play, "您的充值金额不足#57|，无法领取#57|【冠名称号】#249|")
+            Player.sendmsgEx(play, "您的充值金额不足#57|，无法领取#57|【冠名称号】#218|")
         end
     end
 end

@@ -59,9 +59,9 @@ local function _try_grant_level_bonus(play, data)
     _save_data(play, data)
     local _, realAdd = Player.addRoleLevel(play, add, false)
     if realAdd > 0 then
-        Player.sendmsgEx(play, string.format("你已获得称号#57|【%s】#249|的等级奖励，额外获得#57|【%d级】#249|", _title_name, realAdd))
+        Player.sendmsgEx(play, string.format("你已获得称号#57|【%s】#218|的等级奖励，额外获得#57|【%d级】#218|", _title_name, realAdd))
     else
-        Player.sendmsgEx(play, string.format("你已获得称号#57|【%s】#249|的等级奖励，但当前等级已达#57|【%d级】#249|上限，未获得额外等级#57", _title_name, Player.getRoleLevelCap()))
+        Player.sendmsgEx(play, string.format("你已获得称号#57|【%s】#218|的等级奖励，但当前等级已达#57|【%d级】#218|上限，未获得额外等级#57", _title_name, Player.getRoleLevelCap()))
     end
     return true
 end
@@ -144,7 +144,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         end
         local cost = _toint(cfg.cost)
         if data.point < cost then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", _point_name, cost))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", _point_name, cost))
             return
         end
         if not _grant_reward(play, data, reward, "残魂商店") then
@@ -155,7 +155,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         data.buy[tostring(idx)] = _get_buy_num(data, idx) + 1
         _save_data(play, data)
         _try_grant_level_bonus(play, data)
-        Player.sendmsgEx(play, string.format("兑换成功，获得#57|【%s】#249|", tostring(cfg.name or "奖励")))
+        Player.sendmsgEx(play, string.format("兑换成功，获得#57|【%s】#218|", tostring(cfg.name or "奖励")))
         sendluamsg(play, 100, npcid, 1, idx, tbl2json(_build_payload(play)))
     elseif p2 == 2 then
         _try_grant_level_bonus(play, data)
@@ -175,7 +175,7 @@ function npc.add_point(play, num, reason)
     data.point = data.point + num
     _save_data(play, data)
     if reason and reason ~= "" then
-        Player.sendmsgEx(play, string.format("%s，#57|【%s】#249|+%d", reason, _point_name, num))
+        Player.sendmsgEx(play, string.format("%s，#57|【%s】#218|+%d", reason, _point_name, num))
     end
     return data.point
 end

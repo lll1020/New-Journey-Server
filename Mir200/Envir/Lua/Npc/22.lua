@@ -48,7 +48,7 @@ local function _lg_take_change_cost(play, cost, slotName)
     end
     local name, num = Player.checkItemNumByTable(play, cost)
     if name then
-        Player.sendmsgEx(play, string.format("切换%s需要#57|【%s】#249|x%s", tostring(slotName or "灵根"), tostring(name), tostring(num or 0)))
+        Player.sendmsgEx(play, string.format("切换%s需要#57|【%s】#218|x%s", tostring(slotName or "灵根"), tostring(name), tostring(num or 0)))
         return false
     end
     Player.takeItemByTable(play, cost, ",灵根切换", nil)
@@ -81,7 +81,7 @@ function npc.link(play,npcid,ew,aid)
     if ew == 1 and false then--抽取低级灵根
         T_data.level[""..math.random(1, 5)] = 0
         Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
-        Player.sendmsgEx(play, "提示：你获得了新的|【灵根】#249|，请前往灵根升级界面查看")
+        Player.sendmsgEx(play, "提示：你获得了新的|【灵根】#218|，请前往灵根升级界面查看")
         sendluamsg(play,100,npcid,1,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
     elseif ew == 2 then--装配主灵根
         local oldMain = tonumber(T_data.main or 0) or 0
@@ -118,7 +118,7 @@ function npc.link(play,npcid,ew,aid)
         end
         T_data.main = aid
         Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
-        Player.sendmsgEx(play, "提示：你的|【灵根】#249|装配成功")
+        Player.sendmsgEx(play, "提示：你的|【灵根】#218|装配成功")
         sendluamsg(play,100,npcid,1,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
     elseif ew == 3 then--装配副灵根
         local oldOther = tonumber(T_data.other or 0) or 0
@@ -155,7 +155,7 @@ function npc.link(play,npcid,ew,aid)
         end
         T_data.other = aid
         Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
-        Player.sendmsgEx(play, "提示：你的|【灵根】#249|装配成功")
+        Player.sendmsgEx(play, "提示：你的|【灵根】#218|装配成功")
         sendluamsg(play,100,npcid,1,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
     elseif ew == 5 then--灵根升级
         T_data.level = T_data.level or {}
@@ -166,7 +166,7 @@ function npc.link(play,npcid,ew,aid)
         local oldLevel = tonumber(T_data.level[""..aid] or 0) or 0
         T_data.level[""..aid] = oldLevel + 1
         if T_data.level[""..aid] > _config.main_updata.max_level then
-            Player.sendmsgEx(play, "提示：你的灵根等级已达到|【最高等级】#249|")
+            Player.sendmsgEx(play, "提示：你的灵根等级已达到|【最高等级】#218|")
             return
         end
         local config = aid < 6 and _config.main_updata.details.low[T_data.level[""..aid]] or _config.main_updata.details.up[T_data.level[""..aid]]
@@ -176,14 +176,15 @@ function npc.link(play,npcid,ew,aid)
         end
         local name, num = Player.checkItemNumByTable(play, config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足#57", name))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足#57", name))
             return
         end
         Player.takeItemByTable(play, config.cost, ",灵根升级",nil)
         Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
-        Player.sendmsgEx(play, "提示：你的|【灵根】#249|升级成功")
+        Player.sendmsgEx(play, "提示：你的|【灵根】#218|升级成功")
         if FairyFate and FairyFate.touch then FairyFate.touch(play, "linggen") end
         Player.updateSomeAddr(play, _lg_build_attr(_config.main_r[aid].attr, oldLevel + _base_ratio), _lg_build_attr(_config.main_r[aid].attr, (tonumber(T_data.level[""..aid]) or 0) + _base_ratio))
+        TMLP_refresh_linggen_bonus(play)
         sendluamsg(play,101,1005,0,0,"tpcg")
         sendluamsg(play,100,npcid,2,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
     end
@@ -201,10 +202,41 @@ function Login_lg(play)
         end
     end
     Player.updateSomeAddr(play,nil, attr)
+    TMLP_refresh_linggen_bonus(play)
     Buff[103](play,1)
     Buff[104](play,1)
 end
 GameEvent.add(EventCfg.onLogin, Login_lg, "Login_lg")
+function TMLP_refresh_linggen_bonus(play)
+    local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"]) or {}
+    local levels = T_data.level or {}
+    local max_level = (((teshudata or {})["npc_22"] or {}).main_updata or {}).max_level or 0
+    local count = 0
+    for _, level in pairs(levels) do
+        if (tonumber(level) or 0) >= max_level and max_level > 0 then
+            count = count + 1
+        end
+    end
+    Player.del_attlist(play, "天命道盘_灵根加成")
+    if count < 2 then
+        return
+    end
+    local attrs = {}
+    for i = 1, 10 do
+        local base = _lg_build_attr(_config.main_r[i].attr, _base_ratio)
+        for _, one in ipairs(base) do
+            local attr_id = tonumber(one[1])
+            local value = tonumber(one[2]) or 0
+            if attr_id and value ~= 0 then
+                attrs[attr_id] = (attrs[attr_id] or 0) + math.floor(value * 5 / 100)
+            end
+        end
+    end
+    local attrsstr = Player.getAttrTableToStr(attrs)
+    if attrsstr and attrsstr ~= "" then
+        Player.add_attlist(play, "天命道盘_灵根加成", "=", attrsstr, 1)
+    end
+end
 local function _lg_extract_title(desc, fallback)
     if type(desc) == "string" then
         local title = string.match(desc, "【(.-)】")
@@ -245,7 +277,7 @@ end
 local function _lg_send_trigger_msg(play, lgCfg, isMain)
     local title = _lg_extract_title(isMain and lgCfg.wz1 or lgCfg.wz2, (lgCfg.name or "未知").."灵根")
     local effect = _lg_effect_short(lgCfg, isMain)
-    Player.sendmsgEx(play, "【灵根觉醒】【|【"..tostring(title).."】#249|"..tostring(effect).."】")
+    Player.sendmsgEx(play, "【灵根觉醒】【|【"..tostring(title).."】#218|"..tostring(effect).."】")
 end
 function npc.lgcf(play,zt,Damage,Target,triggerType)
     --灵根触发

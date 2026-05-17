@@ -115,7 +115,7 @@ function npc.link(play,npcid,ew,aid)
     local state = tonumber(jq_data[_cfg_key] or 0) or 0
 
     if state >= 2 then
-        Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
+        Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#218|")
         return
     end
 
@@ -124,7 +124,7 @@ function npc.link(play,npcid,ew,aid)
         jq_data[_cfg_key] = 1
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         shaguai.jia(play, 705)
-        Player.sendmsgEx(play, "领取#57|【"..(_config.name or "任务").."】#249|成功")
+        Player.sendmsgEx(play, "领取#57|【"..(_config.name or "任务").."】#218|成功")
         sendluamsg(play,101,1005,0,0,"rwjs")
         sendluamsg(play,100,npcid,1,0,"")
         return
@@ -132,7 +132,7 @@ function npc.link(play,npcid,ew,aid)
 
     local req_map = _task_cfg.map or "罗刹海市"
     if req_map ~= "" and getbaseinfo(play,3) ~= req_map and getbaseinfo(play,3) ~= "xtc" then
-        Player.sendmsgEx(play, "请前往#57|【"..req_map.."】#249|完成后再提交#57")
+        Player.sendmsgEx(play, "请前往#57|【"..req_map.."】#218|完成后再提交#57")
         if npcid then Guard.closeNpc(play, npcid) end
         return
     end
@@ -145,7 +145,7 @@ function npc.link(play,npcid,ew,aid)
     local boss_done = (need_boss <= 0) or (cur_boss >= need_boss)
 
     if not (small_done and boss_done) then
-        local msg = string.format("击杀进度：小怪#57|【%d/%d】#249|，BOSS#57|【%d/%d】#249|", cur_small, need_small, cur_boss, need_boss)
+        local msg = string.format("击杀进度：小怪#57|【%d/%d】#218|，BOSS#57|【%d/%d】#218|", cur_small, need_small, cur_boss, need_boss)
         Player.sendmsgEx(play, msg)
         return
     end
@@ -170,7 +170,7 @@ function npc.link(play,npcid,ew,aid)
         choice = pick
         jq_data[_choice_key] = choice
     elseif pick and pick ~= choice then
-        Player.sendmsgEx(play, "已选择提交#57|".._choice_text(choice).."#249|，不可更改#57")
+        Player.sendmsgEx(play, "已选择提交#57|".._choice_text(choice).."#218|，不可更改#57")
         return
     end
 
@@ -197,14 +197,14 @@ function npc.link(play,npcid,ew,aid)
     sg_data[key_boss] = nil
     Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 
-    Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+    Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成#57")
     if npcid then Guard.closeNpc(play, npcid) end
     sendluamsg(play,101,1005,0,0,"rwwc")
 
     local title = _choice_title(choice)
     if type(title) == "string" and title ~= "" then
         Player.title_give(play, title)
-        Player.sendmsgEx(play, "获得称号：|【"..title.."】#249|")
+        Player.sendmsgEx(play, "获得称号：|【"..title.."】#218|")
     end
 
     _give_item_reward_only(play)

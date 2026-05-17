@@ -40,17 +40,17 @@ function npc.link(play,npcid,ew,aid)
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     local key = "npc_635"
     if jq_data[key] and jq_data[key] >= 2 then
-        Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
+        Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#218|")
         return
     end
     if ew == 1 then
         if jq_data[key] and jq_data[key] == 1 then
-            Player.sendmsgEx(play, "你已经领取#57|【"..(_config.name or "该任务").."】#249|")
+            Player.sendmsgEx(play, "你已经领取#57|【"..(_config.name or "该任务").."】#218|")
             return
         end
         jq_data[key] = 1
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#249|")
+        Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#218|")
         if npcid then Guard.closeNpcAndAuto(play, npcid) end
         shaguai.jia(play, _config.shaguai_id or 635)
         sendluamsg(play,101,1005,0,0,"rwjs")
@@ -64,7 +64,7 @@ function npc.link(play,npcid,ew,aid)
                     jq_data[key] = 2
                 end
                 Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-                Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成")
+                Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成")
                 if npcid then Guard.closeNpc(play, npcid) end
                 sendluamsg(play,101,1005,0,0,"rwwc")
                 if _config.ch then
@@ -76,12 +76,12 @@ function npc.link(play,npcid,ew,aid)
                 end
                 sendluamsg(play,100,npcid,1,2,"")
             else
-                Player.sendmsgEx(play, "你还没有完成#57|【"..(_config.name or "该任务").."】#249|")
+                Player.sendmsgEx(play, "你还没有完成#57|【"..(_config.name or "该任务").."】#218|")
                 if npcid then Guard.closeNpcAndAuto(play, npcid) end
                 return
             end
         else
-            Player.sendmsgEx(play, "你还没有领取#57|【"..(_config.name or "任务").."】#249|")
+            Player.sendmsgEx(play, "你还没有领取#57|【"..(_config.name or "任务").."】#218|")
             return
         end
     end

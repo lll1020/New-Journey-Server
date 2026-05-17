@@ -116,7 +116,7 @@ function Guard.ensureCost(play, cost)
     end
     local name, num = Player.checkItemNumByTable(play, cost)
     if name then
-        Player.sendmsgEx(play, string.format("缺少|%s#249|数量|%d#249", name, num))
+        Player.sendmsgEx(play, string.format("缺少|%s#218|数量|%d#218", name, num))
         return false
     end
     return true

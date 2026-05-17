@@ -99,7 +99,7 @@ local function _try_escape_main_mob(play, dtm)
     setplaydef(play, "N$npc627_escape_time", os.time() + 2)
     _kill_main_mob(play, dtm)
     _spawn_main_mob(dtm)
-    Player.sendmsgEx(play, "#57|息灾迅速逃离了你的攻击，使用【定身符】后才能将其困在原地#249|")
+    Player.sendmsgEx(play, "#57|息灾迅速逃离了你的攻击，使用【定身符】后才能将其困在原地#218|")
 end
 
 function npc.main(play,npcid)
@@ -154,20 +154,20 @@ function npc.link(play,npcid,ew,aid)
         local item_name = _prep_item_name()
         local need_num = _prep_need_num()
         if state >= 2 then
-            Player.sendmsgEx(play, "你已经完成了#57|"..item_name.."#249|#57")
+            Player.sendmsgEx(play, "你已经完成了#57|"..item_name.."#218|#57")
             return
         end
         if state == 0 then
             jq_data[_prep_key] = 1
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
             shaguai.jia(play, 627)
-            Player.sendmsgEx(play, "领取任务：#57|"..item_name.."#249|在#57|"..((_config.prep_task and _config.prep_task.map) or "叹息旷野").."#249|收集#57|"..material_name.."#249|*"..need_num)
+            Player.sendmsgEx(play, "领取任务：#57|"..item_name.."#218|在#57|"..((_config.prep_task and _config.prep_task.map) or "叹息旷野").."#218|收集#57|"..material_name.."#218|*"..need_num)
             if npcid then Guard.closeNpcAndAuto(play, npcid) end
             sendluamsg(play,100,npcid,1,1,"")
             return
         end
         if _prep_piece_count(play) < need_num then
-            Player.sendmsgEx(play, "当前已收集#57|"..material_name.."#249|#57|".._prep_piece_count(play).."/"..need_num.."#249|")
+            Player.sendmsgEx(play, "当前已收集#57|"..material_name.."#218|#57|".._prep_piece_count(play).."/"..need_num.."#218|")
             return
         end
         takeitem(play, material_name, need_num)
@@ -175,7 +175,7 @@ function npc.link(play,npcid,ew,aid)
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         shaguai.jian(play, 627)
         giveitem(play, item_name, 1)
-        Player.sendmsgEx(play, "合成成功，获得物品#57|"..item_name.."#249|#57")
+        Player.sendmsgEx(play, "合成成功，获得物品#57|"..item_name.."#218|#57")
         sendluamsg(play,100,npcid,1,2,"")
     end
 end
@@ -273,7 +273,7 @@ function npc_627_finish(play)
         delbuff(play, 20111)
     end
     setplaydef(play, "N$npc627_escape_time", 0)
-    Player.sendmsgEx(play, "|"..(_config.name or "任务").."#249|完成#57")
+    Player.sendmsgEx(play, "|"..(_config.name or "任务").."#218|完成#57")
     if npcid then Guard.closeNpc(play, npcid) end
     sendluamsg(play,101,1005,0,0,"rwwc")
     if _config.jl then

@@ -56,6 +56,20 @@ local function _xianfa_get_slot_need_lv(actor, cfg, slot)
     return tonumber(unlock_lv[slot]) or 1, false
 end
 
+local function TMLP_get_xianfa_rate_bonus(actor)
+    if TianMingDaoPanHasPath and TianMingDaoPanHasPath(actor, 4) then
+        return 5
+    end
+    return 0
+end
+local function _xianfa_has_red_bonus_5(actor)
+    local czlb = json2tbl(getplaydef(actor, VarCfg.T_czlb))
+    if type(czlb) ~= "table" then
+        return false
+    end
+    return tonumber(czlb["cz502_998"] or 0) == 1
+end
+
 local function _build_npc24_payload(actor, T_data)
     return {
         ["T_data"] = _tianshu_fix_data(T_data),
@@ -265,7 +279,7 @@ end
 function npc.main(play,npcid)
     local itemobj = linkbodyitem(play, _config.where)
     if not itemobj or itemobj == "0" then
-        Player.sendmsgEx(play, "请先装备#57|【天书】#249|后再打开#57")
+        Player.sendmsgEx(play, "请先装备#57|【天书】#218|后再打开#57")
         return
     end
     local T_data = _tianshu_fix_data(Player.getJsonTableByVar(play, VarCfg["T_天书"]))
@@ -291,7 +305,7 @@ function npc.link(play,npcid,ew,aid,data)
 
     local itemobj = linkbodyitem(play, _config.where)
     if not itemobj or itemobj == "0" then
-        Player.sendmsgEx(play, "请先装备#57|【天书】#249|后再操作#57")
+        Player.sendmsgEx(play, "请先装备#57|【天书】#218|后再操作#57")
         return
     end
     local T_data = _tianshu_fix_data(Player.getJsonTableByVar(play, VarCfg["T_天书"]))
@@ -301,17 +315,17 @@ function npc.link(play,npcid,ew,aid,data)
         if itemobj then
             T_data.level = (T_data.level or 0) + 1
             if T_data.level > _config.details[1].max_level then
-                Player.sendmsgEx(play, "天书已达到#57|【最高等级】#249|，无需再强化#57")
+                Player.sendmsgEx(play, "天书已达到#57|【最高等级】#218|，无需再强化#57")
                 return
             end
             local config = _config.details[1].details[T_data.level]
             -- release_print("天书强化配置:", T_data.level)
             -- release_print("天书强化配置:", tbl2json(config))
             if (T_data.jf or 0) < config.jf then
-                Player.sendmsgEx(play, "你的#57|【天书杀意值】#249|不足，无法进行强化#57")
+                Player.sendmsgEx(play, "你的#57|【天书杀意值】#218|不足，无法进行强化#57")
                 return
             end
-            Player.sendmsgEx(play, "恭喜你，天书强化成功，当前天书等级为|【"..T_data.level.."级】#249|")
+            Player.sendmsgEx(play, "恭喜你，天书强化成功，当前天书等级为|【"..T_data.level.."级】#218|")
             Player.setJsonVarByTable(play, VarCfg["T_天书"], T_data)
             xianfa_refresh(play)
             tianshu_refresh_item(play, T_data, itemobj)
@@ -328,7 +342,7 @@ function npc.link(play,npcid,ew,aid,data)
 
             sendluamsg(play,100,npcid,1,0,tbl2json(_build_npc24_payload(play, T_data)))
         else
-            Player.sendmsgEx(play, "请先穿戴#57|【对应部位装备】#249|")
+            Player.sendmsgEx(play, "请先穿戴#57|【对应部位装备】#218|")
             return
         end
     elseif ew == 2 then --仙法
@@ -342,7 +356,7 @@ function npc.link(play,npcid,ew,aid,data)
             local need_lv, unlock_by_artifact = _xianfa_get_slot_need_lv(play, cfg, slot)
             local cur_lv = T_data.level or 0
             if not unlock_by_artifact and cur_lv < need_lv then
-                Player.sendmsgEx(play, string.format("天书等级达到#57|【%d级】#249|才可解锁该仙法槽位#57", need_lv))
+                Player.sendmsgEx(play, string.format("天书等级达到#57|【%d级】#218|才可解锁该仙法槽位#57", need_lv))
                 return
             end
 
@@ -351,10 +365,17 @@ function npc.link(play,npcid,ew,aid,data)
 
             local force_xianpin = tonumber(aid) == 2
             local weight = cfg.weight
+            local redBonus = 0
             if getplaydef(play, "N$buff311") == 1 then
+                redBonus = redBonus + 20 -- 红色仙法概率+20%
+            end
+            if _xianfa_has_red_bonus_5(play) then
+                redBonus = redBonus + 5 -- 第8档在线充值：红色仙法概率+5%
+            end
+            if redBonus > 0 then
                 local wmap = _xianfa_parse_weight_map(weight)
                 if next(wmap) ~= nil then
-                    wmap[5] = (wmap[5] or 0) + 20 -- 红色仙法概率+20%
+                    wmap[5] = (wmap[5] or 0) + redBonus
                     local parts = {}
                     for i = 1, 5 do
                         if wmap[i] then
@@ -365,7 +386,7 @@ function npc.link(play,npcid,ew,aid,data)
                 end
             end
 
-            local max_group = (getplaydef(play, "N$buff311") == 1) and 5 or 3
+            local max_group = (redBonus > 0) and 5 or 3
             local randomNum, idx = _xianfa_roll_non_repeat(T_data, slot, weight, max_group, force_xianpin and 5 or nil)
             if not randomNum or not idx then
                 Player.sendmsgEx(play, "当前已没有可抽取的新仙法，请先更换槽位或调整已有仙法#57")
@@ -376,7 +397,7 @@ function npc.link(play,npcid,ew,aid,data)
                 local need = {{"极品仙法卷轴",1}}
                 local name, num = Player.checkItemNumByTable(play, need)
                 if name then
-                    Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
+                    Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
                     return
                 end
                 Player.takeItemByTable(play, need, ",天书仙法", nil)
@@ -387,10 +408,10 @@ function npc.link(play,npcid,ew,aid,data)
                     if name then
                         local name2, num2 = Player.checkItemNumByTable(play, cost_cfg[2])
                         if name2 then
-                            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name2, num2))
+                            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name2, num2))
                             return
                         end
-                        Player.sendmsgEx(play, "#57|【仙法卷轴】#249|不足，改用|【灵石】#249|消耗#57")
+                        Player.sendmsgEx(play, "#57|【仙法卷轴】#218|不足，改用|【灵石】#218|消耗#57")
                         Player.takeItemByTable(play, cost_cfg[2], ",天书仙法", nil)
                     else
                         Player.takeItemByTable(play, cost_cfg[1], ",天书仙法", nil)

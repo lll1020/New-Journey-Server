@@ -95,7 +95,7 @@ function npc.link(play,npcid,ew,aid,data)
 
         local name, num = Player.checkItemNumByTable(play, _config.cost or {{"金币",1000000}})
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
             return
         end
         Player.takeItemByTable(play, _config.cost or {{"金币",1000000}}, ",福娃猜拳", nil)
@@ -144,12 +144,12 @@ function npc.link(play,npcid,ew,aid,data)
         }
         if result == 1 then
             T_data.wins = T_data.wins + 1
-            Player.sendmsgEx(play, string.format("恭喜你在本轮福娃猜拳中获胜，你出的是|【%s】#249|，福娃出的是|【%s】#249|，额外获得|【%d】#249|切割", player_choice_name, npc_choice_name, cut_gain))
+            Player.sendmsgEx(play, string.format("恭喜你在本轮福娃猜拳中获胜，你出的是|【%s】#218|，福娃出的是|【%s】#218|，额外获得|【%d】#218|切割", player_choice_name, npc_choice_name, cut_gain))
         elseif result == 2 then
             T_data.losses = T_data.losses + 1
-            Player.sendmsgEx(play, string.format("很遗憾你在本轮福娃猜拳中失败了#57，你出的是#57|【%s】#249|，福娃出的是#57|【%s】#249|，额外获得#57|【%d】#249|切割#57", player_choice_name, npc_choice_name, cut_gain))
+            Player.sendmsgEx(play, string.format("很遗憾你在本轮福娃猜拳中失败了#57，你出的是#57|【%s】#218|，福娃出的是#57|【%s】#218|，额外获得#57|【%d】#218|切割#57", player_choice_name, npc_choice_name, cut_gain))
         else
-            Player.sendmsgEx(play, string.format("本轮福娃猜拳平局，你出的是|【%s】#249|，福娃出的是|【%s】#249|，额外获得|【%d】#249|切割", player_choice_name, npc_choice_name, cut_gain))
+            Player.sendmsgEx(play, string.format("本轮福娃猜拳平局，你出的是|【%s】#218|，福娃出的是|【%s】#218|，额外获得|【%d】#218|切割", player_choice_name, npc_choice_name, cut_gain))
         end
 
         -- 记录当日已玩次数
@@ -170,7 +170,7 @@ function npc.link(play,npcid,ew,aid,data)
         local shopItem = _config.shop[idx]
         local T_data = _get_fuwa_data(play)
         if T_data.wins < shopItem.win_num then
-            Player.sendmsgEx(play, string.format("你的胜利次数不足#57|【%d】#249|，无法兑换该奖励#57", shopItem.win_num))
+            Player.sendmsgEx(play, string.format("你的胜利次数不足#57|【%d】#218|，无法兑换该奖励#57", shopItem.win_num))
             return
         end
         T_data["dh"] = T_data["dh"] or {}
@@ -183,10 +183,10 @@ function npc.link(play,npcid,ew,aid,data)
         Player.setJsonTableByVar(play, VarCfg["T_福娃猜拳"], T_data)
         if shopItem.give then
             Player.rwjl(play, shopItem.give, "福娃猜拳兑换奖励", 1)
-            Player.sendmsgEx(play, string.format("你成功兑换了|【%s】#249|x%d", shopItem.item, (shopItem.give and shopItem.give[1] and shopItem.give[1][2]) or 1))
+            Player.sendmsgEx(play, string.format("你成功兑换了|【%s】#218|x%d", shopItem.item, (shopItem.give and shopItem.give[1] and shopItem.give[1][2]) or 1))
         elseif shopItem.ch then
             Player.title_give(play, shopItem.ch)
-            Player.sendmsgEx(play, string.format("你成功兑换了|【%s】#249|称号", shopItem.ch))
+            Player.sendmsgEx(play, string.format("你成功兑换了|【%s】#218|称号", shopItem.ch))
         end
         local data = _build_panel_data(play)
         sendluamsg(play,100,npcid,2,0,tbl2json(data))

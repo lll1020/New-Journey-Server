@@ -1,4 +1,42 @@
 release_print("加载Buff模块")
+local function _godstone_level(play, key)
+    return tonumber(getplaydef(play, "N$godstone_" .. key) or 0) or 0
+end
+local function _godstone_is_mon(obj)
+    return obj and not getbaseinfo(obj, ConstCfg.gbase.isplayer)
+end
+local function _godstone_is_player(obj)
+    return obj and getbaseinfo(obj, ConstCfg.gbase.isplayer)
+end
+local function _godstone_mon_type(obj)
+    if not _godstone_is_mon(obj) then
+        return 0
+    end
+    local name = tostring(getbaseinfo(obj, 1) or "")
+    return tonumber((guaiwutype and guaiwutype[name]) or 0) or 0
+end
+local function _godstone_is_red_boss(obj)
+    if not _godstone_is_mon(obj) then
+        return false
+    end
+    local name = tostring(getbaseinfo(obj, 1) or "")
+    return string.find(name, "★", 1, true) ~= nil
+        or string.find(name, "≮", 1, true) ~= nil
+        or string.find(name, "红", 1, true) ~= nil
+end
+local function _godstone_roll(play, key, rate, cd)
+    local now = os.time()
+    local cdKey = "N$godstone_" .. key .. "_cd"
+    local last = tonumber(getplaydef(play, cdKey) or 0) or 0
+    if now - last < (tonumber(cd or 0) or 0) then
+        return false
+    end
+    if math.random(10000) <= (tonumber(rate or 0) or 0) then
+        setplaydef(play, cdKey, now)
+        return true
+    end
+    return false
+end
 local function _huti_set_trigger(play, varName, buffId, enable)
     local bl = getplaydef(play, varName)
     local data = json2tbl(bl == "" and {} or bl)
@@ -559,6 +597,76 @@ local function _equip_lock_series(play, zt, Damage, Target, MagicId, idx)
     end
 end
 Buff = {
+    [565] = function(play, zt, Damage, Target, MagicId)
+        -- 神石攻击触发：火焰增伤、雷电控制。
+        if zt ~= 3 then
+            return 0
+        end
+        local extra = 0
+        if _godstone_is_mon(Target) then
+            local fire = _godstone_level(play, "fire")
+            local monType = _godstone_mon_type(Target)
+            if fire >= 1 and monType >= 2 and Damage and Damage > 0 then
+                local rate = ({600, 1000, 1500, 2200})[fire] or 0
+                extra = extra + math.floor(Damage * rate / 10000)
+            end
+            local thunder = _godstone_level(play, "thunder")
+            if thunder > 0 then
+                if thunder == 1 and monType <= 0 and _godstone_roll(play, "thunder_mon_1", 300, 0) then
+                    changemode(Target, ConstCfg.pmode.stick, 1)
+                elseif thunder == 2 and monType >= 1 and _godstone_roll(play, "thunder_mon_2", 600, 0) then
+                    changemode(Target, ConstCfg.pmode.stick, 2)
+                elseif thunder == 3 and _godstone_roll(play, "thunder_mon_3", 900, 0) then
+                    local x = tonumber(getbaseinfo(Target, ConstCfg.gbase.x) or 0) or 0
+                    local y = tonumber(getbaseinfo(Target, ConstCfg.gbase.y) or 0) or 0
+                    rangeharm(play, x, y, 3, 1, 0, 0, 0, 2, 0, 3)
+                    changemode(Target, ConstCfg.pmode.stick, 3)
+                elseif thunder >= 4 and _godstone_is_red_boss(Target) and _godstone_roll(play, "thunder_mon_4", 1000, 0) then
+                    changemode(Target, ConstCfg.pmode.stick, 3)
+                end
+            end
+        elseif _godstone_is_player(Target) then
+            local fire = _godstone_level(play, "fire")
+            if fire >= 4 and Damage and Damage > 0 then
+                extra = extra + math.floor(Damage * 1000 / 10000)
+            end
+            local thunder = _godstone_level(play, "thunder")
+            if thunder >= 4 and _godstone_roll(play, "thunder_player", 800, 0) then
+                changemode(Target, ConstCfg.pmode.stick, 2)
+            end
+        end
+        return extra
+    end,
+    [566] = function(play, zt, Damage, Hiter, MagicId)
+        -- 神石受击触发：山川减伤、海洋低血保命、大地反伤。
+        if zt ~= 3 then
+            return 0
+        end
+        local extra = 0
+        if _godstone_is_mon(Hiter) then
+            local mountain = _godstone_level(play, "mountain")
+            if mountain >= 3 and Damage and Damage > 0 and _godstone_mon_type(Hiter) >= 1 then
+                extra = extra - math.floor(Damage * 300 / 10000)
+            end
+            local ocean = _godstone_level(play, "ocean")
+            if ocean >= 3 then
+                local maxhp = tonumber(getbaseinfo(play, ConstCfg.gbase.maxhp) or 0) or 0
+                local curhp = tonumber(getbaseinfo(play, ConstCfg.gbase.curhp) or 0) or 0
+                if maxhp > 0 and curhp * 100 <= maxhp * 50 then
+                    humanhp(play, "+", 1000)
+                end
+                if ocean >= 4 and maxhp > 0 and curhp * 100 <= maxhp * 2 and _godstone_roll(play, "ocean_shield", 10000, 180) then
+                    addbuff(play, 20033, 1, 0, play)
+                end
+            end
+        elseif _godstone_is_player(Hiter) then
+            local earth = _godstone_level(play, "earth")
+            if earth >= 4 and Damage and Damage > 0 and _godstone_roll(play, "earth_reflect", 800, 0) then
+                humanhp(Hiter, "-", Damage, 110, 0, play, 1)
+            end
+        end
+        return extra
+    end,
     [70] = function(play,zt)      --被人物攻击随机(CD30秒)
         if zt == 3 then
             local sj = os.time()

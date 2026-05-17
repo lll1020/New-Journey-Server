@@ -43,7 +43,7 @@ function npc.link(play,npcid,ew,aid)
             end
             local name, num = Player.checkItemNumByTable(play, _config.cost)
             if name then
-                Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", name, num))
+                Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
                 Player.sendmsgEx(play, "阴阳玉佩合成失败#57")
                 return
             end
@@ -51,7 +51,7 @@ function npc.link(play,npcid,ew,aid)
             T_dljq["npc_620"] = 2
             Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
             sendluamsg(play,100,npcid,1,0,"")
-            Player.sendmsgEx(play, "阴阳玉佩合成成功，获得|【阴阳玉佩】#249|")
+            Player.sendmsgEx(play, "阴阳玉佩合成成功，获得|【阴阳玉佩】#218|")
             sendluamsg(play,101,1005,0,0,"rwwc")
         else
             Player.sendmsgEx(play, "你已经拥有阴阳玉佩")

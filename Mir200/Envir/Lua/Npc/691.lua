@@ -60,7 +60,7 @@ local function _grant_submit_attr(play, jq_data)
     local legacy_key = _legacy_attr_cnt_key(pick.key)
     jq_data[key] = (tonumber(jq_data[key] or jq_data[legacy_key] or 0) or 0) + 1
     jq_data[legacy_key] = nil
-    Player.sendmsgEx(play, "本次获得属性：|【"..pick.tip.."】#249|")
+    Player.sendmsgEx(play, "本次获得属性：|【"..pick.tip.."】#218|")
 end
 
 function npc.main(play,npcid)
@@ -98,7 +98,7 @@ function npc.link(play,npcid,ew,aid)
     local state = tonumber(jq_data[_cfg_key] or 0) or 0
     local cnt = tonumber(jq_data[prog_key] or 0) or 0
     if state >= 2 then
-        Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#249|")
+        Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#218|")
         return
     end
 
@@ -110,7 +110,7 @@ function npc.link(play,npcid,ew,aid)
     local req_map = _task_cfg.map or "红尘大陆"
     local cur_map = getbaseinfo(play,3)
     if cur_map ~= req_map and cur_map ~= "xtc" and not (req_map == "红尘大陆" and cur_map == "生命边界") then
-        Player.sendmsgEx(play, "请前往#57|【"..req_map.."】#249|完成后再提交#57")
+        Player.sendmsgEx(play, "请前往#57|【"..req_map.."】#218|完成后再提交#57")
         if npcid then Guard.closeNpc(play, npcid) end
         return
     end
@@ -131,7 +131,7 @@ function npc.link(play,npcid,ew,aid)
     Player.del_attlist(play, _attr_list_name)
     Login_jq_691(play)
 
-    Player.sendmsgEx(play, string.format("提交进度：#57|【%d/%d】#249|", cnt, max_num))
+    Player.sendmsgEx(play, string.format("提交进度：#57|【%d/%d】#218|", cnt, max_num))
 
     local submitRewards = _task_cfg.submit_rewards
     if type(submitRewards) == "table" and #submitRewards > 0 then
@@ -145,7 +145,7 @@ function npc.link(play,npcid,ew,aid)
         jq_data[prog_key] = nil
         jq_data[_cfg_key] = 2
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+        Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成#57")
         if npcid then Guard.closeNpc(play, npcid) end
         sendluamsg(play,101,1005,0,0,"rwwc")
 

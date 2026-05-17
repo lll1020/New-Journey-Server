@@ -168,7 +168,7 @@ local function _on_pass(play)
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
 
     sendluamsg(play,101,1005,0,0,"rwwc")
-    Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+    Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成#57")
     if npcid then Guard.closeNpc(play, npcid) end
     Guard.giveTaskReward(play, _config, (_config.name or "剧情任务").."奖励")
 end
@@ -264,7 +264,7 @@ function npc.link(play,npcid,ew,aid)
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     local state = tonumber(jq_data[_cfg_key] or 0) or 0
     if state >= 2 then
-        Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|已完成，不能再次提交进入副本#57")
+        Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|已完成，不能再次提交进入副本#57")
         return
     end
 
@@ -276,7 +276,7 @@ function npc.link(play,npcid,ew,aid)
     if state < 1 then
         jq_data[_cfg_key] = 1
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#249|")
+        Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#218|")
         if npcid then Guard.closeNpcAndAuto(play, npcid) end
         sendluamsg(play,101,1005,0,0,"rwjs")
     end

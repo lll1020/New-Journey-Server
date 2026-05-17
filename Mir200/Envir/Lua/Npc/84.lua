@@ -161,7 +161,7 @@ local function _check_rune(play, idx)
         return true
     elseif idx == 3 then
         if not _has_wine_artifact(play) then
-            return false, "需要获得背包神器#57|【酒仙剑】#249|后才可激活#57"
+            return false, "需要获得背包神器#57|【酒仙剑】#218|后才可激活#57"
         end
         return true
     elseif idx == 4 then
@@ -181,7 +181,7 @@ local function _check_rune(play, idx)
         return true
     elseif idx == 7 then
         if not _has_star_emperor(play) then
-            return false, "需要星象达到#57|【帝星】#249|后才可激活#57"
+            return false, "需要星象达到#57|【帝星】#218|后才可激活#57"
         end
         return true
     end
@@ -234,9 +234,9 @@ local function _try_grant_level_bonus(play, data)
     _save_state(play, data)
     local _, realAdd = Player.addRoleLevel(play, _all_level_add, false)
     if realAdd > 0 then
-        Player.sendmsgEx(play, string.format("你已获得称号#57|【%s】#249|，额外获得#57|【%d级】#249|", _title_name, realAdd))
+        Player.sendmsgEx(play, string.format("你已获得称号#57|【%s】#218|，额外获得#57|【%d级】#218|", _title_name, realAdd))
     else
-        Player.sendmsgEx(play, string.format("你已获得称号#57|【%s】#249|，但当前等级已达#57|【%d级】#249|上限，未获得额外等级#57", _title_name, Player.getRoleLevelCap()))
+        Player.sendmsgEx(play, string.format("你已获得称号#57|【%s】#218|，但当前等级已达#57|【%d级】#218|上限，未获得额外等级#57", _title_name, Player.getRoleLevelCap()))
     end
     return true
 end
@@ -289,7 +289,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         data.runes[key] = 1
         _refresh_count(data)
         _save_state(play, data)
-        Player.sendmsgEx(play, string.format("你成功激活了#57|【%s】#249|", cfg.name or "世界符文"))
+        Player.sendmsgEx(play, string.format("你成功激活了#57|【%s】#218|", cfg.name or "世界符文"))
         sendluamsg(play, 100, npcid, 1, idx, tbl2json(_build_payload(play)))
     elseif p2 == 2 then
         if _toint(data.claim) == 1 or checktitle(play, _title_name) then
@@ -307,7 +307,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         end
         if not _try_grant_level_bonus(play, data) then
             if (tonumber(getbaseinfo(play, 6)) or 0) < _all_level_need then
-                Player.sendmsgEx(play, string.format("你已获得#57|【%s】#249|，达到#57|【%d级】#249|后可额外获得#57|【%d级】#249|", _title_name, _all_level_need, _all_level_add))
+                Player.sendmsgEx(play, string.format("你已获得#57|【%s】#218|，达到#57|【%d级】#218|后可额外获得#57|【%d级】#218|", _title_name, _all_level_need, _all_level_add))
             end
         end
         sendluamsg(play, 100, npcid, 2, 0, tbl2json(_build_payload(play)))

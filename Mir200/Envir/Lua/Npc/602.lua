@@ -106,7 +106,7 @@
 --             T_dljq["npc_602"][""..aid] = 2
 --             Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
 --             Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
---             Player.sendmsgEx(play, "恭喜你，成功激活了#249|灵根")
+--             Player.sendmsgEx(play, "恭喜你，成功激活了#218|灵根")
 --             sendluamsg(play,100,npcid,2,aid,"")
 --             sendluamsg(play,101,1005,0,0,"rwwc")
 --         else

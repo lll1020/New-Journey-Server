@@ -58,7 +58,7 @@ local function _ensure_continent_map_access(play, continent, map_name)
         return Player.ensureThirdContinentMapAccess(
             play,
             map_name,
-            "未开#57|【开辟仙府】#249|前，三大陆目前只能进入#57|【灰界】#249|#57"
+            "未开#57|【开辟仙府】#218|前，三大陆目前只能进入#57|【灰界】#218|#57"
         )
     end
     return true

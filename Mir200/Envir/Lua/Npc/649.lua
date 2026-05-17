@@ -42,7 +42,7 @@ function npc.link(play,npcid,ew,aid)
         local try_key = key.."_try"
         local ok_key = key.."_ok"
         if jq_data[key] and jq_data[key] >= 2 then
-            Player.sendmsgEx(play, string.format("已完成：成功|【%d/%d】#249|，累计提交|【%d次】#249|", (jq_data[ok_key] or 0), (_config.num or 0), (jq_data[try_key] or 0)))
+            Player.sendmsgEx(play, string.format("已完成：成功|【%d/%d】#218|，累计提交|【%d次】#218|", (jq_data[ok_key] or 0), (_config.num or 0), (jq_data[try_key] or 0)))
             return
         end
 
@@ -56,13 +56,13 @@ function npc.link(play,npcid,ew,aid)
         local success = FProbabilityHit(_config.gl or 0)
         if success then
             jq_data[ok_key] = (jq_data[ok_key] or 0) + 1
-            Player.sendmsgEx(play, string.format("提交成功：|【%d/%d】#249|", jq_data[ok_key], (_config.num or 0)))
+            Player.sendmsgEx(play, string.format("提交成功：|【%d/%d】#218|", jq_data[ok_key], (_config.num or 0)))
             sendluamsg(play,100,npcid,1,1,tbl2json({try_key = jq_data[try_key], ok_key = jq_data[ok_key]}))
         else
             Player.sendmsgEx(play, "提交失败#57")
             sendluamsg(play,100,npcid,1,1,tbl2json({try_key = jq_data[try_key], ok_key = jq_data[ok_key]}))
         end
-        Player.sendmsgEx(play, string.format("累计提交：#57|【%d次】#249|", jq_data[try_key]))
+        Player.sendmsgEx(play, string.format("累计提交：#57|【%d次】#218|", jq_data[try_key]))
 
         if (jq_data[ok_key] or 0) >= (_config.num or 0) then
             jq_data[key] = 2
@@ -71,7 +71,7 @@ function npc.link(play,npcid,ew,aid)
                 jq_data[key] = 2
             end
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-            Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#249|完成#57")
+            Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成#57")
             if npcid then Guard.closeNpc(play, npcid) end
             sendluamsg(play,101,1005,0,0,"rwwc")
             local reward = _config.jl or _config.rwjl

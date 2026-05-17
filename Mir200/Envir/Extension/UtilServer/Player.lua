@@ -527,7 +527,7 @@ end
 function Player.canGainRoleLevel(actor, tip)
     if Player.isRoleLevelLocked(actor) then
         if tip ~= false then
-            Player.sendmsgEx(actor, tip or string.format("当前等级已达#57|【%d级】#249|，无法继续获得人物等级经验#57", _role_level_cap))
+            Player.sendmsgEx(actor, tip or string.format("当前等级已达#57|【%d级】#218|，无法继续获得人物等级经验#57", _role_level_cap))
         end
         return false
     end
@@ -910,7 +910,7 @@ local function _dl_check(actor, dl)
         if zslv >= 60 and jqd >= 100 and Player.hasSeventhContinentPass(actor) then
             return true
         end
-        return false, "需完成六大陆转生且剧情点达到100，并获得#57|【世界符文·[真我]】#249|后才可进入七大陆"
+        return false, "需完成六大陆转生且剧情点达到100，并获得#57|【世界符文·[真我]】#218|后才可进入七大陆"
     end
     return true
 end
@@ -1005,7 +1005,7 @@ function Player.ensureThirdContinentOpen(actor, tip)
     if Player.hasThirdContinentOpen(actor) then
         return true
     end
-    Player.sendmsgEx(actor, tip or "请先#57|【开辟仙府】#249|后再使用该功能#57")
+    Player.sendmsgEx(actor, tip or "请先#57|【开辟仙府】#218|后再使用该功能#57")
     return false
 end
 -- 三大陆地图限制：处理灰界放行、主城拦截与正式地图进入提示。
@@ -1014,10 +1014,10 @@ function Player.ensureThirdContinentMapAccess(actor, map_name, tip)
         return true
     end
     if map_name == "三大陆主城" then
-        Player.sendmsgEx(actor, tip or "请先#57|【开辟仙府】#249|后前往#57|【三大陆主城】#249|#57")
+        Player.sendmsgEx(actor, tip or "请先#57|【开辟仙府】#218|后前往#57|【三大陆主城】#218|#57")
         return false
     end
-    Player.sendmsgEx(actor, tip or ("请先#57|【开辟仙府】#249|后前往#57|【" .. map_name .. "】#249|#57"))
+    Player.sendmsgEx(actor, tip or ("请先#57|【开辟仙府】#218|后前往#57|【" .. map_name .. "】#218|#57"))
     return false
 end
 function Player.hasThirdContinentPass(actor)
@@ -1029,7 +1029,7 @@ function Player.ensureThirdContinentPass(actor, tip)
     if Player.hasThirdContinentPass(actor) then
         return true
     end
-    Player.sendmsgEx(actor, tip or "请先完成#57|【灾厄入侵】#249|后再使用该功能#57")
+    Player.sendmsgEx(actor, tip or "请先完成#57|【灾厄入侵】#218|后再使用该功能#57")
     return false
 end
 function Player.moveToThirdContinentFrontier(actor, tip)
@@ -1051,10 +1051,10 @@ local function _third_continent_map_guard(actor)
         return
     end
     if map_name == "三大陆主城" then
-        Player.moveToThirdContinentFrontier(actor, "未开#57|【开辟仙府】#249|前暂时只能#57|【灰界】#249|活动#57")
+        Player.moveToThirdContinentFrontier(actor, "未开#57|【开辟仙府】#218|前暂时只能#57|【灰界】#218|活动#57")
         return
     end
-    Player.moveToThirdContinentFrontier(actor, "未开#57|【开辟仙府】#249|前暂时只能#57|【灰界】#249|活动#57")
+    Player.moveToThirdContinentFrontier(actor, "未开#57|【开辟仙府】#218|前暂时只能#57|【灰界】#218|活动#57")
 end
 GameEvent.add(EventCfg.onLoginEnd, _third_continent_map_guard, "三大陆地图拦截")
 GameEvent.add(EventCfg.goSwitchMap, _third_continent_map_guard, "三大陆地图拦截")

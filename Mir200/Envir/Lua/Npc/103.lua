@@ -131,7 +131,7 @@ local function _finish(play)
     T_data.claimed = 0
     _save_data(play, T_data)
     _refresh_attr(play, T_data)
-    Player.sendmsgEx(play, "|【"..((_config and _config.name) or "天书试炼").."】#249|完成，请返回界面领取|【天书】#249|#57")
+    Player.sendmsgEx(play, "|【"..((_config and _config.name) or "天书试炼").."】#218|完成，请返回界面领取|【天书】#218|#57")
     sendluamsg(play, 101, 1005, 0, 0, "rwwc")
     sendluamsg(play, 101, 9999, 0, 0, "npc_"..103)
     _finish_mainline(play, 13)
@@ -139,7 +139,7 @@ end
 local function _enter_fb(play)
     local runMap = tostring(getplaydef(play, _run_map_var) or "")
     if runMap ~= "" and getbaseinfo(play, 3) == runMap then
-        Player.sendmsgEx(play, "你已经在|【天书试炼】#249|副本中#57")
+        Player.sendmsgEx(play, "你已经在|【天书试炼】#218|副本中#57")
         return
     end
     _save_back(play)
@@ -159,7 +159,7 @@ local function _enter_fb(play)
     setenvirontimer(dtm, 1, 1, "@npc_103_dsq,"..play..","..dtm)
     setenvirontimer(dtm, _boss_effect_timer_id, 5, "@npc_103_fx,"..dtm)
     senddelaymsg(play, "距离副本结束剩余%s", tonumber((_config and _config.fb_time) or 300) or 300, 250, 1, "@npc_103_timeout")
-    Player.sendmsgEx(play, "已进入|【天书试炼】#249|副本，击败炫光BOSS即可获得|【天书】#249|#57")
+    Player.sendmsgEx(play, "已进入|【天书试炼】#218|副本，击败炫光BOSS即可获得|【天书】#218|#57")
     sendluamsg(play, 101, 9999, 0, 0, "npc_"..103)
 end
 function npc.main(play, npcid)
@@ -204,12 +204,12 @@ function npc.link(play, npcid, ew, aid, data)
         end
         local key = tostring(cfg.idx or submit_idx)
         if tonumber(T_data.submit[key] or 0) == 1 then
-            Player.sendmsgEx(play, "|【"..(cfg.name or ("材料"..submit_idx)).."】#249|已提交过#57")
+            Player.sendmsgEx(play, "|【"..(cfg.name or ("材料"..submit_idx)).."】#218|已提交过#57")
             return
         end
         local missName, missNum = Player.checkItemNumByTable(play, cfg.cost or {})
         if missName then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足：#57|【%d】#249|", missName, tonumber(missNum) or 0))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", missName, tonumber(missNum) or 0))
             return
         end
         Player.takeItemByTable(play, cfg.cost or {}, ",天书试炼提交", nil)
@@ -219,9 +219,9 @@ function npc.link(play, npcid, ew, aid, data)
         end
         _save_data(play, T_data)
         _refresh_attr(play, T_data)
-        Player.sendmsgEx(play, "成功提交|【"..(cfg.name or ("材料"..submit_idx)).."】#249|，获得属性：|【"..(cfg.attr_desc or "已生效").."】#249|")
+        Player.sendmsgEx(play, "成功提交|【"..(cfg.name or ("材料"..submit_idx)).."】#218|，获得属性：|【"..(cfg.attr_desc or "已生效").."】#218|")
         if T_data.unlock == 1 then
-            Player.sendmsgEx(play, "四种材料已全部提交，已解锁|【天书试炼副本】#249|挑战权限#57")
+            Player.sendmsgEx(play, "四种材料已全部提交，已解锁|【天书试炼副本】#218|挑战权限#57")
             _refresh_panel(play, npcid, 1, submit_idx)
         else
             sendluamsg(play, 101, 9999, 0, 0, "npc_"..103)
@@ -231,11 +231,11 @@ function npc.link(play, npcid, ew, aid, data)
     end
     if ew == 5 then
         if T_data.finish ~= 1 then
-            Player.sendmsgEx(play, "请先完成|【天书试炼】#249|后再领取|【天书】#249|#57")
+            Player.sendmsgEx(play, "请先完成|【天书试炼】#218|后再领取|【天书】#218|#57")
             return
         end
         if tonumber(T_data.claimed or 0) == 1 then
-            Player.sendmsgEx(play, "|【天书】#249|已领取过#57")
+            Player.sendmsgEx(play, "|【天书】#218|已领取过#57")
             return
         end
         T_data.claimed = 1
@@ -244,7 +244,7 @@ function npc.link(play, npcid, ew, aid, data)
             Player.rwjl(play, _config.reward, (_config.name or "天书试炼").."奖励", 1, 0)
         end
         _finish_mainline(play, 14)
-        Player.sendmsgEx(play, "成功领取|【天书】#249|#57")
+        Player.sendmsgEx(play, "成功领取|【天书】#218|#57")
         sendluamsg(play, 101, 9999, 0, 0, "npc_"..103)
         return
     end
@@ -252,7 +252,7 @@ function npc.link(play, npcid, ew, aid, data)
         return
     end
     if T_data.finish == 1 then
-        Player.sendmsgEx(play, "|【天书试炼】#249|已完成，无法再次领取|【天书】#249|#57")
+        Player.sendmsgEx(play, "|【天书试炼】#218|已完成，无法再次领取|【天书】#218|#57")
         return
     end
     if T_data.unlock ~= 1 and not _is_all_submit(T_data) then

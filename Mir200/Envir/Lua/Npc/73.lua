@@ -30,7 +30,7 @@ function npc.link(play, npcid, p2, p3, msgData)
 
         local name, num = Player.checkItemNumByTable(play, _config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#249|不足#57", name))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足#57", name))
             return
         end
         Player.takeItemByTable(play, _config.cost, ",深渊",nil)

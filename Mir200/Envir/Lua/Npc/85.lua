@@ -634,7 +634,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         end
         local miss_name, miss_num = _check_costs(play, stage_cfg.unlock_cost or {})
         if miss_name then
-            Player.sendmsgEx(play, "你的#57|【" .. miss_name .. "】#249|不足：#57|【" .. miss_num .. "】#249|")
+            Player.sendmsgEx(play, "你的#57|【" .. miss_name .. "】#218|不足：#57|【" .. miss_num .. "】#218|")
             return
         end
         _take_costs(play, stage_cfg.unlock_cost or {}, ",星象圣图")
@@ -642,7 +642,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         data.stage[tostring(stage_idx)] = stage_data
         _save_data(play, data)
         star_chart_refresh(play)
-        Player.sendmsgEx(play, "你成功解锁了#57|【" .. (stage_cfg.name or "星象阶段") .. "】#249|")
+        Player.sendmsgEx(play, "你成功解锁了#57|【" .. (stage_cfg.name or "星象阶段") .. "】#218|")
         sendluamsg(play, 100, npcid, 1, 0, tbl2json(_build_payload(play, data)))
     elseif p2 == 2 then
         local stage_idx = _toint(json_data.stage)
@@ -673,7 +673,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         local node_cfg = stage_cfg.nodes[node_idx]
         local miss_name, miss_num = _check_costs(play, node_cfg.cost or {})
         if miss_name then
-            Player.sendmsgEx(play, "你的#57|【" .. miss_name .. "】#249|不足：#57|【" .. miss_num .. "】#249|")
+            Player.sendmsgEx(play, "你的#57|【" .. miss_name .. "】#218|不足：#57|【" .. miss_num .. "】#218|")
             return
         end
         _take_costs(play, node_cfg.cost or {}, ",星象圣图")
@@ -685,9 +685,9 @@ function npc.link(play, npcid, p2, p3, msgData)
                 _grant_stage_reward(play, stage_cfg)
                 stage_data.reward = 1
             end
-            Player.sendmsgEx(play, "你完成了#57|【" .. (stage_cfg.name or "星象阶段") .. "】#249|的全部点亮#57")
+            Player.sendmsgEx(play, "你完成了#57|【" .. (stage_cfg.name or "星象阶段") .. "】#218|的全部点亮#57")
         else
-            Player.sendmsgEx(play, "你点亮了#57|【" .. (node_cfg.name or "星宿") .. "】#249|")
+            Player.sendmsgEx(play, "你点亮了#57|【" .. (node_cfg.name or "星宿") .. "】#218|")
         end
 
         data.stage[tostring(stage_idx)] = stage_data

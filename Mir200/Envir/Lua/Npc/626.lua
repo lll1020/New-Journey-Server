@@ -82,7 +82,8 @@ function npc.link(play,npcid,ew,aid)
         if jq_data[_main_key] and jq_data[_main_key] >= 2 then
             Player.sendmsgEx(play, "任务已完成，无法再次进入#57")
             return
-        end
+        end
+
         -- 允许玩家跳过前置任务直接进入该讨伐副本，前置任务改为独立可选线路。
         if not Guard.ensureCost(play, _config.cost) then
             return
