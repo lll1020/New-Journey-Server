@@ -73,6 +73,12 @@ function resetday(play)
 	for _, v in pairs(constant.pz_ldql) do
 		Player.title_del(play, v)
 	end
+    local curMap = tostring(getbaseinfo(play, ConstCfg.gbase.mapid) or "")
+    local mijingMaps = { ["苍云秘境"] = true, ["若水秘境"] = true, ["红尘秘境"] = true, ["灵虚秘境"] = true, ["万灵秘境"] = true, ["诸天秘境"] = true }
+    if mijingMaps[curMap] then
+        mapmove(play, "xtc", 137, 138, 5)
+        Player.sendmsgEx(play, "日卡已跨天失效，已返回主城#57")
+    end
     setplaydef(play, VarCfg["U_登录天数"], getplaydef(play, VarCfg["U_登录天数"]) + 1)
     local T_qrbq = Player.getJsonTableByVar(play, VarCfg.T_qrbq)
     T_qrbq["zxjl"] = 0
@@ -1645,6 +1651,7 @@ local qf_teshunpc = {
     [24] = 24,-- 天书
     [64] = 64,-- 灵兽
     [70] = 70, -- 狂魔乱舞
+    [86] = 86, [87] = 86, [88] = 86, [89] = 86, [90] = 86, [91] = 86, -- 日卡秘境
     [105] = 105,
     [1002] = 1002,[1003] = 1003,[1004] = 1003,[1005] = 1003,[1006] = 1003,[1007] = 1003, -- 各大陆时装兑换
     [69] = 64, -- 神兽圣遗物 --这个是特殊的 前端不要的
