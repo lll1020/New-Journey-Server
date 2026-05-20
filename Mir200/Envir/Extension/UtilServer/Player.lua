@@ -1116,7 +1116,7 @@ local hs_group_prefix_compat = {
     clfj = "7|1",
     teshuhuihsou = "8|1",
 }
-local hs_default_recycle_keys = {"1_1_1", "1_1_2", "1_1_3", "3_3_1"}
+local hs_default_recycle_keys = {"1_1_1", "1_1_2", "1_1_3", "3_3_1","3_3_2","3_3_3","2_2_1","1_1_4","1_1_5","1_2_1","1_2_2","1_2_3"}
 local function hs_map_old_zzhs_key(subgroup)
     subgroup = tonumber(subgroup or 0) or 0
     if subgroup >= 1 and subgroup <= 5 then
@@ -1169,6 +1169,9 @@ function Player.ensureRecycleSelectConfig(play)
     else
         if new_pz["3_3_1"] == nil then
             new_pz["3_3_1"] = 1
+            new_pz["3_3_2"] = 1
+            new_pz["3_3_3"] = 1
+            new_pz["2_2_1"] = 1
         end
         if (not has_old_zzhs)
             and new_pz["1_1_1"] == nil and new_pz["1_1_2"] == nil
@@ -1176,6 +1179,8 @@ function Player.ensureRecycleSelectConfig(play)
             new_pz["1_1_1"] = 1
             new_pz["1_1_2"] = 1
             new_pz["1_1_3"] = 1
+            new_pz["1_1_4"] = 1
+            new_pz["1_1_5"] = 1
         end
     end
     new_pz.__hs_group_v2 = 1

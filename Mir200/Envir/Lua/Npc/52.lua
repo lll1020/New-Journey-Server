@@ -10,6 +10,8 @@ function npc.main(play,npcid)
         return
     end
     local equipLevel = Player.getEquipFieldByPos(play, _config.where, 1) or 0
+    equipLevel = tonumber(equipLevel)
+
     if equipLevel < 12 then
         Player.sendmsgEx(play,  "请先装备#57|【".._config.now.."】#218|进行升级#57")
         return

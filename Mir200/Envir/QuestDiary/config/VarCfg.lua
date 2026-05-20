@@ -27,6 +27,7 @@ VarCfg["A_血契之门公告"]          = "A11"                                       
 VarCfg["A_黑暗禁地json"]          = "A12"                                                                          --黑暗禁地json
 VarCfg["A_保卫村庄json"]          = "A13"                                                                          --保卫村庄json
 VarCfg["A_违规人员名单"]          = "A300"                                                                          --违规人员名单
+VarCfg["A_锁妖塔排行"]          = "A15"                                                                          --锁妖塔通天塔排行记录
 --引擎U变量
 --个人U变量
 VarCfg.U_create_actor_time                  = "U0"                  --创建角色时间戳

@@ -518,6 +518,7 @@ function npc.main(play,npcid)
             <Button|id=ui_64|x=130|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=禁地结束|link=@ggna,51>
             <Button|id=ui_66|x=242|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=成就测试|link=@ggna,52>
             <Button|id=ui_67|x=354|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=刷怪测试|link=@ggna,53>
+            <Button|id=ui_68|x=466|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=清通天塔|link=@ggna,55>
             <Button|id=ui_65|x=578|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=飘字测试|link=@ggna,14>
                 ]])
     end
@@ -821,6 +822,19 @@ function ggna(play,id)
         end
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         Player.sendmsgEx(play, "灰界任务已一键完成#218")
+    elseif id == "55" then
+        local varName = VarCfg["T_锁妖塔"] or "T51"
+        local data = Player.getJsonTableByVar(play, varName) or {}
+        data.daily = {date = os.date("%Y%m%d"), free = 0, paid = 0}
+        data.in_run = 0
+        data.run_floor = 0
+        data.active_floor = 0
+        Player.setJsonVarByTable(play, varName, data)
+        local dtm = getbaseinfo(play, 1) .. "_ttt"
+        if checkmirrormap(dtm) then
+            delmirrormap(dtm)
+        end
+        Player.sendmsgEx(play, "已清空今日通天塔挑战次数与续打进度#218")
     elseif id == "25" then
         -- 大陆全解锁：一次性补齐主线、人物等级、转生、剧情点、灵根、天道命盘与七大陆称号门槛。
         local target_task = 21

@@ -282,7 +282,7 @@ function clicknewtask(play,rwid)
             if yy <= 0 then
                 yy = tonumber(getbaseinfo(play, 5)) or 0
             end
-            if constant.rw_syb[rwid][2] ~= getbaseinfo(play,3) then
+            if constant.rw_syb[rwid][2] ~= getbaseinfo(play,3) or true then
                 mapmove(play,constant.rw_syb[rwid][2],xx,yy,3)
             end
             sendluamsg(play, 101, 0, 1, 1,'{"lx":2,"npcdt":"'..constant.rw_syb[rwid][2]..'","npcid":'..constant.rw_syb[rwid][3]..',"xx":'..xx..',"yy":'..yy..'}')
