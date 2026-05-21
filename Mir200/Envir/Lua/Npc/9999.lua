@@ -837,7 +837,7 @@ function ggna(play,id)
         Player.sendmsgEx(play, "已清空今日通天塔挑战次数与续打进度#218")
     elseif id == "25" then
         -- 大陆全解锁：一次性补齐主线、人物等级、转生、剧情点、灵根、天道命盘与七大陆称号门槛。
-        local target_task = 21
+        local target_task = 19
         local target_level = 150
         local target_zs = 70
         local target_jqd = 200

@@ -1095,6 +1095,12 @@ function Player.checkItemNum(actor, t, multiple)
 end
 --回收
 local fd_sjyb = {[10053] = {500,2000},[10054] = {1000,5000},[10055] = {5000,50000},[10056] = {10000,1000000}}
+local hs_auto_gold_items = {
+    ["金币(小)"] = {100, 1000},
+    ["金币(中)"] = {1000, 10000},
+    ["金币(大)"] = {10000, 100000},
+    ["金币(超级)"] = {100000, 1000000},
+}
 local hs_name_hlsj = "辉耀水晶"
 local hs_name_lingshi = "幻灵石"
 -- 自动回收键匹配：按分组区分，并兼容旧前缀。
@@ -1321,6 +1327,33 @@ local function hs_apply_reward(play, reward, gz)
         end
     end
 end
+local function hs_auto_use_gold_items(play)
+    if getflagstatus(play, VarCfg.BS_huishou[2]) ~= 1 then
+        return
+    end
+    local total = 0
+    for item_name, range in pairs(hs_auto_gold_items) do
+        local list = getbagitems(play, item_name)
+        if type(list) == "table" then
+            for _, item_obj in ipairs(list) do
+                if item_obj and item_obj ~= "0" then
+                    local item_num = tonumber(getiteminfo(play, item_obj, 5) or 0) or 0
+                    if item_num <= 0 then
+                        item_num = 1
+                    end
+                    if delitembymakeindex(play, getiteminfo(play, item_obj, 1), item_num) then
+                        for _ = 1, item_num do
+                            total = total + math.random(range[1], range[2])
+                        end
+                    end
+                end
+            end
+        end
+    end
+    if total > 0 then
+        changemoney(play, getflagstatus(play, VarCfg.BS_mztq) == 1 and 1 or 3, '+', total, '回收自动吃金币', true)
+    end
+end
 function Player.huishou(play, hs_constant)
     if hs_constant == nil then
         -- 模式1：全背包自动回收（由开关控制）。
@@ -1383,6 +1416,7 @@ function Player.huishou(play, hs_constant)
             hs_apply_reward(play, reward, gz)
             Login_msg(play,10,reward.coin,reward.yb)
         end
+        hs_auto_use_gold_items(play)
     else
         -- 模式2：按传入 makeindex 列表进行定向回收/销毁。
         local hs = hs_constant
@@ -1406,6 +1440,7 @@ function Player.huishou(play, hs_constant)
         end
         hs_apply_reward(play, reward, gz)
         Login_msg(play,10,reward.coin,reward.yb)
+        hs_auto_use_gold_items(play)
     end
 end
 function Player.addteshuhuihsou(play, t)

@@ -432,6 +432,10 @@ function npc.link(play,npcid,ew,aid,data)
             T_data["tj"][randomNum.."_"..idx] = 1
             T_data.last_xianfa_draw = {randomNum,idx}
             Player.setJsonVarByTable(play, VarCfg["T_天书"], T_data)
+            if TianshuWangshiRecord and list_cfg[idx] and tonumber(randomNum or 0) >= 3 then
+                TianshuWangshiRecord(play, 12, tostring(list_cfg[idx].name or "未知仙法"))
+                T_data = Player.getJsonTableByVar(play, VarCfg["T_天书"]) or T_data
+            end
             xianfa_refresh(play)
 
             xianfa_add(play,randomNum,idx)
@@ -443,7 +447,7 @@ function npc.link(play,npcid,ew,aid,data)
 end
 
 function npc.wangshi(play,idx,data)
-    local T_data = Player.getJsonTableByVar(play, VarCfg["T_天书"])
+    local T_data = Player.getJsonTableByVar(play, VarCfg["T_天书"]) or {}
     T_data.wangshi = T_data.wangshi or {}
     if T_data.wangshi[""..idx] then
         -- Player.sendmsgEx(play, "你已经记录过该往事#57")
@@ -451,6 +455,98 @@ function npc.wangshi(play,idx,data)
     end
     T_data.wangshi[""..idx] = data
     Player.setJsonVarByTable(play, VarCfg["T_天书"], T_data)
+end
+
+
+-- 天书往事：统一记录时间与节点数据，data 会按配置 desc 的占位符顺序传给客户端展示。
+local function _tianshu_ws_time()
+    return os.date("%Y年%m月%d日 %H:%M")
+end
+
+function TianshuWangshiRecord(play, idx, ...)
+    if not play or not idx then
+        return false
+    end
+    local data = {_tianshu_ws_time(), ...}
+    local T_data = Player.getJsonTableByVar(play, VarCfg["T_天书"]) or {}
+    T_data.wangshi = T_data.wangshi or {}
+    if T_data.wangshi["" .. idx] then
+        return false
+    end
+    T_data.wangshi["" .. idx] = data
+    Player.setJsonVarByTable(play, VarCfg["T_天书"], T_data)
+    return true
+end
+
+local function _tianshu_ws_realm_title(level)
+    local cfg = Guard.getConfig("npc_21") or {}
+    local detail = cfg.details and cfg.details[level]
+    return (detail and detail.title) or "筑基境"
+end
+
+function TianshuWangshiTryRecordProgress(play)
+    if not play then
+        return
+    end
+    local roleLevel = tonumber(getbaseinfo(play, ConstCfg.gbase.level) or 0) or 0
+    if roleLevel >= 100 then
+        TianshuWangshiRecord(play, 4, 100)
+    end
+    if roleLevel >= 150 then
+        TianshuWangshiRecord(play, 5, 150)
+    end
+
+    local tsData = Player.getJsonTableByVar(play, VarCfg["T_天书"]) or {}
+    local tsLevel = tonumber(tsData.level or 0) or 0
+    if tsLevel >= 10 then
+        TianshuWangshiRecord(play, 6, 10)
+    end
+    if tsLevel >= 30 then
+        TianshuWangshiRecord(play, 7, 30)
+    end
+
+    local realmLevel = tonumber(getplaydef(play, VarCfg["U_境界修炼"][1]) or 0) or 0
+    if realmLevel >= 18 then
+        TianshuWangshiRecord(play, 10, _tianshu_ws_realm_title(realmLevel))
+    end
+
+    local rebirthLevel = tonumber(getplaydef(play, VarCfg["U_转生等级"]) or 0) or 0
+    if rebirthLevel >= 20 then
+        TianshuWangshiRecord(play, 8, "二大陆转生")
+    end
+    if rebirthLevel >= 30 then
+        TianshuWangshiRecord(play, 9, "三大陆转生")
+        TianshuWangshiRecord(play, 11, "三阶转生")
+    end
+
+    local power = tonumber(querymoney(play, 29) or 0) or 0
+    if power >= 1000000 then
+        TianshuWangshiRecord(play, 13, tostring(power))
+    end
+end
+
+local function _tianshu_ws_on_login(play)
+    TianshuWangshiRecord(play, 1)
+    TianshuWangshiTryRecordProgress(play)
+end
+
+local function _tianshu_ws_on_kill_mon(play, mob)
+    if not play or not mob then
+        return
+    end
+    local mobName = tostring(getbaseinfo(mob, 1) or "")
+    if mobName ~= "" and mobName ~= "稻草人" then
+        TianshuWangshiRecord(play, 2, mobName)
+    end
+    TianshuWangshiTryRecordProgress(play)
+end
+
+local function _tianshu_ws_on_kill_play(play, target)
+    if not play or not target then
+        return
+    end
+    local targetName = tostring(getbaseinfo(target, ConstCfg.gbase.name) or "无名客")
+    TianshuWangshiRecord(play, 3, targetName)
 end
 
 -- 天书仙法系统：统一管理常量/标记/BUFF ID，供后续逻辑复用
@@ -1197,6 +1293,11 @@ GameEvent.add(EventCfg.onkillplay, _xianfa_on_killplay, "天书仙法")
 GameEvent.add(EventCfg.onPlaydie, _xianfa_on_playdie, "天书仙法")
 GameEvent.add(EventCfg.goKuangBao, _xianfa_on_login, "天书仙法")
 GameEvent.add(EventCfg.OpenKuangBao, _xianfa_on_login, "天书仙法")
+GameEvent.add(EventCfg.onLoginEnd, _tianshu_ws_on_login, "天书往事")
+GameEvent.add(EventCfg.onKillMon, _tianshu_ws_on_kill_mon, "天书往事")
+GameEvent.add(EventCfg.onkillplay, _tianshu_ws_on_kill_play, "天书往事")
+GameEvent.add(EventCfg.onPlayLevelUp, TianshuWangshiTryRecordProgress, "天书往事")
+GameEvent.add(EventCfg.goSwitchMap, TianshuWangshiTryRecordProgress, "天书往事")
 
 -- 清空仙法属性与状态（切换/重抽时调用）
 function xianfa_del(actor, group ,idx)

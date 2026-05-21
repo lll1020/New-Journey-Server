@@ -25,6 +25,20 @@ local function _refreshFashionAttr(play, T_data)
         Player.del_attlist(play, _fashionAttrListName)
     end
 end
+local function _sc_equip_first_fashion(play, T_data)
+    local cfg = (((_fashionConfig1002 or {}).details or {}).sz or {})[1]
+    if not cfg then
+        return
+    end
+    T_data.dqzb = 1
+    setfeature(play, 0, cfg.shape, 655350, 0, 0)
+    setfeature(play, 1, 9999, 655350, 0, 0)
+    local equipObj = linkbodyitem(play, 17)
+    if equipObj and equipObj ~= "0" then
+        setitemaddvalue(play, equipObj, 1, 47, cfg.sEffect)
+        refreshitem(play, equipObj)
+    end
+end
 npc[2] = function(play, p2, p3, msgData) --背包  面板
     if p2 == 0 then
         -- 回收面板
@@ -551,6 +565,91 @@ _ywl_try_clear_current_task = function(play, T_ywl, sj)
     end
     return T_ywl, false
 end
+local function _ywl_get_current_task(T_ywl)
+    local dq = tostring(T_ywl and T_ywl.dq or "")
+    local i, j, z = dq:match("^(%d+)_(%d+)_(%d+)$")
+    i, j, z = tonumber(i), tonumber(j), tonumber(z)
+    if not i or not j or not z then
+        return nil, nil
+    end
+    local shuju = npc_xyl[i] and npc_xyl[i][j] and npc_xyl[i][j].jq and npc_xyl[i][j].jq[z]
+    if type(shuju) ~= "table" then
+        return nil, nil
+    end
+    return {i = i, j = j, z = z}, shuju
+end
+local function _ywl_auto_once_key(key)
+    return "S$ywl_auto_once_" .. tostring(key or "")
+end
+local function _ywl_is_auto_receive_map_task(play, sj, shuju)
+    if not play or not sj or tonumber(sj.i or 0) ~= 2 or type(shuju) ~= "table" then
+        return false
+    end
+    local yd = shuju.yd or {}
+    if tonumber(yd[1] or 0) ~= 1 then
+        return false
+    end
+    local key = tostring(shuju.tk or "")
+    if key == "" then
+        return false
+    end
+    local cfg = Guard.getConfig(key)
+    if not cfg then
+        return false
+    end
+    if cfg.shaguai_id ~= nil then
+        local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
+        return (tonumber(jq_data[key] or 0) or 0) <= 0
+    end
+    if cfg.cost ~= nil then
+        return tostring(getplaydef(play, _ywl_auto_once_key(key)) or "") ~= "1"
+    end
+    return false
+end
+local function _ywl_auto_receive_map_task(play)
+    if not play or Guard._syncingXylMapTask then
+        return
+    end
+    Guard._syncingXylMapTask = true
+    if Guard.syncXylCurrentTask then
+        Guard.syncXylCurrentTask(play)
+    end
+    local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl)) or {}
+    local sj, shuju = _ywl_get_current_task(T_ywl)
+    if not sj or sj.i ~= 2 or not shuju then
+        Guard._syncingXylMapTask = false
+        return
+    end
+    local yd = shuju.yd or {}
+    local taskMap = tostring(yd[2] or "")
+    local curMap = tostring(getbaseinfo(play, 3) or "")
+    if yd[1] ~= 1 or taskMap == "" or curMap ~= taskMap then
+        Guard._syncingXylMapTask = false
+        return
+    end
+    if not _ywl_is_auto_receive_map_task(play, sj, shuju) then
+        Guard._syncingXylMapTask = false
+        return
+    end
+    local key = tostring(shuju.tk or "")
+    if key ~= "" then
+        local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
+        local npcId = tonumber(key:match("npc_(%d+)") or 0) or 0
+        local cfg = npcId > 0 and Guard.getConfig(key) or nil
+        if cfg and cfg.shaguai_id then
+            jq_data[key] = 1
+            Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+            shaguai.jia(play, cfg.shaguai_id)
+            Player.sendmsgEx(play, "已自动接取#57|【" .. tostring((cfg and cfg.name) or shuju[1] or "当前地图任务") .. "】#218|")
+        elseif cfg and cfg.cost then
+            setplaydef(play, _ywl_auto_once_key(key), "1")
+            Player.sendmsgEx(play, "已进入#57|【" .. tostring(cfg.name or shuju[1] or "当前地图任务") .. "】#218|任务地图，开始自动战斗")
+        end
+    end
+    startautoattack(play)
+    Guard._syncingXylMapTask = false
+end
+GameEvent.add(EventCfg.goSwitchMap, _ywl_auto_receive_map_task, "二大陆异闻录地图任务自动接取")
 npc[11] = function(play, p2, p3, data) --异闻录
     -- sj.i 大陆  sj.j 章节  sj.k 暂时不用  sj.z 剧情
     if p2 == 0 then
@@ -601,8 +700,11 @@ npc[11] = function(play, p2, p3, data) --异闻录
                         local targetX = shuju.yd[4]
                         local targetY = shuju.yd[5]
                         -- 这里不再对未完成三大陆主线的玩家自动兜底传送到灰界，是否可传送统一前置到 _ywl_can_transfer 里拦截。
+                        local skipNpcGuide = _ywl_is_auto_receive_map_task(play, sj, shuju)
                         mapmove(play, targetMap, targetX, targetY, 5)
-                        sendluamsg(play, 101, 0, 1, 1, '{"lx":2,"npcdt":"' .. targetMap .. '","npcid":' .. targetNpc .. ',"xx":' .. targetX .. ',"yy":' .. targetY .. '}')
+                        if not skipNpcGuide then
+                            sendluamsg(play, 101, 0, 1, 1, '{"lx":2,"npcdt":"' .. targetMap .. '","npcid":' .. targetNpc .. ',"xx":' .. targetX .. ',"yy":' .. targetY .. '}')
+                        end
                         sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
                         is_transfer_ok = true
                     else
@@ -1069,9 +1171,10 @@ local function _sc_apply_main_reward(play, data)
     -- 群体施毒术已调整到 105 限时福利发放，这里改为首充直接补发聚宝盆碎片。
     Player.rwjl(play, {{"聚宝盆碎片", 20}}, "首充礼包", 1)
 
-    local sz_data = Player.getJsonTableByVar(play, VarCfg.T_szjl)
+    local sz_data = Player.getJsonTableByVar(play, VarCfg.T_szjl) or {}
     sz_data.yjs = sz_data.yjs or {}
     sz_data.yjs["1"] = 1
+    _sc_equip_first_fashion(play, sz_data)
     Player.setJsonVarByTable(play, VarCfg.T_szjl, sz_data)
     GameEvent.push(EventCfg.onUPSkin, play, 1)
     _refreshFashionAttr(play, sz_data)
@@ -1112,7 +1215,8 @@ npc[501] = function(play, p2, p3, data) --首充礼包
         _sc_apply_main_reward(play, T_data)
         _sc_set_data(play, T_data)
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>天选资格、自动巡航等首充联动功能已解锁...</font>","Type":9}')
-        sendluamsg(play, 101, 501, 1, 0, tbl2json(_sc_build_open_payload(play)))
+        sendluamsg(play, 101, 501, 1, 1, tbl2json(_sc_build_open_payload(play)))
+        Npclib[105].main(play, 105)
         return
     elseif p2 == 2 or p2 == 3 then
         Player.sendmsgEx(play, "限时福利请前往#57|【105NPC】#218|领取")

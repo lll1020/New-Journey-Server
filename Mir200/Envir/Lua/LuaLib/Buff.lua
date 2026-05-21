@@ -24,6 +24,16 @@ local function _godstone_is_red_boss(obj)
         or string.find(name, "≮", 1, true) ~= nil
         or string.find(name, "红", 1, true) ~= nil
 end
+local function _is_red_name_monster(obj)
+    if not _godstone_is_mon(obj) then
+        return false
+    end
+    local monidx = tonumber(getbaseinfo(obj, 2) or 0) or 0
+    if monidx <= 0 then
+        return false
+    end
+    return tonumber(getmonbaseinfo(monidx, 2) or 0) == 249
+end
 local function _godstone_roll(play, key, rate, cd)
     local now = os.time()
     local cdKey = "N$godstone_" .. key .. "_cd"
@@ -1493,7 +1503,7 @@ Buff = {
     end,
     [563] = function(play,zt,Damage,Target) -- 诸邪退散：对红名怪每15刀额外造成88888真实伤害，并作为灰界免疫标记
         if zt == 3 then
-            if not Target or getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+            if not _is_red_name_monster(Target) then
                 return 0
             end
             local cur = tonumber(getplaydef(play, "N$buff563_count") or 0) or 0

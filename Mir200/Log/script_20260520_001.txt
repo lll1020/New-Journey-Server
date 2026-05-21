@@ -24,3 +24,94 @@
 
 [2026-05-20 13:58:34:338] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：156; NpcThreadId: 49300, CurPlayThreadId: 49300
 
+[2026-05-20 14:37:56:980] LuaNPC:玩家名字 ID:999999999 执行 addbag player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 14:51:30:495] LuaNPC:玩家名字 ID:999999999 执行 pickupitemfrontex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 15:40:41:745] LuaNPC:玩家名字 ID:999999999 执行 pickupitemfrontex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 16:08:05:308] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 16:08:42:824] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 16:16:32:464] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：32; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 16:39:24:180] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 16:42:24:917] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 17:13:15:089] LuaNPC:玩家名字 ID:999999999 执行 pickupitemfrontex player:玩家名字 耗时：32; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 17:21:47:214] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：32; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 18:21:53:246] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 18:37:50:326] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 18:58:07:464] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：32; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 20:22:11:438] LuaNPC:玩家名字 ID:999999999 执行 mondropitemex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 20:40:46:824] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 21:32:15:918] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 21:40:13:355] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 21:40:32:339] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 22:12:10:255] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 22:47:42:377] LuaNPC:玩家名字 ID:999999999 执行 attack player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 22:57:07:092] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：32; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 23:14:14:886] LuaNPC:玩家名字 ID:999999999 执行 pickupitemfrontex player:玩家名字 耗时：32; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 23:18:24:137] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-20 23:47:35:845] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：32; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-21 00:02:06:042] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-21 00:23:34:153] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-21 00:44:05:189] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-21 00:51:44:339] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：32; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-21 01:28:16:527] LuaNPC:玩家名字 ID:999999999 执行 pickupitemfrontex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-21 01:56:06:128] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-21 02:14:20:935] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-21 02:28:01:928] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-21 02:54:06:728] LuaNPC:玩家名字 ID:999999999 执行 mondropitemex player:玩家名字 耗时：32; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-21 03:35:40:568] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-21 04:12:02:228] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-21 04:22:52:976] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-21 04:29:47:895] LuaNPC:玩家名字 ID:999999999 执行 attack player:玩家名字 耗时：32; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-21 05:12:52:249] LuaNPC:玩家名字 ID:999999999 执行 mondropitemex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-21 05:36:34:220] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-21 06:38:39:341] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-21 06:41:47:683] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：32; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-21 07:13:56:895] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-21 07:58:15:454] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-21 08:39:06:240] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 49300, CurPlayThreadId: 49300
+
+[2026-05-21 12:42:24:404] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：110; NpcThreadId: 49300, CurPlayThreadId: 49300
+[2026-05-21 12:42:24:404] [玩家名字]Lua执行耗时过高:110ms msgid:100 32 1 0 
+

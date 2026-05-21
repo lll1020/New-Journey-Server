@@ -712,7 +712,7 @@ local npc_xyl = {
                     end,
                     need_receive = false,
                     yd = { 1, "极光城郊", 106, 83, 166 },
-                    desc = "收集聚宝盆碎片×20并完成重铸，修复聚宝盆后可继续解锁后续成长内容。\n<font color='#F4D179'>目标：</font>修复聚宝盆\n<font color='#F4D179'>进度：</font>%s",
+                    desc = "收集聚宝盆碎片×20并完成重铸，修复聚宝盆后可继续解锁后续成长内容。\n<font color='#F4D179'>目标：</font>修复聚宝盆\n<font color='#F4D179'>进度：</font>%s\n<font color='#FF0000'>首充礼包中赠送</font>",
                 },
                 {
                     "洗炼天书",
@@ -2811,6 +2811,7 @@ local npc_xyl = {
     },
 }
 return npc_xyl
+
 
 
 

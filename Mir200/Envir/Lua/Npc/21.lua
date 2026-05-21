@@ -29,7 +29,58 @@ end
 local function _send_sync_data(play, npcid, p2)
     sendluamsg(play,100,npcid,p2 or 0,0,tbl2json(_build_sync_data(play)))
 end
+local function _get_bag_item_make_id(play, itemName)
+    local list = getbagitems(play, itemName)
+    if type(list) == "table" then
+        for _, itemObj in ipairs(list) do
+            if itemObj and itemObj ~= "0" and tostring(getiteminfo(play, itemObj, 7) or "") == itemName then
+                return getiteminfo(play, itemObj, 1)
+            end
+        end
+    end
+    local item_num = tonumber(getbaseinfo(play, 34) or 0) or 0
+    for i = 0, item_num - 1 do
+        local itemObj = getiteminfobyindex(play, i)
+        if itemObj and itemObj ~= "0" and tostring(getiteminfo(play, itemObj, 7) or "") == itemName then
+            return getiteminfo(play, itemObj, 1)
+        end
+    end
+    return nil
+end
 
+local function _guide_bag_item(play, makeId, msg)
+    sendluamsg(play, 101, 2, 8, 0, "")
+    navigation(play, 1, makeId, msg)
+end
+local function _guide_foundation_dan(play)
+    local danMakeId = _get_bag_item_make_id(play, "筑基丹")
+    if danMakeId then
+        _guide_bag_item(play, danMakeId, "使用筑基丹后再提升境界")
+        return
+    end
+    if (tonumber(getbagitemcount(play, "筑基丹碎片") or 0) or 0) >= 10 then
+        local fragMakeId = _get_bag_item_make_id(play, "筑基丹碎片")
+        if fragMakeId then
+            _guide_bag_item(play, fragMakeId, "使用筑基丹碎片合成筑基丹")
+            return
+        end
+    end
+    sendluamsg(play, 101, 502, 8, 10, getplaydef(play, VarCfg.T_czlb))
+end
+
+local function _guide_cultivation_pill(play)
+    local bigMakeId = _get_bag_item_make_id(play, "修为丹（大）")
+    if bigMakeId then
+        _guide_bag_item(play, bigMakeId, "使用修为丹（大）增加修为")
+        return true
+    end
+    local smallMakeId = _get_bag_item_make_id(play, "修为丹（小）")
+    if smallMakeId then
+        _guide_bag_item(play, smallMakeId, "使用修为丹（小）增加修为")
+        return true
+    end
+    return false
+end
 function npc.main(play,npcid)
     _send_sync_data(play, npcid, 0)
     openhyperlink(play, 1, 2)
@@ -69,6 +120,7 @@ function npc.link(play,npcid,ew,aid)
         if exp >= config.need_xxz then
             if level == 10 and _get_jz_dan_count(play) < 1 then
                 Player.sendmsgEx(play, "你的#57|【筑基丹】#218|不足，需要服用#57|【1颗筑基丹】#218|后方可突破")
+                _guide_foundation_dan(play)
                 return
             end
             local name, num = Player.checkItemNumByTable(play, config.cost)
@@ -90,6 +142,7 @@ function npc.link(play,npcid,ew,aid)
             if FairyFate and FairyFate.touch then FairyFate.touch(play, "realm_up") end
             Player.del_attlist(play, "境界修为")
             Login_jjxw(play)
+            if TianshuWangshiTryRecordProgress then TianshuWangshiTryRecordProgress(play) end
             if level == 10 then
                 -- 兼容未配置主线映射的场景，避免完成境界时直接索引空表报错。
                 if rwcf and rwcf[npcid] then
@@ -102,6 +155,7 @@ function npc.link(play,npcid,ew,aid)
             _send_sync_data(play, npcid, 1)
         else
             Player.sendmsgEx(play,  "你的修为不足，无法提升境界#57")
+            _guide_cultivation_pill(play)
             return
         end
     end

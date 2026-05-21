@@ -1,4 +1,9 @@
 paokujl={
+    max_equip_per_round = 2,
+    category_weight = {
+        normal = 50,
+        equip = 50,
+    },
     normal = {
         "10W经验卷",
         "20W经验卷",

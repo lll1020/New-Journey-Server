@@ -64,6 +64,7 @@ function npc.link(play,npcid,ew,aid)
         if FairyFate and FairyFate.touch then FairyFate.touch(play) end
         Player.del_attlist(play, "×ªÉú")
         Login_zsattr(play)
+        if TianshuWangshiTryRecordProgress then TianshuWangshiTryRecordProgress(play) end
         if Buff and Buff.refreshHuTiGuangHuan then
             Buff.refreshHuTiGuangHuan(play)
         end

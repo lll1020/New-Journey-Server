@@ -1178,14 +1178,13 @@ end
 function stdmodefunc60(play, item) --筑基丹碎片
     local sl, itemName = _get_use_all_info(play, item)
     itemName = itemName or "筑基丹碎片"
-    local needNum = 3
+    local needNum = 10
     if sl < needNum then
         Player.sendmsgEx(play, itemName .. "不足" .. needNum .. "个#57")
         return false
     end
-    local makeCount = math.min(math.floor(sl / needNum), 3)
-    local takeCount = makeCount >= 3 and sl or makeCount * needNum
-    _take_use_all_item(play, item, takeCount, itemName)
+    local makeCount = math.floor(sl / needNum)
+    _take_use_all_item(play, item, makeCount * needNum, itemName)
     giveitem(play, "筑基丹", makeCount)
     Player.sendmsgEx(play, "成功合成#57|【筑基丹*" .. makeCount .. "】#218|#57")
     return false

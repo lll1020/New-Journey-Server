@@ -67,22 +67,19 @@ end
 
 local function _tcppk_get_reward_cache()
     if _TCPPK_REWARD_CACHE then
-        return _TCPPK_REWARD_CACHE.normal, _TCPPK_REWARD_CACHE.equip, _TCPPK_REWARD_CACHE.all, _TCPPK_REWARD_CACHE.equipSet
+        return _TCPPK_REWARD_CACHE.normal, _TCPPK_REWARD_CACHE.equip, _TCPPK_REWARD_CACHE.equipSet, _TCPPK_REWARD_CACHE.categoryWeight, _TCPPK_REWARD_CACHE.maxEquip
     end
     local cfg = type(paokujl) == "table" and paokujl or {}
     local normal = type(cfg.normal) == "table" and cfg.normal or {}
     local equip = type(cfg.equip) == "table" and cfg.equip or {}
-    local all = {}
     local equipSet = {}
-    for _, rewardName in ipairs(normal) do
-        all[#all + 1] = rewardName
-    end
     for _, rewardName in ipairs(equip) do
-        all[#all + 1] = rewardName
         equipSet[rewardName] = true
     end
-    _TCPPK_REWARD_CACHE = {normal = normal, equip = equip, all = all, equipSet = equipSet}
-    return normal, equip, all, equipSet
+    local categoryWeight = type(cfg.category_weight) == "table" and cfg.category_weight or {}
+    local maxEquip = tonumber(cfg.max_equip_per_round or 2) or 2
+    _TCPPK_REWARD_CACHE = {normal = normal, equip = equip, equipSet = equipSet, categoryWeight = categoryWeight, maxEquip = maxEquip}
+    return normal, equip, equipSet, categoryWeight, maxEquip
 end
 
 local function _tcppk_get_player_equip_count(play)
@@ -104,15 +101,29 @@ local function _tcppk_set_player_equip_count(play, count)
 end
 
 local function _tcppk_pick_reward(play)
-    local normal, _, all, equipSet = _tcppk_get_reward_cache()
-    if #all <= 0 then
+    local normal, equip, equipSet, categoryWeight, maxEquip = _tcppk_get_reward_cache()
+    local equipCount = _tcppk_get_player_equip_count(play)
+    local normalWeight = tonumber(categoryWeight.normal or 50) or 50
+    local equipWeight = tonumber(categoryWeight.equip or 50) or 50
+    if #normal <= 0 then
+        normalWeight = 0
+    end
+    if #equip <= 0 or equipCount >= maxEquip then
+        equipWeight = 0
+    end
+    if normalWeight <= 0 and equipWeight <= 0 then
         return nil
     end
-    local equipCount = _tcppk_get_player_equip_count(play)
-    local pool = all
-    if equipCount >= 2 and #normal > 0 then
-        pool = normal
+
+    -- Pick category first, then item; long equip list should not dominate reward rate.
+    local useEquip = false
+    if equipWeight > 0 and normalWeight > 0 then
+        useEquip = math.random(normalWeight + equipWeight) > normalWeight
+    elseif equipWeight > 0 then
+        useEquip = true
     end
+
+    local pool = useEquip and equip or normal
     if #pool <= 0 then
         return nil
     end

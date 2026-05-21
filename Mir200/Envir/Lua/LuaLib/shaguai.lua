@@ -1692,7 +1692,7 @@ shaguai = {
 			BwczApi.onKillMon(play, mob)
 		end
 	end,
-	["32"] = function(play,mob)      --转生材料掉落（按大陆，固定击杀区间，越接近越容易掉）
+	["32"] = function(play,mob)      --转生材料掉落（二重固定1/30，其他按大陆击杀区间）
 		local map = getbaseinfo(play,3)
 		local dl = daluditu and daluditu[map] or 0
 		if not dl or dl <= 0 or dl > 6 then
@@ -1701,6 +1701,12 @@ shaguai = {
 		local items = {"","二重转生石","三重转生石","四重转生石","五重转生石","六重转生石"}
 		local item = items[dl]
 		if not item or item == "" then
+			return
+		end
+		if dl == 2 then
+			if math.random(15) == 1 then
+				shaguai.temp_drop(play, mob, item)
+			end
 			return
 		end
 		local data = json2tbl(getplaydef(play, VarCfg.T_zscl)) or {}
@@ -1712,12 +1718,7 @@ shaguai = {
 		local goal = tonumber(data.kill_goal[item]) or 0
 		local cz = tonumber(getplaydef(play, VarCfg["U_真实充值"])) or 0
 		local function _base_by_old_rule(_dl, _cnt, _cz)
-			if _dl == 2 then
-				if _cnt < 7 then
-					return 30
-				end
-				return 80
-			elseif _dl == 3 then
+			if _dl == 3 then
 				if _cz > 80 then
 					return math.random(50,100)
 				end
