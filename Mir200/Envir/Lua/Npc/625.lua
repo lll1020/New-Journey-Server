@@ -198,7 +198,6 @@ function npc_625_finish(play)
         jq_data[_main_key] = 2
     end
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-    _remove_finish_item(play, _prep_item_name())
     Player.sendmsgEx(play, "|"..(_config.name or "任务").."#249|完成#57")
     if npcid then Guard.closeNpc(play, npcid) end
     sendluamsg(play,101,1005,0,0,"rwwc")

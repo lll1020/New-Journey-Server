@@ -770,7 +770,7 @@ function Player.title_give(actor, title_name) --∏¯≥∆∫≈
         local idx = tonumber(raw_idx or 0) or 0
         if idx > 0 then
             Buff[idx](actor,1)
-            Buff[idx](actor,5)
+            -- Buff[idx](actor,5)
         end
         Player.trySyncSecondContinentXyl(actor)
         if title_name == "÷Ó–∞ÕÀ…¢" and Login and Login.refreshGrayWorldVision then
@@ -787,7 +787,7 @@ function Player.title_del(actor, title_name) --…æ≥∆∫≈
         local idx = tonumber(raw_idx or 0) or 0
         if idx > 0 then
             Buff[idx](actor,2)
-            Buff[idx](actor,6)
+            -- Buff[idx](actor,6)
         end
         if title_name == "÷Ó–∞ÕÀ…¢" and Login and Login.refreshGrayWorldVision then
             Login.refreshGrayWorldVision(actor)

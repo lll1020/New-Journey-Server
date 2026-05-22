@@ -500,8 +500,6 @@ local function _xyl_check_task(play, name)
         ["升级灵根"] = _xyl_has_linggen_feed,
         ["强化灵根"] = _xyl_has_linggen_feed,
         ["强化灵根1次"] = _xyl_has_linggen_feed,
-        ["查看江湖称号"] = _xyl_has_jianghu_title,
-        ["查看江湖称号1次"] = _xyl_has_jianghu_title,
         ["装配主灵根"] = _xyl_has_main_linggen,
         ["装配火灵根至主灵根"] = function(play)
             return _xyl_has_main_linggen_of(play, 4)
@@ -515,8 +513,6 @@ local function _xyl_check_task(play, name)
         ["引导点击限时福利NPC"] = _xyl_has_second_continent_welfare_open,
         ["洗炼天书"] = _xyl_has_second_continent_tianshu_refine,
         ["引导天书使者洗炼一次"] = _xyl_has_second_continent_tianshu_refine,
-        ["查看幸运增幅"] = _xyl_has_second_continent_lucky_view,
-        ["查看幸运增幅1次"] = _xyl_has_second_continent_lucky_view,
         ["筑基"] = _xyl_has_foundation_realm,
         ["提升修为至筑基境"] = _xyl_has_foundation_realm,
         ["转生·二"] = function(play)
@@ -781,19 +777,6 @@ local npc_xyl = {
                     desc = "持续肃清林地中的杂兵，稳定整片区域的安全局势。\n<font color='#F4D179'>目标：</font>击杀怪物50只\n<font color='#F4D179'>进度：</font>%s",
                 },
                 {
-                    "查看江湖称号",
-                    id = 999,
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "查看江湖称号")
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    need_receive = false,
-                    yd = { 1, "二大陆主城", 43, 119, 122 },
-                    desc = "前往江湖称号界面查看称号信息，熟悉当前江湖成长方向。\n<font color='#F4D179'>目标：</font>查看江湖称号\n<font color='#F4D179'>进度：</font>%s",
-                },
-                {
                     "杀伐之路（剧）",
                     tk = "npc_605",
                     id = 999,
@@ -810,19 +793,6 @@ local npc_xyl = {
                     need_receive = true,
                     yd = { 1, "杀伐道场", 605, 103, 53 },
                     desc = "在血战中证明自己，继续推进主线杀伐节奏。\n<font color='#F4D179'>目标：</font>击杀怪物30只\n<font color='#F4D179'>进度：</font>%s",
-                },
-                {
-                    "查看幸运增幅",
-                    id = 999,
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "查看幸运增幅")
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    need_receive = false,
-                    yd = { 1, "二大陆主城", 25, 105, 106 },
-                    desc = "前往幸运增幅界面查看当前强化成长，了解幸运体系提升方向。\n<font color='#F4D179'>目标：</font>成功查看幸运增幅\n<font color='#F4D179'>进度：</font>%s",
                 },
                 {
                     "掘墓人（剧）",
@@ -2811,7 +2781,6 @@ local npc_xyl = {
     },
 }
 return npc_xyl
-
 
 
 

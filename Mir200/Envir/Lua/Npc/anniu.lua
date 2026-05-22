@@ -1195,6 +1195,15 @@ local function _sc_build_open_payload(play)
         wait_left = _sc_get_wait_left(data, tonumber(data.welfare_select or 0) or 0),
     }
 end
+function sc_open_welfare_after_first_charge(play, code)
+    if tostring(code or "") ~= "1" then
+        return false
+    end
+    if Npclib and Npclib[105] and Npclib[105].main then
+        Npclib[105].main(play, 105)
+    end
+    return false
+end
 ---首充礼包
 npc[501] = function(play, p2, p3, data) --首充礼包
     if p2 == 0 then
@@ -1216,7 +1225,7 @@ npc[501] = function(play, p2, p3, data) --首充礼包
         _sc_set_data(play, T_data)
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>天选资格、自动巡航等首充联动功能已解锁...</font>","Type":9}')
         sendluamsg(play, 101, 501, 1, 1, tbl2json(_sc_build_open_payload(play)))
-        Npclib[105].main(play, 105)
+        messagebox(play, "你可以领取全部的限时福利了！无需等待！是否立即领取？", "@sc_open_welfare_after_first_charge,1", "@exit")
         return
     elseif p2 == 2 or p2 == 3 then
         Player.sendmsgEx(play, "限时福利请前往#57|【105NPC】#218|领取")

@@ -28,11 +28,9 @@ local function _is_red_name_monster(obj)
     if not _godstone_is_mon(obj) then
         return false
     end
-    local monidx = tonumber(getbaseinfo(obj, 2) or 0) or 0
-    if monidx <= 0 then
-        return false
-    end
-    return tonumber(getmonbaseinfo(monidx, 2) or 0) == 249
+    local monidx = getbaseinfo(obj, 1)
+
+    return tonumber(getmonbaseinfo(getdbmonfieldvalue(monidx, "idx"), 2) or 0) == 249
 end
 local function _godstone_roll(play, key, rate, cd)
     local now = os.time()
@@ -1501,18 +1499,18 @@ Buff = {
             _set_title_buff_flag(play, 338, false)
         end
     end,
-    [563] = function(play,zt,Damage,Target) -- 诸邪退散：对红名怪每15刀额外造成88888真实伤害，并作为灰界免疫标记
+    [563] = function(play,zt,Damage,Target) -- 诸邪退散：对红名怪每9刀额外造成288888真实伤害，并作为灰界免疫标记
         if zt == 3 then
             if not _is_red_name_monster(Target) then
                 return 0
             end
             local cur = tonumber(getplaydef(play, "N$buff563_count") or 0) or 0
             cur = cur + 1
-            if cur >= 15 then
+            if cur >= 9 then
                 cur = 0
                 setplaydef(play, "N$buff563_count", cur)
                 playeffect(Target, 60456, 0, 0, 1, 0, 0)
-                return 88888
+                return 288888
             end
             setplaydef(play, "N$buff563_count", cur)
             return 0

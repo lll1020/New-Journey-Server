@@ -119,11 +119,11 @@ shaguai = {
 		if getbaseinfo(mob,1) == "恶狼" or true then
 			local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
 			sg_data["npc2"] = (sg_data["npc2"] or 0) + 1
-			if sg_data["npc2"] >= 5 then
+			if sg_data["npc2"] >= 10 then
 				shaguai.jian(play,1)
 				messagebox(play,"任务完成,立即前往提交")
 			end
-			Player.sendmsgEx(play,  "击杀恶狼+"..1 .." ( "..sg_data["npc2"].."/5 )#57")
+			Player.sendmsgEx(play,  "击杀恶狼+"..1 .." ( "..sg_data["npc2"].."/10 )#57")
 			Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 		end
 	end,
@@ -131,11 +131,11 @@ shaguai = {
 		if getbaseinfo(mob,1) == "恶狼" or true then
 			local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
 			sg_data["npc4"] = (sg_data["npc4"] or 0) + 1
-			if sg_data["npc4"] >= 5 then
+			if sg_data["npc4"] >= 10 then
 				shaguai.jian(play,2)
 				messagebox(play,"任务完成,立即前往提交")
 			end
-			Player.sendmsgEx(play,  "击杀怪物+"..1 .." ( "..sg_data["npc4"].."/5 )#57")
+			Player.sendmsgEx(play,  "击杀怪物+"..1 .." ( "..sg_data["npc4"].."/10 )#57")
 			Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 		end
 	end,
