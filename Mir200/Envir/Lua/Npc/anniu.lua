@@ -446,7 +446,11 @@ local function _ywl_finish_single_task_state(play, T_ywl, sj, shuju)
     T_ywl = select(1, _ywl_try_clear_current_task(play, T_ywl, sj))
     local taskReward = _ywl_filter_rewards(play, shuju.jl)
     if taskReward and #taskReward > 0 then
-        Player.rwjl(play, taskReward, "xyl", 1, 0)
+        if tonumber(sj.i) == 2 then
+            Player.rwjl(play, taskReward, "xyl", 1, 0)
+        else
+            Player.rwjl(play, taskReward, "xyl", 1)
+        end
     end
     return T_ywl
 end
@@ -762,7 +766,11 @@ npc[11] = function(play, p2, p3, data) --异闻录
             setplaydef(play, VarCfg.T_ywl, tbl2json(T_ywl))
             local _jl = _ywl_filter_rewards(play, npc_xyl[sj.i][sj.j].jl)
             if _jl and #_jl > 0 then
-                Player.rwjl(play, _jl, "剧情jl", 1)
+                if tonumber(sj.i) == 2 then
+                    Player.rwjl(play, _jl, "剧情jl", 1, 0)
+                else
+                    Player.rwjl(play, _jl, "剧情jl", 1)
+                end
             end
             if sj.i == 2 and sj.j == 4 then 
                 Player.zxrw_wancheng(play, 23, "任务") --完成任务
@@ -906,7 +914,8 @@ npc[18] = function(play, p2, p3, data) --新手礼包
                 play,
                 {{"复活戒指",1},{"麻痹戒指",1},{"斗笠",1},{"攻速之镰[lv1]",1}, {"切割之斧[lv1]",1},{ "盟重回城石", 1 }, { "随机传送石", 1 }, { "龙骨刀", 1 }, { "龙骨甲", 1 },{"酒葫芦",1},},
                 "新手礼包",
-                nil
+                1,
+                0
             )
             addbuff(play, 20000)
             addbuff(play, 20001)
@@ -1169,7 +1178,7 @@ local function _sc_apply_main_reward(play, data)
         addskill(play, halfMoon, 3)
     end
     -- 群体施毒术已调整到 105 限时福利发放，这里改为首充直接补发聚宝盆碎片。
-    Player.rwjl(play, {{"聚宝盆碎片", 20}}, "首充礼包", 1)
+    Player.rwjl(play, {{"聚宝盆碎片", 20}}, "首充礼包", 1, 0)
 
     local sz_data = Player.getJsonTableByVar(play, VarCfg.T_szjl) or {}
     sz_data.yjs = sz_data.yjs or {}
@@ -1662,10 +1671,8 @@ local function _activity507_is_open(p3)
         local tb = state ~= "" and json2tbl(state) or {}
         return getsysvar(VarCfg["G_全民夺矿状态"]) == 1 and type(tb) == "table" and tonumber(tb.open) == 1
     elseif p3 == 3 then
-        local cfg = _qmdt_get_cfg_507()
         local state = _qmdt_get_state_507()
-        local idx = tonumber(state.current_idx) or 0
-        return cfg and tonumber(state.open) == 1 and idx > 0 and _qmdt_is_active_507(state, cfg, idx)
+        return getsysvar(VarCfg["G_全民答题状态"]) == 1 and type(state) == "table" and tonumber(state.open) == 1
     elseif p3 == 5 then
         return dqfz >= 5 and dqfz < 8
     elseif p3 == 6 then
@@ -1779,19 +1786,11 @@ npc[507] = function(play, p2, p3, msgData) --活动面板
                 Player.sendmsgEx(play, "全民答题当前未开启#57")
                 return
             end
-            local cfg = _qmdt_get_cfg_507()
-            local state = _qmdt_get_state_507()
-            local idx = tonumber(state.current_idx) or 0
-            if _qmdt_is_active_507(state, cfg, idx) then
-                local sayText = _qmdt_build_say_507(state, cfg, idx)
-                if sayText and sayText ~= "" then
-                    say(play, sayText)
-                end
-            elseif cfg and tonumber(state.open) == 1 and idx > 0 and cfg.questions[idx] then
-                Player.sendmsgEx(play, "当前答题已进入结算阶段#57")
-            else
-                Player.sendmsgEx(play, "当前暂无可答题目#57")
-            end
+            local cfg = _qmdt_get_cfg_507() or {}
+            local enterPos = type(cfg.enter_pos) == "table" and cfg.enter_pos or {50, 50}
+            mapmove(play, tostring(cfg.map or "全民答题"), tonumber(enterPos[1]) or 50, tonumber(enterPos[2]) or 50, 2)
+            Player.sendmsgEx(play, "请站到正确答案怪物旁，结算时按最近答案判定，距离小于5才算作答#218")
+            _activity507_enter_notice(play, 3, "全民答题")
         elseif p3 == 4 then
             Player.sendmsgEx(play, "勇夺镖车暂未开放#57")
         elseif p3 == 5 then
@@ -2244,7 +2243,7 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
                 end
                 matData[targetDay] = matRecord
                 if type(matRecord.give) == "table" and #matRecord.give > 0 then
-                    Player.rwjl(play, matRecord.give, "七日翻牌神秘奖励", 1)
+                    Player.rwjl(play, matRecord.give, "七日翻牌神秘奖励", 1, 0)
                 end
             end
             T_qrbq["7rqd"] = targetDay
@@ -2270,7 +2269,7 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
             Player.setJsonVarByTable(play, VarCfg.T_qrbq, T_qrbq)
             sendmail(getbaseinfo(play,2),0,"七日登录奖励","七日登录奖励,奖励已下发!",Player.jl_mail(dayReward.jl))
             if finalAwardToGive > 0 then
-                Player.rwjl(play, { { "绑定元宝", finalAwardToGive } }, "七日翻牌幸运奖励", 1)
+                Player.rwjl(play, { { "绑定元宝", finalAwardToGive } }, "七日翻牌幸运奖励", 1, 0)
             end
             sendluamsg(play, 101, 511, 1, 1, tbl2json(T_qrbq))
             if getplaydef(play, VarCfg.U_zxrw[1]) == 10 then
@@ -2291,7 +2290,7 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
             if T_qrbq["zxjl"] == jsonData["zxjl"] then
                 if jsonData["zxjl"] <= #teshudata["fldt"]["zxjl"] then
                     Player.setJsonVarByTable(play, VarCfg.T_qrbq, T_qrbq)
-                    Player.rwjl(play, teshudata["fldt"]["zxjl"][T_qrbq["zxjl"]].jl, "在线奖励", 1)
+                    Player.rwjl(play, teshudata["fldt"]["zxjl"][T_qrbq["zxjl"]].jl, "在线奖励", 1, 0)
                     sendluamsg(play, 101, 511, 1, 1, tbl2json(T_qrbq))
                 else
                     Player.sendmsgEx(play, "在线奖励已经全部领取完毕#57")
@@ -2314,7 +2313,7 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
             if T_qrbq["sgjl"] == jsonData["sgjl"] then
                 if jsonData["sgjl"] <= #teshudata["fldt"]["sgjl"] then
                     Player.setJsonVarByTable(play, VarCfg.T_qrbq, T_qrbq)
-                    Player.rwjl(play, teshudata["fldt"]["sgjl"][T_qrbq["sgjl"]].jl, "杀怪奖励", 1)
+                    Player.rwjl(play, teshudata["fldt"]["sgjl"][T_qrbq["sgjl"]].jl, "杀怪奖励", 1, 0)
                     sendluamsg(play, 101, 511, 1, 1, tbl2json(T_qrbq))
                 else
                     Player.sendmsgEx(play, "杀怪奖励已经全部领取完毕#57")

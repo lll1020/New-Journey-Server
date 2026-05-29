@@ -1,3 +1,15 @@
+local COMBAT_STATE_SEC = 3
+local function _mark_combat_state(play)
+    if play then
+        setplaydef(play, "N$战斗状态", os.time() + COMBAT_STATE_SEC)
+    end
+end
+if GameEvent and EventCfg and EventCfg.onAttackDamageMonster and not rawget(_G, "__combat_state_attack_mon_event") then
+    _G.__combat_state_attack_mon_event = true
+    GameEvent.add(EventCfg.onAttackDamageMonster, function(play)
+        _mark_combat_state(play)
+    end, "combat_state_attack_mon")
+end
 -- 第五章击杀任务：计算当前轮次目标
 local function _story5_kill_need(task_cfg, done_cnt)
 	local step_need = tonumber(task_cfg.kill_per_step or 0) or 0
@@ -113,6 +125,23 @@ local function _sg_is_kuafu_boss(mob)
 	end
 	return string.find(mapName, "跨服", 1, true) ~= nil
 		or string.find(mapName, "kuafu", 1, true) ~= nil
+end
+local function _sg_record_killed_boss(play, mob)
+	if not play or not mob then
+		return
+	end
+	local mobName = tostring(getbaseinfo(mob, 1) or "")
+	if mobName == "" then
+		return
+	end
+	local mobType = tonumber((guaiwutype and guaiwutype[mobName]) or 0) or 0
+	if mobType < 2 then
+		return
+	end
+	local ok, data = pcall(json2tbl, getplaydef(play, "S$equip_killed_boss"))
+	data = ok and type(data) == "table" and data or {}
+	data[mobName] = true
+	setplaydef(play, "S$equip_killed_boss", tbl2json(data))
 end
 shaguai = {
 	["1"] = function(play,mob)      --任务1：杀怪任务
@@ -1532,7 +1561,121 @@ shaguai = {
 			Player.sendmsgEx(play, "打怪掉落【"..drop_item.."】#57")
 		end
 	end,
-		["33"] = function(play,mob)      --聚宝盆碎片：接到聚宝盆任务后，极光城郊普通怪按 1/150 + 30 杀保底掉落
+	["721"] = function(play,mob)      -- story npc kill route
+		local mod = dofile("Envir/Lua/Npc/721.lua")
+		if mod and mod.link then
+			mod.link(play, 721, 4, mob)
+		end
+	end,
+	["722"] = function(play,mob)      -- story npc kill route
+		local mod = dofile("Envir/Lua/Npc/722.lua")
+		if mod and mod.link then
+			mod.link(play, 722, 4, mob)
+		end
+	end,
+	["723"] = function(play,mob)      -- story npc kill route
+		local mod = dofile("Envir/Lua/Npc/723.lua")
+		if mod and mod.link then
+			mod.link(play, 723, 4, mob)
+		end
+	end,
+	["724"] = function(play,mob)      -- story npc kill route
+		local mod = dofile("Envir/Lua/Npc/724.lua")
+		if mod and mod.link then
+			mod.link(play, 724, 4, mob)
+		end
+	end,
+	["725"] = function(play,mob)      -- story npc kill route
+		local mod = dofile("Envir/Lua/Npc/725.lua")
+		if mod and mod.link then
+			mod.link(play, 725, 4, mob)
+		end
+	end,
+	["726"] = function(play,mob)      -- story npc kill route
+		local mod = dofile("Envir/Lua/Npc/726.lua")
+		if mod and mod.link then
+			mod.link(play, 726, 4, mob)
+		end
+	end,
+	["728"] = function(play,mob)      -- story npc kill route
+		local mod = dofile("Envir/Lua/Npc/728.lua")
+		if mod and mod.link then
+			mod.link(play, 728, 4, mob)
+		end
+	end,
+	["729"] = function(play,mob)      -- story npc kill route
+		local mod = dofile("Envir/Lua/Npc/729.lua")
+		if mod and mod.link then
+			mod.link(play, 729, 4, mob)
+		end
+	end,
+	["730"] = function(play,mob)      -- story npc kill route
+		local mod = dofile("Envir/Lua/Npc/730.lua")
+		if mod and mod.link then
+			mod.link(play, 730, 4, mob)
+		end
+	end,
+	["731"] = function(play,mob)      -- story npc kill route
+		local mod = dofile("Envir/Lua/Npc/731.lua")
+		if mod and mod.link then
+			mod.link(play, 731, 4, mob)
+		end
+	end,
+	["732"] = function(play,mob)      -- story npc kill route
+		local mod = dofile("Envir/Lua/Npc/732.lua")
+		if mod and mod.link then
+			mod.link(play, 732, 4, mob)
+		end
+	end,
+	["733"] = function(play,mob)      -- story npc kill route
+		local mod = dofile("Envir/Lua/Npc/733.lua")
+		if mod and mod.link then
+			mod.link(play, 733, 4, mob)
+		end
+	end,
+	["734"] = function(play,mob)      -- story npc kill route
+		local mod = dofile("Envir/Lua/Npc/734.lua")
+		if mod and mod.link then
+			mod.link(play, 734, 4, mob)
+		end
+	end,
+	["735"] = function(play,mob)      -- story npc kill route
+		local mod = dofile("Envir/Lua/Npc/735.lua")
+		if mod and mod.link then
+			mod.link(play, 735, 4, mob)
+		end
+	end,
+	["736"] = function(play,mob)      -- story npc kill route
+		local mod = dofile("Envir/Lua/Npc/736.lua")
+		if mod and mod.link then
+			mod.link(play, 736, 4, mob)
+		end
+	end,
+	["737"] = function(play,mob)      -- story npc kill route
+		local mod = dofile("Envir/Lua/Npc/737.lua")
+		if mod and mod.link then
+			mod.link(play, 737, 4, mob)
+		end
+	end,
+	["738"] = function(play,mob)      -- story npc kill route
+		local mod = dofile("Envir/Lua/Npc/738.lua")
+		if mod and mod.link then
+			mod.link(play, 738, 4, mob)
+		end
+	end,
+	["739"] = function(play,mob)      -- story npc kill route
+		local mod = dofile("Envir/Lua/Npc/739.lua")
+		if mod and mod.link then
+			mod.link(play, 739, 4, mob)
+		end
+	end,
+	["740"] = function(play,mob)      -- story npc kill route
+		local mod = dofile("Envir/Lua/Npc/740.lua")
+		if mod and mod.link then
+			mod.link(play, 740, 4, mob)
+		end
+	end,
+	["33"] = function(play,mob)      --聚宝盆碎片：接到聚宝盆任务后，极光城郊普通怪按 1/150 + 30 杀保底掉落
 		local state = _sg_tb_state(play)
 		if state.rebuilt >= 1 or state.task_started < 1 then
 			return
@@ -1692,7 +1835,7 @@ shaguai = {
 			BwczApi.onKillMon(play, mob)
 		end
 	end,
-	["32"] = function(play,mob)      --转生材料掉落（二重固定1/30，其他按大陆击杀区间）
+	["32"] = function(play,mob)      --转生材料掉落（二重固定1/12，其他按大陆击杀区间）
 		local map = getbaseinfo(play,3)
 		local dl = daluditu and daluditu[map] or 0
 		if not dl or dl <= 0 or dl > 6 then
@@ -1704,7 +1847,7 @@ shaguai = {
 			return
 		end
 		if dl == 2 then
-			if math.random(15) == 1 then
+			if math.random(12) == 1 then
 				shaguai.temp_drop(play, mob, item)
 			end
 			return
@@ -1772,6 +1915,19 @@ shaguai = {
 		setplaydef(play, VarCfg.T_zscl, tbl2json(data))
 	end,
 }
+local _raw_shaguai_handlers = shaguai
+shaguai = setmetatable({}, {
+    __index = _raw_shaguai_handlers,
+    __newindex = _raw_shaguai_handlers,
+})
+for id, handler in pairs(_raw_shaguai_handlers) do
+    if type(handler) == "function" then
+        shaguai[id] = function(play, mob, ...)
+            _mark_combat_state(play)
+            return handler(play, mob, ...)
+        end
+    end
+end
 -- 备注：临时掉落物品（封装 additemtodroplist）
 shaguai.temp_drop = function(play, mob, itemname)
     if not (play and mob and itemname and itemname ~= "") then
@@ -1789,5 +1945,20 @@ shaguai.jian = function(play, id)
 	local chuli = json2tbl(getplaydef(play, VarCfg.T_sgcf))
 	chuli["" .. id] = nil
 	setplaydef(play, VarCfg.T_sgcf, tbl2json(chuli))
+end
+if GameEvent and EventCfg and EventCfg.onkillplay and not rawget(_G, "__npc728_killplay_event") then
+	_G.__npc728_killplay_event = true
+	GameEvent.add(EventCfg.onkillplay, function(play, target)
+		local mod = dofile("Envir/Lua/Npc/728.lua")
+		if mod and mod.link then
+			mod.link(play, 728, 5, target)
+		end
+	end, "npc728_恶魔契约")
+end
+if GameEvent and EventCfg and EventCfg.onKillMon and not rawget(_G, "__equip_killed_boss_record_event") then
+	_G.__equip_killed_boss_record_event = true
+	GameEvent.add(EventCfg.onKillMon, function(play, mob)
+		_sg_record_killed_boss(play, mob)
+	end, "equip_killed_boss_record")
 end
 return shaguai

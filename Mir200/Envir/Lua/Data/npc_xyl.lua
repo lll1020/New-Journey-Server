@@ -184,9 +184,9 @@ local function _xyl_has_linggen_feed(play)
     return false
 end
 
--- 备注：江湖称号任务改为查看界面即可完成，不再要求实际升级称号等级
+-- 备注：江湖称号任务要求实际强化一次
 local function _xyl_has_jianghu_title(play)
-    return (tonumber(getplaydef(play, "N$查看江湖称号") or 0) or 0) > 0
+    return (tonumber(getplaydef(play, VarCfg["U_江湖称号"]) or 0) or 0) > 0
 end
 
 -- 备注：是否已装配主灵根
@@ -228,9 +228,9 @@ local function _xyl_has_second_continent_tianshu_refine(play)
     return (tonumber(getplaydef(play, "N$XYL2_TIANSHU_REFINE") or 0) or 0) > 0
 end
 
--- 备注：是否已查看过幸运增幅界面
+-- 备注：幸运增幅任务要求实际强化一次
 local function _xyl_has_second_continent_lucky_view(play)
-    return (tonumber(getplaydef(play, "N$XYL2_LUCKY_VIEW") or 0) or 0) > 0
+    return (tonumber(getplaydef(play, VarCfg["U_幸运强化"]) or 0) or 0) > 0
 end
 
 -- 备注：境界是否已达到筑基境（等级 10）
@@ -509,6 +509,13 @@ local function _xyl_check_task(play, name)
             return _xyl_has_other_linggen_of(play, 3)
         end,
         ["气运占卜"] = _xyl_has_divination,
+        ["江湖称号"] = _xyl_has_jianghu_title,
+        ["引导江湖称号"] = _xyl_has_jianghu_title,
+        ["江湖称号强化一次"] = _xyl_has_jianghu_title,
+        ["幸运增幅"] = _xyl_has_second_continent_lucky_view,
+        ["幸运强化"] = _xyl_has_second_continent_lucky_view,
+        ["引导幸运增幅"] = _xyl_has_second_continent_lucky_view,
+        ["幸运增幅强化一次"] = _xyl_has_second_continent_lucky_view,
         ["限时福利"] = _xyl_has_second_continent_welfare_open,
         ["引导点击限时福利NPC"] = _xyl_has_second_continent_welfare_open,
         ["洗炼天书"] = _xyl_has_second_continent_tianshu_refine,
@@ -657,6 +664,20 @@ local npc_xyl = {
                     desc = "进行一次气运占卜，开启命格与气运加成的第一步。\n<font color='#F4D179'>目标：</font>完成1次气运占卜\n<font color='#F4D179'>进度：</font>%s",
                 },
                 {
+                    "引导江湖称号",
+                    id = 999,
+                    jl = { { "剧情点", 1 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "引导江湖称号")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    need_receive = false,
+                    yd = { 1, "二大陆主城", 43, 120, 106 },
+                    desc = "前往江湖称号界面完成一次称号提升，首次引导免费。\n<font color='#F4D179'>目标：</font>江湖称号强化1次\n<font color='#F4D179'>进度：</font>%s",
+                },
+                {
                     "深入野火（剧）",
                     tk = "npc_607",
                     id = 999,
@@ -751,7 +772,20 @@ local npc_xyl = {
                     yd = { 1, "二大陆主城", 28, 115, 106 },
                     desc = "前往装备强化界面完成一次强化，让角色拥有更稳定的正向成长。\n<font color='#F4D179'>目标：</font>完成任意部位装备强化\n<font color='#F4D179'>进度：</font>%s",
                 },
-            },
+                {
+                    "引导幸运增幅",
+                    id = 999,
+                    jl = { { "剧情点", 1 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "引导幸运增幅")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    need_receive = false,
+                    yd = { 1, "二大陆主城", 25, 125, 106 },
+                    desc = "前往幸运增幅界面完成一次幸运强化，首次引导免费。\n<font color='#F4D179'>目标：</font>幸运增幅强化1次\n<font color='#F4D179'>进度：</font>%s",
+                },                },
             name = "小试牛刀",
             jqd = 4,
             jl = { { "1元真实充值", 1 }, { "激活木灵根", 1 } },

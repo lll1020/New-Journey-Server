@@ -1,24 +1,5 @@
 release_print("useitme.lua")
---------------------双击物品触发-------------------随机石
-function stdmodefunc9(play, item)
-    setplaydef(play,"S$dtm",getbaseinfo(play, 3))
-    release_print("随机石")
-    if getplaydef(play,"N$战斗状态") < os.time() or _has_equip_name(play, "遮云日") then
-        map(play,getbaseinfo(play,3))
-        -- if getflagstatus(play, 300) == 1 then
-        --     startautoattack(play)
-        -- end
-    else
-        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}')
-    end
-    return false
-end
---------------------双击物品触发-------------------回城石
--- 灰界系列地图是否需要回到【灰界】统一通过 xilieditu 映射判断，避免这里再维护一份重复地图表。
-local function _is_huijie_return_map(map_name)
-    return type(xilieditu) == "table" and xilieditu[map_name] == 3
-end
-function stdmodefunc10(play, item)
+local RANDOM_TRANSFER_CD = 3
 local _equip_slots = {0,1,3,4,5,6,7,8,9,10,11,13,14,16,30,31,32,33,34,35,36,37,38,39,40,41}
 local function _has_equip_name(play, itemname)
     if not play or not itemname or itemname == "" then
@@ -31,6 +12,38 @@ local function _has_equip_name(play, itemname)
     end
     return false
 end
+local function _random_transfer_cd_left(play, now)
+    local nextTime = tonumber(getplaydef(play, "N$随机传送CD") or 0) or 0
+    local left = nextTime - (now or os.time())
+    return left > 0 and left or 0
+end
+--------------------双击物品触发-------------------随机石
+function stdmodefunc9(play, item)
+    setplaydef(play,"S$dtm",getbaseinfo(play, 3))
+    release_print("随机石")
+    local now = os.time()
+    local cdLeft = _random_transfer_cd_left(play, now)
+    if cdLeft > 0 then
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>随机传送冷却中，请稍后...</font>","Type":9}')
+        return false
+    end
+    if getplaydef(play,"N$战斗状态") < now or _has_equip_name(play, "遮云日") then
+        map(play,getbaseinfo(play,3))
+        setplaydef(play, "N$随机传送CD", now + RANDOM_TRANSFER_CD)
+        -- if getflagstatus(play, 300) == 1 then
+        --     startautoattack(play)
+        -- end
+    else
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用，脱战3秒后可用...</font>","Type":9}')
+    end
+    return false
+end
+--------------------双击物品触发-------------------回城石
+-- 灰界系列地图是否需要回到【灰界】统一通过 xilieditu 映射判断，避免这里再维护一份重复地图表。
+local function _is_huijie_return_map(map_name)
+    return type(xilieditu) == "table" and xilieditu[map_name] == 3
+end
+function stdmodefunc10(play, item)
     setplaydef(play,"S$dtm",getbaseinfo(play, 3))
     local du = getbaseinfo(play, 3)
     if getplaydef(play,"N$战斗状态") < os.time() then
@@ -1248,6 +1261,81 @@ function stdmodefunc63(play, item) --仙酒：使用后增加醉意值
     setplaydef(play, VarCfg["J_醉意值"], newValue)
     Player.sendmsgEx(play, string.format("你饮用了|【%s】#218|，醉意值增加了|【%d】#218|，当前醉意值为|【%d】#218", itemName, realAdd, newValue))
     -- sendluamsg(play,100,70,1,0,tbl2json({num = newValue}))
+    return false
+end
+-- 沙巴克攻防药剂入口。
+-- 参数说明：
+-- play: 使用药剂的玩家对象。
+-- item: 双击使用的物品对象。
+-- itemName: 物品名称，用于区分“沙城征服者秘药 / 沙城霸主秘药 / 沙城勇士药剂”等具体效果。
+-- 返回值：true 表示已处理并消耗道具；false 表示未处理或配置缺失。
+local SBK_POTION_EFFECT_HANDLERS = {
+    ["沙城征服者秘药"] = function(play, item, itemName)
+        -- TODO: 在这里补“沙城征服者秘药”的实际效果逻辑。
+        return true
+    end,
+    ["沙城霸主秘药"] = function(play, item, itemName)
+        -- TODO: 在这里补“沙城霸主秘药”的实际效果逻辑。
+        return true
+    end,
+    ["沙城勇士药剂"] = function(play, item, itemName)
+        -- TODO: 在这里补“沙城勇士药剂”的实际效果逻辑。
+        return true
+    end,
+}
+
+
+local MIJING_TITLE_USE_ITEMS = {
+    ["极光使者"] = "极光使者",
+    ["白云苍狗"] = "白云苍狗",
+    ["上善若水"] = "上善若水",
+    ["看破红尘"] = "看破红尘",
+    ["归入灵虚"] = "归入灵虚",
+}
+function stdmodefunc65(play, item) --沙巴克攻防药剂
+    local itemName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "")
+    if itemName == "" then
+        Player.sendmsgEx(play, "沙城药剂名称异常，无法使用#57")
+        return false
+    end
+
+    local handler = SBK_POTION_EFFECT_HANDLERS[itemName]
+    if type(handler) ~= "function" then
+        Player.sendmsgEx(play, "该沙城药剂暂未配置使用效果#57")
+        return false
+    end
+    local ok, result = pcall(handler, play, item, itemName)
+    if not ok then
+        release_print("[stdmodefunc65] 沙城药剂使用错误", itemName, result)
+        Player.sendmsgEx(play, "沙城药剂使用失败，请检查配置#57")
+        return false
+    end
+    if result == false then
+        return false
+    end
+    delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+    Player.sendmsgEx(play, "使用成功：|【" .. itemName .. "】#218|#57")
+    return false
+end
+function stdmodefunc66(play, item) --秘境称号道具
+    local itemName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "")
+    if itemName == "" then
+        Player.sendmsgEx(play, "秘境称号道具名称异常，无法使用#57")
+        return false
+    end
+    local titleKey = string.gsub(itemName, "%[可使用%]", "")
+    local titleName = MIJING_TITLE_USE_ITEMS[titleKey]
+    if not titleName then
+        Player.sendmsgEx(play, "该秘境称号道具暂未配置使用效果#57")
+        return false
+    end
+    if checktitle(play, titleName) then
+        Player.sendmsgEx(play, "你已经拥有|【" .. titleName .. "】#218|称号#57")
+        return false
+    end
+    Player.title_give(play, titleName)
+    delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+    Player.sendmsgEx(play, "恭喜你获得|【" .. titleName .. "】#218|称号#57")
     return false
 end
 function stdmodefunc64(play, item) --改名卡

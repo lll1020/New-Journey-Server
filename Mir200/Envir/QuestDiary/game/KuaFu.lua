@@ -366,16 +366,28 @@ end
 function kfsyscall53(actor, arg1, arg2)
 
 end
---跨服通知本服发放攻沙奖励邮件
+--跨服通知本服发放攻沙奖励邮件；跨服积分落角色持久变量，不进入邮件物品。
 function kfsyscall54(actor, arg1, arg2)
     local title = tostring(arg1 or "沙巴克奖励")
     local reward = tostring(arg2 or "")
-    if reward == "" then
-        return
+    local kfPoint = 0
+    if string.sub(reward, 1, 1) == "{" then
+        local ok, data = pcall(json2tbl, reward)
+        if ok and type(data) == "table" then
+            reward = tostring(data.reward or "")
+            kfPoint = tonumber(data.kf_point or 0) or 0
+        end
     end
-    local userid = getbaseinfo(actor, ConstCfg.gbase.id)
-    sendmail(userid, 1, title, "请领取您的沙巴克奖励", reward)
-    if title == "沙巴克胜利方奖励" then
+    if kfPoint > 0 then
+        local varName = VarCfg["U_跨服积分"] or "U49"
+        setplaydef(actor, varName, (tonumber(getplaydef(actor, varName) or 0) or 0) + kfPoint)
+        Player.sendmsgEx(actor, "跨服积分+" .. tostring(kfPoint) .. "#218")
+    end
+    if reward ~= "" then
+        local userid = getbaseinfo(actor, ConstCfg.gbase.id)
+        sendmail(userid, 1, title, "请领取您的沙巴克奖励", reward)
+    end
+    if title == "沙巴克胜利方奖励" or title == "沙巴克胜利方会长奖励" then
         GameEvent.push(EventCfg.GetCastleRewards, actor)
     end
 end

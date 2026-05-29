@@ -89,6 +89,66 @@ local function _set_claimed(play, is_kf, value)
 end
 local _calculate_guild_points
 local _add_player_points
+local _KF_POINT_NAME = "跨服积分"
+-- 跨服积分是持久化数值，不作为真实物品发放；奖励预览仍使用同名物品展示。
+local function _get_kf_point_var()
+    return VarCfg["U_跨服积分"] or "U49"
+end
+local function _add_kf_point(play, amount)
+    amount = _toint(amount)
+    if amount <= 0 then
+        return
+    end
+    local varName = _get_kf_point_var()
+    setplaydef(play, varName, _toint(getplaydef(play, varName)) + amount)
+end
+local function _split_kf_point_reward(reward)
+    local mailItems = {}
+    local point = 0
+    for _, item in ipairs(reward or {}) do
+        if type(item) == "table" and _tostr(item[1]) == _KF_POINT_NAME then
+            point = point + _toint(item[2])
+        else
+            mailItems[#mailItems + 1] = item
+        end
+    end
+    return mailItems, point
+end
+-- 首充礼包实际领取后才允许领取攻沙奖励。
+local function _has_first_charge(play)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
+    return (tonumber(data.main_claimed or data.other_lb or data["首充"] or 0) or 0) >= 1
+end
+-- 固定奖励模式下，奖励表直接发邮件，避免继续按个人积分比例拆分。
+local function _get_fixed_reward(camp, isChairman)
+    local fixed = _config.fixed_rewards or {}
+    local result = {}
+    local base = camp == 0 and (fixed.loser or {}) or (fixed.winner or {})
+    for _, item in ipairs(base) do
+        result[#result + 1] = {item[1], _toint(item[2])}
+    end
+    if isChairman then
+        for _, item in ipairs(fixed.chairman or {}) do
+            result[#result + 1] = {item[1], _toint(item[2])}
+        end
+    end
+    return result
+end
+local function _is_chairman(play, camp)
+    if camp == 0 then
+        return false
+    end
+    return _toint(castleidentity(play)) == 2 or _toint(getbaseinfo(play, ConstCfg.gbase.isboos)) == 1
+end
+local function _grant_chairman_title(play)
+    local cfg = _config.chairman_title or {}
+    local titleName = _tostr(cfg.name ~= nil and cfg.name or "沙城霸主")
+    local seconds = _toint(cfg.seconds ~= nil and cfg.seconds or 48 * 3600)
+    if titleName ~= "" and seconds > 0 then
+        changetitletime(play, titleName, "=", seconds)
+        confertitle(play, titleName, 0)
+    end
+end
 --刷新攻沙面板运行数据
 local function _refresh_panel(play, npcid, is_kf)
     local cfg = _get_reward_cfg(is_kf)
@@ -104,15 +164,24 @@ local function _refresh_panel(play, npcid, is_kf)
         winnerPoints = winnerPoints,
         loserPoints = loserPoints,
         castleidentity = _toint(castleidentity(play)),
+        reward_mode = _tostr(_config.reward_mode or "legacy"),
+        need_first_charge = _toint(_config.need_first_charge or 0),
+        has_first_charge = _has_first_charge(play) and 1 or 0,
+        fixed_rewards = _config.fixed_rewards or {},
+        chairman_title = _config.chairman_title or {},
+        enter_maps = _get_enter_map_list(is_kf),
     }
     sendluamsg(play, 100, npcid or _NPC_ID, 0, 0, tbl2json(data))
 end
 --本服直接发放攻沙奖励邮件
 local function _send_reward_mail(play, title, reward)
+    if reward == nil or reward == "" then
+        return
+    end
     local userid = getbaseinfo(play, ConstCfg.gbase.id)
     sendmail(userid, 1, title, "请领取您的沙巴克奖励", reward)
 end
---按当前阵营和个人积分结算奖励
+-- 按当前阵营结算攻沙奖励：新配置为固定奖励，旧配置仍兼容积分比例拆分。
 local function _claim_reward(play, is_kf)
     if castleinfo(5) then
         Player.sendmsgEx(play, "请在沙巴克攻城结束后领取奖励#57")
@@ -124,6 +193,10 @@ local function _claim_reward(play, is_kf)
     end
     if _get_claimed(play, is_kf) == 1 then
         Player.sendmsgEx(play, is_kf and "你已经领取过跨服沙巴克奖励了#57" or "你已经领取过沙巴克奖励了#57")
+        return
+    end
+    if _toint(_config.need_first_charge or 0) == 1 and not _has_first_charge(play) then
+        Player.sendmsgEx(play, "领取攻沙奖励需要先领取首充礼包#57")
         return
     end
     local cfg = _get_reward_cfg(is_kf)
@@ -138,33 +211,58 @@ local function _claim_reward(play, is_kf)
         return
     end
     local camp = _toint(castleidentity(play))
-    local rewardValue = 0
-    local rewardTitle = "沙巴克失败方奖励"
-    if camp == 0 then
-        if loserPoints <= 0 then
-            Player.sendmsgEx(play, "失败方暂无可分配奖励#57")
+    local rewardTitle = camp == 0 and "沙巴克失败方奖励" or "沙巴克胜利方奖励"
+    local mailReward = ""
+    local isChairman = _is_chairman(play, camp)
+    if _tostr(_config.reward_mode or "legacy") == "fixed" then
+        local reward = _get_fixed_reward(camp, isChairman)
+        if #reward <= 0 then
+            Player.sendmsgEx(play, "沙巴克固定奖励配置缺失#57")
             return
         end
-        rewardValue = (cfg.loserReward / loserPoints) * myPoints
+        local mailItems, point = _split_kf_point_reward(reward)
+        mailReward = Player.jl_mail(mailItems)
+        if is_kf then
+            mailReward = tbl2json({reward = mailReward, kf_point = point})
+        else
+            _add_kf_point(play, point)
+        end
+        if isChairman then
+            rewardTitle = "沙巴克胜利方会长奖励"
+        end
     else
-        if winnerPoints <= 0 then
-            Player.sendmsgEx(play, "胜利方暂无可分配奖励#57")
-            return
+        local rewardValue = 0
+        if camp == 0 then
+            if loserPoints <= 0 then
+                Player.sendmsgEx(play, "失败方暂无可分配奖励#57")
+                return
+            end
+            rewardValue = (cfg.loserReward / loserPoints) * myPoints
+        else
+            if winnerPoints <= 0 then
+                Player.sendmsgEx(play, "胜利方暂无可分配奖励#57")
+                return
+            end
+            rewardValue = (cfg.winReward / winnerPoints) * myPoints
         end
-        rewardValue = (cfg.winReward / winnerPoints) * myPoints
-        rewardTitle = "沙巴克胜利方奖励"
+        mailReward = cfg.money .. tostring(numberRound(rewardValue))
     end
-    rewardValue = numberRound(rewardValue)
     _set_claimed(play, is_kf, 1)
+    if isChairman then
+        _grant_chairman_title(play)
+    end
     if is_kf then
-        FKuaFuToBenFuGongShaReward(play, rewardTitle, cfg.money .. tostring(rewardValue))
+        FKuaFuToBenFuGongShaReward(play, rewardTitle, mailReward)
     else
-        _send_reward_mail(play, rewardTitle, cfg.money .. tostring(rewardValue))
-        if rewardTitle == "沙巴克胜利方奖励" then
+        _send_reward_mail(play, rewardTitle, mailReward)
+        if camp ~= 0 then
             GameEvent.push(EventCfg.GetCastleRewards, play)
         end
     end
     Player.sendmsgEx(play, "奖励已发送到邮件,请到邮件查收!#218")
+    if _tostr(_config.reward_mode or "legacy") == "fixed" then
+        Player.sendmsgEx(play, "跨服积分已直接计入角色数据#218")
+    end
     _refresh_panel(play, _NPC_ID, is_kf)
 end
 function npc.main(play, npcid)

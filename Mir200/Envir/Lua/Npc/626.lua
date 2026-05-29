@@ -49,6 +49,16 @@ local function _remove_finish_item(play, item_name)
     return false
 end
 
+local function _try_send_gray_entry_guide(play)
+    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+    if tonumber(jq_data["npc_625"] or 0) >= 2
+        and tonumber(jq_data["npc_626"] or 0) >= 2
+        and tonumber(jq_data["npc_627"] or 0) >= 2
+        and tonumber(jq_data["npc_628"] or 0) >= 2 then
+        mapmove(play, "灰界", 205, 196, 2)
+        sendluamsg(play, 101, 0, 1, 1, '{"lx":2,"npcdt":"灰界","npcid":46,"xx":205,"yy":196}')
+    end
+end
 function npc.main(play,npcid)
     if not _config then
         return
@@ -225,6 +235,7 @@ function npc_626_finish(play)
     Player.sendmsgEx(play, "|"..(_config.name or "任务").."#249|完成#57")
     if npcid then Guard.closeNpc(play, npcid) end
     sendluamsg(play,101,1005,0,0,"rwwc")
+    _try_send_gray_entry_guide(play)
     if _config.jl then
         Player.rwjl(play, _config.jl, (_config.name or "剧情任务").."奖励", 1)
     end

@@ -271,10 +271,6 @@ function npc.link(play, npcid, ew, aid, msgData)
     local T_data = _get_data(play)
     if ew == 1 then
         local max_refresh = tonumber((_config and _config.max_refresh) or 20) or 20
-        if T_data.refresh_times >= max_refresh then
-            Player.sendmsgEx(play, string.format("先天词条最多只能刷新#57|【%d次】#218|", max_refresh))
-            return
-        end
         local cost = (_config and _config.cost) or {{"辉耀水晶",5},{"金币",500000}}
         local name, num = Player.checkItemNumByTable(play, cost)
         if name then
@@ -284,8 +280,6 @@ function npc.link(play, npcid, ew, aid, msgData)
         Player.takeItemByTable(play, cost, ",天书先天词条", nil)
         T_data.refresh_times = T_data.refresh_times + 1
         T_data.preview = _build_preview(play, T_data.refresh_times)
-        setplaydef(play, "N$XYL2_TIANSHU_REFINE", 1)
-        Player.trySyncSecondContinentXyl(play)
         _save_data(play, T_data)
         if T_data.refresh_times >= max_refresh then
             _grant_refresh_title(play)
@@ -306,6 +300,8 @@ function npc.link(play, npcid, ew, aid, msgData)
     end
     T_data.saved = choice
     T_data.preview = {}
+    setplaydef(play, "N$XYL2_TIANSHU_REFINE", 1)
+    Player.trySyncSecondContinentXyl(play)
     _save_data(play, T_data)
 
     Player.sendmsgEx(play, "附魔成功：|【" .. tostring(choice.name or "先天词条") .. "】#218| " .. tostring(choice.desc or "") .. "，已替换天书当前词条#57")

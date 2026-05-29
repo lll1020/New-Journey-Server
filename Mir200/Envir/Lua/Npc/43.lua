@@ -41,15 +41,19 @@ function npc.link(play,npcid,ew,aid,data)
             Player.sendmsgEx(play, "称号配置缺失，请联系管理员#57")
             return
         end
-        local name, num = Player.checkItemNumByTable(play, _config.cost[nextLevel])
-        if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
-            return
+        local isFreeGuide = dj_num <= 0
+        if not isFreeGuide then
+            local name, num = Player.checkItemNumByTable(play, _config.cost[nextLevel])
+            if name then
+                Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+                return
+            end
+            Player.takeItemByTable(play, _config.cost[nextLevel], ",江湖称号",nil)
         end
-        Player.takeItemByTable(play, _config.cost[nextLevel], ",江湖称号",nil)
         DeleteAllTitle(play)
         Player.title_give(play, _config.ch[nextLevel])
         setplaydef(play, VarCfg["U_江湖称号"], nextLevel)
+        Player.trySyncSecondContinentXyl(play)
         Player.sendmsgEx(play, string.format("恭喜你，获得了|【%s】#218|称号！", _config.ch[nextLevel]))
         sendluamsg(play,100,npcid,1,0,"")
         sendluamsg(play,101,1005,0,0,"qhcg")

@@ -45,6 +45,127 @@ local function _ff9999_random_finish(play) -- 9999测试：随机完成一个未完成成就
     sendluamsg(play, 101, 515, 2, tonumber(detail.id) or 0, tbl2json({tp = "cjdc", id = detail.id, name = detail.name, tip = "达成成就[" .. tostring(detail.name or detail.id) .. "]"}))
     -- Player.sendmsgEx(play, "已随机完成|【" .. tostring(detail.name or detail.id) .. "】#218|成就")
 end
+local function _ff9999_copy_rewards(list)
+    local out = {}
+    if type(list) ~= "table" then
+        return out
+    end
+    for _, v in ipairs(list) do
+        if type(v) == "table" and type(v[1]) == "string" then
+            local cnt = tonumber(v[2]) or 0
+            if cnt > 0 then
+                out[#out + 1] = { v[1], cnt }
+            end
+        end
+    end
+    return out
+end
+
+local function _ff9999_activate_linggen(play, idx)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
+    data = type(data) == "table" and data or {}
+    data.level = type(data.level) == "table" and data.level or {}
+    local key = tostring(idx)
+    if data.level[key] then
+        return true
+    end
+    data.level[key] = 0
+    Player.setJsonVarByTable(play, VarCfg["T_灵根"], data)
+    local cfg = Guard and Guard.getConfig and Guard.getConfig("npc_22") or nil
+    local baseRatio = tonumber(cfg and cfg.base_ratio or 0.4) or 0.4
+    local rootCfg = cfg and cfg.main_r and cfg.main_r[idx]
+    local addAttrs = {}
+    for _, one in ipairs(rootCfg and rootCfg.attr or {}) do
+        addAttrs[#addAttrs + 1] = { one[1], math.max(1, math.floor((tonumber(one[2]) or 0) * baseRatio + 0.5)) }
+    end
+    if #addAttrs > 0 then
+        Player.updateSomeAddr(play, nil, addAttrs)
+    end
+    Player.sendmsgEx(play, "恭喜你，成功激活|【灵根】#218|")
+    return true
+end
+local function _ff9999_apply_special_reward(play, name)
+    if name == "激活金灵根" then
+        return _ff9999_activate_linggen(play, 1)
+    elseif name == "激活木灵根" then
+        return _ff9999_activate_linggen(play, 2)
+    elseif name == "激活水灵根" then
+        return _ff9999_activate_linggen(play, 3)
+    elseif name == "激活火灵根" then
+        return _ff9999_activate_linggen(play, 4)
+    elseif name == "激活土灵根" then
+        return _ff9999_activate_linggen(play, 5)
+    end
+    return false
+end
+
+local function _ff9999_award_rewards(play, rewardList, reason)
+    local items = _ff9999_copy_rewards(rewardList)
+    local normal = {}
+    for _, v in ipairs(items) do
+        if not _ff9999_apply_special_reward(play, v[1]) then
+            normal[#normal + 1] = v
+        end
+    end
+    if #normal > 0 then
+        Player.rwjl(play, normal, reason or "9999XYL", 1, 0)
+    end
+end
+
+local function _ff9999_finish_second_continent_xyl(play)
+    -- 一键完成二大陆 XYL，并补发对应任务/章节奖励。
+    local xyl_cfg = include("lua/Data/npc_xyl.lua") or {}
+    local chapters = xyl_cfg[2] or {}
+    if #chapters <= 0 then
+        Player.sendmsgEx(play, "二大陆异闻录配置缺失#57")
+        return
+    end
+    local ywl = Player.getJsonTableByVar(play, VarCfg.T_ywl)
+    ywl = type(ywl) == "table" and ywl or {}
+    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+    jq_data = type(jq_data) == "table" and jq_data or {}
+
+    for j, chapter in ipairs(chapters) do
+        local chapterKey = "jl_2_" .. j
+        local chapterDone = tonumber(ywl[chapterKey] or 0) == 1
+        local tasks = type(chapter) == "table" and chapter.jq or {}
+        for z, task in ipairs(tasks) do
+            local taskKey = chapterKey .. "_" .. z
+            local taskDone = tonumber(ywl[taskKey] or 0) == 1
+            if not taskDone then
+                if type(task) == "table" and task.jl then
+                    _ff9999_award_rewards(play, task.jl, "9999二大陆XYL任务")
+                end
+                ywl[taskKey] = 1
+            end
+            if type(task) == "table" and task.tk then
+                jq_data[tostring(task.tk)] = 2
+            end
+        end
+        if not chapterDone then
+            if type(chapter) == "table" and chapter.jl then
+                _ff9999_award_rewards(play, chapter.jl, "9999二大陆XYL章节")
+            end
+            ywl[chapterKey] = 1
+        end
+    end
+
+    ywl.dq = ""
+    ywl.dq_i = nil
+    ywl.dq_j = nil
+    ywl.dq_z = nil
+    ywl.dq_id = nil
+    Player.setJsonVarByTable(play, VarCfg.T_ywl, ywl)
+    Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+    if Guard and Guard.sendXylCurrentTask then
+        Guard.sendXylCurrentTask(play)
+    end
+    setplaydef(play, VarCfg.U_zxrw[1], 18)
+    setplaydef(play, VarCfg.U_zxrw[2], 0)
+    sendluamsg(play, 103, 1, 0, 0, '{"rwid":18}')
+    Player.sendmsgEx(play, "二大陆异闻录已全部完成，奖励已发放，主线已切到18#218")
+end
+
 local _admin_test_monsters = {
     -- "测试怪物名",
 ---灰界---
@@ -275,48 +396,35 @@ local function _admin_bwcz_finish(play)
     BwczApi.finish(cfg, true)
     Player.sendmsgEx(play, "保卫村庄已立即关闭#218")
 end
-local function _admin_qmdt_build_prompt(q, qidx, total)
-    local lines = {"第" .. tostring(qidx) .. "/" .. tostring(total) .. "题：" .. tostring(q.title or "")}
-    for i, one in ipairs(q.options or {}) do
-        lines[#lines + 1] = tostring(i) .. "." .. tostring(one)
-    end
-    lines[#lines + 1] = "请输入答案序号或完整答案"
-    return table.concat(lines, "\n")
-end
 local function _admin_qmdt_start(play)
-    local cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].qmdt or nil
+    local cfg = QmdtApi and QmdtApi.get_cfg and QmdtApi.get_cfg() or (teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].qmdt or nil)
     if type(cfg) ~= "table" or type(cfg.questions) ~= "table" or #cfg.questions <= 0 then
         Player.sendmsgEx(play, "全民答题配置缺失#57")
         return
     end
-    local dqfz = tonumber(getsysvar(VarCfg["G_开区分钟"]) or 0) or 0
-    local qidx = 1
-    local perSec = tonumber(cfg.per_question_sec) or 120
-    local state = {
-        open = 1,
-        start_minute = dqfz,
-        current_idx = qidx,
-        question_start_minute = dqfz,
-        question_end_ts = os.time() + perSec,
-        players = {},
-    }
-    setsysvar(VarCfg["G_全民答题状态"], 1)
-    setsysvar(VarCfg["A_全民答题json"], tbl2json(state))
-    for _, playerObj in ipairs(getplayerlst() or {}) do
+    if getsysvar(VarCfg["G_全民答题状态"]) == 1 then
+        Player.sendmsgEx(play, "全民答题当前已开启#57")
+        return
     end
-    sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《全民答题》已开启，请通过活动面板输入答案...")
-    sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《全民答题》已开启，请通过活动面板输入答案...")
-    Player.sendmsgEx(play, _admin_qmdt_build_prompt(cfg.questions[qidx], qidx, math.min(tonumber(cfg.question_count) or #cfg.questions, #cfg.questions)))
+    local dqfz = tonumber(getsysvar(VarCfg["G_开区分钟"]) or 0) or 0
+    if QmdtApi and QmdtApi.start then
+        QmdtApi.start(dqfz, cfg)
+    end
+    Player.sendmsgEx(play, "全民答题已按地图站位模式开启#218")
 end
 local function _admin_qmdt_finish(play)
-    local raw = getsysvar(VarCfg["A_全民答题json"])
-    local state = raw ~= "" and json2tbl(raw) or {}
-    state.open = 0
-    state.finished = 1
-    setsysvar(VarCfg["A_全民答题json"], tbl2json(state))
-    setsysvar(VarCfg["G_全民答题状态"], 0)
-    sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《全民答题》已结束,本次第一名为【测试玩家】...")
-    sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《全民答题》已结束,本次第一名为【测试玩家】...")
+    local cfg = QmdtApi and QmdtApi.get_cfg and QmdtApi.get_cfg() or (teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].qmdt or nil)
+    if type(cfg) ~= "table" then
+        Player.sendmsgEx(play, "全民答题配置缺失#57")
+        return
+    end
+    if getsysvar(VarCfg["G_全民答题状态"]) ~= 1 then
+        Player.sendmsgEx(play, "全民答题当前未开启#57")
+        return
+    end
+    if QmdtApi and QmdtApi.finish then
+        QmdtApi.finish(cfg)
+    end
     Player.sendmsgEx(play, "全民答题已手动关闭#218")
 end
 local function _admin_wlmz_start(play)
@@ -334,7 +442,10 @@ local function _admin_wlmz_finish(play)
     Player.sendmsgEx(play, "武林盟主测试结束#218")
 end
 local function _admin_tcppk_start(play)
-    Player.SetGlobalTempInt("TCPPK_ROUND", (tonumber(Player.GetGlobalTempInt("TCPPK_ROUND") or 0) or 0) + 1)
+    local tcppkRound = (tonumber(Player.GetGlobalTempInt("TCPPK_ROUND") or 0) or 0) + 1
+    Player.SetGlobalTempInt("TCPPK_ROUND", tcppkRound)
+    Player.SetGlobalTempInt("TCPPK_EQUIP_ROUND", tcppkRound)
+    Player.SetGlobalTempInt("TCPPK_EQUIP_TOTAL", 0)
     for _, playerObj in ipairs(getplayerlst() or {}) do
         sendluamsg(playerObj, 101, 1000, 1, 0, "")
         setplaydef(playerObj, "N$上次坐标x", 0)
@@ -520,6 +631,7 @@ function npc.main(play,npcid)
             <Button|id=ui_67|x=354|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=刷怪测试|link=@ggna,53>
             <Button|id=ui_68|x=466|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=清通天塔|link=@ggna,55>
             <Button|id=ui_65|x=578|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=飘字测试|link=@ggna,14>
+            <Button|id=ui_69|x=18|y=350|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=二大陆XYL全清|link=@ggna,56>
                 ]])
     end
 end
@@ -835,6 +947,8 @@ function ggna(play,id)
             delmirrormap(dtm)
         end
         Player.sendmsgEx(play, "已清空今日通天塔挑战次数与续打进度#218")
+    elseif id == "56" then
+        _ff9999_finish_second_continent_xyl(play)
     elseif id == "25" then
         -- 大陆全解锁：一次性补齐主线、人物等级、转生、剧情点、灵根、天道命盘与七大陆称号门槛。
         local target_task = 19

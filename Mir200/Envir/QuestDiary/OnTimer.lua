@@ -51,7 +51,8 @@ local function _txzr_get_notice_cfg()
 end
 -- 为指定玩家抽取未重复的背包神器
 local _TCPPK_ROUND_VAR = "TCPPK_ROUND"
-local _TCPPK_EQUIP_COUNT_VAR = "N$tcppk_equip_reward_count"
+local _TCPPK_EQUIP_ROUND_VAR = "TCPPK_EQUIP_ROUND"
+local _TCPPK_EQUIP_COUNT_VAR = "TCPPK_EQUIP_TOTAL"
 local _TCPPK_REWARD_CACHE = nil
 
 local function _tcppk_begin_round()
@@ -82,27 +83,24 @@ local function _tcppk_get_reward_cache()
     return normal, equip, equipSet, categoryWeight, maxEquip
 end
 
-local function _tcppk_get_player_equip_count(play)
+local function _tcppk_get_activity_equip_count()
     local round = _tcppk_get_round()
-    local raw = tostring(getplaydef(play, _TCPPK_EQUIP_COUNT_VAR) or "")
-    local savedRound, savedCount = string.match(raw, "^(%d+):(%d+)$")
-    savedRound = tonumber(savedRound or 0) or 0
-    savedCount = tonumber(savedCount or 0) or 0
+    local savedRound = tonumber(Player.GetGlobalTempInt(_TCPPK_EQUIP_ROUND_VAR) or 0) or 0
     if savedRound ~= round then
         return 0
     end
-    return savedCount
+    return tonumber(Player.GetGlobalTempInt(_TCPPK_EQUIP_COUNT_VAR) or 0) or 0
 end
 
-local function _tcppk_set_player_equip_count(play, count)
-    local round = _tcppk_get_round()
+local function _tcppk_set_activity_equip_count(count)
     count = math.max(0, tonumber(count) or 0)
-    setplaydef(play, _TCPPK_EQUIP_COUNT_VAR, tostring(round) .. ":" .. tostring(count))
+    Player.SetGlobalTempInt(_TCPPK_EQUIP_ROUND_VAR, _tcppk_get_round())
+    Player.SetGlobalTempInt(_TCPPK_EQUIP_COUNT_VAR, count)
 end
 
 local function _tcppk_pick_reward(play)
     local normal, equip, equipSet, categoryWeight, maxEquip = _tcppk_get_reward_cache()
-    local equipCount = _tcppk_get_player_equip_count(play)
+    local equipCount = _tcppk_get_activity_equip_count()
     local normalWeight = tonumber(categoryWeight.normal or 50) or 50
     local equipWeight = tonumber(categoryWeight.equip or 50) or 50
     if #normal <= 0 then
@@ -129,7 +127,7 @@ local function _tcppk_pick_reward(play)
     end
     local rewardName = pool[math.random(#pool)]
     if equipSet[rewardName] then
-        _tcppk_set_player_equip_count(play, equipCount + 1)
+        _tcppk_set_activity_equip_count(equipCount + 1)
     end
     return rewardName
 end
@@ -283,11 +281,17 @@ local function _qmdt_get_cfg()
     end
     cfg.start_minute = tonumber(cfg.start_minute) or 33
     cfg.question_count = math.min(tonumber(cfg.question_count) or 5, #cfg.questions)
-    cfg.per_question_sec = tonumber(cfg.per_question_sec) or 120
+    cfg.per_question_sec = tonumber(cfg.per_question_sec) or 52
+    cfg.final_question_sec = tonumber(cfg.final_question_sec) or 30
+    cfg.settle_before_sec = tonumber(cfg.settle_before_sec) or 5
     cfg.base_score = tonumber(cfg.base_score) or 100
-    cfg.time_bonus_per_sec = tonumber(cfg.time_bonus_per_sec) or 1
-    cfg.question_span_min = math.max(1, math.ceil(cfg.per_question_sec / 60))
-    cfg.duration_min = math.max(tonumber(cfg.duration_min) or (cfg.question_count * cfg.question_span_min), cfg.question_count * cfg.question_span_min)
+    cfg.map = tostring(cfg.map or "全民答题")
+    cfg.answer_mob = tostring(cfg.answer_mob or "问题答案")
+    cfg.answer_range = tonumber(cfg.answer_range) or 2
+    cfg.enter_pos = type(cfg.enter_pos) == "table" and cfg.enter_pos or {50, 50}
+    cfg.answer_points = type(cfg.answer_points) == "table" and cfg.answer_points or {
+        {x = 43, y = 50}, {x = 57, y = 50}, {x = 50, y = 43}, {x = 50, y = 57},
+    }
     return cfg
 end
 local function _qmdt_get_state()
@@ -301,13 +305,33 @@ end
 local function _qmdt_save_state(state)
     setsysvar(VarCfg["A_全民答题json"], tbl2json(state or {}))
 end
+local function _qmdt_question_duration(cfg, qidx)
+    if tonumber(qidx) >= tonumber(cfg.question_count) then
+        return tonumber(cfg.final_question_sec) or 30
+    end
+    return tonumber(cfg.per_question_sec) or 52
+end
+local function _qmdt_get_answer_point(cfg, idx)
+    local point = cfg.answer_points and cfg.answer_points[idx]
+    if type(point) ~= "table" then
+        return nil
+    end
+    return {x = tonumber(point.x or point[1]) or 0, y = tonumber(point.y or point[2]) or 0}
+end
 local function _qmdt_build_prompt(q, qidx, total)
     local lines = {"第" .. tostring(qidx) .. "/" .. tostring(total) .. "题：" .. tostring(q.title or "")}
     for i, one in ipairs(q.options or {}) do
         lines[#lines + 1] = tostring(i) .. "." .. tostring(one)
     end
-    lines[#lines + 1] = "请输入答案序号或完整答案"
+    lines[#lines + 1] = "请进入全民答题地图，站到正确答案旁等待结算"
     return table.concat(lines, "\n")
+end
+local function _qmdt_build_notice(q, qidx, total, duration, settleBefore)
+    local opts = {}
+    for i, one in ipairs(q.options or {}) do
+        opts[#opts + 1] = tostring(i) .. "." .. tostring(one)
+    end
+    return "全民答题：第" .. tostring(qidx) .. "/" .. tostring(total) .. "题【" .. tostring(q.title or "") .. "】 " .. table.concat(opts, "  ") .. "，请进入【全民答题】地图，站到正确答案怪物旁。本题" .. tostring(duration) .. "秒，结束前" .. tostring(settleBefore) .. "秒结算。"
 end
 local function _qmdt_make_payload(state, cfg, qidx)
     local q = cfg.questions[qidx]
@@ -322,40 +346,205 @@ local function _qmdt_make_payload(state, cfg, qidx)
         title = _qmdt_build_prompt(q, qidx, cfg.question_count),
         question_title = q.title,
         options = q.options or {},
-        input_mode = 1,
-        placeholder = "请输入答案序号或完整答案",
+        input_mode = 0,
+        answer_mode = "map_pos",
+        placeholder = "进入地图后站到正确答案怪物旁",
         limit_sec = remain,
         end_ts = tonumber(state.question_end_ts) or 0,
+        settle_ts = tonumber(state.settle_ts) or 0,
+        map = cfg.map,
     }
+end
+local function _qmdt_clear_answers(cfg)
+    if not cfg or not cfg.map or cfg.map == "" then
+        return
+    end
+    -- 答案怪物会被改名展示，按基础名不一定能清掉；全民答题为独立地图，直接清空本地图怪物最稳。
+    pcall(function() killmonsters(cfg.map, "*", 0, false) end)
+    pcall(function() killmapmon(cfg.map, 0, 0, 999, "*", false, true) end)
+end
+local function _qmdt_rename_mon(monObj, name)
+    if not monObj then
+        return
+    end
+    if type(monObj) == "table" then
+        for _, one in pairs(monObj) do
+            pcall(function() changemonname(one, name) end)
+        end
+    else
+        pcall(function() changemonname(monObj, name) end)
+    end
+end
+local function _qmdt_spawn_answers(cfg, q)
+    _qmdt_clear_answers(cfg)
+    for i, optionText in ipairs(q.options or {}) do
+        local point = _qmdt_get_answer_point(cfg, i)
+        if point then
+            local showName = tostring(optionText)
+            release_print("spawning answer monster:", showName, "at", point.x, point.y)
+            local monObj = genmonex(cfg.map, point.x, point.y, cfg.answer_mob, 0, 1, 0, 254, showName, 0)
+            mapeffect('问题连接1', cfg.map, point.x - 2, point.y + 2, 27, 0, 0)
+            mapeffect('问题连接2', cfg.map, point.x - 1, point.y + 2, 27, 0, 0)
+            mapeffect('问题连接3', cfg.map, point.x, point.y + 2, 27, 0, 0)
+            mapeffect('问题连接4', cfg.map, point.x + 2, point.y + 2, 27, 0, 0)
+            mapeffect('问题连接5', cfg.map, point.x + 1, point.y + 2, 27, 0, 0)
+
+            mapeffect('问题连接6', cfg.map, point.x - 2, point.y - 2, 27, 0, 0)
+            mapeffect('问题连接7', cfg.map, point.x - 1, point.y - 2, 27, 0, 0)
+            mapeffect('问题连接8', cfg.map, point.x, point.y - 2, 27, 0, 0)
+            mapeffect('问题连接9', cfg.map, point.x + 2, point.y - 2, 27, 0, 0)
+            mapeffect('问题连接10', cfg.map, point.x + 1, point.y - 2, 27, 0, 0)
+
+            mapeffect('问题连接11', cfg.map, point.x - 2, point.y + 1, 27, 0, 0)
+            mapeffect('问题连接12', cfg.map, point.x - 2, point.y, 27, 0, 0)
+            mapeffect('问题连接13', cfg.map, point.x - 2, point.y - 1, 27, 0, 0)
+
+            mapeffect('问题连接14', cfg.map, point.x + 2, point.y + 1, 27, 0, 0)
+            mapeffect('问题连接15', cfg.map, point.x + 2, point.y, 27, 0, 0)
+            mapeffect('问题连接16', cfg.map, point.x + 2, point.y - 1, 27, 0, 0)
+
+            -- _qmdt_rename_mon(monObj, showName)
+        end
+    end
+end
+local function _qmdt_broadcast_question(cfg, q, qidx, duration)
+    local msg = _qmdt_build_notice(q, qidx, cfg.question_count, duration, cfg.settle_before_sec)
+    sendmovemsg("0", 1, 254, 0, 300, 5, msg)
+    sendmovemsg("0", 1, 254, 0, 270, 5, msg)
+    for _, player in ipairs(getplayerlst() or {}) do
+        sendluamsg(player, 101, 12, 1, 3, '{"sk":2,"kf":2,"idx":3}')
+    end
 end
 local function _qmdt_push_question(state, cfg, qidx, dqfz)
     local q = cfg.questions[qidx]
     if not q then
         return false
     end
+    local nowTs = os.time()
+    local duration = _qmdt_question_duration(cfg, qidx)
+    local endTs = nowTs + duration
+    local settleTs = endTs
+    if qidx < cfg.question_count then
+        settleTs = math.max(nowTs + 1, endTs - math.max(0, tonumber(cfg.settle_before_sec) or 5))
+    end
     state.current_idx = qidx
     state.question_start_minute = dqfz or tonumber(state.question_start_minute) or tonumber(state.start_minute) or getsysvar(VarCfg["G_开区分钟"])
-    state.question_end_ts = os.time() + cfg.per_question_sec
+    state.question_start_ts = nowTs
+    state.question_end_ts = endTs
+    state.settle_ts = settleTs
+    state.next_question_ts = endTs
+    state.settled_idx = 0
+    state.phase = "answer"
+    state.payload = _qmdt_make_payload(state, cfg, qidx)
     _qmdt_save_state(state)
-    for _, player in ipairs(getplayerlst() or {}) do
-        sendluamsg(player, 101, 12, 1, 3, '{"sk":2,"kf":2,"idx":3}')
-    end
-    sendmovemsg("0", 1, 254, 0, 300, 1, "活动：全民答题第" .. tostring(qidx) .. "题已发布，请点击活动面板输入答案...")
+    _qmdt_spawn_answers(cfg, q)
+    _qmdt_broadcast_question(cfg, q, qidx, duration)
     return true
+end
+local function _qmdt_get_player_answer_idx(play, cfg)
+    local px = tonumber(getbaseinfo(play, 4) or 0) or 0
+    local py = tonumber(getbaseinfo(play, 5) or 0) or 0
+    local range = tonumber(cfg.answer_range) or 5
+    local bestIdx = nil
+    local bestDist = nil
+    for i, _ in ipairs(cfg.answer_points or {}) do
+        local point = _qmdt_get_answer_point(cfg, i)
+        if point then
+            local dx = px - point.x
+            local dy = py - point.y
+            local dist = math.sqrt(dx * dx + dy * dy)
+            if not bestDist or dist < bestDist then
+                bestDist = dist
+                bestIdx = i
+            end
+        end
+    end
+    if bestIdx and bestDist and bestDist < range then
+        return bestIdx
+    end
+    return nil
+end
+local function _qmdt_record_answer(state, cfg, qidx, play, answerIdx)
+    local q = cfg.questions[qidx]
+    if not q or not answerIdx then
+        return false, 0
+    end
+    local playerName = getbaseinfo(play, 1)
+    state.players = state.players or {}
+    local rec = state.players[playerName] or {score = 0, right = 0, total = 0, questions = {}}
+    rec.questions = rec.questions or {}
+    local ansKey = tostring(qidx)
+    local qrec = rec.questions[ansKey] or {joined = 0, done = 0}
+    if tonumber(qrec.joined) == 1 then
+        return false, 0
+    end
+    qrec.joined = 1
+    qrec.answer = answerIdx
+    qrec.x = tonumber(getbaseinfo(play, 4) or 0) or 0
+    qrec.y = tonumber(getbaseinfo(play, 5) or 0) or 0
+    rec.total = (tonumber(rec.total) or 0) + 1
+    local gainScore = 0
+    if tonumber(q.answer) == tonumber(answerIdx) then
+        qrec.done = 1
+        gainScore = tonumber(q.score) or tonumber(cfg.base_score) or 100
+        rec.right = (tonumber(rec.right) or 0) + 1
+        rec.score = (tonumber(rec.score) or 0) + gainScore
+    end
+    rec.questions[ansKey] = qrec
+    state.players[playerName] = rec
+    return tonumber(q.answer) == tonumber(answerIdx), gainScore
+end
+local function _qmdt_settle_question(state, cfg, qidx)
+    if tonumber(state.settled_idx) == tonumber(qidx) then
+        return state
+    end
+    local q = cfg.questions[qidx]
+    if not q then
+        return state
+    end
+    local rightCount = 0
+    local answerCount = 0
+    local players = getobjectinmap(cfg.map, 0, 0, 999, 1) or {}
+    for _, play in pairs(players) do
+        local answerIdx = _qmdt_get_player_answer_idx(play, cfg)
+        if answerIdx then
+            local ok = false
+            local gain = 0
+            ok, gain = _qmdt_record_answer(state, cfg, qidx, play, answerIdx)
+            answerCount = answerCount + 1
+            if ok then
+                rightCount = rightCount + 1
+                Player.sendmsgEx(play, "回答正确，当前积分+|【" .. tostring(gain) .. "】#218|")
+            else
+                Player.sendmsgEx(play, "回答错误，本题已结算#57")
+            end
+        end
+    end
+    state.settled_idx = qidx
+    state.phase = "settled"
+    _qmdt_clear_answers(cfg)
+    local answerText = tostring((q.options or {})[tonumber(q.answer) or 0] or q.answer or "")
+    sendmovemsg("0", 1, 254, 0, 300, 3, "全民答题：第" .. tostring(qidx) .. "题结算，正确答案【" .. answerText .. "】，答对" .. tostring(rightCount) .. "人，参与" .. tostring(answerCount) .. "人。")
+    _qmdt_save_state(state)
+    return state
 end
 local function _qmdt_start(dqfz, cfg)
     local state = {
         open = 1,
+        mode = "map_pos",
+        map = cfg.map,
         start_minute = dqfz,
         current_idx = 0,
         question_start_minute = dqfz,
         question_end_ts = 0,
+        settle_ts = 0,
         players = {},
     }
     setsysvar(VarCfg["G_全民答题状态"], 1)
     _qmdt_save_state(state)
-    sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《全民答题》已开启，请通过活动面板输入答案...")
-    sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《全民答题》已开启，请通过活动面板输入答案...")
+    setenvirontimer(cfg.map, 4, 1, "@hd_tcppk," .. cfg.map)
+    sendmovemsg("0", 1, 254, 0, 300, 5, "活动：活动《全民答题》已开启，请前往【" .. tostring(cfg.map) .. "】站到正确答案怪物旁参与答题...")
+    sendmovemsg("0", 1, 254, 0, 270, 5, "活动：活动《全民答题》已开启，请前往【" .. tostring(cfg.map) .. "】站到正确答案怪物旁参与答题...")
     _qmdt_push_question(state, cfg, 1, dqfz)
 end
 local function _qmdt_finish(cfg)
@@ -363,6 +552,10 @@ local function _qmdt_finish(cfg)
         return
     end
     local state = _qmdt_get_state()
+    local currentIdx = tonumber(state.current_idx) or 0
+    if currentIdx > 0 and tonumber(state.settled_idx) ~= currentIdx then
+        state = _qmdt_settle_question(state, cfg, currentIdx)
+    end
     local rankData = {}
     for name, rec in pairs(state.players or {}) do
         local total = tonumber(rec.total) or 0
@@ -416,38 +609,58 @@ local function _qmdt_finish(cfg)
     state.rank = rankData
     _qmdt_save_state(state)
     setsysvar(VarCfg["G_全民答题状态"], 0)
+    setenvirofftimer(cfg.map, 4)
+    _qmdt_clear_answers(cfg)
 end
-local function _qmdt_tick(dqfz, cfg)
+local function _qmdt_tick_runtime(cfg, state)
     if getsysvar(VarCfg["G_全民答题状态"]) ~= 1 then
-        return
+        return state
     end
-    local state = _qmdt_get_state()
+    state = type(state) == "table" and state or _qmdt_get_state()
     if tonumber(state.open) ~= 1 then
-        return
+        return state
     end
     local currentIdx = tonumber(state.current_idx) or 0
     if currentIdx <= 0 then
-        _qmdt_push_question(state, cfg, 1, dqfz)
-        return
+        _qmdt_push_question(state, cfg, 1, tonumber(getsysvar(VarCfg["G_开区分钟"]) or 0) or 0)
+        return _qmdt_get_state()
     end
     local nowTs = os.time()
-    local questionEndTs = tonumber(state.question_end_ts) or 0
-    if questionEndTs > 0 then
-        if nowTs < questionEndTs then
-            return
-        end
-    else
-        local questionStartMinute = tonumber(state.question_start_minute) or tonumber(state.start_minute) or dqfz
-        if dqfz - questionStartMinute < cfg.question_span_min then
-            return
-        end
+    local settleTs = tonumber(state.settle_ts) or 0
+    if settleTs > 0 and nowTs >= settleTs and tonumber(state.settled_idx) ~= currentIdx then
+        state = _qmdt_settle_question(state, cfg, currentIdx)
     end
+    local nextTs = tonumber(state.next_question_ts) or tonumber(state.question_end_ts) or 0
     if currentIdx >= cfg.question_count then
-        _qmdt_finish(cfg)
-        return
+        if tonumber(state.settled_idx) == currentIdx then
+            _qmdt_finish(cfg)
+        end
+        return _qmdt_get_state()
     end
-    _qmdt_push_question(state, cfg, currentIdx + 1, dqfz)
+    if nextTs > 0 and nowTs >= nextTs and tonumber(state.settled_idx) == currentIdx then
+        _qmdt_push_question(state, cfg, currentIdx + 1, tonumber(getsysvar(VarCfg["G_开区分钟"]) or 0) or 0)
+        return _qmdt_get_state()
+    end
+    return state
 end
+local function _qmdt_tick(dqfz, cfg)
+    _qmdt_tick_runtime(cfg, _qmdt_get_state())
+end
+local function _qmdt_is_timer_map(ditu)
+    local cfg = _qmdt_get_cfg()
+    local state = _qmdt_get_state()
+    local qmdtMap = (state.map and state.map ~= "") and state.map or (cfg and cfg.map)
+    return cfg ~= nil and tostring(qmdtMap or "") == tostring(ditu or "")
+end
+QmdtApi = QmdtApi or {}
+QmdtApi.get_cfg = _qmdt_get_cfg
+QmdtApi.get_state = _qmdt_get_state
+QmdtApi.start = _qmdt_start
+QmdtApi.finish = _qmdt_finish
+QmdtApi.tick_runtime = _qmdt_tick_runtime
+QmdtApi.make_payload = _qmdt_make_payload
+QmdtApi.is_timer_map = _qmdt_is_timer_map
+
 QmdkApi = QmdkApi or {}
 local _QMDK_PREP_NOTICE_VAR = "N$qmdk_prep_notice"
 local _QMDK_PANEL_FLAG_VAR = "N$qmdk_panel"
@@ -2581,6 +2794,7 @@ function ontimerex1()
             end
             if dqfz == 5 then
                 _tcppk_begin_round()
+                _tcppk_set_activity_equip_count(0)
                 setenvirontimer("xtc",1,3,"@hd_tcppk,xtc")
                 local t = getplayerlst()
                 for _, v in pairs(t) do
@@ -3032,6 +3246,10 @@ function hd_tcppk(xx,ditu)
                 end
             end
         end
+    elseif getsysvar(VarCfg["G_全民答题状态"]) == 1 and _qmdt_is_timer_map(ditu) then
+        local qmdtCfg = _qmdt_get_cfg()
+        local qmdtState = _qmdt_get_state()
+        _qmdt_tick_runtime(qmdtCfg, qmdtState)
     elseif getsysvar(VarCfg["G_全民夺矿状态"]) == 1 then
         local qmdkCfg = _qmdk_get_cfg()
         local qmdkState = _qmdk_get_state()

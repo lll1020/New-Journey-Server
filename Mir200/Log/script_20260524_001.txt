@@ -1,0 +1,10 @@
+[2026-05-24 23:40:21:222] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：78; NpcThreadId: 21640, CurPlayThreadId: 21640
+
+[2026-05-24 23:42:10:411] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 21640, CurPlayThreadId: 21640
+
+[2026-05-25 00:09:08:112] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：31; NpcThreadId: 21640, CurPlayThreadId: 21640
+
+[2026-05-25 00:09:24:428] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：31; NpcThreadId: 21640, CurPlayThreadId: 21640
+
+[2026-05-25 00:27:29:070] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：31; NpcThreadId: 21640, CurPlayThreadId: 21640
+

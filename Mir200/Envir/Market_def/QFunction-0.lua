@@ -68,13 +68,30 @@ function login(play)
     end
 end
 --------------------跨天登录触发--------------------
+local function _qf_salary_with_title_bonus(play, salary)
+    if type(salary) ~= "table" then
+        return salary
+    end
+    if not checktitle(play, "极光使者") then
+        return salary
+    end
+    local doubled = {}
+    for i, v in ipairs(salary) do
+        if type(v) == "table" then
+            doubled[i] = {v[1], (tonumber(v[2] or 0) or 0) * 2}
+        else
+            doubled[i] = v
+        end
+    end
+    return doubled
+end
 function resetday(play)
     ---清理每日称号
 	for _, v in pairs(constant.pz_ldql) do
 		Player.title_del(play, v)
 	end
     local curMap = tostring(getbaseinfo(play, ConstCfg.gbase.mapid) or "")
-    local mijingMaps = { ["苍云秘境"] = true, ["若水秘境"] = true, ["红尘秘境"] = true, ["灵虚秘境"] = true, ["万灵秘境"] = true, ["诸天秘境"] = true }
+    local mijingMaps = { ["极光秘境"] = true, ["苍云秘境"] = true, ["若水秘境"] = true, ["红尘秘境"] = true, ["灵虚秘境"] = true, ["万灵秘境"] = true, ["诸天秘境"] = true }
     if mijingMaps[curMap] then
         mapmove(play, "xtc", 137, 138, 5)
         Player.sendmsgEx(play, "日卡已跨天失效，已返回主城#57")
@@ -94,7 +111,7 @@ function resetday(play)
         local detail = zz_cfg[i]
         local titleName = tostring((detail or {}).ch or "")
         if titleName ~= "" and checktitle(play, titleName) and type(detail.salary) == "table" and #detail.salary > 0 then
-            sendmail(getbaseinfo(play, 2), 0, "至尊赞助工资", "跨天登录成功，今日【" .. titleName .. "】工资已通过邮件发放，请注意查收。", Player.jl_mail(detail.salary))
+            sendmail(getbaseinfo(play, 2), 0, "至尊赞助工资", "跨天登录成功，今日【" .. titleName .. "】工资已通过邮件发放，请注意查收。", Player.jl_mail(_qf_salary_with_title_bonus(play, detail.salary)))
             zz_data.salary_date = today
             Player.setJsonVarByTable(play, VarCfg["T_免费赞助"], zz_data)
             break

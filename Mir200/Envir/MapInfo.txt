@@ -8,6 +8,8 @@
 [黑暗禁地|zzmj	黑暗禁地] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5 dark
 [村庄|qcdl	村庄] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
 
+[全民答题|qcdl	全民答题] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) RUNHUMAN(1) NOALLOWUSEITEMS(随机传送石) day safe
+
 
 [gm|q004 GM地图] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
@@ -45,6 +47,7 @@ kfhg 23 26 -> kfhjsbk 86 102
 [mwsl 太虚幻境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
 [副本|mwsl 任务副本] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
 
+[极光秘境|4dlzc   极光秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 [苍云秘境|4dlzc   苍云秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 [若水秘境|4dlzc   若水秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 [红尘秘境|4dlzc   红尘秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)

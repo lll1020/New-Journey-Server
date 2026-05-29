@@ -471,6 +471,62 @@ local function _equip_is_dalu(play, d)
     local mapid = tostring(getbaseinfo(play, ConstCfg.gbase.mapid) or "")
     return daluditu and daluditu[mapid] == d
 end
+local _equip_mijing_maps = {
+    ["极光秘境"] = true,
+    ["苍云秘境"] = true,
+    ["若水秘境"] = true,
+    ["红尘秘境"] = true,
+    ["灵虚秘境"] = true,
+    ["万灵秘境"] = true,
+    ["诸天秘境"] = true,
+}
+local function _equip_is_mijing_mon(play, target)
+    if not _equip_is_mon(target) then
+        return false
+    end
+    local mapid = tostring(getbaseinfo(target, ConstCfg.gbase.mapid) or getbaseinfo(target, 3) or getbaseinfo(play, ConstCfg.gbase.mapid) or "")
+    return _equip_mijing_maps[mapid] == true
+end
+local function _equip_low_hp_regen_to(play, idx, lowPct, healPct, stopPct)
+    local maxhp = _equip_get_maxhp(play)
+    local curhp = _equip_get_curhp(play)
+    if maxhp <= 0 or curhp <= 0 or curhp * 100 >= maxhp * lowPct then
+        return
+    end
+    local now = os.time()
+    local key = "N$equipbuff" .. idx .. "regen"
+    if now <= (tonumber(getplaydef(play, key) or 0) or 0) then
+        return
+    end
+    setplaydef(play, key, now)
+    local stopHp = math.floor(maxhp * stopPct / 100)
+    local heal = math.floor(maxhp * healPct / 100)
+    if heal < 1 then
+        heal = 1
+    end
+    if curhp + heal > stopHp then
+        heal = stopHp - curhp
+    end
+    if heal > 0 then
+        humanhp(play, "+", heal)
+    end
+end
+local function _equip_has_killed_boss(play, target)
+    if not _equip_is_mon(target) then
+        return false
+    end
+    local mobName = tostring(getbaseinfo(target, ConstCfg.gbase.name) or getbaseinfo(target, 1) or "")
+    if mobName == "" then
+        return false
+    end
+    local mobType = tonumber((guaiwutype and guaiwutype[mobName]) or 0) or 0
+    if mobType < 2 then
+        return false
+    end
+    local ok, data = pcall(json2tbl, getplaydef(play, "S$equip_killed_boss"))
+    data = ok and type(data) == "table" and data or {}
+    return data[mobName] == true or data[mobName] == 1
+end
 local function _equip_set_timed_attr(play, key, listName, attrs, seconds)
     local now = os.time()
     local end_time = now + (tonumber(seconds) or 0)
@@ -1498,6 +1554,57 @@ Buff = {
         elseif zt == 2 then
             _set_title_buff_flag(play, 338, false)
         end
+    end,
+    [567] = function(play,zt,Damage,Target,MagicId) -- 极光石
+        -- 特殊效果: 对秘境怪物造成额外15000切割伤害。
+        if zt == 3 then
+            if _equip_is_mijing_mon(play, Target) then
+                return 15000
+            end
+            return 0
+        end
+        _toggle_buff_var(play, VarCfg.S_buffgwq, 567, zt == 1)
+    end,
+    [568] = function(play,zt,Damage,Target,MagicId) -- 苍云镜
+        -- 属性类效果由装备属性配置处理: 对怪增伤+10%、对怪攻速+10%。
+        return 0
+    end,
+    [569] = function(play,zt,Damage,Target,MagicId) -- 若水灵珠
+        -- 特殊效果: 生命低于30%时每秒恢复最大生命1%, 最高恢复到30%。
+        if zt == 3 then
+            _equip_low_hp_regen_to(play, 569, 30, 1, 30)
+            return 0
+        end
+        _toggle_buff_var(play, VarCfg.S_buffgjq, 569, zt == 1)
+        _toggle_buff_var(play, VarCfg.S_buffbgjq, 569, zt == 1)
+        _toggle_buff_var(play, VarCfg.S_buffbrwq, 569, zt == 1)
+        if zt == 2 then
+            setplaydef(play, "N$equipbuff569regen", 0)
+        end
+    end,
+    [570] = function(play,zt,Damage,Target,MagicId) -- 斩红尘
+        -- 特殊效果: 对已经击杀过的BOSS额外增伤10%; PK增伤走装备属性配置。
+        if zt == 3 then
+            if Damage and Damage > 0 and _equip_has_killed_boss(play, Target) then
+                return math.floor(Damage * 0.10)
+            end
+            return 0
+        end
+        _toggle_buff_var(play, VarCfg.S_buffgjq, 570, zt == 1)
+    end,
+    [571] = function(play,zt,Damage,Target,MagicId) -- 灵虚剑
+        -- 特殊效果: 攻击怪物时0.01%概率秒杀; 神圣一击属性走装备属性配置。
+        if zt == 3 then
+            if _equip_is_mon(Target) and math.random(10000) == 1 then
+                local curhp = _equip_get_curhp(Target)
+                if curhp > 0 then
+                    playeffect(Target, 60463, 0, 0, 1, 0, 0)
+                    humanhp(Target, "-", curhp, 107, 0, play, 1)
+                end
+            end
+            return 0
+        end
+        _toggle_buff_var(play, VarCfg.S_buffgwq, 571, zt == 1)
     end,
     [563] = function(play,zt,Damage,Target) -- 诸邪退散：对红名怪每9刀额外造成288888真实伤害，并作为灰界免疫标记
         if zt == 3 then

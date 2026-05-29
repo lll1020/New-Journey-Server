@@ -1,0 +1,5 @@
+[2026-05-29 11:27:27:024] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：125; NpcThreadId: 31936, CurPlayThreadId: 31936
+
+[2026-05-29 11:30:54:187] LuaNPC:玩家名字k ID:999999999 执行 struckdamage player:玩家名字k 耗时：93; NpcThreadId: 31936, CurPlayThreadId: 31936
+[2026-05-29 11:30:55:223] LuaNPC:玩家名字k ID:999999999 执行 attack player:玩家名字k 耗时：32; NpcThreadId: 31936, CurPlayThreadId: 31936
+

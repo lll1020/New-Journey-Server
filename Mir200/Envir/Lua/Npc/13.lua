@@ -74,6 +74,8 @@ function npc.link(play, npcid, p2, p3, msgData)
         end
         Player.takeItemByTable(play, config.cost, ",兰姐好感度",nil)
         if FProbabilityHit(config.gl) then
+            local curLevel = tonumber(getplaydef(play, VarCfg["U_兰姐好感度"]) or 0) or 0
+            sendluamsg(play,100,npcid,1,0,tbl2json({dj_num = curLevel, percent = _get_goodwill_percent(curLevel)}))
             Player.sendmsgEx(play,  "很遗憾，好感度提升失败，请继续努力#57")
             return
         end

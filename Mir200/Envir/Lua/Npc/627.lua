@@ -102,6 +102,16 @@ local function _try_escape_main_mob(play, dtm)
     Player.sendmsgEx(play, "#57|息灾迅速逃离了你的攻击，使用【定身符】后才能将其困在原地#218|")
 end
 
+local function _try_send_gray_entry_guide(play)
+    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+    if tonumber(jq_data["npc_625"] or 0) >= 2
+        and tonumber(jq_data["npc_626"] or 0) >= 2
+        and tonumber(jq_data["npc_627"] or 0) >= 2
+        and tonumber(jq_data["npc_628"] or 0) >= 2 then
+        mapmove(play, "灰界", 205, 196, 2)
+        sendluamsg(play, 101, 0, 1, 1, '{"lx":2,"npcdt":"灰界","npcid":46,"xx":205,"yy":196}')
+    end
+end
 function npc.main(play,npcid)
     if not _config then
         return
@@ -276,6 +286,7 @@ function npc_627_finish(play)
     Player.sendmsgEx(play, "|"..(_config.name or "任务").."#218|完成#57")
     if npcid then Guard.closeNpc(play, npcid) end
     sendluamsg(play,101,1005,0,0,"rwwc")
+    _try_send_gray_entry_guide(play)
     if _config.jl then
         Player.rwjl(play, _config.jl, (_config.name or "剧情任务").."奖励", 1)
     end

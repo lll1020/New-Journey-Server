@@ -1,0 +1,6 @@
+[2026-05-25 21:48:18:829] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：1125; NpcThreadId: 15432, CurPlayThreadId: 15432
+
+[2026-05-25 22:29:01:358] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：94; NpcThreadId: 19120, CurPlayThreadId: 19120
+
+[2026-05-25 23:29:06:180] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：109; NpcThreadId: 44080, CurPlayThreadId: 44080
+

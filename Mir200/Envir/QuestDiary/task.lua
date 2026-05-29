@@ -63,6 +63,19 @@ end
 local function _zxrw_block_click_during_xyl_guide(play)
     return false
 end
+local function _zxrw_refresh_xyl_auto_entry(play, rwid)
+    rwid = tonumber(rwid) or 0
+    if rwid < 17 then
+        return
+    end
+    if Guard and type(Guard.sendXylCurrentTask) == "function" then
+        Guard.sendXylCurrentTask(play)
+    elseif Guard and type(Guard.syncXylCurrentTask) == "function" then
+        Guard.syncXylCurrentTask(play)
+        local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
+        sendluamsg(play, 101, 11, 9, 0, '{"dq":"' .. (T_ywl.dq or "") .. '"}')
+    end
+end
 function task_login(play)
     ---------------------------------------------------任务初始化
     local rwid = getplaydef(play,VarCfg.U_zxrw[1])
@@ -135,6 +148,7 @@ function task_login(play)
             return
         end
         Player.zxrw_teshushuaxin(play, rwid, nil)
+        _zxrw_refresh_xyl_auto_entry(play, rwid)
     elseif rwid == 51 then
         --newpicktask(play,51,getplaydef(play,VarCfg.U_zxrw[2]))
     end
@@ -508,6 +522,7 @@ function deletetask(play,rwid)
     end
     if rwid < 40 then
         sendluamsg(play,103,1,0,0,'{"rwid":'..(rwid+1)..'}')
+        _zxrw_refresh_xyl_auto_entry(play, rwid + 1)
     end
     if rwid > 2000 then
         rwcf.jian(play,rwid)

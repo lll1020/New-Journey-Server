@@ -764,6 +764,9 @@ function Player.title_give(actor, title_name) --¸ø³ÆºÅ
     if not checktitle(actor, title_name) then
         release_print("¸ø³ÆºÅ",title_name,getbaseinfo(actor,1))
         confertitle(actor, title_name)
+        if title_name == "°×ÔÆ²Ô¹·" and (tonumber(getbaseinfo(actor, 6) or 0) or 0) < 150 then
+            callscriptex(actor, "CHANGELEVEL", "=", 150)
+        end
         _change_title_level(actor, title_name, "+")
         GameEvent.push(EventCfg.onGetTaskTitle, actor, title_name)
         local raw_idx = getstditeminfo(title_name,8)

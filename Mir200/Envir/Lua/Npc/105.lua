@@ -74,11 +74,11 @@ local function _grant_reward(play, reward)
         local skillId = getskillindex and getskillindex("群体施毒术") or 0
         if tonumber(skillId or 0) > 0 then
             addskill(play, skillId, 3)
-            Player.sendmsgEx(play, "成功领取#57|【群体施毒术】#218|#57")
+            sendluamsg(play, 101, 0, 9, 0, tbl2json({item = reward}))
         end
         return
     end
-    Player.rwjl(play, reward, "限时福利", 1, 1000)
+    Player.rwjl(play, reward, "限时福利", 1, 0)
 end
 function npc.main(play, npcid)
     local data = _get_data(play)
