@@ -67,9 +67,12 @@ function npc.link(play,npcid,ew,aid)
                 refreshitem(play, itemobj)
                 recalcabilitys(play)
                 -- 二大陆伏妖录：装备强化成功后立即尝试自动结算当前任务。
-                Player.trySyncSecondContinentXyl(play)
+                local xylCompleted = Player.trySyncSecondContinentXyl(play)
                 if FairyFate and FairyFate.touch then FairyFate.touch(play, "strength_success") end
                 sendluamsg(play,100,npcid,1,aid,"")
+                if xylCompleted then
+                    sendluamsg(play, 101, 9999, 0, 0, "npc_28")
+                end
 
                 if nextLevel == 10 or nextLevel == 20 or nextLevel == 30 then
                     Player.sendmsgEx(play, "恭喜你，|【".._config.where[aid][1].."】#218|部位的装备强化提升到了【"..nextLevel.."级】，属性大幅提升！")

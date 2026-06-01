@@ -27,7 +27,7 @@ function stdmodefunc9(play, item)
         sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>随机传送冷却中，请稍后...</font>","Type":9}')
         return false
     end
-    if getplaydef(play,"N$战斗状态") < now or _has_equip_name(play, "遮云日") then
+    if getplaydef(play,"N$PK脱战") < now or _has_equip_name(play, "遮云日") then
         map(play,getbaseinfo(play,3))
         setplaydef(play, "N$随机传送CD", now + RANDOM_TRANSFER_CD)
         -- if getflagstatus(play, 300) == 1 then
@@ -46,7 +46,8 @@ end
 function stdmodefunc10(play, item)
     setplaydef(play,"S$dtm",getbaseinfo(play, 3))
     local du = getbaseinfo(play, 3)
-    if getplaydef(play,"N$战斗状态") < os.time() then
+    local now = os.time()
+    if getplaydef(play,"N$PK脱战") < now or _has_equip_name(play, "遮云日") then
         if du == "xtc" or du == "二大陆主城" or du == "三大陆主城" or du == "四大陆主城" or du == "五大陆主城" or du == "六大陆主城" or du == "七大陆主城" or du == "八大陆主城" or du == "九大陆主城" then
             mapmove(play, 'xtc', 137,138,8)
             addhpper(play, '=', 100)
@@ -90,7 +91,7 @@ function stdmodefunc10(play, item)
             addmpper(play, '=', 100)
         end
     else
-        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}')
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用，脱战3秒后可用...</font>","Type":9}')
     end
     return false
 end
@@ -1338,6 +1339,27 @@ function stdmodefunc66(play, item) --秘境称号道具
     Player.sendmsgEx(play, "恭喜你获得|【" .. titleName .. "】#218|称号#57")
     return false
 end
+function stdmodefunc67(play, item) --灵兽幼崽：真实累计充值99元后可立即孵化
+    local itemName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "")
+    if itemName == "" then
+        Player.sendmsgEx(play, "灵兽幼崽名称异常，无法使用#57")
+        return false
+    end
+    local petNpc = Npclib and Npclib[64]
+    if not petNpc or type(petNpc.useBabyItem) ~= "function" then
+        Player.sendmsgEx(play, "灵兽契约逻辑未加载#57")
+        return false
+    end
+    local ok, msg = petNpc.useBabyItem(play, itemName)
+    if not ok then
+        Player.sendmsgEx(play, msg or "灵兽幼崽使用失败#57")
+        return false
+    end
+    delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+    Player.sendmsgEx(play, msg or "灵兽幼崽孵化成功#57")
+    return false
+end
+
 function stdmodefunc64(play, item) --改名卡
     local itemName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "改名卡")
     if itemName == "" then

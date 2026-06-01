@@ -55,8 +55,9 @@ function npc.link(play,npcid,ew,aid)
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
         local T_dljq = Player.getJsonTableByVar(play, VarCfg.T_dljq)
         T_data.level = T_data.level or {}
-        if T_data.level[""..aid] then
-            Player.sendmsgEx(play, "你已经激活了该灵根#57")
+        local rootIdx = aid + 5
+        if T_data.level[tostring(rootIdx)] then
+            Player.sendmsgEx(play, "你已经觉醒了该灵根#57")
             return
         end
         T_dljq["npc_68"] = T_dljq["npc_68"] or {}
@@ -76,15 +77,22 @@ function npc.link(play,npcid,ew,aid)
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
         local T_dljq = Player.getJsonTableByVar(play, VarCfg.T_dljq)
         T_data.level = T_data.level or {}
-        if T_data.level[""..aid + 5] then
-            Player.sendmsgEx(play, "你已经激活了该灵根#57")
+        local rootIdx = aid + 5
+        if T_data.level[tostring(rootIdx)] then
+            Player.sendmsgEx(play, "你已经觉醒了该灵根#57")
             return
         end
         T_dljq["npc_68"] = T_dljq["npc_68"] or {}
         if T_dljq["npc_68"][""..aid] and T_dljq["npc_68"][""..aid] == 1 then
-            T_data.level[""..aid + 5] = 0
+            T_data.level[tostring(rootIdx)] = 1
             Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
-            Player.sendmsgEx(play, "恭喜你，成功激活|【灵根】#218|")
+            local rootCfg = (((Guard.getConfig("npc_22") or {}).main_r or {})[rootIdx]) or {}
+            local addAttrs = {}
+            for _, one in ipairs(rootCfg.attr or {}) do
+                addAttrs[#addAttrs + 1] = {one[1], tonumber(one[2]) or 0}
+            end
+            if #addAttrs > 0 then Player.updateSomeAddr(play, nil, addAttrs) end
+            Player.sendmsgEx(play, "恭喜你，成功觉醒|【"..tostring(rootCfg.name or "灵根").."】#218|")
             sendluamsg(play,100,npcid,2,aid,"")
             sendluamsg(play,101,1005,0,0,"rwwc")
         else

@@ -1,0 +1,102 @@
+[2026-05-31 07:22:22:751] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：172; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 07:25:16:095] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 07:36:16:201] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 07:40:17:575] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 07:40:21:167] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 08:32:10:987] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 08:33:18:254] LuaNPC:玩家名字 ID:999999999 执行 struckdamage player:玩家名字 耗时：32; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 08:52:12:027] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：203; NpcThreadId: 20764, CurPlayThreadId: 20764
+[2026-05-31 08:52:12:027] [玩家名字]Lua执行耗时过高:203ms msgid:101 507 2 7 
+
+[2026-05-31 08:54:15:902] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：62; NpcThreadId: 20764, CurPlayThreadId: 20764
+[2026-05-31 08:54:15:902] [玩家名字]Lua执行耗时过高:62ms msgid:100 21 1 0 
+
+[2026-05-31 09:00:41:972] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+[2026-05-31 09:00:41:972] [玩家名字]Lua执行耗时过高:31ms msgid:100 33 1 0 
+
+[2026-05-31 09:20:33:969] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：46; NpcThreadId: 20764, CurPlayThreadId: 20764
+[2026-05-31 09:20:33:969] [玩家名字]Lua执行耗时过高:46ms msgid:101 507 2 7 
+
+[2026-05-31 09:40:49:023] Func Fail, obj is nil: GetBaseInfo Chrid: 3192993581616 Npc:  tc:stack traceback:
+	[C]: in function 'getbaseinfo'
+	.\Envir\Market_Def\QFunction-0.lua:1508: in function <.\Envir\Market_Def\QFunction-0.lua:1507>
+
+[2026-05-31 09:52:12:854] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：47; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 10:44:39:220] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：62; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 10:48:38:967] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 10:56:39:836] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：47; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 11:01:32:259] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 11:05:09:997] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：32; NpcThreadId: 20764, CurPlayThreadId: 20764
+[2026-05-31 11:05:09:997] [玩家名字k]Lua执行耗时过高:32ms msgid:101 11 1 0 {"i":2,"j":1,"k":0,"z":5}
+
+[2026-05-31 11:10:03:137] LuaNPC:玩家名字k ID:999999999 执行 attackdamage player:玩家名字k 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 11:26:09:117] LuaNPC:玩家名字k ID:999999999 执行 mondropitemex player:玩家名字k 耗时：32; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 11:27:55:855] LuaNPC:玩家名字k ID:999999999 执行 mondropitemex player:玩家名字k 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 11:32:51:006] LuaNPC:玩家名字k ID:999999999 执行 killmon player:玩家名字k 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 11:43:56:505] LuaNPC:玩家名字k ID:999999999 执行 pickupitemex player:玩家名字k 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 11:58:42:661] LuaNPC:玩家名字k ID:999999999 执行 killmon player:玩家名字k 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 12:00:36:317] LuaNPC:玩家名字k ID:999999999 执行 attackdamage player:玩家名字k 耗时：32; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 12:02:31:541] LuaNPC:玩家名字k ID:999999999 执行 pickupitemex player:玩家名字k 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 12:07:39:103] LuaNPC:玩家名字k ID:999999999 执行 mondropitemex player:玩家名字k 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 12:11:13:396] LuaNPC:玩家名字k ID:999999999 执行 killmon player:玩家名字k 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 12:11:22:246] LuaNPC:玩家名字k ID:999999999 执行 pickupitemex player:玩家名字k 耗时：32; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 12:13:28:287] LuaNPC:玩家名字k ID:999999999 执行 attackdamage player:玩家名字k 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 12:14:11:028] LuaNPC:玩家名字k ID:999999999 执行 pickupitemex player:玩家名字k 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 12:18:51:365] LuaNPC:玩家名字k ID:999999999 执行 killmon player:玩家名字k 耗时：47; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 12:21:46:964] LuaNPC:玩家名字k ID:999999999 执行 pickupitemex player:玩家名字k 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 12:27:10:591] LuaNPC:玩家名字k ID:999999999 执行 mondropitemex player:玩家名字k 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 12:30:44:881] LuaNPC:玩家名字k ID:999999999 执行 mondropitemex player:玩家名字k 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 12:33:07:433] LuaNPC:玩家名字k ID:999999999 执行 pickupitemex player:玩家名字k 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 12:36:03:599] LuaNPC:玩家名字k ID:999999999 执行 attackdamage player:玩家名字k 耗时：31; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 14:27:48:364] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：79; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 14:28:10:632] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：47; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 14:44:03:829] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：32; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 14:54:18:525] LuaNPC:分板机 ID:999999999 执行 inputstring68 player:分板机 耗时：47; NpcThreadId: 20764, CurPlayThreadId: 20764
+
+[2026-05-31 15:05:48:062] LuaNPC: ID:999999999 执行 startup player: 耗时：31; NpcThreadId: 29292, CurPlayThreadId: 29292
+
+[2026-05-31 17:06:03:724] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：219; NpcThreadId: 29292, CurPlayThreadId: 29292
+
+[2026-05-31 17:23:07:224] LuaNPC:玩家名字 ID:999999999 执行 ontimer1 player:玩家名字 耗时：63; NpcThreadId: 29292, CurPlayThreadId: 29292
+
+[2026-05-31 17:24:16:066] LuaNPC:玩家名字 ID:999999999 执行 ontimer1 player:玩家名字 耗时：62; NpcThreadId: 29292, CurPlayThreadId: 29292
+
+[2026-06-01 07:56:11:513] Func Fail, obj is nil: GetBaseInfo Chrid: 2813670619632 Npc:  tc:stack traceback:
+	[C]: in function 'getbaseinfo'
+	.\Envir\Market_Def\QFunction-0.lua:1508: in function <.\Envir\Market_Def\QFunction-0.lua:1507>
+[2026-06-01 07:56:11:532] LuaNPC:玩家名字 ID:999999999 执行 itemexpired player:玩家名字 耗时：31; NpcThreadId: 29292, CurPlayThreadId: 29292
+

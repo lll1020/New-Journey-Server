@@ -391,6 +391,7 @@ function TreasureBasin.link(play, npcid, p2, p3, msgData)
     _refresh_attr(play)
     _refresh_item_bar(play)
     Player.sendmsgEx(play, "成功重铸#57|【".._artifact_show_name().."】#218|，已发放实体背包神器#57")
+    sendluamsg(play, 101, 9999, 0, 0, "npc_106")
     _send_panel(play, 1, npcid)
 end
 

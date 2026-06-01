@@ -513,7 +513,7 @@ function deletetask(play,rwid)
                     end
                 end
                 if str ~= "" then
-                    sendluamsg(play,101,0,9,rwid,'{"item":['..str..']}')
+                    -- sendluamsg(play,101,0,9,rwid,'{"item":['..str..']}')
                 end
             end
         end

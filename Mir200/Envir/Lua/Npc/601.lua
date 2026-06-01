@@ -45,6 +45,7 @@ function npc.link(play,npcid,ew,aid)
 
 
             Player.title_give(play, _config.details.ch)
+            if Player.trySyncSecondContinentXyl then Player.trySyncSecondContinentXyl(play) end
             Player.sendmsgEx(play, "ÐùÔ¯½£ÐÞ¸´³É¹¦£¬»ñµÃ³ÆºÅ|¡¾".._config.details.ch.."¡¿#218|")
             sendluamsg(play,101,1005,0,0,"rwwc")
             sendluamsg(play,100,npcid,1,0,"")

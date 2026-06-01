@@ -5,6 +5,150 @@ npc = {}
 
 local _config = Guard.getConfig("npc_64")
 local FairyFate = include("lua/LuaLib/fairy_fate.lua")
+local _xyl_config = dofile('Envir/Lua/Data/npc_xyl.lua')
+local LINGSHOU_BABY_SECONDS = 48 * 3600
+local LINGSHOU_CONTRACT_TASK_NAME = "灵兽孵化"
+local LINGSHOU_BABY_CFG = {
+    [1] = {pet = "麒麟", item = "麒麟幼崽"},
+    [2] = {pet = "青龙", item = "青龙幼崽"},
+    [3] = {pet = "朱雀", item = "朱雀幼崽"},
+    [4] = {pet = "白虎", item = "白虎幼崽"},
+    [5] = {pet = "玄武", item = "玄武幼崽"},
+}
+local LINGSHOU_BABY_ITEM_TO_IDX = {
+    ["麒麟幼崽"] = 1,
+    ["青龙幼崽"] = 2,
+    ["朱雀幼崽"] = 3,
+    ["白虎幼崽"] = 4,
+    ["玄武幼崽"] = 5,
+}
+
+local function _toint(v, d)
+    return tonumber(v or d or 0) or (d or 0)
+end
+
+local function _real_charge(play)
+    return math.max(_toint(querymoney(play, 23)), _toint(getplaydef(play, VarCfg["U_真实充值"])))
+end
+
+local function _ensure_pet_data(T_data)
+    T_data = T_data or {}
+    T_data.ls = T_data.ls or {}
+    T_data.ls_sp = T_data.ls_sp or {}
+    T_data.hatch = T_data.hatch or {}
+    T_data.hatch_log = T_data.hatch_log or {}
+    return T_data
+end
+
+
+local function _find_xyl_task(taskName)
+    taskName = tostring(taskName or "")
+    for i, lCfg in ipairs(_xyl_config or {}) do
+        for j, zCfg in ipairs(lCfg or {}) do
+            for z, task in ipairs((zCfg and zCfg.jq) or {}) do
+                if tostring(task and task[1] or "") == taskName then
+                    return {i = i, j = j, z = z}
+                end
+            end
+        end
+    end
+    return nil
+end
+
+local function _xyl_dq_reached(currentDq, target)
+    if not target then return false end
+    local i, j, z = tostring(currentDq or ""):match("^(%d+)_(%d+)_(%d+)$")
+    i, j, z = tonumber(i), tonumber(j), tonumber(z)
+    if not (i and j and z) then return false end
+    if i > target.i then return true end
+    if i < target.i then return false end
+    if j > target.j then return true end
+    if j < target.j then return false end
+    return z >= target.z
+end
+
+local function _is_lingshou_contract_open(play, T_data)
+    T_data = _ensure_pet_data(T_data)
+    if _toint(T_data.dqzh) > 0 then
+        return false, "已出战灵兽，无需再领取灵兽契约#57"
+    end
+    if _toint(T_data.baby_choice) > 0 then
+        return true
+    end
+    local target = _find_xyl_task(LINGSHOU_CONTRACT_TASK_NAME)
+    if not target then
+        return false, "灵兽契约任务配置异常#57"
+    end
+    local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl)) or {}
+    if T_ywl["jl_" .. target.i .. "_" .. target.j .. "_" .. target.z] == 1 then
+        return true
+    end
+    if T_ywl["jl_" .. target.i .. "_" .. target.j] == 1 then
+        return true
+    end
+    if _xyl_dq_reached(T_ywl.dq, target) then
+        return true
+    end
+    return false, "请先推进异闻录至【灵兽孵化】#57"
+end
+local function _has_pet_linggen_synergy(play, T_data)
+    T_data = T_data or {}
+    local idx = tonumber(T_data.dqzh or 0) or 0
+    local cfg = _config.config and _config.config.ls and _config.config.ls[idx]
+    if not cfg then return false end
+    if (tonumber((T_data.ls or {})[tostring(idx)] or 0) or 0) < 2 then return false end
+    local lg = Player.getJsonTableByVar(play, VarCfg["T_灵根"]) or {}
+    local main = tonumber(lg.main or 0) or 0
+    return main > 0 and (main == cfg.yq[1] or main == cfg.yq[2])
+end
+local function _push_hatch_log(T_data, idx, itemName, source, beforeStar, afterStar)
+    T_data.hatch_log = T_data.hatch_log or {}
+    table.insert(T_data.hatch_log, 1, {
+        idx = idx,
+        item = itemName,
+        source = source,
+        time = os.time(),
+        before = beforeStar,
+        after = afterStar,
+    })
+    while #T_data.hatch_log > 20 do
+        table.remove(T_data.hatch_log)
+    end
+end
+
+local function _refresh_pet_panel(play, npcid, p2, T_data)
+    sendluamsg(play, 100, npcid or 64, p2 or 1, 0, tbl2json({T_data = T_data, server_time = os.time()}))
+end
+
+local function _add_lingshou_star(play, idx, source, itemName)
+    idx = tonumber(idx)
+    local cfg = idx and LINGSHOU_BABY_CFG[idx]
+    if not cfg or not _config.config or not _config.config.ls or not _config.config.ls[idx] then
+        return false, "灵兽幼崽配置异常#57"
+    end
+    local T_data = _ensure_pet_data(Player.getJsonTableByVar(play, VarCfg["T_灵兽"]))
+    local key = tostring(idx)
+    local beforeStar = _toint(T_data.ls_sp[key])
+    local maxStar = _toint(_config.max_star, 3)
+    if beforeStar >= maxStar then
+        return false, "该灵兽星级已满，无法继续孵化#57"
+    end
+    if _toint(T_data.ls[key]) <= 0 then
+        T_data.ls[key] = 1
+        Player.updateSomeAddr(play, nil, _config.config.wy.det[1] and _config.config.wy.det[1].attr or nil)
+    end
+    T_data.ls_sp[key] = math.min(maxStar, beforeStar + 1)
+    if T_data.hatch and T_data.hatch[key] then
+        T_data.hatch[key].status = "done"
+        T_data.hatch[key].doneAt = os.time()
+        T_data.hatch[key].source = source
+    end
+    _push_hatch_log(T_data, idx, itemName or cfg.item, source or "unknown", beforeStar, T_data.ls_sp[key])
+    Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
+    if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
+    TMLP_refresh_pet_bonus(play)
+    return true, string.format("灵兽|【%s】#218|孵化成功，当前星级|【%d】#218", cfg.pet, T_data.ls_sp[key]), T_data
+end
 
 function TMLP_refresh_pet_bonus(play)
     local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"]) or {}
@@ -34,15 +178,25 @@ function TMLP_refresh_pet_bonus(play)
     end
 end
 function npc.main(play,npcid)
-    if not Player.dl_sz(play, 4) then
-        Player.sendMsg(play,'{"Msg":"<font color=\'#ff0000\'>灵兽系统需要达到四大陆后开启！</font>","Type":1}')
+    local contractOnly = tonumber(npcid) == 1064
+    local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
+    if (not contractOnly) and (not Player.dl_sz(play, 4)) then
+        Player.sendmsgEx(play, "灵兽系统需要达到四大陆后开启！#57")
         return
     end
+    if contractOnly then
+        local ok, msg = _is_lingshou_contract_open(play, T_data)
+        if not ok then
+            Player.sendmsgEx(play, msg)
+            return
+        end
+    end
     local data = {}
-    data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
-    sendluamsg(play,100,npcid,0,0,tbl2json(data))
+    data["T_data"] = T_data
+    data["server_time"] = os.time()
+    if contractOnly then data["open_contract"] = 1 end
+    sendluamsg(play,100,64,0,0,tbl2json(data))
 end
-
 function npc.link(play,npcid,ew,aid,data)
     -- npc_guard: 入参校验
     if not Guard.ensurePlayer(play, npcid) then
@@ -54,7 +208,7 @@ function npc.link(play,npcid,ew,aid,data)
     end
     ew = __guardAction
     -- npc_guard: 操作白名单（优化：限定合法操作编号）
-    local __guardAllowedActions = Guard.newActionSet({1,2,3,4,5})
+    local __guardAllowedActions = Guard.newActionSet({1,2,3,4,5,6})
     if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
         return
     end
@@ -88,8 +242,7 @@ function npc.link(play,npcid,ew,aid,data)
             Player.sendmsgEx(play, "你已获得该灵兽的|【初始星级】#218|，快去召唤它吧")
             Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
             if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
-            sendluamsg(play,100,npcid,1,0,tbl2json({T_data = T_data}))
-            Player.updateSomeAddr(play,nil, _config.config.ls[randomNum].attr_give)
+            sendluamsg(play,100,npcid,1,0,tbl2json({T_data = T_data, server_time = os.time()}))
             Player.updateSomeAddr(play,nil, _config.config.wy.det[T_data.ls[""..randomNum]].attr)
             TMLP_refresh_pet_bonus(play)
         else
@@ -103,30 +256,26 @@ function npc.link(play,npcid,ew,aid,data)
             Player.sendmsgEx(play, string.format("你成功抽取到灵兽|【%s】#218|x1已自动转换为星级", _config.config.ls[randomNum].name))
             Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
             if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
-            sendluamsg(play,100,npcid,1,0,tbl2json({T_data = T_data}))
+            sendluamsg(play,100,npcid,1,0,tbl2json({T_data = T_data, server_time = os.time()}))
         end
         -- T_data.ls_sp[randomNum] = (T_data.ls_sp[randomNum] or 0) + 1
         -- Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
         -- sendluamsg(play, 100, npcid, 1, randomNum, "")
     elseif ew == 2 then -- 召唤灵兽
         T_data.ls = T_data.ls or {}
-        -- T_data.ls_sp 
         T_data.ls_sp = T_data.ls_sp or {}
         if not T_data.ls[""..json_data.idx] or T_data.ls[""..json_data.idx] <= 0 then
             Player.sendmsgEx(play, "你没有该灵兽，请先抽取灵兽#57")
             return
         end
-        local Tlg_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
+        local oldIdx = tonumber(T_data.dqzh)
+        local oldAttr = oldIdx and _config.config.ls[oldIdx] and _config.config.ls[oldIdx].attr_give or nil
+        local newAttr = _config.config.ls[json_data.idx].attr_give
         T_data.dqzh = json_data.idx
         Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
         if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
-        Login_lszh(play)
-        if Tlg_data.main and (Tlg_data.main == _config.config.ls[json_data.idx].yq[1] or Tlg_data.main == _config.config.ls[json_data.idx].yq[2]) then
-            Player.sendmsgEx(play, string.format("你成功出战了灵兽|【%s】#218|，快去战斗吧！", _config.config.ls[json_data.idx].name))
-        else
-            Player.sendmsgEx(play, "你的主灵根与该灵兽的契约灵根冲突，可能无法出战该灵兽,请切换主灵根#57")
-        end
-        
+        Player.updateSomeAddr(play, oldAttr, newAttr)
+        Player.sendmsgEx(play, string.format("你成功出战了灵兽|【%s】#218|，快去战斗吧！", _config.config.ls[json_data.idx].name))
     elseif ew == 3 then -- 灵兽升级 --喂养
         T_data.ls = T_data.ls or {}
         -- T_data.ls_sp 
@@ -151,9 +300,38 @@ function npc.link(play,npcid,ew,aid,data)
         if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
         Player.updateSomeAddr(play,_config.config.wy.det[T_data.ls[""..json_data.idx] - 1] and _config.config.wy.det[T_data.ls[""..json_data.idx] - 1].attr or nil, _config.config.wy.det[T_data.ls[""..json_data.idx]].attr)
         TMLP_refresh_pet_bonus(play)
-        sendluamsg(play,100,npcid,3,0,tbl2json({T_data = T_data}))
+        sendluamsg(play,100,npcid,3,0,tbl2json({T_data = T_data, server_time = os.time()}))
         Player.sendmsgEx(play, string.format("你成功喂养灵兽|【%s】#218|，当前喂养次数|【%d】#218", _config.config.ls[json_data.idx].name, T_data.ls[""..json_data.idx]))
     elseif ew == 4 then -- 灵兽升星
+    elseif ew == 6 then -- 灵兽契约：领取48小时幼崽
+        T_data = _ensure_pet_data(T_data)
+        local openOk, openMsg = _is_lingshou_contract_open(play, T_data)
+        if not openOk then
+            Player.sendmsgEx(play, openMsg)
+            return
+        end
+        local cfg = LINGSHOU_BABY_CFG[json_data.idx]
+        if not cfg then
+            Player.sendmsgEx(play, "灵兽幼崽配置异常#57")
+            return
+        end
+        local key = tostring(json_data.idx)
+        if T_data.baby_choice then
+            Player.sendmsgEx(play, "灵兽契约只能领取一次，无法重复选择幼崽#57")
+            return
+        end
+        local maxStar = _toint(_config.max_star, 3)
+        if _toint(T_data.ls_sp[key]) >= maxStar then
+            Player.sendmsgEx(play, "该灵兽星级已满，无法继续领取幼崽#57")
+            return
+        end
+        giveitem(play, cfg.item, 1)
+        T_data.baby_choice = json_data.idx
+        T_data.hatch[key] = {item = cfg.item, startAt = os.time(), expireAt = os.time() + LINGSHOU_BABY_SECONDS, status = "hatching"}
+        Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
+        if Player.trySyncSecondContinentXyl then Player.trySyncSecondContinentXyl(play) end
+        Player.sendmsgEx(play, string.format("已领取|【%s】#218|，48小时后自动孵化#57", cfg.item))
+        _refresh_pet_panel(play, npcid, 6, T_data)
     elseif ew == 5 then -- 灵兽装备圣遗物
         T_data.ls = T_data.ls or {}
         -- T_data.ls_sp 
@@ -176,7 +354,7 @@ function npc.link(play,npcid,ew,aid,data)
         T_data.syw[""..json_data.idx] = 1
         Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
         if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
-        sendluamsg(play, 100, npcid, 1, 0, tbl2json({T_data = T_data}))
+        sendluamsg(play, 100, npcid, 1, 0, tbl2json({T_data = T_data, server_time = os.time()}))
         Player.sendmsgEx(play, string.format("你成功为灵兽|【%s】#218|装备了圣遗物|【%s】#218", _config.config.ls[json_data.idx].name, _config.config.ls[json_data.idx].syw))
 
         if T_data.syw["1"] and T_data.syw["2"] and T_data.syw["3"] and T_data.syw["4"] and T_data.syw["5"] and not T_data.syw_all then
@@ -220,19 +398,68 @@ function npc.lscf(play,zt,Damage,Target)
     if not T_data.dqzh or not _config.config.ls[T_data.dqzh] then
         return 0
     end
-    local Tlg_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
-    if Tlg_data.main and (Tlg_data.main == _config.config.ls[T_data.dqzh].yq[1] or Tlg_data.main == _config.config.ls[T_data.dqzh].yq[2]) then
+    do
         if sj - getplaydef(play,"N$buff_ls") >= 30 then
             local cw = recallmobex(play, _config.config.ls[T_data.dqzh].name,0,0,7,1,_config.config.wy.det[T_data.ls[""..T_data.dqzh]].time,0,0,0,0,0,0,"")
             sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[灵兽]</font><font color=\'#00ff00\'>成功召唤灵兽【'.._config.config.ls[T_data.dqzh].name..'】...</font>","Type":9}')
             setplaydef(play,"N$buff_ls",sj)
-            Player.updateSomeAddr_time(play,nil, _config.config.ls[T_data.dqzh].b_attr,_config.config.wy.det[T_data.ls[""..T_data.dqzh]].time)
+            if _has_pet_linggen_synergy(play, T_data) then
+                Player.updateSomeAddr_time(play,nil, _config.config.ls[T_data.dqzh].b_attr,_config.config.wy.det[T_data.ls[""..T_data.dqzh]].time)
+            end
         end
     end
     return 0
 end
 
 
+local function _get_baby_index_by_item_name(itemName)
+    return LINGSHOU_BABY_ITEM_TO_IDX[tostring(itemName or "")]
+end
+
+function npc.getBabyIndexByItemName(itemName)
+    return _get_baby_index_by_item_name(itemName)
+end
+
+function npc.useBabyItem(play, itemName)
+    local idx = _get_baby_index_by_item_name(itemName)
+    if not idx then
+        return false, "该灵兽幼崽暂未配置#57"
+    end
+    if _real_charge(play) < 99 then
+        return false, "真实累计充值达到99元后，才可立即孵化灵兽幼崽#57"
+    end
+    local ok, msg, T_data = _add_lingshou_star(play, idx, "use", itemName)
+    if ok and T_data then
+        _refresh_pet_panel(play, 64, 6, T_data)
+    end
+    return ok, msg
+end
+
+function npc.onBabyExpired(play, itemobj)
+    local itemName = ""
+    local okName, gotName = pcall(function()
+        return getiteminfo(play, itemobj, ConstCfg.iteminfo.name) or getiteminfo(play, itemobj, 7)
+    end)
+    if okName and gotName then
+        itemName = tostring(gotName)
+    end
+    if itemName == "" then
+        local okBase, baseName = pcall(function()
+            return getbaseinfo(itemobj, 1)
+        end)
+        if okBase and baseName then
+            itemName = tostring(baseName)
+        end
+    end
+    local idx = _get_baby_index_by_item_name(itemName)
+    if not idx then
+        return false
+    end
+    local ok, msg, T_data = _add_lingshou_star(play, idx, "expired", itemName)
+    Player.sendmsgEx(play, msg or (ok and "灵兽幼崽孵化完成#57" or "灵兽幼崽孵化失败#57"))
+    if ok and T_data then
+        _refresh_pet_panel(play, 64, 6, T_data)
+    end
+    return ok
+end
 return npc
-
-

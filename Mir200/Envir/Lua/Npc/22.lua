@@ -1,235 +1,323 @@
 npc = {}
 --灵根
-local _config = Guard.getConfig("npc_22")
+local _config = Guard.getConfig("npc_22") or {}
 local FairyFate = include("lua/LuaLib/fairy_fate.lua")
-local _base_ratio = tonumber(_config.base_ratio or 0.4) or 0.4
+local _base_ratio = tonumber(_config.base_ratio or 0) or 0
 
-local function _lg_has_root(T_data, idx)
-    T_data = T_data or {}
-    T_data.level = T_data.level or {}
-    return T_data.level[tostring(idx)] ~= nil
+local function _toint(v, d)
+    v = tonumber(v)
+    if v == nil then return d or 0 end
+    return math.floor(v)
 end
 
-local function _lg_effect_scale(T_data, idx)
-    if not _lg_has_root(T_data, idx) then
-        return 0
-    end
-    return (tonumber(T_data.level[tostring(idx)]) or 0) + _base_ratio
-end
-
-local function _lg_round_value(value)
+local function _round(value)
     value = tonumber(value) or 0
-    if value <= 0 then
-        return 0
-    end
+    if value <= 0 then return 0 end
     local ret = math.floor(value + 0.5)
-    if ret <= 0 then
-        ret = 1
-    end
+    if ret <= 0 then ret = 1 end
     return ret
 end
 
-local function _lg_build_attr(attr_list, scale)
-    local attrs = {}
-    scale = tonumber(scale) or 0
-    if scale <= 0 then
-        return attrs
+local function _root_cfg(idx)
+    return _config.main_r and _config.main_r[tonumber(idx or 0)] or nil
+end
+
+local function _has_root(T_data, idx)
+    T_data = type(T_data) == "table" and T_data or {}
+    T_data.level = type(T_data.level) == "table" and T_data.level or {}
+    return T_data.level[tostring(idx)] ~= nil
+end
+
+local function _has_any_basic_root(T_data)
+    for i = 1, 5 do
+        if _has_root(T_data, i) then return true end
     end
+    return false
+end
+
+local function _ensure_data(T_data)
+    T_data = type(T_data) == "table" and T_data or {}
+    T_data.level = type(T_data.level) == "table" and T_data.level or {}
+    if T_data.other then T_data.other = nil end
+    if not _has_any_basic_root(T_data) and not T_data.init_unlock_given then
+        T_data.unlock_chance = _toint(T_data.unlock_chance, 0) + _toint(_config.free_unlock_chance, 1)
+        T_data.init_unlock_given = 1
+    end
+    return T_data
+end
+
+local function _level(T_data, idx)
+    if not _has_root(T_data, idx) then return 0 end
+    return math.max(1, _toint(T_data.level[tostring(idx)], 1))
+end
+
+local function _interp_attr_value(one, level)
+    level = math.max(1, math.min(10, _toint(level, 1)))
+    local v1 = tonumber(one[2]) or 0
+    local v10 = tonumber(one[3])
+    if v10 then
+        return _round(v1 + (v10 - v1) * (level - 1) / 9)
+    end
+    return _round(v1 * (level + _base_ratio))
+end
+
+local function _build_attr_by_level(attr_list, level)
+    local attrs = {}
+    if _toint(level, 0) <= 0 then return attrs end
     for _, one in ipairs(attr_list or {}) do
-        attrs[#attrs + 1] = {one[1], _lg_round_value((tonumber(one[2]) or 0) * scale)}
+        attrs[#attrs + 1] = {one[1], _interp_attr_value(one, level)}
     end
     return attrs
 end
 
-local function _lg_take_change_cost(play, cost, slotName)
-    cost = cost or {}
-    if #cost <= 0 then
-        return true
+local function _build_root_attr(idx, level)
+    local cfg = _root_cfg(idx)
+    if not cfg then return {} end
+    local attrs = _build_attr_by_level(cfg.attr, level)
+
+    return attrs
+end
+
+local function _build_special_by_level(special_list, level)
+    local specials = {}
+    if _toint(level, 0) <= 0 then return specials end
+    level = math.max(1, math.min(10, _toint(level, 1)))
+    for _, one in ipairs(special_list or {}) do
+        local key = tostring(one.key or one[1] or "")
+        if key ~= "" then
+            local v1 = tonumber(one.v1 or one[2]) or 0
+            local v10 = tonumber(one.v10 or one[3])
+            local value = v10 and _round(v1 + (v10 - v1) * (level - 1) / 9) or _round(v1 * (level + _base_ratio))
+            specials[key] = (specials[key] or 0) + value
+        end
     end
+    return specials
+end
+
+local function _build_root_special(idx, level)
+    local cfg = _root_cfg(idx)
+    if not cfg then return {} end
+    return _build_special_by_level(cfg.special, level)
+end
+
+local function _refresh_linggen_special(play, T_data)
+    T_data = _ensure_data(T_data or Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
+    local totals = {}
+    for i = 1, 10 do
+        local lv = _level(T_data, i)
+        if lv > 0 then
+            for key, value in pairs(_build_root_special(i, lv)) do
+                totals[key] = (totals[key] or 0) + value
+            end
+        end
+    end
+    setplaydef(play, "N$linggen_skill_cd_dec", _toint(totals.skill_cd_dec, 0))
+end
+local function _refresh_send(play, npcid, p2)
+    sendluamsg(play, 100, npcid, p2 or 1, 0, tbl2json({T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
+end
+
+local function _take_change_cost(play)
+    local cost = _config.main_xl_cost or {}
+    if #cost <= 0 then return true end
     local name, num = Player.checkItemNumByTable(play, cost)
     if name then
-        Player.sendmsgEx(play, string.format("切换%s需要#57|【%s】#218|x%s", tostring(slotName or "灵根"), tostring(name), tostring(num or 0)))
+        Player.sendmsgEx(play, string.format("切换本命灵根需要#57|【%s】#218|x%s", tostring(name), tostring(num or 0)))
         return false
     end
-    Player.takeItemByTable(play, cost, ",灵根切换", nil)
+    Player.takeItemByTable(play, cost, ",本命灵根切换", nil)
     return true
 end
 
-function npc.main(play,npcid)
-    local data = {}
-    data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
-    sendluamsg(play,100,npcid,0,0,tbl2json(data))
+local function _need_role_level(rootIdx, nextLevel)
+    local low = {80,80,80,100,100,100,150,150,150,151}
+    local high = {152,152,152,155,155,155,160,160,160,165}
+    return (tonumber(rootIdx) or 0) <= 5 and low[nextLevel] or high[nextLevel]
+end
+
+function npc.main(play, npcid)
+    local T_data = _ensure_data(Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
+    Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
+    sendluamsg(play, 100, npcid, 0, 0, tbl2json({T_data = T_data}))
     openhyperlink(play, 1, 2)
 end
-function npc.link(play,npcid,ew,aid)
-    -- npc_guard: 入参校验
-    if not Guard.ensurePlayer(play, npcid) then
-        return
-    end
-    local __guardAction = Guard.normalizeAction(play, npcid, ew)
-    if __guardAction == nil then
-        return
-    end
-    ew = __guardAction
-    -- npc_guard: 操作白名单（优化：限定合法操作编号）
-    local __guardAllowedActions = Guard.newActionSet({1, 2, 3, 5})
-    if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
-        return
-    end
-    local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
-    T_data.level = T_data.level or {}
-    if ew == 1 and false then--抽取低级灵根
-        T_data.level[""..math.random(1, 5)] = 0
+
+function npc.link(play, npcid, ew, aid)
+    if not Guard.ensurePlayer(play, npcid) then return end
+    ew = Guard.normalizeAction(play, npcid, ew)
+    if ew == nil then return end
+    if not Guard.ensureActionAllowed(play, npcid, ew, Guard.newActionSet({1, 2, 3, 5, 6})) then return end
+
+    aid = _toint(aid, 0)
+    local T_data = _ensure_data(Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
+
+    if ew == 1 then -- 选择解锁基础灵根
+        if aid < 1 or aid > 5 then
+            Player.sendmsgEx(play, "只能选择金木水火土基础灵根#57")
+            return
+        end
+        if _has_root(T_data, aid) then
+            Player.sendmsgEx(play, "该基础灵根已解锁，不能重复解锁#57")
+            return
+        end
+        if _toint(T_data.unlock_chance, 0) <= 0 then
+            Player.sendmsgEx(play, "当前没有基础灵根解锁#57")
+            return
+        end
+        T_data.unlock_chance = math.max(0, _toint(T_data.unlock_chance, 0) - 1)
+        T_data.level[tostring(aid)] = 1
+        if _toint(T_data.main, 0) <= 0 then T_data.main = aid end
         Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
-        Player.sendmsgEx(play, "提示：你获得了新的|【灵根】#218|，请前往灵根升级界面查看")
-        sendluamsg(play,100,npcid,1,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
-    elseif ew == 2 then--装配主灵根
-        local oldMain = tonumber(T_data.main or 0) or 0
+        Player.updateSomeAddr(play, nil, _build_root_attr(aid, 1))
+        _refresh_linggen_special(play, T_data)
+        if FairyFate and FairyFate.touch then FairyFate.touch(play, "linggen") end
+        local cfg = _root_cfg(aid) or {}
+        Player.sendmsgEx(play, "提示：你成功解锁|【"..tostring(cfg.name or "").."灵根】#218|")
+        _refresh_send(play, npcid, 1)
+        return
+    end
+
+    if ew == 2 then -- 设置本命灵根
+        local oldMain = _toint(T_data.main, 0)
         if aid == 0 then
             if oldMain <= 0 then
-                Player.sendmsgEx(play, "提示:当前未装配主灵根#57")
+                Player.sendmsgEx(play, "当前未设置本命灵根#57")
                 return
             end
-            if not _lg_take_change_cost(play, _config.main_xl_cost, "主灵根") then
-                return
-            end
+            if not _take_change_cost(play) then return end
             T_data.main = nil
             Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
-            Player.sendmsgEx(play, "提示:你的主灵根已卸下")
-            sendluamsg(play,100,npcid,1,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
+            Player.sendmsgEx(play, "提示：本命灵根已卸下")
+            _refresh_send(play, npcid, 1)
             return
         end
-        T_data.level = T_data.level or {}
-        T_data.main = T_data.main or 0
-        if T_data.main == aid then
-            Player.sendmsgEx(play, "提示:你已经装配该灵根属性，无需重复装配#57")
+        if not _has_root(T_data, aid) then
+            Player.sendmsgEx(play, "你还没有该灵根，无法设置为本命#57")
             return
         end
-        if not _lg_has_root(T_data, aid) then
-            Player.sendmsgEx(play, "提示:你还没有该灵根属性，无法进行装配#57")
+        if oldMain == aid then
+            Player.sendmsgEx(play, "该灵根已经是本命灵根#57")
             return
         end
-        if T_data.other and T_data.other == aid then
-            Player.sendmsgEx(play, "提示:该灵根属性已经被装配为副灵根，无法装配为主灵根#57")
-            return
-        end
-        if oldMain > 0 and not _lg_take_change_cost(play, _config.main_xl_cost, "主灵根") then
-            return
-        end
+        if oldMain > 0 and not _take_change_cost(play) then return end
         T_data.main = aid
         Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
-        Player.sendmsgEx(play, "提示：你的|【灵根】#218|装配成功")
-        sendluamsg(play,100,npcid,1,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
-    elseif ew == 3 then--装配副灵根
-        local oldOther = tonumber(T_data.other or 0) or 0
-        T_data.other = T_data.other or 0
-        if aid == 0 then
-            if oldOther <= 0 then
-                Player.sendmsgEx(play, "提示:当前未装配副灵根#57")
-                return
-            end
-            if not _lg_take_change_cost(play, _config.other_xl_cost, "副灵根") then
-                return
-            end
-            T_data.other = nil
-            Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
-            Player.sendmsgEx(play, "提示:你的副灵根已卸下")
-            sendluamsg(play,100,npcid,1,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
-            return
-        end
-        T_data.level = T_data.level or {}
-        if T_data.other == aid then
-            Player.sendmsgEx(play, "提示:你已经装配该灵根属性，无需重复装配#57")
-            return
-        end
-        if not _lg_has_root(T_data, aid) then
-            Player.sendmsgEx(play, "提示:你还没有该灵根属性，无法进行装配#57")
-            return
-        end
-        if T_data.main and T_data.main == aid then
-            Player.sendmsgEx(play, "提示:该灵根属性已经被装配为主灵根，无法装配为副灵根#57")
-            return
-        end
-        if oldOther > 0 and not _lg_take_change_cost(play, _config.other_xl_cost, "副灵根") then
-            return
-        end
-        T_data.other = aid
-        Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
-        Player.sendmsgEx(play, "提示：你的|【灵根】#218|装配成功")
-        sendluamsg(play,100,npcid,1,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
-    elseif ew == 5 then--灵根升级
-        T_data.level = T_data.level or {}
-        if not _lg_has_root(T_data, aid) then
-            Player.sendmsgEx(play, "提示:你还没有该灵根属性，无法进行升级#57")
-            return
-        end
-        local oldLevel = tonumber(T_data.level[""..aid] or 0) or 0
-        T_data.level[""..aid] = oldLevel + 1
-        if T_data.level[""..aid] > _config.main_updata.max_level then
-            Player.sendmsgEx(play, "提示：你的灵根等级已达到|【最高等级】#218|")
-            return
-        end
-        local config = aid < 6 and _config.main_updata.details.low[T_data.level[""..aid]] or _config.main_updata.details.up[T_data.level[""..aid]]
-        if not config then
-            Player.sendmsgEx(play, "灵根配置异常#57")
-            return
-        end
-        local name, num = Player.checkItemNumByTable(play, config.cost)
-        if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足#57", name))
-            return
-        end
-        Player.takeItemByTable(play, config.cost, ",灵根升级",nil)
-        Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
-        Player.sendmsgEx(play, "提示：你的|【灵根】#218|升级成功")
-        if FairyFate and FairyFate.touch then FairyFate.touch(play, "linggen") end
-        Player.updateSomeAddr(play, _lg_build_attr(_config.main_r[aid].attr, oldLevel + _base_ratio), _lg_build_attr(_config.main_r[aid].attr, (tonumber(T_data.level[""..aid]) or 0) + _base_ratio))
-        TMLP_refresh_linggen_bonus(play)
-        sendluamsg(play,101,1005,0,0,"tpcg")
-        sendluamsg(play,100,npcid,2,0,tbl2json({["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])}))
-    end
-end
-function Login_lg(play)
-    local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
-    T_data.level = T_data.level or {}
-    local attr = {}
-    for i = 1, 10 do
-        local scale = _lg_effect_scale(T_data, i)
-        if scale > 0 then
-            for _, one in ipairs(_lg_build_attr(_config.main_r[i].attr, scale)) do
-                table.insert(attr, one)
-            end
-        end
-    end
-    Player.updateSomeAddr(play,nil, attr)
-    TMLP_refresh_linggen_bonus(play)
-    Buff[103](play,1)
-    Buff[104](play,1)
-end
-GameEvent.add(EventCfg.onLogin, Login_lg, "Login_lg")
-function TMLP_refresh_linggen_bonus(play)
-    local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"]) or {}
-    local levels = T_data.level or {}
-    local max_level = (((teshudata or {})["npc_22"] or {}).main_updata or {}).max_level or 0
-    local count = 0
-    for _, level in pairs(levels) do
-        if (tonumber(level) or 0) >= max_level and max_level > 0 then
-            count = count + 1
-        end
-    end
-    Player.del_attlist(play, "天命道盘_灵根加成")
-    if count < 2 then
+        Player.sendmsgEx(play, "提示：本命灵根切换成功")
+        _refresh_send(play, npcid, 1)
         return
     end
+
+    if ew == 3 then -- 副灵根取消，兼容旧请求
+        T_data.other = nil
+        Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
+        Player.sendmsgEx(play, "副灵根已取消，现在只保留本命灵根#57")
+        _refresh_send(play, npcid, 1)
+        return
+    end
+
+    if ew == 6 then -- 双形态灵根切换
+        local mainIdx = _toint(T_data.main, 0)
+        local pairIdx = _toint(_config.awaken_pairs and _config.awaken_pairs[mainIdx], 0)
+        if mainIdx <= 0 or pairIdx <= 0 or not _has_root(T_data, pairIdx) then
+            Player.sendmsgEx(play, "需要同时拥有本命灵根与对应觉醒灵根后才可切换#57")
+            return
+        end
+        local realmNeed = _toint(_config.realm_dual_need, 26)
+        local realmLevel = _toint(getplaydef(play, VarCfg["U_境界修炼"][1]), 0)
+        if realmLevel < realmNeed then
+            Player.sendmsgEx(play, "境界达到渡劫境[前期]后才可切换双形态灵根#57")
+            return
+        end
+        if _toint(getplaydef(play, "N$战斗状态"), 0) >= os.time() then
+            Player.sendmsgEx(play, "战斗状态无法切换灵根，脱战后再试#57")
+            return
+        end
+        local now = os.time()
+        local nextTime = _toint(T_data.dual_switch_next, 0)
+        if nextTime > now then
+            Player.sendmsgEx(play, "灵根形态切换冷却中，还需|【"..tostring(nextTime - now).."】#218|秒#57")
+            return
+        end
+        T_data.main = pairIdx
+        T_data.dual_switch_next = now + _toint(_config.switch_cd, 60)
+        Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
+        local cfg = _root_cfg(pairIdx) or {}
+        Player.sendmsgEx(play, "提示：已切换为|【"..tostring(cfg.name or "觉醒").."灵根】#218|")
+        _refresh_send(play, npcid, 1)
+        return
+    end
+    if ew == 5 then -- 灵根升级
+        if not _has_root(T_data, aid) then
+            Player.sendmsgEx(play, "你还没有该灵根，无法升级#57")
+            return
+        end
+        local oldLevel = _level(T_data, aid)
+        local nextLevel = oldLevel + 1
+        if nextLevel > _toint(_config.main_updata and _config.main_updata.max_level, 10) then
+            Player.sendmsgEx(play, "该灵根已达到最高等级#57")
+            return
+        end
+        local needLv = _need_role_level(aid, nextLevel)
+        if needLv and _toint(getbaseinfo(play, 6), 0) < needLv then
+            Player.sendmsgEx(play, "升级该灵根需要人物等级达到|【"..needLv.."】#218|#57")
+            return
+        end
+        local details = ((_config.main_updata or {}).details or {})[aid <= 5 and "low" or "up"] or {}
+        local upCfg = details[nextLevel]
+        if not upCfg then
+            Player.sendmsgEx(play, "灵根升级配置异常#57")
+            return
+        end
+        local name = Player.checkItemNumByTable(play, upCfg.cost)
+        if name then
+            Player.sendmsgEx(play, "你的#57|【"..tostring(name).."】#218|不足#57")
+            return
+        end
+        Player.takeItemByTable(play, upCfg.cost, ",灵根升级", nil)
+        T_data.level[tostring(aid)] = nextLevel
+        Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
+        Player.updateSomeAddr(play, _build_root_attr(aid, oldLevel), _build_root_attr(aid, nextLevel))
+        _refresh_linggen_special(play, T_data)
+        TMLP_refresh_linggen_bonus(play)
+        if FairyFate and FairyFate.touch then FairyFate.touch(play, "linggen") end
+        Player.sendmsgEx(play, "提示：你的|【灵根】#218|升级成功")
+        sendluamsg(play, 101, 1005, 0, 0, "tpcg")
+        _refresh_send(play, npcid, 2)
+        return
+    end
+end
+
+function Login_lg(play)
+    local T_data = _ensure_data(Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
+    Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
+    _refresh_linggen_special(play, T_data)
     local attrs = {}
     for i = 1, 10 do
-        local base = _lg_build_attr(_config.main_r[i].attr, _base_ratio)
-        for _, one in ipairs(base) do
-            local attr_id = tonumber(one[1])
-            local value = tonumber(one[2]) or 0
-            if attr_id and value ~= 0 then
-                attrs[attr_id] = (attrs[attr_id] or 0) + math.floor(value * 5 / 100)
-            end
+        local lv = _level(T_data, i)
+        if lv > 0 then
+            for _, one in ipairs(_build_root_attr(i, lv)) do attrs[#attrs + 1] = one end
+        end
+    end
+    Player.updateSomeAddr(play, nil, attrs)
+    TMLP_refresh_linggen_bonus(play)
+end
+GameEvent.add(EventCfg.onLogin, Login_lg, "Login_lg")
+
+function TMLP_refresh_linggen_bonus(play)
+    local T_data = _ensure_data(Player.getJsonTableByVar(play, VarCfg["T_灵根"]) or {})
+    local maxLevel = _toint((_config.main_updata or {}).max_level, 10)
+    local count = 0
+    for _, level in pairs(T_data.level or {}) do
+        if _toint(level, 0) >= maxLevel then count = count + 1 end
+    end
+    Player.del_attlist(play, "天命道盘_灵根加成")
+    if count < 2 then return end
+    local attrs = {}
+    for i = 1, 10 do
+        for _, one in ipairs(_build_root_attr(i, maxLevel)) do
+            local id = tonumber(one[1])
+            local value = math.floor((_toint(one[2], 0)) * 5 / 100)
+            if id and value > 0 then attrs[id] = (attrs[id] or 0) + value end
         end
     end
     local attrsstr = Player.getAttrTableToStr(attrs)
@@ -237,275 +325,18 @@ function TMLP_refresh_linggen_bonus(play)
         Player.add_attlist(play, "天命道盘_灵根加成", "=", attrsstr, 1)
     end
 end
-local function _lg_extract_title(desc, fallback)
-    if type(desc) == "string" then
-        local title = string.match(desc, "【(.-)】")
-        if title and title ~= "" then
-            return title
-        end
-    end
-    return fallback or "灵根之力"
-end
-local function _lg_effect_short(lgCfg, isMain)
-    local effectMapMain = {
-        ["金"] = "范围切割",
-        ["木"] = "获得护盾",
-        ["水"] = "漩涡吸怪",
-        ["火"] = "火焰斩击",
-        ["土"] = "护体强化",
-        ["雷"] = "落雷轰击",
-        ["风"] = "移速提升",
-        ["冰"] = "寒冬减速",
-        ["焚"] = "召唤魔王",
-        ["岩"] = "短暂无敌",
-    }
-    local effectMapOther = {
-        ["金"] = "追加切割",
-        ["木"] = "持续复苏",
-        ["水"] = "迟缓目标",
-        ["火"] = "点燃目标",
-        ["土"] = "双防提升",
-        ["雷"] = "雷闪避伤",
-        ["风"] = "攻速提升",
-        ["冰"] = "概率冰冻",
-        ["焚"] = "天火坠落",
-        ["岩"] = "伤害减免",
-    }
-    local effectMap = isMain and effectMapMain or effectMapOther
-    return effectMap[tostring(lgCfg and lgCfg.name or "")] or "灵根生效"
-end
-local function _lg_send_trigger_msg(play, lgCfg, isMain)
-    local title = _lg_extract_title(isMain and lgCfg.wz1 or lgCfg.wz2, (lgCfg.name or "未知").."灵根")
-    local effect = _lg_effect_short(lgCfg, isMain)
-    Player.sendmsgEx(play, "【灵根觉醒】【|【"..tostring(title).."】#218|"..tostring(effect).."】")
-end
-function npc.lgcf(play,zt,Damage,Target,triggerType)
-    --灵根触发
-    local sj = os.time()
-    local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
-    T_data.level = T_data.level or {}
-    if not T_data.main then
-        return 0
-    end
-    if not _lg_has_root(T_data, T_data.main) then
-        return 0
-    end
-    local level = _lg_effect_scale(T_data, T_data.main)
-    local config = _config.main_r[T_data.main]
-    local mainTriggered = false
-    local otherTriggered = false
-    -- 木灵根护盾在受击时优先结算
-    if triggerType == 2 and T_data.main == 2 then
-        local shieldEnd = tonumber(getplaydef(play,"N$buff_lg_mhd_end") or 0) or 0
-        local shieldVal = tonumber(getplaydef(play,"N$buff_lg_mhd") or 0) or 0
-        if shieldEnd < sj and shieldVal > 0 then
-            setplaydef(play,"N$buff_lg_mhd",0)
-            setplaydef(play,"N$buff_lg_mhd_end",0)
-            shieldVal = 0
-        end
-        if shieldVal > 0 and shieldEnd >= sj and Damage and Damage > 0 then
-            local absorb = math.min(shieldVal, Damage)
-            if absorb > 0 then
-                setplaydef(play,"N$buff_lg_mhd",shieldVal - absorb)
-                humanhp(play,"+",absorb,5,0,play)
-                if shieldVal - absorb <= 0 then
-                    clearplayeffect(play,60460)
-                end
-            end
-        end
-    end
-    -- 土灵根护盾在受击时优先结算
-    if triggerType == 2 and T_data.main == 5 then
-        local shieldEnd = tonumber(getplaydef(play,"N$buff_lg_tu_end") or 0) or 0
-        local shieldVal = tonumber(getplaydef(play,"N$buff_lg_tu") or 0) or 0
-        if shieldEnd < sj and shieldVal > 0 then
-            setplaydef(play,"N$buff_lg_tu",0)
-            setplaydef(play,"N$buff_lg_tu_end",0)
-            shieldVal = 0
-        end
-        if shieldVal > 0 and shieldEnd >= sj and Damage and Damage > 0 then
-            local absorb = math.min(shieldVal, Damage)
-            if absorb > 0 then
-                setplaydef(play,"N$buff_lg_tu",shieldVal - absorb)
-                humanhp(play,"+",absorb,5,0,play)
-            end
-        end
-    end
-    -- 火灵根持续斩击在攻击时结算
-    if triggerType == 1 and T_data.main == 4 then
-        local huoEnd = tonumber(getplaydef(play,"N$buff_lg_huo_end") or 0) or 0
-        local huoTick = tonumber(getplaydef(play,"N$buff_lg_huo_tick") or 0) or 0
-        local huoLv = tonumber(getplaydef(play,"N$buff_lg_huo_lv") or 0) or 0
-        if huoEnd >= sj and huoLv > 0 and Target and sj - huoTick >= 1 then
-            local fireDamage = _lg_round_value(huoLv)
-            if fireDamage > 0 then
-                setplaydef(play,"N$buff_lg_huo_tick",sj)
-                humanhp(Target,"-",fireDamage,110,0,play,1)
-                playeffect(Target,60463,0,0,1,1,0)
-            end
-        end
-    end
-    -- 岩灵根无敌期间免疫一切伤害
-    if triggerType == 2 and T_data.main == 10 then
-        local yanEnd = tonumber(getplaydef(play,"N$buff_lg_yan_end") or 0) or 0
-        if yanEnd >= sj and Damage and Damage > 0 then
-            humanhp(play,"+",Damage,5,0,play)
-        end
-    end
-    -- 雷副灵根闪避在受击时优先判定
-    if triggerType == 2 and T_data.other == 6 then
-        local leiEnd = tonumber(getplaydef(play,"N$buff_lg_lei_end") or 0) or 0
-        local leiRate = tonumber(getplaydef(play,"N$buff_lg_lei_rate") or 0) or 0
-        if leiEnd >= sj and leiRate > 0 and Damage and Damage > 0 and math.random(100) <= leiRate then
-            humanhp(play,"+",Damage,5,0,play)
-            playeffect(play,60458,0,0,1,1,0)
-        end
-    end
-    if sj - (tonumber(getplaydef(play,"N$buff_lg") or 0) or 0) >= 30 then
-        if T_data.main == 1 then -- 金
-            setobjintvar(play,22041,_lg_round_value(level * (tonumber(config.value1) or 0)))
-            addbuff(play,20104,10)
-            mainTriggered = true
-        elseif T_data.main == 2 then -- 木
-            if triggerType == 2 then
-                local maxHp = tonumber(getbaseinfo(play,10) or 0) or 0
-                local shield = _lg_round_value(maxHp * level * (tonumber(config.value1) or 0) / 100)
-                if shield > 0 then
-                    setplaydef(play,"N$buff_lg_mhd",shield)
-                    setplaydef(play,"N$buff_lg_mhd_end",sj + 10)
-                    playeffect(play,60460,0,0,0,1,0)
-                    mainTriggered = true
-                end
-            end
-        elseif T_data.main == 3 then -- 水
-            setobjintvar(play,22042,_lg_round_value(level * (tonumber(config.value1) or 0)))
-            addbuff(play,20105,10)
-            mainTriggered = true
-        elseif T_data.main == 4 then -- 火
-            setplaydef(play,"N$buff_lg_huo_end",sj + 10)
-            setplaydef(play,"N$buff_lg_huo_lv",_lg_round_value(level * (tonumber(config.value1) or 0)))
-            setplaydef(play,"N$buff_lg_huo_tick",0)
-            if Target then
-                local fireDamage = _lg_round_value(level * (tonumber(config.value1) or 0))
-                if fireDamage > 0 then
-                    humanhp(Target,"-",fireDamage,110,0,play,1)
-                    playeffect(Target,60463,0,0,1,1,0)
-                end
-            end
-            mainTriggered = true
-        elseif T_data.main == 5 then -- 土
-            if triggerType == 2 then
-                local shield = _lg_round_value(level * (tonumber(config.value1) or 0))
-                if shield > 0 then
-                    setplaydef(play,"N$buff_lg_tu",shield)
-                    setplaydef(play,"N$buff_lg_tu_end",sj + 10)
-                    playeffect(play,60458,0,0,10,1,0)
-                    mainTriggered = true
-                end
-            end
-        elseif T_data.main == 6 then -- 雷
-            if Target then
-                setobjintvar(Target,22043,_lg_round_value(level * (tonumber(config.value) or 0) * 100))
-                setobjstrvar(Target,22043,getbaseinfo(play,1) or "")
-                addbuff(Target,20107,10,_lg_round_value(level * 10),play)
-                mainTriggered = true
-            end
-        elseif T_data.main == 7 then -- 风
-            Player.updateSomeAddr_time(play, nil, {{243, _lg_round_value(level * (tonumber(config.value1) or 0) * 100)}},10)
-            playeffect(play,60036,0,0,10,1,0)
-            mainTriggered = true
-        elseif T_data.main == 8 then -- 冰
-            if Target then
-                local tx, ty, dqdt = getbaseinfo(Target,4), getbaseinfo(Target,5), getbaseinfo(play,3)
-                local mons = getobjectinmap(dqdt, tx, ty, 3, 2) or {}
-                local plays = getobjectinmap(dqdt, tx, ty, 3, 1) or {}
-                for _, v in ipairs(mons) do
-                    if v ~= Target then
-                        Player.updateSomeAddr_time(v, {{243, _lg_round_value(level * (tonumber(config.value1) or 0) * 100)},{201, _lg_round_value(level * (tonumber(config.value1) or 0))}}, nil,10)
-                        playeffect(v,60459,0,0,10,1,0)
-                    end
-                end
-                for _, v in ipairs(plays) do
-                    if v ~= play then
-                        Player.updateSomeAddr_time(v, {{243, _lg_round_value(level * (tonumber(config.value1) or 0) * 100)},{201, _lg_round_value(level * (tonumber(config.value1) or 0))}}, nil,10)
-                        playeffect(v,60459,0,0,10,1,0)
-                    end
-                end
-                mainTriggered = true
-            end
-        elseif T_data.main == 9 then -- 焚
-            recallself(play,10,1,_lg_round_value(level * (tonumber(config.value1) or 0)),0,0,0,0,0,0,"20108")
-            mainTriggered = true
-        elseif T_data.main == 10 then -- 岩
-            setplaydef(play,"N$buff_lg_yan_end",sj + math.max(1, _lg_round_value(level * (tonumber(config.value1) or 0))))
-            playeffect(play,60458,0,0,10,1,0)
-            mainTriggered = true
-        end
-        setplaydef(play,"N$buff_lg",sj)
-        if mainTriggered then
-            _lg_send_trigger_msg(play, config, true)
-        end
-        if not T_data.other then
-            return 0
-        end
-        -- 副灵根效果
-        if not _lg_has_root(T_data, T_data.other) then
-            return 0
-        end
-        level = _lg_effect_scale(T_data, T_data.other)
-        config = _config.main_r[T_data.other]
-        if T_data.other == 1 then -- 金
-            if Target then
-                humanhp(Target,"-",_lg_round_value(level * (tonumber(config.value2) or 0)),110,1,play)
-                otherTriggered = true
-            end
-        elseif T_data.other == 2 then -- 木
-            local curHp = tonumber(getbaseinfo(play,9) or 0) or 0
-            local maxHp = tonumber(getbaseinfo(play,10) or 0) or 0
-            local heal = _lg_round_value(math.max(0, maxHp - curHp) * level * (tonumber(config.value2) or 0) / 100)
-            if heal > 0 then
-                humanhp(play,"+",heal,5,0,play)
-                otherTriggered = true
-            end
-        elseif T_data.other == 3 then -- 水
-            if Target then
-                Player.updateSomeAddr_time(Target, {{243, _lg_round_value(level * (tonumber(config.value2) or 0) * 100)}}, nil,10)
-                otherTriggered = true
-            end
-        elseif T_data.other == 4 then -- 火
-            if Target then
-                setobjintvar(Target,22045,_lg_round_value(level * (tonumber(config.value2) or 0)))
-                setobjstrvar(Target,22045,getbaseinfo(play,1) or "")
-                addbuff(Target,20105,10,_lg_round_value(level * 10),play)
-                otherTriggered = true
-            end
-        elseif T_data.other == 5 then -- 土
-            Player.updateSomeAddr_time(play, nil, {{26, _lg_round_value(level * (tonumber(config.value2) or 0) * 100)},{27, _lg_round_value(level * (tonumber(config.value2) or 0) * 100)}},10)
-            otherTriggered = true
-        elseif T_data.other == 6 then -- 雷
-            setplaydef(play,"N$buff_lg_lei_end",sj + 10)
-            setplaydef(play,"N$buff_lg_lei_rate",_lg_round_value(level * (tonumber(config.value2) or 0)))
-            otherTriggered = true
-        elseif T_data.other == 7 then -- 风
-            Player.updateSomeAddr_time(play, nil, {{200, _lg_round_value(level * (tonumber(config.value2) or 0))},{201, _lg_round_value(level * (tonumber(config.value2) or 0))}},10)
-            otherTriggered = true
-        elseif T_data.other == 8 then -- 冰
-            if math.random(1,100) <= _lg_round_value(level * (tonumber(config.value2) or 0)) then
-                rangeharm(play,getbaseinfo(play,4),getbaseinfo(play,5),3,0,2,1,0,2,0)
-                otherTriggered = true
-            end
-        elseif T_data.other == 9 then -- 焚
-            rangeharm(play,getbaseinfo(play,4),getbaseinfo(play,5),3,_lg_round_value(level * (tonumber(config.value2) or 0)),0,0,0,2,0)
-            otherTriggered = true
-        elseif T_data.other == 10 then -- 岩
-            Player.updateSomeAddr_time(play, nil, {{206, _lg_round_value(level * (tonumber(config.value2) or 0) * 100)}},10)
-            otherTriggered = true
-        end
-        if otherTriggered then
-            _lg_send_trigger_msg(play, config, false)
-        end
-        return 0
-    end
+
+function npc.lgcf(play, zt, Damage, Target, triggerType)
+    -- 新版灵根主动技能改为手动/自动释放，旧版30秒自动触发效果停用。
     return 0
 end
+
+function LingGenGrantBasicUnlockChance(play, count)
+    local T_data = _ensure_data(Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
+    T_data.unlock_chance = _toint(T_data.unlock_chance, 0) + math.max(1, _toint(count, 1))
+    Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
+    Player.sendmsgEx(play, "获得基础灵根解锁|【"..tostring(count or 1).."】#218|次")
+    return true
+end
+
 return npc

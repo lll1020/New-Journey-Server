@@ -850,16 +850,22 @@ local function _dl_get_jqd(actor)
     end
     return querymoney(actor, jqd_idx) or 0
 end
--- 五大陆门槛：检查是否已激活全部 10 种灵根。
-local function _dl_has_all_linggen(actor)
+-- 五大陆门槛：本命灵根对应的基础灵根满级，且觉醒灵根达到 Lv.2。
+local function _dl_has_linggen_gate(actor)
     local data = Player.getJsonTableByVar(actor, VarCfg["T_灵根"]) or {}
     local levels = type(data.level) == "table" and data.level or {}
-    for i = 1, 10 do
-        if (tonumber(levels[tostring(i)]) or 0) <= 0 then
-            return false
-        end
+    local cfg = (teshudata or {})["npc_22"] or {}
+    local main = tonumber(data.main or 0) or 0
+    local pair = tonumber((cfg.awaken_pairs or {})[main] or 0) or 0
+    if main <= 0 or pair <= 0 then
+        return false
     end
-    return true
+    local base = main <= 5 and main or pair
+    local awaken = main <= 5 and pair or main
+    if base <= 0 or base > 5 or awaken <= 5 then
+        return false
+    end
+    return (tonumber(levels[tostring(base)] or 0) or 0) >= 10 and (tonumber(levels[tostring(awaken)] or 0) or 0) >= 2
 end
 -- 六大陆门槛：检查天道命盘是否已全部完成。
 local function _dl_has_all_destiny(actor)
@@ -900,10 +906,10 @@ local function _dl_check(actor, dl)
         end
         return false, "需完成三大陆转生且剧情点达到40、玩家等级达到150级后才可进入四大陆"
     elseif dl == 5 then
-        if zslv >= 40 and jqd >= 90 and _dl_has_all_linggen(actor) then
+        if zslv >= 40 and jqd >= 90 and _dl_has_linggen_gate(actor) then
             return true
         end
-        return false, "需完成四大陆转生且剧情点达到90后才可进入五大陆,并且激活所有的灵根"
+        return false, "需完成四大陆转生且剧情点达到90，并且本命灵根Lv10、对应觉醒灵根Lv2后才可进入五大陆"
     elseif dl == 6 then
         if zslv >= 50 and jqd >= 100 and _dl_has_all_destiny(actor) then
             return true

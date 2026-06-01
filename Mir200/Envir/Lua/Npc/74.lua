@@ -33,22 +33,20 @@ local function _count_full_lingshou(play)
     return count, max_level
 end
 
-local function _count_full_linggen(play)
+local function _has_awakened_main_linggen_level(play, needLevel)
     local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"]) or {}
-    local levels = T_data.level or {}
-    local max_level = (((teshudata or {})["npc_22"] or {}).main_updata or {}).max_level or 0
-    local count = 0
-    if max_level <= 0 then
-        return 0, 0
+    local mainIdx = tonumber(T_data.main or 0) or 0
+    if mainIdx <= 0 then
+        return false, 0, 0
     end
-    for _, level in pairs(levels) do
-        if (tonumber(level) or 0) >= max_level then
-            count = count + 1
-        end
+    local cfg = (teshudata or {})["npc_22"] or {}
+    local pair = (cfg.awaken_pairs or {})[mainIdx]
+    if not pair or pair <= 5 then
+        return false, pair or 0, 0
     end
-    return count, max_level
+    local lv = tonumber((T_data.level or {})[tostring(pair)] or 0) or 0
+    return lv >= (needLevel or 3), pair, lv
 end
-
 local function _get_realm_level(play)
     return tonumber(getplaydef(play, VarCfg["U_境界修炼"][1])) or 0
 end
@@ -102,9 +100,9 @@ local function _check_task_condition(play, idx)
         end
         return true
     elseif idx == 2 then
-        local count = _count_full_linggen(play)
-        if count < 2 then
-            return false, string.format("需要任意2个灵根满级后才可激活，当前仅完成%d/2#57", count)
+        local ok, pair, lv = _has_awakened_main_linggen_level(play, 3)
+        if not ok then
+            return false, string.format("需要本命灵根对应的觉醒灵根达到|【Lv.3】#218|后才可激活，当前觉醒灵根等级为|【%d】#218|#57", lv or 0)
         end
         return true
     elseif idx == 3 then

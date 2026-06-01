@@ -410,7 +410,8 @@ end
 local function _qmdt_broadcast_question(cfg, q, qidx, duration)
     local msg = _qmdt_build_notice(q, qidx, cfg.question_count, duration, cfg.settle_before_sec)
     sendmovemsg("0", 1, 254, 0, 300, 5, msg)
-    sendmovemsg("0", 1, 254, 0, 270, 5, msg)
+    sendtopchatboardmsg("0", 1, 254, 0, 300, msg, 5)
+    -- sendmovemsg("0", 1, 254, 0, 270, 5, msg)
     for _, player in ipairs(getplayerlst() or {}) do
         sendluamsg(player, 101, 12, 1, 3, '{"sk":2,"kf":2,"idx":3}')
     end

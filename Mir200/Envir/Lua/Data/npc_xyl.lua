@@ -184,40 +184,54 @@ local function _xyl_has_linggen_feed(play)
     return false
 end
 
+-- 备注：是否已选择本命灵根
+local function _xyl_has_main_linggen(play)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
+    return (tonumber(data.main or 0) or 0) > 0
+end
+
+-- 备注：本命灵根是否升级过一次
+local function _xyl_has_main_linggen_upgraded(play)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
+    local mainIdx = tonumber(data.main or 0) or 0
+    if mainIdx <= 0 then
+        return false
+    end
+    local levels = data.level or {}
+    return (tonumber(levels[tostring(mainIdx)] or 0) or 0) > 1
+end
+
+-- 备注：是否已领取灵兽幼崽；老号已获得/孵化任意灵兽也视为完成
+local function _xyl_has_lingshou_hatched(play)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
+    if (tonumber(data.baby_choice or 0) or 0) > 0 then
+        return true
+    end
+    for _, mapName in ipairs({"ls", "ls_sp"}) do
+        local map = data[mapName] or {}
+        for _, v in pairs(map) do
+            if tonumber(v) and tonumber(v) > 0 then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+
+-- 备注：轩辕剑任务必须实际修复完成，不能只靠材料齐全跳过
+local function _xyl_has_xuanyuan_material(play)
+    local cfg = teshudata and teshudata["npc_601"]
+    return cfg and cfg.details and _xyl_has_title(play, cfg.details.ch)
+end
 -- 备注：江湖称号任务要求实际强化一次
 local function _xyl_has_jianghu_title(play)
     return (tonumber(getplaydef(play, VarCfg["U_江湖称号"]) or 0) or 0) > 0
 end
-
--- 备注：是否已装配主灵根
-local function _xyl_has_main_linggen(play)
-    local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
-    return (tonumber(data.main) or 0) > 0
-end
-
--- 备注：是否已装配副灵根
-local function _xyl_has_other_linggen(play)
-    local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
-    return (tonumber(data.other) or 0) > 0
-end
-
 -- 备注：气运占卜次数是否大于 0
 local function _xyl_has_divination(play)
     return (getplaydef(play, VarCfg["U_占卜次数"]) or 0) > 0
 end
-
--- 备注：主灵根是否为指定下标（1=金 2=木 3=水 4=火 5=土）
-local function _xyl_has_main_linggen_of(play, idx)
-    local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
-    return (tonumber(data.main) or 0) == (tonumber(idx) or 0)
-end
-
--- 备注：副灵根是否为指定下标（1=金 2=木 3=水 4=火 5=土）
-local function _xyl_has_other_linggen_of(play, idx)
-    local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
-    return (tonumber(data.other) or 0) == (tonumber(idx) or 0)
-end
-
 -- 备注：是否已打开过二大陆限时福利
 local function _xyl_has_second_continent_welfare_open(play)
     return (tonumber(getplaydef(play, "N$XYL2_WELFARE_OPEN") or 0) or 0) > 0
@@ -492,22 +506,10 @@ local function _xyl_check_task(play, name)
     local key = _xyl_norm_name(name)
     local special = {
         ["天书强化"] = _xyl_has_tianshu_level,
-        ["进行天书强化1次"] = _xyl_has_tianshu_level,
         ["初识仙法"] = _xyl_has_any_xianfa,
-        ["进行天书仙法抽取"] = _xyl_has_any_xianfa,
+        ["天书仙法"] = _xyl_has_any_xianfa,
         ["装备强化"] = _xyl_has_equip_strength,
         ["装备强化1次"] = _xyl_has_equip_strength,
-        ["升级灵根"] = _xyl_has_linggen_feed,
-        ["强化灵根"] = _xyl_has_linggen_feed,
-        ["强化灵根1次"] = _xyl_has_linggen_feed,
-        ["装配主灵根"] = _xyl_has_main_linggen,
-        ["装配火灵根至主灵根"] = function(play)
-            return _xyl_has_main_linggen_of(play, 4)
-        end,
-        ["装配副灵根"] = _xyl_has_other_linggen,
-        ["装配水灵根至副灵根"] = function(play)
-            return _xyl_has_other_linggen_of(play, 3)
-        end,
         ["气运占卜"] = _xyl_has_divination,
         ["江湖称号"] = _xyl_has_jianghu_title,
         ["引导江湖称号"] = _xyl_has_jianghu_title,
@@ -517,9 +519,11 @@ local function _xyl_check_task(play, name)
         ["引导幸运增幅"] = _xyl_has_second_continent_lucky_view,
         ["幸运增幅强化一次"] = _xyl_has_second_continent_lucky_view,
         ["限时福利"] = _xyl_has_second_continent_welfare_open,
-        ["引导点击限时福利NPC"] = _xyl_has_second_continent_welfare_open,
         ["洗炼天书"] = _xyl_has_second_continent_tianshu_refine,
         ["引导天书使者洗炼一次"] = _xyl_has_second_continent_tianshu_refine,
+        ["本命灵根"] = _xyl_has_main_linggen,
+        ["升级灵根"] = _xyl_has_main_linggen_upgraded,
+        ["灵兽孵化"] = _xyl_has_lingshou_hatched,
         ["筑基"] = _xyl_has_foundation_realm,
         ["提升修为至筑基境"] = _xyl_has_foundation_realm,
         ["转生·二"] = function(play)
@@ -572,10 +576,7 @@ local function _xyl_check_task(play, name)
         ["唐代古玩"] = _xyl_has_tang_antique,
         ["红色仙法"] = _xyl_has_red_xianfa,
         ["生肖守护"] = _xyl_has_shengxiao_guard,
-        ["修复轩辕剑"] = function(play)
-            local cfg = teshudata and teshudata["npc_601"]
-            return cfg and cfg.details and _xyl_has_title(play, cfg.details.ch)
-        end,
+        ["修复轩辕剑"] = _xyl_has_xuanyuan_material,
         ["灾厄入侵"] = function(play)
             local cfg = teshudata and teshudata["npc_46"]
             return cfg and _xyl_has_title(play, cfg.ch)
@@ -592,6 +593,20 @@ local npc_xyl = {
         {
             jq = {
                 {
+                    "限时福利",
+                    id = 999,
+                    jl = { { "剧情点", 1 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "限时福利")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    need_receive = false,
+                    yd = { 1, "二大陆主城", 105, 95, 106 },
+                    desc = "打开限时福利界面查看当前阶段奖励，3秒后按引导关闭界面继续任务。\n<font color='#F4D179'>目标：</font>成功查看限时福利\n<font color='#F4D179'>进度：</font>%s",
+                },
+                {
                     "天书强化",
                     id = 999,
                     jl = { { "剧情点", 1 }, { "仙法卷轴", 1 } },
@@ -606,11 +621,11 @@ local npc_xyl = {
                     desc = "前往天书界面完成首次强化，让天书正式发挥作用。\n<font color='#F4D179'>目标：</font>将天书提升至1级\n<font color='#F4D179'>进度：</font>%s",
                 },
                 {
-                    "初识仙法",
+                    "天书仙法",
                     id = 999,
                     jl = { { "剧情点", 1 } },
                     fwdjy = function(play)
-                        return _xyl_check_task(play, "初识仙法")
+                        return _xyl_check_task(play, "天书仙法")
                     end,
                     khdjy = function()
                         return true
@@ -618,19 +633,6 @@ local npc_xyl = {
                     need_receive = false,
                     yd = { 3, 14 },
                     desc = "在天书中完成一次仙法抽取，正式掌握仙法力量。\n<font color='#F4D179'>目标：</font>已获得任意仙法\n<font color='#F4D179'>进度：</font>%s",
-                },
-                {
-                    "限时福利",
-                    id = 999,
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "限时福利")
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    need_receive = false,
-                    yd = { 1, "二大陆主城", 105, 95, 106 },
-                    desc = "前往限时福利界面查看当前阶段奖励，熟悉前期补给来源。\n<font color='#F4D179'>目标：</font>成功打开限时福利\n<font color='#F4D179'>进度：</font>%s",
                 },
                 {
                     "扫荡野火帮（剧）",
@@ -653,6 +655,7 @@ local npc_xyl = {
                 {
                     "气运占卜",
                     id = 999,
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play)
                         return _xyl_check_task(play, "气运占卜")
                     end,
@@ -663,25 +666,18 @@ local npc_xyl = {
                     yd = { 1, "二大陆主城", 26, 110, 106 },
                     desc = "进行一次气运占卜，开启命格与气运加成的第一步。\n<font color='#F4D179'>目标：</font>完成1次气运占卜\n<font color='#F4D179'>进度：</font>%s",
                 },
-                {
-                    "引导江湖称号",
-                    id = 999,
-                    jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "引导江湖称号")
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    need_receive = false,
-                    yd = { 1, "二大陆主城", 43, 120, 106 },
-                    desc = "前往江湖称号界面完成一次称号提升，首次引导免费。\n<font color='#F4D179'>目标：</font>江湖称号强化1次\n<font color='#F4D179'>进度：</font>%s",
-                },
+            },
+            name = "初入江湖",
+            jqd = 0,
+            jl = { { "1元真实充值", 1 }, { "基础灵根解锁", 1 } },
+        },
+        {
+            jq = {
                 {
                     "深入野火（剧）",
                     tk = "npc_607",
                     id = 999,
-                    jl = { { "剧情点", 1 }, { "激活火灵根", 1 } },
+                    jl = { { "剧情点", 1 }, { "基础灵根解锁", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -695,34 +691,27 @@ local npc_xyl = {
                     yd = { 1, "野火帮大营", 607, 60, 279 },
                     desc = "清理现场后搜集罪证，将野火帮的恶行作为后续调查线索。\n<font color='#F4D179'>目标：</font>\n提交野火帮罪证×10\n<font color='#F4D179'>进度：</font>%s",
                 },
-            },
-            name = "初入江湖",
-            jqd = 0,
-            jl = { { "1元真实充值", 1 }, { "激活火灵根", 1 } },
-        },
-        {
-            jq = {
                 {
-                    "装配主灵根",
+                    "本命灵根",
                     id = 999,
-                    jl = { { "剧情点", 1 } },
+                    jl = { { "剧情点", 1 }, { "基础灵根解锁", 1 } },
                     fwdjy = function(play)
-                        return _xyl_check_task(play, "装配主灵根")
+                        return _xyl_check_task(play, "本命灵根")
                     end,
                     khdjy = function()
                         return true
                     end,
                     need_receive = false,
                     yd = { 3, 14 },
-                    desc = "前往灵根界面将火灵根装配到主灵根位置，先建立核心灵根方向。\n<font color='#F4D179'>目标：</font>主灵根为火灵根\n<font color='#F4D179'>进度：</font>%s",
+                    desc = "前往灵根界面，使用基础灵根解锁并选择一个本命灵根。\n<font color='#F4D179'>目标：</font>已选择本命灵根\n<font color='#F4D179'>进度：</font>%s",
                 },
                 {
-                    "聚宝盆",
+                    "聚宝盆任务",
                     tk = "npc_106",
                     id = 999,
                     jl = { { "剧情点", 1 } },
                     fwdjy = function(play)
-                        return _xyl_check_task(play, "聚宝盆")
+                        return _xyl_check_task(play, "聚宝盆任务")
                     end,
                     khdjy = function()
                         return true
@@ -730,33 +719,6 @@ local npc_xyl = {
                     need_receive = false,
                     yd = { 1, "极光城郊", 106, 83, 166 },
                     desc = "收集聚宝盆碎片×20并完成重铸，修复聚宝盆后可继续解锁后续成长内容。\n<font color='#F4D179'>目标：</font>修复聚宝盆\n<font color='#F4D179'>进度：</font>%s\n<font color='#FF0000'>首充礼包中赠送</font>",
-                },
-                {
-                    "洗炼天书",
-                    id = 999,
-                    jl = { { "剧情点", 1 }, { "激活水灵根", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "洗炼天书")
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    need_receive = false,
-                    yd = { 1, "二大陆主城", 104, 100, 106 },
-                    desc = "前往天书使者完成一次洗炼，熟悉天书附魔强化路线。\n<font color='#F4D179'>目标：</font>完成1次天书使者洗炼\n<font color='#F4D179'>进度：</font>%s",
-                },
-                {
-                    "装配副灵根",
-                    id = 999,
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "装配副灵根")
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    need_receive = false,
-                    yd = { 3, 14 },
-                    desc = "返回灵根界面将水灵根装配到副灵根位置，补齐第二道灵根属性。\n<font color='#F4D179'>目标：</font>副灵根为水灵根\n<font color='#F4D179'>进度：</font>%s",
                 },
                 {
                     "装备强化1次",
@@ -772,26 +734,6 @@ local npc_xyl = {
                     yd = { 1, "二大陆主城", 28, 115, 106 },
                     desc = "前往装备强化界面完成一次强化，让角色拥有更稳定的正向成长。\n<font color='#F4D179'>目标：</font>完成任意部位装备强化\n<font color='#F4D179'>进度：</font>%s",
                 },
-                {
-                    "引导幸运增幅",
-                    id = 999,
-                    jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "引导幸运增幅")
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    need_receive = false,
-                    yd = { 1, "二大陆主城", 25, 125, 106 },
-                    desc = "前往幸运增幅界面完成一次幸运强化，首次引导免费。\n<font color='#F4D179'>目标：</font>幸运增幅强化1次\n<font color='#F4D179'>进度：</font>%s",
-                },                },
-            name = "小试牛刀",
-            jqd = 4,
-            jl = { { "1元真实充值", 1 }, { "激活木灵根", 1 } },
-        },
-        {
-            jq = {
                 {
                     "守护森林（剧）",
                     tk = "npc_608",
@@ -809,6 +751,27 @@ local npc_xyl = {
                     need_receive = true,
                     yd = { 1, "神秘森林", 608, 52, 53 },
                     desc = "持续肃清林地中的杂兵，稳定整片区域的安全局势。\n<font color='#F4D179'>目标：</font>击杀怪物50只\n<font color='#F4D179'>进度：</font>%s",
+                },
+            },
+            name = "小试牛刀",
+            jqd = 5,
+            jl = { { "1元真实充值", 1 }, { "基础灵根解锁", 1 } },
+        },
+        {
+            jq = {
+                {
+                    "升级灵根",
+                    id = 999,
+                    jl = { { "剧情点", 1 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "升级灵根")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    need_receive = false,
+                    yd =  { 3, 14 },
+                    desc = "进入灵根升级界面，完成一次本命灵根升级。\n<font color='#F4D179'>目标：</font>本命灵根等级达到2级\n<font color='#F4D179'>进度：</font>%s",
                 },
                 {
                     "杀伐之路（剧）",
@@ -829,6 +792,20 @@ local npc_xyl = {
                     desc = "在血战中证明自己，继续推进主线杀伐节奏。\n<font color='#F4D179'>目标：</font>击杀怪物30只\n<font color='#F4D179'>进度：</font>%s",
                 },
                 {
+                    "灵兽孵化",
+                    id = 999,
+                    jl = { { "剧情点", 1 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "灵兽孵化")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    need_receive = false,
+                    yd = { 4, 105, 64, 1064 },
+                    desc = "前往灵兽契约界面领取一次灵兽幼崽。\n<font color='#F4D179'>目标：</font>领取灵兽幼崽\n<font color='#F4D179'>进度：</font>%s",
+                },
+                {
                     "掘墓人（剧）",
                     tk = "npc_610",
                     id = 999,
@@ -847,22 +824,23 @@ local npc_xyl = {
                     desc = "从古墓线索中带回关键古物，推进墓地支线真相。\n<font color='#F4D179'>目标：</font>提交唐三彩×5\n<font color='#F4D179'>进度：</font>%s",
                 },
                 {
-                    "强化灵根",
+                    "修复轩辕剑",
                     id = 999,
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play)
-                        return _xyl_check_task(play, "强化灵根")
+                        return _xyl_check_task(play, "修复轩辕剑")
                     end,
                     khdjy = function()
                         return true
                     end,
                     need_receive = false,
-                    yd = { 3, 14 },
-                    desc = "完成一次灵根培养，让修炼体系正式进入进阶阶段。\n<font color='#F4D179'>目标：</font>完成1次灵根升级\n<font color='#F4D179'>进度：</font>%s",
+                    yd = { 1, "二大陆主城", 601, 91, 116 },
+                    desc = "前往轩辕剑修复界面，提交材料完成修复。\n<font color='#F4D179'>目标：</font>修复轩辕剑并获得称号\n<font color='#F4D179'>进度：</font>%s",
                 },
             },
             name = "漫漫仙途",
-            jqd = 8,
-            jl = { { "1元真实充值", 1 }, { "激活木灵根", 1 } },
+            jqd = 10,
+            jl = { { "1元真实充值", 1 }, { "基础灵根解锁", 1 } },
         },
         {
             jq = {
@@ -885,6 +863,20 @@ local npc_xyl = {
                     desc = "夜探夜魔洞深处，清剿潜伏在暗处的精英魔物。\n<font color='#F4D179'>目标：</font>击杀精英怪10只\n<font color='#F4D179'>进度：</font>%s",
                 },
                 {
+                    "提升修为至筑基境",
+                    id = 999,
+                    jl = { { "剧情点", 1 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "提升修为至筑基境")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    need_receive = false,
+                    yd = { 3, 14 },
+                    desc = "提升修为境界并跨入筑基境，完成二大陆阶段性的修炼突破。\n<font color='#F4D179'>目标：</font>境界达到筑基境\n<font color='#F4D179'>进度：</font>%s",
+                },
+                {
                     "古刹之谜（剧）",
                     tk = "npc_609",
                     id = 999,
@@ -903,39 +895,11 @@ local npc_xyl = {
                     desc = "收集古刹异变残留物，拼出幕后事件的关键线索。\n<font color='#F4D179'>目标：</font>\n<font color='#F0B42A'>杀意碎片</font>   %s\n<font color='#F0B42A'>煞气</font>   %s",
                 },
                 {
-                    "修复轩辕剑（剧）",
+                    "完成2大陆转生",
                     id = 999,
                     jl = { { "剧情点", 1 } },
                     fwdjy = function(play)
-                        return _xyl_check_task(play, "修复轩辕剑")
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    need_receive = false,
-                    yd = { 1, "二大陆主城", 601, 91, 116 },
-                    desc = "沿着前置剧情完成轩辕剑修复，补足这一阶段的主线关键节点。\n<font color='#F4D179'>目标：</font>\n完成修复轩辕剑剧情\n<font color='#F4D179'>进度：</font>%s",
-                },
-                {
-                    "筑基",
-                    id = 999,
-                    jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "筑基")
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    need_receive = false,
-                    yd = { 3, 14 },
-                    desc = "提升修为境界并跨入筑基境，完成二大陆阶段性的修炼突破。\n<font color='#F4D179'>目标：</font>境界达到筑基境\n<font color='#F4D179'>进度：</font>%s",
-                },
-                {
-                    "完成转生",
-                    id = 999,
-                    jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "完成转生")
+                        return _xyl_check_task(play, "完成2大陆转生")
                     end,
                     khdjy = function()
                         return true
@@ -946,7 +910,7 @@ local npc_xyl = {
                 },
             },
             name = "融会贯通",
-            jqd = 11,
+            jqd = 15,
             jl = { { "1元真实充值", 1 }, { "仙法卷轴", 1 } },
         },
     },
@@ -1055,7 +1019,7 @@ local npc_xyl = {
             name = "灰界开篇",
             jqd = 11,
 
-            jl = { { "1元真实充值", 1 }, { "激活木灵根", 1 } },
+            jl = { { "1元真实充值", 1 }, { "基础灵根解锁", 1 } },
         },
         {
             jq = {
@@ -1109,7 +1073,7 @@ local npc_xyl = {
                 tip = "请先完成【开辟仙府】后再进入本章节",
             },
 
-            jl = {{ "1元真实充值", 2 }, { "激活金灵根", 1 }},
+            jl = {{ "1元真实充值", 2 }, { "基础灵根解锁", 1 }},
         },
         {
             jq = {
@@ -1189,7 +1153,7 @@ local npc_xyl = {
             name = "外海之旅",
             jqd = 17,
 
-            jl = {{ "1元真实充值", 2 }, { "激活土灵根", 1 }},
+            jl = {{ "1元真实充值", 2 }, { "基础灵根解锁", 1 }},
         },
         {
             jq = {
@@ -2815,8 +2779,3 @@ local npc_xyl = {
     },
 }
 return npc_xyl
-
-
-
-
-

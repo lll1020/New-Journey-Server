@@ -163,28 +163,17 @@ local daluditu = dofile('Envir/Lua/Data/daluditu.lua')
 -- 
 local function _ywl_activate_linggen(play, idx)
     local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
-    data.level = data.level or {}
-    local key = tostring(idx)
-    if data.level[key] then
-        return true
-    end
-    data.level[key] = 0
+    data = type(data) == "table" and data or {}
+    data.level = type(data.level) == "table" and data.level or {}
+    data.unlock_chance = (tonumber(data.unlock_chance or 0) or 0) + 1
     Player.setJsonVarByTable(play, VarCfg["T_灵根"], data)
-    local baseRatio = tonumber(_linggenConfig22 and _linggenConfig22.base_ratio or 0.4) or 0.4
-    local rootCfg = _linggenConfig22 and _linggenConfig22.main_r and _linggenConfig22.main_r[idx]
-    local addAttrs = {}
-    for _, one in ipairs(rootCfg and rootCfg.attr or {}) do
-        addAttrs[#addAttrs + 1] = {one[1], math.max(1, math.floor((tonumber(one[2]) or 0) * baseRatio + 0.5))}
-    end
-    if #addAttrs > 0 then
-        Player.updateSomeAddr(play, nil, addAttrs)
-    end
-    -- 按 602 的激活逻辑，这里只做激活与提示，不走副本流程
-    Player.sendmsgEx(play, "恭喜你，成功激活|【灵根】#218|")
+    Player.sendmsgEx(play, "获得基础灵根解锁|【1】#218|次，请前往灵根界面选择金木水火土之一")
     return true
 end
 local function _ywl_apply_special_reward(play, name, count)
-    if name == "激活金灵根" then
+    if name == "基础灵根解锁" then
+        return _ywl_activate_linggen(play, 0)
+    elseif name == "激活金灵根" then
         return _ywl_activate_linggen(play, 1)
     elseif name == "激活木灵根" then
         return _ywl_activate_linggen(play, 2)
@@ -491,7 +480,7 @@ local function _ywl_sync_auto_current_task(play)
         return false
     end
     Guard._syncingXylCurrentTask = true
-    if not Player.dl_sz(play, autoContinent) then
+    if not Player.dl_sz_notip(play, autoContinent) then
         Guard._syncingXylCurrentTask = false
         return false
     end
@@ -698,22 +687,18 @@ npc[11] = function(play, p2, p3, data) --异闻录
                 if shuju.yd[1] == 0 then
                     sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>当前剧情未配置传送坐标...</font>","Type":9}')
                 elseif shuju.yd[1] == 1 then
-                    if getplaydef(play, "N$战斗状态") < os.time() then
-                        local targetMap = shuju.yd[2]
-                        local targetNpc = shuju.yd[3]
-                        local targetX = shuju.yd[4]
-                        local targetY = shuju.yd[5]
-                        -- 这里不再对未完成三大陆主线的玩家自动兜底传送到灰界，是否可传送统一前置到 _ywl_can_transfer 里拦截。
-                        local skipNpcGuide = _ywl_is_auto_receive_map_task(play, sj, shuju)
-                        mapmove(play, targetMap, targetX, targetY, 5)
-                        if not skipNpcGuide then
-                            sendluamsg(play, 101, 0, 1, 1, '{"lx":2,"npcdt":"' .. targetMap .. '","npcid":' .. targetNpc .. ',"xx":' .. targetX .. ',"yy":' .. targetY .. '}')
-                        end
-                        sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
-                        is_transfer_ok = true
-                    else
-                        Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}')
+                    local targetMap = shuju.yd[2]
+                    local targetNpc = shuju.yd[3]
+                    local targetX = shuju.yd[4]
+                    local targetY = shuju.yd[5]
+                    -- 这里不再对未完成三大陆主线的玩家自动兜底传送到灰界，是否可传送统一前置到 _ywl_can_transfer 里拦截。
+                    local skipNpcGuide = _ywl_is_auto_receive_map_task(play, sj, shuju)
+                    mapmove(play, targetMap, targetX, targetY, 5)
+                    if not skipNpcGuide then
+                        sendluamsg(play, 101, 0, 1, 1, '{"lx":2,"npcdt":"' .. targetMap .. '","npcid":' .. targetNpc .. ',"xx":' .. targetX .. ',"yy":' .. targetY .. '}')
                     end
+                    sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
+                    is_transfer_ok = true
                 elseif shuju.yd[1] == 2 then
                     sendluamsg(play, 101, 0, 1, 1, '{"lx":1,"fx":1,"an":' .. shuju.yd[3] .. ',"ms":"点击按钮"}')
                     sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
@@ -724,7 +709,14 @@ npc[11] = function(play, p2, p3, data) --异闻录
                     sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
                     is_transfer_ok = true
                 elseif shuju.yd[1] == 4 then
-                    sendluamsg(play, shuju.yd[2], shuju.yd[3], shuju.yd[4], 0, "")
+                    local msgId = tonumber(shuju.yd[2]) or 0
+                    local targetNpc = tonumber(shuju.yd[3]) or 0
+                    local targetParam = tonumber(shuju.yd[4]) or targetNpc
+                    if msgId == 105 and Npclib and Npclib[targetNpc] and Npclib[targetNpc].main then
+                        Npclib[targetNpc].main(play, targetParam)
+                    else
+                        sendluamsg(play, msgId, targetNpc, targetParam, 0, "")
+                    end
                     sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
                     is_transfer_ok = true
                 end
@@ -872,7 +864,7 @@ npc[13] = function(play, p2, p3, data) -- 记录石
         --判断记录石信息是否存在
         if jlsinfo then
             --判断当前玩家是否处于战斗状态
-            if getplaydef(play, "N$战斗状态") < os.time() then
+            if getplaydef(play, "N$怪物脱战") < os.time() and getplaydef(play, "N$PK脱战") < os.time() then
                 --是不是有足够的灵石
                 if getbindmoney(play, "灵石") < 10 then
                     Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0500\'>灵石不足,无法传送...</font>","Type":9}')
@@ -2274,6 +2266,7 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
             sendluamsg(play, 101, 511, 1, 1, tbl2json(T_qrbq))
             if getplaydef(play, VarCfg.U_zxrw[1]) == 10 then
                 Player.zxrw_wancheng(play, 10, "福利")
+                sendluamsg(play, 101, 9999, 0, 0, "npc_fldt")
             end
         elseif p3 == 2 then --在线奖励
             -- 累计在线分钟数存储在 VarCfg.J_zxsj，对应配置 teshudata["fldt"]["zxjl"]

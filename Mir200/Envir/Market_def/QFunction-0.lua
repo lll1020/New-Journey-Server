@@ -131,6 +131,13 @@ local function _sc_has_patrol_privilege(play)
     local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
     return (tonumber(sc_data.main_claimed or sc_data.other_lb or 0) or 0) >= 1
 end
+local function _set_combat_until(play, varName, untilTime)
+    setplaydef(play, varName, untilTime)
+end
+local function _is_transfer_out_of_combat(play, now)
+    now = now or os.time()
+    return getplaydef(play, "N$怪物脱战") < now and getplaydef(play, "N$PK脱战") < now
+end
 --------------------传送戒指传送前触发触发-------------------
 function beginteleport(play)
     setplaydef(play,"S$dtm",getbaseinfo(play, 3))
@@ -147,7 +154,7 @@ function beginteleport(play)
         end
     end
     local du = getbaseinfo(play, 3)
-    if (daluditu[du] and daluditu[du] < 3) or (getplaydef(play,"N$战斗状态") < os.time()) then
+    if (daluditu[du] and daluditu[du] < 3) or _is_transfer_out_of_combat(play, os.time()) then
         setplaydef(play,"N$传送功能CD",sj)
         return true
     end
@@ -685,8 +692,9 @@ function attack(play, Target, Hiter, MagicId)
 				Buff[sy](play, 3, 0, Target, MagicId)
 			end
 		end
-        setplaydef(play,"N$战斗状态",os.time()+3)
+        _set_combat_until(play, "N$PK脱战", os.time() + 3)
 	else
+        _set_combat_until(play, "N$怪物脱战", os.time() + 3)
         bl = getplaydef(play, VarCfg.S_buffgwh)
         data = json2tbl(bl == '' and {} or bl)
         for k, v in pairs(data) do
@@ -799,7 +807,9 @@ end
 --------------------被攻击后触发-------------------
 function struck(play, Hiter, Target, MagicId)
     if getbaseinfo(Hiter, -1) then
-        setplaydef(play,"N$战斗状态",os.time()+3)
+        _set_combat_until(play, "N$PK脱战", os.time() + 3)
+    else
+        _set_combat_until(play, "N$怪物脱战", os.time() + 3)
     end
 end
 --------------------杀怪触发-------------------
@@ -1493,8 +1503,129 @@ function playreconnection(play)--	人物小退触发
         offlineplay(play,9999)
     end
 end
+-- 角色限时装备到期触发;
+function itemexpired(role,itemobj)
+    release_print("角色限时装备到期触发","角色ID："..getbaseinfo(role,1),"物品ID："..getbaseinfo(itemobj,1))
+    local petNpc = Npclib and Npclib[64]
+    if petNpc and type(petNpc.onBabyExpired) == "function" then
+        local ok, err = pcall(petNpc.onBabyExpired, role, itemobj)
+        if not ok then
+            release_print("[灵兽幼崽到期]处理失败", err)
+        end
+    end
+end
 --------------------宠物攻击伤害前触发-------------------
+local _lingshou_cut_damage = 10000
+local _lingshou_pet_index = {
+    ["麒麟"] = 1,
+    ["青龙"] = 2,
+    ["朱雀"] = 3,
+    ["白虎"] = 4,
+    ["玄武"] = 5,
+}
+
+local function _lingshou_get_owner(Hiter)
+    if Hiter and getbaseinfo(Hiter, ConstCfg.gbase.isplayer) then
+        return Hiter
+    end
+    return nil
+end
+
+local function _lingshou_get_level(play, petName)
+    local idx = _lingshou_pet_index[petName]
+    if not idx then return 0 end
+    local data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"]) or {}
+    if tonumber(data.dqzh or 0) ~= idx then
+        return 0
+    end
+    local ls = data.ls or {}
+    return tonumber(ls[tostring(idx)] or 0) or 0
+end
+
+local function _lingshou_has_active_skill(play, petName)
+    local level = _lingshou_get_level(play, petName)
+    local cfg = (teshudata and teshudata["npc_64"] and teshudata["npc_64"].config) or {}
+    local maxLevel = tonumber(cfg.wy and cfg.wy.max_level or 10) or 10
+    local det = cfg.wy and cfg.wy.det and cfg.wy.det[level] or nil
+    return level >= maxLevel and det and det.s_skill == true
+end
+
+local function _lingshou_skill_ready(play, petName, cd)
+    local now = os.time()
+    local key = "N$灵兽技能CD_" .. tostring(petName or "")
+    if now - (tonumber(getplaydef(play, key) or 0) or 0) < (tonumber(cd) or 10) then
+        return false
+    end
+    setplaydef(play, key, now)
+    return true
+end
+
+local function _lingshou_target_xy(Target)
+    return tonumber(getbaseinfo(Target, ConstCfg.gbase.x) or 0) or 0,
+        tonumber(getbaseinfo(Target, ConstCfg.gbase.y) or 0) or 0
+end
+
+local function _lingshou_root_level(play, idx)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"]) or {}
+    local level = data.level or {}
+    return tonumber(level[tostring(idx)] or 0) or 0
+end
+
+local function _lingshou_safe_effect(Target, effectId)
+    if playeffect and Target and effectId and effectId > 0 then
+        playeffect(Target, effectId, 0, 0, 1, 0, 0)
+    end
+end
+
+local _lingshou_skills = {
+    ["麒麟"] = function(play, Target)
+        local x, y = _lingshou_target_xy(Target)
+        rangeharm(play, x, y, 2, 1, 0, 0, 0, 2, 20310, 12)
+        changemode(Target, ConstCfg.pmode.stick, 1)
+        _lingshou_safe_effect(Target, 60456)
+    end,
+    ["青龙"] = function(play, Target)
+        local hurt = (_lingshou_root_level(play, 2) + _lingshou_root_level(play, 7)) * 10000
+        if hurt <= 0 then hurt = 10000 end
+        local x, y = _lingshou_target_xy(Target)
+        rangeharm(play, x, y, 4, hurt, 0, 0, 0, 2, 20310, 16)
+        _lingshou_safe_effect(Target, 60456)
+    end,
+    ["朱雀"] = function(play, Target)
+        local x, y = _lingshou_target_xy(Target)
+        rangeharm(play, x, y, 12, 10000, 0, 0, 0, 2, 20310, 24)
+        _lingshou_safe_effect(Target, 60456)
+    end,
+    ["白虎"] = function(play, Target)
+        local x, y = _lingshou_target_xy(Target)
+        rangeharm(play, x, y, 1, 50000, 0, 0, 0, 2, 20310, 12)
+        _lingshou_safe_effect(Target, 60456)
+    end,
+    ["玄武"] = function(play, Target)
+        local x, y = _lingshou_target_xy(Target)
+        rangeharm(play, x, y, 2, 50000, 0, 0, 0, 2, 20310, 12)
+        changemode(Target, ConstCfg.pmode.frost, 1)
+        _lingshou_safe_effect(Target, 60456)
+    end,
+}
+
 function attackdamagebb(self,Target,Hiter,MagicId,Damage)
+    if self and Target and not getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+        local petName = tostring(getbaseinfo(self, 1) or "")
+        if _lingshou_pet_index[petName] then
+            local play = _lingshou_get_owner(Hiter)
+            if play and _lingshou_has_active_skill(play, petName) and _lingshou_skill_ready(play, petName, 10) then
+                local skill = _lingshou_skills[petName]
+                if skill then
+                    local ok, err = pcall(skill, play, Target)
+                    if not ok then
+                        release_print("[灵兽技能]触发失败", petName, err)
+                    end
+                end
+            end
+            return (tonumber(Damage) or 0) + _lingshou_cut_damage
+        end
+    end
     return Damage
 end
 function canpaimaiitem(actor,itemIdx,itemMakeIndex,moneyType,price)
@@ -1724,6 +1855,10 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
 	elseif msgID == 101 then
 		Npclib['anniu'][p1](play, p2, p3, msgData)
     elseif msgID == 105 then
+        if p1 == 64 and p2 == 64 then
+            Npclib[64].main(play, 1064)
+            return
+        end
         if p1 > 200 and p1 < 400 then--地图NPC
             Npclib[200].main(play, p1, p2)
         elseif p1 > 500 and p1 < 520 then--大陆地图NPC
@@ -1733,4 +1868,3 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
         end
 	end
 end
-

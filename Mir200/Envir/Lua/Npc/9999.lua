@@ -65,27 +65,15 @@ local function _ff9999_activate_linggen(play, idx)
     local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
     data = type(data) == "table" and data or {}
     data.level = type(data.level) == "table" and data.level or {}
-    local key = tostring(idx)
-    if data.level[key] then
-        return true
-    end
-    data.level[key] = 0
+    data.unlock_chance = (tonumber(data.unlock_chance or 0) or 0) + 1
     Player.setJsonVarByTable(play, VarCfg["T_灵根"], data)
-    local cfg = Guard and Guard.getConfig and Guard.getConfig("npc_22") or nil
-    local baseRatio = tonumber(cfg and cfg.base_ratio or 0.4) or 0.4
-    local rootCfg = cfg and cfg.main_r and cfg.main_r[idx]
-    local addAttrs = {}
-    for _, one in ipairs(rootCfg and rootCfg.attr or {}) do
-        addAttrs[#addAttrs + 1] = { one[1], math.max(1, math.floor((tonumber(one[2]) or 0) * baseRatio + 0.5)) }
-    end
-    if #addAttrs > 0 then
-        Player.updateSomeAddr(play, nil, addAttrs)
-    end
-    Player.sendmsgEx(play, "恭喜你，成功激活|【灵根】#218|")
+    Player.sendmsgEx(play, "获得基础灵根解锁|【1】#218|次，请前往灵根界面选择金木水火土之一")
     return true
 end
 local function _ff9999_apply_special_reward(play, name)
-    if name == "激活金灵根" then
+    if name == "基础灵根解锁" then
+        return _ff9999_activate_linggen(play, 0)
+    elseif name == "激活金灵根" then
         return _ff9999_activate_linggen(play, 1)
     elseif name == "激活木灵根" then
         return _ff9999_activate_linggen(play, 2)
