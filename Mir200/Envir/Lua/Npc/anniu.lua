@@ -2525,6 +2525,28 @@ local function _zz516_get_cz502_requirement(config)
     end
     return tonumber((config or {}).need_cz502 or 0) or 0, 0
 end
+local function _zz516_condition_tip(config)
+    local needCz502, needCz502Idx = _zz516_get_cz502_requirement(config)
+    if needCz502 > 0 then
+        if needCz502Idx > 0 then
+            return string.format("请先领取第%s档在线充值礼包后再领取", tostring(needCz502Idx))
+        end
+        return string.format("请先领取%s档在线充值礼包后再领取", tostring(needCz502))
+    end
+    local needPay21 = tonumber((config or {}).need_pay21 or 0) or 0
+    if needPay21 > 0 then
+        return string.format("请先购买%s元礼包后再领取", tostring(needPay21))
+    end
+    local needMoney23 = tonumber((config or {}).need_money23 or 0) or 0
+    if needMoney23 > 0 then
+        return string.format("累计充值%s元后可领取", tostring(needMoney23))
+    end
+    local needCharge = tonumber((config or {}).need_charge or (config or {}).sgsl or 0) or 0
+    if needCharge > 0 then
+        return string.format("累计充值%s元后可领取", tostring(needCharge))
+    end
+    return "暂未达到领取条件"
+end
 local function _zz516_check_cfg(play, config)
     local needCz502 = _zz516_get_cz502_requirement(config)
     if needCz502 > 0 then
@@ -2638,7 +2660,7 @@ npc[516] = function(play, p2, p3, msgData) --至尊赞助
                     return
                 end
             end
-            sendluamsg(play, 101, 9999, 0, 0, "npc_anniu_516")
+            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0500\'>' .. _zz516_condition_tip(config) .. '...</font>","Type":9}')
             return
         end
         T_data[key] = 1

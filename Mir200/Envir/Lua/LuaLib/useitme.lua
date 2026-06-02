@@ -1,4 +1,6 @@
 release_print("useitme.lua")
+local RANDOM_TRANSFER_WINDOW_SEC = 3
+local RANDOM_TRANSFER_WINDOW_LIMIT = 3
 local RANDOM_TRANSFER_CD = 3
 local _equip_slots = {0,1,3,4,5,6,7,8,9,10,11,13,14,16,30,31,32,33,34,35,36,37,38,39,40,41}
 local function _has_equip_name(play, itemname)
@@ -17,6 +19,23 @@ local function _random_transfer_cd_left(play, now)
     local left = nextTime - (now or os.time())
     return left > 0 and left or 0
 end
+local function _record_random_transfer_use(play, now)
+    now = now or os.time()
+    local windowStart = tonumber(getplaydef(play, "N$随机传送窗口开始时间") or 0) or 0
+    local useCount = tonumber(getplaydef(play, "N$随机传送窗口次数") or 0) or 0
+    if windowStart <= 0 or now - windowStart >= RANDOM_TRANSFER_WINDOW_SEC then
+        windowStart = now
+        useCount = 0
+    end
+    useCount = useCount + 1
+    setplaydef(play, "N$随机传送窗口开始时间", windowStart)
+    setplaydef(play, "N$随机传送窗口次数", useCount)
+    if useCount >= RANDOM_TRANSFER_WINDOW_LIMIT then
+        setplaydef(play, "N$随机传送CD", now + RANDOM_TRANSFER_CD)
+        setplaydef(play, "N$随机传送窗口开始时间", 0)
+        setplaydef(play, "N$随机传送窗口次数", 0)
+    end
+end
 --------------------双击物品触发-------------------随机石
 function stdmodefunc9(play, item)
     setplaydef(play,"S$dtm",getbaseinfo(play, 3))
@@ -29,7 +48,7 @@ function stdmodefunc9(play, item)
     end
     if getplaydef(play,"N$PK脱战") < now or _has_equip_name(play, "遮云日") then
         map(play,getbaseinfo(play,3))
-        setplaydef(play, "N$随机传送CD", now + RANDOM_TRANSFER_CD)
+        _record_random_transfer_use(play, now)
         -- if getflagstatus(play, 300) == 1 then
         --     startautoattack(play)
         -- end

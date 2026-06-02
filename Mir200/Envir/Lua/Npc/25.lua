@@ -47,17 +47,14 @@ function npc.link(play,npcid,ew,aid)
                 gl = 100
             end
         end
-        local isFreeGuide = curLevel <= 0
-        if not isFreeGuide then
-            local name, num = Player.checkItemNumByTable(play, config.cost)
-            if name then
-                Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
-                return
-            end
-            Player.takeItemByTable(play, config.cost, ",幸运强化",nil)
+        local name, num = Player.checkItemNumByTable(play, config.cost)
+        if name then
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+            return
         end
+        Player.takeItemByTable(play, config.cost, ",幸运强化",nil)
 
-        if not isFreeGuide and FProbabilityHit(gl) then
+        if FProbabilityHit(gl) then
             if FairyFate and FairyFate.touch then FairyFate.touch(play, "strength_fail") end
             Player.sendmsgEx(play,  "很遗憾，幸运强化失败，请继续努力#57")
             return

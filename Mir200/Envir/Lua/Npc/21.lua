@@ -65,7 +65,7 @@ local function _guide_foundation_dan(play)
             return
         end
     end
-    sendluamsg(play, 101, 502, 8, 10, getplaydef(play, VarCfg.T_czlb))
+    sendluamsg(play, 100, 21, 2, 0, "")
 end
 
 local function _guide_cultivation_pill(play)
@@ -97,8 +97,13 @@ function npc.link(play,npcid,ew,aid)
     end
     ew = __guardAction
     -- npc_guard: 操作白名单（优化：限定合法操作编号）
-    local __guardAllowedActions = Guard.newActionSet({1})
+    local __guardAllowedActions = Guard.newActionSet({1, 2})
     if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
+        return
+    end
+
+    if ew == 2 then
+        sendluamsg(play, 101, 502, 8, 10, getplaydef(play, VarCfg.T_czlb))
         return
     end
 

@@ -514,6 +514,7 @@ local function _xyl_check_task(play, name)
         ["江湖称号"] = _xyl_has_jianghu_title,
         ["引导江湖称号"] = _xyl_has_jianghu_title,
         ["江湖称号强化一次"] = _xyl_has_jianghu_title,
+        ["江湖称号升级1次"] = _xyl_has_jianghu_title,
         ["幸运增幅"] = _xyl_has_second_continent_lucky_view,
         ["幸运强化"] = _xyl_has_second_continent_lucky_view,
         ["引导幸运增幅"] = _xyl_has_second_continent_lucky_view,
@@ -522,7 +523,6 @@ local function _xyl_check_task(play, name)
         ["洗炼天书"] = _xyl_has_second_continent_tianshu_refine,
         ["引导天书使者洗炼一次"] = _xyl_has_second_continent_tianshu_refine,
         ["本命灵根"] = _xyl_has_main_linggen,
-        ["升级灵根"] = _xyl_has_main_linggen_upgraded,
         ["灵兽孵化"] = _xyl_has_lingshou_hatched,
         ["筑基"] = _xyl_has_foundation_realm,
         ["提升修为至筑基境"] = _xyl_has_foundation_realm,
@@ -650,7 +650,7 @@ local npc_xyl = {
                     end,
                     need_receive = true,
                     yd = { 1, "野火帮", 603, 100, 223 },
-                    desc = "深入野火帮外围清剿匪徒，用连续战斗打开剧情缺口。\n<font color='#F4D179'>目标：</font>击杀怪物30只\n<font color='#F4D179'>进度：</font>%s",
+                    desc = "深入野火帮外围清剿匪徒，用连续战斗打开剧情缺口。\n<font color='#F4D179'>目标：</font>击杀怪物20只\n<font color='#F4D179'>进度：</font>%s",
                 },
                 {
                     "气运占卜",
@@ -750,7 +750,7 @@ local npc_xyl = {
                     end,
                     need_receive = true,
                     yd = { 1, "神秘森林", 608, 52, 53 },
-                    desc = "持续肃清林地中的杂兵，稳定整片区域的安全局势。\n<font color='#F4D179'>目标：</font>击杀怪物50只\n<font color='#F4D179'>进度：</font>%s",
+                    desc = "持续肃清林地中的杂兵，稳定整片区域的安全局势。\n<font color='#F4D179'>目标：</font>击杀怪物30只\n<font color='#F4D179'>进度：</font>%s",
                 },
             },
             name = "小试牛刀",
@@ -760,18 +760,18 @@ local npc_xyl = {
         {
             jq = {
                 {
-                    "升级灵根",
+                    "江湖称号升级1次",
                     id = 999,
                     jl = { { "剧情点", 1 } },
                     fwdjy = function(play)
-                        return _xyl_check_task(play, "升级灵根")
+                        return _xyl_check_task(play, "江湖称号升级1次")
                     end,
                     khdjy = function()
                         return true
                     end,
                     need_receive = false,
                     yd =  { 3, 14 },
-                    desc = "进入灵根升级界面，完成一次本命灵根升级。\n<font color='#F4D179'>目标：</font>本命灵根等级达到2级\n<font color='#F4D179'>进度：</font>%s",
+                    desc = "前往江湖称号界面，完成一次江湖称号升级。\n<font color='#F4D179'>目标：</font>江湖称号升级1次\n<font color='#F4D179'>进度：</font>%s",
                 },
                 {
                     "杀伐之路（剧）",

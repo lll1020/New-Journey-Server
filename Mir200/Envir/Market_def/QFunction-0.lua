@@ -1009,10 +1009,41 @@ function killplay(play,hiter)
         Player.sendmsgEx(hiter,1,'{"Msg":"比武大会：当前积分:'..jf..'","FColor":253,"BColor":255,"Type":1}')
     end
 end
+
+local function _is_gray_world_map_name(mapName)
+    mapName = tostring(mapName or "")
+    return string.find(mapName, "灰界", 1, true) ~= nil
+        or mapName == "虚妄山脉"
+        or mapName == "叹息旷野"
+        or mapName == "鬼嘲深渊"
+        or mapName == "禁忌之海"
+end
+
+local function _build_first_gray_world_death_mail_tip(play)
+    if not play then
+        return "", nil
+    end
+    if tonumber(getplaydef(play, "N$gray_world_death_mail") or 0) == 1 then
+        return "", nil
+    end
+    local mapName = tostring(getbaseinfo(play, 45) or "")
+    if not _is_gray_world_map_name(mapName) then
+        return "", nil
+    end
+    setplaydef(play, "N$gray_world_death_mail", 1)
+    local tip = "<br><font color='#ff0000'>灰界对玩家存在特殊压制BUFF：未破除前，你在灰界对怪伤害会降低，受到灰界怪物伤害会提升。</font><br><font color='#ff0000'>若想破除灰界对你的影响，请获得称号【诸邪退散】。</font>"
+    return tip, Player.jl_mail({{"诸邪退散[称号]", 0}})
+end
 --------------------玩家死亡触发-------------------
 function playdie(play, hiter)
     local dt,x,y = getbaseinfo(play,3),getbaseinfo(play,4),getbaseinfo(play,5)
-    sendmail("#" .. getbaseinfo(play, 1), 1, "系统提示", "您被["..getbaseinfo(hiter, 1).."]在"..getbaseinfo(play,45).."("..x.."."..y..")杀害了...")
+    local grayTip, grayIcon = _build_first_gray_world_death_mail_tip(play)
+    local deathContent = "您被["..getbaseinfo(hiter, 1).."]在"..getbaseinfo(play,45).."("..x.."."..y..")杀害了..." .. tostring(grayTip or "")
+    if grayIcon and grayIcon ~= "" then
+        sendmail("#" .. getbaseinfo(play, 1), 1, "系统提示", deathContent, grayIcon)
+    else
+        sendmail("#" .. getbaseinfo(play, 1), 1, "系统提示", deathContent)
+    end
     setplaydef(play,VarCfg.U_bssl,getplaydef(play,VarCfg.U_bssl)+1)
     GameEvent.push(EventCfg.onPlaydie, play, hiter)
     if getbaseinfo(hiter,-1) then
