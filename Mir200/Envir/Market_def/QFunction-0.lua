@@ -230,6 +230,10 @@ function entermap(play)
     if Login and Login.refreshGrayWorldVision then
         Login.refreshGrayWorldVision(play)
     end
+    if dt == "正邪大战" then
+        zxdz_apply_camp(play)
+        zxdz_send_rank(play)
+    end
     GameEvent.push(EventCfg.goSwitchMap, play)
 end
 -- 进入/离开队伍触发（引擎回调入口）
@@ -259,7 +263,7 @@ end
 function checkdropuseitems(play,item_wz,item_id,bool)
     local zb_dx = linkbodyitem(play,item_wz)
     local dt = getbaseinfo(play, 3)
-    if dt == "阵营对抗" or dt == "跨服阵营对抗" or dt == "武林盟主" then
+    if dt == "阵营对抗" or dt == "跨服阵营对抗" or dt == "武林盟主" or dt == "正邪大战" then
         return false
     end
     -- 天书仙法：守财奴每日一次防掉落
@@ -491,6 +495,377 @@ function takeoffex(play, item, where, Name, makeindex)
     GameEvent.push(EventCfg.onTakeOffEx, play, item, where, Name, makeindex)
 end
 --------------------攻击前触发-------------------
+local function _magtag_tonum(v, d)
+    v = tonumber(v)
+    if v == nil then
+        return d or 0
+    end
+    return v
+end
+
+local _magtag_skill_root = {
+    [1007] = 1, [1008] = 2, [1009] = 3, [1010] = 4, [1011] = 5,
+    [1012] = 6, [1013] = 7, [1014] = 8, [1015] = 9, [1016] = 10,
+}
+
+local function _magtag_skill_level(play, skillId)
+    local rootIdx = _magtag_skill_root[tonumber(skillId or 0)]
+    local lv = 0
+    if rootIdx and Player and Player.getJsonTableByVar and VarCfg and VarCfg["T_灵根"] then
+        local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"]) or {}
+        local levels = type(data.level) == "table" and data.level or {}
+        lv = tonumber(levels[tostring(rootIdx)] or 0) or 0
+    end
+    if lv <= 0 then
+        lv = 1
+    end
+    if lv < 1 then lv = 1 end
+    if lv > 10 then lv = 10 end
+    return math.floor(lv)
+end
+local function _magtag_lerp(lv, minValue, maxValue)
+    lv = math.max(1, math.min(10, _magtag_tonum(lv, 1)))
+    if lv <= 1 then return minValue end
+    if lv >= 10 then return maxValue end
+    return math.floor(minValue + (maxValue - minValue) * (lv - 1) / 9 + 0.5)
+end
+
+local function _magtag_now()
+    return _magtag_tonum(os.time(), 0)
+end
+
+local function _magtag_cd_ready(play, skillId, cd)
+    local now = _magtag_now()
+    local key = "N$magtag_cd_" .. tostring(skillId)
+    local last = _magtag_tonum(getplaydef(play, key), 0)
+    cd = _magtag_tonum(cd, 0)
+    if cd > 0 and now - last < cd then
+        local left = cd - (now - last)
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>Skill cooldown '..left..'s</font>","Type":9}')
+        return false
+    end
+    setplaydef(play, key, now)
+    return true
+end
+
+local function _magtag_attack(play)
+    local dc2 = 0
+    if ConstCfg and ConstCfg.gbase and ConstCfg.gbase.dc2 then
+        dc2 = _magtag_tonum(getbaseinfo(play, ConstCfg.gbase.dc2), 0)
+    end
+    dc2 = math.max(dc2, _magtag_tonum(getbaseinfo(play, 20), 0))
+    if dc2 <= 0 then dc2 = 1 end
+    return dc2
+end
+
+local function _magtag_xy(play)
+    local x = _magtag_tonum(getbaseinfo(play, 4), 0)
+    local y = _magtag_tonum(getbaseinfo(play, 5), 0)
+    return x, y
+end
+
+local function _magtag_forward_xy(play, step)
+    local x, y = _magtag_xy(play)
+    local dirId = ConstCfg and ConstCfg.gbase and ConstCfg.gbase.dir or 69
+    local dir = _magtag_tonum(getbaseinfo(play, dirId), 0)
+    local dirs = {
+        [0] = {0, -1}, [1] = {1, -1}, [2] = {1, 0}, [3] = {1, 1},
+        [4] = {0, 1}, [5] = {-1, 1}, [6] = {-1, 0}, [7] = {-1, -1},
+    }
+    local d = dirs[dir] or dirs[0]
+    step = math.max(1, _magtag_tonum(step, 1))
+    return x + d[1] * step, y + d[2] * step
+end
+
+local function _magtag_range_damage(play, range, pct, hits, effectId, maxTargets, centerX, centerY)
+    local x, y = centerX, centerY
+    if not x or not y then
+        x, y = _magtag_xy(play)
+    end
+    local hurt = math.floor(_magtag_attack(play) * _magtag_tonum(pct, 100) / 100)
+    if hurt <= 0 then hurt = 1 end
+    hits = math.max(1, _magtag_tonum(hits, 1))
+    for _ = 1, hits do
+        rangeharm(play, x, y, range or 1, hurt, 0, 0, 0, 2, effectId or 20310, maxTargets or 20)
+    end
+    return hurt
+end
+
+local function _magtag_play_effect(obj, effectId)
+    if obj and effectId and effectId > 0 and playeffect then
+        playeffect(obj, effectId, 0, 0, 1, 0, 0)
+    end
+end
+
+local function _magtag_cast_feedback(play, name)
+    if release_print then
+        release_print("linggen_skill_cast", tostring(getbaseinfo(play, 1) or ""), tostring(name or ""), tostring(getbaseinfo(play, 3) or ""), tostring(getbaseinfo(play, 4) or ""), tostring(getbaseinfo(play, 5) or ""))
+    end
+    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>释放【' .. tostring(name or '') .. '】</font>","Type":9}')
+end
+local function _magtag_heal_self(play, pct)
+    local maxhp = _magtag_tonum(getbaseinfo(play, 10), 0)
+    if maxhp <= 0 then return 0 end
+    local heal = math.floor(maxhp * _magtag_tonum(pct, 0) / 100)
+    if heal > 0 then
+        humanhp(play, "+", heal, 5, 0, play)
+    end
+    return heal
+end
+
+local function _magtag_set_until(play, key, duration, value)
+    setplaydef(play, "N$magtag_" .. key .. "_until", _magtag_now() + _magtag_tonum(duration, 0))
+    if value ~= nil then
+        setplaydef(play, "N$magtag_" .. key, value)
+    end
+end
+
+local function _magtag_is_active(play, key)
+    return _magtag_tonum(getplaydef(play, "N$magtag_" .. key .. "_until"), 0) >= _magtag_now()
+end
+
+local function _magtag_clear(play, key)
+    setplaydef(play, "N$magtag_" .. key .. "_until", 0)
+    setplaydef(play, "N$magtag_" .. key, 0)
+end
+
+local function _magtag_consume_lucky_marks(play)
+    local keys = {"N$magtag_lucky_mark", "N$lucky_mark", "N$xianfa_lucky_mark"}
+    local count = 0
+    for _, key in ipairs(keys) do
+        local v = _magtag_tonum(getplaydef(play, key), 0)
+        if v > count then count = v end
+    end
+    for _, key in ipairs(keys) do
+        setplaydef(play, key, 0)
+    end
+    return count
+end
+
+local function _magtag_is_red_mon(Target)
+    if not Target or getbaseinfo(Target, -1) then return false end
+    local monName = tostring(getbaseinfo(Target, 1) or "")
+    if monName == "" then return false end
+    local idx = getdbmonfieldvalue(monName, "idx")
+    return _magtag_tonum(getmonbaseinfo(idx, 2), 0) == 249
+end
+
+local function _magtag_open_drop_window(play, skillId, lv, duration, count, freezeSec)
+    local marks = _magtag_consume_lucky_marks(play)
+    local per = _magtag_lerp(lv, 1, 10)
+    _magtag_set_until(play, "drop", duration, skillId)
+    setplaydef(play, "N$magtag_drop_count", count or 1)
+    setplaydef(play, "N$magtag_drop_lucky_marks", marks)
+    setplaydef(play, "N$magtag_drop_bonus_pct", marks * per)
+    setplaydef(play, "N$magtag_drop_freeze_sec", freezeSec or 0)
+    setplaydef(play, "S$magtag_drop_target", "")
+    setplaydef(play, "S$magtag_drop_map", "")
+    setplaydef(play, "N$magtag_drop_applied", 0)
+    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>Drop window active.</font>","Type":9}')
+end
+
+local _magtag_drop_pool_cache = nil
+
+local function _magtag_trim(v)
+    return tostring(v or ""):gsub("^%s*(.-)%s*$", "%1")
+end
+
+local function _magtag_load_drop_pool()
+    if _magtag_drop_pool_cache then
+        return _magtag_drop_pool_cache
+    end
+    local cache = {headers = {}, byHeader = {}}
+    _magtag_drop_pool_cache = cache
+    if not io or not io.open then
+        return cache
+    end
+    local paths = {
+        "Envir/QuestDiary/功能数据/通用爆率/地图专属装备池.txt",
+        "./Envir/QuestDiary/功能数据/通用爆率/地图专属装备池.txt",
+        "E:/新起航/服务端/Mir200/Envir/QuestDiary/功能数据/通用爆率/地图专属装备池.txt",
+    }
+    local text = nil
+    for _, path in ipairs(paths) do
+        local f = io.open(path, "r")
+        if f then
+            text = f:read("*a")
+            f:close()
+            break
+        end
+    end
+    if not text then
+        return cache
+    end
+    local current = nil
+    for line in (text .. "\n"):gmatch("([^\n]*)\n") do
+        line = line:gsub("\r$", "")
+        local header = line:match("^%s*%[(@[^%]]+)%]")
+        if header then
+            current = header
+            if not cache.byHeader[current] then
+                cache.byHeader[current] = {}
+                table.insert(cache.headers, current)
+            end
+        elseif current then
+            local rate, item = line:match("^%s*1/(%d+)%s+(.+)%s*$")
+            item = _magtag_trim(item)
+            if rate and item ~= "" then
+                table.insert(cache.byHeader[current], {rate = _magtag_tonum(rate, 0), name = item})
+            end
+        end
+    end
+    return cache
+end
+
+local function _magtag_pick_drop_item_by_map(mapName)
+    mapName = _magtag_trim(mapName)
+    if mapName == "" then
+        return ""
+    end
+    local cache = _magtag_load_drop_pool()
+    local hit = nil
+    for _, header in ipairs(cache.headers or {}) do
+        if header:find(mapName, 1, true) then
+            hit = header
+            break
+        end
+    end
+    if not hit then
+        for _, header in ipairs(cache.headers or {}) do
+            local shortName = header:gsub("^@[^_]*_", ""):gsub("专属池$", "")
+            if shortName ~= "" and mapName:find(shortName, 1, true) then
+                hit = header
+                break
+            end
+        end
+    end
+    local list = hit and cache.byHeader[hit] or nil
+    if not list or #list == 0 then
+        return ""
+    end
+    local candidates = {}
+    for _, item in ipairs(list) do
+        if _magtag_tonum(item.rate, 0) > 0 and _magtag_tonum(item.rate, 0) <= 50000 then
+            table.insert(candidates, item)
+        end
+    end
+    if #candidates == 0 then
+        candidates = list
+    end
+    table.sort(candidates, function(a, b)
+        return _magtag_tonum(a.rate, 0) < _magtag_tonum(b.rate, 0)
+    end)
+    local limit = math.min(#candidates, 5)
+    return candidates[math.random(limit)].name or ""
+end
+
+local function _magtag_try_extra_drop(play, mob)
+    if not play or not mob or not _magtag_is_active(play, "drop") then
+        return
+    end
+    if not _magtag_is_red_mon(mob) then
+        return
+    end
+    local mobName = tostring(getbaseinfo(mob, 1) or "")
+    local targetName = tostring(getplaydef(play, "S$magtag_drop_target") or "")
+    if targetName ~= "" and mobName ~= targetName then
+        return
+    end
+    local mapName = tostring(getbaseinfo(mob, 3) or "")
+    local mapTitle = tostring(getbaseinfo(mob, 45) or "")
+    local count = math.max(1, _magtag_tonum(getplaydef(play, "N$magtag_drop_count"), 1))
+    local dropped = 0
+    for _ = 1, count do
+        local itemName = _magtag_pick_drop_item_by_map(mapName)
+        if itemName == "" then
+            itemName = _magtag_pick_drop_item_by_map(mapTitle)
+        end
+        if itemName ~= "" then
+            if additemtodroplist then
+                additemtodroplist(play, mob, itemName)
+            else
+                giveitem(play, itemName, 1, 0, "magtag_extra_drop")
+            end
+            dropped = dropped + 1
+        end
+    end
+    if dropped > 0 then
+        sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>Extra drop triggered.</font>","Type":9}')
+    end
+    _magtag_clear(play, "drop")
+    setplaydef(play, "N$magtag_drop_applied", 0)
+end
+local function _magtag_on_attack_target(play, Target, Damage, MagicId)
+    if not Target then return Damage end
+    local now = _magtag_now()
+    Damage = _magtag_tonum(Damage, 0)
+    if _magtag_is_active(play, "jingang") and getbaseinfo(Target, -1) then
+        local maxhp = _magtag_tonum(getbaseinfo(Target, 10), 0)
+        local hurt = math.floor(maxhp * 15 / 100)
+        local cap = _magtag_attack(play) * 10
+        if cap > 0 and hurt > cap then hurt = cap end
+        if hurt > 0 then
+            humanhp(Target, "-", hurt, 110, 0, play, 1)
+            _magtag_play_effect(Target, 60451)
+        end
+        _magtag_clear(play, "jingang")
+    end
+    local thunderHits = _magtag_tonum(getplaydef(play, "N$magtag_thunder_hits"), 0)
+    if thunderHits > 0 and _magtag_is_active(play, "thunder") then
+        if ConstCfg and ConstCfg.pmode and ConstCfg.pmode.palsy then
+            changemode(Target, ConstCfg.pmode.palsy, 1)
+        elseif ConstCfg and ConstCfg.pmode and ConstCfg.pmode.stick then
+            changemode(Target, ConstCfg.pmode.stick, 1)
+        end
+        setplaydef(play, "N$magtag_thunder_hits", thunderHits - 1)
+        if getbaseinfo(Target, -1) then
+            setplaydef(Target, "N$magtag_break_def_until", now + 1)
+        end
+        _magtag_play_effect(Target, 60452)
+    end
+    if _magtag_is_active(play, "drop") and _magtag_is_red_mon(Target) then
+        local freezeSec = _magtag_tonum(getplaydef(play, "N$magtag_drop_freeze_sec"), 0)
+        if freezeSec > 0 and ConstCfg and ConstCfg.pmode and ConstCfg.pmode.frost then
+            changemode(Target, ConstCfg.pmode.frost, freezeSec)
+            _magtag_play_effect(Target, 60385)
+        end
+        setplaydef(play, "S$magtag_drop_target", tostring(getbaseinfo(Target, 1) or ""))
+        setplaydef(play, "S$magtag_drop_map", tostring(getbaseinfo(Target, 3) or ""))
+        setplaydef(play, "N$magtag_drop_applied", 1)
+    end
+    return Damage
+end
+
+local function _magtag_apply_defense(play, Hiter, final)
+    final = _magtag_tonum(final, 0)
+    if final <= 0 then return final end
+    if _magtag_tonum(getplaydef(play, "N$magtag_break_def_until"), 0) >= _magtag_now() then
+        final = math.floor(final * 1.10)
+    end
+    local reduce = 0
+    if _magtag_is_active(play, "heal_reduce") then
+        reduce = reduce + _magtag_tonum(getplaydef(play, "N$magtag_heal_reduce"), 0)
+    end
+    if _magtag_is_active(play, "shanhe") then
+        reduce = reduce + _magtag_tonum(getplaydef(play, "N$magtag_shanhe_reduce"), 0)
+        local block = _magtag_tonum(getplaydef(play, "N$magtag_shanhe_block"), 0)
+        if block > 0 and math.random(100) <= block then
+            final = 0
+        end
+        local reflect = _magtag_tonum(getplaydef(play, "N$magtag_shanhe_reflect"), 0)
+        if reflect > 0 and Hiter then
+            humanhp(Hiter, "-", math.floor(final * reflect / 100), 110, 0, play, 1)
+        end
+    end
+    if _magtag_is_active(play, "barrier") then
+        reduce = reduce + _magtag_tonum(getplaydef(play, "N$magtag_barrier_reduce"), 0)
+    end
+    if reduce > 0 then
+        if reduce > 80 then reduce = 80 end
+        final = math.floor(final * (100 - reduce) / 100)
+    end
+    return final
+end
 function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
     GameEvent.push(EventCfg.onAttackDamage, play, Target, Hiter, MagicId, Damage, Model)
 	if getbaseinfo(Target, -1) then
@@ -534,6 +909,7 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
         if TianMingDaoPanAdjustPlayerDamage then
             Damage = TianMingDaoPanAdjustPlayerDamage(play, Target, Damage)
         end
+        Damage = _magtag_on_attack_target(play, Target, Damage, MagicId)
 		return Damage
 	else
         GameEvent.push(EventCfg.onAttackDamageMonster, play, Target, Damage, MagicId, Model)
@@ -655,6 +1031,7 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
         if huijie_damage_rate ~= 1 then
             Damage = math.floor(Damage * huijie_damage_rate)
         end
+        Damage = _magtag_on_attack_target(play, Target, Damage, MagicId)
 		return Damage
 	end
 end
@@ -801,6 +1178,7 @@ function struckdamage(play, Hiter, Target, MagicId, Damage)
             end
         end
     end
+    realDamage = _magtag_apply_defense(play, Hiter, realDamage)
     GameEvent.push(EventCfg.onProHarm, play, realDamage, Hiter, Target, MagicId)
     return realDamage
 end
@@ -815,6 +1193,7 @@ end
 --------------------杀怪触发-------------------
 function killmon(play, mob)
     GameEvent.push(EventCfg.onKillMon, play, mob, getbaseinfo(mob, ConstCfg.gbase.idx))
+    _magtag_try_extra_drop(play, mob)
     if BwczApi and BwczApi.get_cfg then
         local bwcz_cfg = BwczApi.get_cfg()
         if bwcz_cfg and getsysvar(VarCfg["G_保卫村庄状态"]) == 1 then
@@ -994,6 +1373,153 @@ function revival(play)
         addbuff(play,20060,getbaseinfo(play,44))
     end
 end
+--------------------正邪大战-------------------
+local _ZXDZ_MAP_NAME = "正邪大战"
+local _ZXDZ_SCORE_VAR = "正邪大战"
+local _ZXDZ_CAMP_VAR = "N$正邪大战阵营"
+local _ZXDZ_STATUS_VAR = "G_正邪大战状态"
+local _ZXDZ_RED_SCORE_VAR = "G_正邪大战正方积分"
+local _ZXDZ_BLUE_SCORE_VAR = "G_正邪大战邪方积分"
+local _ZXDZ_REWARDS = {
+    rank = {{"跨服积分", 30}, {"跨服积分", 20}, {"跨服积分", 15}},
+    win = {{"跨服积分", 50}},
+    join = {{"跨服积分", 20}},
+}
+local function _zxdz_toint(v, d)
+    return tonumber(v or d or 0) or d or 0
+end
+local function _zxdz_add_kf_point(play, amount)
+    amount = _zxdz_toint(amount, 0)
+    if not play or amount <= 0 then return end
+    local varName = VarCfg["U_跨服积分"] or "U49"
+    setplaydef(play, varName, _zxdz_toint(getplaydef(play, varName), 0) + amount)
+end
+local function _zxdz_give_reward(play, reward, reason)
+    if not play or type(reward) ~= "table" then return end
+    local mail = {}
+    for _, item in ipairs(reward) do
+        if type(item) == "table" then
+            local name = tostring(item[1] or "")
+            local count = _zxdz_toint(item[2], 0)
+            if name == "跨服积分" then
+                _zxdz_add_kf_point(play, count)
+            elseif name ~= "" and count > 0 then
+                mail[#mail + 1] = {name, count}
+            end
+        end
+    end
+    if #mail > 0 then
+        sendmail(getbaseinfo(play, 2), 0, reason or "正邪大战", "正邪大战奖励已发放，请及时提取。", Player.jl_mail(mail))
+    end
+end
+function zxdz_send_rank(play)
+    if not play then return end
+    sendluamsg(play, 101, 498, 1, 0, '{"pmsj":' .. tbl2json(sorthumvar(_ZXDZ_SCORE_VAR, 1, 1, 5)) .. ',"grjf":' .. _zxdz_toint(getplayvar(play, "HUMAN", _ZXDZ_SCORE_VAR), 0) .. ',"hjf":' .. _zxdz_toint(getsysvar(_ZXDZ_RED_SCORE_VAR), 0) .. ',"ljf":' .. _zxdz_toint(getsysvar(_ZXDZ_BLUE_SCORE_VAR), 0) .. '}')
+end
+function zxdz_apply_camp(play)
+    if not play then return 0 end
+    local camp = _zxdz_toint(getplaydef(play, _ZXDZ_CAMP_VAR), 0)
+    if camp <= 0 then
+        local red = _zxdz_toint(getsysvar(_ZXDZ_RED_SCORE_VAR), 0)
+        local blue = _zxdz_toint(getsysvar(_ZXDZ_BLUE_SCORE_VAR), 0)
+        camp = red <= blue and 1 or 2
+        setplaydef(play, _ZXDZ_CAMP_VAR, camp)
+    end
+    if camp == 1 then
+        setcamp(play, 1)
+        changenamecolor(play, 69)
+        playeffect(play, 11502, 0, 0, 0, 1, 0)
+    else
+        setcamp(play, 2)
+        changenamecolor(play, 180)
+        playeffect(play, 11506, 0, 0, 0, 1, 0)
+    end
+    setattackmode(play, 8, 100)
+    return camp
+end
+function zxdz_enter(play)
+    if not checkkuafu(play) and not checkkuafuconnect() then
+        Player.sendmsgEx(play, "跨服未开启，暂时无法参加正邪大战#57")
+        return false
+    end
+    if _zxdz_toint(getsysvar(_ZXDZ_STATUS_VAR), 0) ~= 1 then
+        Player.sendmsgEx(play, "正邪大战当前未开启#57")
+        return false
+    end
+    zxdz_apply_camp(play)
+    mapmove(play, _ZXDZ_MAP_NAME, 33, 37, 8)
+    return true
+end
+function jqr_zxdz_start()
+    clearhumcustvar("*", _ZXDZ_SCORE_VAR)
+    setsysvar(_ZXDZ_STATUS_VAR, 1)
+    setsysvar(_ZXDZ_RED_SCORE_VAR, 0)
+    setsysvar(_ZXDZ_BLUE_SCORE_VAR, 0)
+    setenvirontimer(_ZXDZ_MAP_NAME, 8, 3, "@hd_tcppk," .. _ZXDZ_MAP_NAME)
+    sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《正邪大战》已开启，自动分配正邪阵营，请尽快参加活动...")
+    sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《正邪大战》已开启，自动分配正邪阵营，请尽快参加活动...")
+    for _, player in ipairs(getplayerlst() or {}) do
+        sendluamsg(player, 101, 12, 1, 8, '{"sk":10,"kf":2,"idx":8}')
+    end
+end
+function zxdz_map_tick()
+    if _zxdz_toint(getsysvar(_ZXDZ_STATUS_VAR), 0) ~= 1 then return end
+    local players = getobjectinmap(_ZXDZ_MAP_NAME, 34, 33, 100, 1)
+    for _, v in pairs(players or {}) do
+        local camp = zxdz_apply_camp(v)
+        local jf = getplayvar(v, "HUMAN", _ZXDZ_SCORE_VAR) + 1
+        setplayvar(v, "HUMAN", _ZXDZ_SCORE_VAR, jf, 1)
+        if camp == 1 then
+            setsysvar(_ZXDZ_RED_SCORE_VAR, _zxdz_toint(getsysvar(_ZXDZ_RED_SCORE_VAR), 0) + 1)
+        else
+            setsysvar(_ZXDZ_BLUE_SCORE_VAR, _zxdz_toint(getsysvar(_ZXDZ_BLUE_SCORE_VAR), 0) + 1)
+        end
+        zxdz_send_rank(v)
+    end
+end
+
+function jqr_zxdz_end()
+    setenvirofftimer(_ZXDZ_MAP_NAME, 8)
+    setsysvar(_ZXDZ_STATUS_VAR, 0)
+    local rank = sorthumvar(_ZXDZ_SCORE_VAR, 1, 1, 5) or {}
+    local top = {}
+    for i = 1, #rank, 2 do
+        local pos = math.floor((i + 1) / 2)
+        local name = rank[i]
+        local score = _zxdz_toint(rank[i + 1], 0)
+        if pos <= 3 and name and score > 0 then
+            local p = getplayerbyname(name)
+            if p then
+                top[getbaseinfo(p, 2)] = true
+                _zxdz_give_reward(p, _ZXDZ_REWARDS.rank[pos], "正邪大战第" .. pos .. "名奖励")
+            end
+        end
+    end
+    local redScore = _zxdz_toint(getsysvar(_ZXDZ_RED_SCORE_VAR), 0)
+    local blueScore = _zxdz_toint(getsysvar(_ZXDZ_BLUE_SCORE_VAR), 0)
+    local winCamp = redScore >= blueScore and 1 or 2
+    for _, player in ipairs(getplayerlst() or {}) do
+        if _zxdz_toint(getplayvar(player, "HUMAN", _ZXDZ_SCORE_VAR), 0) > 0 then
+            local roleId = getbaseinfo(player, 2)
+            if not top[roleId] then
+                local camp = _zxdz_toint(getplaydef(player, _ZXDZ_CAMP_VAR), 0)
+                _zxdz_give_reward(player, camp == winCamp and _ZXDZ_REWARDS.win or _ZXDZ_REWARDS.join, camp == winCamp and "正邪大战胜利方奖励" or "正邪大战失败方奖励")
+            end
+        end
+        if getbaseinfo(player, 3) == _ZXDZ_MAP_NAME then
+            sendluamsg(player, 101, 498, 2, 0, "")
+            mapmove(player, "xtc", 137, 138, 8)
+        end
+        if _zxdz_toint(getplaydef(player, _ZXDZ_CAMP_VAR), 0) > 0 then
+            setplaydef(player, _ZXDZ_CAMP_VAR, 0)
+            setcamp(player, 0)
+            changenamecolor(player, 255)
+        end
+        sendluamsg(player, 101, 12, 4, 8, getsysvar(VarCfg.G_kqfz))
+    end
+    sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《正邪大战》已结束，胜利阵营为【" .. (winCamp == 1 and "正方" or "邪方") .. "】...")
+    clearhumcustvar("*", _ZXDZ_SCORE_VAR)
+end
 --------------------杀死玩家触发-------------------
 function killplay(play,hiter)
     -- 杀人事件：派发给监听模块（如天书仙法）
@@ -1008,15 +1534,37 @@ function killplay(play,hiter)
         setplayvar(hiter, "HUMAN", "比武大会", jf, 1)
         Player.sendmsgEx(hiter,1,'{"Msg":"比武大会：当前积分:'..jf..'","FColor":253,"BColor":255,"Type":1}')
     end
+    if getbaseinfo(play, 3) == _ZXDZ_MAP_NAME and _zxdz_toint(getsysvar(_ZXDZ_STATUS_VAR), 0) == 1 then
+        local jf = getplayvar(play, "HUMAN", _ZXDZ_SCORE_VAR) + 50
+        setplayvar(play, "HUMAN", _ZXDZ_SCORE_VAR, jf, 1)
+        if _zxdz_toint(getplaydef(play, _ZXDZ_CAMP_VAR), 0) == 1 then
+            setsysvar(_ZXDZ_RED_SCORE_VAR, _zxdz_toint(getsysvar(_ZXDZ_RED_SCORE_VAR), 0) + 50)
+            setsysvar(_ZXDZ_BLUE_SCORE_VAR, _zxdz_toint(getsysvar(_ZXDZ_BLUE_SCORE_VAR), 0) + 25)
+        else
+            setsysvar(_ZXDZ_BLUE_SCORE_VAR, _zxdz_toint(getsysvar(_ZXDZ_BLUE_SCORE_VAR), 0) + 50)
+            setsysvar(_ZXDZ_RED_SCORE_VAR, _zxdz_toint(getsysvar(_ZXDZ_RED_SCORE_VAR), 0) + 25)
+        end
+        sendmsg(play, 1, '{"Msg":"正邪大战：当前积分:' .. jf .. '","FColor":253,"BColor":255,"Type":1}')
+        zxdz_send_rank(play)
+        if hiter and getbaseinfo(hiter, 3) == _ZXDZ_MAP_NAME then
+            local bjf = getplayvar(hiter, "HUMAN", _ZXDZ_SCORE_VAR) + 10
+            setplayvar(hiter, "HUMAN", _ZXDZ_SCORE_VAR, bjf, 1)
+            zxdz_send_rank(hiter)
+        end
+    end
 end
 
 local function _is_gray_world_map_name(mapName)
     mapName = tostring(mapName or "")
     return string.find(mapName, "灰界", 1, true) ~= nil
         or mapName == "虚妄山脉"
+        or mapName == "山脉入口"
         or mapName == "叹息旷野"
+        or mapName == "恐怖裂隙"
         or mapName == "鬼嘲深渊"
+        or mapName == "旷野之原"
         or mapName == "禁忌之海"
+        or mapName == "海峰孤岛"
 end
 
 local function _build_first_gray_world_death_mail_tip(play)
@@ -1310,6 +1858,135 @@ function rw_exit(play)
         mapmove(play,"xtc",137,138)
     end
 end
+function magselffunc1007(play)  -- 惊雷斩
+    local skillId = 1007
+    local lv = _magtag_skill_level(play, skillId)
+    if not _magtag_cd_ready(play, skillId, 12) then return end
+    _magtag_cast_feedback(play, "惊雷斩")
+    local pct = _magtag_lerp(lv, 80, 200)
+    local x, y = _magtag_forward_xy(play, 2)
+    _magtag_range_damage(play, 1, pct, 3, 60451, 12, x, y)
+    if lv >= 10 then
+        _magtag_set_until(play, "jingang", 5, 1)
+    end
+end
+function magselffunc1008(play)  -- 万物回春
+    local skillId = 1008
+    local lv = _magtag_skill_level(play, skillId)
+    if not _magtag_cd_ready(play, skillId, 45) then return end
+    _magtag_cast_feedback(play, "万物回春")
+    _magtag_play_effect(play, 60462)
+    local healPct = _magtag_lerp(lv, 15, 35)
+    local reduce = _magtag_lerp(lv, 4, 12)
+    _magtag_heal_self(play, healPct)
+    _magtag_set_until(play, "heal_reduce", 3, reduce)
+    setplaydef(play, "N$magtag_heal_reduce", reduce)
+end
+function magselffunc1009(play)  -- 寻宝天眼
+    local skillId = 1009
+    local lv = _magtag_skill_level(play, skillId)
+    if not _magtag_cd_ready(play, skillId, 45) then return end
+    _magtag_cast_feedback(play, "寻宝天眼")
+    _magtag_play_effect(play, 60460)
+    _magtag_open_drop_window(play, skillId, lv, 5, 1, 0)
+end
+function magselffunc1010(play)  -- 烈焰旋风
+    local skillId = 1010
+    local lv = _magtag_skill_level(play, skillId)
+    if not _magtag_cd_ready(play, skillId, 10) then return end
+    _magtag_cast_feedback(play, "烈焰旋风")
+    local pct = _magtag_lerp(lv, 50, 110)
+    _magtag_range_damage(play, 1, pct, 1, 60463, 16)
+end
+function magselffunc1011(play)  -- 山河霸体
+    local skillId = 1011
+    local lv = _magtag_skill_level(play, skillId)
+    if not _magtag_cd_ready(play, skillId, 25) then return end
+    _magtag_cast_feedback(play, "山河霸体")
+    _magtag_play_effect(play, 60458)
+    local reduce = _magtag_lerp(lv, 7, 18)
+    local reflect = _magtag_lerp(lv, 1, 10)
+    local block = _magtag_lerp(lv, 1, 10)
+    _magtag_set_until(play, "shanhe", 5, 1)
+    setplaydef(play, "N$magtag_shanhe_reduce", reduce)
+    setplaydef(play, "N$magtag_shanhe_reflect", reflect)
+    setplaydef(play, "N$magtag_shanhe_block", block)
+end
+function magselffunc1012(play)  -- 雷霆灭世斩
+    local skillId = 1012
+    local lv = _magtag_skill_level(play, skillId)
+    if not _magtag_cd_ready(play, skillId, 15) then return end
+    _magtag_cast_feedback(play, "雷霆灭世斩")
+    local pct = _magtag_lerp(lv, 50, 90)
+    local x, y = _magtag_forward_xy(play, 2)
+    _magtag_range_damage(play, 2, pct, 5, 60452, 16, x, y)
+    _magtag_set_until(play, "thunder", 5, 1)
+    setplaydef(play, "N$magtag_thunder_hits", 5)
+end
+function magselffunc1013(play)  -- 风影重生
+    local skillId = 1013
+    local lv = _magtag_skill_level(play, skillId)
+    if not _magtag_cd_ready(play, skillId, 35) then return end
+    _magtag_cast_feedback(play, "风影重生")
+    _magtag_play_effect(play, 60384)
+    local healPct = _magtag_lerp(lv, 20, 45)
+    local duration = _magtag_lerp(lv, 4, 8)
+    local speed = _magtag_lerp(lv, 5, 30)
+    local healUp = _magtag_lerp(lv, 0, 25)
+    _magtag_heal_self(play, healPct)
+    if changespeedex then
+        changespeedex(play, 1, speed, duration)
+    end
+    _magtag_set_until(play, "heal_up", duration, healUp)
+    setplaydef(play, "N$magtag_heal_up", healUp)
+end
+function magselffunc1014(play)  -- 寒霜祈运
+    local skillId = 1014
+    local lv = _magtag_skill_level(play, skillId)
+    if not _magtag_cd_ready(play, skillId, 50) then return end
+    _magtag_cast_feedback(play, "寒霜祈运")
+    _magtag_play_effect(play, 60385)
+    local dropCount = lv >= 10 and 2 or 1
+    local freezeSec = lv >= 10 and 3 or 1
+    _magtag_open_drop_window(play, skillId, lv, 5, dropCount, freezeSec)
+end
+function magselffunc1015(play)  -- 焚天炼狱
+    local skillId = 1015
+    local lv = _magtag_skill_level(play, skillId)
+    if not _magtag_cd_ready(play, skillId, 15) then return end
+    _magtag_cast_feedback(play, "焚天炼狱")
+    local pct = _magtag_lerp(lv, 60, 120)
+    _magtag_range_damage(play, 12, pct, 3, 20311, 30)
+end
+function magselffunc1016(play)  -- 镇岳结界
+    local skillId = 1016
+    local lv = _magtag_skill_level(play, skillId)
+    if not _magtag_cd_ready(play, skillId, 25) then return end
+    _magtag_cast_feedback(play, "镇岳结界")
+    _magtag_play_effect(play, 14228)
+    local duration = _magtag_lerp(lv, 5, 8)
+    local reduce = _magtag_lerp(lv, 10, 25)
+    local shareReduce = _magtag_lerp(lv, 5, 10)
+    _magtag_set_until(play, "barrier", duration, 1)
+    setplaydef(play, "N$magtag_barrier_reduce", reduce)
+    local group = getgroupmember and (getgroupmember(play) or {}) or {}
+    local mapId = tostring(getbaseinfo(play, 3) or "")
+    local x, y = _magtag_xy(play)
+    local myGuild = getmyguild and tostring(getmyguild(play) or "") or ""
+    for _, member in ipairs(group) do
+        if member and member ~= play and tostring(getbaseinfo(member, 3) or "") == mapId then
+            local mx = _magtag_tonum(getbaseinfo(member, 4), 0)
+            local my = _magtag_tonum(getbaseinfo(member, 5), 0)
+            local memberGuild = getmyguild and tostring(getmyguild(member) or "") or ""
+            if math.abs(mx - x) <= 4 and math.abs(my - y) <= 4 and memberGuild ~= "" and memberGuild == myGuild then
+                _magtag_set_until(member, "barrier", duration, 1)
+                setplaydef(member, "N$magtag_barrier_reduce", shareReduce)
+                _magtag_play_effect(member, 14228)
+            end
+        end
+    end
+end
+
 --------------------机器人触发脚本-------------------
 function jqr_qingli() -- 每日0点清理
     if getsysvar(VarCfg["G_新区验证"]) == 0 then  -------是否有人验证
@@ -1348,6 +2025,86 @@ function jqr_qmdk_end()
     setsysvar(VarCfg["A_全民夺矿json"], tbl2json(state))
     release_print("机器人触发：全民夺矿结束")
 end
+
+--------------------机器人触发脚本-------------------天下第一武道会
+local function _wdh_module()
+    return dofile('Envir/Lua/Npc/1011.lua')
+end
+function jqr_wudaohui_start()
+    local mod = _wdh_module()
+    if mod and rawget(_G, "__wudaohui_module") and __wudaohui_module.start then
+        __wudaohui_module.start()
+    end
+end
+function jqr_wudaohui_end()
+    local mod = _wdh_module()
+    if mod and rawget(_G, "__wudaohui_module") and __wudaohui_module.stop then
+        __wudaohui_module.stop()
+    end
+end
+function jqr_wudaohui_rank_reward()
+    local mod = _wdh_module()
+    if mod and rawget(_G, "__wudaohui_module") and __wudaohui_module.rankReward then
+        __wudaohui_module.rankReward()
+    end
+end
+function qf_kfdz(xt, mapIdx)
+    local mod = _wdh_module()
+    if mod and rawget(_G, "__wudaohui_module") and __wudaohui_module.settle then
+        __wudaohui_module.settle(mapIdx)
+    end
+end
+function kf_slwj(play, mapIdx)
+    local mod = _wdh_module()
+    if mod and rawget(_G, "__wudaohui_module") and __wudaohui_module.leave then
+        __wudaohui_module.leave(play, mapIdx)
+    end
+end
+function qf_kfjinrdt(xt, play1, play2, mapIdx)
+    local mod = _wdh_module()
+    if mod and rawget(_G, "__wudaohui_module") and __wudaohui_module.enterBattle then
+        __wudaohui_module.enterBattle(play1, play2, mapIdx)
+    end
+end
+function bfsyscall22(actor, arg1, arg2)
+    local mod = _wdh_module()
+    if mod and rawget(_G, "__wudaohui_module") and __wudaohui_module.queueUpdate then
+        __wudaohui_module.queueUpdate(actor, arg1, arg2)
+    end
+end
+function bfsyscall23(actor, arg1, arg2)
+    local mod = _wdh_module()
+    if mod and rawget(_G, "__wudaohui_module") and __wudaohui_module.receiveOpponentPreview then
+        __wudaohui_module.receiveOpponentPreview(actor, arg2)
+    end
+end
+function kfsyscall22(actor, arg1, arg2)
+    local mod = _wdh_module()
+    if mod and rawget(_G, "__wudaohui_module") and __wudaohui_module.matchSuccess then
+        __wudaohui_module.matchSuccess(actor, arg2)
+    end
+end
+function kfsyscall23(actor, arg1, arg2)
+    local mod = _wdh_module()
+    if mod and rawget(_G, "__wudaohui_module") and __wudaohui_module.receiveHistory then
+        __wudaohui_module.receiveHistory(actor, arg1, arg2)
+    end
+end
+function kfsyscall50(actor, arg1, arg2)
+    local mod = _wdh_module()
+    if mod and rawget(_G, "__wudaohui_module") and __wudaohui_module.receiveCrossReward then
+        if __wudaohui_module.receiveCrossReward(actor, arg1, arg2) then
+            return
+        end
+    end
+    sendmail(getbaseinfo(actor, 2), 0, "奖励", arg1, arg2)
+end
+function qf_kfdzdjs(play)
+    local mod = _wdh_module()
+    if mod and rawget(_G, "__wudaohui_module") and __wudaohui_module.battleCountdown then
+        __wudaohui_module.battleCountdown(play)
+    end
+end
 --------------------机器人触发脚本-------------------沙巴克
 function jqr_shabake()
     local hqcs = globalinfo(3)
@@ -1366,6 +2123,7 @@ function jqr_kfshabake()
         addattacksabakall()
     end
 end
+
 --------------------机器人触发脚本-------------------沙巴克发放通知
 function jqr_kfshabakejltz()
     if castleinfo(5) then
@@ -1838,6 +2596,8 @@ local qf_teshunpc = {
     [6] = 6,[7] = 7,[8] = 8,[9] = 9,[10] = 10,[11] = 11,[13] = 13,[14] = 14,[24] = 24,[22] = 22,[43] = 43,[26] = 26,[28] = 28,[25] = 25,[54] = 54,[27] = 27,[44] = 44,[64] = 64,[65] = 65,[70] = 70,--小提升
     [1] = 6,[2] = 7,
     [101] = 101,
+    [1011] = 1011, -- 武道大会/跨服PK
+    [9998] = 9998, -- rename card ui
     [46] = 46, -- 灾厄入侵
 }
 function clicknpc(play, npcid)

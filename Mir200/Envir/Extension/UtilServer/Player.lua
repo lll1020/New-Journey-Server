@@ -57,30 +57,7 @@ function Player.SetPlayDefEx(actor, varName, value)
 end
 -- 二大陆伏妖录：仅当当前追踪任务属于二大陆时，才在状态变更后自动同步并尝试结算奖励。
 function Player.trySyncSecondContinentXyl(actor)
-    if not actor or not Guard or not Guard.syncXylCurrentTask or Guard._syncingXylCurrentTask then
-        return false
-    end
-    local raw = getplaydef(actor, VarCfg.T_ywl)
-    if raw == nil or raw == "" then
-        return false
-    end
-    local T_ywl = json2tbl(raw)
-    if type(T_ywl) ~= "table" then
-        return false
-    end
-    local dq = tostring(T_ywl.dq or "")
-    if dq:match("^2_%d+_%d+$") == nil then
-        return false
-    end
-    if Guard.syncXylCurrentTask(actor) then
-        if Guard.pushXylCurrentTask then
-            Guard.pushXylCurrentTask(actor)
-        else
-            local latest = json2tbl(getplaydef(actor, VarCfg.T_ywl))
-            sendluamsg(actor, 101, 11, 9, 0, '{"dq":"' .. tostring(latest.dq or "") .. '"}')
-        end
-        return true
-    end
+    -- 二大陆下雨了流程已迁移到主线，不再从通用 JSON 保存入口同步旧 xyl。
     return false
 end
 --设置json变量内容，返回table
@@ -371,33 +348,34 @@ function updateSomeAddr_time_del(actor,time)
     end
 end
 function Player.rwjl(actor, t, desc, multiple,gm)
+    if type(t) ~= "table" then
+        return
+    end
+    if multiple and multiple < 1 then
+        return
+    end
     local str = ""
-    if (multiple and multiple >= 1) or not multiple then
-        for i, v in ipairs(t) do
-            local idx = getstditeminfo(v[1], 0)
-            if Item.isCurrency(idx) then        --货币
-                if multiple then v[2]=v[2]*multiple end
-                if str ~= "" then
-                    str = str..",[\""..v[1].."\","..v[2].."]"
-                else
-                    str = str.."[\""..v[1].."\","..v[2].."]"
-                end
-                changemoney(actor,idx,"+",v[2],desc,true)
+    local rate = multiple or 1
+    for _, v in ipairs(t) do
+        local name = v[1]
+        local amount = (tonumber(v[2]) or 0) * rate
+        if name and amount > 0 then
+            local idx = getstditeminfo(name, 0)
+            if str ~= "" then
+                str = str .. ","
+            end
+            str = str .. '["' .. name .. '",' .. amount .. ']'
+            if idx and Item.isCurrency(idx) then        --货币
+                changemoney(actor,idx,"+",amount,desc,true)
             else
-                if multiple then v[2]=v[2]*multiple end
-                if str ~= "" then
-                    str = str..",[\""..v[1].."\","..v[2].."]"
-                else
-                    str = str.."[\""..v[1].."\","..v[2].."]"
-                end
-                giveitem(actor,v[1],v[2],850)
+                giveitem(actor,name,amount,850)
             end
         end
-        if str ~= "" and gm ~= 0 then
-            sendluamsg(actor,101,0,9,gm and gm or 999,'{"item":['..str..']}')
-        end
-        release_print("Player.rwjl", desc, str, getbaseinfo(actor,1))
     end
+    if str ~= "" and gm ~= 0 then
+        sendluamsg(actor,101,0,9,gm and gm or 999,'{"item":['..str..']}')
+    end
+    release_print("Player.rwjl", desc, str, getbaseinfo(actor,1))
 end
 --发送消息个人
 function Player.sendmsg(actor, msg)
@@ -896,53 +874,41 @@ local function _dl_check(actor, dl)
         end
         return false, "需完成主线引导后才可进入二大陆"
     elseif dl == 3 then
-        if zslv >= 20 and jqd >= 11 then
+        if zslv >= 20 then
             return true
         end
-        return false, "需完成二大陆转生且剧情点达到11后才可进入三大陆"
+        return false, "需完成二大陆转生后才可进入三大陆"
     elseif dl == 4 then
-        if zslv >= 30 and jqd >= 40 and level >= 150 then
+        if zslv >= 30 and level >= 150 then
             return true
         end
-        return false, "需完成三大陆转生且剧情点达到40、玩家等级达到150级后才可进入四大陆"
+        return false, "需完成三大陆转生且玩家等级达到150级后才可进入四大陆"
     elseif dl == 5 then
-        if zslv >= 40 and jqd >= 90 and _dl_has_linggen_gate(actor) then
+        if zslv >= 40 and _dl_has_linggen_gate(actor) then
             return true
         end
-        return false, "需完成四大陆转生且剧情点达到90，并且本命灵根Lv10、对应觉醒灵根Lv2后才可进入五大陆"
+        return false, "需完成四大陆转生且本命灵根Lv10、对应觉醒灵根Lv2后才可进入五大陆"
     elseif dl == 6 then
-        if zslv >= 50 and jqd >= 100 and _dl_has_all_destiny(actor) then
+        if zslv >= 50 and _dl_has_all_destiny(actor) then
             return true
         end
-        return false, "需完成五大陆转生且剧情点达到100，并完成天道命盘后才可进入六大陆"
+        return false, "需完成五大陆转生且完成天道命盘后才可进入六大陆"
     elseif dl == 7 then
-        if zslv >= 60 and jqd >= 100 and Player.hasSeventhContinentPass(actor) then
+        if zslv >= 60 and Player.hasSeventhContinentPass(actor) then
             return true
         end
-        return false, "需完成六大陆转生且剧情点达到100，并获得#57|【世界符文·[真我]】#218|后才可进入七大陆"
+        return false, "需完成六大陆转生且获得#57|【世界符文·[真我]】#218|后才可进入七大陆"
     end
     return true
 end
 function Player.dl_sz_notip(actor, dl) --大陆限制 -- 无提示
     local ok = _dl_check(actor, dl)
-    if ok and Guard and Guard.syncXylCurrentTask and not Guard._syncingXylCurrentTask then
-        if Guard.syncXylCurrentTask(actor) then
-            local T_ywl = json2tbl(getplaydef(actor, VarCfg.T_ywl))
-            sendluamsg(actor, 101, 11, 9, 0, '{"dq":"' .. (T_ywl.dq or "") .. '"}')
-        end
-    end
     return ok
 end
 function Player.dl_sz(actor, dl) --大陆限制 -- 有提示
     local ok, tip = _dl_check(actor, dl)
     if not ok and tip then
         Player.sendmsgEx(actor, tip .. "#57")
-    end
-    if ok and Guard and Guard.syncXylCurrentTask and not Guard._syncingXylCurrentTask then
-        if Guard.syncXylCurrentTask(actor) then
-            local T_ywl = json2tbl(getplaydef(actor, VarCfg.T_ywl))
-            sendluamsg(actor, 101, 11, 9, 0, '{"dq":"' .. (T_ywl.dq or "") .. '"}')
-        end
     end
     return ok
 end

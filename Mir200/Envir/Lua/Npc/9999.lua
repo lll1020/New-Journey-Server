@@ -145,13 +145,10 @@ local function _ff9999_finish_second_continent_xyl(play)
     ywl.dq_id = nil
     Player.setJsonVarByTable(play, VarCfg.T_ywl, ywl)
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-    if Guard and Guard.sendXylCurrentTask then
-        Guard.sendXylCurrentTask(play)
-    end
-    setplaydef(play, VarCfg.U_zxrw[1], 18)
+    setplaydef(play, VarCfg.U_zxrw[1], 35)
     setplaydef(play, VarCfg.U_zxrw[2], 0)
-    sendluamsg(play, 103, 1, 0, 0, '{"rwid":18}')
-    Player.sendmsgEx(play, "二大陆异闻录已全部完成，奖励已发放，主线已切到18#218")
+    sendluamsg(play, 103, 1, 0, 0, '{"rwid":35}')
+    Player.sendmsgEx(play, "二大陆异闻录已全部完成，奖励已发放，主线已切到35#218")
 end
 
 local _admin_test_monsters = {
@@ -883,9 +880,19 @@ function ggna(play,id)
     elseif id == "41" then
         _admin_txzr_finish(play)
     elseif id == "42" then
-        _admin_simple_activity_start(play, 8, "正邪大战", 5)
+        if jqr_zxdz_start then
+            jqr_zxdz_start()
+            Player.sendmsgEx(play, "正邪大战测试开始#218")
+        else
+            Player.sendmsgEx(play, "正邪大战启动函数缺失#57")
+        end
     elseif id == "43" then
-        _admin_simple_activity_finish(play, 8, "正邪大战")
+        if jqr_zxdz_end then
+            jqr_zxdz_end()
+            Player.sendmsgEx(play, "正邪大战测试结束#218")
+        else
+            Player.sendmsgEx(play, "正邪大战结束函数缺失#57")
+        end
     elseif id == "44" then
         _admin_sbk_start(play)
     elseif id == "45" then
@@ -939,7 +946,7 @@ function ggna(play,id)
         _ff9999_finish_second_continent_xyl(play)
     elseif id == "25" then
         -- 大陆全解锁：一次性补齐主线、人物等级、转生、剧情点、灵根、天道命盘与七大陆称号门槛。
-        local target_task = 19
+        local target_task = 18
         local target_level = 150
         local target_zs = 70
         local target_jqd = 200

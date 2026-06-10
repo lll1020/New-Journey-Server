@@ -4,19 +4,19 @@ local _config = {
     shaguai_id = 3,
     name = "开辟仙府",
     -- rwjl = {{"仙草种子",9},{"绑定元宝",200000}},
-    permit_item = "开辟许可证",   -- 许可证开辟：消耗 1 个开辟许可证
+    permit_item = "开辟许可证",   -- 许可证开辟：拥有背包神器即可，不消耗
     force_cost = {{"碎岩锤",20}},  -- 强行开辟：消耗碎岩锤*2
 }
 local function _has_permit(play)
-    return getbagitemcount(play, _config.permit_item) > 0
+    return getbagitemcount(play, _config.permit_item) > 0 or Player.hasEquipInArtifactSlot(play, _config.permit_item) ~= nil
 end
--- 开辟许可证为普通物品，点击按钮时直接扣除 1 个。
-local function _consume_permit(play)
-    if not _has_permit(play) then
-        return false
+
+local function _permit_count(play)
+    local count = tonumber(getbagitemcount(play, _config.permit_item) or 0) or 0
+    if Player.hasEquipInArtifactSlot(play, _config.permit_item) then
+        count = count + 1
     end
-    Player.takeItemByTable(play, {{_config.permit_item, 1}}, ",开辟许可证开辟", nil)
-    return true
+    return count
 end
 local function _build_main_data(play)
     local data = {}
@@ -25,7 +25,7 @@ local function _build_main_data(play)
     data["open_cfg"] = {
         permit_item = _config.permit_item,
         has_permit = _has_permit(play) and 1 or 0,
-        permit_count = getbagitemcount(play, _config.permit_item),
+        permit_count = _permit_count(play),
         force_cost = _config.force_cost,
         hammer_count = getbagitemcount(play, "碎岩锤"),
     }
@@ -78,10 +78,6 @@ function npc.link(play, npcid, p2, p3, msgData)
     if p2 == 1 then
         if not _has_permit(play) then
             Player.sendmsgEx(play, "未拥有#57|【".._config.permit_item.."】#218|，无法进行许可证开辟#57")
-            return
-        end
-        if not _consume_permit(play) then
-            Player.sendmsgEx(play, "扣除#57|【".._config.permit_item.."】#218|失败，请检查物品状态#57")
             return
         end
         _finish_open(play, npcid, jq_data, sg_data, 1)

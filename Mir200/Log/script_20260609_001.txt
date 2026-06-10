@@ -1,0 +1,513 @@
+[2026-06-09 22:34:03:949] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：1359; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 22:35:05:302] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 22:35:36:941] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 22:36:19:347] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 22:37:27:096] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 22:39:38:774] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 22:39:58:267] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 22:41:20:236] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 22:41:44:501] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 22:41:59:393] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 22:42:57:971] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：47; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 22:43:17:222] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 22:44:16:554] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 22:45:47:080] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 22:47:55:127] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 22:48:24:251] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 22:49:23:692] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 22:52:21:800] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 22:57:23:524] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 22:57:51:345] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 22:59:09:978] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 22:59:28:158] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 23:00:30:830] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 23:01:28:398] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 23:02:10:206] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 23:02:34:299] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 23:06:46:923] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 23:09:09:934] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 23:30:03:761] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 23:35:24:366] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 23:39:02:407] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 23:40:29:953] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 23:42:21:378] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 23:42:50:129] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 23:43:13:818] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-09 23:59:07:448] LuaNPC:123131 ID:999999999 执行 attackdamage player:123131 耗时：62; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 00:03:51:603] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 00:06:52:641] LuaNPC:123131 ID:999999999 执行 attackdamage player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 00:07:20:548] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 00:10:24:706] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 00:13:48:384] LuaNPC:123131 ID:999999999 执行 clicknpc player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 00:30:48:371] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 00:53:16:374] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 00:53:51:329] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:00:09:078] LuaNPC:123131 ID:999999999 执行 attackdamage player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:03:42:282] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:06:29:320] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:08:20:646] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:11:37:800] >>>>>>HumTime id:0  onTimer1-16 
+
+[2026-06-10 01:20:01:830] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:20:41:572] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:23:15:671] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:24:37:515] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:26:28:997] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:27:11:329] LuaNPC:123131 ID:999999999 执行 killmon player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:28:54:808] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:30:03:499] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:30:12:533] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:33:02:015] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:33:05:656] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:33:12:095] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:33:52:387] LuaNPC:123131 ID:999999999 执行 pickupitemfrontex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:35:47:325] LuaNPC:123131 ID:999999999 执行 killmon player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:39:03:099] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:39:05:177] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:39:21:292] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:41:11:497] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:48:45:189] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:53:49:277] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 01:58:32:407] LuaNPC:123131 ID:999999999 执行 addbag player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 02:07:33:352] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 02:09:02:940] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 02:13:31:212] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 02:14:11:501] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 02:23:25:659] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 02:28:53:779] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 02:35:03:549] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 02:35:38:877] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 02:37:34:483] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 02:39:02:365] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 02:41:29:787] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 02:42:34:361] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 02:45:48:009] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 02:51:19:387] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 02:57:49:104] LuaNPC:123131 ID:999999999 执行 killmon player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 02:58:55:794] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 02:59:24:052] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 03:04:11:566] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 03:08:32:927] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 03:12:10:941] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 03:12:17:909] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 03:13:28:513] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 03:15:41:853] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+[2026-06-10 03:15:43:890] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 03:15:48:919] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 03:20:07:300] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 03:22:00:410] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 03:26:09:450] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 03:28:19:609] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 03:28:58:150] LuaNPC:123131 ID:999999999 执行 attackdamage player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 03:30:53:664] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 03:31:36:226] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 03:34:16:691] LuaNPC:123131 ID:999999999 执行 killmon player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 03:38:18:879] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 03:50:16:959] LuaNPC:123131 ID:999999999 执行 killmon player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 03:53:08:978] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 03:57:00:115] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 03:58:41:131] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 04:05:44:111] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 04:06:32:861] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 04:15:13:649] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 04:15:52:040] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 04:17:12:149] LuaNPC:123131 ID:999999999 执行 killmon player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 04:23:05:074] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 04:23:47:101] LuaNPC:123131 ID:999999999 执行 killmon player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 04:25:44:285] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 04:29:40:164] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 04:30:07:552] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 04:33:05:228] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 04:46:21:069] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+[2026-06-10 04:46:21:115] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 04:47:35:786] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 04:49:29:451] LuaNPC:123131 ID:999999999 执行 attackdamage player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 04:51:06:688] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 05:09:41:139] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 05:09:56:931] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 05:10:03:902] LuaNPC:123131 ID:999999999 执行 ontimer1 player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 05:18:34:777] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 05:18:48:785] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 05:20:00:372] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 05:28:47:418] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 05:30:11:241] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 05:30:17:319] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 05:49:18:403] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 05:53:24:475] LuaNPC:123131 ID:999999999 执行 killmon player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 05:57:45:772] LuaNPC:123131 ID:999999999 执行 killmon player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 06:02:40:109] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 06:07:47:346] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 06:10:06:574] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 06:13:44:536] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 06:14:31:509] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 06:20:52:399] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 06:22:45:384] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 06:28:02:736] LuaNPC:123131 ID:999999999 执行 killmon player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 06:28:48:658] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 06:41:47:792] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 06:50:31:539] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 06:52:42:718] LuaNPC:123131 ID:999999999 执行 killmon player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 06:58:44:933] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 07:01:53:543] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 07:02:32:513] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 07:10:15:113] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 07:16:32:519] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 07:19:26:285] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 07:19:38:163] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 07:28:58:250] LuaNPC:123131 ID:999999999 执行 killmon player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 07:31:23:328] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 07:34:51:721] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 07:37:28:297] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 07:44:47:841] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 07:47:54:950] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 07:49:20:674] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 07:56:39:325] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 07:58:39:389] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:01:40:921] LuaNPC:123131 ID:999999999 执行 killmon player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:03:22:468] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:03:41:078] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:04:38:104] LuaNPC:123131 ID:999999999 执行 attackdamage player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:04:40:686] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:09:19:625] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:11:27:558] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:15:24:014] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:15:59:277] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:17:22:653] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:18:37:713] LuaNPC:123131 ID:999999999 执行 killmon player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:20:47:947] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:29:30:767] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:30:09:139] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:32:20:391] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:32:41:429] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:34:04:633] LuaNPC:123131 ID:999999999 执行 killmon player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:34:18:265] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:36:30:401] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:37:02:648] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:39:52:152] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:42:39:882] LuaNPC:123131 ID:999999999 执行 killmon player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:46:55:763] LuaNPC:123131 ID:999999999 执行 addbag player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:47:00:873] LuaNPC:123131 ID:999999999 执行 sendability player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:49:45:287] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:50:42:803] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:51:06:022] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:54:38:837] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 08:57:37:444] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 09:00:35:756] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 09:05:22:568] LuaNPC:123131 ID:999999999 执行 killmon player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 09:06:41:974] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 09:12:17:864] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 09:15:55:786] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+[2026-06-10 09:15:59:780] LuaNPC:123131 ID:999999999 执行 attackdamage player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 09:17:55:770] LuaNPC:123131 ID:999999999 执行 attackdamage player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 09:19:47:993] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 09:24:19:161] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 09:27:15:760] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 09:27:23:835] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 09:30:02:255] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 09:35:35:363] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 09:38:28:759] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 09:41:05:538] LuaNPC:123131 ID:999999999 执行 killmon player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 09:41:45:930] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 09:44:21:134] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 09:46:17:570] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 09:46:45:836] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 09:58:26:884] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 10:01:49:602] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 10:04:32:082] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 10:05:48:836] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 10:08:34:074] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 10:14:07:186] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 10:19:44:448] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 10:20:35:017] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 10:25:14:356] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 10:26:03:340] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 10:27:44:176] LuaNPC:123131 ID:999999999 执行 attack player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 10:29:48:588] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 10:33:45:673] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 10:35:52:250] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 10:40:37:349] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 10:41:02:468] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 10:45:32:511] LuaNPC:123131 ID:999999999 执行 killmon player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 10:46:30:437] LuaNPC:123131 ID:999999999 执行 addbag player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 10:50:32:181] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 10:54:46:450] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 10:59:07:568] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 11:08:42:658] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 11:13:33:160] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 11:24:31:748] LuaNPC:123131 ID:999999999 执行 sendability player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 11:27:05:185] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 11:27:20:287] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 11:28:48:988] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 11:36:59:105] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 11:40:15:793] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 11:41:16:435] LuaNPC:123131 ID:999999999 执行 mondropitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 11:42:31:123] LuaNPC:123131 ID:999999999 执行 killmon player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 11:43:08:184] LuaNPC:123131 ID:999999999 执行 addbag player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 12:01:23:038] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 12:07:00:072] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 12:07:47:793] LuaNPC:123131 ID:999999999 执行 handlerequest player:123131 耗时：62; NpcThreadId: 30788, CurPlayThreadId: 30788
+[2026-06-10 12:07:47:793] [123131]Lua执行耗时过高:62ms msgid:100 625 1 0 
+
+[2026-06-10 12:07:54:328] LuaNPC:123131 ID:999999999 执行 clicknpc player:123131 耗时：78; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 12:10:13:989] LuaNPC:123131 ID:999999999 执行 pickupitemex player:123131 耗时：32; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 12:10:56:670] LuaNPC:123131 ID:999999999 执行 clicknpc player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 12:25:14:559] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：94; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 12:26:13:841] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 12:26:16:799] LuaNPC:123131 ID:999999999 执行 handlerequest player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+[2026-06-10 12:26:16:799] [123131]Lua执行耗时过高:31ms msgid:105 9999 9999 0 
+
+[2026-06-10 12:27:19:583] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 12:34:25:721] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 12:34:50:291] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+
+[2026-06-10 12:47:44:160] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：31; NpcThreadId: 30788, CurPlayThreadId: 30788
+

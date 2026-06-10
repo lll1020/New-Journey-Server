@@ -151,16 +151,21 @@ function bl_zyjhl9(play,mingzi)
     if not need then
         return false
     end
+    local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
+    local firstCharge = tonumber(sc_data["首充"] or 0) == 1
+    if firstCharge then
+        need = math.max(1, math.floor(need / 3))
+    end
     local data = Player.getJsonTableByVar(play, VarCfg["T_物品掉落记录"])
     if not data then
         data = {}
     end
-    local key = "pity_" .. mingzi
+    local key = (firstCharge and "pity_first_charge_" or "pity_") .. mingzi
     local cnt = tonumber(data[key]) or 0
     cnt = cnt + 1
     data[key] = cnt
     Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
-    -- 不清零：达到阈值后，之后每满1000的倍数再掉落
+    -- 不清零：达到阈值后，之后每满 need*5 的倍数再掉落
     if cnt == need or (cnt > need and cnt % (need * 5) == 0) then
         return true
     end
@@ -244,6 +249,32 @@ function bl_zyjhl13(play,mingzi)
         return false
     end
     data[key] = 1
+    Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
+    return true
+end
+--------------------爆率监听触发-------------------二大陆强化石额外限量
+function bl_zyjhl14(play,mingzi)
+    if mingzi ~= "强化石" then
+        return false
+    end
+    local cur_map = tostring(getbaseinfo(play, 3) or "")
+    local dl = 0
+    if cur_map ~= "" and daluditu then
+        dl = tonumber(daluditu[cur_map] or 0) or 0
+    end
+    if dl ~= 2 then
+        return false
+    end
+    local data = Player.getJsonTableByVar(play, VarCfg["T_物品掉落记录"])
+    if not data then
+        data = {}
+    end
+    local key = "second_continent_strengthen_drop_count"
+    local cnt = tonumber(data[key] or 0) or 0
+    if cnt >= 10 then
+        return false
+    end
+    data[key] = cnt + 1
     Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
     return true
 end

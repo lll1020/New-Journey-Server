@@ -5,9 +5,7 @@ npc = {}
 
 local _config = Guard.getConfig("npc_64")
 local FairyFate = include("lua/LuaLib/fairy_fate.lua")
-local _xyl_config = dofile('Envir/Lua/Data/npc_xyl.lua')
 local LINGSHOU_BABY_SECONDS = 48 * 3600
-local LINGSHOU_CONTRACT_TASK_NAME = "灵兽孵化"
 local LINGSHOU_BABY_CFG = {
     [1] = {pet = "麒麟", item = "麒麟幼崽"},
     [2] = {pet = "青龙", item = "青龙幼崽"},
@@ -41,31 +39,8 @@ local function _ensure_pet_data(T_data)
 end
 
 
-local function _find_xyl_task(taskName)
-    taskName = tostring(taskName or "")
-    for i, lCfg in ipairs(_xyl_config or {}) do
-        for j, zCfg in ipairs(lCfg or {}) do
-            for z, task in ipairs((zCfg and zCfg.jq) or {}) do
-                if tostring(task and task[1] or "") == taskName then
-                    return {i = i, j = j, z = z}
-                end
-            end
-        end
-    end
-    return nil
-end
 
-local function _xyl_dq_reached(currentDq, target)
-    if not target then return false end
-    local i, j, z = tostring(currentDq or ""):match("^(%d+)_(%d+)_(%d+)$")
-    i, j, z = tonumber(i), tonumber(j), tonumber(z)
-    if not (i and j and z) then return false end
-    if i > target.i then return true end
-    if i < target.i then return false end
-    if j > target.j then return true end
-    if j < target.j then return false end
-    return z >= target.z
-end
+
 
 local function _is_lingshou_contract_open(play, T_data)
     T_data = _ensure_pet_data(T_data)
@@ -75,21 +50,11 @@ local function _is_lingshou_contract_open(play, T_data)
     if _toint(T_data.baby_choice) > 0 then
         return true
     end
-    local target = _find_xyl_task(LINGSHOU_CONTRACT_TASK_NAME)
-    if not target then
-        return false, "灵兽契约任务配置异常#57"
-    end
-    local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl)) or {}
-    if T_ywl["jl_" .. target.i .. "_" .. target.j .. "_" .. target.z] == 1 then
+    local rwid = _toint(getplaydef(play, VarCfg.U_zxrw[1]))
+    if rwid >= 28 then
         return true
     end
-    if T_ywl["jl_" .. target.i .. "_" .. target.j] == 1 then
-        return true
-    end
-    if _xyl_dq_reached(T_ywl.dq, target) then
-        return true
-    end
-    return false, "请先推进异闻录至【灵兽孵化】#57"
+    return false, "请先推进主线至【灵兽孵化】#57"
 end
 local function _has_pet_linggen_synergy(play, T_data)
     T_data = T_data or {}
@@ -276,6 +241,7 @@ function npc.link(play,npcid,ew,aid,data)
         if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
         Player.updateSomeAddr(play, oldAttr, newAttr)
         Player.sendmsgEx(play, string.format("你成功出战了灵兽|【%s】#218|，快去战斗吧！", _config.config.ls[json_data.idx].name))
+        _refresh_pet_panel(play, npcid, 2, T_data)
     elseif ew == 3 then -- 灵兽升级 --喂养
         T_data.ls = T_data.ls or {}
         -- T_data.ls_sp 
@@ -330,6 +296,7 @@ function npc.link(play,npcid,ew,aid,data)
         T_data.hatch[key] = {item = cfg.item, startAt = os.time(), expireAt = os.time() + LINGSHOU_BABY_SECONDS, status = "hatching"}
         Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
         if Player.trySyncSecondContinentXyl then Player.trySyncSecondContinentXyl(play) end
+        if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "任务") end
         Player.sendmsgEx(play, string.format("已领取|【%s】#218|，48小时后自动孵化#57", cfg.item))
         _refresh_pet_panel(play, npcid, 6, T_data)
     elseif ew == 5 then -- 灵兽装备圣遗物

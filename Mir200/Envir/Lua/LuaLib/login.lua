@@ -131,11 +131,6 @@ function Login.main(play)
     else
         sendluamsg(play,103,1,0,0,'{"kqfz":'..getsysvar(VarCfg["G_开区分钟"])..',"kqts":'..getsysvar(VarCfg["G_开区天数"])..',"rwid":'..(getplaydef(play,VarCfg.U_zxrw[1]))..',"ngkg":'..getflagstatus(play,VarCfg.BS_ngkg)..',"hqcs":'..globalinfo(3)..',"zhuboma":'.. 1 ..',"tsqb":'..getflagstatus(play,VarCfg.BS_tsqb)..',"U_dlxz_bc":'..getplaydef(play,VarCfg.U_dlxz_bc)..'}')
     end
-    if Guard and Guard.syncXylCurrentTask then
-        Guard.syncXylCurrentTask(play)
-    end
-    local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
-    sendluamsg(play, 101, 11, 9, 0, '{"dq":"' .. (T_ywl.dq or "") .. '"}')
     ---------------------------------------------------自动相关
     if getflagstatus(play,VarCfg.BS_huishou[4]) == 1 then
         sendmsg(play,1,'{"Msg":"[自动回收已开启]","FColor":219,"BColor":255,"Type":1}')

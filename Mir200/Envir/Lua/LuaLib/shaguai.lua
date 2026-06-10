@@ -10,6 +10,24 @@ if GameEvent and EventCfg and EventCfg.onAttackDamageMonster and not rawget(_G, 
         _mark_combat_state(play)
     end, "combat_state_attack_mon")
 end
+local _zxrw_story_kill_rwid = {
+    [603] = 19,
+    [608] = 25,
+    [605] = 27,
+    [606] = 31,
+}
+local function _zxrw_sync_story_kill_progress(play, taskId, cur, need)
+    local rwid = _zxrw_story_kill_rwid[tonumber(taskId) or 0]
+    if not rwid or (tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0) ~= rwid then
+        return
+    end
+    cur = tonumber(cur or 0) or 0
+    need = tonumber(need or 0) or 0
+    if need > 0 and cur > need then
+        cur = need
+    end
+    newchangetask(play, rwid, cur)
+end
 -- 第五章击杀任务：计算当前轮次目标
 local function _story5_kill_need(task_cfg, done_cnt)
 	local step_need = tonumber(task_cfg.kill_per_step or 0) or 0
@@ -401,6 +419,7 @@ shaguai = {
 		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
 		local key = "npc_603"
 		sg_data[key] = (sg_data[key] or 0) + 1
+		_zxrw_sync_story_kill_progress(play, 603, sg_data[key], config.num)
 		if sg_data[key] >= (config.num or 0) then
 			shaguai.jian(play,603)
 			messagebox(play,"任务完成,立即前往提交")
@@ -465,6 +484,7 @@ shaguai = {
 		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
 		local key = "npc_605"
 		sg_data[key] = (sg_data[key] or 0) + 1
+		_zxrw_sync_story_kill_progress(play, 605, sg_data[key], config.num)
 		if sg_data[key] >= (config.num or 0) then
 			shaguai.jian(play,605)
 			messagebox(play,"任务完成,立即前往提交")
@@ -488,6 +508,7 @@ shaguai = {
 		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
 		local key = "npc_606"
 		sg_data[key] = (sg_data[key] or 0) + 1
+		_zxrw_sync_story_kill_progress(play, 606, sg_data[key], config.num)
 		if (sg_data[key] or 0) >= (config.num or 0) then
 			shaguai.jian(play,606)
 			messagebox(play,"任务完成,立即前往提交")
@@ -510,6 +531,7 @@ shaguai = {
 		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
 		local key = "npc_608"
 		sg_data[key] = (sg_data[key] or 0) + 1
+		_zxrw_sync_story_kill_progress(play, 608, sg_data[key], config.num)
 		if sg_data[key] >= (config.num or 0) then
 			shaguai.jian(play,608)
 			messagebox(play,"任务完成,立即前往提交")
@@ -1675,15 +1697,13 @@ shaguai = {
 			mod.link(play, 740, 4, mob)
 		end
 	end,
-	["33"] = function(play,mob)      --聚宝盆碎片：接到聚宝盆任务后，极光城郊普通怪按 1/150 + 30 杀保底掉落
-		local state = _sg_tb_state(play)
-		if state.rebuilt >= 1 or state.task_started < 1 then
-			return
-		end
+	["33"] = function(play,mob)      --聚宝盆碎片：接到聚宝盆任务后，极光城郊怪物按 1/70 + 20 杀保底掉落
+		
+		-- local state = _sg_tb_state(play)
+		-- if state.rebuilt >= 1 or state.task_started < 1 then
+		-- 	return
+		-- end
 		if getbaseinfo(play,3) ~= "极光城郊" then
-			return
-		end
-		if not _sg_can_count_common_mon(play, mob) then
 			return
 		end
 		local cfg = teshudata["npc_106"] or {}
@@ -1695,9 +1715,9 @@ shaguai = {
 		local key = "kill_pity_聚宝盆碎片"
 		local cur, dropData = _sg_drop_record_inc(play, key)
 		local dropped = false
-		if math.random(150) == 1 then
+		if math.random(70) == 1 then
 			dropped = shaguai.temp_drop(play, mob, itemName)
-		elseif cur >= 30 then
+		elseif cur >= 20 then
 			dropped = shaguai.temp_drop(play, mob, itemName)
 		end
 		if dropped then
@@ -1720,9 +1740,6 @@ shaguai = {
 		if dl ~= 2 and dl ~= 3 then
 			return
 		end
-		if not _sg_can_count_common_mon(play, mob) then
-			return
-		end
 		local key = "kill_pity_筑基丹碎片"
 		local cur, dropData = _sg_drop_record_inc(play, key)
 		if cur % 100 ~= 0 then
@@ -1734,9 +1751,6 @@ shaguai = {
 		end
 	end,
 	["35"] = function(play,mob)      --修为丹独立掉落：不吃全局爆率，小丹二大陆起掉，大丹需真实充值大于 100
-		if not _sg_can_count_common_mon(play, mob) then
-			return
-		end
 		local mapName = tostring(getbaseinfo(mob, 3) or "")
 		local dl = tonumber((daluditu and daluditu[mapName]) or 0) or 0
 		if dl < 2 then

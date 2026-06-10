@@ -81,6 +81,7 @@ function npc.link(play,npcid,ew,aid)
         setplaydef(play, VarCfg["U_占卜次数"], U_num + 1)
         -- 二大陆伏妖录：占卜成功后立即尝试自动结算当前任务。
         Player.trySyncSecondContinentXyl(play)
+        if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "任务") end
         -- Player.sendmsgEx(play, string.format("你获得了|【%s】#218", titileName))
         sendluamsg(play,100,npcid,1,0,"")
     end

@@ -4,6 +4,15 @@ npc = {}
 
 local _config = Guard.getConfig("npc_24")
 
+local function _try_finish_mainline_task(play, rwid)
+    if zxrw_try_finish_current_mainline and zxrw_try_finish_current_mainline(play, "任务") then
+        return
+    end
+    rwid = tonumber(rwid or 0) or 0
+    if rwid > 0 and (tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0) == rwid then
+        Player.zxrw_wancheng(play, rwid, "任务")
+    end
+end
 local function _get_jf_need_kill_text(jf)
     jf = tonumber(jf) or 0
     if jf > 130000 then
@@ -339,6 +348,7 @@ function npc.link(play,npcid,ew,aid,data)
             setaddnewabil(play, -2, "=",attrsstr, itemobj)
             refreshitem(play, itemobj)
             recalcabilitys(play)
+            _try_finish_mainline_task(play, 17)
 
             sendluamsg(play,100,npcid,1,0,tbl2json(_build_npc24_payload(play, T_data)))
         else
@@ -439,6 +449,7 @@ function npc.link(play,npcid,ew,aid,data)
             xianfa_refresh(play)
 
             xianfa_add(play,randomNum,idx)
+            _try_finish_mainline_task(play, 18)
             sendluamsg(play,100,npcid,2,0,tbl2json(_build_npc24_payload(play, T_data)))
             sendluamsg(play,100,npcid,10,0,tbl2json({ ["group"] = randomNum,["idx"] = idx} ))
         else

@@ -68,6 +68,7 @@ function npc.link(play,npcid,ew,aid)
                 recalcabilitys(play)
                 -- 二大陆伏妖录：装备强化成功后立即尝试自动结算当前任务。
                 local xylCompleted = Player.trySyncSecondContinentXyl(play)
+                if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "任务") end
                 if FairyFate and FairyFate.touch then FairyFate.touch(play, "strength_success") end
                 sendluamsg(play,100,npcid,1,aid,"")
                 if xylCompleted then

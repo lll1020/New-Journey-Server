@@ -1,3 +1,4 @@
+[正邪大战|bjzc 正邪大战] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE CAMP
 ;==============================================城市地图==============================
 ;[新手地图|12       新手地图] day NOALLOWUSEITEMS(盟重回城石) safe RUNMON(1) NEEDSET_OFF(300)
 [比武大会|D3804_2 比武大会]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) SECRET(47|神秘人|2|21) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
@@ -29,6 +30,28 @@ hjsbk 89 96 -> hg 26 20
 hg 23 26 -> hjsbk 86 102
 
 
+
+[跨服地图|bjzc 跨服地图] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
+[kftt1|bjzc 武道会擂台1] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt2|bjzc 武道会擂台2] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt3|bjzc 武道会擂台3] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt4|bjzc 武道会擂台4] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt5|bjzc 武道会擂台5] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt6|bjzc 武道会擂台6] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt7|bjzc 武道会擂台7] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt8|bjzc 武道会擂台8] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt9|bjzc 武道会擂台9] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt10|bjzc 武道会擂台10] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt11|bjzc 武道会擂台11] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt12|bjzc 武道会擂台12] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt13|bjzc 武道会擂台13] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt14|bjzc 武道会擂台14] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt15|bjzc 武道会擂台15] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt16|bjzc 武道会擂台16] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt17|bjzc 武道会擂台17] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt18|bjzc 武道会擂台18] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt19|bjzc 武道会擂台19] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt20|bjzc 武道会擂台20] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
 [kfhjsbk|03023 跨服沙巴克] noreconnect(xtc:137:138:9) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE Kuafu day
 [kfhg|n0150 沙巴克皇宫] noreconnect(xtc:137:138:9)  NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE Kuafu day
 kfhjsbk 85 100 -> kfhg 20 24
@@ -124,10 +147,10 @@ kfhg 23 26 -> kfhjsbk 86 102
 [灰界西部|D11032   灰界西部] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) dark
 
 
-[虚妄山脉|14   虚妄山脉] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) dark
-[鬼嘲深渊|D4307_S2   鬼嘲深渊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) dark
-[叹息旷野|D4102   叹息旷野] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) dark 
-[禁忌之海|D4308   禁忌之海] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) dark 
+[虚妄山脉|14   山脉入口] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) dark
+[鬼嘲深渊|D4307_S2   旷野之原] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) dark
+[叹息旷野|D4102   恐怖裂隙] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) dark 
+[禁忌之海|D4308   海峰孤岛] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) dark 
 
 灰界 200 378 -> 灰界南部 22 308
 灰界 204 25 -> 灰界北部 23 24

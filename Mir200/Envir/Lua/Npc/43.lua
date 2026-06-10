@@ -54,6 +54,7 @@ function npc.link(play,npcid,ew,aid,data)
         Player.title_give(play, _config.ch[nextLevel])
         setplaydef(play, VarCfg["U_江湖称号"], nextLevel)
         Player.trySyncSecondContinentXyl(play)
+        if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "任务") end
         Player.sendmsgEx(play, string.format("恭喜你，获得了|【%s】#218|称号！", _config.ch[nextLevel]))
         sendluamsg(play,100,npcid,1,0,"")
         sendluamsg(play,101,1005,0,0,"qhcg")

@@ -1,0 +1,634 @@
+[2026-06-04 18:43:16:632] D701 - secret map not found !!
+[2026-06-04 18:43:16:632] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-36360] 当前Thread:8648
+[2026-06-04 18:43:16:632] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2026-06-04 18:43:16:632] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-36360] 当前Thread:8648
+[2026-06-04 18:43:16:632] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2026-06-04 18:43:16:632] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-36360] 当前Thread:8648
+[2026-06-04 18:43:16:632] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2026-06-04 18:43:16:632] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-36360] 当前Thread:8648
+[2026-06-04 18:43:16:632] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2026-06-04 18:43:16:757] ---------------------线程耗时监控
+[2026-06-04 18:43:17:193] Frame-----------------------------------
+
+[2026-06-04 18:43:17:215] MainRunThread(16)-----------------------------------
+
+[2026-06-04 18:43:17:302] EnvirThread 0/0(21578-0)flag:50000004  lua: 1 CallLua:setontimerex 422-----------------------------------
+
+[2026-06-04 18:43:17:329] DbThread(0-0)-----------------------------------
+
+[2026-06-04 18:43:17:357] BoxSellDbThread(15)-----------------------------------
+
+[2026-06-04 18:43:17:381] NewHttpPost(15-0-0)-----------------------------------
+
+
+[2026-06-04 18:44:00:299] lua.Json2Tbl Except：Expected "{" but found value (1, 2)[0000000001E98281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001E97AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001E979B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001E9AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001E89702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001E8996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001E89AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000EC23B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000EC2418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[00000000015A81FA] JsonDataObjects._ZN15Jsondataobjects15TJsonBaseObject5ParseEPwiPNS_22TJsonReaderProgressRecE (Line 3214, "JsonDataObjects.pas" + 30)
+[0000000001B757E2] uMyLua._ZN6Umylua6TMyLua8Json2TblEPv (Line 8698, "uMyLua.pas" + 6)
+[00000000017B1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFBBAEE2C36]
+[00007FFBBAEE89EA] lua_pcall
+[0000000001BAB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000001BA9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001C63E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[0000000001C63C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[0000000001FE31CB] ObjPlay._ZN7Objplay11TPlayObject9UserLogonEv (Line 22293, "ObjPlay.pas" + 107)
+[0000000001D52049] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 140, "playManage.pas" + 30)
+[0000000001D51D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[0000000001D6D71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000001A9B12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000012E21D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[00000000012E1D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000FE2963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000EC2F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC41D9E957] BaseThreadInitThunk
+[00007FFC430E427C] RtlUserThreadStart
+
+
+[2026-06-04 18:45:57:232] lua.Json2Tbl Except：Expected "{" but found value (1, 2)[0000000001E98281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001E97AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001E979B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001E9AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001E89702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001E8996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001E89AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000EC23B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000EC2418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[00000000015A81FA] JsonDataObjects._ZN15Jsondataobjects15TJsonBaseObject5ParseEPwiPNS_22TJsonReaderProgressRecE (Line 3214, "JsonDataObjects.pas" + 30)
+[0000000001B757E2] uMyLua._ZN6Umylua6TMyLua8Json2TblEPv (Line 8698, "uMyLua.pas" + 6)
+[00000000017B1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFBBAEE2C36]
+[00007FFBBAEE89EA] lua_pcall
+[0000000001BAB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000001BA9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001C63E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[0000000001C63C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[0000000001FE31CB] ObjPlay._ZN7Objplay11TPlayObject9UserLogonEv (Line 22293, "ObjPlay.pas" + 107)
+[0000000001D52049] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 140, "playManage.pas" + 30)
+[0000000001D51D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[0000000001D6D71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000001A9B12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000012E21D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[00000000012E1D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000FE2963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000EC2F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC41D9E957] BaseThreadInitThunk
+[00007FFC430E427C] RtlUserThreadStart
+
+
+[2026-06-04 18:51:48:445] ---------------------线程耗时监控
+[2026-06-04 18:51:48:954] Frame-----------------------------------
+
+[2026-06-04 18:51:49:000] MainRunThread(0)-----------------------------------
+
+[2026-06-04 18:51:49:194] DbThread(2578-0)-----------------------------------
+
+[2026-06-04 18:51:49:247] BoxSellDbThread(0)-----------------------------------
+
+[2026-06-04 18:51:49:293] NewHttpPost(16-0-0)-----------------------------------
+
+
+[2026-06-04 19:00:21:163] ---------------------线程耗时监控
+[2026-06-04 19:00:21:210] Frame-----------------------------------
+
+[2026-06-04 19:00:21:249] MainRunThread(0)-----------------------------------
+
+[2026-06-04 19:00:21:290] EnvirThread 0/0(31-0)flag:5000000  lua: 434 CallLua:getobjectinmap 5379-----------------------------------
+
+[2026-06-04 19:00:21:338] DbThread(2140-0)-----------------------------------
+
+[2026-06-04 19:00:21:379] BoxSellDbThread(16)-----------------------------------
+
+[2026-06-04 19:00:21:417] NewHttpPost(16-0-0)-----------------------------------
+
+
+[2026-06-04 19:07:47:521] ---------------------线程耗时监控
+[2026-06-04 19:07:47:567] Frame-----------------------------------
+
+[2026-06-04 19:07:47:607] MainRunThread(0)-----------------------------------
+
+[2026-06-04 19:07:47:660] DbThread(2109-0)-----------------------------------
+
+[2026-06-04 19:07:47:699] BoxSellDbThread(15)-----------------------------------
+
+[2026-06-04 19:07:47:734] NewHttpPost(15-0-0)-----------------------------------
+
+
+[2026-06-04 20:29:53:654] ProgramException Except：Cannot create file "E:\新起航\服务端\Mir200\GlobalVal.ini". 另一个程序正在使用此文件，进程无法访问。[0000000001E98281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001E97AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001E979B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001E9AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001E89702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001E8996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001E89AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000EC23B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000EC2418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[0000000000FCB9D4] System.Classes._ZN6System7Classes11TFileStreamC3ENS_13UnicodeStringEt (Line 9547, "System.Classes.pas" + 6)
+[0000000000FC6540] System.Classes._ZN6System7Classes8TStrings10SaveToFileENS_13UnicodeStringEPNS_8Sysutils9TEncodingE (Line 7183, "System.Classes.pas" + 1)
+[0000000001063497] System.IniFiles._ZN6System8Inifiles11TMemIniFile10UpdateFileEv (Line 1214, "System.IniFiles.pas" + 13)
+[000000000219F294] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 323, "svMain.pas" + 21)
+[000000000219F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[000000000118AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[000000000118AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000FE8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFC41E5C396] Unknown function at CallWindowProcW
+[00007FFC41E5A7ED] Unknown function at IsWindowUnicode
+[00000000012242F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000001224368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[00000000012247BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[00000000021B13E2] M2Server._ZN8M2server14initializationEv
+[00007FFC41D9E957] BaseThreadInitThunk
+[00007FFC430E427C] RtlUserThreadStart
+
+
+[2026-06-04 20:30:33:652] ProgramException Except：Cannot create file "E:\新起航\服务端\Mir200\GlobalVal.ini". 另一个程序正在使用此文件，进程无法访问。[0000000001E98281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001E97AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001E979B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001E9AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001E89702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001E8996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001E89AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000EC23B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000EC2418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[0000000000FCB9D4] System.Classes._ZN6System7Classes11TFileStreamC3ENS_13UnicodeStringEt (Line 9547, "System.Classes.pas" + 6)
+[0000000000FC6540] System.Classes._ZN6System7Classes8TStrings10SaveToFileENS_13UnicodeStringEPNS_8Sysutils9TEncodingE (Line 7183, "System.Classes.pas" + 1)
+[0000000001063497] System.IniFiles._ZN6System8Inifiles11TMemIniFile10UpdateFileEv (Line 1214, "System.IniFiles.pas" + 13)
+[000000000219F294] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 323, "svMain.pas" + 21)
+[000000000219F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[000000000118AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[000000000118AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000FE8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFC41E5C396] Unknown function at CallWindowProcW
+[00007FFC41E5A7ED] Unknown function at IsWindowUnicode
+[00000000012242F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000001224368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[00000000012247BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[00000000021B13E2] M2Server._ZN8M2server14initializationEv
+[00007FFC41D9E957] BaseThreadInitThunk
+[00007FFC430E427C] RtlUserThreadStart
+
+
+[2026-06-04 21:05:27:388] ---------------------线程耗时监控
+[2026-06-04 21:05:27:420] Frame-----------------------------------
+
+[2026-06-04 21:05:27:453] MainRunThread(0)-----------------------------------
+
+[2026-06-04 21:05:27:491] DbThread(2078-0)-----------------------------------
+
+[2026-06-04 21:05:27:524] BoxSellDbThread(0)-----------------------------------
+
+[2026-06-04 21:05:27:558] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-06-04 21:25:02:014] ---------------------线程耗时监控
+[2026-06-04 21:25:02:047] Frame-----------------------------------
+
+[2026-06-04 21:25:02:081] MainRunThread(0)-----------------------------------
+
+[2026-06-04 21:25:02:119] DbThread(2078-1)-----------------------------------
+
+[2026-06-04 21:25:02:163] BoxSellDbThread(16)-----------------------------------
+
+[2026-06-04 21:25:02:219] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-06-04 21:45:28:566] ---------------------线程耗时监控
+[2026-06-04 21:45:28:593] Frame-----------------------------------
+
+[2026-06-04 21:45:28:622] MainRunThread(0)-----------------------------------
+
+[2026-06-04 21:45:28:650] EnvirThread 0/0(31-0)flag:5000000  lua: 6449 CallLua:getbagblank 33652-----------------------------------
+
+[2026-06-04 21:45:28:682] DbThread(2094-0)-----------------------------------
+
+[2026-06-04 21:45:28:711] BoxSellDbThread(16)-----------------------------------
+
+[2026-06-04 21:45:28:739] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-06-04 22:14:54:169] ---------------------线程耗时监控
+[2026-06-04 22:14:54:206] Frame-----------------------------------
+
+[2026-06-04 22:14:54:245] MainRunThread(16)-----------------------------------
+
+[2026-06-04 22:14:54:283] EnvirThread 0/0(31-0)flag:5000000  lua: 7131 CallLua:getbagblank 35658-----------------------------------
+
+[2026-06-04 22:14:54:320] DbThread(15-0)-----------------------------------
+
+[2026-06-04 22:14:54:357] BoxSellDbThread(0)-----------------------------------
+
+[2026-06-04 22:14:54:390] NewHttpPost(15-0-0)-----------------------------------
+
+
+[2026-06-04 22:27:45:212] ---------------------线程耗时监控
+[2026-06-04 22:27:46:274] Frame-----------------------------------
+
+[2026-06-04 22:27:46:304] MainRunThread(0)-----------------------------------
+
+[2026-06-04 22:27:46:335] DbThread(0-0)-----------------------------------
+
+[2026-06-04 22:27:46:365] BoxSellDbThread(0)-----------------------------------
+
+[2026-06-04 22:27:46:396] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-06-04 22:28:33:728] ProgramException Except：Cannot create file "E:\新起航\服务端\Mir200\GlobalVal.ini". 另一个程序正在使用此文件，进程无法访问。[0000000001E98281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001E97AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001E979B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001E9AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001E89702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001E8996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001E89AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000EC23B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000EC2418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[0000000000FCB9D4] System.Classes._ZN6System7Classes11TFileStreamC3ENS_13UnicodeStringEt (Line 9547, "System.Classes.pas" + 6)
+[0000000000FC6540] System.Classes._ZN6System7Classes8TStrings10SaveToFileENS_13UnicodeStringEPNS_8Sysutils9TEncodingE (Line 7183, "System.Classes.pas" + 1)
+[0000000001063497] System.IniFiles._ZN6System8Inifiles11TMemIniFile10UpdateFileEv (Line 1214, "System.IniFiles.pas" + 13)
+[000000000219F294] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 323, "svMain.pas" + 21)
+[000000000219F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[000000000118AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[000000000118AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000FE8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFC41E5C396] Unknown function at CallWindowProcW
+[00007FFC41E5A7ED] Unknown function at IsWindowUnicode
+[00000000012242F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000001224368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[00000000012247BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[00000000021B13E2] M2Server._ZN8M2server14initializationEv
+[00007FFC41D9E957] BaseThreadInitThunk
+[00007FFC430E427C] RtlUserThreadStart
+
+
+[2026-06-04 22:30:37:589] ---------------------线程耗时监控
+[2026-06-04 22:30:37:637] Frame-----------------------------------
+
+[2026-06-04 22:30:37:671] MainRunThread(16)-----------------------------------
+
+[2026-06-04 22:30:37:711] EnvirThread 0/0(31-0)flag:5000000  lua: 7513 CallLua:getbagblank 36896-----------------------------------
+
+[2026-06-04 22:30:37:743] DbThread(0-0)-----------------------------------
+
+[2026-06-04 22:30:37:774] BoxSellDbThread(0)-----------------------------------
+
+[2026-06-04 22:30:37:804] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-06-04 22:40:33:052] ---------------------线程耗时监控
+[2026-06-04 22:40:33:089] Frame-----------------------------------
+
+[2026-06-04 22:40:33:123] MainRunThread(0)-----------------------------------
+
+[2026-06-04 22:40:33:156] EnvirThread 0/0(31-0)flag:5000000  lua: 7754 CallLua:getbagblank 37681-----------------------------------
+
+[2026-06-04 22:40:33:189] DbThread(0-0)-----------------------------------
+
+[2026-06-04 22:40:33:228] BoxSellDbThread(0)-----------------------------------
+
+[2026-06-04 22:40:33:262] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-06-04 22:48:10:478] lua.Json2Tbl Except：Expected "{" but found value (1, 2)[0000000001E98281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001E97AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001E979B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001E9AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001E89702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001E8996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001E89AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000EC23B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000EC2418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[00000000015A81FA] JsonDataObjects._ZN15Jsondataobjects15TJsonBaseObject5ParseEPwiPNS_22TJsonReaderProgressRecE (Line 3214, "JsonDataObjects.pas" + 30)
+[0000000001B757E2] uMyLua._ZN6Umylua6TMyLua8Json2TblEPv (Line 8698, "uMyLua.pas" + 6)
+[00000000017B1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFBBAEE2C36]
+[00007FFBBAEE89EA] lua_pcall
+[0000000001BAB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000001BA9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001C63E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[0000000001C63C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[0000000001FE31CB] ObjPlay._ZN7Objplay11TPlayObject9UserLogonEv (Line 22293, "ObjPlay.pas" + 107)
+[0000000001D52049] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 140, "playManage.pas" + 30)
+[0000000001D51D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[0000000001D6D71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000001A9B12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000012E21D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[00000000012E1D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000FE2963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000EC2F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC41D9E957] BaseThreadInitThunk
+[00007FFC430E427C] RtlUserThreadStart
+
+
+[2026-06-04 23:19:26:468] ---------------------线程耗时监控
+[2026-06-04 23:19:26:497] Frame-----------------------------------
+
+[2026-06-04 23:19:26:527] MainRunThread(16)-----------------------------------
+
+[2026-06-04 23:19:26:553] EnvirThread 0/0(31-0)flag:5000000  lua: 8695 CallLua:getbagblank 42324-----------------------------------
+
+[2026-06-04 23:19:26:578] DbThread(16-0)-----------------------------------
+
+[2026-06-04 23:19:26:606] BoxSellDbThread(15)-----------------------------------
+
+[2026-06-04 23:19:26:634] NewHttpPost(15-0-0)-----------------------------------
+
+
+[2026-06-04 23:23:33:719] ProgramException Except：Cannot create file "E:\新起航\服务端\Mir200\GlobalVal.ini". 另一个程序正在使用此文件，进程无法访问。[0000000001E98281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001E97AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001E979B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001E9AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001E89702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001E8996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001E89AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000EC23B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000EC2418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[0000000000FCB9D4] System.Classes._ZN6System7Classes11TFileStreamC3ENS_13UnicodeStringEt (Line 9547, "System.Classes.pas" + 6)
+[0000000000FC6540] System.Classes._ZN6System7Classes8TStrings10SaveToFileENS_13UnicodeStringEPNS_8Sysutils9TEncodingE (Line 7183, "System.Classes.pas" + 1)
+[0000000001063497] System.IniFiles._ZN6System8Inifiles11TMemIniFile10UpdateFileEv (Line 1214, "System.IniFiles.pas" + 13)
+[000000000219F294] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 323, "svMain.pas" + 21)
+[000000000219F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[000000000118AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[000000000118AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000FE8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFC41E5C396] Unknown function at CallWindowProcW
+[00007FFC41E5A7ED] Unknown function at IsWindowUnicode
+[00000000012242F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000001224368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[00000000012247BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[00000000021B13E2] M2Server._ZN8M2server14initializationEv
+[00007FFC41D9E957] BaseThreadInitThunk
+[00007FFC430E427C] RtlUserThreadStart
+
+
+[2026-06-04 23:35:46:590] ---------------------线程耗时监控
+[2026-06-04 23:35:46:620] Frame-----------------------------------
+
+[2026-06-04 23:35:46:648] MainRunThread(0)-----------------------------------
+
+[2026-06-04 23:35:46:680] DbThread(2063-0)-----------------------------------
+
+[2026-06-04 23:35:46:711] BoxSellDbThread(0)-----------------------------------
+
+[2026-06-04 23:35:46:740] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-06-04 23:50:02:021] ---------------------线程耗时监控
+[2026-06-04 23:50:02:057] Frame-----------------------------------
+
+[2026-06-04 23:50:02:095] MainRunThread(0)-----------------------------------
+
+[2026-06-04 23:50:02:137] DbThread(2094-1)-----------------------------------
+
+[2026-06-04 23:50:02:173] BoxSellDbThread(16)-----------------------------------
+
+[2026-06-04 23:50:02:210] NewHttpPost(16-0-0)-----------------------------------
+
+
+[2026-06-04 23:50:47:939] ---------------------线程耗时监控
+[2026-06-04 23:50:48:011] Frame-----------------------------------
+
+[2026-06-04 23:50:48:062] MainRunThread(0)-----------------------------------
+
+[2026-06-04 23:50:48:108] DbThread(0-0)-----------------------------------
+
+[2026-06-04 23:50:48:151] BoxSellDbThread(0)-----------------------------------
+
+[2026-06-04 23:50:48:193] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-06-05 00:33:33:280] ProgramException Except：Cannot create file "E:\新起航\服务端\Mir200\GlobalVal.ini". 另一个程序正在使用此文件，进程无法访问。[0000000001E98281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001E97AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001E979B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001E9AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001E89702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001E8996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001E89AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000EC23B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000EC2418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[0000000000FCB9D4] System.Classes._ZN6System7Classes11TFileStreamC3ENS_13UnicodeStringEt (Line 9547, "System.Classes.pas" + 6)
+[0000000000FC6540] System.Classes._ZN6System7Classes8TStrings10SaveToFileENS_13UnicodeStringEPNS_8Sysutils9TEncodingE (Line 7183, "System.Classes.pas" + 1)
+[0000000001063497] System.IniFiles._ZN6System8Inifiles11TMemIniFile10UpdateFileEv (Line 1214, "System.IniFiles.pas" + 13)
+[000000000219F294] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 323, "svMain.pas" + 21)
+[000000000219F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[000000000118AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[000000000118AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000FE8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFC41E5C396] Unknown function at CallWindowProcW
+[00007FFC41E5A7ED] Unknown function at IsWindowUnicode
+[00000000012242F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000001224368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[00000000012247BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[00000000021B13E2] M2Server._ZN8M2server14initializationEv
+[00007FFC41D9E957] BaseThreadInitThunk
+[00007FFC430E427C] RtlUserThreadStart
+
+
+[2026-06-05 00:35:33:278] ProgramException Except：Cannot create file "E:\新起航\服务端\Mir200\GlobalVal.ini". 另一个程序正在使用此文件，进程无法访问。[0000000001E98281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001E97AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001E979B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001E9AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001E89702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001E8996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001E89AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000EC23B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000EC2418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[0000000000FCB9D4] System.Classes._ZN6System7Classes11TFileStreamC3ENS_13UnicodeStringEt (Line 9547, "System.Classes.pas" + 6)
+[0000000000FC6540] System.Classes._ZN6System7Classes8TStrings10SaveToFileENS_13UnicodeStringEPNS_8Sysutils9TEncodingE (Line 7183, "System.Classes.pas" + 1)
+[0000000001063497] System.IniFiles._ZN6System8Inifiles11TMemIniFile10UpdateFileEv (Line 1214, "System.IniFiles.pas" + 13)
+[000000000219F294] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 323, "svMain.pas" + 21)
+[000000000219F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[000000000118AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[000000000118AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000FE8A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFC41E5C396] Unknown function at CallWindowProcW
+[00007FFC41E5A7ED] Unknown function at IsWindowUnicode
+[00000000012242F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000001224368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[00000000012247BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[00000000021B13E2] M2Server._ZN8M2server14initializationEv
+[00007FFC41D9E957] BaseThreadInitThunk
+[00007FFC430E427C] RtlUserThreadStart
+
+
+[2026-06-05 00:39:22:300] ---------------------线程耗时监控
+[2026-06-05 00:39:22:330] Frame-----------------------------------
+
+[2026-06-05 00:39:22:361] MainRunThread(0)-----------------------------------
+
+[2026-06-05 00:39:24:260] lua.Json2Tbl Except：Expected "{" but found value (1, 2)[0000000001E98281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001E97AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001E979B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001E9AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001E89702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001E8996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001E89AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000EC23B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000EC2418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[00000000015A81FA] JsonDataObjects._ZN15Jsondataobjects15TJsonBaseObject5ParseEPwiPNS_22TJsonReaderProgressRecE (Line 3214, "JsonDataObjects.pas" + 30)
+[0000000001B757E2] uMyLua._ZN6Umylua6TMyLua8Json2TblEPv (Line 8698, "uMyLua.pas" + 6)
+[00000000017B1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFBBAEE2C36]
+[00007FFBBAEE89EA] lua_pcall
+[0000000001BAB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000001BA9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001C63E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[0000000001C63C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[0000000001FE31CB] ObjPlay._ZN7Objplay11TPlayObject9UserLogonEv (Line 22293, "ObjPlay.pas" + 107)
+[0000000001D52049] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 140, "playManage.pas" + 30)
+[0000000001D51D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[0000000001D6D71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000001A9B12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000012E21D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[00000000012E1D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000FE2963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000EC2F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC41D9E957] BaseThreadInitThunk
+[00007FFC430E427C] RtlUserThreadStart
+
+[2026-06-05 00:39:25:762] EnvirThread 0/0(2078-0)flag:2000000200  lua:login 10556 CallLua:json2tbl 47849-----------------------------------
+
+[2026-06-05 00:39:25:791] DbThread(0-0)-----------------------------------
+
+[2026-06-05 00:39:25:819] BoxSellDbThread(0)-----------------------------------
+
+[2026-06-05 00:39:25:851] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-06-05 00:39:25:861] ---------------------线程耗时监控
+[2026-06-05 00:39:25:892] Frame-----------------------------------
+
+[2026-06-05 00:39:25:921] MainRunThread(0)-----------------------------------
+
+[2026-06-05 00:39:26:104] EnvirThread 0/0(5641-0)flag:1000000728  lua:login 10556 CallLua:setcandlevalue 47911-----------------------------------
+
+[2026-06-05 00:39:26:131] DbThread(0-0)-----------------------------------
+
+[2026-06-05 00:39:26:161] BoxSellDbThread(0)-----------------------------------
+
+[2026-06-05 00:39:26:187] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-06-05 00:40:25:163] lua.Json2Tbl Except：Expected "{" but found value (1, 2)[0000000001E98281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001E97AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001E979B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001E9AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001E89702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001E8996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001E89AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000EC23B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000EC2418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[00000000015A81FA] JsonDataObjects._ZN15Jsondataobjects15TJsonBaseObject5ParseEPwiPNS_22TJsonReaderProgressRecE (Line 3214, "JsonDataObjects.pas" + 30)
+[0000000001B757E2] uMyLua._ZN6Umylua6TMyLua8Json2TblEPv (Line 8698, "uMyLua.pas" + 6)
+[00000000017B1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFBBAEE2C36]
+[00007FFBBAEE89EA] lua_pcall
+[0000000001BAB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000001BA9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001C63E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[0000000001C63C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[0000000001FE31CB] ObjPlay._ZN7Objplay11TPlayObject9UserLogonEv (Line 22293, "ObjPlay.pas" + 107)
+[0000000001D52049] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 140, "playManage.pas" + 30)
+[0000000001D51D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[0000000001D6D71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000001A9B12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000012E21D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[00000000012E1D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000FE2963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000EC2F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC41D9E957] BaseThreadInitThunk
+[00007FFC430E427C] RtlUserThreadStart
+
+
+[2026-06-05 00:52:36:758] lua.Json2Tbl Except：Expected "{" but found value (1, 2)[0000000001E98281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001E97AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001E979B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001E9AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001E89702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001E8996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001E89AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000EC23B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000EC2418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[00000000015A81FA] JsonDataObjects._ZN15Jsondataobjects15TJsonBaseObject5ParseEPwiPNS_22TJsonReaderProgressRecE (Line 3214, "JsonDataObjects.pas" + 30)
+[0000000001B757E2] uMyLua._ZN6Umylua6TMyLua8Json2TblEPv (Line 8698, "uMyLua.pas" + 6)
+[00000000017B1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFBBAEE2C36]
+[00007FFBBAEE89EA] lua_pcall
+[0000000001BAB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000001BA9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001C63E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[0000000001C63C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[0000000001FE31CB] ObjPlay._ZN7Objplay11TPlayObject9UserLogonEv (Line 22293, "ObjPlay.pas" + 107)
+[0000000001D52049] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 140, "playManage.pas" + 30)
+[0000000001D51D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[0000000001D6D71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000001A9B12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000012E21D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[00000000012E1D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000FE2963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000EC2F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC41D9E957] BaseThreadInitThunk
+[00007FFC430E427C] RtlUserThreadStart
+
+
+[2026-06-05 00:53:10:029] lua.Json2Tbl Except：Expected "{" but found value (1, 2)[0000000001E98281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001E97AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001E979B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001E9AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001E89702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001E8996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001E89AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000EC23B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000EC2418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[00000000015A81FA] JsonDataObjects._ZN15Jsondataobjects15TJsonBaseObject5ParseEPwiPNS_22TJsonReaderProgressRecE (Line 3214, "JsonDataObjects.pas" + 30)
+[0000000001B757E2] uMyLua._ZN6Umylua6TMyLua8Json2TblEPv (Line 8698, "uMyLua.pas" + 6)
+[00000000017B1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFBBAEE2C36]
+[00007FFBBAEE89EA] lua_pcall
+[0000000001BAB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000001BA9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001C63E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[0000000001C63C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[0000000001FE31CB] ObjPlay._ZN7Objplay11TPlayObject9UserLogonEv (Line 22293, "ObjPlay.pas" + 107)
+[0000000001D52049] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 140, "playManage.pas" + 30)
+[0000000001D51D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[0000000001D6D71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000001A9B12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000012E21D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[00000000012E1D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000FE2963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000EC2F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC41D9E957] BaseThreadInitThunk
+[00007FFC430E427C] RtlUserThreadStart
+
+
+[2026-06-05 01:05:49:056] Socket Err:10061
+[2026-06-05 01:05:49:052] [Exception]TMainRunThread.LoadKuaFuConfig Error  Except：[FireDAC][Phys][ODBC][Microsoft][ODBC SQL Server Driver][DBNETLIB]ConnectionWrite (send()).[0000000001E98281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001E97AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001E979B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001E9AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001E89702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001E8996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001E89AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000EC23B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000EC2418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[000000000150484F] FireDAC.Comp.Client._ZN7Firedac4Comp6Client15TFDRdbmsDataSet10OpenCursorEb (Line 11214, "FireDAC.Comp.Client.pas" + 9)
+[0000000001290354] Data.DB._ZN4Data2Db8TDataSet9SetActiveEb (Line 12665, "Data.DB.pas" + 14)
+[00000000014AB3BF] FireDAC.Comp.DataSet._ZN7Firedac4Comp7Dataset10TFDDataSet9SetActiveEb (Line 1615, "FireDAC.Comp.DataSet.pas" + 8)
+[00000000012900F6] Data.DB._ZN4Data2Db8TDataSet4OpenEv (Line 12620, "Data.DB.pas" + 2)
+[00000000021AEFFF] svMain._ZN6Svmain14TMainRunThread15LoadKuaFuConfigEv (Line 3408, "svMain.pas" + 9)
+[00000000021AF868] svMain._ZN6Svmain14TMainRunThread15CheckKuaFuStateEv (Line 3476, "svMain.pas" + 3)
+[00000000021AD31E] svMain._ZN6Svmain14TMainRunThread5OnRunEv (Line 2798, "svMain.pas" + 155)
+[00000000012E21D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[00000000012E1D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000FE2963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000EC2F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFC41D9E957] BaseThreadInitThunk
+[00007FFC430E427C] RtlUserThreadStart
+
+

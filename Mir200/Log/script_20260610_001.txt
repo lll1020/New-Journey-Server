@@ -1,0 +1,23 @@
+[2026-06-10 15:38:05:179] LuaNPC:123131 ID:999999999 执行 login player:123131 耗时：906; NpcThreadId: 34528, CurPlayThreadId: 34528
+
+[2026-06-10 16:30:10:544] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：203; NpcThreadId: 34528, CurPlayThreadId: 34528
+
+[2026-06-10 18:00:11:007] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：688; NpcThreadId: 34528, CurPlayThreadId: 34528
+
+[2026-06-10 18:42:21:855] LuaNPC:123131 ID:999999999 执行 clicknpc player:123131 耗时：156; NpcThreadId: 34528, CurPlayThreadId: 34528
+
+[2026-06-10 19:00:00:511] LuaNPC:系统控制 ID:999999999 执行 jqr_zxht_change player:系统控制 耗时：47; NpcThreadId: 34528, CurPlayThreadId: 34528
+
+[2026-06-10 19:00:13:534] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：3219; NpcThreadId: 34528, CurPlayThreadId: 34528
+
+[2026-06-10 19:00:40:668] LuaNPC:123131 ID:999999999 执行 clicknpc player:123131 耗时：32; NpcThreadId: 34528, CurPlayThreadId: 34528
+
+[2026-06-10 19:01:13:277] LuaNPC: ID:999999999 执行 hd_tcppk player: 耗时：78; NpcThreadId: 34528, CurPlayThreadId: 34528
+
+[2026-06-10 19:05:09:303] LuaNPC:123131 ID:999999999 执行 entermap player:123131 耗时：188; NpcThreadId: 34528, CurPlayThreadId: 34528
+[2026-06-10 19:05:09:314] LuaNPC:123131 ID:999999999 执行 stdmodefunc10 player:123131 耗时：281; NpcThreadId: 34528, CurPlayThreadId: 34528
+
+[2026-06-10 19:30:10:817] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：516; NpcThreadId: 34528, CurPlayThreadId: 34528
+
+[2026-06-10 19:30:26:127] LuaNPC: ID:999999999 执行 hd_tcppk player: 耗时：94; NpcThreadId: 34528, CurPlayThreadId: 34528
+

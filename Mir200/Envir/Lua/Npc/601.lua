@@ -46,6 +46,7 @@ function npc.link(play,npcid,ew,aid)
 
             Player.title_give(play, _config.details.ch)
             if Player.trySyncSecondContinentXyl then Player.trySyncSecondContinentXyl(play) end
+            if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "任务") end
             Player.sendmsgEx(play, "轩辕剑修复成功，获得称号|【".._config.details.ch.."】#218|")
             sendluamsg(play,101,1005,0,0,"rwwc")
             sendluamsg(play,100,npcid,1,0,"")

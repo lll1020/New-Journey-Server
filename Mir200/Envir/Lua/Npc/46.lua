@@ -131,6 +131,9 @@ function npc.link(play,npcid,ew,aid,data)
         Player.title_give(play, _config.ch)
         Player.sendmsgEx(play,  "恭喜你，获得称号：|【".._config.ch.."】#218|")
         sendluamsg(play,100,npcid,1,0,"")
+        if rwcf and rwcf[npcid] then
+            Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
+        end
     elseif ew == 2 then
         _jump_to_route(play, tonumber(aid or 0) or 0)
     end

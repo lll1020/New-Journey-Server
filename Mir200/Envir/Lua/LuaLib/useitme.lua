@@ -667,13 +667,29 @@ local function _apply_dan40_attr(play, rec)
         Player.del_attlist(play, "特殊丹药")
     end
 end
+local function _get_jz_dan_attr_str(count)
+    count = tonumber(count or 0) or 0
+    local cut = count * 1000
+    local base = count * 50
+    local block = count * 2000
+    return table.concat({
+        "3#244#" .. tostring(cut),
+        "3#3#" .. tostring(base),
+        "3#4#" .. tostring(base),
+        "3#5#" .. tostring(base),
+        "3#6#" .. tostring(base),
+        "3#7#" .. tostring(base),
+        "3#8#" .. tostring(base),
+        "3#255#" .. tostring(block),
+    }, "|")
+end
 local function Login_dan40(play)
     local rec = json2tbl(getplaydef(play, VarCfg["T_物品使用记录"]))
     _apply_dan40_attr(play, rec)
     rec = type(rec) == "table" and rec or {}
     local jz_count = tonumber(rec.jz_dan_count or 0) or 0
     if jz_count > 0 then
-        Player.add_attlist(play, "筑基丹", "=", "3#244#" .. tostring(jz_count * 1000) .. "|3#4#" .. tostring(jz_count * 50), 1)
+        Player.add_attlist(play, "筑基丹", "=", _get_jz_dan_attr_str(jz_count), 1)
     else
         Player.del_attlist(play, "筑基丹")
     end
@@ -1235,7 +1251,7 @@ function stdmodefunc61(play, item) --筑基丹
     end
     rec.jz_dan_count = cur + 1
     setplaydef(play, VarCfg["T_物品使用记录"], tbl2json(rec))
-    Player.add_attlist(play, "筑基丹", "=", "3#244#" .. tostring((tonumber(rec.jz_dan_count) or 0) * 1000) .. "|3#4#" .. tostring((tonumber(rec.jz_dan_count) or 0) * 50), 1)
+    Player.add_attlist(play, "筑基丹", "=", _get_jz_dan_attr_str(rec.jz_dan_count), 1)
     Player.sendmsgEx(play, "筑基丹服用成功，当前已服用|" .. tostring(rec.jz_dan_count) .. "/3#218")
     return false
 end
@@ -1379,7 +1395,21 @@ function stdmodefunc67(play, item) --灵兽幼崽：真实累计充值99元后可立即孵化
     return false
 end
 
+local function _rename_card_can_use(play)
+    local mergeCount = 0
+    if globalinfo then
+        mergeCount = tonumber(globalinfo(3) or 0) or 0
+    end
+    if mergeCount < 1 then
+        Player.sendmsgEx(play, "第一次合区以后才可改名#57")
+        return false
+    end
+    return true
+end
 function stdmodefunc64(play, item) --改名卡
+    if not _rename_card_can_use(play) then
+        return false
+    end
     local itemName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "改名卡")
     if itemName == "" then
         itemName = "改名卡"
@@ -1393,11 +1423,14 @@ function stdmodefunc64(play, item) --改名卡
         return false
     end
     setplaydef(play, "S$改名卡道具", itemName)
-    say(play, "<确认改名/@@InputString68(请输入新的角色名称：)>\\")
+    sendluamsg(play, 100, 9998, 0, 0, tbl2json({itemName = itemName}))
     return false
 end
 
 local function _rename_card_submit(play, inputText, inputVar)
+    if not _rename_card_can_use(play) then
+        return false
+    end
     local newName = tostring(inputText or "")
     if newName == "" and inputVar and inputVar ~= "" then
         newName = tostring(getplaydef(play, inputVar) or "")
@@ -1439,6 +1472,10 @@ end
 
 function inputstring64(play, inputText)
     return _rename_card_submit(play, inputText, "S64")
+end
+
+function renamecardsubmit(play, inputText)
+    return _rename_card_submit(play, inputText, "")
 end
 local function _get_zhuji_dan_record(play)
     local rec = json2tbl(getplaydef(play, VarCfg["T_物品使用记录"]))

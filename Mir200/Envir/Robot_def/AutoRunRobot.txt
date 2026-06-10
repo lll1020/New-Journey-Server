@@ -39,3 +39,18 @@
 #AutoRun NPC RunOnDay 22:00:00 @jqr_zxht_change 0
 #AutoRun NPC RunOnDay 23:00:00 @jqr_zxht_change 0
 #AutoRun NPC RunOnDay 24:00:00 @jqr_zxht_change 0
+;天下第一武道会（跨服功能，确认跨服地图 kftt1~kftt100 后开启）
+#AutoRun NPC RUNONWEEK 1:20:00 @jqr_wudaohui_start 0
+#AutoRun NPC RUNONWEEK 1:22:00 @jqr_wudaohui_end 0
+#AutoRun NPC RUNONWEEK 2:20:00 @jqr_wudaohui_start 0
+#AutoRun NPC RUNONWEEK 2:22:00 @jqr_wudaohui_end 0
+#AutoRun NPC RUNONWEEK 3:20:00 @jqr_wudaohui_start 0
+#AutoRun NPC RUNONWEEK 3:22:00 @jqr_wudaohui_end 0
+#AutoRun NPC RUNONWEEK 4:20:00 @jqr_wudaohui_start 0
+#AutoRun NPC RUNONWEEK 4:22:00 @jqr_wudaohui_end 0
+#AutoRun NPC RUNONWEEK 5:20:00 @jqr_wudaohui_start 0
+#AutoRun NPC RUNONWEEK 5:22:00 @jqr_wudaohui_end 0
+#AutoRun NPC RUNONWEEK 7:24:00 @jqr_wudaohui_rank_reward 0
+;正邪大战
+#AutoRun NPC RunOnDay 22:00:00 @jqr_zxdz_start 0
+#AutoRun NPC RunOnDay 22:10:00 @jqr_zxdz_end 0

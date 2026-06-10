@@ -143,6 +143,7 @@ function TreasureBasin.markTaskStarted(play)
     end
     data.task_started = 1
     _save_state(play, data)
+    if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "任务") end
     local dropData = Player.getJsonTableByVar(play, VarCfg["T_物品掉落记录"])
     if type(dropData) ~= "table" then
         dropData = {}
@@ -278,6 +279,7 @@ local function _grant_artifact_if_needed(play, data)
     end
     if changed then
         _save_state(play, data)
+    if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "任务") end
     end
     return data
 end
@@ -381,6 +383,7 @@ function TreasureBasin.link(play, npcid, p2, p3, msgData)
     Player.takeItemByTable(play, {{itemName, needNum}}, ",聚宝盆重铸", nil)
     data.rebuilt = 1
     _save_state(play, data)
+    if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "任务") end
     if shaguai and shaguai.jian then
         shaguai.jian(play, 33)
     end

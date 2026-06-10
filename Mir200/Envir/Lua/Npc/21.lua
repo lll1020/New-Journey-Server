@@ -143,6 +143,7 @@ function npc.link(play,npcid,ew,aid)
             setplaydef(play, VarCfg["U_境界修炼"][1], level)
             -- 二大陆伏妖录：境界突破成功后立即尝试自动结算当前任务。
             Player.trySyncSecondContinentXyl(play)
+            if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "任务") end
             Player.sendmsgEx(play,  "恭喜你，境界提升成功，当前境界等级为|【".._config.details[level].title.."级】#218|")
             if FairyFate and FairyFate.touch then FairyFate.touch(play, "realm_up") end
             Player.del_attlist(play, "境界修为")

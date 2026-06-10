@@ -1,0 +1,28 @@
+[2026-06-04 18:44:00:423] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：125; NpcThreadId: 36360, CurPlayThreadId: 36360
+
+[2026-06-04 19:00:17:813] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：1016; NpcThreadId: 36360, CurPlayThreadId: 36360
+
+[2026-06-04 19:00:40:074] LuaNPC: ID:999999999 执行 hd_tcppk player: 耗时：547; NpcThreadId: 36360, CurPlayThreadId: 36360
+
+[2026-06-04 19:05:40:015] LuaNPC:玩家名字 ID:999999999 执行 ontimer1 player:玩家名字 耗时：703; NpcThreadId: 36360, CurPlayThreadId: 36360
+
+[2026-06-04 19:20:16:838] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：63; NpcThreadId: 36360, CurPlayThreadId: 36360
+
+[2026-06-04 20:16:57:616] LuaNPC:玩家名字 ID:999999999 执行 ontimer6 player:玩家名字 耗时：46; NpcThreadId: 36360, CurPlayThreadId: 36360
+
+[2026-06-04 22:48:10:607] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：140; NpcThreadId: 36360, CurPlayThreadId: 36360
+
+[2026-06-05 00:00:01:449] LuaNPC:系统控制 ID:999999999 执行 jqr_qingli player:系统控制 耗时：172; NpcThreadId: 36360, CurPlayThreadId: 36360
+[2026-06-05 00:00:03:091] LuaNPC:玩家名字 ID:999999999 执行 resetday player:玩家名字 耗时：344; NpcThreadId: 36360, CurPlayThreadId: 36360
+
+[2026-06-05 00:37:49:417] LuaNPC:玩家名字 ID:999999999 执行 playoffline player:玩家名字 耗时：78; NpcThreadId: 36360, CurPlayThreadId: 36360
+
+[2026-06-05 00:39:26:417] LuaNPC:玩家名字 ID:999999999 执行 sendability player:玩家名字 耗时：172; NpcThreadId: 36360, CurPlayThreadId: 36360
+[2026-06-05 00:39:27:802] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：5907; NpcThreadId: 36360, CurPlayThreadId: 36360
+
+[2026-06-05 00:40:25:189] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 36360, CurPlayThreadId: 36360
+
+[2026-06-05 00:52:36:787] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 36360, CurPlayThreadId: 36360
+
+[2026-06-05 00:53:10:054] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：32; NpcThreadId: 36360, CurPlayThreadId: 36360
+

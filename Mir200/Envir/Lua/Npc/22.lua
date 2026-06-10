@@ -51,6 +51,26 @@ local function _level(T_data, idx)
     return math.max(1, _toint(T_data.level[tostring(idx)], 1))
 end
 
+local _linggen_skill_ids = {
+    [1] = 1007, [2] = 1008, [3] = 1009, [4] = 1010, [5] = 1011,
+    [6] = 1012, [7] = 1013, [8] = 1014, [9] = 1015, [10] = 1016,
+}
+
+local function _sync_linggen_skill(play, T_data)
+    T_data = _ensure_data(T_data or Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
+    for _, skillId in pairs(_linggen_skill_ids) do
+        delskill(play, skillId)
+        setplaydef(play, "N$magtag_level_" .. tostring(skillId), 0)
+    end
+    local mainIdx = _toint(T_data.main, 0)
+    local skillId = _linggen_skill_ids[mainIdx]
+    local level = _level(T_data, mainIdx)
+    if skillId and level > 0 then
+        addskill(play, skillId, level)
+        setplaydef(play, "N$magtag_level_" .. tostring(skillId), level)
+    end
+end
+
 local function _interp_attr_value(one, level)
     level = math.max(1, math.min(10, _toint(level, 1)))
     local v1 = tonumber(one[2]) or 0
@@ -168,8 +188,10 @@ function npc.link(play, npcid, ew, aid)
         T_data.level[tostring(aid)] = 1
         if _toint(T_data.main, 0) <= 0 then T_data.main = aid end
         Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
+        _sync_linggen_skill(play, T_data)
         Player.updateSomeAddr(play, nil, _build_root_attr(aid, 1))
         _refresh_linggen_special(play, T_data)
+        if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "任务") end -- linggen_auto_1
         if FairyFate and FairyFate.touch then FairyFate.touch(play, "linggen") end
         local cfg = _root_cfg(aid) or {}
         Player.sendmsgEx(play, "提示：你成功解锁|【"..tostring(cfg.name or "").."灵根】#218|")
@@ -184,11 +206,14 @@ function npc.link(play, npcid, ew, aid)
                 Player.sendmsgEx(play, "当前未设置本命灵根#57")
                 return
             end
-            if not _take_change_cost(play) then return end
+            -- no cost required for unequip; keep _take_change_cost for possible rollback.
+            -- if not _take_change_cost(play) then return end
             T_data.main = nil
             Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
+            _sync_linggen_skill(play, T_data)
             Player.sendmsgEx(play, "提示：本命灵根已卸下")
             _refresh_send(play, npcid, 1)
+            clearplayeffect(play,(oldMain > 5 and oldMain - 5 or oldMain) + 60499)
             return
         end
         if not _has_root(T_data, aid) then
@@ -199,10 +224,15 @@ function npc.link(play, npcid, ew, aid)
             Player.sendmsgEx(play, "该灵根已经是本命灵根#57")
             return
         end
-        if oldMain > 0 and not _take_change_cost(play) then return end
+        -- no cost required for switching main root; keep _take_change_cost for possible rollback.
+        -- if oldMain > 0 and not _take_change_cost(play) then return end
         T_data.main = aid
         Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
+        _sync_linggen_skill(play, T_data)
+        if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "任务") end -- linggen_auto_2
         Player.sendmsgEx(play, "提示：本命灵根切换成功")
+        clearplayeffect(play,(oldMain > 5 and oldMain - 5 or oldMain) + 60499)
+        playeffect(play,(aid > 5 and aid - 5 or aid) + 60499,0,0,0,0,0)
         _refresh_send(play, npcid, 1)
         return
     end
@@ -241,6 +271,7 @@ function npc.link(play, npcid, ew, aid)
         T_data.main = pairIdx
         T_data.dual_switch_next = now + _toint(_config.switch_cd, 60)
         Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
+        _sync_linggen_skill(play, T_data)
         local cfg = _root_cfg(pairIdx) or {}
         Player.sendmsgEx(play, "提示：已切换为|【"..tostring(cfg.name or "觉醒").."灵根】#218|")
         _refresh_send(play, npcid, 1)
@@ -276,8 +307,10 @@ function npc.link(play, npcid, ew, aid)
         Player.takeItemByTable(play, upCfg.cost, ",灵根升级", nil)
         T_data.level[tostring(aid)] = nextLevel
         Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
+        if _toint(T_data.main, 0) == aid then _sync_linggen_skill(play, T_data) end
         Player.updateSomeAddr(play, _build_root_attr(aid, oldLevel), _build_root_attr(aid, nextLevel))
         _refresh_linggen_special(play, T_data)
+        if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "任务") end -- linggen_auto_1
         TMLP_refresh_linggen_bonus(play)
         if FairyFate and FairyFate.touch then FairyFate.touch(play, "linggen") end
         Player.sendmsgEx(play, "提示：你的|【灵根】#218|升级成功")
@@ -290,6 +323,7 @@ end
 function Login_lg(play)
     local T_data = _ensure_data(Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
     Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
+    _sync_linggen_skill(play, T_data)
     _refresh_linggen_special(play, T_data)
     local attrs = {}
     for i = 1, 10 do
@@ -297,6 +331,10 @@ function Login_lg(play)
         if lv > 0 then
             for _, one in ipairs(_build_root_attr(i, lv)) do attrs[#attrs + 1] = one end
         end
+    end
+    local oldMain = _toint(T_data.main, 0)
+    if oldMain > 0 then
+        playeffect(play,(oldMain > 5 and oldMain - 5 or oldMain) + 60499,0,0,0,0,0)
     end
     Player.updateSomeAddr(play, nil, attrs)
     TMLP_refresh_linggen_bonus(play)

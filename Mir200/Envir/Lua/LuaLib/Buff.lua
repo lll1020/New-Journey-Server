@@ -249,7 +249,7 @@ local function _sync_item_named_cut_attr(play, itemobj, tagName, stack)
     setcustomitemprogressbar(play, itemobj, 0, tbl2json({
         ["open"] = 1,
         ["show"] = 0,
-        ["name"] = string.format("≥‰÷µ«–∏Ó£∫+%d", cutValue),
+        ["name"] = string.format("¿€º∆«–∏Ó£∫+%d", cutValue),
         ["color"] = 251,
         ["imgcount"] = 1,
     }))
@@ -265,7 +265,7 @@ local function Buff_refreshRechargeBlade(play)
         setplaydef(play, "N$«–∏Óµ∂“—º§ªÓ", 1)
     end
 -- ÷ª±£¡ÙŒÔ∆∑…œµƒ«–∏Ó Ù–‘£¨±‹√‚Ω«…´…Ì…œ≤–¡Ùæ…∞ÊÕ¨√˚ Ù–‘°£
-    Player.del_attlist(play, "≥‰÷µ«–∏Óµ∂")
+    Player.del_attlist(play, "¿€º∆«–∏Óµ∂")
     if active == 1 then
         _set_title_buff_flag(play, 564, true)
         if shaguai and shaguai.jia then
@@ -274,7 +274,7 @@ local function Buff_refreshRechargeBlade(play)
     end
     if active ~= 1 then
         if bladeItem and bladeItem ~= "0" then
-            _sync_item_named_cut_attr(play, bladeItem, "[≥‰÷µ«–∏Ó]", 0)
+            _sync_item_named_cut_attr(play, bladeItem, "[¿€º∆«–∏Ó]", 0)
         end
         return
     end
@@ -286,7 +286,7 @@ local function Buff_refreshRechargeBlade(play)
     end
     setplaydef(play, "N$«–∏Óµ∂¿€º∆«–∏Ó", stack)
     if bladeItem and bladeItem ~= "0" then
-        _sync_item_named_cut_attr(play, bladeItem, "[≥‰÷µ«–∏Ó]", stack)
+        _sync_item_named_cut_attr(play, bladeItem, "[¿€º∆«–∏Ó]", stack)
     end
 end
 local function _tianshu_buff_splash(play, Target)

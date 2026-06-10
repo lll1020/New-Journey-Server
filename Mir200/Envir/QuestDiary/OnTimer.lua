@@ -1672,6 +1672,14 @@ local function _bwcz_save_player_data(play, data)
     Player.setJsonVarByTable(play, VarCfg["T_保卫村庄"], data or {})
 end
 
+local function _bwcz_clear_legacy_hdjl(play)
+    local hdjl = Player.getJsonTableByVar(play, VarCfg.T_hdjl) or {}
+    if type(hdjl) == "table" and hdjl.bwcz ~= nil then
+        hdjl.bwcz = nil
+        Player.setJsonVarByTable(play, VarCfg.T_hdjl, hdjl)
+    end
+end
+
 local function _bwcz_get_title_cfg_by_idx(cfg, idx)
     idx = tonumber(idx) or 0
     for _, one in ipairs((cfg and cfg.title_levels) or {}) do
@@ -1739,26 +1747,24 @@ local function _bwcz_add_activity_score(play, cfg)
     if not play or not cfg then
         return
     end
-    local hdjl = Player.getJsonTableByVar(play, VarCfg.T_hdjl)
-    hdjl.bwcz = hdjl.bwcz or {}
-    if tonumber(hdjl.bwcz.joined) == 1 then
+    local data = _bwcz_get_player_data(play)
+    if tonumber(data.joined) == 1 then
         return
     end
-    hdjl.bwcz.joined = 1
-    hdjl.bwcz.join_score = (tonumber(hdjl.bwcz.join_score) or 0) + (tonumber(cfg.score_per_join) or 0)
+    data.joined = 1
+    data.join_score = (tonumber(data.join_score) or 0) + (tonumber(cfg.score_per_join) or 0)
     local scoreVar = tostring(cfg.score_var or _BWCZ_SCORE_VAR)
     setplayvar(play, "HUMAN", scoreVar, _safe_getplayvar_num(play, "HUMAN", scoreVar) + (tonumber(cfg.score_per_join) or 0), 1)
-    Player.setJsonVarByTable(play, VarCfg.T_hdjl, hdjl)
+    _bwcz_save_player_data(play, data)
 end
 
 local function _bwcz_reset_online_scores(cfg)
     local scoreVar = tostring((cfg and cfg.score_var) or _BWCZ_SCORE_VAR)
     for _, player in ipairs(getplayerlst() or {}) do
         setplayvar(player, "HUMAN", scoreVar, 0, 1)
-        local hdjl = Player.getJsonTableByVar(player, VarCfg.T_hdjl)
-        hdjl.bwcz = hdjl.bwcz or {}
-        hdjl.bwcz.joined = 0
-        Player.setJsonVarByTable(player, VarCfg.T_hdjl, hdjl)
+        local data = _bwcz_get_player_data(player)
+        data.joined = 0
+        _bwcz_save_player_data(player, data)
     end
 end
 
@@ -1879,6 +1885,7 @@ local function _bwcz_on_login(play)
     local data = _bwcz_get_player_data(play)
     _bwcz_refresh_title_by_total_merit(play, cfg, data)
     _bwcz_save_player_data(play, data)
+    _bwcz_clear_legacy_hdjl(play)
 end
 
 local function _bwcz_is_active_map(play, cfg)
@@ -1949,10 +1956,8 @@ local function _bwcz_finish(cfg, fromBot)
             data.last_score = tonumber(one.score) or 0
             _bwcz_refresh_title_by_total_merit(playerObj, cfg, data)
             _bwcz_save_player_data(playerObj, data)
-            local hdjl = Player.getJsonTableByVar(playerObj, VarCfg.T_hdjl)
-            hdjl.bwcz = hdjl.bwcz or {}
-            hdjl.bwcz.last = {rank = i, score = one.score, merit = tonumber(data.total_merit) or 0}
-            Player.setJsonVarByTable(playerObj, VarCfg.T_hdjl, hdjl)
+            data.last = {rank = i, score = one.score, merit = tonumber(data.total_merit) or 0}
+            _bwcz_save_player_data(playerObj, data)
         end
     end
     local topName = rankData[1] and rankData[1].name or "无人上榜"
@@ -3273,6 +3278,8 @@ function hd_tcppk(xx,ditu)
                 _hdjd_refresh_actor(v)
             end
         end
+    elseif ditu == "正邪大战" then
+        if zxdz_map_tick then zxdz_map_tick() end
     elseif ditu == _WLMZ_MAP_NAME then
         local wanjia = getobjectinmap(_WLMZ_MAP_NAME,25,29,65,1)
         for k, v in pairs(wanjia) do

@@ -213,6 +213,17 @@ function npc_628_back(play)
     setplaydef(play, "S$npc628_back", "")
 end
 
+function npc_628_delay_back(play)
+    local dtm = getbaseinfo(play,1).."_npc628"
+    if getbaseinfo(play,3) == dtm then
+        npc_628_back(play)
+    end
+    if checkmirrormap(dtm) then
+        setenvirofftimer(dtm, 1)
+        delmirrormap(dtm)
+    end
+end
+
 function npc_628_enter(play)
     npc_628_savepos(play)
     local dtm = getbaseinfo(play,1).."_npc628"
@@ -220,7 +231,7 @@ function npc_628_enter(play)
         delmirrormap(dtm)
     end
     local base_map = _config.fb_map or "mwsl"
-    addmirrormap(base_map, dtm, _config.name or "副本", 300, "xtc")
+    addmirrormap(base_map, dtm, "虚妄山脉", 300, "xtc")
     mapmove(play, dtm, 29, 27, 2)
 
     if _has_prep_item_equipped(play) then
@@ -252,10 +263,8 @@ function npc_628_dsq(xt,play,dtm,data)
     if main_count + x_count < 1 then
         setenvirofftimer(dtm, 1)
         npc_628_finish(play)
-        if getbaseinfo(play,3) == dtm then
-            npc_628_back(play)
-        end
-        delmirrormap(dtm)
+        Player.sendmsgEx(play, "Boss已击败，5秒后离开副本#57")
+        delaygoto(play, 5000, "@npc_628_delay_back")
         return
     end
 
@@ -280,7 +289,11 @@ function npc_628_timeout(play)
     local dtm = getbaseinfo(play,1).."_npc628"
     if getbaseinfo(play,3) == dtm then
         if getmoncount(dtm,-1,true) < 1 then
+            setenvirofftimer(dtm, 1)
             npc_628_finish(play)
+            Player.sendmsgEx(play, "Boss已击败，5秒后离开副本#57")
+            delaygoto(play, 5000, "@npc_628_delay_back")
+            return
         else
             Player.sendmsgEx(play, "副本时间结束#57")
         end

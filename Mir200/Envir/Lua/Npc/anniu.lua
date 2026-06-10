@@ -186,14 +186,17 @@ local function _ywl_apply_special_reward(play, name, count)
     end
     return false
 end
-local function _ywl_filter_rewards(play, list)
+local function _ywl_filter_rewards(play, list, continent)
     if type(list) ~= "table" then
         return list
     end
+    local skipJqd = (tonumber(continent or 0) or 0) >= 3
     local out = {}
     for _, v in ipairs(list) do
         if type(v) == "table" and type(v[1]) == "string" then
-            if not _ywl_apply_special_reward(play, v[1], v[2]) then
+            if skipJqd and v[1] == "剧情点" then
+                -- 三大陆及之后伏妖录不再发放剧情点。
+            elseif not _ywl_apply_special_reward(play, v[1], v[2]) then
                 out[#out + 1] = v
             end
         else
@@ -245,10 +248,12 @@ local function _ywl_is_chapter_open(play, i, j)
     if not npc_xyl[i] or not npc_xyl[i][j] then
         return false
     end
-    local need_jqd = tonumber(npc_xyl[i][j].jqd) or 0
-    local cur_jqd = querymoney(play, getstditeminfo("剧情点", 0))
-    if cur_jqd < need_jqd then
-        return false
+    if tonumber(i) < 3 then
+        local need_jqd = tonumber(npc_xyl[i][j].jqd) or 0
+        local cur_jqd = querymoney(play, getstditeminfo("剧情点", 0))
+        if cur_jqd < need_jqd then
+            return false
+        end
     end
     local preList = _ywl_to_pre_list(npc_xyl[i][j].pre) or _ywl_to_pre_list(npc_xyl[i][j].unlock_pre)
     if preList then
@@ -271,10 +276,14 @@ local function _ywl_get_target_dl(sj, shuju)
     return tonumber(sj and sj.i) or 0
 end
 local _ywl_map_gate = {
-    ["虚妄山脉"] = {mode = "ge", key = "npc_621", value = 2, tip = "踏入·虚妄山脉"},
-    ["鬼嘲深渊"] = {mode = "ge", key = "npc_623", value = 2, tip = "踏入·鬼嘲深渊"},
-    ["叹息旷野"] = {mode = "ge", key = "npc_622", value = 2, tip = "踏入·叹息旷野"},
-    ["禁忌之海"] = {mode = "ge", key = "npc_624", value = 2, tip = "踏入·禁忌之海"},
+    ["虚妄山脉"] = {mode = "ge", key = "npc_621", value = 2, tip = "踏入·山脉入口"},
+    ["山脉入口"] = {mode = "ge", key = "npc_621", value = 2, tip = "踏入·山脉入口"},
+    ["鬼嘲深渊"] = {mode = "ge", key = "npc_623", value = 2, tip = "踏入·旷野之原"},
+    ["旷野之原"] = {mode = "ge", key = "npc_623", value = 2, tip = "踏入·旷野之原"},
+    ["叹息旷野"] = {mode = "ge", key = "npc_622", value = 2, tip = "踏入·恐怖裂隙"},
+    ["恐怖裂隙"] = {mode = "ge", key = "npc_622", value = 2, tip = "踏入·恐怖裂隙"},
+    ["禁忌之海"] = {mode = "ge", key = "npc_624", value = 2, tip = "踏入·海峰孤岛"},
+    ["海峰孤岛"] = {mode = "ge", key = "npc_624", value = 2, tip = "踏入·海峰孤岛"},
     ["船长室"] = {mode = "eq", key = "npc_629_a", value = 1, tip = "沉船之谜·船长室提交"},
     ["水手舱"] = {mode = "eq", key = "npc_629_b", value = 1, tip = "沉船之谜·水手舱提交"},
     ["黄泉路"] = {mode = "ge", key = "npc_667", value = 2, tip = "买路钱"},
@@ -433,7 +442,7 @@ local _ywl_try_clear_current_task
 local function _ywl_finish_single_task_state(play, T_ywl, sj, shuju)
     T_ywl["jl_" .. sj.i .. "_" .. sj.j .. "_" .. sj.z] = 1
     T_ywl = select(1, _ywl_try_clear_current_task(play, T_ywl, sj))
-    local taskReward = _ywl_filter_rewards(play, shuju.jl)
+    local taskReward = _ywl_filter_rewards(play, shuju.jl, sj.i)
     if taskReward and #taskReward > 0 then
         if tonumber(sj.i) == 2 then
             Player.rwjl(play, taskReward, "xyl", 1, 0)
@@ -665,7 +674,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
             and sj.z <= #npc_xyl[sj.i][sj.j].jq
         then
             if not _ywl_is_chapter_open(play, sj.i, sj.j) then
-                sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>剧情点不足...</font>","Type":9}')
+                sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>' .. ((tonumber(sj.i) or 0) < 3 and "剧情点不足..." or "章节未解锁...") .. '</font>","Type":9}')
                 return
             end
             local shuju = npc_xyl[sj.i][sj.j].jq[sj.z]
@@ -735,7 +744,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
                 return
             end
             if not _ywl_is_chapter_open(play, sj.i, sj.j) then
-                sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>剧情点不足...</font>","Type":9}')
+                sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>' .. ((tonumber(sj.i) or 0) < 3 and "剧情点不足..." or "章节未解锁...") .. '</font>","Type":9}')
                 return
             end
             local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
@@ -756,7 +765,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
             end
             T_ywl["jl_" .. sj.i .. "_" .. sj.j] = 1
             setplaydef(play, VarCfg.T_ywl, tbl2json(T_ywl))
-            local _jl = _ywl_filter_rewards(play, npc_xyl[sj.i][sj.j].jl)
+            local _jl = _ywl_filter_rewards(play, npc_xyl[sj.i][sj.j].jl, sj.i)
             if _jl and #_jl > 0 then
                 if tonumber(sj.i) == 2 then
                     Player.rwjl(play, _jl, "剧情jl", 1, 0)
@@ -787,7 +796,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
             and sj.z <= #npc_xyl[sj.i][sj.j].jq
         then
             if not _ywl_is_chapter_open(play, sj.i, sj.j) then
-                sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>剧情点不足...</font>","Type":9}')
+                sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>' .. ((tonumber(sj.i) or 0) < 3 and "剧情点不足..." or "章节未解锁...") .. '</font>","Type":9}')
                 return
             end
             local shuju = npc_xyl[sj.i][sj.j].jq[sj.z]
@@ -1163,14 +1172,27 @@ local function _sc_sync_flags(play, data)
         end
     end
 end
+local function _sc_refresh_treasure_task_progress(play)
+    if (tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0) ~= 23 then
+        return
+    end
+    local have = tonumber(getbagitemcount(play, "聚宝盆碎片") or 0) or 0
+    if have > 20 then
+        have = 20
+    end
+    newchangetask(play, 23, have)
+end
 local function _sc_apply_main_reward(play, data)
-    Buff[73](play, 1) -- 护体光环
+    local poisonSkill = getskillindex and getskillindex("群体施毒术") or 0
+    if tonumber(poisonSkill or 0) > 0 then
+        addskill(play, poisonSkill, 3)
+    end
     local halfMoon = getskillindex and getskillindex("半月弯刀") or 25
     if tonumber(halfMoon or 0) > 0 then
         addskill(play, halfMoon, 3)
     end
-    -- 群体施毒术已调整到 105 限时福利发放，这里改为首充直接补发聚宝盆碎片。
     Player.rwjl(play, {{"聚宝盆碎片", 20}}, "首充礼包", 1, 0)
+    _sc_refresh_treasure_task_progress(play)
 
     local sz_data = Player.getJsonTableByVar(play, VarCfg.T_szjl) or {}
     sz_data.yjs = sz_data.yjs or {}
@@ -1671,8 +1693,12 @@ local function _activity507_is_open(p3)
         local state = getsysvar(VarCfg["A_美食狂欢json"])
         local tb = state ~= "" and json2tbl(state) or {}
         return getsysvar(VarCfg["G_美食狂欢状态"]) == 1 and type(tb) == "table" and tonumber(tb.open) == 1
+    elseif p3 == 8 then
+        return tonumber(getsysvar("G_正邪大战状态") or 0) == 1
     elseif p3 == 9 then
         return dqfz >= 25 and dqfz < 30
+    elseif p3 == 10 then
+        return tonumber(getsysvar("G_武道大会状态") or 0) == 1
     elseif p3 == 13 then
         local cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].sjdb or {}
         local keepMin = math.max(1, math.ceil((tonumber(cfg.keep_sec) or 300) / 60))
@@ -1691,9 +1717,11 @@ local function _activity507_open_state_payload()
         [3] = _activity507_is_open(3) and 1 or 0,
         [5] = _activity507_is_open(5) and 1 or 0,
         [6] = _activity507_is_open(6) and 1 or 0,
+        [8] = _activity507_is_open(8) and 1 or 0,
         [9] = _activity507_is_open(9) and 1 or 0,
         [13] = _activity507_is_open(13) and 1 or 0,
         [14] = _activity507_is_open(14) and 1 or 0,
+        [10] = _activity507_is_open(10) and 1 or 0,
     })
 end
 npc[507] = function(play, p2, p3, msgData) --活动面板
@@ -1802,7 +1830,9 @@ npc[507] = function(play, p2, p3, msgData) --活动面板
         elseif p3 == 7 then
             Npclib["anniu"][506](play, 0, 0, "")
         elseif p3 == 8 then
-            Player.sendmsgEx(play, "正邪大战暂未开放#57")
+            if zxdz_enter(play) then
+                _activity507_enter_notice(play, 8, "正邪大战")
+            end
         elseif p3 == 9 then
             if not _activity507_is_open(p3) then
                 Player.sendmsgEx(play, "武林盟主当前未开启#57")
@@ -1811,7 +1841,15 @@ npc[507] = function(play, p2, p3, msgData) --活动面板
             map(play, "比武大会")
             _activity507_enter_notice(play, 9, "武林盟主")
         elseif p3 == 10 then
-            Player.sendmsgEx(play, "该活动尚未开放#57")
+            if not checkkuafu(play) and not checkkuafuconnect() then
+                Player.sendmsgEx(play, "跨服未开启，暂时无法参加武道大会#57")
+                return
+            end
+            local mod = dofile("Envir/Lua/Npc/1011.lua")
+            if mod and mod.main then
+                mod.main(play, 1011)
+            end
+            _activity507_enter_notice(play, 10, "武道大会")
         elseif p3 == 11 then
             Player.sendmsgEx(play, "请通过沙巴克专属入口参与#57")
         elseif p3 == 12 then
