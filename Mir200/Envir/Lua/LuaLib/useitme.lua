@@ -19,6 +19,11 @@ local function _random_transfer_cd_left(play, now)
     local left = nextTime - (now or os.time())
     return left > 0 and left or 0
 end
+local function _pk_combat_left(play, now)
+    now = now or os.time()
+    local left = (tonumber(getplaydef(play, "N$PK脱战") or 0) or 0) - now
+    return left > 0 and math.ceil(left) or 0
+end
 local function _record_random_transfer_use(play, now)
     now = now or os.time()
     local windowStart = tonumber(getplaydef(play, "N$随机传送窗口开始时间") or 0) or 0
@@ -43,7 +48,7 @@ function stdmodefunc9(play, item)
     local now = os.time()
     local cdLeft = _random_transfer_cd_left(play, now)
     if cdLeft > 0 then
-        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>随机传送冷却中，请稍后...</font>","Type":9}')
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>随机传送冷却中,剩余' .. math.max(1, math.ceil(cdLeft)) .. '秒</font>","Type":9}')
         return false
     end
     if getplaydef(play,"N$PK脱战") < now or _has_equip_name(play, "遮云日") then
@@ -53,7 +58,7 @@ function stdmodefunc9(play, item)
         --     startautoattack(play)
         -- end
     else
-        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用，脱战3秒后可用...</font>","Type":9}')
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗中不能传送,剩余' .. math.max(1, _pk_combat_left(play, now)) .. '秒</font>","Type":9}')
     end
     return false
 end
@@ -110,7 +115,7 @@ function stdmodefunc10(play, item)
             addmpper(play, '=', 100)
         end
     else
-        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用，脱战3秒后可用...</font>","Type":9}')
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗中不能传送,剩余' .. math.max(1, _pk_combat_left(play, now)) .. '秒</font>","Type":9}')
     end
     return false
 end

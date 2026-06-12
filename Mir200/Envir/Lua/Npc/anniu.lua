@@ -840,6 +840,13 @@ npc[11] = function(play, p2, p3, data) --异闻录
     end
 end
 ---记忆传送
+local function _jls_transfer_combat_left(play, now)
+    now = now or os.time()
+    local monsterLeft = (tonumber(getplaydef(play, "N$怪物脱战") or 0) or 0) - now
+    local pkLeft = (tonumber(getplaydef(play, "N$PK脱战") or 0) or 0) - now
+    local left = math.max(monsterLeft, pkLeft, 0)
+    return left > 0 and math.ceil(left) or 0
+end
 npc[13] = function(play, p2, p3, data) -- 记录石
     if p2 == 0 then
         -- 当 p3 为 0 时，进行记录石的初始化操作
@@ -886,7 +893,7 @@ npc[13] = function(play, p2, p3, data) -- 记录石
                 sendluamsg(play, 101, 13, 3, p3, "")
             else
                 --向客户端发送消息，通知玩家处于战斗状态，无法传送
-                sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}' )
+                sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>战斗中不能传送,剩余' .. math.max(1, _jls_transfer_combat_left(play, os.time())) .. '秒</font>","Type":9}')
             end
         else
             --向客户端发送消息，通知记录石不存在

@@ -138,6 +138,10 @@ local function _send_reward_mail(play, cfg)
     local attachments = #mailItems > 0 and Player.jl_mail(mailItems) or ""
     sendmail(getbaseinfo(play, 2), 0, "新区冲级", mailDesc, attachments)
     if title ~= "" then
+        _remove_other_titles(play, title)
+        if not checktitle(play, title) then
+            Player.title_give(play, title)
+        end
         Player.sendmsgEx(play, "新区冲级奖励已发送到邮件：#57|【" .. title .. "】#218|")
     else
         Player.sendmsgEx(play, "新区冲级奖励已发送到邮件，请及时领取。")

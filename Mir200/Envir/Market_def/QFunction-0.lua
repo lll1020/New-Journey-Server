@@ -143,6 +143,13 @@ local function _is_transfer_out_of_combat(play, now)
     now = now or os.time()
     return getplaydef(play, "N$怪物脱战") < now and getplaydef(play, "N$PK脱战") < now
 end
+local function _transfer_combat_left(play, now)
+    now = now or os.time()
+    local monsterLeft = (tonumber(getplaydef(play, "N$怪物脱战") or 0) or 0) - now
+    local pkLeft = (tonumber(getplaydef(play, "N$PK脱战") or 0) or 0) - now
+    local left = math.max(monsterLeft, pkLeft, 0)
+    return left > 0 and math.ceil(left) or 0
+end
 --------------------传送戒指传送前触发触发-------------------
 function beginteleport(play)
     setplaydef(play,"S$dtm",getbaseinfo(play, 3))
@@ -158,7 +165,7 @@ function beginteleport(play)
     if cd > 0 then
         local bl = sj - getplaydef(play,"N$传送功能CD")
         if bl < cd then
-            sendmsg(play,1,'{"Msg":"请等待'..(cd-bl)..'秒后在使用","FColor":56,"BColor":255,"Type":1}')
+            sendmsg(play,1,'{"Msg":"传送冷却中,剩余'..math.max(1, math.ceil(cd - bl))..'秒","FColor":56,"BColor":255,"Type":1}')
             return false
         end
     end
@@ -167,7 +174,7 @@ function beginteleport(play)
         setplaydef(play,"N$传送功能CD",sj)
         return true
     end
-    sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗状态无法使用...</font>","Type":9}')
+    sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗中不能传送,剩余' .. math.max(1, _transfer_combat_left(play, os.time())) .. '秒</font>","Type":9}')
     return false
 end
 --------------------AI挂机自动切换地图-------------------
