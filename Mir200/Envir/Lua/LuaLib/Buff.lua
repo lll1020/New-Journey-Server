@@ -671,21 +671,28 @@ Buff = {
             local fire = _godstone_level(play, "fire")
             local monType = _godstone_mon_type(Target)
             if fire >= 1 and monType >= 2 and Damage and Damage > 0 then
-                local rate = ({600, 1000, 1500, 2200})[fire] or 0
+                local fireRates = {600, 1000, 1500, 2200}
+                local rate = 0
+                for i = 1, math.min(fire, #fireRates) do
+                    rate = rate + fireRates[i]
+                end
                 extra = extra + math.floor(Damage * rate / 10000)
             end
             local thunder = _godstone_level(play, "thunder")
             if thunder > 0 then
-                if thunder == 1 and monType <= 0 and _godstone_roll(play, "thunder_mon_1", 300, 0) then
+                if thunder >= 1 and monType <= 0 and _godstone_roll(play, "thunder_mon_1", 300, 0) then
                     changemode(Target, ConstCfg.pmode.stick, 1)
-                elseif thunder == 2 and monType >= 1 and _godstone_roll(play, "thunder_mon_2", 600, 0) then
+                end
+                if thunder >= 2 and monType >= 1 and _godstone_roll(play, "thunder_mon_2", 600, 0) then
                     changemode(Target, ConstCfg.pmode.stick, 2)
-                elseif thunder == 3 and _godstone_roll(play, "thunder_mon_3", 900, 0) then
+                end
+                if thunder >= 3 and _godstone_roll(play, "thunder_mon_3", 900, 0) then
                     local x = tonumber(getbaseinfo(Target, ConstCfg.gbase.x) or 0) or 0
                     local y = tonumber(getbaseinfo(Target, ConstCfg.gbase.y) or 0) or 0
                     rangeharm(play, x, y, 3, 1, 0, 0, 0, 2, 0, 3)
                     changemode(Target, ConstCfg.pmode.stick, 3)
-                elseif thunder >= 4 and _godstone_is_red_boss(Target) and _godstone_roll(play, "thunder_mon_4", 1000, 0) then
+                end
+                if thunder >= 4 and _godstone_is_red_boss(Target) and _godstone_roll(play, "thunder_mon_4", 1000, 0) then
                     changemode(Target, ConstCfg.pmode.stick, 3)
                 end
             end
@@ -794,7 +801,7 @@ Buff = {
             if sj - getplaydef(play,VarCfg.N_Aigj[1]) >= 60 and not getbaseinfo(play,0) and json.gjkg then
                 setplaydef(play,VarCfg.N_Aigj[1],sj)
                 map(play,getbaseinfo(play,3))
-                sendmsg(play,1,'{"Msg":"<font color=\'#28ef01\'>AI挂机：被人物攻击自动随机！</font>","Type":9}')
+                sendmsg(play,1,'{"Msg":"<font color=\'#ff3131\' size=\'14\'>AI挂机</font><font color=\'#c0c0c0\' size=\'14\'>：被人物攻击自动随机！</font>","Type":9}')
                 startautoattack(play)
             end
             return 0
@@ -1207,7 +1214,7 @@ Buff = {
                 extraDamage = 0
             end
             if extraDamage > 0 then
-                Player.sendmsgEx(play,"【毁灭】#253|切割之斧触发，额外造成"..extraDamage.."点真实伤害")
+                Player.sendmsgEx(play,"【毁灭】#22|切割之斧触发，额外造成#7|"..extraDamage.."点真实伤害#22")
                 playeffect(Target,60456,0,0,1,0,0)
             end
             return extraDamage

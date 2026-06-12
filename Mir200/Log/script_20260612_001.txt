@@ -1,0 +1,19 @@
+[2026-06-12 01:26:24:334] LuaNPC: ID:999999999 执行 startup player: 耗时：78; NpcThreadId: 44548, CurPlayThreadId: 44548
+
+[2026-06-12 01:28:32:011] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：266; NpcThreadId: 44548, CurPlayThreadId: 44548
+
+[2026-06-12 01:28:38:129] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：47; NpcThreadId: 44548, CurPlayThreadId: 44548
+[2026-06-12 01:28:38:129] [玩家名字]Lua执行耗时过高:47ms msgid:101 18 1 0 
+
+[2026-06-12 01:49:07:514] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：32; NpcThreadId: 44548, CurPlayThreadId: 44548
+
+[2026-06-12 02:03:24:377] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：31; NpcThreadId: 44548, CurPlayThreadId: 44548
+
+[2026-06-12 22:13:29:484] LuaNPC: ID:999999999 执行 startup player: 耗时：31; NpcThreadId: 7648, CurPlayThreadId: 7648
+
+[2026-06-12 22:14:02:954] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：1344; NpcThreadId: 7648, CurPlayThreadId: 7648
+
+[2026-06-12 22:14:12:340] LuaNPC:玩家名字 ID:999999999 执行 clicknewtask player:玩家名字 耗时：63; NpcThreadId: 7648, CurPlayThreadId: 7648
+
+[2026-06-12 22:21:18:622] LuaNPC:玩家名字 ID:999999999 执行 mondropitemex player:玩家名字 耗时：31; NpcThreadId: 7648, CurPlayThreadId: 7648
+

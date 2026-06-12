@@ -57,14 +57,43 @@ local function _xianfa_unlock_all_slots(actor)
     return checktitle(actor, "九五至尊")
 end
 
-local function _xianfa_get_slot_need_lv(actor, cfg, slot)
-    if _xianfa_unlock_all_slots(actor) then
-        return 1, true
+local function _xianfa_story_done(actor, cond)
+    local story = Player.getJsonTableByVar(actor, VarCfg["T_dljq"]) or {}
+    local tk = cond.tk or "npc_46"
+    local node = story[tk]
+    if type(node) == "table" and tonumber(node.wc or 0) == 1 then
+        return true
     end
-    local unlock_lv = cfg.unlock_lv or {}
-    return tonumber(unlock_lv[slot]) or 1, false
+    local title = cond.title or "灾厄杀手"
+    return title ~= "" and checktitle(actor, title)
 end
 
+local function _xianfa_is_slot_unlocked(actor, cfg, slot, T_data)
+    if _xianfa_unlock_all_slots(actor) then
+        return true, "已解锁", true
+    end
+    local cond = cfg.unlock_cond and cfg.unlock_cond[slot]
+    if not cond then
+        local unlock_lv = cfg.unlock_lv or {}
+        local need_lv = tonumber(unlock_lv[slot]) or 1
+        local cur_lv = tonumber(T_data and T_data.level or 0) or 0
+        return cur_lv >= need_lv, string.format("天书等级%d级", need_lv), false
+    end
+    if cond.kind == "free" then
+        return true, cond.desc or "免费解锁", false
+    elseif cond.kind == "level" then
+        local need_lv = tonumber(cond.level) or 0
+        local cur_lv = tonumber(getbaseinfo(actor, 6) or 0) or 0
+        return cur_lv >= need_lv, cond.desc or string.format("玩家等级Lv%d", need_lv), false
+    elseif cond.kind == "story" then
+        return _xianfa_story_done(actor, cond), cond.desc or "完成指定剧情任务", false
+    elseif cond.kind == "tianshu" then
+        local need_lv = tonumber(cond.level) or 0
+        local cur_lv = tonumber(T_data and T_data.level or 0) or 0
+        return cur_lv >= need_lv, cond.desc or string.format("天书等级%d级", need_lv), false
+    end
+    return false, cond.desc or "未满足解锁条件", false
+end
 local function TMLP_get_xianfa_rate_bonus(actor)
     if TianMingDaoPanHasPath and TianMingDaoPanHasPath(actor, 4) then
         return 5
@@ -363,13 +392,11 @@ function npc.link(play,npcid,ew,aid,data)
             end
 
             local cfg = _config.details[2]
-            local need_lv, unlock_by_artifact = _xianfa_get_slot_need_lv(play, cfg, slot)
-            local cur_lv = T_data.level or 0
-            if not unlock_by_artifact and cur_lv < need_lv then
-                Player.sendmsgEx(play, string.format("天书等级达到#57|【%d级】#218|才可解锁该仙法槽位#57", need_lv))
+            local unlocked, lock_desc = _xianfa_is_slot_unlocked(play, cfg, slot, T_data)
+            if not unlocked then
+                Player.sendmsgEx(play, string.format("达到#57|【%s】#218|后才可解锁该仙法槽位#57", lock_desc))
                 return
             end
-
             T_data["caowei"] = T_data["caowei"] or {}
             local slot_key = ""..slot
 

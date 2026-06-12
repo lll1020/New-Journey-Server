@@ -194,7 +194,7 @@ function npc.link(play, npcid, ew, aid)
         if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "任务") end -- linggen_auto_1
         if FairyFate and FairyFate.touch then FairyFate.touch(play, "linggen") end
         local cfg = _root_cfg(aid) or {}
-        Player.sendmsgEx(play, "提示：你成功解锁|【"..tostring(cfg.name or "").."灵根】#218|")
+        Player.sendmsgEx(play, "提示：你成功解锁#7|【"..tostring(cfg.name or "").."灵根】#22|")
         _refresh_send(play, npcid, 1)
         return
     end
@@ -211,7 +211,7 @@ function npc.link(play, npcid, ew, aid)
             T_data.main = nil
             Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
             _sync_linggen_skill(play, T_data)
-            Player.sendmsgEx(play, "提示：本命灵根已卸下")
+            Player.sendmsgEx(play, "提示：本命灵根已卸下#7")
             _refresh_send(play, npcid, 1)
             clearplayeffect(play,(oldMain > 5 and oldMain - 5 or oldMain) + 60499)
             return
@@ -230,7 +230,7 @@ function npc.link(play, npcid, ew, aid)
         Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
         _sync_linggen_skill(play, T_data)
         if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "任务") end -- linggen_auto_2
-        Player.sendmsgEx(play, "提示：本命灵根切换成功")
+        Player.sendmsgEx(play, "提示：本命灵根切换成功#7")
         clearplayeffect(play,(oldMain > 5 and oldMain - 5 or oldMain) + 60499)
         playeffect(play,(aid > 5 and aid - 5 or aid) + 60499,0,0,0,0,0)
         _refresh_send(play, npcid, 1)
@@ -273,7 +273,7 @@ function npc.link(play, npcid, ew, aid)
         Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
         _sync_linggen_skill(play, T_data)
         local cfg = _root_cfg(pairIdx) or {}
-        Player.sendmsgEx(play, "提示：已切换为|【"..tostring(cfg.name or "觉醒").."灵根】#218|")
+        Player.sendmsgEx(play, "提示：已切换为#7|【"..tostring(cfg.name or "觉醒").."灵根】#22|")
         _refresh_send(play, npcid, 1)
         return
     end
@@ -313,7 +313,7 @@ function npc.link(play, npcid, ew, aid)
         if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "任务") end -- linggen_auto_1
         TMLP_refresh_linggen_bonus(play)
         if FairyFate and FairyFate.touch then FairyFate.touch(play, "linggen") end
-        Player.sendmsgEx(play, "提示：你的|【灵根】#218|升级成功")
+        Player.sendmsgEx(play, "提示：你的#7|【灵根】#22|升级成功#7")
         sendluamsg(play, 101, 1005, 0, 0, "tpcg")
         _refresh_send(play, npcid, 2)
         return
@@ -373,7 +373,7 @@ function LingGenGrantBasicUnlockChance(play, count)
     local T_data = _ensure_data(Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
     T_data.unlock_chance = _toint(T_data.unlock_chance, 0) + math.max(1, _toint(count, 1))
     Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
-    Player.sendmsgEx(play, "获得基础灵根解锁|【"..tostring(count or 1).."】#218|次")
+    Player.sendmsgEx(play, "获得基础灵根解锁#7|【"..tostring(count or 1).."】#22|次#7")
     return true
 end
 

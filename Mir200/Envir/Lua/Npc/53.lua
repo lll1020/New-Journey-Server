@@ -80,7 +80,7 @@ local _box_name_order = {"神石宝箱", "神石宝箱[史诗级]", "神石宝箱[传说级]"}
     参数：play=玩家对象；item_list=待过滤的神石列表。
 ]]
 
--- 神石效果按“神石类型 + 品质”生效，不做低阶效果累加。
+-- 神石特殊效果按品质逐档累加：紫色=蓝+紫，传说=蓝+紫+传说，神话=四档全生效。
 local _godstone_effect_cfg = {
     ["山川神石"] = {
         attrs = {
@@ -167,7 +167,9 @@ local function _build_item_attr_by_item(item_name)
     local _, level, effect = _resolve_godstone_info(item_name)
     local attrs = {}
     if effect and effect.attrs then
-        _merge_attr(attrs, effect.attrs[level] or {})
+        for i = 1, level do
+            _merge_attr(attrs, effect.attrs[i] or {})
+        end
     end
     return attrs, level
 end

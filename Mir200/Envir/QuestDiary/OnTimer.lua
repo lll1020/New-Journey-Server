@@ -287,7 +287,7 @@ local function _qmdt_get_cfg()
     cfg.base_score = tonumber(cfg.base_score) or 100
     cfg.map = tostring(cfg.map or "全民答题")
     cfg.answer_mob = tostring(cfg.answer_mob or "问题答案")
-    cfg.answer_range = tonumber(cfg.answer_range) or 2
+    cfg.answer_range = tonumber(cfg.answer_range) or 5
     cfg.enter_pos = type(cfg.enter_pos) == "table" and cfg.enter_pos or {50, 50}
     cfg.answer_points = type(cfg.answer_points) == "table" and cfg.answer_points or {
         {x = 43, y = 50}, {x = 57, y = 50}, {x = 50, y = 43}, {x = 50, y = 57},
@@ -355,6 +355,41 @@ local function _qmdt_make_payload(state, cfg, qidx)
         map = cfg.map,
     }
 end
+local function _qmdt_make_panel_payload(state, cfg, qidx)
+    local q = cfg and cfg.questions and cfg.questions[qidx]
+    if not q then
+        return nil
+    end
+    return {
+        mode = "qmdt",
+        idx = qidx,
+        total = cfg.question_count,
+        question = q.title,
+        end_ts = tonumber(state.question_end_ts) or 0,
+        settle_ts = tonumber(state.settle_ts) or 0,
+        map = cfg.map,
+    }
+end
+local function _qmdt_send_panel(play, state, cfg)
+    if not play or not cfg then
+        return
+    end
+    state = type(state) == "table" and state or _qmdt_get_state()
+    if getsysvar(VarCfg["G_全民答题状态"]) ~= 1 or tonumber(state.open) ~= 1 then
+        sendluamsg(play, 101, 498, 2, 0, "")
+        return
+    end
+    local payload = _qmdt_make_panel_payload(state, cfg, tonumber(state.current_idx) or 0)
+    if payload then
+        sendluamsg(play, 101, 498, 1, 0, tbl2json(payload))
+    end
+end
+local function _qmdt_send_panel_to_map(state, cfg)
+    local players = getobjectinmap(cfg.map, 0, 0, 999, 1) or {}
+    for _, play in pairs(players) do
+        _qmdt_send_panel(play, state, cfg)
+    end
+end
 local function _qmdt_clear_answers(cfg)
     if not cfg or not cfg.map or cfg.map == "" then
         return
@@ -409,12 +444,7 @@ local function _qmdt_spawn_answers(cfg, q)
 end
 local function _qmdt_broadcast_question(cfg, q, qidx, duration)
     local msg = _qmdt_build_notice(q, qidx, cfg.question_count, duration, cfg.settle_before_sec)
-    sendmovemsg("0", 1, 254, 0, 300, 5, msg)
-    sendtopchatboardmsg("0", 1, 254, 0, 300, msg, 5)
-    -- sendmovemsg("0", 1, 254, 0, 270, 5, msg)
-    for _, player in ipairs(getplayerlst() or {}) do
-        sendluamsg(player, 101, 12, 1, 3, '{"sk":2,"kf":2,"idx":3}')
-    end
+    sendtopchatboardmsg("0", 1, 254, 0, 300, msg, 8)
 end
 local function _qmdt_push_question(state, cfg, qidx, dqfz)
     local q = cfg.questions[qidx]
@@ -440,6 +470,7 @@ local function _qmdt_push_question(state, cfg, qidx, dqfz)
     _qmdt_save_state(state)
     _qmdt_spawn_answers(cfg, q)
     _qmdt_broadcast_question(cfg, q, qidx, duration)
+    _qmdt_send_panel_to_map(state, cfg)
     return true
 end
 local function _qmdt_get_player_answer_idx(play, cfg)
@@ -526,6 +557,7 @@ local function _qmdt_settle_question(state, cfg, qidx)
     _qmdt_clear_answers(cfg)
     local answerText = tostring((q.options or {})[tonumber(q.answer) or 0] or q.answer or "")
     sendmovemsg("0", 1, 254, 0, 300, 3, "全民答题：第" .. tostring(qidx) .. "题结算，正确答案【" .. answerText .. "】，答对" .. tostring(rightCount) .. "人，参与" .. tostring(answerCount) .. "人。")
+    sendtopchatboardmsg("0", 1, 254, 0, 300, "全民答题：第" .. tostring(qidx) .. "题结算，正确答案【" .. answerText .. "】，答对" .. tostring(rightCount) .. "人，参与" .. tostring(answerCount) .. "人。", 5)
     _qmdt_save_state(state)
     return state
 end
@@ -546,6 +578,9 @@ local function _qmdt_start(dqfz, cfg)
     setenvirontimer(cfg.map, 4, 1, "@hd_tcppk," .. cfg.map)
     sendmovemsg("0", 1, 254, 0, 300, 5, "活动：活动《全民答题》已开启，请前往【" .. tostring(cfg.map) .. "】站到正确答案怪物旁参与答题...")
     sendmovemsg("0", 1, 254, 0, 270, 5, "活动：活动《全民答题》已开启，请前往【" .. tostring(cfg.map) .. "】站到正确答案怪物旁参与答题...")
+    for _, player in ipairs(getplayerlst() or {}) do
+        sendluamsg(player, 101, 12, 1, 3, '{"sk":' .. tostring(tonumber(cfg.duration_min) or 4) .. ',"kf":2,"idx":3}')
+    end
     _qmdt_push_question(state, cfg, 1, dqfz)
 end
 local function _qmdt_finish(cfg)
@@ -612,6 +647,9 @@ local function _qmdt_finish(cfg)
     setsysvar(VarCfg["G_全民答题状态"], 0)
     setenvirofftimer(cfg.map, 4)
     _qmdt_clear_answers(cfg)
+    for _, player in ipairs(getplayerlst() or {}) do
+        sendluamsg(player, 101, 12, 4, 3, "")
+    end
 end
 local function _qmdt_tick_runtime(cfg, state)
     if getsysvar(VarCfg["G_全民答题状态"]) ~= 1 then
@@ -660,6 +698,7 @@ QmdtApi.start = _qmdt_start
 QmdtApi.finish = _qmdt_finish
 QmdtApi.tick_runtime = _qmdt_tick_runtime
 QmdtApi.make_payload = _qmdt_make_payload
+QmdtApi.send_panel = _qmdt_send_panel
 QmdtApi.is_timer_map = _qmdt_is_timer_map
 
 QmdkApi = QmdkApi or {}
@@ -2049,10 +2088,27 @@ BwczApi.is_active_map = _bwcz_is_active_map
 BwczApi.get_mon_hp = _bwcz_get_mon_hp
 BwczApi.get_mon_merit = _bwcz_get_mon_merit
 BwczApi.get_mon_type = _bwcz_get_mon_type
+BwczApi.count_alive_monsters = _bwcz_count_alive_monsters
 BwczApi.add_merit = _bwcz_add_merit
 BwczApi.add_activity_score = _bwcz_add_activity_score
 BwczApi.give_kill_reward = _bwcz_give_kill_reward
 BwczApi.build_rank_data = _bwcz_build_rank_data
+
+local function _bwcz_send_498_panel(play, cfg)
+    if not play or not cfg then
+        return
+    end
+    local state = _bwcz_get_state()
+    local scoreVar = tostring(cfg.score_var or _BWCZ_SCORE_VAR)
+    local payload = {
+        pmsj = sorthumvar(scoreVar, 1, 1, 5),
+        grjf = tonumber(getplayvar(play, "HUMAN", scoreVar) or 0) or 0,
+        wave_name = tostring(state.current_wave_name or ""),
+        left_mon = _bwcz_count_alive_monsters(cfg),
+    }
+    sendluamsg(play, 101, 498, 1, 0, tbl2json(payload))
+end
+BwczApi.send_498_panel = _bwcz_send_498_panel
 
 local function _bwcz_on_login_event(play)
     _bwcz_on_login(play)
@@ -2071,6 +2127,7 @@ local function _bwcz_on_kill_mon(play, mob)
     setplayvar(play, "HUMAN", tostring(cfg.score_var or _BWCZ_SCORE_VAR), (_safe_getplayvar_num(play, "HUMAN", tostring(cfg.score_var or _BWCZ_SCORE_VAR)) + _bwcz_get_mon_merit(monName, cfg)), 1)
     _bwcz_add_merit(play, monName, cfg)
     _bwcz_give_kill_reward(play, monName, cfg)
+    _bwcz_send_498_panel(play, cfg)
 end
 BwczApi.onKillMon = _bwcz_on_kill_mon
 
@@ -2820,7 +2877,7 @@ function ontimerex1()
                 local t = getplayerlst()
                 for _, v in pairs(t) do
                     sendluamsg(v, 101, 1000, 2, 0,"")
-                    sendluamsg(v, 101, 12, 4, 3,"")
+                    sendluamsg(v, 101, 12, 4, 5,"")
                     setplaydef(v, "N$上次坐标x", 0)
                     setplaydef(v, "N$上次坐标y", 0)
                 end
@@ -2935,6 +2992,10 @@ function ontimer4(play)
     if midExpire > 0 and midExpire <= os.time() then
         setplaydef(play, "N$xf_dan_mid_expire", 0)
         Player.del_attlist(play, "仙府幸运丹")
+    end
+    local petNpc = Npclib and Npclib[64]
+    if petNpc and type(petNpc.checkBabyHatch) == "function" then
+        petNpc.checkBabyHatch(play, 60, false)
     end
 end
 -----------------个人5号定时器----------------1秒定时器AI挂机开启

@@ -454,7 +454,18 @@ teshudata = {
             [2] = {
                 -- 仙法配置说明：
                 -- attr 的ID/数值类型来源于 AAAA.txt；部分触发/条件/副作用在 npc_24.lua 中实现
-                unlock_lv = {[1]=1,[2]=4,[3]=6,[4]=10,[5]=15,[6]=20,[7]=25,[8]=30,[9]=40,[10]=50},
+                unlock_cond = {
+                    [1] = {kind = "free", desc = "免费解锁"},
+                    [2] = {kind = "level", level = 80, desc = "玩家等级Lv80"},
+                    [3] = {kind = "level", level = 100, desc = "玩家等级Lv100"},
+                    [4] = {kind = "level", level = 120, desc = "玩家等级Lv120"},
+                    [5] = {kind = "level", level = 140, desc = "玩家等级Lv140"},
+                    [6] = {kind = "level", level = 150, desc = "玩家等级Lv150"},
+                    [7] = {kind = "story", tk = "npc_46", title = "灾厄杀手", desc = "完成剧情任务【灾厄入侵】"},
+                    [8] = {kind = "tianshu", level = 25, desc = "天书等级25级"},
+                    [9] = {kind = "tianshu", level = 40, desc = "天书等级40级"},
+                    [10] = {kind = "tianshu", level = 50, desc = "天书等级50级"},
+                },
                 weight = "1#60|2#24|3#10|4#5|5#1",
                 cost = {
                     [1] = {{"仙法卷轴",1}},
@@ -2601,7 +2612,7 @@ teshudata = {
         details = {
             slots = {
                 [1] = {value = 12, show = {{"天选资格",1},{"群体施毒术",1}}},
-                [2] = {value = 32, show = {{"智能巡航",1},{"传送3秒CD",1}}},
+                [2] = {value = 32, show = {{"智能巡航",1},{"定点传送功能",1}}},
                 [3] = {value = 52, show = {{"半月弯刀",1},{"护体光环",1}}},
                 [4] = {value = 92, show = {{"聚宝盆碎片",20},{"时装：小小裁决战士",1}}},
             },
@@ -2765,7 +2776,7 @@ teshudata = {
             {idx = 3, name = "全民答题"},
             {idx = 4, name = "勇夺镖车"},
             {idx = 5, name = "土城跑酷"},
-            {idx = 6, name = "天才地宝"},
+            {idx = 6, name = "美食狂欢"},
             {idx = 7, name = "天选之人"},
             {idx = 8, name = "正邪大战"},
             {idx = 9, name = "武林盟主"},
@@ -2923,25 +2934,25 @@ teshudata = {
                 {
                     name = "烈焰军团",
                     spawn = {
-                        {name = "焦木兵", count = 17, hp = 100, merit = 1, type = "small"},
-                        {name = "赤焰先锋", count = 4, hp = 200, merit = 5, type = "elite"},
-                        {name = "「焚营军魁·铁炎」", count = 1, hp = 500, merit = 20, type = "boss"},
+                        {name = "焚村火卒", count = 50, hp = 100, merit = 1, type = "small"},
+                        {name = "熔甲先锋", count = 10, hp = 200, merit = 5, type = "elite"},
+                        {name = "【焚村魔魁·赤烬】", count = 3, hp = 500, merit = 20, type = "boss"},
                     },
                 },
                 {
                     name = "寒霜军团",
                     spawn = {
-                        {name = "寒霜狐", count = 17, hp = 100, merit = 1, type = "small"},
-                        {name = "冰羽雀", count = 4, hp = 200, merit = 5, type = "elite"},
-                        {name = "「辉域守护者·冰霄」", count = 1, hp = 500, merit = 20, type = "boss"},
+                        {name = "霜牙妖狐", count = 50, hp = 100, merit = 1, type = "small"},
+                        {name = "寒羽妖雀", count = 10, hp = 200, merit = 5, type = "elite"},
+                        {name = "【寒狱统领·冰魄】", count = 3, hp = 500, merit = 20, type = "boss"},
                     },
                 },
                 {
                     name = "灵木军团",
                     spawn = {
-                        {name = "灵叶鹿", count = 17, hp = 100, merit = 1, type = "small"},
-                        {name = "薄辉魅", count = 4, hp = 200, merit = 5, type = "elite"},
-                        {name = "霜风踏雪者", count = 1, hp = 500, merit = 20, type = "boss"},
+                        {name = "枯藤妖鹿", count = 50, hp = 100, merit = 1, type = "small"},
+                        {name = "毒叶魅影", count = 10, hp = 200, merit = 5, type = "elite"},
+                        {name = "【古木灾主·森魇】", count = 3, hp = 500, merit = 20, type = "boss"},
                     },
                 },
             },
@@ -3100,12 +3111,27 @@ teshudata = {
         desc = "参加保卫村庄活动，杀怪赢功勋，晋升称号！",
         top_notice = "前三名达到镇境武侯的玩家！每人奖励50元真实充值！",
     },
+    ["npc_102"] = {
+        id = 102,
+        name = "新区冲级",
+        title = "新区冲级",
+        desc = "新区冲级赢豪礼！等待什么呢？",
+        title_replace = true,
+        rewards = {
+            {level = 70, title = "", limit = 0, desc = "金币*38w、千年玄铁*88、斗笠碎片*20", items = {{"金币", 380000}, {"千年玄铁", 88}, {"斗笠碎片", 20}}},
+            {level = 80, title = "新兵", limit = 0, desc = "称号：新兵、仙法卷轴*1、千年玄铁*188", items = {{"仙法卷轴", 1}, {"千年玄铁", 188}}},
+            {level = 90, title = "下士", limit = 30, desc = "称号：下士、修为丹（小）*20、杀伐神石[小]*10", items = {{"修为丹（小）", 20}, {"杀伐神石[小]", 10}}},
+            {level = 100, title = "军士长", limit = 10, desc = "称号：军士长、修为丹（大）*2、杀伐神石[大]*2", items = {{"修为丹（大）", 2}, {"杀伐神石[大]", 2}}},
+            {level = 120, title = "大校", limit = 5, desc = "称号：大校、仙法卷轴*3、五行石*20", items = {{"仙法卷轴", 3}, {"五行石", 20}}},
+            {level = 150, title = "统帅", limit = 3, desc = "称号：统帅、灵兽蛋*2、极品仙法卷轴*1", items = {{"灵兽蛋", 2}, {"极品仙法卷轴", 1}}},
+        },
+    },
     ["anniu_516"] = {
         id = "anniu_516",
         name = "至尊赞助",
         details = {
             {ch = "入门玩家", sgsl = 0, need_charge = 0},
-            {ch = "诸邪退散", sgsl = 0, need_pay21 = 18, auto_pay = 18, pay_moneyid = 21, jl = {}, extra_titles = {"高级玩家"}, desc = "灰界压制：未拥有该称号时，在灰界对怪伤害降低、受到灰界怪物伤害提升。获得后可破除灰界影响，并获得对红名怪额外真实伤害能力。"},
+            {ch = "诸邪退散", sgsl = 0, need_real_charge = 38, jl = {{"传送3秒CD",1}}, extra_titles = {"高级玩家"}, desc = "灰界压制：未拥有该称号时，在灰界对怪伤害降低、受到灰界怪物伤害提升。获得后可破除灰界影响，并获得对红名怪额外真实伤害能力。"},
             {ch = "至尊玩家", sgsl = 0, need_cz502_idx = 4, salary = {{"绑定金币",300000},{"绑定元宝",3000},{"绑定灵石",60}},jl = {{"至尊黑卡",1}}},
         },
     },

@@ -62,6 +62,7 @@ function login(play)
             end
         end)
         setontimer(play, 1, 3, 0, 1)
+        setontimer(play, 4, 60, 0, 1)
         --红点系统定时器
         setontimer(play,6,60,0,1)
         delaygoto(play,10000,"ontimer6")
@@ -131,6 +132,10 @@ local function _sc_has_patrol_privilege(play)
     local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
     return (tonumber(sc_data.main_claimed or sc_data.other_lb or 0) or 0) >= 1
 end
+local function _zz516_has_teleport_cd_privilege(play)
+    local zz_data = Player.getJsonTableByVar(play, VarCfg["T_免费赞助"]) or {}
+    return (tonumber(zz_data["zzlb_2"] or 0) or 0) >= 1
+end
 local function _set_combat_until(play, varName, untilTime)
     setplaydef(play, varName, untilTime)
 end
@@ -142,7 +147,11 @@ end
 function beginteleport(play)
     setplaydef(play,"S$dtm",getbaseinfo(play, 3))
     local sj  = os.time()
-    local cd = _sc_has_patrol_privilege(play) and 3 or 5
+    if not _sc_has_patrol_privilege(play) then
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>领取首充礼包后才可使用定点传送...</font>","Type":9}')
+        return false
+    end
+    local cd = _zz516_has_teleport_cd_privilege(play) and 3 or 5
     if getplaydef(play,"N$buff310") == 1 then
         cd = math.max(0, cd - 5) -- 来去自如：传送冷却-5秒
     end
@@ -208,6 +217,28 @@ function entermap(play)
             local hsmy_px = sorthumvar("比武大会",1,1,5)
             setplaydef(play,VarCfg.N_tyecmb,1)
             sendluamsg(play,101,498,0,0,'{"pmsj":'..tbl2json(hsmy_px)..',"grjf":'..getplayvar(play, "HUMAN", "比武大会")..'}')
+        end
+    elseif QmdtApi and QmdtApi.is_timer_map and QmdtApi.is_timer_map(dt) then
+        if QmdtApi.send_panel then
+            QmdtApi.send_panel(play, QmdtApi.get_state and QmdtApi.get_state() or {}, QmdtApi.get_cfg and QmdtApi.get_cfg() or nil)
+        end
+        setplaydef(play,VarCfg.N_tyecmb,0)
+    elseif BwczApi and BwczApi.get_cfg then
+        local bwcz_cfg = BwczApi.get_cfg()
+        if bwcz_cfg and dt == tostring(bwcz_cfg.map or "") and getsysvar(VarCfg["G_保卫村庄状态"]) == 1 then
+            local state = BwczApi.get_state and BwczApi.get_state() or {}
+            local scoreVar = tostring(bwcz_cfg.score_var or "保卫村庄")
+            local payload = {
+                pmsj = sorthumvar(scoreVar, 1, 1, 5),
+                grjf = tonumber(getplayvar(play, "HUMAN", scoreVar) or 0) or 0,
+                wave_name = tostring(state.current_wave_name or ""),
+                left_mon = BwczApi.count_alive_monsters and BwczApi.count_alive_monsters(bwcz_cfg) or 0,
+            }
+            setplaydef(play,VarCfg.N_tyecmb,1)
+            sendluamsg(play,101,498,1,0,tbl2json(payload))
+        else
+            sendluamsg(play,101,498,2,0,"")
+            setplaydef(play,VarCfg.N_tyecmb,0)
         end
     else
         sendluamsg(play,101,498,2,0,"")
@@ -601,7 +632,7 @@ local function _magtag_cast_feedback(play, name)
     if release_print then
         release_print("linggen_skill_cast", tostring(getbaseinfo(play, 1) or ""), tostring(name or ""), tostring(getbaseinfo(play, 3) or ""), tostring(getbaseinfo(play, 4) or ""), tostring(getbaseinfo(play, 5) or ""))
     end
-    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>释放【' .. tostring(name or '') .. '】</font>","Type":9}')
+    sendmsg(play, 1, '{"Msg":"<font color=\'#c0c0c0\' size=\'14\'>释放</font><font color=\'#ff3131\' size=\'14\'>【' .. tostring(name or '') .. '】</font>","Type":9}')
 end
 local function _magtag_heal_self(play, pct)
     local maxhp = _magtag_tonum(getbaseinfo(play, 10), 0)
@@ -661,7 +692,7 @@ local function _magtag_open_drop_window(play, skillId, lv, duration, count, free
     setplaydef(play, "S$magtag_drop_target", "")
     setplaydef(play, "S$magtag_drop_map", "")
     setplaydef(play, "N$magtag_drop_applied", 0)
-    sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>Drop window active.</font>","Type":9}')
+    sendmsg(play, 1, '{"Msg":"<font color=\'#c0c0c0\' size=\'14\'>掉落窗口已开启</font>","Type":9}')
 end
 
 local _magtag_drop_pool_cache = nil
@@ -790,7 +821,7 @@ local function _magtag_try_extra_drop(play, mob)
         end
     end
     if dropped > 0 then
-        sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>Extra drop triggered.</font>","Type":9}')
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff3131\' size=\'14\'>额外掉落</font><font color=\'#c0c0c0\' size=\'14\'>已触发</font>","Type":9}')
     end
     _magtag_clear(play, "drop")
     setplaydef(play, "N$magtag_drop_applied", 0)
@@ -1049,7 +1080,7 @@ function attack(play, Target, Hiter, MagicId)
 			setplaydef(play, VarCfg.N_gscd, sj)
 			setplaydef(play, VarCfg.N_dqgs, gs)
 			callscriptex(play, 'changespeedex', 2, gs)
-			sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>当前攻击速度+' .. gs .. '%</font>","Type":9}')
+			sendmsg(play, 1, '{"Msg":"<font color=\'#c0c0c0\' size=\'14\'>当前攻击速度+</font><font color=\'#ff3131\' size=\'14\'>' .. gs .. '%</font>","Type":9}')
 		end
 	end
 	local bl = getplaydef(play, VarCfg.S_buffgjh)
@@ -1089,6 +1120,53 @@ function attack(play, Target, Hiter, MagicId)
     if xi > 0 then
         humanhp(play,"+",xi)
     end
+end
+local function _red_mon_knock_is_red(Hiter)
+    if not Hiter or getbaseinfo(Hiter, -1) then
+        return false
+    end
+    local name = tostring(getbaseinfo(Hiter, 1) or "")
+    if name == "" then
+        return false
+    end
+    if string.find(name, "★", 1, true) or string.find(name, "≮", 1, true) or string.find(name, "红", 1, true) then
+        return true
+    end
+    if getdbmonfieldvalue and getmonbaseinfo then
+        local ok, idx = pcall(getdbmonfieldvalue, name, "idx")
+        if ok and idx then
+            local ok2, color = pcall(getmonbaseinfo, idx, 2)
+            if ok2 and tonumber(color or 0) == 249 then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+local function _red_mon_knock_try(play, Hiter)
+    if not play or not Hiter or getbaseinfo(play, ConstCfg.gbase.isdie) then
+        return
+    end
+    if not _red_mon_knock_is_red(Hiter) then
+        return
+    end
+    if (tonumber(getplaydef(play, "N$godstone_mountain") or 0) or 0) >= 4 then
+        return
+    end
+    local now = os.time()
+    local cdKey = "N$red_mon_knock_cd"
+    local last = tonumber(getplaydef(play, cdKey) or 0) or 0
+    if now - last < 3 then
+        return
+    end
+    if math.random(10000) > 200 then
+        return
+    end
+    local px = tonumber(getbaseinfo(play, ConstCfg.gbase.x) or 0) or 0
+    local py = tonumber(getbaseinfo(play, ConstCfg.gbase.y) or 0) or 0
+    setplaydef(play, cdKey, now)
+    rangeharm(Hiter, px, py, 0, 0, 1, 5, 1, 1, 0, 1)
 end
 --------------------被攻击前触发-------------------
 function struckdamage(play, Hiter, Target, MagicId, Damage)
@@ -1179,6 +1257,7 @@ function struckdamage(play, Hiter, Target, MagicId, Damage)
         end
     end
     realDamage = _magtag_apply_defense(play, Hiter, realDamage)
+    _red_mon_knock_try(play, Hiter)
     GameEvent.push(EventCfg.onProHarm, play, realDamage, Hiter, Target, MagicId)
     return realDamage
 end
@@ -1302,7 +1381,7 @@ function killmon(play, mob)
             local bianshi = getbaseinfo(play, 51, 207)
             if bianshi > 0 then
                 if math.random(10000) <= bianshi then
-                    sendmsg(play,1,'{"Msg":"<font color=\'#00ff00\'>[鞭尸]</font>触发鞭尸['..mz..']","FColor":253,"BColor":255,"Type":9}')
+                    sendmsg(play,1,'{"Msg":"<font color=\'#ff3131\' size=\'14\'>[鞭尸]</font><font color=\'#c0c0c0\' size=\'14\'>触发鞭尸['..mz..']</font>","FColor":253,"BColor":255,"Type":9}')
                     local guaiwu = genmonex(getbaseinfo(play, 3), getbaseinfo(play, 4), getbaseinfo(play, 5), mz, 1, 1, play, 254, mz .. "[鞭尸]", 0)
                     for _, v in pairs(guaiwu) do
                         humanhp(v, "=", 1)
@@ -1615,6 +1694,9 @@ function playlevelup(play, level, oldlevel)
         level = getbaseinfo(play, ConstCfg.gbase.level)
     end
     GameEvent.push(EventCfg.onPlayLevelUp, play, level, oldlevel)
+    if Npclib and Npclib[102] and type(Npclib[102].tryAutoSend) == "function" then
+        Npclib[102].tryAutoSend(play)
+    end
 end
 --------------------属性改变触发-------------------
 function sendability(play)

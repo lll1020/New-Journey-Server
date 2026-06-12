@@ -124,6 +124,9 @@ function Login.main(play)
     pickupitems(play,0,5,800) --自动捡物
     ---------------------------------------------------在线时间 --定时器
     setontimer(play, 4, 60, 0, 1)
+    if Npclib and Npclib[102] and type(Npclib[102].tryAutoSend) == "function" then
+        Npclib[102].tryAutoSend(play)
+    end
     ---------------------------------------------------客户端同步数据
     local zhid = tonumber(getconst(play,"<$USERACCOUNT>"))
     if constant.pz_zbfc[zhid] then

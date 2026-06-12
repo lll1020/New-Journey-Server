@@ -115,6 +115,45 @@ local function _add_lingshou_star(play, idx, source, itemName)
     return true, string.format("灵兽|【%s】#218|孵化成功，当前星级|【%d】#218", cfg.pet, T_data.ls_sp[key]), T_data
 end
 
+
+local function _settle_due_hatch(play, aheadSeconds, silent)
+    local T_data = _ensure_pet_data(Player.getJsonTableByVar(play, VarCfg["T_灵兽"]))
+    local now = os.time()
+    local deadline = now + math.max(0, _toint(aheadSeconds, 0))
+    local changed = false
+    local lastMsg = nil
+    for key, hatch in pairs(T_data.hatch or {}) do
+        if type(hatch) == "table" and hatch.status == "hatching" then
+            local expireAt = _toint(hatch.expireAt, 0)
+            local idx = _toint(key, 0)
+            if idx > 0 and expireAt > 0 and expireAt <= deadline then
+                local ok, msg, newData = _add_lingshou_star(play, idx, "timer", hatch.item)
+                if ok and newData then
+                    T_data = _ensure_pet_data(newData)
+                    changed = true
+                    lastMsg = msg
+                else
+                    hatch.status = "failed"
+                    hatch.doneAt = now
+                    hatch.failMsg = msg or "孵化失败"
+                    changed = true
+                end
+            end
+        end
+    end
+    if changed then
+        Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
+        _refresh_pet_panel(play, 64, 6, T_data)
+        if not silent then
+            Player.sendmsgEx(play, lastMsg or "灵兽幼崽孵化完成#57")
+        end
+    end
+    return changed
+end
+
+function npc.checkBabyHatch(play, aheadSeconds, silent)
+    return _settle_due_hatch(play, aheadSeconds, silent)
+end
 function TMLP_refresh_pet_bonus(play)
     local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"]) or {}
     local ls = T_data.ls or {}
@@ -291,13 +330,12 @@ function npc.link(play,npcid,ew,aid,data)
             Player.sendmsgEx(play, "该灵兽星级已满，无法继续领取幼崽#57")
             return
         end
-        giveitem(play, cfg.item, 1)
         T_data.baby_choice = json_data.idx
         T_data.hatch[key] = {item = cfg.item, startAt = os.time(), expireAt = os.time() + LINGSHOU_BABY_SECONDS, status = "hatching"}
         Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
         if Player.trySyncSecondContinentXyl then Player.trySyncSecondContinentXyl(play) end
         if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "任务") end
-        Player.sendmsgEx(play, string.format("已领取|【%s】#218|，48小时后自动孵化#57", cfg.item))
+        Player.sendmsgEx(play, string.format("已选择|【%s】#218|，48小时后自动孵化#57", cfg.item))
         _refresh_pet_panel(play, npcid, 6, T_data)
     elseif ew == 5 then -- 灵兽装备圣遗物
         T_data.ls = T_data.ls or {}
@@ -353,6 +391,7 @@ function Login_lszh(play)
     
     TMLP_refresh_pet_bonus(play)
     Buff[105](play,1)
+    _settle_due_hatch(play, 60, true)
 end
 GameEvent.add(EventCfg.onLogin, Login_lszh, "灵兽召唤")
 

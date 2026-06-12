@@ -445,7 +445,7 @@ end
 local function _admin_tcppk_finish(play)
     for _, playerObj in ipairs(getplayerlst() or {}) do
         sendluamsg(playerObj, 101, 1000, 2, 0, "")
-        sendluamsg(playerObj, 101, 12, 4, 3, "")
+        sendluamsg(playerObj, 101, 12, 4, 5, "")
         setplaydef(playerObj, "N$上次坐标x", 0)
         setplaydef(playerObj, "N$上次坐标y", 0)
     end

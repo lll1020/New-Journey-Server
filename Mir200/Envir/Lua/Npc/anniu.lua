@@ -2554,6 +2554,9 @@ local function _zz516_get_charge(play)
     local realCharge = tonumber(getplaydef(play, VarCfg["U_真实充值"]) or 0) or 0
     return math.max(charge23, realCharge), charge23
 end
+local function _zz516_get_real_charge(play)
+    return tonumber(getplaydef(play, VarCfg["U_真实充值"]) or 0) or 0
+end
 -- 根据在线充值档位检测，对应需要购买的礼包档位。
 local function _zz516_get_cz502_requirement(config)
     local needIdx = tonumber((config or {}).need_cz502_idx or 0) or 0
@@ -2579,6 +2582,10 @@ local function _zz516_condition_tip(config)
     if needMoney23 > 0 then
         return string.format("累计充值%s元后可领取", tostring(needMoney23))
     end
+    local needRealCharge = tonumber((config or {}).need_real_charge or 0) or 0
+    if needRealCharge > 0 then
+        return string.format("真实累计充值%s元后可领取", tostring(needRealCharge))
+    end
     local needCharge = tonumber((config or {}).need_charge or (config or {}).sgsl or 0) or 0
     if needCharge > 0 then
         return string.format("累计充值%s元后可领取", tostring(needCharge))
@@ -2600,6 +2607,11 @@ local function _zz516_check_cfg(play, config)
         return tonumber((T_data or {})["pay21_" .. needPay21] or 0) == 1
     end
     local totalCharge, charge23 = _zz516_get_charge(play)
+    local realCharge = _zz516_get_real_charge(play)
+    local needRealCharge = tonumber((config or {}).need_real_charge or 0) or 0
+    if needRealCharge > 0 then
+        return realCharge >= needRealCharge
+    end
     local needCharge = tonumber((config or {}).need_charge or (config or {}).sgsl or 0) or 0
     local needMoney23 = tonumber((config or {}).need_money23 or 0) or 0
     return (needMoney23 > 0 and charge23 >= needMoney23) or (needMoney23 <= 0 and totalCharge >= needCharge)
@@ -2652,6 +2664,7 @@ local function _zz516_panel_data(play)
     data["T_data"] = T_data
     data["sgsl"] = charge
     data["charge"] = charge
+    data["real_charge"] = _zz516_get_real_charge(play)
     data["money23"] = charge23
     data["tier"] = _zz516_get_claim_tier(T_data)
     return data
