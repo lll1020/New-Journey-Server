@@ -1844,6 +1844,11 @@ shaguai = {
 			Npclib[82].onKillMon(play, mob)
 		end
 	end,
+	["42"] = function(play,mob)      --登神之路：鬼神道击杀六大陆怪物获得神力
+		if Npclib and Npclib[77] and Npclib[77].onKillMon then
+			Npclib[77].onKillMon(play, mob)
+		end
+	end,
 	["41"] = function(play,mob)      --保卫村庄：统一走 shaguai 击杀结算
 		if BwczApi and BwczApi.onKillMon then
 			BwczApi.onKillMon(play, mob)

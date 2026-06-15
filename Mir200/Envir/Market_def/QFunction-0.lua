@@ -236,10 +236,11 @@ function entermap(play)
             local state = BwczApi.get_state and BwczApi.get_state() or {}
             local scoreVar = tostring(bwcz_cfg.score_var or "保卫村庄")
             local payload = {
-                pmsj = sorthumvar(scoreVar, 1, 1, 5),
+                mode = "bwcz",
                 grjf = tonumber(getplayvar(play, "HUMAN", scoreVar) or 0) or 0,
                 wave_name = tostring(state.current_wave_name or ""),
                 left_mon = BwczApi.count_alive_monsters and BwczApi.count_alive_monsters(bwcz_cfg) or 0,
+                mon_left = BwczApi.count_alive_monsters_by_wave and BwczApi.count_alive_monsters_by_wave(bwcz_cfg, state) or {},
             }
             setplaydef(play,VarCfg.N_tyecmb,1)
             sendluamsg(play,101,498,1,0,tbl2json(payload))
@@ -1136,19 +1137,17 @@ local function _red_mon_knock_is_red(Hiter)
     if name == "" then
         return false
     end
-    if string.find(name, "★", 1, true) or string.find(name, "≮", 1, true) or string.find(name, "红", 1, true) then
-        return true
-    end
-    if getdbmonfieldvalue and getmonbaseinfo then
-        local ok, idx = pcall(getdbmonfieldvalue, name, "idx")
-        if ok and idx then
-            local ok2, color = pcall(getmonbaseinfo, idx, 2)
-            if ok2 and tonumber(color or 0) == 249 then
-                return true
-            end
-        end
-    end
-    return false
+    local allow = {
+        ["二大陆boss"] = true,
+        ["三大陆boss"] = true,
+        ["四大陆boss"] = true,
+        ["五大陆boss"] = true,
+        ["六大陆boss"] = true,
+        ["七大陆boss"] = true,
+        ["八大陆boss"] = true,
+        ["九大陆boss"] = true,
+    }
+    return allow[name] == true
 end
 
 local function _red_mon_knock_try(play, Hiter)
@@ -1164,16 +1163,16 @@ local function _red_mon_knock_try(play, Hiter)
     local now = os.time()
     local cdKey = "N$red_mon_knock_cd"
     local last = tonumber(getplaydef(play, cdKey) or 0) or 0
-    if now - last < 3 then
+    if now - last < 2 then
         return
     end
-    if math.random(10000) > 200 then
+    if math.random(100) > 20 then
         return
     end
     local px = tonumber(getbaseinfo(play, ConstCfg.gbase.x) or 0) or 0
     local py = tonumber(getbaseinfo(play, ConstCfg.gbase.y) or 0) or 0
     setplaydef(play, cdKey, now)
-    rangeharm(Hiter, px, py, 0, 0, 1, 5, 1, 1, 0, 1)
+    rangeharm(Hiter, px, py, 0, 0, 1, 10, 1, 1, 0, 1)
 end
 --------------------被攻击前触发-------------------
 function struckdamage(play, Hiter, Target, MagicId, Damage)
@@ -1500,7 +1499,7 @@ local function _zxdz_give_reward(play, reward, reason)
 end
 function zxdz_send_rank(play)
     if not play then return end
-    sendluamsg(play, 101, 498, 1, 0, '{"pmsj":' .. tbl2json(sorthumvar(_ZXDZ_SCORE_VAR, 1, 1, 5)) .. ',"grjf":' .. _zxdz_toint(getplayvar(play, "HUMAN", _ZXDZ_SCORE_VAR), 0) .. ',"hjf":' .. _zxdz_toint(getsysvar(_ZXDZ_RED_SCORE_VAR), 0) .. ',"ljf":' .. _zxdz_toint(getsysvar(_ZXDZ_BLUE_SCORE_VAR), 0) .. '}')
+    sendluamsg(play, 101, 498, 1, 0, '{"mode":"zxdz","pmsj":' .. tbl2json(sorthumvar(_ZXDZ_SCORE_VAR, 1, 1, 5)) .. ',"grjf":' .. _zxdz_toint(getplayvar(play, "HUMAN", _ZXDZ_SCORE_VAR), 0) .. ',"hjf":' .. _zxdz_toint(getsysvar(_ZXDZ_RED_SCORE_VAR), 0) .. ',"ljf":' .. _zxdz_toint(getsysvar(_ZXDZ_BLUE_SCORE_VAR), 0) .. '}')
 end
 function zxdz_apply_camp(play)
     if not play then return 0 end
@@ -1537,6 +1536,14 @@ function zxdz_enter(play)
     return true
 end
 function jqr_zxdz_start()
+    if (tonumber(getsysvar(VarCfg["G_开区分钟"]) or 0) or 0) < 1440 then
+        release_print("正邪大战未开启：开服未满第二天")
+        return false
+    end
+    if not checkkuafuconnect() then
+        release_print("正邪大战未开启：跨服未连接")
+        return false
+    end
     clearhumcustvar("*", _ZXDZ_SCORE_VAR)
     setsysvar(_ZXDZ_STATUS_VAR, 1)
     setsysvar(_ZXDZ_RED_SCORE_VAR, 0)
@@ -1641,6 +1648,9 @@ function killplay(play,hiter)
 end
 
 local function _is_gray_world_map_name(mapName)
+    if Player and Player.isHuiJieMap then
+        return Player.isHuiJieMap(mapName)
+    end
     mapName = tostring(mapName or "")
     return string.find(mapName, "灰界", 1, true) ~= nil
         or mapName == "虚妄山脉"
@@ -1652,7 +1662,6 @@ local function _is_gray_world_map_name(mapName)
         or mapName == "禁忌之海"
         or mapName == "海峰孤岛"
 end
-
 local function _build_first_gray_world_death_mail_tip(play)
     if not play then
         return "", nil
@@ -1661,18 +1670,19 @@ local function _build_first_gray_world_death_mail_tip(play)
         return "", nil
     end
     local mapName = tostring(getbaseinfo(play, 45) or "")
-    if not _is_gray_world_map_name(mapName) then
+    local mapIdName = tostring(getbaseinfo(play, 3) or "")
+    if not _is_gray_world_map_name(mapName) and not _is_gray_world_map_name(mapIdName) then
         return "", nil
     end
     setplaydef(play, "N$gray_world_death_mail", 1)
-    local tip = "<br><font color='#ff0000'>灰界对玩家存在特殊压制BUFF：未破除前，你在灰界对怪伤害会降低，受到灰界怪物伤害会提升。</font><br><font color='#ff0000'>若想破除灰界对你的影响，请获得称号【诸邪退散】。</font>"
+    local tip = "灰界系列地图存在特殊压制BUFF：未破除前，你在灰界系列地图对怪伤害会降低，受到灰界怪物伤害会提升。若想破除灰界对你的影响，请获得称号【诸邪退散】。"
     return tip, Player.jl_mail({{"诸邪退散[称号]", 0}})
 end
 --------------------玩家死亡触发-------------------
 function playdie(play, hiter)
     local dt,x,y = getbaseinfo(play,3),getbaseinfo(play,4),getbaseinfo(play,5)
     local grayTip, grayIcon = _build_first_gray_world_death_mail_tip(play)
-    local deathContent = "您被["..getbaseinfo(hiter, 1).."]在"..getbaseinfo(play,45).."("..x.."."..y..")杀害了..." .. tostring(grayTip or "")
+    local deathContent = "您被["..getbaseinfo(hiter, 1).."]在"..getbaseinfo(play,45).."("..x.."."..y..")杀害了..." .. tostring(grayTip ~= "" and " " .. grayTip or "")
     if grayIcon and grayIcon ~= "" then
         sendmail("#" .. getbaseinfo(play, 1), 1, "系统提示", deathContent, grayIcon)
     else
@@ -2120,6 +2130,14 @@ local function _wdh_module()
     return dofile('Envir/Lua/Npc/1011.lua')
 end
 function jqr_wudaohui_start()
+    if (tonumber(getsysvar(VarCfg["G_开区分钟"]) or 0) or 0) < 1440 then
+        release_print("武道大会未开启：开服未满第二天")
+        return false
+    end
+    if not checkkuafuconnect() then
+        release_print("武道大会未开启：跨服未连接")
+        return false
+    end
     local mod = _wdh_module()
     if mod and rawget(_G, "__wudaohui_module") and __wudaohui_module.start then
         __wudaohui_module.start()

@@ -828,6 +828,68 @@ local function _dl_get_jqd(actor)
     end
     return querymoney(actor, jqd_idx) or 0
 end
+local _dl_xyl_cfg_cache
+local function _dl_get_xyl_cfg()
+    if _dl_xyl_cfg_cache ~= nil then
+        return _dl_xyl_cfg_cache
+    end
+    local ok, cfg = pcall(dofile, 'Envir/Lua/Data/npc_xyl.lua')
+    _dl_xyl_cfg_cache = (ok and type(cfg) == "table") and cfg or false
+    return _dl_xyl_cfg_cache
+end
+local function _dl_get_task_story_point(task)
+    local rewards = type(task) == "table" and task.jl or nil
+    if type(rewards) ~= "table" then
+        return 0
+    end
+    local total = 0
+    for _, reward in ipairs(rewards) do
+        if type(reward) == "table" and reward[1] == "剧情点" then
+            total = total + (tonumber(reward[2]) or 0)
+        end
+    end
+    return total
+end
+-- 大陆门槛：按已领取的伏妖录剧情点奖励计算本大陆剧情完成度。
+local function _dl_has_story_progress(actor, continent, need_percent)
+    local cfg = _dl_get_xyl_cfg()
+    local chapters = type(cfg) == "table" and cfg[continent] or nil
+    if type(chapters) ~= "table" then
+        return false
+    end
+    local ywl = Player.getJsonTableByVar(actor, VarCfg.T_ywl) or {}
+    local total = 0
+    local received = 0
+    for chapter_idx, chapter in ipairs(chapters) do
+        local tasks = type(chapter) == "table" and chapter.jq or nil
+        if type(tasks) == "table" then
+            local chapter_key = "jl_" .. continent .. "_" .. chapter_idx
+            local chapter_received = tonumber(ywl[chapter_key] or 0) == 1
+            for task_idx, task in ipairs(tasks) do
+                local point = _dl_get_task_story_point(task)
+                total = total + point
+                if point > 0 and (chapter_received or tonumber(ywl[chapter_key .. "_" .. task_idx] or 0) == 1) then
+                    received = received + point
+                end
+            end
+        end
+    end
+    if total <= 0 then
+        return false
+    end
+    return received * 100 >= total * (tonumber(need_percent) or 100)
+end
+-- 五大陆门槛：10 种灵根均已激活。
+local function _dl_has_all_linggen(actor)
+    local data = Player.getJsonTableByVar(actor, VarCfg["T_灵根"]) or {}
+    local levels = type(data.level) == "table" and data.level or {}
+    for i = 1, 10 do
+        if (tonumber(levels[tostring(i)] or levels[i] or 0) or 0) <= 0 then
+            return false
+        end
+    end
+    return true
+end
 -- 五大陆门槛：本命灵根对应的基础灵根满级，且觉醒灵根达到 Lv.2。
 local function _dl_has_linggen_gate(actor)
     local data = Player.getJsonTableByVar(actor, VarCfg["T_灵根"]) or {}
@@ -858,6 +920,7 @@ local function _dl_get_base_state(actor)
         zslv = tonumber(getplaydef(actor, VarCfg["U_转生等级"]) or 0) or 0,
         jqd = _dl_get_jqd(actor),
         level = tonumber(getbaseinfo(actor, 6)) or 0,
+        zxrw = tonumber(getplaydef(actor, VarCfg.U_zxrw[1]) or 0) or 0,
     }
 end
 local function _dl_check(actor, dl)
@@ -868,36 +931,37 @@ local function _dl_check(actor, dl)
     local zslv = state.zslv
     local jqd = state.jqd
     local level = state.level
+    local zxrw = state.zxrw
     if dl == 2 then
-        if zslv >= 10 then
+        if zxrw >= 16 then
             return true
         end
         return false, "需完成主线引导后才可进入二大陆"
     elseif dl == 3 then
-        if zslv >= 20 then
+        if zxrw >= 35 then
             return true
         end
-        return false, "需完成二大陆转生后才可进入三大陆"
+        return false, "需跟随主线引导后才可进入三大陆"
     elseif dl == 4 then
-        if zslv >= 30 and level >= 150 then
+        if _dl_has_story_progress(actor, 3, 85) and zslv >= 30 and level >= 150 then
             return true
         end
-        return false, "需完成三大陆转生且玩家等级达到150级后才可进入四大陆"
+        return false, "需三大陆剧情完成度达到85%、完成三大陆转生且玩家等级达到150级后才可进入四大陆"
     elseif dl == 5 then
-        if zslv >= 40 and _dl_has_linggen_gate(actor) then
+        if _dl_has_story_progress(actor, 4, 95) and zslv >= 40 and _dl_has_all_linggen(actor) then
             return true
         end
-        return false, "需完成四大陆转生且本命灵根Lv10、对应觉醒灵根Lv2后才可进入五大陆"
+        return false, "需四大陆剧情完成度达到95%、完成四大陆转生且激活全部灵根后才可进入五大陆"
     elseif dl == 6 then
-        if zslv >= 50 and _dl_has_all_destiny(actor) then
+        if _dl_has_story_progress(actor, 5, 95) and zslv >= 50 and _dl_has_all_destiny(actor) then
             return true
         end
-        return false, "需完成五大陆转生且完成天道命盘后才可进入六大陆"
+        return false, "需五大陆剧情完成度达到95%、完成五大陆转生且完成天道命盘后才可进入六大陆"
     elseif dl == 7 then
-        if zslv >= 60 and Player.hasSeventhContinentPass(actor) then
+        if _dl_has_story_progress(actor, 6, 100) and zslv >= 60 and Player.hasSeventhContinentPass(actor) then
             return true
         end
-        return false, "需完成六大陆转生且获得#57|【世界符文·[真我]】#218|后才可进入七大陆"
+        return false, "需六大陆剧情完成度达到100%、完成六大陆转生且获得#57|【世界符文·[真我]】#218|后才可进入七大陆"
     end
     return true
 end
@@ -922,6 +986,14 @@ local _huijie_maps = {
     ["灰界北部"] = true,
     ["灰界东部"] = true,
     ["灰界西部"] = true,
+    ["虚妄山脉"] = true,
+    ["山脉入口"] = true,
+    ["鬼嘲深渊"] = true,
+    ["旷野之原"] = true,
+    ["叹息旷野"] = true,
+    ["恐怖裂隙"] = true,
+    ["禁忌之海"] = true,
+    ["海峰孤岛"] = true,
 }
 function Player.isHuiJieMap(map_name)
     return type(map_name) == "string" and _huijie_maps[map_name] == true

@@ -1,0 +1,63 @@
+[2026-06-13 19:41:54:136] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：109; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-13 19:56:34:768] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：297; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-13 20:05:48:019] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：687; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-13 20:12:20:102] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：3125; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-13 20:16:34:535] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：63; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-13 20:25:03:335] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：812; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-13 20:30:12:382] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-13 20:31:22:594] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：125; NpcThreadId: 37592, CurPlayThreadId: 37592
+[2026-06-13 20:31:22:594] [玩家名字]Lua执行耗时过高:125ms msgid:105 9999 9999 0 
+
+[2026-06-13 21:29:46:693] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：32; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-13 23:05:21:084] LuaNPC:玩家名字 ID:999999999 执行 mondropitemex player:玩家名字 耗时：31; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-13 23:14:27:990] LuaNPC:玩家名字 ID:999999999 执行 attack player:玩家名字 耗时：31; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-13 23:31:46:123] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-13 23:54:38:215] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-14 00:33:07:514] LuaNPC:玩家名字 ID:999999999 执行 yc_fuhuo_hc player:玩家名字 耗时：78; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-14 01:08:27:679] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-14 01:44:27:136] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-14 20:38:19:428] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-14 20:45:20:668] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-15 00:56:50:071] LuaNPC:玩家名字 ID:999999999 执行 sendability player:玩家名字 耗时：32; NpcThreadId: 37592, CurPlayThreadId: 37592
+[2026-06-15 00:56:50:085] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：156; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-15 02:09:48:557] LuaNPC:玩家名字 ID:999999999 执行 clicknewtask player:玩家名字 耗时：31; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-15 02:10:29:576] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：63; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-15 02:32:33:153] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：63; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-15 02:40:22:088] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-15 04:33:01:434] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：47; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-15 05:50:38:655] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 37592, CurPlayThreadId: 37592
+[2026-06-15 05:50:38:655] [玩家名字]Lua执行耗时过高:31ms msgid:100 44 1 0 {"action":"harvest","param":{"gridId":4}}
+
+[2026-06-15 16:00:34:481] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：94; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-15 18:00:35:261] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：969; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-15 18:01:34:579] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：281; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-15 19:00:34:486] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：187; NpcThreadId: 37592, CurPlayThreadId: 37592
+
+[2026-06-15 19:30:34:334] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：31; NpcThreadId: 37592, CurPlayThreadId: 37592
+

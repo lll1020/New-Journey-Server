@@ -732,7 +732,7 @@ local function _qmdk_get_cfg()
     cfg.ore_mob = cfg.ore_mob or "大矿石"
     cfg.carry_buff = tonumber(cfg.carry_buff) or 20115
     cfg.mail_title = cfg.mail_title or "全民夺矿"
-    cfg.min_open_day = tonumber(cfg.min_open_day) or 2
+    cfg.min_open_day = math.max(2, tonumber(cfg.min_open_day) or 2)
     cfg.start_hour = tonumber(cfg.start_hour) or 19
     cfg.start_minute_clock = tonumber(cfg.start_minute_clock) or 0
     return cfg
@@ -1230,7 +1230,7 @@ local function _hdjd_get_cfg()
     cfg.spawn_radius = tonumber(cfg.spawn_radius) or 32
     cfg.center_pos = cfg.center_pos or {36, 36}
     cfg.mail_title = tostring(cfg.mail_title or _HDJD_EVENT_NAME)
-    cfg.min_open_day = tonumber(cfg.min_open_day) or 2
+    cfg.min_open_day = math.max(2, tonumber(cfg.min_open_day) or 2)
     cfg.start_hour = tonumber(cfg.start_hour) or 19
     cfg.start_minute_clock = tonumber(cfg.start_minute_clock) or 30
     cfg.vision = tonumber(cfg.vision) or 1
@@ -1613,7 +1613,7 @@ local function _bwcz_get_cfg()
     end
     cfg.map = tostring(cfg.map)
     cfg.duration_min = math.max(1, tonumber(cfg.duration_min) or 30)
-    cfg.min_open_day = tonumber(cfg.min_open_day) or 2
+    cfg.min_open_day = math.max(2, tonumber(cfg.min_open_day) or 2)
     cfg.start_hour = tonumber(cfg.start_hour) or 18
     cfg.start_minute_clock = tonumber(cfg.start_minute_clock) or 0
     cfg.score_var = tostring(cfg.score_var or _BWCZ_SCORE_VAR)
@@ -1825,6 +1825,23 @@ local function _bwcz_count_alive_monsters(cfg)
         total = total + #(mons or {})
     end
     return total
+end
+
+local function _bwcz_count_alive_monsters_by_wave(cfg, state)
+    local result = {}
+    local waveIdx = tonumber(state and state.current_wave or 0) or 0
+    local wave = cfg and cfg.waves and cfg.waves[waveIdx]
+    if type(wave) ~= "table" then
+        return result
+    end
+    for _, spawn in ipairs(wave.spawn or {}) do
+        local monName = tostring(spawn.name or "")
+        if monName ~= "" then
+            local mons = getmapmon(cfg.map, monName, 0, 0, 999)
+            result[#result + 1] = {name = monName, left = #(mons or {})}
+        end
+    end
+    return result
 end
 
 local function _bwcz_spawn_mon(cfg, monName, hp)
@@ -2089,6 +2106,7 @@ BwczApi.get_mon_hp = _bwcz_get_mon_hp
 BwczApi.get_mon_merit = _bwcz_get_mon_merit
 BwczApi.get_mon_type = _bwcz_get_mon_type
 BwczApi.count_alive_monsters = _bwcz_count_alive_monsters
+BwczApi.count_alive_monsters_by_wave = _bwcz_count_alive_monsters_by_wave
 BwczApi.add_merit = _bwcz_add_merit
 BwczApi.add_activity_score = _bwcz_add_activity_score
 BwczApi.give_kill_reward = _bwcz_give_kill_reward
@@ -2101,10 +2119,11 @@ local function _bwcz_send_498_panel(play, cfg)
     local state = _bwcz_get_state()
     local scoreVar = tostring(cfg.score_var or _BWCZ_SCORE_VAR)
     local payload = {
-        pmsj = sorthumvar(scoreVar, 1, 1, 5),
+        mode = "bwcz",
         grjf = tonumber(getplayvar(play, "HUMAN", scoreVar) or 0) or 0,
         wave_name = tostring(state.current_wave_name or ""),
         left_mon = _bwcz_count_alive_monsters(cfg),
+        mon_left = _bwcz_count_alive_monsters_by_wave(cfg, state),
     }
     sendluamsg(play, 101, 498, 1, 0, tbl2json(payload))
 end
@@ -2155,7 +2174,7 @@ local function _mskh_get_cfg()
     cfg.title_collect_sec = tonumber(cfg.title_collect_sec) or 4
     cfg.start_hour = tonumber(cfg.start_hour) or 16
     cfg.start_minute_clock = tonumber(cfg.start_minute_clock) or 0
-    cfg.min_open_day = tonumber(cfg.min_open_day) or 2
+    cfg.min_open_day = math.max(2, tonumber(cfg.min_open_day) or 2)
     cfg.spawn_radius = tonumber(cfg.spawn_radius) or 16
     cfg.spawn_try_count = tonumber(cfg.spawn_try_count) or 40
     cfg.respawn_sec = tonumber(cfg.respawn_sec) or 8

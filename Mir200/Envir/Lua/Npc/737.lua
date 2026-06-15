@@ -5,7 +5,7 @@ local NPC_ID = 737
 local _cfg_key = "npc_" .. tostring(NPC_ID)
 local _config = Guard.getConfig(_cfg_key)
 local _task_cfg = (_config and _config.task_cfg) or {}
-local DROP_RULES = {{map = "¡Ÿ∞≤π≈∂…", item = "…Ò√ÿ¥…”‘", rate = 300}, {map = "¡Ÿ∞≤π≈∂…", item = "ƒ‡ÕÎÀÿ≈ﬂ", rate = 300}}
+local DROP_RULES = {{map = "¡Ÿ∞≤π≈∂…", item = "…Ò√ÿ¥…”‘", rate = 2000}, {map = "¡Ÿ∞≤π≈∂…", item = "ƒ‡ÕÎÀÿ≈ﬂ", rate = 2000}}
 local KILL_ONLY = false
 local ALLOW_PRESTART_DROP = false
 

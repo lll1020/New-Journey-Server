@@ -1,6 +1,7 @@
 npc = {}
 
 local _config = Guard.getConfig("npc_46")
+local _INTRO_SEEN_VAR = "N$three_city_intro_seen"
 local _need_keys = {621, 622, 623, 624, 625, 626, 627, 628}
 local _route_map = {
     [1] = {
@@ -94,6 +95,7 @@ end
 function npc.main(play,npcid)
     local data = {}
     data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_dljq"])
+    data["three_city_intro_seen"] = tonumber(getplaydef(play, _INTRO_SEEN_VAR) or 0) or 0
     sendluamsg(play,100,npcid,0,0,tbl2json(data))
 end
 
@@ -106,7 +108,7 @@ function npc.link(play,npcid,ew,aid,data)
         return
     end
     ew = __guardAction
-    local __guardAllowedActions = Guard.newActionSet({1,2})
+    local __guardAllowedActions = Guard.newActionSet({1,2,8,9})
     if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
         return
     end
@@ -136,6 +138,11 @@ function npc.link(play,npcid,ew,aid,data)
         end
     elseif ew == 2 then
         _jump_to_route(play, tonumber(aid or 0) or 0)
+    elseif ew == 8 then
+        local state = {three_city_intro_seen = tonumber(getplaydef(play, _INTRO_SEEN_VAR) or 0) or 0}
+        sendluamsg(play, 100, npcid, 8, 0, tbl2json(state))
+    elseif ew == 9 then
+        setplaydef(play, _INTRO_SEEN_VAR, 1)
     end
 end
 

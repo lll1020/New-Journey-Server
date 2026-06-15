@@ -151,6 +151,40 @@ local function _ff9999_finish_second_continent_xyl(play)
     Player.sendmsgEx(play, "二大陆异闻录已全部完成，奖励已发放，主线已切到35#218")
 end
 
+local function _ff9999_mark_xyl_story_received(play, continents)
+    local ok, xyl = pcall(dofile, 'Envir/Lua/Data/npc_xyl.lua')
+    if not ok or type(xyl) ~= "table" then
+        return false
+    end
+    local ywl = Player.getJsonTableByVar(play, VarCfg.T_ywl) or {}
+    for _, continent in ipairs(continents or {}) do
+        local chapters = xyl[continent]
+        if type(chapters) == "table" then
+            for chapter_idx, chapter in ipairs(chapters) do
+                local tasks = type(chapter) == "table" and chapter.jq or nil
+                if type(tasks) == "table" then
+                    local chapter_key = "jl_" .. continent .. "_" .. chapter_idx
+                    for task_idx, task in ipairs(tasks) do
+                        local has_story_point = false
+                        for _, reward in ipairs(task.jl or {}) do
+                            if type(reward) == "table" and reward[1] == "剧情点" then
+                                has_story_point = true
+                                break
+                            end
+                        end
+                        if has_story_point then
+                            ywl[chapter_key .. "_" .. task_idx] = 1
+                        end
+                    end
+                    ywl[chapter_key] = 1
+                end
+            end
+        end
+    end
+    Player.setJsonVarByTable(play, VarCfg.T_ywl, ywl)
+    return true
+end
+
 local _admin_test_monsters = {
     -- "测试怪物名",
 ---灰界---
@@ -945,15 +979,15 @@ function ggna(play,id)
     elseif id == "56" then
         _ff9999_finish_second_continent_xyl(play)
     elseif id == "25" then
-        -- 大陆全解锁：一次性补齐主线、人物等级、转生、剧情点、灵根、天道命盘与七大陆称号门槛。
-        local target_task = 18
+        -- 大陆全解锁：补齐新大陆门槛，包含主线、3-6大陆伏妖录领取进度、转生、等级、灵根、天道命盘、世界符文。
+        local target_task = 35
         local target_level = 150
         local target_zs = 70
-        local target_jqd = 200
-        local jqd_idx = getstditeminfo("剧情点", 0)
         local cur_task = tonumber(getplaydef(play, VarCfg.U_zxrw[1])) or 0
         if cur_task < target_task then
             setplaydef(play, VarCfg.U_zxrw[1], target_task)
+            setplaydef(play, VarCfg.U_zxrw[2], 0)
+            sendluamsg(play, 103, 1, 0, 0, '{"rwid":35}')
         end
         local cur_level = tonumber(getbaseinfo(play, 6)) or 0
         if cur_level < target_level then
@@ -967,12 +1001,7 @@ function ggna(play,id)
         if cur_zs_base < target_zs then
             setbaseinfo(play, 39, target_zs)
         end
-        if jqd_idx > 0 then
-            local cur_jqd = tonumber(querymoney(play, jqd_idx)) or 0
-            if cur_jqd < target_jqd then
-                changemoney(play, jqd_idx, "+", target_jqd - cur_jqd, "测试-大陆全解锁", true)
-            end
-        end
+        _ff9999_mark_xyl_story_received(play, {3,4,5,6})
         local linggen_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"]) or {}
         linggen_data.level = type(linggen_data.level) == "table" and linggen_data.level or {}
         for i = 1, 10 do
@@ -992,9 +1021,20 @@ function ggna(play,id)
         destiny_state.all = destiny_need
         destiny_state.level_bonus = 1
         jq_data["npc_74"] = destiny_state
+        local rune_state = Player.getJsonTableByVar(play, VarCfg["T_世界符文"]) or {}
+        rune_state.runes = type(rune_state.runes) == "table" and rune_state.runes or {}
+        for i = 1, 7 do
+            rune_state.runes[tostring(i)] = 1
+        end
+        rune_state.all = 7
+        rune_state.claim = 1
+        rune_state.level_bonus = 1
+        Player.setJsonVarByTable(play, VarCfg["T_世界符文"], rune_state)
+        jq_data["npc_84"] = type(jq_data["npc_84"]) == "table" and jq_data["npc_84"] or {}
+        jq_data["npc_84"].wc = 1
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         Player.title_give(play, "世界符文·[真我]")
-        Player.sendmsgEx(play, "大陆条件已一键解锁：主线>=21、等级>=150、转生>=70、剧情点>=200、全灵根、天道命盘、世界符文·[真我]")
+        Player.sendmsgEx(play, "大陆条件已一键解锁：主线>=35、等级>=150、转生>=70、3-6大陆剧情进度、全灵根、天道命盘、世界符文·[真我]")
     elseif id == "23" then
         release_print("测试装备")
         local cailiao = {

@@ -23,3 +23,15 @@
 
 [2026-06-13 00:17:59:822] LuaNPC:玩家名字 ID:999999999 执行 stdmodefunc9 player:玩家名字 耗时：31; NpcThreadId: 7648, CurPlayThreadId: 7648
 
+[2026-06-13 16:30:29:754] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：234; NpcThreadId: 7648, CurPlayThreadId: 7648
+
+[2026-06-13 18:00:29:630] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：125; NpcThreadId: 7648, CurPlayThreadId: 7648
+
+[2026-06-13 18:25:57:649] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：7610; NpcThreadId: 7648, CurPlayThreadId: 7648
+
+[2026-06-13 18:26:12:968] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：47; NpcThreadId: 7648, CurPlayThreadId: 7648
+
+[2026-06-13 18:29:22:761] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：875; NpcThreadId: 7648, CurPlayThreadId: 7648
+
+[2026-06-13 19:20:29:533] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：32; NpcThreadId: 7648, CurPlayThreadId: 7648
+

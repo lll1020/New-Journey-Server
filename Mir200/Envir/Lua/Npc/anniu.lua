@@ -190,13 +190,10 @@ local function _ywl_filter_rewards(play, list, continent)
     if type(list) ~= "table" then
         return list
     end
-    local skipJqd = (tonumber(continent or 0) or 0) >= 3
     local out = {}
     for _, v in ipairs(list) do
         if type(v) == "table" and type(v[1]) == "string" then
-            if skipJqd and v[1] == "剧情点" then
-                -- 三大陆及之后伏妖录不再发放剧情点。
-            elseif not _ywl_apply_special_reward(play, v[1], v[2]) then
+            if not _ywl_apply_special_reward(play, v[1], v[2]) then
                 out[#out + 1] = v
             end
         else
@@ -735,6 +732,10 @@ npc[11] = function(play, p2, p3, data) --异闻录
             end
         end
     elseif p2 == 2 then --一页任务奖励
+        -- 章节奖励已取消，客户端改为展示本大陆伏妖录任务总进度；旧领取逻辑保留注释，避免残留消息继续发奖。
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>章节奖励已取消...</font>","Type":9}')
+        return
+        --[[
         local sj = json2tbl(data)
         if sj.i and sj.j and sj.i > 0 and sj.j > 0 and sj.i <= #npc_xyl and sj.j <= #npc_xyl[sj.i] then
             if _ywl_is_auto_current_continent(sj.i) then
@@ -782,6 +783,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
             end
             
         end
+        ]]
     elseif p2 == 3 then --单个任务奖励
         local sj = json2tbl(data)
         if
@@ -2960,7 +2962,8 @@ npc[1004] = function(play, p2, p3, msg) --排行榜查询
         local dx = getplayerbyid(msg)
         if dx then
             Player.sendmsgEx(dx, 1, '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'></font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>在偷偷打量你</outline>","Type":1}')
-            sendluamsg(play, 101, 1004, 0, 0, '{"userid":"' .. msg .. '","zdl":' .. querymoney(dx, 29) .. "}")
+            local payload = {userid = tostring(msg), zdl = querymoney(dx, 29), linggen = Player.getJsonTableByVar(dx, VarCfg["T_灵根"]) or {}}
+            sendluamsg(play, 101, 1004, 0, 0, tbl2json(payload))
         else
             sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>玩家不在线</font>","Type":9}')
         end

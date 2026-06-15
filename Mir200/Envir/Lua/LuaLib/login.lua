@@ -2,14 +2,24 @@ Login = {}
 
 -- 灰界视野限制：无【诸邪退散】时缩小照明范围。
 function Login.isGrayWorldMap(mapName)
+    if Player and Player.isHuiJieMap then
+        return Player.isHuiJieMap(mapName)
+    end
     mapName = tostring(mapName or "")
     return mapName == "灰界"
         or mapName == "灰界南部"
         or mapName == "灰界北部"
         or mapName == "灰界东部"
         or mapName == "灰界西部"
+        or mapName == "虚妄山脉"
+        or mapName == "山脉入口"
+        or mapName == "鬼嘲深渊"
+        or mapName == "旷野之原"
+        or mapName == "叹息旷野"
+        or mapName == "恐怖裂隙"
+        or mapName == "禁忌之海"
+        or mapName == "海峰孤岛"
 end
-
 function Login.refreshGrayWorldVision(play)
     local cur_map = tostring(getbaseinfo(play, 3) or "")
     if Login.isGrayWorldMap(cur_map) and not checktitle(play, "诸邪退散") then

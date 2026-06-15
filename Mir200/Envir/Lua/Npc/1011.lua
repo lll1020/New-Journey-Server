@@ -1,4 +1,4 @@
-ï»¿npc = {}
+npc = {}
 
 local WDH = rawget(_G, "__wudaohui_module")
 if not WDH then
@@ -7,7 +7,7 @@ if not WDH then
 end
 
 local UI_NPC_ID = 1011
-local LOBBY_MAP = "è·¨æœåœ°å›¾"
+local LOBBY_MAP = "¿ç·şµØÍ¼"
 local LOBBY_X, LOBBY_Y = 26, 55
 local BATTLE_PREFIX = "kftt"
 local BATTLE_TIMER_ID = 1
@@ -15,16 +15,16 @@ local BATTLE_SECONDS = 180
 local WIN_RANK_SCORE, LOSE_RANK_SCORE = 10, 2
 local WIN_CROSS_SCORE, LOSE_CROSS_SCORE = 10, 2
 local QUEUE_FLAG_VAR = "N$kfdl"
-local ENTER_COUNT_VAR = "N$æ­¦é“å¤§ä¼šæ¬¡æ•°"
-local ENTER_DATE_VAR = "S$æ­¦é“å¤§ä¼šæ¬¡æ•°æ—¥æœŸ"
-local HISTORY_VAR = "T$æ­¦é“å¤§ä¼šæˆ˜ç»©"
-local PROCESSED_REWARD_VAR = "T$æ­¦é“å¤§ä¼šå·²å‘å¥–åŠ±"
-local SEASON_VAR = "N$æ­¦é“å¤§ä¼šèµ›å­£"
-local RANK_SYS_VAR = "A_æ­¦é“ä¼šæ’è¡Œ"
-local ACTIVE_SYS_VAR = "G_æ­¦é“å¤§ä¼šçŠ¶æ€"
-local SEASON_SYS_VAR = "G_æ­¦é“å¤§ä¼šèµ›å­£"
-local SCORE_VAR = "è·¨æœå¯¹æŠ—ç§¯åˆ†"
-local CROSS_SCORE_VAR = "è·¨æœç§¯åˆ†"
+local ENTER_COUNT_VAR = "N$ÎäµÀ´ó»á´ÎÊı"
+local ENTER_DATE_VAR = "S$ÎäµÀ´ó»á´ÎÊıÈÕÆÚ"
+local HISTORY_VAR = "T$ÎäµÀ´ó»áÕ½¼¨"
+local PROCESSED_REWARD_VAR = "T$ÎäµÀ´ó»áÒÑ·¢½±Àø"
+local SEASON_VAR = "N$ÎäµÀ´ó»áÈü¼¾"
+local RANK_SYS_VAR = "A_ÎäµÀ»áÅÅĞĞ"
+local ACTIVE_SYS_VAR = "G_ÎäµÀ´ó»á×´Ì¬"
+local SEASON_SYS_VAR = "G_ÎäµÀ´ó»áÈü¼¾"
+local SCORE_VAR = "¿ç·ş¶Ô¿¹»ı·Ö"
+local CROSS_SCORE_VAR = "¿ç·ş»ı·Ö"
 local RANK_REWARDS = {[1] = 100, [2] = 80, [3] = 70, [4] = 60, [5] = 50, [6] = 40, [7] = 30, [8] = 25, [9] = 20, [10] = 15, default = 10}
 
 local function _toint(v, d)
@@ -57,7 +57,7 @@ end
 
 local function _msg(play, text)
     if not play then return end
-    sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[æ­¦é“å¤§ä¼š]</font><font color=\'#00ff00\'>' .. tostring(text or "") .. '</font>","Type":9}')
+    sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[ÎäµÀ´ó»á]</font><font color=\'#00ff00\'>' .. tostring(text or "") .. '</font>","Type":9}')
 end
 
 local function _broadcast(text)
@@ -109,7 +109,7 @@ end
 local function _add_history(play, opponentName, isWin)
     if not play then return end
     local data = _json_decode(getplaydef(play, HISTORY_VAR), {})
-    data[#data + 1] = {tostring(opponentName or "ç©å®¶"), isWin and "1" or "0"}
+    data[#data + 1] = {tostring(opponentName or "Íæ¼Ò"), isWin and "1" or "0"}
     while #data > 10 do table.remove(data, 1) end
     setplaydef(play, HISTORY_VAR, tbl2json(data))
 end
@@ -119,7 +119,7 @@ local function _consume_reward_once(play, key)
     if not play or key == "" then return true end
     local data = _json_decode(getplaydef(play, PROCESSED_REWARD_VAR), {})
     if data[key] then
-        release_print("æ­¦é“å¤§ä¼šå¥–åŠ±é‡å¤å›è°ƒå·²æ‹¦æˆª", getbaseinfo(play, 1), key)
+        release_print("ÎäµÀ´ó»á½±ÀøÖØ¸´»Øµ÷ÒÑÀ¹½Ø", getbaseinfo(play, 1), key)
         return false
     end
     local count = 0
@@ -213,16 +213,24 @@ local function _safe_kfbackcall(code, roleId, arg1, arg2)
 end
 
 function WDH.start()
+    if (tonumber(getsysvar(VarCfg["G_¿ªÇø·ÖÖÓ"]) or 0) or 0) < 1440 then
+        release_print("ÎäµÀ´ó»áÎ´¿ªÆô£º¿ª·şÎ´ÂúµÚ¶şÌì")
+        return false
+    end
+    if not checkkuafuconnect() then
+        release_print("ÎäµÀ´ó»áÎ´¿ªÆô£º¿ç·şÎ´Á¬½Ó")
+        return false
+    end
     setsysvar(ACTIVE_SYS_VAR, 1)
     WDH.queue, WDH.queueIndex = {}, {}
     _ensure_map_pool()
-    _broadcast("è·¨æœæ´»åŠ¨ï¼šæ­¦é“å¤§ä¼šå·²å¼€å¯ï¼Œå¥–åŠ±ä¸°åšï¼Œè¯·å‰å¾€è·¨æœå‚åŠ ï¼")
+    _broadcast("¿ç·ş»î¶¯£ºÎäµÀ´ó»áÒÑ¿ªÆô£¬½±Àø·áºñ£¬ÇëÇ°Íù¿ç·ş²Î¼Ó£¡")
 end
 
 function WDH.stop()
     setsysvar(ACTIVE_SYS_VAR, 0)
     WDH.queue, WDH.queueIndex = {}, {}
-    _broadcast("è·¨æœæ´»åŠ¨ï¼šæ­¦é“å¤§ä¼šå·²ç»“æŸï¼ŒæœªåŒ¹é…ç©å®¶å·²è‡ªåŠ¨é€€å‡ºé˜Ÿåˆ—ã€‚")
+    _broadcast("¿ç·ş»î¶¯£ºÎäµÀ´ó»áÒÑ½áÊø£¬Î´Æ¥ÅäÍæ¼ÒÒÑ×Ô¶¯ÍË³ö¶ÓÁĞ¡£")
 end
 
 function WDH.rankReward()
@@ -279,7 +287,7 @@ function WDH.queueUpdate(actor, action, score)
         WDH.queue[#WDH.queue + 1] = {roleId, tostring(getbaseinfo(actor, 1) or ""), _toint(score)}
         WDH.queueIndex[roleId] = true
     end
-    release_print("æ­¦é“å¤§ä¼šé˜Ÿåˆ—", tbl2json(WDH.queue or {}))
+    release_print("ÎäµÀ´ó»á¶ÓÁĞ", tbl2json(WDH.queue or {}))
     WDH.match()
 end
 
@@ -290,10 +298,10 @@ function WDH.enterBattle(name1, name2, mapIdx)
     local p2 = getplayerbyname(tostring(name2 or ""))
     WDH.battle = WDH.battle or {}
     if WDH.battle[mapName] then
-        release_print("æ­¦é“å¤§ä¼šé‡å¤è¿›å…¥æˆ˜æ–—å·²æ‹¦æˆª", mapName, name1, name2)
+        release_print("ÎäµÀ´ó»áÖØ¸´½øÈëÕ½¶·ÒÑÀ¹½Ø", mapName, name1, name2)
         _return_map(mapIdx)
-        if p1 then _msg(p1, "å¯¹æˆ˜åœ°å›¾å ç”¨ï¼Œè¯·é‡æ–°æŠ¥ååŒ¹é…") end
-        if p2 then _msg(p2, "å¯¹æˆ˜åœ°å›¾å ç”¨ï¼Œè¯·é‡æ–°æŠ¥ååŒ¹é…") end
+        if p1 then _msg(p1, "¶ÔÕ½µØÍ¼Õ¼ÓÃ£¬ÇëÖØĞÂ±¨ÃûÆ¥Åä") end
+        if p2 then _msg(p2, "¶ÔÕ½µØÍ¼Õ¼ÓÃ£¬ÇëÖØĞÂ±¨ÃûÆ¥Åä") end
         return
     end
     WDH.battle[mapName] = {mapIdx = mapIdx, start = os.time()}
@@ -309,14 +317,14 @@ function WDH.enterBattle(name1, name2, mapIdx)
         screffects(p2, "1", 20130, 400, 400, 1, 1, 0)
         setattackmode(p2, 0, 30)
     end
-    mapeffect("æ­¦é“å¤§ä¼š" .. tostring(mapIdx), mapName, 25, 29, 20126, 3, 0, nil, 0)
+    mapeffect("ÎäµÀ´ó»á" .. tostring(mapIdx), mapName, 25, 29, 20126, 3, 0, nil, 0)
     setenvirontimer(mapName, BATTLE_TIMER_ID, 1, "@qf_kfdz," .. tostring(mapIdx))
 end
 
 local function _opponent_name(play)
     local target = getbaseinfo(play, 67)
-    if target then return tostring(getbaseinfo(target, 1) or "ç©å®¶") end
-    return "ç©å®¶"
+    if target then return tostring(getbaseinfo(target, 1) or "Íæ¼Ò") end
+    return "Íæ¼Ò"
 end
 
 local function _finish_battle_player(play, isWin, mapIdx, battleKey)
@@ -327,9 +335,9 @@ local function _finish_battle_player(play, isWin, mapIdx, battleKey)
     local rewardKey = tostring(battleKey or mapIdx) .. ":" .. tostring(getbaseinfo(play, 2) or "")
     _safe_kfbackcall(50, getbaseinfo(play, 2), "__WDH_MATCH__", rankScore .. "|" .. crossScore .. "|" .. (isWin and "1" or "0") .. "|" .. rewardKey)
     _safe_kfbackcall(23, getbaseinfo(play, 2), isWin and "1" or "0", _opponent_name(play))
-    _msg(play, isWin and ("å¯¹æˆ˜èƒœåˆ©ï¼Œæ’ä½åˆ†+" .. rankScore .. "ï¼Œè·¨æœç§¯åˆ†+" .. crossScore) or ("å¯¹æˆ˜ç»“æŸï¼Œæ’ä½åˆ†+" .. rankScore .. "ï¼Œè·¨æœç§¯åˆ†+" .. crossScore))
+    _msg(play, isWin and ("¶ÔÕ½Ê¤Àû£¬ÅÅÎ»·Ö+" .. rankScore .. "£¬¿ç·ş»ı·Ö+" .. crossScore) or ("¶ÔÕ½½áÊø£¬ÅÅÎ»·Ö+" .. rankScore .. "£¬¿ç·ş»ı·Ö+" .. crossScore))
     screffects(play, "1", isWin and 20128 or 20129, 400, 400, 1, 1, 0)
-    senddelaymsg(play, "è·ç¦»ç¦»å¼€åœ°å›¾å‰©ä½™%s", 5, 250, 1, "kf_slwj," .. tostring(mapIdx))
+    senddelaymsg(play, "¾àÀëÀë¿ªµØÍ¼Ê£Óà%s", 5, 250, 1, "kf_slwj," .. tostring(mapIdx))
 end
 
 function WDH.settle(mapIdx)
@@ -354,7 +362,7 @@ function WDH.settle(mapIdx)
     local battleKey = tostring(mapIdx) .. ":" .. tostring(state.start)
     if #alive == 1 then
         for _, player in ipairs(players) do _finish_battle_player(player, player == alive[1], mapIdx, battleKey) end
-        sendmovemsg("0", 1, 253, 0, 200, 1, "ç©å®¶ã€Š" .. tostring(getbaseinfo(alive[1], 1) or "") .. "ã€‹å–å¾—æ­¦é“å¤§ä¼šèƒœåˆ©ï¼")
+        sendmovemsg("0", 1, 253, 0, 200, 1, "Íæ¼Ò¡¶" .. tostring(getbaseinfo(alive[1], 1) or "") .. "¡·È¡µÃÎäµÀ´ó»áÊ¤Àû£¡")
         return
     end
     for _, player in ipairs(players) do _finish_battle_player(player, false, mapIdx, battleKey) end
@@ -371,19 +379,19 @@ end
 
 function WDH.matchSuccess(actor, opponentRoleId)
     if not checkkuafuconnect() then
-        _msg(actor, "è·¨æœæœªå¼€å¯ï¼Œæš‚æ—¶æ— æ³•è¿›å…¥å¯¹æˆ˜")
+        _msg(actor, "¿ç·şÎ´¿ªÆô£¬ÔİÊ±ÎŞ·¨½øÈë¶ÔÕ½")
         return
     end
     mapmove(actor, LOBBY_MAP, LOBBY_X, LOBBY_Y, 8)
     sendluamsg(actor, 100, UI_NPC_ID, 3, 0, "")
     bfbackcall(23, getbaseinfo(actor, 2), "1", tostring(opponentRoleId or ""))
     setplaydef(actor, QUEUE_FLAG_VAR, 0)
-    _msg(actor, "åŒ¹é…æˆåŠŸï¼Œæ­£åœ¨è¿›å…¥å¯¹æˆ˜")
+    _msg(actor, "Æ¥Åä³É¹¦£¬ÕıÔÚ½øÈë¶ÔÕ½")
     delaygoto(actor, 300, "@qf_kfdzdjs")
 end
 
 function WDH.battleCountdown(play)
-    senddelaymsg(play, "è·ç¦»å¯¹æˆ˜ç»“æŸ%s", BATTLE_SECONDS, 250, 1)
+    senddelaymsg(play, "¾àÀë¶ÔÕ½½áÊø%s", BATTLE_SECONDS, 250, 1)
 end
 
 function WDH.receiveOpponentPreview(actor, opponentRoleId)
@@ -401,7 +409,7 @@ function WDH.receiveOpponentPreview(actor, opponentRoleId)
 end
 
 function WDH.receiveHistory(actor, isWin, opponentName)
-    _add_history(actor, tostring(opponentName or "ç©å®¶"), tostring(isWin) == "1")
+    _add_history(actor, tostring(opponentName or "Íæ¼Ò"), tostring(isWin) == "1")
 end
 
 function WDH.receiveCrossReward(actor, rewardType, payload)
@@ -417,7 +425,7 @@ function WDH.receiveCrossReward(actor, rewardType, payload)
         _add_personal_score(actor, rankScore)
         _add_cross_score(actor, crossScore)
         setplaydef(actor, ENTER_COUNT_VAR, _toint(getplaydef(actor, ENTER_COUNT_VAR), 0) + 1)
-        _msg(actor, (c == "1" and "æ­¦é“å¤§ä¼šèƒœåˆ©" or "æ­¦é“å¤§ä¼šå‚ä¸") .. "ï¼Œè·¨æœç§¯åˆ†+" .. crossScore)
+        _msg(actor, (c == "1" and "ÎäµÀ´ó»áÊ¤Àû" or "ÎäµÀ´ó»á²ÎÓë") .. "£¬¿ç·ş»ı·Ö+" .. crossScore)
         return true
     elseif rewardType == "__WDH_WEEKLY__" then
         local scoreRaw, seasonRaw = string.match(tostring(payload or ""), "([^|]+)|([^|]+)")
@@ -428,7 +436,7 @@ function WDH.receiveCrossReward(actor, rewardType, payload)
         _set_playvar(actor, SCORE_VAR, 0)
         setplaydef(actor, ENTER_COUNT_VAR, 0)
         setplaydef(actor, ENTER_DATE_VAR, os.date("%Y%m%d"))
-        _msg(actor, "æ­¦é“å¤§ä¼šå‘¨æ’è¡Œç»“ç®—ï¼Œè·¨æœç§¯åˆ†+" .. score)
+        _msg(actor, "ÎäµÀ´ó»áÖÜÅÅĞĞ½áËã£¬¿ç·ş»ı·Ö+" .. score)
         return true
     end
     return false
@@ -440,20 +448,20 @@ end
 
 function WDH.join(play)
     if not checkkuafuconnect() then
-        _msg(play, "è·¨æœæœªå¼€å¯ï¼Œæš‚æ—¶æ— æ³•å‚åŠ æ­¦é“å¤§ä¼š")
+        _msg(play, "¿ç·şÎ´¿ªÆô£¬ÔİÊ±ÎŞ·¨²Î¼ÓÎäµÀ´ó»á")
         return
     end
     if not _is_active() then
-        _msg(play, "æ´»åŠ¨æœªå¼€å¯ï¼Œç­‰å¾…å¼€å¯åå†æŠ¥å")
+        _msg(play, "»î¶¯Î´¿ªÆô£¬µÈ´ı¿ªÆôºóÔÙ±¨Ãû")
         return
     end
     if _toint(getplaydef(play, ENTER_COUNT_VAR), 0) >= 8 then
-        _msg(play, "ä»Šæ—¥è·¨æœå¯¹æˆ˜æ¬¡æ•°ä¸è¶³")
+        _msg(play, "½ñÈÕ¿ç·ş¶ÔÕ½´ÎÊı²»×ã")
         return
     end
     bfbackcall(22, getbaseinfo(play, 2), "1", _playvar(play, SCORE_VAR))
     setplaydef(play, QUEUE_FLAG_VAR, 1)
-    _msg(play, "æŠ¥åæˆåŠŸï¼Œæ­£åœ¨ä¸ºä½ åŒ¹é…å¯¹æ‰‹")
+    _msg(play, "±¨Ãû³É¹¦£¬ÕıÔÚÎªÄãÆ¥Åä¶ÔÊÖ")
     sendluamsg(play, 100, UI_NPC_ID, 1, 0, "")
 end
 
@@ -462,7 +470,7 @@ function WDH.cancel(play)
         bfbackcall(22, getbaseinfo(play, 2), "2", _playvar(play, SCORE_VAR))
     end
     setplaydef(play, QUEUE_FLAG_VAR, 0)
-    _msg(play, "å·²å–æ¶ˆæ­¦é“å¤§ä¼šåŒ¹é…")
+    _msg(play, "ÒÑÈ¡ÏûÎäµÀ´ó»áÆ¥Åä")
     sendluamsg(play, 100, UI_NPC_ID, 2, 0, "")
 end
 
