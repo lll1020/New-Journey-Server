@@ -1,70 +1,70 @@
-ï»¿npc = {}
---åœ°å›¾è·³è½¬npc
+npc = {}
+--µØÍ¼Ìø×ªnpc
 local _config = {
-    --{"åœ°å›¾å",x,y,é™åˆ¶fun,æç¤ºæ–‡å­—,æ‰€å±å¤§é™†}
-    [201] = {"å±±åº„",0,0,nil,nil,1, mob_name = "æ¯ç¯å®¢", mob_shape = 631, min_map = "010345"},
-    [202] = {"å¹½è°·",0,0,nil,nil,1, mob_name = "é’è‹”å¦–", mob_shape = 200, min_map = "028561"},
-    [203] = {"æ´ç©´",0,0,nil,nil,1, mob_name = "çŸ³ç‰™å…½", mob_shape = 45, min_map = "027578"},
-    [204] = {"å¤æ®¿",0,0,nil,nil,1, mob_name = "ç ´é¢ä¿‘", mob_shape = 12052, min_map = "027626"},
-    -- [205] = {"éšè—åœ°å›¾äºŒ",0,0,nil,nil,2, mob_name = "é“¶çˆªæ”¶å‰²è€…", mob_shape = 221, min_map = "000100"},
-    [206] = {"é‡ç«å¸®",100,100,nil,nil,2, mob_name = "ã€Œç„šéª¨ç»Ÿé¢†Â·èµ¤ç‹±ã€", mob_shape = 16236, min_map = "028614"},
-    [207] = {"æå…‰åŸéƒŠ",100,100,nil,nil,2, mob_name = "ã€Œè¾‰åŸŸå®ˆæŠ¤è€…Â·å†°éœ„ã€", mob_shape = 12015, min_map = "028574"},
-    [208] = {"æ€ä¼é“åœº",100,100,nil,nil,2, mob_name = "å¤å…µæ‰§æˆŸè€…", mob_shape = 16192, min_map = "028808",other_name = "å…µé“å¤è—"},
-    [209] = {"å¤œé­”æ´",100,100,nil,nil,2, mob_name = "ã€Œæ·±å¤œé­”å›Â·æ¼†æ¸Šã€", mob_shape = 12011, min_map = "029393"},
-    -- [210] = {"ç‰¹æ®Šç§˜å¢ƒå‰¯æœ¬äºŒ",0,0,nil,nil,2, mob_name = "é“¶çˆªæ”¶å‰²è€…", mob_shape = 221, min_map = "000100"},
-    -- [211] = {"éšè—åœ°å›¾ä¸‰",0,0,nil,nil,3, mob_name = "é“¶çˆªæ”¶å‰²è€…", mob_shape = 221, min_map = "000100"},
-    [212] = {"ç°ç•Œ",201,199,nil,nil,3, mob_name = "ç°çº¹Â·æ½œå™¬è€…", mob_shape = 12033, min_map = "027907"},
-    [213] = {"è—æ˜Ÿæµ·",100,100,nil,nil,3, mob_name = "â‰®ç¾¤æ˜Ÿæ¸Šçš‡â‰¯", mob_shape = 16206, min_map = "027135",other_name = "è‘¬æ˜Ÿæµ·"},
-    [214] = {"è‹äº‘åŸ",100,100,nil,nil,3, mob_name = "ã€Œçº¢å¹•æ³•çš‡ã€[å’†å“®]", mob_shape = 12054, min_map = "027198"},
-    -- [215] = {"æ— ä¸»æ·±æ¸Š",100,100,nil,nil,3, mob_name = "é“¶çˆªæ”¶å‰²è€…", mob_shape = 221, min_map = "000100"},
-    [216] = {"è‰è¯è°·",100,100,nil,nil,3, mob_name = "â˜†ä»™è‰å¤§å¦–â˜†", mob_shape = 12079, min_map = "028854"},
-    -- [217] = {"ç‰¹æ®Šç§˜å¢ƒå‰¯æœ¬ä¸‰",0,0,nil,nil,3, mob_name = "é“¶çˆªæ”¶å‰²è€…", mob_shape = 221, min_map = "000100"},
-    [218] = {"é…†éƒ½é¬¼åŸ",100,100,nil,nil,4, mob_name = "ã€Œé…†éƒ½ä¹‹ä¸»Â·ä¸‡é­‚å†¥å›ã€", mob_shape = 16322, min_map = "027142"},
-    [219] = {"å¤§å”Â·é•¿å®‰åŸ",100,100,nil,nil,4, mob_name = "ã€Œç››ä¸–æš—é¢Â·é•¿å®‰åŸä¸»ã€", mob_shape = 16247, min_map = "027166"},
-    [220] = {"ç”Ÿè‚–çµåŸŸ",100,100,nil,nil,4, mob_name = "â˜…åäºŒå‘½ç›¸Â·ç”Ÿè‚–ä¸»å®°â˜…", mob_shape = 16251, min_map = "027231"},
-    [221] = {"ä¼ è¯´ä¹‹åœ°",100,100,nil,nil,4, mob_name = "â‰®ä¸‡å¤ä¼ è¯´Â·æ—¶ä»£è§è¯è€…â‰¯", mob_shape = 16263, min_map = "027199"},
-    [222] = {"çµå…½è°·",100,100,nil,nil,5, mob_name = "â‰®å¤ªå¤è¡€è„‰Â·çµå…½çš‡â‰¯", mob_shape = 12100, min_map = "027246"},
-    [223] = {"æ—¶ç©ºè£‚éš™",100,100,nil,nil,5, mob_name = "â˜…æ—¶ç©ºå´©åÂ·è£‚ç•Œä¸»â˜…", mob_shape = 12100, min_map = "028125"},
-    [224] = {"ç”Ÿå‘½è¾¹ç•Œ",100,100,nil,nil,5, mob_name = "â‰®ç”Ÿå‘½ç»ˆç« Â·è¾¹ç•Œå°Šâ‰¯", mob_shape = 16121, min_map = "027242"},
-    [225] = {"èŠæ–‹å¿—å¼‚",100,100,nil,nil,5, mob_name = "â‰®ä¹¦å¤–çœŸå¦–Â·å¼‚é—»å°Šâ‰¯", mob_shape = 16121, min_map = "027146"},
-    [226] = {"æ•¦ç…Œé—æ¢¦",100,100,nil,nil,5, mob_name = "â‰®æ–‡æ˜ä½™æ™–Â·æ•¦ç…Œå°Šâ‰¯", mob_shape = 16121, min_map = "010336"},
-    [227] = {"ä¸–ç•Œç¦å¢Ÿ",100,100,nil,nil,5, mob_name = "â‰®æ–‡æ˜ç»ˆç‚¹Â·ç¦å¢Ÿå°Šâ‰¯", mob_shape = 16170, min_map = "027156"},
-    [228] = {"ç™»ç¥ä¹‹è·¯",0,0,nil,nil,6, mob_name = "ç¥åº­æ‰§æ³•è€…ãƒ»åœ£å…‰å®ˆå«", mob_shape = 16170, min_map = "10244", other_name = "ç™»ç¥ä¹‹è·¯"},
-    [229] = {"è¡€å¥‘ä¹‹åœ°",0,0,nil,nil,6, mob_name = "è¡€å¥‘é¢†ä¸»ãƒ»è¡€å± ", mob_shape = 16170, min_map = "10244", other_name = "è¡€å¥‘ä¹‹åœ°"},
-    [230] = {"å†°å·é›ªåŸŸ",0,0,nil,nil,6, mob_name = "é›ªåŸŸå†°ç‹ãƒ»å¯’é­„", mob_shape = 16170, min_map = "10244", other_name = "å†°å·é›ªåŸŸ"},
-    [231] = {"æ£®ç½—é­”åŸŸ",0,0,nil,nil,6, mob_name = "æ£®ç½—é­”ä¸»ãƒ»ç­ä¸–", mob_shape = 16170, min_map = "10244", other_name = "æ£®ç½—é­”åŸŸ"},
-    [232] = {"è¾¹å…³çƒ½åŸ",0,0,nil,nil,6, mob_name = "é•‡å…³å¤§å°†å†›ãƒ»çƒˆé”‹", mob_shape = 16170, min_map = "10244", other_name = "è¾¹å…³çƒ½åŸ"},
-    [233] = {"ç››ä¸–å¤åŸ",0,0,nil,nil,6, mob_name = "å¤åŸå®ˆæŠ¤ç¥ãƒ»å¤©ä½‘ [ç¥åœ£]", mob_shape = 16170, min_map = "10244", other_name = "ç››ä¸–å¤åŸ"},
+    --{"µØÍ¼Ãû",x,y,ÏŞÖÆfun,ÌáÊ¾ÎÄ×Ö,ËùÊô´óÂ½}
+    [201] = {"É½×¯",0,0,nil,nil,1, mob_name = "¿İµÆ¿Í", mob_shape = 631, min_map = "010345"},
+    [202] = {"ÓÄ¹È",0,0,nil,nil,1, mob_name = "ÇàÌ¦Ñı", mob_shape = 200, min_map = "028561"},
+    [203] = {"¶´Ñ¨",0,0,nil,nil,1, mob_name = "Ê¯ÑÀÊŞ", mob_shape = 45, min_map = "027578"},
+    [204] = {"¹Åµî",0,0,nil,nil,1, mob_name = "ÆÆÃæÙ¸", mob_shape = 12052, min_map = "027626"},
+    -- [205] = {"Òş²ØµØÍ¼¶ş",0,0,nil,nil,2, mob_name = "Òø×¦ÊÕ¸îÕß", mob_shape = 221, min_map = "000100"},
+    [206] = {"Ò°»ğ°ï",100,100,nil,nil,2, mob_name = "¡¸·Ù¹ÇÍ³Áì¡¤³àÓü¡¹", mob_shape = 16236, min_map = "028614"},
+    [207] = {"¼«¹â³Ç½¼",100,100,nil,nil,2, mob_name = "¡¸»ÔÓòÊØ»¤Õß¡¤±ùÏö¡¹", mob_shape = 12015, min_map = "028574"},
+    [208] = {"É±·¥µÀ³¡",100,100,nil,nil,2, mob_name = "¹Å±øÖ´êªÕß", mob_shape = 16192, min_map = "028808",other_name = "±øµÀ¹Å²Ø"},
+    [209] = {"Ò¹Ä§¶´",100,100,nil,nil,2, mob_name = "¡¸ÉîÒ¹Ä§¾ı¡¤ÆáÔ¨¡¹", mob_shape = 12011, min_map = "029393"},
+    -- [210] = {"ÌØÊâÃØ¾³¸±±¾¶ş",0,0,nil,nil,2, mob_name = "Òø×¦ÊÕ¸îÕß", mob_shape = 221, min_map = "000100"},
+    -- [211] = {"Òş²ØµØÍ¼Èı",0,0,nil,nil,3, mob_name = "Òø×¦ÊÕ¸îÕß", mob_shape = 221, min_map = "000100"},
+    [212] = {"»Ò½ç",201,199,nil,nil,3, mob_name = "»ÒÎÆ¡¤Ç±ÊÉÕß", mob_shape = 12033, min_map = "027907"},
+    [213] = {"²ØĞÇº£",100,100,nil,nil,3, mob_name = "¡ÚÈºĞÇÔ¨»Ê¡Û", mob_shape = 16206, min_map = "027135",other_name = "ÔáĞÇº£"},
+    [214] = {"²ÔÔÆ³Ç",100,100,nil,nil,3, mob_name = "¡¸ºìÄ»·¨»Ê¡¹[ÅØÏø]", mob_shape = 12054, min_map = "027198"},
+    -- [215] = {"ÎŞÖ÷ÉîÔ¨",100,100,nil,nil,3, mob_name = "Òø×¦ÊÕ¸îÕß", mob_shape = 221, min_map = "000100"},
+    [216] = {"²İÒ©¹È",100,100,nil,nil,3, mob_name = "¡îÏÉ²İ´óÑı¡î", mob_shape = 12079, min_map = "028854"},
+    -- [217] = {"ÌØÊâÃØ¾³¸±±¾Èı",0,0,nil,nil,3, mob_name = "Òø×¦ÊÕ¸îÕß", mob_shape = 221, min_map = "000100"},
+    [218] = {"Ûº¶¼¹í³Ç",100,100,nil,nil,4, mob_name = "¡¸Ûº¶¼Ö®Ö÷¡¤Íò»êÚ¤¾ı¡¹", mob_shape = 16322, min_map = "027142"},
+    [219] = {"´óÌÆ¡¤³¤°²³Ç",100,100,nil,nil,4, mob_name = "¡¸Ê¢ÊÀ°µÃæ¡¤³¤°²³ÇÖ÷¡¹", mob_shape = 16247, min_map = "027166"},
+    [220] = {"ÉúĞ¤ÁéÓò",100,100,nil,nil,4, mob_name = "¡ïÊ®¶şÃüÏà¡¤ÉúĞ¤Ö÷Ô×¡ï", mob_shape = 16251, min_map = "027231"},
+    [221] = {"´«ËµÖ®µØ",100,100,nil,nil,4, mob_name = "¡ÚÍò¹Å´«Ëµ¡¤Ê±´ú¼ûÖ¤Õß¡Û", mob_shape = 16263, min_map = "027199"},
+    [222] = {"ÁéÊŞ¹È",100,100,nil,nil,5, mob_name = "¡ÚÌ«¹ÅÑªÂö¡¤ÁéÊŞ»Ê¡Û", mob_shape = 12100, min_map = "027246"},
+    [223] = {"Ê±¿ÕÁÑÏ¶",100,100,nil,nil,5, mob_name = "¡ïÊ±¿Õ±À»µ¡¤ÁÑ½çÖ÷¡ï", mob_shape = 12100, min_map = "028125"},
+    [224] = {"ÉúÃü±ß½ç",100,100,nil,nil,5, mob_name = "¡ÚÉúÃüÖÕÕÂ¡¤±ß½ç×ğ¡Û", mob_shape = 16121, min_map = "027242"},
+    [225] = {"ÁÄÕ«Ö¾Òì",100,100,nil,nil,5, mob_name = "¡ÚÊéÍâÕæÑı¡¤ÒìÎÅ×ğ¡Û", mob_shape = 16121, min_map = "027146"},
+    [226] = {"¶Ø»ÍÒÅÃÎ",100,100,nil,nil,5, mob_name = "¡ÚÎÄÃ÷ÓàêÍ¡¤¶Ø»Í×ğ¡Û", mob_shape = 16121, min_map = "010336"},
+    [227] = {"ÊÀ½ç½ûĞæ",100,100,nil,nil,5, mob_name = "¡ÚÎÄÃ÷ÖÕµã¡¤½ûĞæ×ğ¡Û", mob_shape = 16170, min_map = "027156"},
+    [228] = {"µÇÉñÖ®Â·",0,0,nil,nil,6, mob_name = "ÉñÍ¥Ö´·¨Õß?Ê¥¹âÊØÎÀ", mob_shape = 16170, min_map = "10244", other_name = "µÇÉñÖ®Â·"},
+    [229] = {"ÑªÆõÖ®µØ",0,0,nil,nil,6, mob_name = "ÑªÆõÁìÖ÷?ÑªÍÀ", mob_shape = 16170, min_map = "10244", other_name = "ÑªÆõÖ®µØ"},
+    [230] = {"±ù´¨Ñ©Óò",0,0,nil,nil,6, mob_name = "Ñ©Óò±ùÍõ?º®ÆÇ", mob_shape = 16170, min_map = "10244", other_name = "±ù´¨Ñ©Óò"},
+    [231] = {"É­ÂŞÄ§Óò",0,0,nil,nil,6, mob_name = "É­ÂŞÄ§Ö÷?ÃğÊÀ", mob_shape = 16170, min_map = "10244", other_name = "É­ÂŞÄ§Óò"},
+    [232] = {"±ß¹Ø·é³Ç",0,0,nil,nil,6, mob_name = "Õò¹Ø´ó½«¾ü?ÁÒ·æ", mob_shape = 16170, min_map = "10244", other_name = "±ß¹Ø·é³Ç"},
+    [233] = {"Ê¢ÊÀ¹Å³Ç",0,0,nil,nil,6, mob_name = "¹Å³ÇÊØ»¤Éñ?ÌìÓÓ [ÉñÊ¥]", mob_shape = 16170, min_map = "10244", other_name = "Ê¢ÊÀ¹Å³Ç"},
 }
 local _config_spa = {
-    --{"åœ°å›¾å",x,y,é™åˆ¶fun,æç¤ºæ–‡å­—,æ‰€å±å¤§é™†}
-    [300] = {"è™šå¦„å±±è„‰", 92, 50,nil,nil,3, mob_name = "â˜…å—å¢ƒè’ç‹â˜…", mob_shape = 12057, min_map = "027343"},
-    [301] = {"é¬¼å˜²æ·±æ¸Š", 273, 33,nil,nil,3, mob_name = "â‰®åŒ—å¯’ç¢éœœç‹â‰¯", mob_shape = 12059, min_map = "027960"},
-    [302] = {"å¹æ¯æ—·é‡", 34, 41,nil,nil,3, mob_name = "ã€Œç°ç¿¼é£ç—•ä¸»ã€", mob_shape = 12039, min_map = "027941"},
-    [303] = {"ç¦å¿Œä¹‹æµ·", 33, 133,nil,nil,3, mob_name = "â˜…è¥¿æµ·å¤çš‡â˜…[é“æ³•åˆä¸€]", mob_shape = 12105, min_map = "027961"},
-    [304] = {"è‘¬æ˜Ÿæµ·æ»©", 184, 40,nil,nil,3, mob_name = "ã€Œæµ·æ®‡å·¨çš‡ã€[è‡³é«˜ç¥çµ]", mob_shape = 16166, min_map = "027241"},
-    [305] = {"èˆ¹é•¿å®¤", 40, 46,nil,nil,3, mob_name = "ã€Œå¹½èˆªé¬¼ä¸»ã€[é€šçµ]", mob_shape = 16147, min_map = "027802"},
-    [306] = {"æ°´æ‰‹èˆ±", 59, 11,nil,nil,3, mob_name = "â‰®æ°´æ‰‹æ€¨çš‡â‰¯[é€šçµ]", mob_shape = 16150, min_map = "027975"},
-    [307] = {"é»„æ³‰è·¯", 49, 29,nil,nil,4, mob_name = "ã€Œé»„æ³‰å°½å¤´Â·å¿˜å·ä¸»å®°ã€", mob_shape = 16131, min_map = "027825"},
-    [308] = {"ç½—é…†å…­å¤©", 71, 78,nil,nil,4, mob_name = "â˜…ç½—é…†å…­å¤©Â·å†¥å¾‹è‡³å°Šâ˜…", mob_shape = 16131, min_map = "028802"},
-    [309] = {"ä¸œæµ·é¾™å®«", 31, 83,nil,nil,4, mob_name = "â‰®ä¸œæµ·çœŸä¸»Â·è¦†æµ·é¾™çš‡â‰¯", mob_shape = 16167, min_map = "027179"},
-    [310] = {"é»‘é£å±±", 158, 72,nil,nil,4, mob_name = "â˜…é»‘é£å¤§ç‹Â·è£‚å±±ç‹‚å°Šâ˜…", mob_shape = 16461, min_map = "028560"},
-    [311] = {"é»„é£å²­", 92, 368,nil,nil,4, mob_name = "â‰®é»„é£å¤§åœ£Â·åå¤©å¦–å°Šâ‰¯", mob_shape = 16461, min_map = "028563"},
-    [312] = {"å¥³å„¿å›½", 161, 146,nil,nil,4, mob_name = "ã€Œçº¢å°˜æƒ…åŠ«Â·å¥³å›½ä¹‹ä¸»ã€", mob_shape = 16461, min_map = "027111"},
-    [313] = {"é€šå¤©æ²³", 237, 39,nil,nil,4, mob_name = "â‰®é€šå¤©æ²³ä¸»Â·è¦†æµªå¦–ç‹â‰¯", mob_shape = 16461, min_map = "028557"},
-    [314] = {"ç‹®é©¼å²­", 17, 87,nil,nil,4, mob_name = "â˜…ç‹®é©¼ä¸‰ç‹Â·é’ç‹®â˜…", mob_shape = 16461, min_map = "027295"},
-    [315] = {"å¤©ç«ºå±±", 68, 66,nil,nil,4, mob_name = "â‰®æ¢µå¤©åœ£å¢ƒÂ·å¤©ç«ºå°Šä¸»â‰¯", mob_shape = 16461, min_map = "029407"},
-    [316] = {"çµåŸŸÂ·äºŒå±‚", 72, 25,nil,nil,4, mob_name = "â‰®çµåŸŸäºŒå±‚Â·ç§©åºä¸»å®°â‰¯", mob_shape = 16149, min_map = "027247"},
-    [317] = {"çµåŸŸÂ·ä¸‰å±‚", 63, 61,nil,nil,4, mob_name = "â‰®çµåŸŸä¸‰å±‚Â·ç»ˆåºä¸»å®°â‰¯", mob_shape = 16149, min_map = "029405"},
-    [318] = {"çµåŸŸÂ·ç§˜å¢ƒ", 21, 20,nil,nil,4, mob_name = "â˜…çµåŸŸç§˜å¢ƒÂ·åŸåˆä¸»å®°â˜…", mob_shape = 16149, min_map = "027186"},
+    --{"µØÍ¼Ãû",x,y,ÏŞÖÆfun,ÌáÊ¾ÎÄ×Ö,ËùÊô´óÂ½}
+    [300] = {"ĞéÍıÉ½Âö", 92, 50,nil,nil,3, mob_name = "¡ïÄÏ¾³»ÄÍõ¡ï", mob_shape = 12057, min_map = "027343"},
+    [301] = {"¹í³°ÉîÔ¨", 273, 33,nil,nil,3, mob_name = "¡Ú±±º®ËéËªÍõ¡Û", mob_shape = 12059, min_map = "027960"},
+    [302] = {"Ì¾Ï¢¿õÒ°", 34, 41,nil,nil,3, mob_name = "¡¸»ÒÒí·çºÛÖ÷¡¹", mob_shape = 12039, min_map = "027941"},
+    [303] = {"½û¼ÉÖ®º£", 33, 133,nil,nil,3, mob_name = "¡ïÎ÷º£¹Å»Ê¡ï[µÀ·¨ºÏÒ»]", mob_shape = 12105, min_map = "027961"},
+    [304] = {"ÔáĞÇº£Ì²", 184, 40,nil,nil,3, mob_name = "¡¸º£éä¾Ş»Ê¡¹[ÖÁ¸ßÉñÁé]", mob_shape = 16166, min_map = "027241"},
+    [305] = {"´¬³¤ÊÒ", 40, 46,nil,nil,3, mob_name = "¡¸ÓÄº½¹íÖ÷¡¹[Í¨Áé]", mob_shape = 16147, min_map = "027802"},
+    [306] = {"Ë®ÊÖ²Õ", 59, 11,nil,nil,3, mob_name = "¡ÚË®ÊÖÔ¹»Ê¡Û[Í¨Áé]", mob_shape = 16150, min_map = "027975"},
+    [307] = {"»ÆÈªÂ·", 49, 29,nil,nil,4, mob_name = "¡¸»ÆÈª¾¡Í·¡¤Íü´¨Ö÷Ô×¡¹", mob_shape = 16131, min_map = "027825"},
+    [308] = {"ÂŞÛºÁùÌì", 71, 78,nil,nil,4, mob_name = "¡ïÂŞÛºÁùÌì¡¤Ú¤ÂÉÖÁ×ğ¡ï", mob_shape = 16131, min_map = "028802"},
+    [309] = {"¶«º£Áú¹¬", 31, 83,nil,nil,4, mob_name = "¡Ú¶«º£ÕæÖ÷¡¤¸²º£Áú»Ê¡Û", mob_shape = 16167, min_map = "027179"},
+    [310] = {"ºÚ·çÉ½", 158, 72,nil,nil,4, mob_name = "¡ïºÚ·ç´óÍõ¡¤ÁÑÉ½¿ñ×ğ¡ï", mob_shape = 16461, min_map = "028560"},
+    [311] = {"»Æ·çÁë", 92, 368,nil,nil,4, mob_name = "¡Ú»Æ·ç´óÊ¥¡¤ÍÌÌìÑı×ğ¡Û", mob_shape = 16461, min_map = "028563"},
+    [312] = {"Å®¶ù¹ú", 161, 146,nil,nil,4, mob_name = "¡¸ºì³¾Çé½Ù¡¤Å®¹úÖ®Ö÷¡¹", mob_shape = 16461, min_map = "027111"},
+    [313] = {"Í¨ÌìºÓ", 237, 39,nil,nil,4, mob_name = "¡ÚÍ¨ÌìºÓÖ÷¡¤¸²ÀËÑıÍõ¡Û", mob_shape = 16461, min_map = "028557"},
+    [314] = {"Ê¨ÍÕÁë", 17, 87,nil,nil,4, mob_name = "¡ïÊ¨ÍÕÈıÍõ¡¤ÇàÊ¨¡ï", mob_shape = 16461, min_map = "027295"},
+    [315] = {"ÌìóÃÉ½", 68, 66,nil,nil,4, mob_name = "¡ÚèóÌìÊ¥¾³¡¤ÌìóÃ×ğÖ÷¡Û", mob_shape = 16461, min_map = "029407"},
+    [316] = {"ÁéÓò¡¤¶ş²ã", 72, 25,nil,nil,4, mob_name = "¡ÚÁéÓò¶ş²ã¡¤ÖÈĞòÖ÷Ô×¡Û", mob_shape = 16149, min_map = "027247"},
+    [317] = {"ÁéÓò¡¤Èı²ã", 63, 61,nil,nil,4, mob_name = "¡ÚÁéÓòÈı²ã¡¤ÖÕĞòÖ÷Ô×¡Û", mob_shape = 16149, min_map = "029405"},
+    [318] = {"ÁéÓò¡¤ÃØ¾³", 21, 20,nil,nil,4, mob_name = "¡ïÁéÓòÃØ¾³¡¤Ô­³õÖ÷Ô×¡ï", mob_shape = 16149, min_map = "027186"},
 }
--- ä¸‰å¤§é™†åœ°å›¾ç»Ÿä¸€æ‹¦æˆªï¼šæœªå¼€è¾Ÿä»™åºœæ—¶ï¼Œåªå…è®¸é€šè¿‡ NPC 200 è¿›å…¥ç°ç•Œã€‚
+-- Èı´óÂ½µØÍ¼Í³Ò»À¹½Ø£ºÎ´¿ª±ÙÏÉ¸®Ê±£¬Ö»ÔÊĞíÍ¨¹ı NPC 200 ½øÈë»Ò½ç¡£
 local function _ensure_continent_map_access(play, continent, map_name)
     if continent == 3 then
         return Player.ensureThirdContinentMapAccess(
             play,
             map_name,
-            "æœªå¼€#57|ã€å¼€è¾Ÿä»™åºœã€‘#218|å‰ï¼Œä¸‰å¤§é™†ç›®å‰åªèƒ½è¿›å…¥#57|ã€ç°ç•Œã€‘#218|#57"
+            "Î´¿ª#57|¡¾¿ª±ÙÏÉ¸®¡¿#218|Ç°£¬Èı´óÂ½Ä¿Ç°Ö»ÄÜ½øÈë#57|¡¾»Ò½ç¡¿#218|#57"
         )
     end
     return true
@@ -73,7 +73,7 @@ function npc.main(play,npcid)
     sendluamsg(play,100,npcid,0,0,"")
 end
 function npc.link(play,npcid,ew,aid)
-    -- npc_guard: å…¥å‚æ ¡éªŒ
+    -- npc_guard: Èë²ÎĞ£Ñé
     if not Guard.ensurePlayer(play, npcid) then
         return
     end
@@ -82,7 +82,7 @@ function npc.link(play,npcid,ew,aid)
         return
     end
     ew = __guardAction
-    -- npc_guard: æ“ä½œç™½åå•ï¼ˆä¼˜åŒ–ï¼šé™å®šåˆæ³•æ“ä½œç¼–å·ï¼‰
+    -- npc_guard: ²Ù×÷°×Ãûµ¥£¨ÓÅ»¯£ºÏŞ¶¨ºÏ·¨²Ù×÷±àºÅ£©
     local __guardAllowedActions = Guard.newActionSet({1})
     if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
         return
@@ -108,98 +108,98 @@ function npc.link(play,npcid,ew,aid)
                 return
             end
                         local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
-            if npcid == 300 then -- è™šå¦„å±±è„‰  621 å¯¹åº”çš„ä»»åŠ¡å®Œæˆå¯ä»¥è¿›å…¥
+            if npcid == 300 then -- ĞéÍıÉ½Âö  621 ¶ÔÓ¦µÄÈÎÎñÍê³É¿ÉÒÔ½øÈë
                 if not (jq_data["npc_621"] and jq_data["npc_621"] >= 2) then
-                    Player.sendmsgEx(play, "ä»»åŠ¡æœªå®Œæˆï¼Œæ— æ³•è¿›å…¥#57")
+                    Player.sendmsgEx(play, "ÈÎÎñÎ´Íê³É£¬ÎŞ·¨½øÈë#57")
                     return
                 end
-            elseif npcid == 301 then -- é¬¼å˜²æ·±æ¸Š  623 å¯¹åº”çš„ä»»åŠ¡å®Œæˆå¯ä»¥è¿›å…¥
+            elseif npcid == 301 then -- ¹í³°ÉîÔ¨  623 ¶ÔÓ¦µÄÈÎÎñÍê³É¿ÉÒÔ½øÈë
                 if not (jq_data["npc_623"] and jq_data["npc_623"] >= 2) then
-                    Player.sendmsgEx(play, "ä»»åŠ¡æœªå®Œæˆï¼Œæ— æ³•è¿›å…¥#57")
+                    Player.sendmsgEx(play, "ÈÎÎñÎ´Íê³É£¬ÎŞ·¨½øÈë#57")
                     return
                 end
-            elseif npcid == 302 then -- å¹æ¯æ—·é‡  622 å¯¹åº”çš„ä»»åŠ¡å®Œæˆå¯ä»¥è¿›å…¥
+            elseif npcid == 302 then -- Ì¾Ï¢¿õÒ°  622 ¶ÔÓ¦µÄÈÎÎñÍê³É¿ÉÒÔ½øÈë
                 if not (jq_data["npc_622"] and jq_data["npc_622"] >= 2) then
-                    Player.sendmsgEx(play, "ä»»åŠ¡æœªå®Œæˆï¼Œæ— æ³•è¿›å…¥#57")
+                    Player.sendmsgEx(play, "ÈÎÎñÎ´Íê³É£¬ÎŞ·¨½øÈë#57")
                     return
                 end
-            elseif npcid == 303 then -- ç¦å¿Œä¹‹æµ·  624 å¯¹åº”çš„ä»»åŠ¡å®Œæˆå¯ä»¥è¿›å…¥
+            elseif npcid == 303 then -- ½û¼ÉÖ®º£  624 ¶ÔÓ¦µÄÈÎÎñÍê³É¿ÉÒÔ½øÈë
                 if not (jq_data["npc_624"] and jq_data["npc_624"] >= 2) then
-                    Player.sendmsgEx(play, "ä»»åŠ¡æœªå®Œæˆï¼Œæ— æ³•è¿›å…¥#57")
+                    Player.sendmsgEx(play, "ÈÎÎñÎ´Íê³É£¬ÎŞ·¨½øÈë#57")
                     return
                 end
-            elseif npcid == 304 then -- è‘¬æ˜Ÿæµ·æ»©  å¯¹åº”å®šæ—¶å™¨çš„ åˆ‡æ¢åœ°å›¾è§¦å‘
+            elseif npcid == 304 then -- ÔáĞÇº£Ì²  ¶ÔÓ¦¶¨Ê±Æ÷µÄ ÇĞ»»µØÍ¼´¥·¢
                 local hour = tonumber(os.date("%H")) or 0
-                mapmove(play,(hour % 2 == 0) and "è‘¬æ˜Ÿæµ·æ»©" or "è‘¬æ˜Ÿæµ·æ»©1",config[2],config[3],5)
+                mapmove(play,(hour % 2 == 0) and "ÔáĞÇº£Ì²" or "ÔáĞÇº£Ì²1",config[2],config[3],5)
                 return
-            elseif npcid == 305 then -- èˆ¹é•¿å®¤ 629çš„ä»»åŠ¡å®Œæˆ -a
+            elseif npcid == 305 then -- ´¬³¤ÊÒ 629µÄÈÎÎñÍê³É -a
                 if jq_data["npc_629_a"] ~= 1 then
-                    Player.sendmsgEx(play, "æœªå®Œæˆå¯¹åº”æäº¤ï¼Œæ— æ³•è¿›å…¥#57")
+                    Player.sendmsgEx(play, "Î´Íê³É¶ÔÓ¦Ìá½»£¬ÎŞ·¨½øÈë#57")
                     return
                 end
-            elseif npcid == 306 then -- æ°´æ‰‹èˆ± 629çš„ä»»åŠ¡å®Œæˆ -b
+            elseif npcid == 306 then -- Ë®ÊÖ²Õ 629µÄÈÎÎñÍê³É -b
                 if jq_data["npc_629_b"] ~= 1 then
-                    Player.sendmsgEx(play, "æœªå®Œæˆå¯¹åº”æäº¤ï¼Œæ— æ³•è¿›å…¥#57")
+                    Player.sendmsgEx(play, "Î´Íê³É¶ÔÓ¦Ìá½»£¬ÎŞ·¨½øÈë#57")
                     return
                 end
-            elseif npcid == 307 then -- é»„æ³‰è·¯ 667çš„ä»»åŠ¡å®Œæˆ
+            elseif npcid == 307 then -- »ÆÈªÂ· 667µÄÈÎÎñÍê³É
                 if not (jq_data["npc_667"] and jq_data["npc_667"] >= 2) then
-                    Player.sendmsgEx(play, "ä»»åŠ¡æœªå®Œæˆï¼Œæ— æ³•è¿›å…¥#57")
+                    Player.sendmsgEx(play, "ÈÎÎñÎ´Íê³É£¬ÎŞ·¨½øÈë#57")
                     return
                 end
-            elseif npcid == 308 then -- ç½—é…†å…­å¤© 669çš„ä»»åŠ¡å®Œæˆ
+            elseif npcid == 308 then -- ÂŞÛºÁùÌì 669µÄÈÎÎñÍê³É
                 if not (jq_data["npc_669"] and jq_data["npc_669"] >= 2) then
-                    Player.sendmsgEx(play, "ä»»åŠ¡æœªå®Œæˆï¼Œæ— æ³•è¿›å…¥#57")
+                    Player.sendmsgEx(play, "ÈÎÎñÎ´Íê³É£¬ÎŞ·¨½øÈë#57")
                     return
                 end
-            elseif npcid == 309 then -- ä¸œæµ·é¾™å®« 642çš„ä»»åŠ¡å®Œæˆ
+            elseif npcid == 309 then -- ¶«º£Áú¹¬ 642µÄÈÎÎñÍê³É
                 if not (jq_data["npc_642"] and jq_data["npc_642"] >= 2) then
-                    Player.sendmsgEx(play, "ä»»åŠ¡æœªå®Œæˆï¼Œæ— æ³•è¿›å…¥#57")
+                    Player.sendmsgEx(play, "ÈÎÎñÎ´Íê³É£¬ÎŞ·¨½øÈë#57")
                     return
                 end
-            elseif npcid == 310 then -- é»‘é£å±± 643çš„ä»»åŠ¡å®Œæˆ
+            elseif npcid == 310 then -- ºÚ·çÉ½ 643µÄÈÎÎñÍê³É
                 if not (jq_data["npc_643"] and jq_data["npc_643"] >= 2) then
-                    Player.sendmsgEx(play, "ä»»åŠ¡æœªå®Œæˆï¼Œæ— æ³•è¿›å…¥#57")
+                    Player.sendmsgEx(play, "ÈÎÎñÎ´Íê³É£¬ÎŞ·¨½øÈë#57")
                     return
                 end
-            elseif npcid == 311 then -- é»„é£å²­ 644çš„ä»»åŠ¡å®Œæˆ
+            elseif npcid == 311 then -- »Æ·çÁë 644µÄÈÎÎñÍê³É
                 if not (jq_data["npc_644"] and jq_data["npc_644"] >= 2) then
-                    Player.sendmsgEx(play, "ä»»åŠ¡æœªå®Œæˆï¼Œæ— æ³•è¿›å…¥#57")
+                    Player.sendmsgEx(play, "ÈÎÎñÎ´Íê³É£¬ÎŞ·¨½øÈë#57")
                     return
                 end
-            elseif npcid == 312 then -- å¥³å„¿å›½ 645çš„ä»»åŠ¡å®Œæˆ
+            elseif npcid == 312 then -- Å®¶ù¹ú 645µÄÈÎÎñÍê³É
                 if not (jq_data["npc_645"] and jq_data["npc_645"] >= 2) then
-                    Player.sendmsgEx(play, "ä»»åŠ¡æœªå®Œæˆï¼Œæ— æ³•è¿›å…¥#57")
+                    Player.sendmsgEx(play, "ÈÎÎñÎ´Íê³É£¬ÎŞ·¨½øÈë#57")
                     return
                 end
-            elseif npcid == 313 then -- é€šå¤©æ²³ 646çš„ä»»åŠ¡å®Œæˆ
+            elseif npcid == 313 then -- Í¨ÌìºÓ 646µÄÈÎÎñÍê³É
                 if not (jq_data["npc_646"] and jq_data["npc_646"] >= 2) then
-                    Player.sendmsgEx(play, "ä»»åŠ¡æœªå®Œæˆï¼Œæ— æ³•è¿›å…¥#57")
+                    Player.sendmsgEx(play, "ÈÎÎñÎ´Íê³É£¬ÎŞ·¨½øÈë#57")
                     return
                 end
-            elseif npcid == 314 then -- ç‹®é©¼å²­ 647çš„ä»»åŠ¡å®Œæˆ
+            elseif npcid == 314 then -- Ê¨ÍÕÁë 647µÄÈÎÎñÍê³É
                 if not (jq_data["npc_647"] and jq_data["npc_647"] >= 2) then
-                    Player.sendmsgEx(play, "ä»»åŠ¡æœªå®Œæˆï¼Œæ— æ³•è¿›å…¥#57")
+                    Player.sendmsgEx(play, "ÈÎÎñÎ´Íê³É£¬ÎŞ·¨½øÈë#57")
                     return
                 end
-            elseif npcid == 315 then -- å¤©ç«ºå±± 648çš„ä»»åŠ¡å®Œæˆ
+            elseif npcid == 315 then -- ÌìóÃÉ½ 648µÄÈÎÎñÍê³É
                 if not (jq_data["npc_648"] and jq_data["npc_648"] >= 2) then
-                    Player.sendmsgEx(play, "ä»»åŠ¡æœªå®Œæˆï¼Œæ— æ³•è¿›å…¥#57")
+                    Player.sendmsgEx(play, "ÈÎÎñÎ´Íê³É£¬ÎŞ·¨½øÈë#57")
                     return
                 end
-            elseif npcid == 316 then -- çµåŸŸÂ·äºŒå±‚ 663çš„ä»»åŠ¡å®Œæˆ
+            elseif npcid == 316 then -- ÁéÓò¡¤¶ş²ã 663µÄÈÎÎñÍê³É
                 if not (jq_data["npc_663"] and jq_data["npc_663"] >= 2) then
-                    Player.sendmsgEx(play, "ä»»åŠ¡æœªå®Œæˆï¼Œæ— æ³•è¿›å…¥#57")
+                    Player.sendmsgEx(play, "ÈÎÎñÎ´Íê³É£¬ÎŞ·¨½øÈë#57")
                     return
                 end
-            elseif npcid == 317 then -- çµåŸŸÂ·ä¸‰å±‚ 664çš„ä»»åŠ¡å®Œæˆ
+            elseif npcid == 317 then -- ÁéÓò¡¤Èı²ã 664µÄÈÎÎñÍê³É
                 if not (jq_data["npc_664"] and jq_data["npc_664"] >= 2) then
-                    Player.sendmsgEx(play, "ä»»åŠ¡æœªå®Œæˆï¼Œæ— æ³•è¿›å…¥#57")
+                    Player.sendmsgEx(play, "ÈÎÎñÎ´Íê³É£¬ÎŞ·¨½øÈë#57")
                     return
                 end
-            elseif npcid == 318 then -- çµåŸŸÂ·ç§˜å¢ƒ 665çš„ä»»åŠ¡å®Œæˆ
+            elseif npcid == 318 then -- ÁéÓò¡¤ÃØ¾³ 665µÄÈÎÎñÍê³É
                 if not (jq_data["npc_665"] and jq_data["npc_665"] >= 2) then
-                    Player.sendmsgEx(play, "ä»»åŠ¡æœªå®Œæˆï¼Œæ— æ³•è¿›å…¥#57")
+                    Player.sendmsgEx(play, "ÈÎÎñÎ´Íê³É£¬ÎŞ·¨½øÈë#57")
                     return
                 end
             end
@@ -212,6 +212,6 @@ function npc.link(play,npcid,ew,aid)
 end
 ----
 function npc_200_fbjs(play)
-    startautoattack(play) --è‡ªåŠ¨æ”»å‡»
+    startautoattack(play) --×Ô¶¯¹¥»÷
 end
 return npc
