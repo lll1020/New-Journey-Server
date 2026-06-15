@@ -1726,10 +1726,6 @@ shaguai = {
 		end
 	end,
 	["34"] = function(play,mob)      --筑基丹碎片：聚宝盆修复后，二三大陆普通怪每累计 100 只保底掉落
-		local state = _sg_tb_state(play)
-		if state.rebuilt < 1 then
-			return
-		end
 		local record = Player.getJsonTableByVar(play, "T39") or {}
 		local jz_count = tonumber(record.jz_dan_count or 0) or 0
 		if jz_count >= 3 then

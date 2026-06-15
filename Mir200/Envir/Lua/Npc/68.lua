@@ -84,14 +84,15 @@ function npc.link(play,npcid,ew,aid)
         end
         T_dljq["npc_68"] = T_dljq["npc_68"] or {}
         if T_dljq["npc_68"][""..aid] and T_dljq["npc_68"][""..aid] == 1 then
-            T_data.level[tostring(rootIdx)] = 1
+            T_data.level[tostring(rootIdx)] = 0
             Player.setJsonVarByTable(play, VarCfg["T_Áé¸ù"], T_data)
             local rootCfg = (((Guard.getConfig("npc_22") or {}).main_r or {})[rootIdx]) or {}
-            local addAttrs = {}
-            for _, one in ipairs(rootCfg.attr or {}) do
-                addAttrs[#addAttrs + 1] = {one[1], tonumber(one[2]) or 0}
-            end
-            if #addAttrs > 0 then Player.updateSomeAddr(play, nil, addAttrs) end
+            local addAttrs = {
+                {1, 2000}, {2, 2000},
+                {3, 100}, {4, 100}, {5, 100}, {6, 100}, {7, 100}, {8, 100},
+                {9, 100}, {10, 100},
+            }
+            Player.updateSomeAddr(play, nil, addAttrs)
             Player.sendmsgEx(play, "¹§Ï²Äã£¬³É¹¦¾õÐÑ|¡¾"..tostring(rootCfg.name or "Áé¸ù").."¡¿#218|")
             sendluamsg(play,100,npcid,2,aid,"")
             sendluamsg(play,101,1005,0,0,"rwwc")

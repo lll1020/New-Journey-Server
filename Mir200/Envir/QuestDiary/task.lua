@@ -278,20 +278,8 @@ function zxrw_try_finish_current_mainline(play, desc)
     end
     return false
 end
-local function _zxrw_activate_linggen(play, idx)
-    local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
-    data = type(data) == "table" and data or {}
-    data.level = type(data.level) == "table" and data.level or {}
-    data.unlock_chance = (tonumber(data.unlock_chance or 0) or 0) + 1
-    Player.setJsonTableByVar(play, VarCfg["T_灵根"], data)
-    Player.sendmsgEx(play, "获得#57|【基础灵根解锁】#218|次数+1")
-    return true
-end
 local function _zxrw_apply_special_reward(play, name, count)
     if name == "基础灵根解锁" then
-        for _ = 1, (tonumber(count or 1) or 1) do
-            _zxrw_activate_linggen(play, 0)
-        end
         return true
     end
     return false

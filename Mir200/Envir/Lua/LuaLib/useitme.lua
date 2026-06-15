@@ -24,6 +24,24 @@ local function _pk_combat_left(play, now)
     local left = (tonumber(getplaydef(play, "N$PK脱战") or 0) or 0) - now
     return left > 0 and math.ceil(left) or 0
 end
+local function _is_random_transfer_free_map(play)
+    local mapName = tostring(getbaseinfo(play, 3) or "")
+    if mapName == "" then
+        return false
+    end
+    local activityRoot = teshudata and teshudata["anniu_507"] or {}
+    local activityKeys = {"qmdt", "qmdk", "hdjd", "bwcz", "mskh", "sjdb"}
+    for _, key in ipairs(activityKeys) do
+        local cfg = activityRoot[key]
+        if type(cfg) == "table" and tostring(cfg.map or "") == mapName then
+            return true
+        end
+    end
+    if QmdtApi and QmdtApi.is_timer_map and QmdtApi.is_timer_map(mapName) then
+        return true
+    end
+    return mapName == "比武大会" or mapName == "xtc"
+end
 local function _record_random_transfer_use(play, now)
     now = now or os.time()
     local windowStart = tonumber(getplaydef(play, "N$随机传送窗口开始时间") or 0) or 0
@@ -46,14 +64,19 @@ function stdmodefunc9(play, item)
     setplaydef(play,"S$dtm",getbaseinfo(play, 3))
     release_print("随机石")
     local now = os.time()
-    local cdLeft = _random_transfer_cd_left(play, now)
-    if cdLeft > 0 then
-        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>随机传送冷却中,剩余' .. math.max(1, math.ceil(cdLeft)) .. '秒</font>","Type":9}')
-        return false
+    local freeActivityMap = _is_random_transfer_free_map(play)
+    if not freeActivityMap then
+        local cdLeft = _random_transfer_cd_left(play, now)
+        if cdLeft > 0 then
+            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>随机传送冷却中,剩余' .. math.max(1, math.ceil(cdLeft)) .. '秒</font>","Type":9}')
+            return false
+        end
     end
     if getplaydef(play,"N$PK脱战") < now or _has_equip_name(play, "遮云日") then
         map(play,getbaseinfo(play,3))
-        _record_random_transfer_use(play, now)
+        if not freeActivityMap then
+            _record_random_transfer_use(play, now)
+        end
         -- if getflagstatus(play, 300) == 1 then
         --     startautoattack(play)
         -- end

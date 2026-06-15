@@ -1,4 +1,4 @@
-ï»¿npc = {}
+npc = {}
 
 local _config = Guard.getConfig("npc_78") or {}
 
@@ -24,15 +24,15 @@ function npc.link(play, npcid, p2, p3, msgData)
     if p2 == 1 then
         local idx = _toint(req.idx or p3)
         local cfg = (_config.equip or {})[idx]
-        if not cfg then Player.sendmsgEx(play, "è£…å¤‡å‚æ•°é”™è¯¯#57") return end
+        if not cfg then Player.sendmsgEx(play, "×°±¸²ÎÊı´íÎó#57") return end
         local itemName = tostring(cfg.name or "")
         if itemName == "" or _toint(getbagitemcount(play, itemName)) <= 0 then
-            Player.sendmsgEx(play, string.format("èƒŒåŒ…ä¸­æ²¡æœ‰#57|ã€%sã€‘#218|", itemName))
+            Player.sendmsgEx(play, string.format("±³°üÖĞÃ»ÓĞ#57|¡¾%s¡¿#218|", itemName))
             return
         end
         takeitem(play, itemName, 1)
-        changemoney(play, _toint(_config.recycle_money_id or 22), "+", _toint(_config.recycle_money or 500), "ç¥é“è£…å¤‡å›æ”¶", true)
-        Player.sendmsgEx(play, string.format("å›æ”¶#57|ã€%sã€‘#218|ï¼Œè·å¾—%s*%d", itemName, tostring(_config.recycle_money_name or "çµç¬¦"), _toint(_config.recycle_money or 500)))
+        changemoney(play, _toint(_config.recycle_money_id or 22), "+", _toint(_config.recycle_money or 500), "ÉñµÀ×°±¸»ØÊÕ", true)
+        Player.sendmsgEx(play, string.format("»ØÊÕ#57|¡¾%s¡¿#218|£¬»ñµÃ%s*%d", itemName, tostring(_config.recycle_money_name or "Áé·û"), _toint(_config.recycle_money or 500)))
     end
     sendluamsg(play, 100, npcid, p2, p3 or 0, tbl2json(_build_payload(play)))
 end

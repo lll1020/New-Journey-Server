@@ -39,16 +39,20 @@ local function _ensure_data(T_data)
     T_data = type(T_data) == "table" and T_data or {}
     T_data.level = type(T_data.level) == "table" and T_data.level or {}
     if T_data.other then T_data.other = nil end
-    if not _has_any_basic_root(T_data) and not T_data.init_unlock_given then
-        T_data.unlock_chance = _toint(T_data.unlock_chance, 0) + _toint(_config.free_unlock_chance, 1)
-        T_data.init_unlock_given = 1
+    T_data.unlock_chance = nil
+    T_data.init_unlock_given = nil
+    for i = 1, 5 do
+        local key = tostring(i)
+        if T_data.level[key] == nil then
+            T_data.level[key] = 0
+        end
     end
     return T_data
 end
 
 local function _level(T_data, idx)
     if not _has_root(T_data, idx) then return 0 end
-    return math.max(1, _toint(T_data.level[tostring(idx)], 1))
+    return math.max(0, _toint(T_data.level[tostring(idx)], 0))
 end
 
 local _linggen_skill_ids = {
@@ -90,11 +94,24 @@ local function _build_attr_by_level(attr_list, level)
     return attrs
 end
 
+local function _build_lv0_attr(idx)
+    local isHigh = _toint(idx, 0) > 5
+    local base = isHigh and 100 or 10
+    local hpmp = isHigh and 2000 or 200
+    return {
+        {1, hpmp}, {2, hpmp},
+        {3, base}, {4, base}, {5, base}, {6, base}, {7, base}, {8, base},
+        {9, base}, {10, base},
+    }
+end
+
 local function _build_root_attr(idx, level)
     local cfg = _root_cfg(idx)
     if not cfg then return {} end
-    local attrs = _build_attr_by_level(cfg.attr, level)
-
+    local attrs = _build_lv0_attr(idx)
+    for _, one in ipairs(_build_attr_by_level(cfg.attr, level)) do
+        attrs[#attrs + 1] = one
+    end
     return attrs
 end
 
@@ -149,6 +166,17 @@ local function _take_change_cost(play)
     return true
 end
 
+local function _mainline_reached_linggen(play)
+    return (tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0) >= 22
+end
+
+local function _check_linggen_mainline(play)
+    if _mainline_reached_linggen(play) then
+        return true
+    end
+    Player.sendmsgEx(play, "请先完成对应主线任务#57")
+    return false
+end
 local function _need_role_level(rootIdx, nextLevel)
     local low = {80,80,80,100,100,100,150,150,150,151}
     local high = {152,152,152,155,155,155,160,160,160,165}
@@ -156,6 +184,7 @@ local function _need_role_level(rootIdx, nextLevel)
 end
 
 function npc.main(play, npcid)
+    if not _check_linggen_mainline(play) then return end
     local T_data = _ensure_data(Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
     Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
     sendluamsg(play, 100, npcid, 0, 0, tbl2json({T_data = T_data}))
@@ -164,6 +193,7 @@ end
 
 function npc.link(play, npcid, ew, aid)
     if not Guard.ensurePlayer(play, npcid) then return end
+    if not _check_linggen_mainline(play) then return end
     ew = Guard.normalizeAction(play, npcid, ew)
     if ew == nil then return end
     if not Guard.ensureActionAllowed(play, npcid, ew, Guard.newActionSet({1, 2, 3, 5, 6})) then return end
@@ -171,30 +201,20 @@ function npc.link(play, npcid, ew, aid)
     aid = _toint(aid, 0)
     local T_data = _ensure_data(Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
 
-    if ew == 1 then -- 选择解锁基础灵根
+    if ew == 1 then -- 选择基础灵根；新版基础灵根默认Lv0激活，不再消耗解锁次数
         if aid < 1 or aid > 5 then
             Player.sendmsgEx(play, "只能选择金木水火土基础灵根#57")
             return
         end
-        if _has_root(T_data, aid) then
-            Player.sendmsgEx(play, "该基础灵根已解锁，不能重复解锁#57")
-            return
-        end
-        if _toint(T_data.unlock_chance, 0) <= 0 then
-            Player.sendmsgEx(play, "当前没有基础灵根解锁#57")
-            return
-        end
-        T_data.unlock_chance = math.max(0, _toint(T_data.unlock_chance, 0) - 1)
-        T_data.level[tostring(aid)] = 1
+        T_data.level[tostring(aid)] = _level(T_data, aid)
         if _toint(T_data.main, 0) <= 0 then T_data.main = aid end
         Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
         _sync_linggen_skill(play, T_data)
-        Player.updateSomeAddr(play, nil, _build_root_attr(aid, 1))
         _refresh_linggen_special(play, T_data)
         if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "任务") end -- linggen_auto_1
         if FairyFate and FairyFate.touch then FairyFate.touch(play, "linggen") end
         local cfg = _root_cfg(aid) or {}
-        Player.sendmsgEx(play, "提示：你成功解锁#7|【"..tostring(cfg.name or "").."灵根】#22|")
+        Player.sendmsgEx(play, "提示：你选择了#7|【"..tostring(cfg.name or "").."灵根】#22|")
         _refresh_send(play, npcid, 1)
         return
     end
@@ -327,8 +347,8 @@ function Login_lg(play)
     _refresh_linggen_special(play, T_data)
     local attrs = {}
     for i = 1, 10 do
-        local lv = _level(T_data, i)
-        if lv > 0 then
+        if _has_root(T_data, i) then
+            local lv = _level(T_data, i)
             for _, one in ipairs(_build_root_attr(i, lv)) do attrs[#attrs + 1] = one end
         end
     end
@@ -371,9 +391,7 @@ end
 
 function LingGenGrantBasicUnlockChance(play, count)
     local T_data = _ensure_data(Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
-    T_data.unlock_chance = _toint(T_data.unlock_chance, 0) + math.max(1, _toint(count, 1))
     Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
-    Player.sendmsgEx(play, "获得基础灵根解锁#7|【"..tostring(count or 1).."】#22|次#7")
     return true
 end
 

@@ -1,4 +1,4 @@
-ï»¿npc = {}
+npc = {}
 
 local function _toint(v)
     return tonumber(v) or 0
@@ -9,7 +9,7 @@ local function _cfg(npcid)
 end
 
 local function _sd_data(play)
-    return Player.getJsonTableByVar(play, VarCfg["T_ç™»ç¥ä¹‹è·¯"] or "T_ç™»ç¥ä¹‹è·¯") or {}
+    return Player.getJsonTableByVar(play, VarCfg["T_µÇÉñÖ®Â·"] or "T_µÇÉñÖ®Â·") or {}
 end
 
 local function _has_cert(play, god)
@@ -27,7 +27,7 @@ end
 local function _check_cost(play, cost)
     local missName, missNum = Player.checkItemNumByTable(play, cost)
     if missName then
-        Player.sendmsgEx(play, string.format("ææ–™ä¸è¶³ï¼š#57|ã€%sã€‘#218| éœ€è¦ %d", tostring(missName), _toint(missNum)))
+        Player.sendmsgEx(play, string.format("²ÄÁÏ²»×ã£º#57|¡¾%s¡¿#218| ĞèÒª %d", tostring(missName), _toint(missNum)))
         return false
     end
     return true
@@ -46,17 +46,17 @@ function npc.link(play, npcid, p2, p3, msgData)
     local cfg = _cfg(npcid)
     if p2 == 1 then
         if _toint(getbagitemcount(play, tostring(cfg.item_name or ""))) > 0 then
-            Player.sendmsgEx(play, "è¯¥ç§˜å®å·²æ‹¥æœ‰ï¼Œæ— éœ€é‡å¤åˆæˆ#57")
+            Player.sendmsgEx(play, "¸ÃÃØ±¦ÒÑÓµÓĞ£¬ÎŞĞèÖØ¸´ºÏ³É#57")
             return
         end
         if not _has_cert(play, cfg.need_cert_god) then
-            Player.sendmsgEx(play, "éœ€è¦å…ˆå®Œæˆå¯¹åº”ç¥é“è‡ªè¯#57")
+            Player.sendmsgEx(play, "ĞèÒªÏÈÍê³É¶ÔÓ¦ÉñµÀ×ÔÖ¤#57")
             return
         end
         if not _check_cost(play, cfg.cost or {}) then return end
-        Player.takeItemByTable(play, cfg.cost or {}, "é“åŸºç§˜å®åˆæˆ")
+        Player.takeItemByTable(play, cfg.cost or {}, "µÀ»ùÃØ±¦ºÏ³É")
         giveitem(play, tostring(cfg.item_name or ""), 1)
-        Player.sendmsgEx(play, string.format("åˆæˆæˆåŠŸï¼Œè·å¾—#57|ã€%sã€‘#218|", tostring(cfg.item_name or "ç§˜å®")))
+        Player.sendmsgEx(play, string.format("ºÏ³É³É¹¦£¬»ñµÃ#57|¡¾%s¡¿#218|", tostring(cfg.item_name or "ÃØ±¦")))
     end
     sendluamsg(play, 100, npcid, p2, p3 or 0, tbl2json(_build_payload(play, npcid)))
 end

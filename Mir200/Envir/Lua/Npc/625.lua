@@ -105,7 +105,7 @@ function npc.link(play,npcid,ew,aid)
             jq_data[_prep_key] = 1
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
             shaguai.jia(play, 625)
-            Player.sendmsgEx(play, "领取任务：#57|"..prep_item.."#249|在#57|"..((_config.prep_task and _config.prep_task.map) or "鬼嘲深渊").."#249|击杀50只怪物")
+            Player.sendmsgEx(play, "领取任务：#57|"..prep_item.."#249|在#57|"..((_config.prep_task and (_config.prep_task.show_map or _config.prep_task.map)) or "旷野之原").."#249|击杀50只怪物")
             if npcid then Guard.closeNpcAndAuto(play, npcid) end
             sendluamsg(play,100,npcid,1,1,"")
             return

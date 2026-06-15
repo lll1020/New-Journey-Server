@@ -61,3 +61,5 @@
 
 [2026-06-15 19:30:34:334] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：31; NpcThreadId: 37592, CurPlayThreadId: 37592
 
+[2026-06-15 21:43:47:453] LuaNPC:玩家名字 ID:999999999 执行 playoffline player:玩家名字 耗时：31; NpcThreadId: 37592, CurPlayThreadId: 37592
+

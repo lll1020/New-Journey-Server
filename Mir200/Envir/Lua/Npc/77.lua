@@ -1,8 +1,8 @@
-ï»¿npc = {}
+npc = {}
 
 local _config = Guard.getConfig("npc_77") or {}
-local _var_name = VarCfg["T_ç™»ç¥ä¹‹è·¯"] or "T_ç™»ç¥ä¹‹è·¯"
-local _attr_list_name = tostring(_config.attr_list_name or "ç™»ç¥ä¹‹è·¯")
+local _var_name = VarCfg["T_µÇÉñÖ®Â·"] or "T_µÇÉñÖ®Â·"
+local _attr_list_name = tostring(_config.attr_list_name or "µÇÉñÖ®Â·")
 
 local function _toint(v) return tonumber(v) or 0 end
 local function _god_key(god) return tostring(_toint(god)) end
@@ -82,7 +82,7 @@ end
 local function _check_cost(play, cost)
     local missName, missNum = Player.checkItemNumByTable(play, cost)
     if missName then
-        Player.sendmsgEx(play, string.format("ææ–™ä¸è¶³ï¼š#57|ã€%sã€‘#218| éœ€è¦ %d", tostring(missName), _toint(missNum)))
+        Player.sendmsgEx(play, string.format("²ÄÁÏ²»×ã£º#57|¡¾%s¡¿#218| ĞèÒª %d", tostring(missName), _toint(missNum)))
         return false
     end
     return true
@@ -104,8 +104,8 @@ function npc.link(play, npcid, p2, p3, msgData)
     local info = _god_data(data, god)
     if p2 == 1 then
         local path = _toint(req.path)
-        if info.path > 0 then Player.sendmsgEx(play, "è¯¥ç¥é“å·²ç»é€‰æ‹©è¿‡è·¯çº¿#57") return end
-        if not _god_cfg(god).name or not _path_cfg(god, path).name then Player.sendmsgEx(play, "ç¥é“å‚æ•°é”™è¯¯#57") return end
+        if info.path > 0 then Player.sendmsgEx(play, "¸ÃÉñµÀÒÑ¾­Ñ¡Ôñ¹ıÂ·Ïß#57") return end
+        if not _god_cfg(god).name or not _path_cfg(god, path).name then Player.sendmsgEx(play, "ÉñµÀ²ÎÊı´íÎó#57") return end
         info.path = path
         info.rank = 1
         if god == 2 and shaguai and shaguai.jia then
@@ -113,37 +113,37 @@ function npc.link(play, npcid, p2, p3, msgData)
         end
         _save_data(play, data)
         _rebuild_attr(play, data)
-        Player.sendmsgEx(play, string.format("å·²é€‰æ‹©#57|ã€%sÂ·%sã€‘#218|", _god_cfg(god).name, _path_cfg(god, path).name))
+        Player.sendmsgEx(play, string.format("ÒÑÑ¡Ôñ#57|¡¾%s¡¤%s¡¿#218|", _god_cfg(god).name, _path_cfg(god, path).name))
         _send(play, npcid, 1, god)
     elseif p2 == 2 then
-        if info.path <= 0 then Player.sendmsgEx(play, "è¯·å…ˆé€‰æ‹©è¯¥ç¥é“è·¯çº¿#57") return end
+        if info.path <= 0 then Player.sendmsgEx(play, "ÇëÏÈÑ¡Ôñ¸ÃÉñµÀÂ·Ïß#57") return end
         local nextRank = info.rank + 1
-        if nextRank > _toint(_config.max_rank or 9) then Player.sendmsgEx(play, "ç¥é“é˜¶çº§å·²æ»¡#57") return end
+        if nextRank > _toint(_config.max_rank or 9) then Player.sendmsgEx(play, "ÉñµÀ½×¼¶ÒÑÂú#57") return end
         local needPower = _toint((_config.rank_need or {})[nextRank] or 0)
-        if info.power < needPower then Player.sendmsgEx(play, string.format("ç¥åŠ›å€¼ä¸è¶³ï¼Œéœ€è¦ %d", needPower)) return end
-        local cost = {{"å…ƒå®", nextRank * _toint(_config.upgrade_cost_base_yb or 500000)}, {"ä¸šç«ç»“æ™¶", nextRank * _toint(_config.upgrade_cost_fire or 10)}}
+        if info.power < needPower then Player.sendmsgEx(play, string.format("ÉñÁ¦Öµ²»×ã£¬ĞèÒª %d", needPower)) return end
+        local cost = {{"Ôª±¦", nextRank * _toint(_config.upgrade_cost_base_yb or 500000)}, {"Òµ»ğ½á¾§", nextRank * _toint(_config.upgrade_cost_fire or 10)}}
         if not _check_cost(play, cost) then return end
-        Player.takeItemByTable(play, cost, "ç™»ç¥ä¹‹è·¯å‡é˜¶")
+        Player.takeItemByTable(play, cost, "µÇÉñÖ®Â·Éı½×")
         info.rank = nextRank
         _save_data(play, data)
-        Player.sendmsgEx(play, string.format("%så‡è‡³#57|ã€%dé˜¶ã€‘#218|", tostring(_god_cfg(god).name or "ç¥é“"), info.rank))
+        Player.sendmsgEx(play, string.format("%sÉıÖÁ#57|¡¾%d½×¡¿#218|", tostring(_god_cfg(god).name or "ÉñµÀ"), info.rank))
         _send(play, npcid, 2, god)
     elseif p2 == 3 then
-        if info.path <= 0 then Player.sendmsgEx(play, "è¯·å…ˆé€‰æ‹©è¯¥ç¥é“è·¯çº¿#57") return end
-        if info.rank < _toint(_config.max_rank or 9) then Player.sendmsgEx(play, "ç¥é“è¾¾åˆ°ä¹é˜¶åæ‰å¯è‡ªè¯#57") return end
-        if info.cert >= 1 then Player.sendmsgEx(play, "è¯¥ç¥é“å·²ç»å®Œæˆè‡ªè¯#57") return end
+        if info.path <= 0 then Player.sendmsgEx(play, "ÇëÏÈÑ¡Ôñ¸ÃÉñµÀÂ·Ïß#57") return end
+        if info.rank < _toint(_config.max_rank or 9) then Player.sendmsgEx(play, "ÉñµÀ´ïµ½¾Å½×ºó²Å¿É×ÔÖ¤#57") return end
+        if info.cert >= 1 then Player.sendmsgEx(play, "¸ÃÉñµÀÒÑ¾­Íê³É×ÔÖ¤#57") return end
         local needPower = _toint(_config.certify_cost_power or 1000)
-        if info.power < needPower then Player.sendmsgEx(play, string.format("ç¥åŠ›å€¼ä¸è¶³ï¼Œéœ€è¦ %d", needPower)) return end
-        local cost = {{"å…ƒå®", _toint(_config.certify_cost_yb or 4500000)}}
+        if info.power < needPower then Player.sendmsgEx(play, string.format("ÉñÁ¦Öµ²»×ã£¬ĞèÒª %d", needPower)) return end
+        local cost = {{"Ôª±¦", _toint(_config.certify_cost_yb or 4500000)}}
         if not _check_cost(play, cost) then return end
-        Player.takeItemByTable(play, cost, "ç¥é“è‡ªè¯")
+        Player.takeItemByTable(play, cost, "ÉñµÀ×ÔÖ¤")
         _set_power(info, info.power - needPower)
         info.cert = 1
         _save_data(play, data)
         local title = tostring(_god_cfg(god).certify_title or "")
         if title ~= "" then Player.title_give(play, title) end
         _sync_legacy_finish(play, god)
-        Player.sendmsgEx(play, string.format("å®Œæˆ#57|ã€%sã€‘#218|è‡ªè¯", tostring(_god_cfg(god).name or "ç¥é“")))
+        Player.sendmsgEx(play, string.format("Íê³É#57|¡¾%s¡¿#218|×ÔÖ¤", tostring(_god_cfg(god).name or "ÉñµÀ")))
         _send(play, npcid, 3, god)
     else
         _send(play, npcid, 9, 0)
@@ -157,7 +157,7 @@ function npc.add_power(play, god, num, reason)
     local info = _god_data(data, god)
     _set_power(info, info.power + num)
     _save_data(play, data)
-    if reason and reason ~= "" then Player.sendmsgEx(play, string.format("%sï¼Œ#57|ã€%sã€‘#218|+%d", reason, tostring(_god_cfg(god).power_name or "ç¥åŠ›å€¼"), num)) end
+    if reason and reason ~= "" then Player.sendmsgEx(play, string.format("%s£¬#57|¡¾%s¡¿#218|+%d", reason, tostring(_god_cfg(god).power_name or "ÉñÁ¦Öµ"), num)) end
     return info.power
 end
 
@@ -169,7 +169,7 @@ function npc.onKillMon(play, mob)
         if tostring(pcfg.event or "") == "monster" then
             info.kills.monster = _toint(info.kills.monster) + 1
             _set_power(info, info.power + _toint(_god_cfg(god).power_kill_mon or 1))
-            Player.sendmsgEx(play, string.format("å‡»æ€å…­å¤§é™†æ€ªç‰©ï¼Œ#57|ã€%sã€‘#218|+%d", tostring(_god_cfg(god).power_name or "ç¥åŠ›å€¼"), _toint(_god_cfg(god).power_kill_mon or 1)))
+            Player.sendmsgEx(play, string.format("»÷É±Áù´óÂ½¹ÖÎï£¬#57|¡¾%s¡¿#218|+%d", tostring(_god_cfg(god).power_name or "ÉñÁ¦Öµ"), _toint(_god_cfg(god).power_kill_mon or 1)))
         end
     end
     _save_data(play, data)
@@ -184,12 +184,12 @@ local function _on_kill_play(play, target)
         if tostring(pcfg.event or "") == "player" then
             info.kills.player = _toint(info.kills.player) + 1
             _set_power(info, info.power + _toint(_god_cfg(god).power_kill_player or 20))
-            Player.sendmsgEx(play, string.format("å‡»æ€ç©å®¶ï¼Œ#57|ã€%sã€‘#218|+%d", tostring(_god_cfg(god).power_name or "ç¥åŠ›å€¼"), _toint(_god_cfg(god).power_kill_player or 20)))
+            Player.sendmsgEx(play, string.format("»÷É±Íæ¼Ò£¬#57|¡¾%s¡¿#218|+%d", tostring(_god_cfg(god).power_name or "ÉñÁ¦Öµ"), _toint(_god_cfg(god).power_kill_player or 20)))
         end
     end
     _save_data(play, data)
     _rebuild_attr(play, data)
 end
 
-GameEvent.add(EventCfg.onkillplay, _on_kill_play, "ç™»ç¥ä¹‹è·¯")
+GameEvent.add(EventCfg.onkillplay, _on_kill_play, "µÇÉñÖ®Â·")
 return npc

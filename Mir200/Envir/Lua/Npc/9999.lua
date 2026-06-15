@@ -62,12 +62,6 @@ local function _ff9999_copy_rewards(list)
 end
 
 local function _ff9999_activate_linggen(play, idx)
-    local data = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
-    data = type(data) == "table" and data or {}
-    data.level = type(data.level) == "table" and data.level or {}
-    data.unlock_chance = (tonumber(data.unlock_chance or 0) or 0) + 1
-    Player.setJsonVarByTable(play, VarCfg["T_灵根"], data)
-    Player.sendmsgEx(play, "获得基础灵根解锁|【1】#218|次，请前往灵根界面选择金木水火土之一")
     return true
 end
 local function _ff9999_apply_special_reward(play, name)

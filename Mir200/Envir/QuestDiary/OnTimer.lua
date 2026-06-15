@@ -66,72 +66,158 @@ local function _tcppk_get_round()
     return tonumber(Player.GetGlobalTempInt(_TCPPK_ROUND_VAR) or 0) or 0
 end
 
-local function _tcppk_get_reward_cache()
-    if _TCPPK_REWARD_CACHE then
-        return _TCPPK_REWARD_CACHE.normal, _TCPPK_REWARD_CACHE.equip, _TCPPK_REWARD_CACHE.equipSet, _TCPPK_REWARD_CACHE.categoryWeight, _TCPPK_REWARD_CACHE.maxEquip
-    end
-    local cfg = type(paokujl) == "table" and paokujl or {}
-    local normal = type(cfg.normal) == "table" and cfg.normal or {}
-    local equip = type(cfg.equip) == "table" and cfg.equip or {}
-    local equipSet = {}
-    for _, rewardName in ipairs(equip) do
-        equipSet[rewardName] = true
-    end
-    local categoryWeight = type(cfg.category_weight) == "table" and cfg.category_weight or {}
-    local maxEquip = tonumber(cfg.max_equip_per_round or 2) or 2
-    _TCPPK_REWARD_CACHE = {normal = normal, equip = equip, equipSet = equipSet, categoryWeight = categoryWeight, maxEquip = maxEquip}
-    return normal, equip, equipSet, categoryWeight, maxEquip
+local function _tcppk_get_cfg()
+    return type(paokujl) == "table" and paokujl or {}
 end
 
-local function _tcppk_get_activity_equip_count()
-    local round = _tcppk_get_round()
-    local savedRound = tonumber(Player.GetGlobalTempInt(_TCPPK_EQUIP_ROUND_VAR) or 0) or 0
-    if savedRound ~= round then
-        return 0
-    end
-    return tonumber(Player.GetGlobalTempInt(_TCPPK_EQUIP_COUNT_VAR) or 0) or 0
+local function _tcppk_limit_record_key()
+    return "T$TCPPK_LIMIT_" .. tostring(_tcppk_get_round())
 end
 
-local function _tcppk_set_activity_equip_count(count)
-    count = math.max(0, tonumber(count) or 0)
-    Player.SetGlobalTempInt(_TCPPK_EQUIP_ROUND_VAR, _tcppk_get_round())
-    Player.SetGlobalTempInt(_TCPPK_EQUIP_COUNT_VAR, count)
+local function _tcppk_get_player_limit_record(play)
+    local key = _tcppk_limit_record_key()
+    local data = Player.getJsonTableByVar(play, key)
+    if type(data) ~= "table" then
+        data = {}
+    end
+    return key, data
+end
+
+local function _tcppk_weight_pick(list, weightField, filter)
+    if type(list) ~= "table" then
+        return nil
+    end
+    local candidates = {}
+    local total = 0
+    for _, one in ipairs(list) do
+        if type(one) == "table" and (not filter or filter(one)) then
+            local weight = tonumber(one[weightField or "weight"] or 0) or 0
+            if weight > 0 then
+                total = total + weight
+                candidates[#candidates + 1] = {cfg = one, weight = weight}
+            end
+        end
+    end
+    if total <= 0 then
+        return nil
+    end
+    local roll = math.random(total)
+    local acc = 0
+    for _, one in ipairs(candidates) do
+        acc = acc + one.weight
+        if roll <= acc then
+            return one.cfg
+        end
+    end
+    return candidates[#candidates].cfg
+end
+
+local function _tcppk_reward_limit_available(rewardCfg, record)
+    local limit = tonumber(rewardCfg and rewardCfg.per_player_limit or 0) or 0
+    if limit <= 0 then
+        return true
+    end
+    local key = tostring(rewardCfg.limit_key or rewardCfg.pool or "")
+    if key == "" and type(rewardCfg.give) == "table" and rewardCfg.give[1] then
+        key = tostring(rewardCfg.give[1][1] or "")
+    end
+    if key == "" then
+        return true
+    end
+    return (tonumber(record[key] or 0) or 0) < limit
+end
+
+local function _tcppk_add_reward_limit(rewardCfg, record)
+    local limit = tonumber(rewardCfg and rewardCfg.per_player_limit or 0) or 0
+    if limit <= 0 then
+        return false
+    end
+    local key = tostring(rewardCfg.limit_key or rewardCfg.pool or "")
+    if key == "" and type(rewardCfg.give) == "table" and rewardCfg.give[1] then
+        key = tostring(rewardCfg.give[1][1] or "")
+    end
+    if key == "" then
+        return false
+    end
+    record[key] = (tonumber(record[key] or 0) or 0) + 1
+    return true
+end
+
+local function _tcppk_build_give(cfg, rewardCfg)
+    if type(rewardCfg) ~= "table" then
+        return nil
+    end
+    if type(rewardCfg.give) == "table" and #rewardCfg.give > 0 then
+        return rewardCfg.give
+    end
+    local poolName = tostring(rewardCfg.pool or "")
+    local pool = cfg.pools and cfg.pools[poolName]
+    if type(pool) == "table" and #pool > 0 then
+        return {{pool[math.random(#pool)], 1}}
+    end
+    return nil
 end
 
 local function _tcppk_pick_reward(play)
-    local normal, equip, equipSet, categoryWeight, maxEquip = _tcppk_get_reward_cache()
-    local equipCount = _tcppk_get_activity_equip_count()
-    local normalWeight = tonumber(categoryWeight.normal or 50) or 50
-    local equipWeight = tonumber(categoryWeight.equip or 50) or 50
-    if #normal <= 0 then
-        normalWeight = 0
+    local cfg = _tcppk_get_cfg()
+    local groups = type(cfg.groups) == "table" and cfg.groups or {}
+    local recordKey, record = _tcppk_get_player_limit_record(play)
+    for _ = 1, 20 do
+        local group = _tcppk_weight_pick(groups, "weight", function(one)
+            return type(one.rewards) == "table" and #one.rewards > 0
+        end)
+        if not group then
+            return nil
+        end
+        local rewardCfg = _tcppk_weight_pick(group.rewards, "weight", function(one)
+            return _tcppk_reward_limit_available(one, record) and _tcppk_build_give(cfg, one) ~= nil
+        end)
+        if rewardCfg then
+            local give = _tcppk_build_give(cfg, rewardCfg)
+            if give and #give > 0 then
+                local changed = _tcppk_add_reward_limit(rewardCfg, record)
+                if changed then
+                    Player.setJsonVarByTable(play, recordKey, record)
+                end
+                return give
+            end
+        end
     end
-    if #equip <= 0 or equipCount >= maxEquip then
-        equipWeight = 0
-    end
-    if normalWeight <= 0 and equipWeight <= 0 then
-        return nil
-    end
-
-    -- Pick category first, then item; long equip list should not dominate reward rate.
-    local useEquip = false
-    if equipWeight > 0 and normalWeight > 0 then
-        useEquip = math.random(normalWeight + equipWeight) > normalWeight
-    elseif equipWeight > 0 then
-        useEquip = true
-    end
-
-    local pool = useEquip and equip or normal
-    if #pool <= 0 then
-        return nil
-    end
-    local rewardName = pool[math.random(#pool)]
-    if equipSet[rewardName] then
-        _tcppk_set_activity_equip_count(equipCount + 1)
-    end
-    return rewardName
+    return nil
 end
 
+local function _tcppk_format_reward_name(give)
+    if type(give) ~= "table" or #give <= 0 then
+        return ""
+    end
+    local parts = {}
+    for _, one in ipairs(give) do
+        if type(one) == "table" then
+            local name = tostring(one[1] or "")
+            local count = tonumber(one[2] or 1) or 1
+            if name ~= "" then
+                parts[#parts + 1] = count > 1 and (name .. "*" .. tostring(count)) or name
+            end
+        end
+    end
+    return table.concat(parts, "、")
+end
+
+local function _tcppk_give_reward(play, give)
+    if type(give) ~= "table" then
+        return
+    end
+    local bindFlag = getflagstatus(play, VarCfg.BS_mztq) == 0 and 0 or 850
+    for _, one in ipairs(give) do
+        if type(one) == "table" then
+            local name = tostring(one[1] or "")
+            local count = tonumber(one[2] or 1) or 1
+            if name ~= "" and count > 0 then
+                giveitem(play, name, count, bindFlag)
+            end
+        end
+    end
+end
 local function _txzr_pick_unique_shenqi(txzz_data, playerName)
     local shenqi_cfg = _txzr_get_shenqi_cfg()
     if #shenqi_cfg <= 0 then
@@ -360,11 +446,13 @@ local function _qmdt_make_panel_payload(state, cfg, qidx)
     if not q then
         return nil
     end
+    local remain = math.max(0, (tonumber(state.question_end_ts) or 0) - os.time())
     return {
         mode = "qmdt",
         idx = qidx,
         total = cfg.question_count,
         question = q.title,
+        limit_sec = remain,
         end_ts = tonumber(state.question_end_ts) or 0,
         settle_ts = tonumber(state.settle_ts) or 0,
         map = cfg.map,
@@ -443,8 +531,7 @@ local function _qmdt_spawn_answers(cfg, q)
     end
 end
 local function _qmdt_broadcast_question(cfg, q, qidx, duration)
-    local msg = _qmdt_build_notice(q, qidx, cfg.question_count, duration, cfg.settle_before_sec)
-    sendtopchatboardmsg("0", 1, 254, 0, 300, msg, 8)
+    -- 全民答题题目只显示在活动面板，不再发滚屏公告。
 end
 local function _qmdt_push_question(state, cfg, qidx, dqfz)
     local q = cfg.questions[qidx]
@@ -556,8 +643,6 @@ local function _qmdt_settle_question(state, cfg, qidx)
     state.phase = "settled"
     _qmdt_clear_answers(cfg)
     local answerText = tostring((q.options or {})[tonumber(q.answer) or 0] or q.answer or "")
-    sendmovemsg("0", 1, 254, 0, 300, 3, "全民答题：第" .. tostring(qidx) .. "题结算，正确答案【" .. answerText .. "】，答对" .. tostring(rightCount) .. "人，参与" .. tostring(answerCount) .. "人。")
-    sendtopchatboardmsg("0", 1, 254, 0, 300, "全民答题：第" .. tostring(qidx) .. "题结算，正确答案【" .. answerText .. "】，答对" .. tostring(rightCount) .. "人，参与" .. tostring(answerCount) .. "人。", 5)
     _qmdt_save_state(state)
     return state
 end
@@ -576,8 +661,6 @@ local function _qmdt_start(dqfz, cfg)
     setsysvar(VarCfg["G_全民答题状态"], 1)
     _qmdt_save_state(state)
     setenvirontimer(cfg.map, 4, 1, "@hd_tcppk," .. cfg.map)
-    sendmovemsg("0", 1, 254, 0, 300, 5, "活动：活动《全民答题》已开启，请前往【" .. tostring(cfg.map) .. "】站到正确答案怪物旁参与答题...")
-    sendmovemsg("0", 1, 254, 0, 270, 5, "活动：活动《全民答题》已开启，请前往【" .. tostring(cfg.map) .. "】站到正确答案怪物旁参与答题...")
     for _, player in ipairs(getplayerlst() or {}) do
         sendluamsg(player, 101, 12, 1, 3, '{"sk":' .. tostring(tonumber(cfg.duration_min) or 4) .. ',"kf":2,"idx":3}')
     end
@@ -638,8 +721,6 @@ local function _qmdt_finish(cfg)
         end
     end
     local topName = rankData[1] and rankData[1].name or "无人上榜"
-    sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《全民答题》已结束,本次第一名为【" .. topName .. "】...")
-    sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《全民答题》已结束,本次第一名为【" .. topName .. "】...")
     state.open = 0
     state.finished = 1
     state.rank = rankData
@@ -680,6 +761,7 @@ local function _qmdt_tick_runtime(cfg, state)
         _qmdt_push_question(state, cfg, currentIdx + 1, tonumber(getsysvar(VarCfg["G_开区分钟"]) or 0) or 0)
         return _qmdt_get_state()
     end
+    _qmdt_send_panel_to_map(state, cfg)
     return state
 end
 local function _qmdt_tick(dqfz, cfg)
@@ -3318,16 +3400,19 @@ function hd_tcppk(xx,ditu)
     if ditu == "xtc" then
         local wanjia = getobjectinmap("xtc",137,138,20,1)
         for k, v in pairs(wanjia) do
-            if math.random(2) == 1 then
+            local tcppkCfg = _tcppk_get_cfg()
+            local triggerRate = tonumber(tcppkCfg.trigger_rate or 50) or 50
+            if math.random(100) <= triggerRate then
                 local x, y = getbaseinfo(v, 4), getbaseinfo(v, 5)
                 if getplaydef(v, "N$上次坐标x") ~= x and getplaydef(v, "N$上次坐标y") ~= y then
                     setplaydef(v, "N$上次坐标x", x)
                     setplaydef(v, "N$上次坐标y", y)
-                    local wpmz = _tcppk_pick_reward(v)
-                    if wpmz and wpmz ~= "" then
-                        sendmsg(v,1,'{"Msg":"<font color=\'#ff7700\'>[土城跑酷]</font><font color=\'#00ff00\'>恭喜你获得了['..wpmz..']...</font>","Type":9}')
-                        sendmsg(v, 2, '{"BColor":249,"FColor":255,"Msg":"[土城跑酷]<font color=\'#00ff00\'>恭喜'..getbaseinfo(v, 1)..'获得了['..wpmz..']...</font>","Type":1}')
-                        giveitem(v, wpmz,1,getflagstatus(v,VarCfg.BS_mztq) == 0 and 0 or 850)
+                    local rewardGive = _tcppk_pick_reward(v)
+                    local rewardName = _tcppk_format_reward_name(rewardGive)
+                    if rewardName ~= "" then
+                        sendmsg(v,1,'{"Msg":"<font color=\'#ff7700\'>[土城跑酷]</font><font color=\'#00ff00\'>恭喜你获得了['..rewardName..']...</font>","Type":9}')
+                        sendmsg(v, 2, '{"BColor":249,"FColor":255,"Msg":"[土城跑酷]<font color=\'#00ff00\'>恭喜'..getbaseinfo(v, 1)..'获得了['..rewardName..']...</font>","Type":1}')
+                        _tcppk_give_reward(v, rewardGive)
                     end
                 end
             end
