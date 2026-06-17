@@ -2738,16 +2738,26 @@ function clicknpc(play, npcid)
     --打印
     release_print("clicknpc", "玩家："..getbaseinfo(play,1), "npcid："..npcid)
 	if qf_teshunpc[npcid] then
-		Npclib[qf_teshunpc[npcid]].main(play, npcid)
+        local mod = Npclib[qf_teshunpc[npcid]]
+        if mod and mod.main then
+            mod.main(play, npcid)
+        else
+            release_print("clicknpc", "NPC模块不存在", "npcid："..npcid, "映射："..qf_teshunpc[npcid])
+        end
 		return true
     elseif npcid > 200 and npcid < 500 then--地图NPC
-        Npclib[200].main(play, npcid)
+        if Npclib[200] and Npclib[200].main then Npclib[200].main(play, npcid) else release_print("clicknpc", "NPC模块不存在", "npcid：200") end
         return true
     elseif npcid > 500 and npcid < 520 then--大陆地图NPC
-        Npclib[500].main(play, npcid)
+        if Npclib[500] and Npclib[500].main then Npclib[500].main(play, npcid) else release_print("clicknpc", "NPC模块不存在", "npcid：500") end
         return true
 	elseif npcid < 2000 then
-		Npclib[npcid].main(play, npcid)
+        local mod = Npclib[npcid]
+        if mod and mod.main then
+            mod.main(play, npcid)
+        else
+            release_print("clicknpc", "NPC模块不存在", "npcid："..npcid)
+        end
 		return true
 	end
 	return false
@@ -2760,36 +2770,63 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
     end
 	if msgID == 100 then 
         if qf_teshunpc[p1] then --可以无视距离点击npc
-            Npclib[qf_teshunpc[p1]].link(play, p1, p2, p3, msgData)
+            local mod = Npclib[qf_teshunpc[p1]]
+            if mod and mod.link then
+                mod.link(play, p1, p2, p3, msgData)
+            else
+                release_print("handlerequest", "NPC模块不存在", "npcid："..p1, "映射："..qf_teshunpc[p1])
+            end
         else
             local dx = getnpcbyindex(p1)
             if dx then
                 if FCheckNPCRange(play, p1, 15) then
                     if qf_teshunpc[p1] then
-                        Npclib[qf_teshunpc[p1]].link(play, p1, p2, p3, msgData)
+                        local mod = Npclib[qf_teshunpc[p1]]
+                        if mod and mod.link then
+                            mod.link(play, p1, p2, p3, msgData)
+                        else
+                            release_print("handlerequest", "NPC模块不存在", "npcid："..p1, "映射："..qf_teshunpc[p1])
+                        end
                     elseif p1 > 200 and p1 < 500 then --地图NPC
-                        Npclib[200].link(play, p1, p2,p3)
+                        if Npclib[200] and Npclib[200].link then Npclib[200].link(play, p1, p2,p3) else release_print("handlerequest", "NPC模块不存在", "npcid：200") end
                     elseif p1 > 500 and p1 < 520 then--大陆地图NPC
-                        Npclib[500].link(play, p1, p2)
+                        if Npclib[500] and Npclib[500].link then Npclib[500].link(play, p1, p2) else release_print("handlerequest", "NPC模块不存在", "npcid：500") end
                     elseif p1 < 2000 then
-                        Npclib[p1].link(play, p1, p2, p3, msgData)
+                        local mod = Npclib[p1]
+                        if mod and mod.link then
+                            mod.link(play, p1, p2, p3, msgData)
+                        else
+                            release_print("handlerequest", "NPC模块不存在", "npcid："..p1)
+                        end
                     end
                 end
             end
         end
 	elseif msgID == 101 then
-		Npclib['anniu'][p1](play, p2, p3, msgData)
+		if Npclib['anniu'] and Npclib['anniu'][p1] then Npclib['anniu'][p1](play, p2, p3, msgData) else release_print("handlerequest", "按钮模块不存在", "按钮："..p1) end
     elseif msgID == 105 then
-        if p1 == 64 and p2 == 64 then
-            Npclib[64].main(play, 1064)
+        if p1 == 64 and (p2 == 64 or p2 == 1064) then
+            if Npclib[64] and Npclib[64].main then Npclib[64].main(play, 1064) else release_print("handlerequest", "NPC模块不存在", "npcid：64") end
             return
         end
-        if p1 > 200 and p1 < 400 then--地图NPC
-            Npclib[200].main(play, p1, p2)
+        if qf_teshunpc[p1] then
+            local mod = Npclib[qf_teshunpc[p1]]
+            if mod and mod.main then
+                mod.main(play, p1)
+            else
+                release_print("handlerequest", "NPC模块不存在", "npcid："..p1, "映射："..qf_teshunpc[p1])
+            end
+        elseif p1 > 200 and p1 < 500 then--地图NPC
+            if Npclib[200] and Npclib[200].main then Npclib[200].main(play, p1, p2) else release_print("handlerequest", "NPC模块不存在", "npcid：200") end
         elseif p1 > 500 and p1 < 520 then--大陆地图NPC
-            Npclib[500].main(play, p1, p2)
+            if Npclib[500] and Npclib[500].main then Npclib[500].main(play, p1, p2) else release_print("handlerequest", "NPC模块不存在", "npcid：500") end
         else
-            Npclib[p1].main(play, p2)
+            local mod = Npclib[p1]
+            if mod and mod.main then
+                mod.main(play, p2)
+            else
+                release_print("handlerequest", "NPC模块不存在", "npcid："..p1)
+            end
         end
 	end
 end

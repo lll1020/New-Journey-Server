@@ -184,6 +184,10 @@ end
 function npc.main(play,npcid)
     local contractOnly = tonumber(npcid) == 1064
     local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
+    if contractOnly then
+        _settle_due_hatch(play, 0, true)
+        T_data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
+    end
     if (not contractOnly) and (not Player.dl_sz(play, 4)) then
         Player.sendmsgEx(play, "灵兽系统需要达到四大陆后开启！#57")
         return
