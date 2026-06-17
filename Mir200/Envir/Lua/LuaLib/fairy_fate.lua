@@ -28,6 +28,7 @@ local _fake_attr_cfg = {
 local function _toint(v) return tonumber(v or 0) or 0 end
 local function _count_pairs(t) local n = 0 for _ in pairs(t or {}) do n = n + 1 end return n end
 local function _count_true(t) local n = 0 for _, v in pairs(t or {}) do if v and v ~= 0 and v ~= "0" and v ~= false then n = n + 1 end end return n end
+local function _count_linggen_lv1(t) local n = 0 for _, v in pairs(t or {}) do if _toint(v) >= 1 then n = n + 1 end end return n end
 -- 判断玩家是否拥有“全服孤品”对应资格。
 -- 这里读取的是全服共享变量 A_全服孤品，而不是玩家个人局部变量。
 -- 目的有两个：
@@ -406,7 +407,7 @@ local function _build_snapshot(play, state)
     return {
         level = _toint(getbaseinfo(play, ConstCfg.gbase.level)), rebirth_stage = math.floor(_toint(getplaydef(play, VarCfg["U_转生等级"])) / 10),
         power = math.max(_toint(querymoney(play, 29)), _toint(getplaydef(play, VarCfg["B_记录战斗力"]))), tianshu_level = _toint((Player.getJsonTableByVar(play, VarCfg["T_天书"]) or {}).level),
-        fashion_count = _count_true((Player.getJsonTableByVar(play, VarCfg.T_szjl) or {}).yjs or {}), linggen_count = _count_pairs(linggen.level), linggen_levels = linggen.level,
+        fashion_count = _count_true((Player.getJsonTableByVar(play, VarCfg.T_szjl) or {}).yjs or {}), linggen_count = _count_linggen_lv1(linggen.level), linggen_levels = linggen.level,
         realm_level = _toint(getplaydef(play, VarCfg["U_境界修炼"][1])), guild_joined = math.max(_toint(state.counter.guild_joined), _has_guild(play)),
         title_count = _count_pairs(gettitlelist(play)), artifact_count = _count_artifacts(play), woodcut_count = _toint((Player.getJsonTableByVar(play, VarCfg["T_砍树系统"]) or {}).num),
         kill_dl = killDl, kill_secret = state.counter.kill_secret, kill_cross_mon = _toint(state.counter.kill_cross_mon), chat_streak = _toint(state.counter.chat_streak),
@@ -435,7 +436,7 @@ local function _reached(play, state, snap, detail)
     if kind == "tianshu_level" then return snap.tianshu_level >= r.target end
     if kind == "fashion_count" then return snap.fashion_count >= r.target end
     if kind == "linggen_count" then return snap.linggen_count >= r.target end
-    if kind == "linggen_group" then for _, idx in ipairs(r.list or {}) do if snap.linggen_levels[tostring(idx)] == nil then return false end end return true end
+    if kind == "linggen_group" then for _, idx in ipairs(r.list or {}) do if _toint(snap.linggen_levels[tostring(idx)]) < 1 then return false end end return true end
     if kind == "linggen_level" then return _toint(snap.linggen_levels[tostring(r.idx)]) >= r.target end
     if kind == "realm_up" then return _toint(state.counter.realm_up) >= r.target or snap.realm_level > 0 end
     if kind == "realm_level" then return snap.realm_level >= r.target end

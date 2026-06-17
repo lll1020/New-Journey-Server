@@ -165,11 +165,11 @@ local function _progress_need()
 end
 
 local function _get_progress(play)
-    return math.min(_toint(getplaydef(play, VarCfg["U_聚宝盆积分"])), _progress_need())
+    return math.min(_toint(getplaydef(play, VarCfg["J_聚宝盆积分"])), _progress_need())
 end
 
 local function _set_progress(play, value)
-    setplaydef(play, VarCfg["U_聚宝盆积分"], math.max(0, math.min(_progress_need(), _toint(value))))
+    setplaydef(play, VarCfg["J_聚宝盆积分"], math.max(0, math.min(_progress_need(), _toint(value))))
 end
 
 local function _is_claimed(play)
@@ -405,14 +405,21 @@ local function _refresh_all(play)
     _try_auto_reward(play, 106)
 end
 
+function TreasureBasin.resetDaily(play)
+    if not play then
+        return
+    end
+    _set_progress(play, 0)
+    _set_claimed(play, false)
+    _refresh_all(play)
+end
+
 local function _on_login(play)
     _refresh_all(play)
 end
 
 local function _on_daily(play)
-    _set_progress(play, 0)
-    _set_claimed(play, false)
-    _refresh_all(play)
+    TreasureBasin.resetDaily(play)
 end
 
 -- 聚宝盆进度改为每击杀 1 只怪累计 1 点，满后直接自动发奖。

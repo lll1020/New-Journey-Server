@@ -41,11 +41,30 @@ local function _ensure_data(T_data)
     if T_data.other then T_data.other = nil end
     T_data.unlock_chance = nil
     T_data.init_unlock_given = nil
+    return T_data
+end
+
+local function _activate_basic_roots(T_data)
+    T_data = _ensure_data(T_data)
     for i = 1, 5 do
         local key = tostring(i)
         if T_data.level[key] == nil then
             T_data.level[key] = 0
         end
+    end
+    return T_data
+end
+
+local function _clear_basic_roots_before_mainline(T_data)
+    T_data = _ensure_data(T_data)
+    for i = 1, 5 do
+        local key = tostring(i)
+        if _toint(T_data.level[key], 0) <= 0 then
+            T_data.level[key] = nil
+        end
+    end
+    if _toint(T_data.main, 0) >= 1 and _toint(T_data.main, 0) <= 5 and not _has_root(T_data, T_data.main) then
+        T_data.main = nil
     end
     return T_data
 end
@@ -185,7 +204,7 @@ end
 
 function npc.main(play, npcid)
     if not _check_linggen_mainline(play) then return end
-    local T_data = _ensure_data(Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
+    local T_data = _activate_basic_roots(Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
     Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
     sendluamsg(play, 100, npcid, 0, 0, tbl2json({T_data = T_data}))
     openhyperlink(play, 1, 2)
@@ -199,9 +218,9 @@ function npc.link(play, npcid, ew, aid)
     if not Guard.ensureActionAllowed(play, npcid, ew, Guard.newActionSet({1, 2, 3, 5, 6})) then return end
 
     aid = _toint(aid, 0)
-    local T_data = _ensure_data(Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
+    local T_data = _activate_basic_roots(Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
 
-    if ew == 1 then -- 选择基础灵根；新版基础灵根默认Lv0激活，不再消耗解锁次数
+    if ew == 1 then -- 主线到达后选择基础灵根；基础灵根此时初始化为Lv0
         if aid < 1 or aid > 5 then
             Player.sendmsgEx(play, "只能选择金木水火土基础灵根#57")
             return
@@ -226,8 +245,7 @@ function npc.link(play, npcid, ew, aid)
                 Player.sendmsgEx(play, "当前未设置本命灵根#57")
                 return
             end
-            -- no cost required for unequip; keep _take_change_cost for possible rollback.
-            -- if not _take_change_cost(play) then return end
+            if not _take_change_cost(play) then return end
             T_data.main = nil
             Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
             _sync_linggen_skill(play, T_data)
@@ -244,8 +262,7 @@ function npc.link(play, npcid, ew, aid)
             Player.sendmsgEx(play, "该灵根已经是本命灵根#57")
             return
         end
-        -- no cost required for switching main root; keep _take_change_cost for possible rollback.
-        -- if oldMain > 0 and not _take_change_cost(play) then return end
+        if oldMain > 0 and not _take_change_cost(play) then return end
         T_data.main = aid
         Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
         _sync_linggen_skill(play, T_data)
@@ -342,7 +359,10 @@ end
 
 function Login_lg(play)
     local T_data = _ensure_data(Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
-    Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
+    if not _mainline_reached_linggen(play) then
+        T_data = _clear_basic_roots_before_mainline(T_data)
+        Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
+    end
     _sync_linggen_skill(play, T_data)
     _refresh_linggen_special(play, T_data)
     local attrs = {}
@@ -390,7 +410,10 @@ function npc.lgcf(play, zt, Damage, Target, triggerType)
 end
 
 function LingGenGrantBasicUnlockChance(play, count)
-    local T_data = _ensure_data(Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
+    if not _mainline_reached_linggen(play) then
+        return false
+    end
+    local T_data = _activate_basic_roots(Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
     Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
     return true
 end

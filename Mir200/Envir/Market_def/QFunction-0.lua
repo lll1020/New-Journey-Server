@@ -118,9 +118,13 @@ function resetday(play)
             break
         end
     end
-    -- 聚宝盆每日进度：跨天清空击杀积分与自动发放标记。
-    setplaydef(play, VarCfg["U_聚宝盆积分"], 0)
-    setplaydef(play, VarCfg["J_聚宝盆领取次数"], 0)
+    -- 聚宝盆每日进度：跨天清空击杀积分与自动发放标记，并刷新背包神器进度条。
+    if TreasureBasin and TreasureBasin.resetDaily then
+        TreasureBasin.resetDaily(play)
+    else
+        setplaydef(play, VarCfg["J_聚宝盆积分"], 0)
+        setplaydef(play, VarCfg["J_聚宝盆领取次数"], 0)
+    end
     pcall(function()
         local xianfuNpc = dofile('Envir/Lua/Npc/44.lua')
         if xianfuNpc and xianfuNpc.refreshDollAttr then
@@ -578,6 +582,11 @@ local function _magtag_cd_ready(play, skillId, cd)
     local key = "N$magtag_cd_" .. tostring(skillId)
     local last = _magtag_tonum(getplaydef(play, key), 0)
     cd = _magtag_tonum(cd, 0)
+    local cdDec = _magtag_tonum(getplaydef(play, "N$linggen_skill_cd_dec"), 0)
+    if cdDec > 0 then
+        if cdDec > 80 then cdDec = 80 end
+        cd = math.max(1, math.floor(cd * (100 - cdDec) / 100 + 0.5))
+    end
     if cd > 0 and now - last < cd then
         local left = cd - (now - last)
         sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>Skill cooldown '..left..'s</font>","Type":9}')
@@ -689,11 +698,12 @@ local function _magtag_is_red_mon(Target)
     return _magtag_tonum(getmonbaseinfo(idx, 2), 0) == 249
 end
 
-local function _magtag_open_drop_window(play, skillId, lv, duration, count, freezeSec)
+local function _magtag_open_drop_window(play, skillId, lv, duration, count, freezeSec, chancePct)
     local marks = _magtag_consume_lucky_marks(play)
     local per = _magtag_lerp(lv, 1, 10)
     _magtag_set_until(play, "drop", duration, skillId)
     setplaydef(play, "N$magtag_drop_count", count or 1)
+    setplaydef(play, "N$magtag_drop_chance_pct", chancePct or 0)
     setplaydef(play, "N$magtag_drop_lucky_marks", marks)
     setplaydef(play, "N$magtag_drop_bonus_pct", marks * per)
     setplaydef(play, "N$magtag_drop_freeze_sec", freezeSec or 0)
@@ -813,6 +823,17 @@ local function _magtag_try_extra_drop(play, mob)
     local mapName = tostring(getbaseinfo(mob, 3) or "")
     local mapTitle = tostring(getbaseinfo(mob, 45) or "")
     local count = math.max(1, _magtag_tonum(getplaydef(play, "N$magtag_drop_count"), 1))
+    local chancePct = _magtag_tonum(getplaydef(play, "N$magtag_drop_chance_pct"), 0)
+    local bonusPct = _magtag_tonum(getplaydef(play, "N$magtag_drop_bonus_pct"), 0)
+    if chancePct > 0 or bonusPct > 0 then
+        chancePct = chancePct + bonusPct
+        local fixed = math.floor(chancePct / 100)
+        local remain = chancePct - fixed * 100
+        count = fixed
+        if remain > 0 and math.random(100) <= remain then
+            count = count + 1
+        end
+    end
     local dropped = 0
     for _ = 1, count do
         local itemName = _magtag_pick_drop_item_by_map(mapName)
@@ -851,15 +872,20 @@ local function _magtag_on_attack_target(play, Target, Damage, MagicId)
     end
     local thunderHits = _magtag_tonum(getplaydef(play, "N$magtag_thunder_hits"), 0)
     if thunderHits > 0 and _magtag_is_active(play, "thunder") then
-        if ConstCfg and ConstCfg.pmode and ConstCfg.pmode.palsy then
-            changemode(Target, ConstCfg.pmode.palsy, 1)
-        elseif ConstCfg and ConstCfg.pmode and ConstCfg.pmode.stick then
-            changemode(Target, ConstCfg.pmode.stick, 1)
+        local thunderLv = _magtag_tonum(getplaydef(play, "N$magtag_thunder_level"), 1)
+        if thunderLv >= 10 then
+            if ConstCfg and ConstCfg.pmode and ConstCfg.pmode.palsy then
+                changemode(Target, ConstCfg.pmode.palsy, 1)
+            elseif ConstCfg and ConstCfg.pmode and ConstCfg.pmode.stick then
+                changemode(Target, ConstCfg.pmode.stick, 1)
+            end
+            if getbaseinfo(Target, -1) then
+                setplaydef(Target, "N$magtag_break_def_until", now + 1)
+            end
+        elseif changespeedex then
+            changespeedex(Target, 2, -5, 1)
         end
         setplaydef(play, "N$magtag_thunder_hits", thunderHits - 1)
-        if getbaseinfo(Target, -1) then
-            setplaydef(Target, "N$magtag_break_def_until", now + 1)
-        end
         _magtag_play_effect(Target, 60452)
     end
     if _magtag_is_active(play, "drop") and _magtag_is_red_mon(Target) then
@@ -1987,7 +2013,7 @@ function magselffunc1009(play)  -- 寻宝天眼
     if not _magtag_cd_ready(play, skillId, 45) then return end
     _magtag_cast_feedback(play, "寻宝天眼")
     _magtag_play_effect(play, 60460)
-    _magtag_open_drop_window(play, skillId, lv, 5, 1, 0)
+    _magtag_open_drop_window(play, skillId, lv, 5, 1, 0, _magtag_lerp(lv, 20, 200))
 end
 function magselffunc1010(play)  -- 烈焰旋风
     local skillId = 1010
@@ -2021,6 +2047,7 @@ function magselffunc1012(play)  -- 雷霆灭世斩
     _magtag_range_damage(play, 2, pct, 5, 60452, 16, x, y)
     _magtag_set_until(play, "thunder", 5, 1)
     setplaydef(play, "N$magtag_thunder_hits", 5)
+    setplaydef(play, "N$magtag_thunder_level", lv)
 end
 function magselffunc1013(play)  -- 风影重生
     local skillId = 1013
