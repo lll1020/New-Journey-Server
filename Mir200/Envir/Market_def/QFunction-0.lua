@@ -2805,6 +2805,10 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
 	elseif msgID == 101 then
 		if Npclib['anniu'] and Npclib['anniu'][p1] then Npclib['anniu'][p1](play, p2, p3, msgData) else release_print("handlerequest", "按钮模块不存在", "按钮："..p1) end
     elseif msgID == 105 then
+        if p1 == 64 and p2 == 0 and p3 == 1064 then
+            if Npclib[64] and Npclib[64].syncContractState then Npclib[64].syncContractState(play) else release_print("handlerequest", "NPC同步接口不存在", "npcid：64") end
+            return
+        end
         if p1 == 64 and (p2 == 64 or p2 == 1064) then
             if Npclib[64] and Npclib[64].main then Npclib[64].main(play, 1064) else release_print("handlerequest", "NPC模块不存在", "npcid：64") end
             return

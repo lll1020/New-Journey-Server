@@ -181,6 +181,11 @@ function TMLP_refresh_pet_bonus(play)
         Player.add_attlist(play, "ÌìÃüµÀÅÌ_ÁéÊŞ¼Ó³É", "=", attrsstr, 1)
     end
 end
+function npc.syncContractState(play)
+    _settle_due_hatch(play, 0, true)
+    local T_data = Player.getJsonTableByVar(play, VarCfg["T_ÁéÊŞ"])
+    sendluamsg(play,100,64,0,0,tbl2json({T_data = T_data, server_time = os.time(), sync_only = 1}))
+end
 function npc.main(play,npcid)
     local contractOnly = tonumber(npcid) == 1064
     local T_data = Player.getJsonTableByVar(play, VarCfg["T_ÁéÊŞ"])
@@ -195,7 +200,13 @@ function npc.main(play,npcid)
     if contractOnly then
         local ok, msg = _is_lingshou_contract_open(play, T_data)
         if not ok then
-            Player.sendmsgEx(play, msg)
+            local syncData = {}
+            syncData["T_data"] = T_data
+            syncData["server_time"] = os.time()
+            sendluamsg(play,100,64,0,0,tbl2json(syncData))
+            if not ((tonumber(T_data and T_data.dqzh or 0) or 0) > 0) then
+                Player.sendmsgEx(play, msg)
+            end
             return
         end
     end
