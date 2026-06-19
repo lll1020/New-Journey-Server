@@ -2958,7 +2958,8 @@ function ontimerex1()
             end
             if dqfz == 5 then
                 _tcppk_begin_round()
-                _tcppk_set_activity_equip_count(0)
+                Player.SetGlobalTempInt(_TCPPK_EQUIP_COUNT_VAR, 0)
+                Player.SetGlobalTempInt(_TCPPK_EQUIP_ROUND_VAR, _tcppk_get_round())
                 setenvirontimer("xtc",1,3,"@hd_tcppk,xtc")
                 local t = getplayerlst()
                 for _, v in pairs(t) do

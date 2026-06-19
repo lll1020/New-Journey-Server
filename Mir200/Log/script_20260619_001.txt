@@ -1,0 +1,84 @@
+[2026-06-19 09:11:26:640] LuaNPC: ID:999999999 执行 startup player: 耗时：1797; NpcThreadId: 226664, CurPlayThreadId: 226664
+
+[2026-06-19 09:20:01:109] lua执行卡死,lab:login strack dump:stack traceback:
+	[C]: in function 'json2tbl'
+	...起航\服务端\Mir200\Envir/Extension/UtilServer/Player.lua:108: in function 'getJsonTableByVar'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/login.lua:88: in function 'main'
+	.\Envir\Market_Def\QFunction-0.lua:57: in function <.\Envir\Market_Def\QFunction-0.lua:34>
+
+[2026-06-19 09:20:04:276] lua执行卡死,lab:login strack dump:stack traceback:
+	[C]: in function 'json2tbl'
+	...起航\服务端\Mir200\Envir/Extension/UtilServer/Player.lua:108: in function 'getJsonTableByVar'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/login.lua:88: in function 'main'
+	.\Envir\Market_Def\QFunction-0.lua:57: in function <.\Envir\Market_Def\QFunction-0.lua:34>
+[2026-06-19 09:20:07:080] lua执行卡死,lab:login strack dump:stack traceback:
+	[C]: in function 'json2tbl'
+	...起航\服务端\Mir200\Envir/Extension/UtilServer/Player.lua:108: in function 'getJsonTableByVar'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/login.lua:88: in function 'main'
+	.\Envir\Market_Def\QFunction-0.lua:57: in function <.\Envir\Market_Def\QFunction-0.lua:34>
+
+[2026-06-19 09:20:10:076] lua执行卡死,lab:login strack dump:stack traceback:
+	[C]: in function 'json2tbl'
+	...起航\服务端\Mir200\Envir/Extension/UtilServer/Player.lua:108: in function 'getJsonTableByVar'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/login.lua:88: in function 'main'
+	.\Envir\Market_Def\QFunction-0.lua:57: in function <.\Envir\Market_Def\QFunction-0.lua:34>
+[2026-06-19 09:20:13:067] lua执行卡死,lab:login strack dump:stack traceback:
+	[C]: in function 'json2tbl'
+	...起航\服务端\Mir200\Envir/Extension/UtilServer/Player.lua:108: in function 'getJsonTableByVar'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/login.lua:88: in function 'main'
+	.\Envir\Market_Def\QFunction-0.lua:57: in function <.\Envir\Market_Def\QFunction-0.lua:34>
+
+[2026-06-19 09:20:16:066] lua执行卡死,lab:login strack dump:stack traceback:
+	[C]: in function 'json2tbl'
+	...起航\服务端\Mir200\Envir/Extension/UtilServer/Player.lua:108: in function 'getJsonTableByVar'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/login.lua:88: in function 'main'
+	.\Envir\Market_Def\QFunction-0.lua:57: in function <.\Envir\Market_Def\QFunction-0.lua:34>
+
+[2026-06-19 09:20:19:082] lua执行卡死,lab:login strack dump:stack traceback:
+	[C]: in function 'json2tbl'
+	...起航\服务端\Mir200\Envir/Extension/UtilServer/Player.lua:108: in function 'getJsonTableByVar'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/login.lua:88: in function 'main'
+	.\Envir\Market_Def\QFunction-0.lua:57: in function <.\Envir\Market_Def\QFunction-0.lua:34>
+[2026-06-19 09:20:22:068] lua执行卡死,lab:login strack dump:stack traceback:
+	[C]: in function 'json2tbl'
+	...起航\服务端\Mir200\Envir/Extension/UtilServer/Player.lua:108: in function 'getJsonTableByVar'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/login.lua:88: in function 'main'
+	.\Envir\Market_Def\QFunction-0.lua:57: in function <.\Envir\Market_Def\QFunction-0.lua:34>
+
+[2026-06-19 09:20:25:068] lua执行卡死,lab:login strack dump:stack traceback:
+	[C]: in function 'json2tbl'
+	...起航\服务端\Mir200\Envir/Extension/UtilServer/Player.lua:108: in function 'getJsonTableByVar'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/login.lua:88: in function 'main'
+	.\Envir\Market_Def\QFunction-0.lua:57: in function <.\Envir\Market_Def\QFunction-0.lua:34>
+[2026-06-19 09:20:28:076] lua执行卡死,lab:login strack dump:stack traceback:
+	[C]: in function 'json2tbl'
+	...起航\服务端\Mir200\Envir/Extension/UtilServer/Player.lua:108: in function 'getJsonTableByVar'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/login.lua:88: in function 'main'
+	.\Envir\Market_Def\QFunction-0.lua:57: in function <.\Envir\Market_Def\QFunction-0.lua:34>
+
+[2026-06-19 09:20:31:074] lua执行卡死,lab:login strack dump:stack traceback:
+	[C]: in function 'json2tbl'
+	...起航\服务端\Mir200\Envir/Extension/UtilServer/Player.lua:108: in function 'getJsonTableByVar'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/login.lua:88: in function 'main'
+	.\Envir\Market_Def\QFunction-0.lua:57: in function <.\Envir\Market_Def\QFunction-0.lua:34>
+
+[2026-06-19 09:20:34:063] lua执行卡死,lab:login strack dump:stack traceback:
+	[C]: in function 'json2tbl'
+	...起航\服务端\Mir200\Envir/Extension/UtilServer/Player.lua:108: in function 'getJsonTableByVar'
+	E:\新起航\服务端\Mir200\Envir/Lua/LuaLib/login.lua:88: in function 'main'
+	.\Envir\Market_Def\QFunction-0.lua:57: in function <.\Envir\Market_Def\QFunction-0.lua:34>
+[2026-06-19 09:20:37:141] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：41812; NpcThreadId: 226664, CurPlayThreadId: 226664
+
+[2026-06-19 09:27:26:686] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：31; NpcThreadId: 226664, CurPlayThreadId: 226664
+
+[2026-06-19 09:32:42:317] .\Envir\QuestDiary/cfg_gm_box.lua time：234
+
+[2026-06-19 09:37:50:391] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：515; NpcThreadId: 238916, CurPlayThreadId: 238916
+
+[2026-06-19 09:38:49:480] LuaNPC:玩家名字 ID:999999999 执行 deletetask player:玩家名字 耗时：31; NpcThreadId: 238916, CurPlayThreadId: 238916
+[2026-06-19 09:38:49:480] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：1422; NpcThreadId: 238916, CurPlayThreadId: 238916
+[2026-06-19 09:38:49:480] [玩家名字]Lua执行耗时过高:1422ms msgid:101 18 1 0 
+
+[2026-06-19 09:38:58:612] LuaNPC:玩家名字 ID:999999999 执行 takeonex player:玩家名字 耗时：94; NpcThreadId: 238916, CurPlayThreadId: 238916
+[2026-06-19 09:38:58:824] LuaNPC:玩家名字 ID:999999999 执行 takeonex player:玩家名字 耗时：219; NpcThreadId: 238916, CurPlayThreadId: 238916
+
