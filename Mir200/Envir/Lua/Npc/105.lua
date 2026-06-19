@@ -31,12 +31,13 @@ local function _has_first_charge(data)
 end
 
 local function _ensure_second_continent(play)
-    local mapName = tostring(getbaseinfo(play, 3) or "")
-    local dl = tonumber((daluditu and daluditu[mapName]) or 0) or 0
-    if dl == 2 then
+    if (tonumber(getplaydef(play, "U_全大陆解锁") or 0) or 0) >= 1 then
         return true
     end
-    Player.sendmsgEx(play, "限时福利为二大陆功能，请前往二大陆后领取#57")
+    if (tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0) >= 16 then
+        return true
+    end
+    Player.sendmsgEx(play, "限时福利为二大陆功能，解锁二大陆后领取#57")
     return false
 end
 

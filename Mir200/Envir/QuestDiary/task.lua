@@ -247,6 +247,9 @@ local function _zxrw_close_mainline_window(play, taskCfg)
     if type(taskCfg) ~= "table" then
         return
     end
+    if tostring(taskCfg.kind or "") == "divination" then
+        return
+    end
     local closeName = taskCfg.close
     if not closeName then
         local yd = taskCfg.yd

@@ -1254,7 +1254,11 @@ npc[501] = function(play, p2, p3, data) --首充礼包
         -- 限时福利为二大陆功能，首充礼包领取后不在一大陆弹出限时福利领取提示。
         return
     elseif p2 == 2 or p2 == 3 then
-        Player.sendmsgEx(play, "限时福利为二大陆功能，请前往二大陆后领取#57")
+        if Npclib and Npclib[105] and Npclib[105].main then
+            Npclib[105].main(play, 105)
+        else
+            Player.sendmsgEx(play, "限时福利为二大陆功能，解锁二大陆后领取#57")
+        end
     end
 end
 ---在线充值
