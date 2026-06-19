@@ -133,3 +133,5 @@
 
 [2026-06-19 23:15:01:146] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：1156; NpcThreadId: 15648, CurPlayThreadId: 15648
 
+[2026-06-19 23:16:31:540] LuaNPC:玩家名字k ID:999999999 执行 killmon player:玩家名字k 耗时：203; NpcThreadId: 15648, CurPlayThreadId: 15648
+
