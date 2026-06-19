@@ -39,9 +39,6 @@ local function _ensure_pet_data(T_data)
 end
 
 
-
-
-
 local function _is_lingshou_contract_open(play, T_data)
     T_data = _ensure_pet_data(T_data)
     if _toint(T_data.dqzh) > 0 then
@@ -214,7 +211,7 @@ function npc.main(play,npcid)
     data["T_data"] = T_data
     data["server_time"] = os.time()
     if contractOnly then data["open_contract"] = 1 end
-    sendluamsg(play,100,64,0,0,tbl2json(data))
+    sendluamsg(play,100,npcid == 69 and 69 or 64,0,0,tbl2json(data))
 end
 function npc.link(play,npcid,ew,aid,data)
     -- npc_guard: 入参校验

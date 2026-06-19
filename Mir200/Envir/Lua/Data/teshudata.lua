@@ -1015,8 +1015,8 @@ teshudata = {
         weight = "1#70|2#20|3#10",
         max = 3,
         details = {
-            {item = "贵族藏宝图",mob_name = "贵族宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "虚妄山脉",map_x = 131,map_y = 129},{map_name = "鬼嘲深渊",map_x = 87,map_y = 148},{map_name = "叹息旷野",map_x = 161,map_y = 67},{map_name = "禁忌之海",map_x = 79,map_y = 53}}},
             {item = "王室藏宝图",mob_name = "王室宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "藏星内海",map_x = 51,map_y = 178},{map_name = "黑暗洞窟",map_x = 214,map_y = 91},{map_name = "苍云城郊外",map_x = 135,map_y = 92}}},
+            {item = "贵族藏宝图",mob_name = "贵族宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "山脉入口",map_x = 131,map_y = 129},{map_name = "旷野之原",map_x = 87,map_y = 148},{map_name = "恐怖裂隙",map_x = 161,map_y = 67},{map_name = "海峰孤岛",map_x = 79,map_y = 53}}},
             {item = "普通藏宝图",mob_name = "普通宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "草药古深处",map_x = 37,map_y = 54},{map_name = "丹道古藏",map_x = 188,map_y = 432}}},
         },
     },
@@ -1730,7 +1730,7 @@ teshudata = {
     ["npc_608"] = {id = 608,name = "守护森林",level = 2,map = "神秘森林",desc = "击杀怪物30只",shaguai_id = 608,num = 30,rwjl = {{"绑定金币",200000},{"称号卷轴",5}},},
     ["npc_609"] = {id = 609,name = "古刹之谜",level = 2,map = "洞穴秘境",desc = "提交：杀意碎片*5、煞气*5",cost = {{"杀意碎片",5},{"煞气",5}},rwjl = {{"绑定金币",150000},{"古刹魔瓶",1}},},
     ["npc_610"] = {id = 610,name = "掘墓人",level = 2,map = "乱葬岗",desc = "提交：唐三彩*5",cost = {{"唐三彩",5}},rwjl = {{"绑定金币",150000}},ch = "摸金校尉"},
-    ["npc_620"] = {id = 620,name = "阴阳玉佩",cost = {{"极阴石",1},{"极阳石",1},{"天道魂魄",1},{"元宝",880000},},give = {{"阴阳玉佩",1}},},
+    ["npc_620"] = {id = 620,name = "阴阳玉佩",cost = {{"极阴石",1},{"极阳石",1},{"天道魂魄",1},{"元宝",280000},},give = {{"阴阳玉佩",1}},},
     ["npc_621"]  = {id = 621, name = "踏入·山脉入口",map = "灰界南部",shaguai_id = 621,num = 30,tp_map = {"虚妄山脉",92,50}},    
     ["npc_622"]  = {id = 622, name = "踏入·恐怖裂隙",map = "灰界北部",shaguai_id = 622,num = 30,tp_map = {"叹息旷野",34,41}},    
     ["npc_623"]  = {id = 623, name = "踏入·旷野之原",map = "灰界东部",shaguai_id = 623,num = 30,tp_map = {"鬼嘲深渊",273,33}},    
@@ -1822,7 +1822,7 @@ teshudata = {
             {idx = 6,wz = "去四大陆隐藏地图击杀500只鸡",c_num = 500,},
         },
     },
-    ["npc_673"]  = {id = 673, name = "传说修复局",xz = {674,675,676,677,678,679,680,681,},ch = "传说之神"},
+    ["npc_673"]  = {id = 673, name = "传说修复局",xz = {674,675,676,677,678,679,680,681,},difficulty = {2,3,3,4,5,5,5,5},ch = "传说之神"},
     ["npc_674"]  = {id = 674, name = "盘古开天",cost = {{"洪荒真气",3}},ch = '我是盘古？'},
     ["npc_675"]  = {id = 675, name = "羿射九日",bag_cost = {{"逐日弓",1}},cost = {{"箭矢",1}},ch = '太阳杀手',hb = {{"元宝",1000000}},attr = {{244,1888}},max_num = 9},
     ["npc_676"]  = {id = 676, name = "共公怒触不周山",map = "不周山",shaguai_id = 676,num = 500,jl_num = 100,ch = "五拳轰碎不周山",jl_c = {{"绑定金币",1}},},
@@ -1876,7 +1876,7 @@ teshudata = {
     ["npc_711"] = { id = 711, name = "天空之王", ch = "天空之王祝福", jl = {{"愿力碎片",1}}, task_cfg = { chapter = 5, task_type = "boss_submit", map = "天空禁墟三层", submit = {{"天空之羽",1}}, }, },
     ["npc_712"] = { id = 712, name = "海洋之王", ch = "海洋之王祝福", jl = {{"愿力碎片",1}}, task_cfg = { chapter = 5, task_type = "boss_submit", map = "海洋禁墟三层", submit = {{"海洋之泪",1}}, }, },
     ["npc_713"] = { id = 713, name = "青铜之王", ch = "青铜之王祝福", jl = {{"愿力碎片",1}}, task_cfg = { chapter = 5, task_type = "boss_submit", map = "青铜禁墟三层", submit = {{"青铜之怒",1}}, }, },
-    ["npc_714"] = { id = 714, name = "屠龙宝刀", shaguai_id = 714, ch = "屠龙刀", task_cfg = { chapter = 5, task_type = "trial_chain", map = "冰火岛", kill_count = 10, kill_boss = "BOSS", scale_item = "冰火龙鳞", scale_drop_rate = 1000, artifact_item = "屠龙刀", artifact_upgrade_item = "真·屠龙刀", upgrade_submit = { {"冰火龙鳞",100}, {"元宝",1000000}, }, }, },
+    ["npc_714"] = { id = 714, name = "屠龙宝刀", shaguai_id = 714, task_cfg = { chapter = 5, task_type = "trial_chain", map = "冰火岛", kill_count = 10, kill_boss = "BOSS", scale_item = "冰火龙鳞", scale_drop_rate = 1000, artifact_item = "屠龙刀", artifact_upgrade_item = "真·屠龙刀", upgrade_submit = { {"冰火龙鳞",100}, {"元宝",1000000}, }, }, },
     ["npc_715"] = { id = 715, name = "围攻光明顶", ch = "乾坤大挪移", task_cfg = { chapter = 5, task_type = "trial_chain", map = "光明顶", submit = { {"乾坤大挪移残页",66}, {"元宝",500000}, }, }, },
     ["npc_716"] = { id = 716, name = "孤身战吕布", ch = "吕布之力",jl = {{"时装：吕奉先",1}}, task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "虎牢关", fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "吕布", boss_pos = {32,36}, submit = { {"刘备祝福",3}, {"张飞祝福",3}, {"关羽祝福",3}, }, }, },
     ["npc_717"] = { id = 717, name = "火烧赤壁", ch = "火中取胜", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "赤壁", fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "≮火烧连营·天命策尊≯", boss_pos = {32,36}, night_only = 1, night_start = 18, night_end = 6, fire_effect_id = 19, fire_tick_hurt_pct = 2, fire_burst_hurt_pct = 20, submit = {{"赤壁密函",10}}, }, },
@@ -2735,10 +2735,11 @@ teshudata = {
         draw_ten_cost = 10, -- 十连消耗次数
         crown_cost = 588, -- 天下谁人不识君累计充值
         day_card = {need_charge = 28, title = "日卡", rewards = {{"元宝",100000},{"灵石",280}}, token_count = 10}, -- 日卡礼包：今日累计充值达到金额后可领取
-        duplicate_fashion_reward = {{"元宝",660000}}, -- 时装重复补偿
+        duplicate_fashion_reward = {{"绑定元宝",660000}}, -- 时装重复补偿
         title_reward = {
             name = "马上发财",
-            attr = {{280,188},{281,188},{282,188},{283,188},{284,188},{285,188},{286,188},{287,188},{288,188},{289,188},{290,188},{291,188},{300,188},{200,10000},{201,10000}} ,
+            -- attr = {{280,0},{281,188},{282,188},{283,188},{284,188},{285,188},{286,188},{287,188},{288,188},{289,188},{290,188},{291,188},{300,188}} ,
+            attr = {{280,0}} ,
         },
         fashion_bonus = {
             [3] = {attr = {{280,10},{281,10},{282,10},{283,10},{284,10},{285,10},{286,10},{287,10},{288,10},{289,10},{290,10},{291,10},{300,10},{200,3000},{201,3000}}},
@@ -2784,7 +2785,7 @@ teshudata = {
                 {kind = "item", give = {{"强化石",20}}, label = "强化石*20"},
             },
             high = {
-                {kind = "item", give = {{"辉耀水晶",40}}, label = "辉耀水晶*40"},
+                {kind = "item", give = {{"辉耀水晶",10}}, label = "辉耀水晶*10"},
                 {kind = "item", give = {{"天道命石",1}}, label = "天道命石*1"},
                 {kind = "item", give = {{"神·五行石",10}}, label = "神·五行石*10"},
                 {kind = "item", give = {{"神石宝箱钥匙",10}}, label = "神石宝箱钥匙*10"},

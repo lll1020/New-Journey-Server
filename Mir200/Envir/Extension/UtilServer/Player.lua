@@ -927,6 +927,9 @@ local function _dl_check(actor, dl)
     if dl == 1 then
         return true
     end
+    if (tonumber(getplaydef(actor, "U_全大陆解锁")) or 0) >= 1 then
+        return true
+    end
     local state = _dl_get_base_state(actor)
     local zslv = state.zslv
     local jqd = state.jqd
@@ -962,6 +965,11 @@ local function _dl_check(actor, dl)
             return true
         end
         return false, "需六大陆剧情完成度达到100%、完成六大陆转生且获得#57|【世界符文·[真我]】#218|后才可进入七大陆"
+    elseif dl == 8 then
+        if zslv >= 70 then
+            return true
+        end
+        return false, "需完成七大陆转生后才可进入八大陆"
     end
     return true
 end

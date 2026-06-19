@@ -25,6 +25,7 @@ local _collection_reward = {
     [4] = 10,
 }
 local _box_name_order = {"神石宝箱", "神石宝箱[史诗级]", "神石宝箱[传说级]"}
+local _panel_open_var = "N$godstone_panel_open_at"
 --[[
 服务端基础状态方法说明：
 1. _build_item_attr_by_level(level)
@@ -559,6 +560,14 @@ end
 local function _send_panel(play, npcid, p2, p3)
     sendluamsg(play, 100, npcid or 53, p2 or 0, p3 or 0, tbl2json(_build_panel_payload(play)))
 end
+
+local function _mark_panel_open(play)
+    setplaydef(play, _panel_open_var, os.time())
+end
+
+local function _should_refresh_panel(play)
+    return os.time() - (tonumber(getplaydef(play, _panel_open_var) or 0) or 0) <= 300
+end
 local function _box_pending_key()
     return "S$godstone_box_pending"
 end
@@ -883,6 +892,7 @@ local function _handle_compose(play, npcid, data)
 end
 
 function npc.main(play, npcid)
+    _mark_panel_open(play)
     _send_panel(play, npcid, 0, 0)
 end
 
@@ -894,7 +904,7 @@ function npc.link(play, npcid, ew, aid, data)
     if action == nil then
         return
     end
-    if not Guard.ensureActionAllowed(play, npcid, action, Guard.newActionSet({1, 2, 3, 4, 5, 6})) then
+    if not Guard.ensureActionAllowed(play, npcid, action, Guard.newActionSet({1, 2, 3, 4, 5, 6, 7})) then
         return
     end
     if action == 1 then
@@ -932,6 +942,11 @@ function npc.link(play, npcid, ew, aid, data)
         _handle_take_off_godstone(play, npcid, data)
         return
     end
+    if action == 7 then
+        _mark_panel_open(play)
+        _send_panel(play, npcid, 1, 0)
+        return
+    end
 end
 
 local function _on_login_sync(play)
@@ -951,6 +966,9 @@ local function _on_take_on_sync(play, itemobj, where, itemname, makeid)
         _try_grant_collection_reward(play)
     end
     _sync_godstone_effect_marks(play)
+    if _should_refresh_panel(play) then
+        _send_panel(play, 53, 1, 0)
+    end
 end
 GameEvent.add(EventCfg.onTakeOnEx, _on_take_on_sync, "godstone_sync_takeon")
 
@@ -963,6 +981,9 @@ local function _on_take_off_sync(play, itemobj, where, itemname, makeid)
         refreshitem(play, itemobj)
     end
     _sync_godstone_effect_marks(play)
+    if _should_refresh_panel(play) then
+        _send_panel(play, 53, 1, 0)
+    end
 end
 GameEvent.add(EventCfg.onTakeOffEx, _on_take_off_sync, "godstone_sync_takeoff")
 

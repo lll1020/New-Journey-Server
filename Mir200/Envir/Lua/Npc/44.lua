@@ -1183,11 +1183,6 @@ local function dollCanRollHidden(record)
 end
 
 local function dollResolveCost(record)
-    local drawTotal = tonumber(((record or {}).doll or {}).draw_total) or 0
-    local firstCount = tonumber(DollCfg.first_draw_count) or 0
-    if drawTotal < firstCount then
-        return cloneRewardList(DollCfg.first_draw_cost or {})
-    end
     return cloneRewardList(DollCfg.normal_draw_cost or {})
 end
 
@@ -1342,11 +1337,12 @@ end
 local function dollBuildBatchCost(record, count)
     local totalCost = {}
     local drawTotal = tonumber((((record or {}).doll or {}).draw_total) or 0) or 0
-    local firstCount = tonumber(DollCfg.first_draw_count) or 0
     local drawCount = math.max(1, tonumber(count) or 1)
+    local firstCount = tonumber(DollCfg.first_draw_count) or 0
+    local useFirstTenCost = drawTotal <= 0 and drawCount == firstCount and firstCount > 0
     for _ = 1, drawCount do
         local cost = nil
-        if drawTotal < firstCount then
+        if useFirstTenCost then
             cost = cloneRewardList(DollCfg.first_draw_cost or {})
         else
             cost = cloneRewardList(DollCfg.normal_draw_cost or {})

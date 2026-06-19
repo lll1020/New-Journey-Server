@@ -3,6 +3,9 @@ npc = {}
 local _config = Guard.getConfig("npc_22") or {}
 local FairyFate = include("lua/LuaLib/fairy_fate.lua")
 local _base_ratio = tonumber(_config.base_ratio or 0) or 0
+local eff_top = {
+    [1] = 60501, [2] = 60502, [3] = 60503, [4] = 60500, [5] = 60504,
+}
 
 local function _toint(v, d)
     v = tonumber(v)
@@ -268,8 +271,8 @@ function npc.link(play, npcid, ew, aid)
         _sync_linggen_skill(play, T_data)
         if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "任务") end -- linggen_auto_2
         Player.sendmsgEx(play, "提示：本命灵根切换成功#7")
-        clearplayeffect(play,(oldMain > 5 and oldMain - 5 or oldMain) + 60499)
-        playeffect(play,(aid > 5 and aid - 5 or aid) + 60499,0,0,0,0,0)
+        clearplayeffect(play,eff_top[(oldMain > 5 and oldMain - 5 or oldMain)])
+        playeffect(play,eff_top[(aid > 5 and aid - 5 or aid)],0,0,0,0,0)
         _refresh_send(play, npcid, 1)
         return
     end
@@ -326,8 +329,9 @@ function npc.link(play, npcid, ew, aid)
             return
         end
         local needLv = _need_role_level(aid, nextLevel)
-        if needLv and _toint(getbaseinfo(play, 6), 0) < needLv then
-            Player.sendmsgEx(play, "升级该灵根需要人物等级达到|【"..needLv.."】#218|#57")
+        local roleLv = _toint(getbaseinfo(play, 6), 0)
+        if needLv and roleLv < needLv then
+            Player.sendmsgEx(play, "升级该灵根需要人物等级达到|【Lv."..needLv.."】#218|，当前|【Lv."..roleLv.."】#249|#57")
             return
         end
         local details = ((_config.main_updata or {}).details or {})[aid <= 5 and "low" or "up"] or {}
@@ -374,7 +378,7 @@ function Login_lg(play)
     end
     local oldMain = _toint(T_data.main, 0)
     if oldMain > 0 then
-        playeffect(play,(oldMain > 5 and oldMain - 5 or oldMain) + 60499,0,0,0,0,0)
+        playeffect(play,eff_top[(oldMain > 5 and oldMain - 5 or oldMain)],0,0,0,0,0)
     end
     Player.updateSomeAddr(play, nil, attrs)
     TMLP_refresh_linggen_bonus(play)

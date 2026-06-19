@@ -324,11 +324,20 @@ local function _xyl_has_series_item_at_least(play, cfg, keyword)
     return false
 end
 
--- 备注：是否拥有传说神石类道具
+-- 备注：是否拥有传说神石类道具，背包或神石装备槽位任意满足即可。
 local function _xyl_has_legendary_stone(play)
     local cfg = teshudata and teshudata["npc_53"]
-    local list = cfg and cfg.cost and cfg.cost[4]
-    return _xyl_has_any_item(play, list)
+    local list = cfg and cfg.cost and cfg.cost[3]
+    if _xyl_has_any_item(play, list) then
+        return true
+    end
+    for where = 103, 110 do
+        local equipName = Player.getEquipNameByPos(play, where)
+        if equipName and equipName:find("神石", 1, true) and equipName:find("【传说】", 1, true) then
+            return true
+        end
+    end
+    return false
 end
 
 -- 备注：传说斗笠（装备或背包）是否拥有（上位斗笠也视为完成）

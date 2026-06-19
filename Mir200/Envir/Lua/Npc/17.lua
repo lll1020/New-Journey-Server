@@ -8,6 +8,7 @@ local _exchange_cfg = {
     [2] = {cost_gold = 10000000, reward_yb = 100000},
     [3] = {cost_gold = 100000000, reward_yb = 1000000},
 }
+local EXCHANGE_DAILY_LIMIT = 999
 
 local _count_vars = {
     [1] = VarCfg.J_hbdh[1],
@@ -69,7 +70,7 @@ function npc.link(play, npcid, p2, p3, msgData)
     end
 
     local day_count = _get_day_count(play, p2)
-    if day_count >= 10 then
+    if day_count >= EXCHANGE_DAILY_LIMIT then
         sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[货币兑换]</font><font color=\'#ff0000\'>每日兑换次数已达上限...</font>","Type":9}')
         return
     end

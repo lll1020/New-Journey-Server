@@ -1251,10 +1251,10 @@ npc[501] = function(play, p2, p3, data) --首充礼包
         _sc_set_data(play, T_data)
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>天选资格、自动巡航等首充联动功能已解锁...</font>","Type":9}')
         sendluamsg(play, 101, 501, 1, 1, tbl2json(_sc_build_open_payload(play)))
-        messagebox(play, "你可以领取全部的限时福利了！无需等待！是否立即领取？", "@sc_open_welfare_after_first_charge,1", "@exit")
+        -- 限时福利为二大陆功能，首充礼包领取后不在一大陆弹出限时福利领取提示。
         return
     elseif p2 == 2 or p2 == 3 then
-        Player.sendmsgEx(play, "限时福利请前往#57|【105NPC】#218|领取")
+        Player.sendmsgEx(play, "限时福利为二大陆功能，请前往二大陆后领取#57")
     end
 end
 ---在线充值
@@ -2111,6 +2111,15 @@ local function fldt_get_qqsb_personal_map(play)
     if type(data) ~= "table" then
         data = {}
     end
+    -- 兼容旧数据：个人首爆 T_grsb 已记录爆出过的装备，也可用于全区首爆的“已爆出但需特权”显示。
+    local grsb = Player.getJsonTableByVar(play, VarCfg.T_grsb)
+    if type(grsb) == "table" then
+        for key, status in pairs(grsb) do
+            if tonumber(status or 0) >= 1 and data[key] == nil then
+                data[key] = 1
+            end
+        end
+    end
     return data
 end
 -- 玩家自己的全区首爆领取记录，防止重复领取。
@@ -2124,7 +2133,7 @@ local function fldt_get_qqsb_claim_map(T_qrbq)
     return T_qrbq["qqsb_claim"]
 end
 -- 按当前玩家视角构建全区首爆奖励状态。
--- 0=未达成，1=可领取，2=已领取。
+-- 0=未达成，1=可领取，2=已领取，3=已爆出但需要独享首爆特权。
 -- 领取规则：
 -- 1. 该装备的全区首爆归属人可以直接领取。
 -- 2. 不是首爆归属人时，必须自己打到过该装备，且达到328档位才可领取。
@@ -2150,6 +2159,11 @@ local function fldt_build_qqsb_view(play, T_qrbq, qqsb)
         if personal_ok == nil then
             personal_ok = personal_map[idx]
         end
+        local cfg = reward_cfg[idx] or reward_cfg[key]
+        local cfg_name = tostring((cfg or {}).name or "")
+        if personal_ok == nil and cfg_name ~= "" then
+            personal_ok = personal_map[cfg_name]
+        end
         local is_first_owner = type(global_owner) == "string" and global_owner == player_name
         local can_take = false
         if global_owner ~= nil and tonumber(claimed or 0) ~= 1 then
@@ -2166,6 +2180,8 @@ local function fldt_build_qqsb_view(play, T_qrbq, qqsb)
             elseif can_take then
                 status = 1
                 can_claim = true
+            elseif tonumber(personal_ok or 0) == 1 and not is_first_owner then
+                status = 3
             end
         end
         view[key] = status
@@ -2489,6 +2505,8 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
             if qqsb_idx == "" or tonumber(qqsb_view[qqsb_idx] or 0) ~= 1 then
                 if tonumber(qqsb_view[qqsb_idx] or 0) == 2 then
                     Player.sendmsgEx(play, "该全区首爆奖励已经领取完毕#57")
+                elseif tonumber(qqsb_view[qqsb_idx] or 0) == 3 then
+                    Player.sendmsgEx(play, "需要独享首爆特权才可领取#57")
                 else
                     Player.sendmsgEx(play, "未完成该全区首爆任务#57")
                 end

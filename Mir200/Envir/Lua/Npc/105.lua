@@ -30,6 +30,16 @@ local function _has_first_charge(data)
     return tonumber(data.ok or 0) == 1 and tonumber(data["首充"] or 0) == 1
 end
 
+local function _ensure_second_continent(play)
+    local mapName = tostring(getbaseinfo(play, 3) or "")
+    local dl = tonumber((daluditu and daluditu[mapName]) or 0) or 0
+    if dl == 2 then
+        return true
+    end
+    Player.sendmsgEx(play, "限时福利为二大陆功能，请前往二大陆后领取#57")
+    return false
+end
+
 local function _ensure_stage_time(play, data)
     if (tonumber(data.welfare_open_time or 0) or 0) <= 0 then
         data.welfare_open_time = os.time()
@@ -82,6 +92,9 @@ local function _grant_reward(play, reward)
 end
 function npc.main(play, npcid)
     local data = _get_data(play)
+    if not _ensure_second_continent(play) then
+        return
+    end
     _ensure_stage_time(play, data)
     _mark_xyl_welfare_open(play)
     sendluamsg(play, 100, npcid, 0, 0, tbl2json(_build_payload(play, data)))
@@ -101,6 +114,9 @@ function npc.link(play, npcid, ew, aid)
         return
     end
 
+    if not _ensure_second_continent(play) then
+        return
+    end
     local data = _get_data(play)
     _ensure_stage_time(play, data)
     local welfare = _get_welfare_list()

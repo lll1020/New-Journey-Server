@@ -140,9 +140,9 @@ function Login.main(play)
     ---------------------------------------------------客户端同步数据
     local zhid = tonumber(getconst(play,"<$USERACCOUNT>"))
     if constant.pz_zbfc[zhid] then
-        sendluamsg(play,103,1,0,0,'{"kqfz":'..getsysvar(VarCfg["G_开区分钟"])..',"kqts":'..getsysvar(VarCfg["G_开区天数"])..',"rwid":'..(getplaydef(play,VarCfg.U_zxrw[1]))..',"ngkg":'..getflagstatus(play,VarCfg.BS_ngkg)..',"hqcs":'..globalinfo(3)..',"zhuboma":'.. 1 ..',"tsqb":'..getflagstatus(play,VarCfg.BS_tsqb)..',"zbfc":1'..'}')
+        sendluamsg(play,103,1,0,0,'{"kqfz":'..getsysvar(VarCfg["G_开区分钟"])..',"kqts":'..getsysvar(VarCfg["G_开区天数"])..',"rwid":'..(getplaydef(play,VarCfg.U_zxrw[1]))..',"ngkg":'..getflagstatus(play,VarCfg.BS_ngkg)..',"hqcs":'..globalinfo(3)..',"zhuboma":'.. 1 ..',"tsqb":'..getflagstatus(play,VarCfg.BS_tsqb)..',"dl_all_unlock":'..(tonumber(getplaydef(play,"U_全大陆解锁")) or 0)..',"zbfc":1'..'}')
     else
-        sendluamsg(play,103,1,0,0,'{"kqfz":'..getsysvar(VarCfg["G_开区分钟"])..',"kqts":'..getsysvar(VarCfg["G_开区天数"])..',"rwid":'..(getplaydef(play,VarCfg.U_zxrw[1]))..',"ngkg":'..getflagstatus(play,VarCfg.BS_ngkg)..',"hqcs":'..globalinfo(3)..',"zhuboma":'.. 1 ..',"tsqb":'..getflagstatus(play,VarCfg.BS_tsqb)..',"U_dlxz_bc":'..getplaydef(play,VarCfg.U_dlxz_bc)..'}')
+        sendluamsg(play,103,1,0,0,'{"kqfz":'..getsysvar(VarCfg["G_开区分钟"])..',"kqts":'..getsysvar(VarCfg["G_开区天数"])..',"rwid":'..(getplaydef(play,VarCfg.U_zxrw[1]))..',"ngkg":'..getflagstatus(play,VarCfg.BS_ngkg)..',"hqcs":'..globalinfo(3)..',"zhuboma":'.. 1 ..',"tsqb":'..getflagstatus(play,VarCfg.BS_tsqb)..',"dl_all_unlock":'..(tonumber(getplaydef(play,"U_全大陆解锁")) or 0)..',"U_dlxz_bc":'..getplaydef(play,VarCfg.U_dlxz_bc)..'}')
     end
     ---------------------------------------------------自动相关
     if getflagstatus(play,VarCfg.BS_huishou[4]) == 1 then

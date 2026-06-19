@@ -31,6 +31,9 @@ end
 
 local function _in_submit_map(play)
     local req_map = _task_cfg.map or "红尘大陆"
+    if tostring(_task_cfg.is_city_npc or "") == "1" then
+        return true, req_map
+    end
     local cur_map = getbaseinfo(play,3)
     if cur_map == "xtc" then
         return true, req_map
@@ -86,13 +89,8 @@ function npc.link(play,npcid,ew,aid)
     local miss = _missing_required_tasks(jq_data)
     if #miss > 0 then
         Player.sendmsgEx(play, "请先完成：#57|【"..table.concat(miss, "、").."】#218|")
-        if npcid then Guard.closeNpcAndAuto(play, npcid) end
+        if npcid then Guard.closeNpc(play, npcid) end
         return
-    end
-
-    if state < 1 then
-        jq_data[_cfg_key] = 1
-        Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
     end
 
     local ok_map, req_map = _in_submit_map(play)
@@ -111,6 +109,9 @@ function npc.link(play,npcid,ew,aid)
 
     cnt = cnt + 1
     jq_data[prog_key] = cnt
+    if state < 1 then
+        jq_data[_cfg_key] = 1
+    end
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
     Player.sendmsgEx(play, string.format("提交进度：#57|【%d/%d】#218|", cnt, max_num))
 

@@ -82,7 +82,8 @@ local function _is_day_card_claimed(T_data)
     return tostring(T_data.day_card_claim_date or "") == _today()
 end
 local function _is_day_card_unlocked()
-    return (tonumber(globalinfo(3) or 0) or 0) >= 1
+    -- 日卡不再受合区次数限制，开服后直接开放。
+    return true
 end
 local function _get_daily_kills(play)
     return (tonumber(getplaydef(play, VarCfg.J_jsgw[1]) or 0) or 0) + (tonumber(getplaydef(play, VarCfg.J_jsgw[2]) or 0) or 0)

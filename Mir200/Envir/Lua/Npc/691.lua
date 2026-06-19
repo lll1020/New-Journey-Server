@@ -102,17 +102,14 @@ function npc.link(play,npcid,ew,aid)
         return
     end
 
-    if state < 1 then
-        jq_data[_cfg_key] = 1
-        Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-    end
-
     local req_map = _task_cfg.map or "红尘大陆"
-    local cur_map = getbaseinfo(play,3)
-    if cur_map ~= req_map and cur_map ~= "xtc" and not (req_map == "红尘大陆" and cur_map == "生命边界") then
-        Player.sendmsgEx(play, "请前往#57|【"..req_map.."】#218|完成后再提交#57")
-        if npcid then Guard.closeNpc(play, npcid) end
-        return
+    if tostring(_task_cfg.is_city_npc or "") ~= "1" then
+        local cur_map = getbaseinfo(play,3)
+        if cur_map ~= req_map and cur_map ~= "xtc" and not (req_map == "红尘大陆" and cur_map == "生命边界") then
+            Player.sendmsgEx(play, "请前往#57|【"..req_map.."】#218|完成后再提交#57")
+            if npcid then Guard.closeNpc(play, npcid) end
+            return
+        end
     end
 
     local costs = _task_cfg.submit
@@ -123,6 +120,9 @@ function npc.link(play,npcid,ew,aid)
 
     cnt = cnt + 1
     jq_data[prog_key] = cnt
+    if state < 1 then
+        jq_data[_cfg_key] = 1
+    end
 
     _grant_submit_attr(play, jq_data)
     _rebuild_attr_cache(jq_data)

@@ -1113,6 +1113,11 @@ local function _refresh_1002_attr(play, T_data)
         Player.del_attlist(play, "时装属性")
     end
 end
+local function _grant_duplicate_fashion_reward(play, item, fashionName)
+    delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+    Player.rwjl(play, {{"绑定元宝", 660000}}, ",fashion_duplicate", 1, 999)
+    Player.sendmsgEx(play, "已拥有|【" .. tostring(fashionName or "该时装") .. "】#218|，重复时装已自动分解为|【绑定元宝*660000】#249|")
+end
 local function _use_1002_unlock(play, item, keyName, listName, label)
     local idx = tonumber(getstditeminfo(getiteminfo(play, item, 2), 8) or 0) or 0
     local cfg1002 = teshudata and teshudata["npc_1002"]
@@ -1125,6 +1130,10 @@ local function _use_1002_unlock(play, item, keyName, listName, label)
     local T_data = Player.getJsonTableByVar(play, VarCfg.T_szjl)
     T_data[keyName] = T_data[keyName] or {}
     if T_data[keyName][tostring(idx)] == 1 then
+        if keyName == "yjs" and listName == "sz" then
+            _grant_duplicate_fashion_reward(play, item, cfgList[idx].name or label)
+            return false
+        end
         Player.sendmsgEx(play, "你已拥有该" .. label .. "，无需重复使用#57")
         return false
     end

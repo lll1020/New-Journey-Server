@@ -973,6 +973,8 @@ function ggna(play,id)
     elseif id == "56" then
         _ff9999_finish_second_continent_xyl(play)
     elseif id == "25" then
+        setplaydef(play, "U_全大陆解锁", 1)
+        sendluamsg(play, 103, 1, 0, 0, '{"dl_all_unlock":1}')
         -- 大陆全解锁：补齐新大陆门槛，包含主线、3-6大陆伏妖录领取进度、转生、等级、灵根、天道命盘、世界符文。
         local target_task = 35
         local target_level = 150
