@@ -1108,13 +1108,15 @@ function attack(play, Target, Hiter, MagicId)
 	else
 		gs = math.floor(getbaseinfo(play, 51, 200) / 100)
 	end
-	if getplaydef(play, VarCfg.N_dqgs) ~= gs then
+    local showGs = gs
+    local realGs = math.floor(gs / 2)
+	if getplaydef(play, VarCfg.N_dqgs) ~= realGs then
 		local sj = os.time()
 		if sj - getplaydef(play, VarCfg.N_gscd) > 0 then
 			setplaydef(play, VarCfg.N_gscd, sj)
-			setplaydef(play, VarCfg.N_dqgs, gs)
-			callscriptex(play, 'changespeedex', 2, gs)
-			sendmsg(play, 1, '{"Msg":"<font color=\'#c0c0c0\' size=\'14\'>当前攻击速度+</font><font color=\'#ff3131\' size=\'14\'>' .. gs .. '%</font>","Type":9}')
+			setplaydef(play, VarCfg.N_dqgs, realGs)
+			callscriptex(play, 'changespeedex', 2, realGs)
+			sendmsg(play, 1, '{"Msg":"<font color=\'#c0c0c0\' size=\'14\'>当前攻击速度+</font><font color=\'#ff3131\' size=\'14\'>' .. showGs .. '%</font>","Type":9}')
 		end
 	end
 	local bl = getplaydef(play, VarCfg.S_buffgjh)
@@ -2834,3 +2836,5 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
         end
 	end
 end
+
+

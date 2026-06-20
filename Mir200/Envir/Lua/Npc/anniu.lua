@@ -726,10 +726,6 @@ npc[11] = function(play, p2, p3, data) --异闻录
             end
         end
     elseif p2 == 2 then --一页任务奖励
-        -- 章节奖励已取消，客户端改为展示本大陆伏妖录任务总进度；旧领取逻辑保留注释，避免残留消息继续发奖。
-        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>章节奖励已取消...</font>","Type":9}')
-        return
-        --[[
         local sj = json2tbl(data)
         if sj.i and sj.j and sj.i > 0 and sj.j > 0 and sj.i <= #npc_xyl and sj.j <= #npc_xyl[sj.i] then
             if _ywl_is_auto_current_continent(sj.i) then
@@ -748,13 +744,11 @@ npc[11] = function(play, p2, p3, data) --异闻录
                 return
             end
             for i = 1, #npc_xyl[sj.i][sj.j].jq do
-                if
+                if not (
                     T_ywl["jl_" .. sj.i .. "_" .. sj.j .. "_" .. i]
                     and T_ywl["jl_" .. sj.i .. "_" .. sj.j .. "_" .. i] == 1
-                then
-                    T_ywl["jl_" .. sj.i .. "_" .. sj.j .. "_" .. i] = nil
-                else
-                    Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>未完成[' .. npc_xyl[sj.i][sj.j].jq[i][1] .. ']剧情...</font>","Type":9}')
+                ) then
+                    sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>未完成[' .. npc_xyl[sj.i][sj.j].jq[i][1] .. ']剧情...</font>","Type":9}')
                     return
                 end
             end
@@ -777,7 +771,6 @@ npc[11] = function(play, p2, p3, data) --异闻录
             end
             
         end
-        ]]
     elseif p2 == 3 then --单个任务奖励
         local sj = json2tbl(data)
         if
@@ -2651,10 +2644,9 @@ local function _zz516_get_claim_tier(T_data)
     return 0, nil
 end
 local function _zz516_clear_titles(play, keep_title)
-    local cfg = _zz516_get_cfg()
     keep_title = tostring(keep_title or "")
-    for i = 1, #cfg do
-        local titleName = tostring((cfg[i] or {}).ch or "")
+    local replaceTitles = {"入门玩家", "高级玩家", "至尊玩家"}
+    for _, titleName in ipairs(replaceTitles) do
         if titleName ~= "" and titleName ~= keep_title and checktitle(play, titleName) then
             deprivetitle(play, titleName)
         end
@@ -2662,10 +2654,14 @@ local function _zz516_clear_titles(play, keep_title)
 end
 local function _zz516_apply_extra_titles(play, T_data)
     local cfg = _zz516_get_cfg()
+    local claimTier = _zz516_get_claim_tier(T_data or {})
     for i = 1, #cfg do
         if tonumber((T_data or {})["zzlb_" .. i] or 0) == 1 then
             for _, titleName in ipairs((cfg[i] or {}).extra_titles or {}) do
                 titleName = tostring(titleName or "")
+                if titleName == "高级玩家" and claimTier >= 3 then
+                    titleName = ""
+                end
                 if titleName ~= "" and not checktitle(play, titleName) then
                     Player.title_give(play, titleName)
                 end
@@ -3013,4 +3009,7 @@ for npcId, handler in pairs(npc) do
     end
 end
 return npc
+
+
+
 

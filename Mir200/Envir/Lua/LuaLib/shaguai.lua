@@ -11,7 +11,14 @@ if GameEvent and EventCfg and EventCfg.onAttackDamageMonster and not rawget(_G, 
     end, "combat_state_attack_mon")
 end
 local function _sg_color_text(text, color)
-    return string.format("<font color='%s'>%s</font>", tostring(color or "#00ff00"), tostring(text or ""))
+    local code = "#253"
+    local c = string.lower(tostring(color or ""))
+    if c == "#ff0000" or c == "#ff3030" or c == "red" then
+        code = "#249"
+    elseif c == "#f7f7de" or c == "#ffffff" or c == "white" then
+        code = "#250"
+    end
+    return code .. "|" .. tostring(text or "")
 end
 local function _sg_kill_tip(play, title, cur, need, action)
     title = tostring(title or "ÈÎÎñ")
@@ -20,9 +27,11 @@ local function _sg_kill_tip(play, title, cur, need, action)
     need = tostring(need or 0)
     Player.sendmsgEx(play,
         _sg_color_text(title .. action .. "+1", "#00ff00") ..
-        _sg_color_text("£¨", "#00ff00") ..
+        _sg_color_text("£¨", "#f7f7de") ..
         _sg_color_text(cur, "#ff3030") ..
-        _sg_color_text("/" .. need .. "£©", "#00ff00"))
+        _sg_color_text("/", "#f7f7de") ..
+        _sg_color_text(need, "#00ff00") ..
+        _sg_color_text("£©", "#f7f7de"))
 end
 local function _sg_kill_multi_tip(play, title, action, content)
     Player.sendmsgEx(play,

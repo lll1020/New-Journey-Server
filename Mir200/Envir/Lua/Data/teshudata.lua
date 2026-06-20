@@ -1917,7 +1917,7 @@ teshudata = {
             {idx = 1,name = "天书残卷一",cost = {{"天书残卷一",1}},attr = {{244,1000}},attr_desc = "打怪切割+1000"},
             {idx = 2,name = "天书残卷二",cost = {{"天书残卷二",1}},attr = {{245,1000}},attr_desc = "对怪增伤+10%"},
             {idx = 3,name = "天书残卷三",cost = {{"天书残卷三",1}},attr = {{242,1000}},attr_desc = "打怪爆率+10%"},
-            {idx = 4,name = "天书残卷四",cost = {{"天书残卷四",1}},attr = {{255,100}},attr_desc = "怪物格挡+100"},
+            {idx = 4,name = "天书残卷四",cost = {{"天书残卷四",1}},attr = {{255,500}},attr_desc = "怪物格挡+500"},
         },
     },
     ["npc_104"] = {
@@ -3234,3 +3234,4 @@ teshudata = {
     },
 }
 return teshudata
+

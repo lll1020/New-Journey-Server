@@ -349,6 +349,32 @@ function npc.link(play,npcid,ew,aid,data)
         if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "任务") end
         Player.sendmsgEx(play, string.format("已选择|【%s】#218|，48小时后自动孵化#57", cfg.item))
         _refresh_pet_panel(play, npcid, 6, T_data)
+    elseif ew == 7 then -- 灵兽契约：真实累计充值99元立即点化
+        T_data = _ensure_pet_data(T_data)
+        local choice = _toint(T_data.baby_choice)
+        if choice <= 0 then
+            Player.sendmsgEx(play, "请先选择灵兽幼崽后再点化#57")
+            return
+        end
+        if json_data.idx ~= choice then
+            Player.sendmsgEx(play, "当前点化灵兽与已选择幼崽不一致#57")
+            return
+        end
+        if _real_charge(play) < 99 then
+            Player.sendmsgEx(play, string.format("真实累计充值达到99元后，才可立即点化灵兽幼崽，当前%d元#57", _real_charge(play)))
+            return
+        end
+        local key = tostring(choice)
+        local hatch = T_data.hatch and T_data.hatch[key]
+        if type(hatch) ~= "table" or hatch.status ~= "hatching" then
+            Player.sendmsgEx(play, "当前灵兽幼崽已完成孵化，无需重复点化#57")
+            return
+        end
+        local ok, msg, newData = _add_lingshou_star(play, choice, "quick", hatch.item)
+        Player.sendmsgEx(play, msg or (ok and "灵兽幼崽点化成功#57" or "灵兽幼崽点化失败#57"))
+        if ok and newData then
+            _refresh_pet_panel(play, npcid, 6, newData)
+        end
     elseif ew == 5 then -- 灵兽装备圣遗物
         T_data.ls = T_data.ls or {}
         -- T_data.ls_sp 
@@ -481,3 +507,5 @@ function npc.onBabyExpired(play, itemobj)
     return ok
 end
 return npc
+
+

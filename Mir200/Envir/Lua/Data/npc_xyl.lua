@@ -339,7 +339,6 @@ local function _xyl_has_legendary_stone(play)
     end
     return false
 end
-
 -- 备注：传说斗笠（装备或背包）是否拥有（上位斗笠也视为完成）
 local function _xyl_has_legendary_hat(play)
     local equipLevel = Player.getEquipFieldByPos(play, 13, 1) or 0
@@ -559,7 +558,7 @@ local function _xyl_check_task(play, name)
         ["完成转生·五"] = function(play)
             return _xyl_has_rebirth(play, 50)
         end,
-        ["拥有1传说神石"] = _xyl_has_legendary_stone,
+        ["拥有传说神石"] = _xyl_has_legendary_stone,
         ["传说·斗笠"] = _xyl_has_legendary_hat,
         ["神·酒葫芦"] = _xyl_has_god_gourd,
         ["高级淬体"] = _xyl_has_advanced_quench,
@@ -995,17 +994,16 @@ local npc_xyl = {
         {
             jq = {
                 {
-                    "拥有1传说神石",
+                    "拥有传说神石",
                     id = 999,
                     jl = { { "剧情点", 3 } },
                     fwdjy = function(play)
-                        return _xyl_check_task(play, "拥有1传说神石")
+                        return _xyl_check_task(play, "拥有传说神石")
                     end,
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "三大陆主城", 53, 159, 223 },
-                    desc = "深入拥有1传说神石，寻回失落线索",
+                    desc = "深入拥有传说神石，寻回失落线索",
                 },
                 {
                     "传说·斗笠",
@@ -1047,7 +1045,6 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "三大陆主城", 53, 159, 223 },
                     desc = "踏入高级淬体，循迹而行",
                 },
                 {
@@ -2465,3 +2462,8 @@ local npc_xyl = {
 }
 npc_xyl.check_task = _xyl_check_task
 return npc_xyl
+
+
+
+
+
