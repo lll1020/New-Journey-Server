@@ -165,7 +165,6 @@ local function _build_payload(play)
     local has_title = _has_need_title(play) and 1 or 0
     return {
         T_data = data,
-        config = _config,
         contract = data.contract,
         enter_count = data.enter_count,
         drop_kill = data.drop_kill,

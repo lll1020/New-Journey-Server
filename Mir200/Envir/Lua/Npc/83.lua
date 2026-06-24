@@ -75,8 +75,6 @@ local function _build_payload(play)
         fire = data.fire,
         has_title = _has_title(play) and 1 or 0,
         title_bonus_done = data.level_bonus or 0,
-        config = _config,
-        shop = _config.shop or {},
     }
 end
 

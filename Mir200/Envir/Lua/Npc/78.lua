@@ -7,7 +7,7 @@ local function _toint(v)
 end
 
 local function _build_payload(play)
-    return {config = _config, equip = _config.equip or {}}
+    return {}
 end
 
 function npc.main(play, npcid)

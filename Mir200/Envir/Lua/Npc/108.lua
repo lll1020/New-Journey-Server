@@ -44,35 +44,19 @@ local function _has_title(play)
     return titleName ~= "" and checktitle(play, titleName)
 end
 
-local function _build_meat_list(play, cfg)
-    local list = {}
-    for itemName, one in pairs((cfg and cfg.meats) or {}) do
-        list[#list + 1] = {
-            name = itemName,
-            point = _toint(one.point),
-            count = _count_item(play, itemName),
-        }
+local function _build_meat_counts(play, cfg)
+    local counts = {}
+    for itemName, _ in pairs((cfg and cfg.meats) or {}) do
+        counts[tostring(itemName)] = _count_item(play, itemName)
     end
-    table.sort(list, function(a, b)
-        return tostring(a.name) < tostring(b.name)
-    end)
-    return list
+    return counts
 end
 
 local function _build_payload(play, npcid, current_tab)
     local cfg = _cfg()
     local data = _get_data(play)
     local tab = tostring(current_tab or (_config and _config.default_tab) or "sell")
-    local shop = {}
-    for i, one in ipairs(cfg.shop or {}) do
-        local row = one
-        if type(row) == "table" then
-            row.idx = _toint(row.idx) > 0 and _toint(row.idx) or i
-        end
-        shop[#shop + 1] = row
-    end
     return {
-        config = cfg,
         default_tab = tostring((_config and _config.default_tab) or "sell"),
         current_tab = tab,
         point = _toint(data.point),
@@ -80,8 +64,7 @@ local function _build_payload(play, npcid, current_tab)
         collect_total = _toint(data.collect_total),
         weapon_level = MskhApi and MskhApi.get_weapon_level and MskhApi.get_weapon_level(play) or 0,
         has_title = _has_title(play) and 1 or 0,
-        meats = _build_meat_list(play, cfg),
-        shop = shop,
+        meat_counts = _build_meat_counts(play, cfg),
         shop_buy = data.shop_buy or {},
         open = getsysvar(VarCfg["G_ÃÀÊ³¿ñ»¶×´Ì¬"]) == 1 and 1 or 0,
     }

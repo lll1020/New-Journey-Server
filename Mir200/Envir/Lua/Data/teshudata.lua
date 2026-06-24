@@ -1476,7 +1476,7 @@ teshudata = {
         -- 残魂商店内可兑换的条目配置。
         shop = {
             [1] = {name = "净业符", cost = 5, limit = 0, reward = {kind = "item", give = {{"净业符",1}}}, desc = "业火值-30"},
-            [2] = {name = "随机装备礼盒（没想好暂定）", cost = 20, limit = 0, reward = {kind = "item", give = {{"六大陆专属装备随机宝箱",1}}}, desc = "占位奖励：六大陆专属装备随机宝箱*1"},
+            [2] = {name = "六大陆专属装备随机宝箱", cost = 20, limit = 0, reward = {kind = "item", give = {{"六大陆专属装备随机宝箱",1}}}, desc = "开启后随机获得六大陆专属装备*1"},
             [3] = {name = "称号：向死而生", cost = 100, limit = 1, reward = {kind = "title", name = "向死而生"}, desc = "对天罚猎杀者额外造成20%伤害，150级后等级+1"},
         },
     },

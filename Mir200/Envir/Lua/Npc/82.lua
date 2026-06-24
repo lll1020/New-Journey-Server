@@ -312,7 +312,6 @@ local function _build_payload(play)
     local temp_gap = (data.temp_end > now) and data.temp_gap or 0
     return {
         T_data = data,
-        config = _config,
         current_idx = data.personality,
         current_key = tostring(cur_cfg.key or ""),
         current_name = tostring(cur_cfg.name or ""),

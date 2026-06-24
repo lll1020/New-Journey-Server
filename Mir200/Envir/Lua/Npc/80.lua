@@ -21,7 +21,7 @@ end
 
 local function _build_payload(play, npcid)
     local cfg = _cfg(npcid)
-    return {config = cfg, has_cert = _has_cert(play, cfg.need_cert_god) and 1 or 0, has_item = (_toint(getbagitemcount(play, tostring(cfg.item_name or ""))) > 0) and 1 or 0}
+    return {has_cert = _has_cert(play, cfg.need_cert_god) and 1 or 0, has_item = (_toint(getbagitemcount(play, tostring(cfg.item_name or ""))) > 0) and 1 or 0}
 end
 
 local function _check_cost(play, cost)
