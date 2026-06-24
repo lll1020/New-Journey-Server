@@ -1,8 +1,8 @@
 local npc = {}
 
 local _mijing_cfg = {
-    [86] = {name = "极光秘境", map = "极光秘境", x = 100, y = 100, need_desc = "高级玩家赞助可进", need_titles = {"高级玩家", "高级玩家赞助"}, artifact = "极光石", title_item = "极光使者[可使用]", title_name = "极光使者"},
-    [87] = {name = "苍云秘境", map = "苍云秘境", x = 100, y = 100, need_desc = "高级玩家赞助可进", need_titles = {"高级玩家", "高级玩家赞助"}, artifact = "苍云镜", title_item = "白云苍狗[可使用]", title_name = "白云苍狗"},
+    [86] = {name = "极光秘境", map = "极光秘境", x = 100, y = 100, need_desc = "高级玩家赞助可进", need_titles = {"高级玩家", "高级玩家赞助", "至尊玩家", "至尊玩家赞助"}, artifact = "极光石", title_item = "极光使者[可使用]", title_name = "极光使者"},
+    [87] = {name = "苍云秘境", map = "苍云秘境", x = 100, y = 100, need_desc = "高级玩家赞助可进", need_titles = {"高级玩家", "高级玩家赞助", "至尊玩家", "至尊玩家赞助"}, artifact = "苍云镜", title_item = "白云苍狗[可使用]", title_name = "白云苍狗"},
     [88] = {name = "若水秘境", map = "若水秘境", x = 100, y = 100, need_desc = "至尊玩家赞助可进", need_titles = {"至尊玩家", "至尊玩家赞助"}, artifact = "若水灵珠", title_item = "上善若水[可使用]", title_name = "上善若水"},
     [89] = {name = "红尘秘境", map = "红尘秘境", x = 100, y = 100, need_desc = "至尊玩家赞助可进", need_titles = {"至尊玩家", "至尊玩家赞助"}, artifact = "斩红尘", title_item = "看破红尘[可使用]", title_name = "看破红尘"},
     [90] = {name = "灵虚秘境", map = "灵虚秘境", x = 100, y = 100, need_desc = "激活5条红色仙法", need_red_xianfa = 5, artifact = "灵虚剑", title_item = "归入灵虚[可使用]", title_name = "归入灵虚"},

@@ -135,3 +135,111 @@
 
 [2026-06-19 23:16:31:540] LuaNPC:玩家名字k ID:999999999 执行 killmon player:玩家名字k 耗时：203; NpcThreadId: 15648, CurPlayThreadId: 15648
 
+[2026-06-19 23:20:41:156] LuaNPC:玩家名字k ID:999999999 执行 attackdamage player:玩家名字k 耗时：31; NpcThreadId: 15648, CurPlayThreadId: 15648
+
+[2026-06-19 23:28:56:963] LuaNPC:玩家名字k ID:999999999 执行 pickupitemex player:玩家名字k 耗时：125; NpcThreadId: 15648, CurPlayThreadId: 15648
+
+[2026-06-19 23:36:47:414] LuaNPC:玩家名字k ID:999999999 执行 attackdamage player:玩家名字k 耗时：31; NpcThreadId: 15648, CurPlayThreadId: 15648
+
+[2026-06-19 23:38:07:372] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：31; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-19 23:38:07:372] [玩家名字k]Lua执行耗时过高:31ms msgid:100 33 1 0 
+
+[2026-06-19 23:40:42:247] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：141; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-19 23:40:42:247] [玩家名字k]Lua执行耗时过高:141ms msgid:105 623 623 0 
+
+[2026-06-19 23:58:58:912] LuaNPC:玩家名字k ID:999999999 执行 attackdamage player:玩家名字k 耗时：31; NpcThreadId: 15648, CurPlayThreadId: 15648
+
+[2026-06-20 00:29:57:265] LuaNPC:玩家名字k ID:999999999 执行 yc_fuhuo_hc player:玩家名字k 耗时：875; NpcThreadId: 15648, CurPlayThreadId: 15648
+
+[2026-06-20 00:37:48:287] LuaNPC:玩家名字k ID:999999999 执行 attack player:玩家名字k 耗时：31; NpcThreadId: 15648, CurPlayThreadId: 15648
+
+[2026-06-20 03:06:49:167] LuaNPC:玩家名字k ID:999999999 执行 moneychange23 player:玩家名字k 耗时：531; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 03:06:49:168] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：531; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 03:06:49:168] [玩家名字k]Lua执行耗时过高:531ms msgid:101 998 1 4 {"mz":"玩家名字k","hb":6}
+
+[2026-06-20 03:07:33:331] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：1531; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 03:07:33:331] [玩家名字k]Lua执行耗时过高:1531ms msgid:105 7 7 0 
+
+[2026-06-20 03:08:14:133] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：219; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 03:08:14:133] [玩家名字k]Lua执行耗时过高:219ms msgid:100 101 2 0 
+
+[2026-06-20 03:08:18:818] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：547; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 03:08:18:818] [玩家名字k]Lua执行耗时过高:547ms msgid:100 101 2 0 
+
+[2026-06-20 03:08:20:025] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：172; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 03:08:20:025] [玩家名字k]Lua执行耗时过高:172ms msgid:100 101 2 0 
+
+[2026-06-20 03:08:51:045] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：62; NpcThreadId: 15648, CurPlayThreadId: 15648
+
+[2026-06-20 03:09:30:325] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：63; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 03:09:30:325] [玩家名字k]Lua执行耗时过高:63ms msgid:100 101 2 0 
+[2026-06-20 03:09:32:561] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：797; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 03:09:32:562] [玩家名字k]Lua执行耗时过高:797ms msgid:100 101 2 0 
+
+[2026-06-20 03:09:35:350] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：1500; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 03:09:35:350] [玩家名字k]Lua执行耗时过高:1500ms msgid:100 101 2 0 
+[2026-06-20 03:09:37:489] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：1453; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 03:09:37:489] [玩家名字k]Lua执行耗时过高:1453ms msgid:100 101 2 0 
+
+[2026-06-20 03:09:40:724] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：484; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 03:09:40:724] [玩家名字k]Lua执行耗时过高:484ms msgid:100 101 2 0 
+[2026-06-20 03:09:42:229] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：469; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 03:09:42:229] [玩家名字k]Lua执行耗时过高:469ms msgid:100 101 2 0 
+
+[2026-06-20 03:09:45:348] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：1078; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 03:09:45:348] [玩家名字k]Lua执行耗时过高:1078ms msgid:100 101 2 0 
+[2026-06-20 03:09:46:599] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：203; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 03:09:46:599] [玩家名字k]Lua执行耗时过高:203ms msgid:100 101 2 0 
+[2026-06-20 03:09:48:698] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：938; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 03:09:48:698] [玩家名字k]Lua执行耗时过高:938ms msgid:100 101 2 0 
+
+[2026-06-20 03:09:50:715] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：156; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 03:09:50:715] [玩家名字k]Lua执行耗时过高:156ms msgid:100 101 2 0 
+[2026-06-20 03:09:52:600] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：218; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 03:09:52:600] [玩家名字k]Lua执行耗时过高:218ms msgid:100 101 2 0 
+
+[2026-06-20 03:18:05:974] LuaNPC:玩家名字k ID:999999999 执行 attackdamage player:玩家名字k 耗时：328; NpcThreadId: 15648, CurPlayThreadId: 15648
+
+[2026-06-20 03:29:15:685] LuaNPC:玩家名字k ID:999999999 执行 attackdamage player:玩家名字k 耗时：31; NpcThreadId: 15648, CurPlayThreadId: 15648
+
+[2026-06-20 04:02:11:019] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：31; NpcThreadId: 15648, CurPlayThreadId: 15648
+
+[2026-06-20 04:16:23:649] LuaNPC:玩家名字k ID:999999999 执行 mondropitemex player:玩家名字k 耗时：31; NpcThreadId: 15648, CurPlayThreadId: 15648
+
+[2026-06-20 04:36:17:797] LuaNPC:玩家名字k ID:999999999 执行 ontimer1 player:玩家名字k 耗时：31; NpcThreadId: 15648, CurPlayThreadId: 15648
+
+[2026-06-20 04:36:23:336] LuaNPC:玩家名字k ID:999999999 执行 pickupitemex player:玩家名字k 耗时：32; NpcThreadId: 15648, CurPlayThreadId: 15648
+
+[2026-06-20 04:56:43:338] LuaNPC:玩家名字k ID:999999999 执行 killmon player:玩家名字k 耗时：32; NpcThreadId: 15648, CurPlayThreadId: 15648
+
+[2026-06-20 05:19:49:095] LuaNPC:玩家名字k ID:999999999 执行 ontimer7 player:玩家名字k 耗时：782; NpcThreadId: 15648, CurPlayThreadId: 15648
+
+[2026-06-20 05:42:48:494] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：31; NpcThreadId: 15648, CurPlayThreadId: 15648
+
+[2026-06-20 05:50:54:430] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：31; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 05:50:54:430] [玩家名字k]Lua执行耗时过高:31ms msgid:100 53 4 0 {"token":"玩家名字k_1781905852275766"}
+
+[2026-06-20 05:51:30:436] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：47; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 05:51:30:436] [玩家名字k]Lua执行耗时过高:47ms msgid:100 53 4 0 {"token":"玩家名字k_1781905890747774"}
+[2026-06-20 05:51:34:412] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：32; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 05:51:34:412] [玩家名字k]Lua执行耗时过高:32ms msgid:100 53 2 0 {"box_name":"神石宝箱"}
+
+[2026-06-20 05:51:44:454] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：78; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 05:51:44:454] [玩家名字k]Lua执行耗时过高:78ms msgid:100 53 2 0 {"box_name":"神石宝箱"}
+[2026-06-20 05:51:46:486] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：125; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 05:51:46:486] [玩家名字k]Lua执行耗时过高:125ms msgid:100 53 4 0 {"token":"玩家名字k_1781905906153658"}
+
+[2026-06-20 05:51:48:450] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：62; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 05:51:48:450] [玩家名字k]Lua执行耗时过高:62ms msgid:100 53 2 0 {"box_name":"神石宝箱"}
+
+[2026-06-20 05:51:54:057] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：547; NpcThreadId: 15648, CurPlayThreadId: 15648
+[2026-06-20 05:51:54:057] [玩家名字k]Lua执行耗时过高:547ms msgid:100 53 5 0 {"makeIndex":"37877"}
+
+[2026-06-20 06:50:44:417] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：1922; NpcThreadId: 15648, CurPlayThreadId: 15648
+
+[2026-06-20 07:04:02:696] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：688; NpcThreadId: 15648, CurPlayThreadId: 15648
+
+[2026-06-20 07:17:18:419] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：109; NpcThreadId: 15648, CurPlayThreadId: 15648
+
+[2026-06-20 07:29:38:495] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：31; NpcThreadId: 15648, CurPlayThreadId: 15648
+

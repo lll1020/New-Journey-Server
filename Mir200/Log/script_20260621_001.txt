@@ -1,0 +1,61 @@
+[2026-06-21 01:46:19:337] .\Envir\lua/Data/fairy_fate_cfg.lua time：125
+
+[2026-06-21 01:46:35:386] LuaNPC: ID:999999999 执行 startup player: 耗时：31; NpcThreadId: 15960, CurPlayThreadId: 15960
+
+[2026-06-21 01:47:03:405] LuaNPC:玩家名字kk ID:999999999 执行 login player:玩家名字kk 耗时：313; NpcThreadId: 15960, CurPlayThreadId: 15960
+
+[2026-06-21 01:47:31:569] LuaNPC:玩家名字kk ID:999999999 执行 handlerequest player:玩家名字kk 耗时：78; NpcThreadId: 15960, CurPlayThreadId: 15960
+[2026-06-21 01:47:31:569] [玩家名字kk]Lua执行耗时过高:78ms msgid:101 18 1 0 
+
+[2026-06-21 01:47:38:257] LuaNPC:玩家名字kk ID:999999999 执行 takeonex player:玩家名字kk 耗时：125; NpcThreadId: 15960, CurPlayThreadId: 15960
+[2026-06-21 01:47:38:602] LuaNPC:玩家名字kk ID:999999999 执行 takeonex player:玩家名字kk 耗时：344; NpcThreadId: 15960, CurPlayThreadId: 15960
+
+[2026-06-21 01:50:58:267] LuaNPC:玩家名字kk ID:999999999 执行 handlerequest player:玩家名字kk 耗时：1609; NpcThreadId: 15960, CurPlayThreadId: 15960
+[2026-06-21 01:50:58:267] [玩家名字kk]Lua执行耗时过高:1609ms msgid:105 201 201 0 
+
+[2026-06-21 01:54:42:854] LuaNPC:玩家名字kk ID:999999999 执行 npc_200_fbjs player:玩家名字kk 耗时：172; NpcThreadId: 15960, CurPlayThreadId: 15960
+
+[2026-06-21 01:54:51:306] LuaNPC:玩家名字kk ID:999999999 执行 pickupitemex player:玩家名字kk 耗时：344; NpcThreadId: 15960, CurPlayThreadId: 15960
+
+[2026-06-21 01:56:52:379] LuaNPC:玩家名字kk ID:999999999 执行 handlerequest player:玩家名字kk 耗时：47; NpcThreadId: 15960, CurPlayThreadId: 15960
+[2026-06-21 01:56:52:379] [玩家名字kk]Lua执行耗时过高:47ms msgid:105 13 13 0 
+
+[2026-06-21 01:58:28:362] LuaNPC:玩家名字kk ID:999999999 执行 handlerequest player:玩家名字kk 耗时：203; NpcThreadId: 15960, CurPlayThreadId: 15960
+[2026-06-21 01:58:28:362] [玩家名字kk]Lua执行耗时过高:203ms msgid:100 103 2 0 
+
+[2026-06-21 02:00:21:200] LuaNPC:玩家名字kk ID:999999999 执行 handlerequest player:玩家名字kk 耗时：78; NpcThreadId: 15960, CurPlayThreadId: 15960
+[2026-06-21 02:00:21:200] [玩家名字kk]Lua执行耗时过高:78ms msgid:105 502 502 0 
+
+[2026-06-21 02:00:34:763] LuaNPC:玩家名字kk ID:999999999 执行 handlerequest player:玩家名字kk 耗时：47; NpcThreadId: 15960, CurPlayThreadId: 15960
+[2026-06-21 02:00:34:763] [玩家名字kk]Lua执行耗时过高:47ms msgid:100 24 1 0 
+
+[2026-06-21 05:29:23:041] LuaNPC:玩家名字kk ID:999999999 执行 login player:玩家名字kk 耗时：31; NpcThreadId: 15960, CurPlayThreadId: 15960
+
+[2026-06-21 10:12:23:071] LuaNPC:玩家名字kk ID:999999999 执行 ontimer6 player:玩家名字kk 耗时：47; NpcThreadId: 15960, CurPlayThreadId: 15960
+
+[2026-06-21 14:50:15:817] .\Envir\lua/Data/fairy_fate_cfg.lua time：250
+
+[2026-06-21 14:50:25:928] .\Envir\lua/LuaLib/fairy_fate.lua time：578
+
+[2026-06-21 14:53:48:625] LuaNPC: ID:999999999 执行 startup player: 耗时：547; NpcThreadId: 13272, CurPlayThreadId: 13272
+
+[2026-06-21 14:54:49:414] LuaNPC:玩家名字kk ID:999999999 执行 login player:玩家名字kk 耗时：1687; NpcThreadId: 13272, CurPlayThreadId: 13272
+
+[2026-06-21 16:00:50:297] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：1641; NpcThreadId: 13272, CurPlayThreadId: 13272
+
+[2026-06-21 16:30:50:272] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：1609; NpcThreadId: 13272, CurPlayThreadId: 13272
+
+[2026-06-21 18:00:50:077] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：1422; NpcThreadId: 13272, CurPlayThreadId: 13272
+
+[2026-06-21 18:01:49:642] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：1000; NpcThreadId: 13272, CurPlayThreadId: 13272
+
+[2026-06-21 19:00:49:047] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：407; NpcThreadId: 13272, CurPlayThreadId: 13272
+
+[2026-06-21 19:20:49:218] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：579; NpcThreadId: 13272, CurPlayThreadId: 13272
+
+[2026-06-21 22:10:00:659] LuaNPC:系统控制 ID:999999999 执行 jqr_zxdz_end player:系统控制 耗时：422; NpcThreadId: 13272, CurPlayThreadId: 13272
+
+[2026-06-22 00:00:04:712] LuaNPC:玩家名字kk ID:999999999 执行 resetday player:玩家名字kk 耗时：47; NpcThreadId: 13272, CurPlayThreadId: 13272
+
+[2026-06-23 00:00:00:054] LuaNPC:玩家名字kk ID:999999999 执行 resetday player:玩家名字kk 耗时：31; NpcThreadId: 13272, CurPlayThreadId: 13272
+

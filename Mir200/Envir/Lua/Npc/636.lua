@@ -54,6 +54,7 @@ function npc.link(play,npcid,ew,aid)
         jq_data[key] = cnt
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         Player.sendmsgEx(play, string.format("提交进度：#57|【%d/%d】#218|", cnt, max_num))
+        sendluamsg(play,100,npcid,1,cnt,tbl2json({T_dljq = jq_data}))
 
         if _config.jl then
             Player.rwjl(play, _config.jl, (_config.name or "剧情任务").."奖励", 1)
@@ -68,7 +69,7 @@ function npc.link(play,npcid,ew,aid)
             Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成#57")
             if npcid then Guard.closeNpc(play, npcid) end
             sendluamsg(play,101,1005,0,0,"rwwc")
-            sendluamsg(play,100,npcid,1,2,"")
+            sendluamsg(play,100,npcid,1,cnt,tbl2json({T_dljq = jq_data}))
         else
             Player.sendmsgEx(play, "提交成功")
         end
@@ -76,4 +77,3 @@ function npc.link(play,npcid,ew,aid)
 end
 
 return npc
-

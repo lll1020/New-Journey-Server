@@ -643,6 +643,26 @@ local function _ywl_auto_receive_map_task(play)
     Guard._syncingXylMapTask = false
 end
 GameEvent.add(EventCfg.goSwitchMap, _ywl_auto_receive_map_task, "二大陆异闻录地图任务自动接取")
+local function _ywl_try_open_submit_npc_if_ready(play, shuju)
+    if not shuju or shuju.tk ~= "npc_636" then
+        return false
+    end
+    local cfg = teshudata and teshudata[shuju.tk]
+    if not cfg or not cfg.cost then
+        return false
+    end
+    local lackName = Player.checkItemNumByTable(play, cfg.cost)
+    if lackName then
+        return false
+    end
+    stopautoattack(play)
+    if Npclib and Npclib[636] and Npclib[636].main then
+        Npclib[636].main(play, 636)
+    else
+        sendluamsg(play, 105, 636, 636, 0, "")
+    end
+    return true
+end
 npc[11] = function(play, p2, p3, data) --异闻录
     -- sj.i 大陆  sj.j 章节  sj.k 暂时不用  sj.z 剧情
     if p2 == 0 then
@@ -670,6 +690,9 @@ npc[11] = function(play, p2, p3, data) --异闻录
             end
             local shuju = npc_xyl[sj.i][sj.j].jq[sj.z]
             local use_shuju = shuju
+            if _ywl_try_open_submit_npc_if_ready(play, shuju) then
+                return
+            end
             if shuju and shuju.tk == "npc_720" and shuju.yd2 then
                 local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
                 local state705 = tonumber(jq_data["npc_705"] or 0) or 0

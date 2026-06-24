@@ -224,7 +224,7 @@ function npc.link(play,npcid,ew,aid,data)
     end
     ew = __guardAction
     -- npc_guard: 操作白名单（优化：限定合法操作编号）
-    local __guardAllowedActions = Guard.newActionSet({1,2,3,4,5,6})
+    local __guardAllowedActions = Guard.newActionSet({1,2,3,4,5,6,7})
     if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
         return
     end
@@ -507,5 +507,3 @@ function npc.onBabyExpired(play, itemobj)
     return ok
 end
 return npc
-
-
