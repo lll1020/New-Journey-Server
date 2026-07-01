@@ -160,7 +160,7 @@ constant.rw_syb = {
     --打开人物界面，选择一个灵根作为本命灵根
     [22] = {20, "本命灵根", task = {kind = "main_linggen", yd = {3, 14}}, jl = {wp = {}}, jx = true},
     --进入极光城郊，收集聚宝盆碎片*20并修复聚宝盆
-    [23] = {20, "聚宝盆任务", task = {kind = "treasure_basin", tk = "npc_106", yd = {1, "极光城郊", 106, 83, 166}, auto = true}, sjwp = {["聚宝盆碎片"] = 20}, sgrw = 33, jx = true},
+    [23] = {20, "聚宝盆任务", task = {kind = "treasure_basin", tk = "npc_106", yd = {4, 106, 106, 106}}, jx = true},
     --前往二大陆主城装备强化 NPC，完成装备强化1次
     [24] = {20, "装备强化", task = {kind = "equip_strength", yd = {1, "二大陆主城", 28, 115, 106}}, jx = true},
     --进入神秘森林并接取任务，击杀30只怪完成守护森林

@@ -141,11 +141,11 @@ local function _zxrw_has_main_linggen(play)
 end
 local function _zxrw_has_treasure_basin_fixed(play)
     local data = _zxrw_get_json(play, VarCfg["T_¾Û±¦Åè"])
-    if (tonumber(data.rebuilt or 0) or 0) >= 1 then
+    if (tonumber(data.task_fixed or 0) or 0) >= 1 then
         return true
     end
     data = _zxrw_get_json(play, "T44")
-    return (tonumber(data.rebuilt or 0) or 0) >= 1
+    return (tonumber(data.task_fixed or 0) or 0) >= 1
 end
 local function _zxrw_has_equip_strength(play)
     local cfg = teshudata and teshudata["npc_28"]
@@ -266,7 +266,6 @@ local function _zxrw_close_mainline_window(play, taskCfg)
         sendluamsg(play, 101, 9999, 0, 0, tostring(closeName))
     end
 end
-
 function zxrw_try_finish_current_mainline(play, desc)
     local rwid = tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0
     if rwid <= 0 then
@@ -340,6 +339,52 @@ local function _zxrw_send_npc_guide(play, xylCfg)
     sendluamsg(play, 101, 0, 1, 1, '{"lx":2,"npcdt":"' .. tostring(yd[2]) .. '","npcid":' .. tostring(yd[3] or 0) .. ',"xx":' .. tostring(yd[4] or 0) .. ',"yy":' .. tostring(yd[5] or 0) .. '}')
     return true
 end
+local function _zxrw_has_submit_items(play, rwid)
+    local cfg = constant.rw_syb[tonumber(rwid) or 0]
+    local taskCfg = cfg and cfg.task
+    if taskCfg and taskCfg.kind == "treasure_basin" then
+        local basinCfg = Guard.getConfig("npc_106") or {}
+        local itemName = tostring(basinCfg.fragment_item or "¾Û±¦ÅèËéÆ¬")
+        local needNum = tonumber(basinCfg.fragment_count or 20) or 20
+        return (tonumber(getbagitemcount(play, itemName) or 0) or 0) >= needNum
+    end
+    if not (cfg and cfg.sjwp) then
+        return false
+    end
+    for itemName, needCount in pairs(cfg.sjwp) do
+        if (tonumber(getbagitemcount(play, itemName) or 0) or 0) < (tonumber(needCount) or 0) then
+            return false
+        end
+    end
+    return true
+end
+local function _zxrw_try_open_submit_npc(play, rwid, xylCfg)
+    if not _zxrw_has_submit_items(play, rwid) then
+        return false
+    end
+    local yd = xylCfg and xylCfg.yd
+    local targetNpc = type(yd) == "table" and tonumber(yd[2] or 0) or 0
+    if targetNpc <= 0 then
+        targetNpc = type(yd) == "table" and tonumber(yd[3] or 0) or 0
+    end
+    if targetNpc <= 0 then
+        return false
+    end
+    opennpcshowex(play, targetNpc, 10, 2)
+    return true
+end
+local function _zxrw_guide_treasure_basin(play, rwid, xylCfg)
+    local yd = xylCfg and xylCfg.yd or {}
+    local targetX = tonumber(yd[3]) or 106
+    local targetY = tonumber(yd[4]) or 106
+    mapmove(play, "¼«¹â³Ç½¼", targetX, targetY, 3)
+    if _zxrw_try_open_submit_npc(play, rwid, xylCfg) then
+        return true
+    end
+    _zxrw_mark_treasure_basin_started(play)
+    startautoattack(play)
+    return true
+end
 local function _zxrw_guide_main_task(play, rwid, xylCfg)
     local yd = xylCfg and xylCfg.yd
     if type(yd) ~= "table" then
@@ -349,9 +394,7 @@ local function _zxrw_guide_main_task(play, rwid, xylCfg)
         local targetMap, targetX, targetY = yd[2], tonumber(yd[4]) or 0, tonumber(yd[5]) or 0
         mapmove(play, targetMap, targetX, targetY, xylCfg.auto and 5 or 3)
         if xylCfg.kind == "treasure_basin" then
-            _zxrw_mark_treasure_basin_started(play)
-            startautoattack(play)
-            return true
+            return _zxrw_guide_treasure_basin(play, rwid, xylCfg)
         end
         if xylCfg.auto and _zxrw_story_need_fight(play, xylCfg) then
             _zxrw_ensure_story_started(play, xylCfg)
@@ -366,12 +409,16 @@ local function _zxrw_guide_main_task(play, rwid, xylCfg)
         sendluamsg(play, 101, 0, 1, 1, '{"lx":3,"rwid":' .. tostring(rwid) .. '}')
         return true
     elseif yd[1] == 4 then
+        if xylCfg.kind == "treasure_basin" then
+            return _zxrw_guide_treasure_basin(play, rwid, xylCfg)
+        end
         local btn = tonumber(yd[3]) or tonumber(yd[2]) or 0
         sendluamsg(play, 101, 0, 1, 1, '{"lx":1,"fx":1,"an":' .. tostring(btn) .. ',"rwid":' .. tostring(rwid) .. ',"ms":"µã»÷¶¥²¿°´Å¥"}')
         return true
     end
     return false
 end
+
 local function _zxrw_auto_mainline_map_task(play)
     local rwid = tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0
     local taskCfg = _zxrw_get_main_task_cfg(rwid)
@@ -387,6 +434,9 @@ local function _zxrw_auto_mainline_map_task(play)
         return
     end
     if xylCfg.kind == "treasure_basin" then
+        if _zxrw_try_open_submit_npc(play, rwid, xylCfg) then
+            return
+        end
         _zxrw_mark_treasure_basin_started(play)
         startautoattack(play)
         return

@@ -1210,8 +1210,8 @@ local function _sc_apply_main_reward(play, data)
     if tonumber(halfMoon or 0) > 0 then
         addskill(play, halfMoon, 3)
     end
-    Player.rwjl(play, {{"¾Û±¦ÅèËéÆ¬", 20}}, "Ê×³äÀñ°ü", 1, 0)
-    _sc_refresh_treasure_task_progress(play)
+    local tb = rawget(_G, "__treasure_basin_module") or dofile("Envir/Lua/LuaLib/treasure_basin.lua")
+    if tb and type(tb.activate) == "function" then tb.activate(play, "Ê×³äÀñ°ü") end
 
     local sz_data = Player.getJsonTableByVar(play, VarCfg.T_szjl) or {}
     sz_data.yjs = sz_data.yjs or {}
@@ -2776,10 +2776,10 @@ end
 local TreasureBasin = rawget(_G, "__treasure_basin_module") or dofile("Envir/Lua/LuaLib/treasure_basin.lua")
 npc[517] = function(play, p2, p3, msgData)
     if p2 == 0 then
-        TreasureBasin.main(play, 106)
+        TreasureBasin.mainFeature(play, 517)
         return
     end
-    TreasureBasin.link(play, 106, p2, p3, msgData)
+    TreasureBasin.linkFeature(play, 517, p2, p3, msgData)
 end
 local xlxl =
     { { 1, 2, 3, 4, 7, 8, 23, 22, 24, 25, 26 }, constant.cz_je, { 88, 6, 3, 18 } }
@@ -3032,6 +3032,7 @@ for npcId, handler in pairs(npc) do
     end
 end
 return npc
+
 
 
 

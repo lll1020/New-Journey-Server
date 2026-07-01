@@ -1358,6 +1358,84 @@ local SBK_POTION_EFFECT_HANDLERS = {
 }
 
 
+local PHOENIX_EYE_VAR = VarCfg["T_凤凰之瞳"] or "T_凤凰之瞳"
+local PHOENIX_EYE_ATTR_LIST = "凤凰之瞳"
+local PHOENIX_EYE_POOL = {
+    {id = 200, value = 666, name = "切割"},
+    {id = 3, value = 20, name = "GMD"},
+    {id = 242, value = 100, name = "打怪爆率"},
+    {id = 245, value = 100, name = "打怪增伤"},
+    {id = 1, value = 1000, name = "固定生命"},
+    {id = 2, value = 1000, name = "固定魔法"},
+    {id = 4, value = 80, name = "固定攻击"},
+    {id = 36, value = 10, name = "固定防御"},
+}
+local FORBIDDEN_ITEM_USE_NAMES = {
+    ["\183\217\204\236\189\251\198\247\161\164\209\215\211\252\193\250\215\240"] = true,
+    ["\211\196\211\252\189\251\198\247\161\164\218\164\186\211\185\237\214\247"] = true,
+    ["\205\242\193\233\189\251\198\247\161\164\204\171\185\197\201\241\187\203"] = true,
+}
+
+local function _phoenix_eye_data(play)
+    local data = Player.getJsonTableByVar(play, PHOENIX_EYE_VAR)
+    data = type(data) == "table" and data or {}
+    data.count = tonumber(data.count) or 0
+    data.attrs = type(data.attrs) == "table" and data.attrs or {}
+    return data
+end
+
+local function _phoenix_eye_attr_str(data)
+    local attrs = {}
+    data = data or {}
+    local saved = type(data.attrs) == "table" and data.attrs or {}
+    for _, cfg in ipairs(PHOENIX_EYE_POOL) do
+        local times = tonumber(saved[tostring(cfg.id)] or saved[cfg.id]) or 0
+        if times > 0 then
+            attrs[cfg.id] = (attrs[cfg.id] or 0) + cfg.value * times
+        end
+    end
+    return Player.getAttrTableToStr(attrs)
+end
+
+local function _phoenix_eye_apply(play)
+    Player.del_attlist(play, PHOENIX_EYE_ATTR_LIST)
+    local data = _phoenix_eye_data(play)
+    if data.count > 0 then
+        Player.add_attlist(play, PHOENIX_EYE_ATTR_LIST, "=", _phoenix_eye_attr_str(data), 1)
+    end
+end
+
+local function _phoenix_eye_login(play)
+    _phoenix_eye_apply(play)
+end
+
+GameEvent.add(EventCfg.onLogin, _phoenix_eye_login, "Login_凤凰之瞳")
+GameEvent.add(EventCfg.onKFLogin, _phoenix_eye_login, "KFLogin_凤凰之瞳")
+
+local function _use_phoenix_eye(play, item)
+    local data = _phoenix_eye_data(play)
+    local cfg = PHOENIX_EYE_POOL[math.random(#PHOENIX_EYE_POOL)]
+    data.count = (tonumber(data.count) or 0) + 1
+    data.attrs[tostring(cfg.id)] = (tonumber(data.attrs[tostring(cfg.id)]) or 0) + 1
+    Player.setJsonVarByTable(play, PHOENIX_EYE_VAR, data)
+    _phoenix_eye_apply(play)
+    delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+    Player.sendmsgEx(play, "使用成功：|【凤凰之瞳】#218|随机获得#57|【" .. cfg.name .. "+" .. cfg.value .. "】#218|，累计#57|【" .. data.count .. "】#218|次")
+    return false
+end
+
+local function _use_forbidden_item(play, item, itemName)
+    local basin = rawget(_G, "__treasure_basin_module")
+    if not basin or type(basin.useForbiddenItem) ~= "function" then
+        Player.sendmsgEx(play, "聚宝盆禁器功能未加载，无法使用#57")
+        return false
+    end
+    local ok = basin.useForbiddenItem(play, itemName)
+    if ok then
+        delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+    end
+    return false
+end
 local MIJING_TITLE_USE_ITEMS = {
     ["极光使者"] = "极光使者",
     ["白云苍狗"] = "白云苍狗",
@@ -1390,11 +1468,17 @@ function stdmodefunc65(play, item) --沙巴克攻防药剂
     Player.sendmsgEx(play, "使用成功：|【" .. itemName .. "】#218|#57")
     return false
 end
-function stdmodefunc66(play, item) --秘境称号道具
+function stdmodefunc66(play, item) --秘境称号/聚宝盆道具
     local itemName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "")
     if itemName == "" then
-        Player.sendmsgEx(play, "秘境称号道具名称异常，无法使用#57")
+        Player.sendmsgEx(play, "道具名称异常，无法使用#57")
         return false
+    end
+    if itemName == "\183\239\187\203\214\174\205\171" then
+        return _use_phoenix_eye(play, item)
+    end
+    if false and FORBIDDEN_ITEM_USE_NAMES[itemName] then
+        return _use_forbidden_item(play, item, itemName)
     end
     local titleKey = string.gsub(itemName, "%[可使用%]", "")
     local titleName = MIJING_TITLE_USE_ITEMS[titleKey]

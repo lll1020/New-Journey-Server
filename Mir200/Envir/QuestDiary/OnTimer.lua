@@ -3090,6 +3090,10 @@ function ontimer4(play)
     local zxsj = getplaydef(play, VarCfg.U_fldt[1])
     setplaydef(play, VarCfg.U_fldt[1], zxsj + 1)
     setplaydef(play, VarCfg.J_zxsj,getplaydef(play, VarCfg.J_zxsj) + 1)
+    local treasureBasin = rawget(_G, "__treasure_basin_module")
+    if treasureBasin and type(treasureBasin.onTimer60) == "function" then
+        treasureBasin.onTimer60(play)
+    end
     local midExpire = tonumber(getplaydef(play, "N$xf_dan_mid_expire") or 0) or 0
     if midExpire > 0 and midExpire <= os.time() then
         setplaydef(play, "N$xf_dan_mid_expire", 0)
@@ -3245,12 +3249,14 @@ function ontimer6(play)
         end
     end
     local can_jbp = false
-    local jbp_cfg = teshudata["npc_106"] or {}
-    local jbp_state = Player.getJsonTableByVar(play, VarCfg["T_¾Û±¦Åè"]) or {}
-    local jbp_need = tonumber(jbp_cfg.fragment_count or 20) or 20
-    local jbp_item = tostring(jbp_cfg.fragment_item or "¾Û±¦ÅèËéÆ¬")
-    if (tonumber(jbp_state.rebuilt or 0) or 0) < 1 and getbagitemcount(play, jbp_item) >= jbp_need then
-        can_jbp = true
+    local jbp_state = Player.getJsonTableByVar(play, "T44") or {}
+    local jbp_active = (tonumber(jbp_state.activated or jbp_state.rebuilt or 0) or 0) >= 1
+    if jbp_active then
+        local energy_sec = tonumber(jbp_state.energy_sec or 0) or 0
+        local refine = type(jbp_state.refine) == "table" and jbp_state.refine or {}
+        if energy_sec >= 60 or (tostring(refine.stone or "") ~= "" and (tonumber(refine.end_at or 0) or 0) <= os.time()) then
+            can_jbp = true
+        end
     end
     -- ÏÉÍ¾ÆæÔµ¶¥²¿ºìµã£º´æÔÚÈÎÒ»Àï³Ì±®½±Àø¿ÉÁìÈ¡Ê±µãÁÁ¡£
     local can_ff = false

@@ -254,8 +254,15 @@ end
 
 -- 备注：聚宝盆是否已修复/激活
 local function _xyl_has_treasure_basin_fixed(play)
+    local mod = rawget(_G, "__treasure_basin_module")
+    if mod and type(mod.isActivated) == "function" and mod.isActivated(play) then
+        return true
+    end
     local data = Player.getJsonTableByVar(play, "T44")
-    return (tonumber(data and data.rebuilt or 0) or 0) >= 1
+    if (tonumber(data and (data.activated or data.rebuilt) or 0) or 0) >= 1 then
+        return true
+    end
+    return getbagitemcount(play, "聚宝盆") >= 1 or Player.hasEquipInArtifactSlot(play, "聚宝盆")
 end
 -- 备注：转生等级是否达到指定等级
 local function _xyl_has_rebirth(play, level)
