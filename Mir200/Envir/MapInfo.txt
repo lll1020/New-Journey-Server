@@ -1,4 +1,4 @@
-[正邪大战|bjzc 正邪大战] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE CAMP
+跨服地图:45:45:8[正邪大战|bjzc 正邪大战] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE CAMP
 ;==============================================城市地图==============================
 ;[新手地图|12       新手地图] day NOALLOWUSEITEMS(盟重回城石) safe RUNMON(1) NEEDSET_OFF(300)
 [比武大会|D3804_2 比武大会]  noreconnect(xtc:137:138:9) NEEDSET_OFF(300) SECRET(47|神秘人|2|21) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
@@ -31,27 +31,27 @@ hg 23 26 -> hjsbk 86 102
 
 
 
-[跨服地图|bjzc 跨服地图] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
-[kftt1|bjzc 武道会擂台1] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
-[kftt2|bjzc 武道会擂台2] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
-[kftt3|bjzc 武道会擂台3] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
-[kftt4|bjzc 武道会擂台4] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
-[kftt5|bjzc 武道会擂台5] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
-[kftt6|bjzc 武道会擂台6] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
-[kftt7|bjzc 武道会擂台7] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
-[kftt8|bjzc 武道会擂台8] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
-[kftt9|bjzc 武道会擂台9] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
-[kftt10|bjzc 武道会擂台10] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
-[kftt11|bjzc 武道会擂台11] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
-[kftt12|bjzc 武道会擂台12] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
-[kftt13|bjzc 武道会擂台13] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
-[kftt14|bjzc 武道会擂台14] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
-[kftt15|bjzc 武道会擂台15] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
-[kftt16|bjzc 武道会擂台16] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
-[kftt17|bjzc 武道会擂台17] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
-[kftt18|bjzc 武道会擂台18] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
-[kftt19|bjzc 武道会擂台19] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
-[kftt20|bjzc 武道会擂台20] noreconnect(跨服地图:26:55:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[跨服地图|nwsjq 跨服地图] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
+[kftt1|slwtzdt 武道会擂台1] noreconnect(跨服地图:45:45:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt2|slwtzdt 武道会擂台2] noreconnect(跨服地图:45:45:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt3|slwtzdt 武道会擂台3] noreconnect(跨服地图:45:45:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt4|slwtzdt 武道会擂台4] noreconnect(跨服地图:45:45:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt5|slwtzdt 武道会擂台5] noreconnect(跨服地图:45:45:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt6|slwtzdt 武道会擂台6] noreconnect(跨服地图:45:45:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt7|slwtzdt 武道会擂台7] noreconnect(跨服地图:45:45:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt8|slwtzdt 武道会擂台8] noreconnect(跨服地图:45:45:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt9|slwtzdt 武道会擂台9] noreconnect(跨服地图:45:45:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt10|slwtzdt 武道会擂台10] noreconnect(跨服地图:45:45:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt11|slwtzdt 武道会擂台11] noreconnect(跨服地图:45:45:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt12|slwtzdt 武道会擂台12] noreconnect(跨服地图:45:45:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt13|slwtzdt 武道会擂台13] noreconnect(跨服地图:45:45:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt14|slwtzdt 武道会擂台14] noreconnect(跨服地图:45:45:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt15|slwtzdt 武道会擂台15] noreconnect(跨服地图:45:45:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt16|slwtzdt 武道会擂台16] noreconnect(跨服地图:45:45:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt17|slwtzdt 武道会擂台17] noreconnect(跨服地图:45:45:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt18|slwtzdt 武道会擂台18] noreconnect(跨服地图:45:45:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt19|slwtzdt 武道会擂台19] noreconnect(跨服地图:45:45:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
+[kftt20|slwtzdt 武道会擂台20] noreconnect(跨服地图:45:45:8) NEEDSET_OFF(300) RUNHUMAN(1) Kuafu day NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
 [kfhjsbk|03023 跨服沙巴克] noreconnect(xtc:137:138:9) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE Kuafu day
 [kfhg|n0150 沙巴克皇宫] noreconnect(xtc:137:138:9)  NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE Kuafu day
 kfhjsbk 85 100 -> kfhg 20 24
@@ -59,7 +59,20 @@ kfhjsbk 80 105 -> kfhg 16 29
 kfhjsbk 78 105 -> kfhg 10 29
 kfhjsbk 89 96 -> kfhg 26 20
 kfhg 23 26 -> kfhjsbk 86 102
+ 
+[幽邃地窟|wbmh   幽邃地窟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu
+[摄魂红尘|wbmh   摄魂红尘] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu
+[逆灵离心|wbmh   逆灵离心] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu
+[生死之门|wbmh   生死之门] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu
+[跨服秘境|wbmh   跨服秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu
 
+[极光[日卡]|4dlzc   极光[日卡]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[苍云[日卡]|4dlzc   苍云[日卡]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[若水[日卡]|4dlzc   若水[日卡]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[红尘[日卡]|4dlzc   红尘[日卡]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[灵虚[日卡]|4dlzc   灵虚[日卡]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[万灵[日卡]|4dlzc   万灵[日卡]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[诸天[日卡]|4dlzc   诸天[日卡]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 
 

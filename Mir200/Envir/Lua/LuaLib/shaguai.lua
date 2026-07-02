@@ -1727,9 +1727,36 @@ shaguai = {
 			mod.link(play, 740, 4, mob)
 		end
 	end,
-	["33"] = function(play,mob)      -- 聚宝盆新版逻辑跳过旧碎片掉落
-		return
-	end,
+    ["33"] = function(play,mob)      -- 聚宝盆碎片：接到聚宝盆任务后，极光城郊怪物按 1/70 + 20 杀保底掉落
+        if getbaseinfo(play,3) ~= "极光城郊" then
+            return
+        end
+        local cfg = teshudata["npc_106"] or {}
+        local itemName = tostring(cfg.fragment_item or "聚宝盆碎片")
+        local needNum = tonumber(cfg.fragment_count or 20) or 20
+        if getbagitemcount(play, itemName) >= needNum then
+            return
+        end
+        local key = "kill_pity_聚宝盆碎片"
+        local cur, dropData = _sg_drop_record_inc(play, key)
+        local dropped = false
+        if math.random(70) == 1 then
+            dropped = shaguai.temp_drop(play, mob, itemName)
+        elseif cur >= 20 then
+            dropped = shaguai.temp_drop(play, mob, itemName)
+        end
+        if dropped then
+            _sg_drop_record_set(play, key, 0, dropData)
+            local have = tonumber(getbagitemcount(play, itemName) or 0) or 0
+            if have > needNum then
+                have = needNum
+            end
+            if (tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0) == 23 then
+                newchangetask(play, 23, have)
+            end
+            Player.sendmsgEx(play, "打怪掉落【"..itemName.."】#57")
+        end
+    end,
 	["34"] = function(play,mob)      --筑基丹碎片：聚宝盆修复后，二三大陆普通怪每累计 100 只保底掉落
 		local record = Player.getJsonTableByVar(play, "T39") or {}
 		local jz_count = tonumber(record.jz_dan_count or 0) or 0

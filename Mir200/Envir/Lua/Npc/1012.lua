@@ -10,7 +10,7 @@ function npc.link(play, npcid, aid)
     end
 
     if checkkuafuconnect() then
-        mapmove(play, "跨服地图", 32, 54, 4)
+        mapmove(play, "跨服地图", 45, 45, 4)
         sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[跨服]</font><font color=\'#00ff00\'>跨服传送成功</font>","Type":9}')
     else
         sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[跨服]</font><font color=\'#ff0000\'>跨服未开启...</font>","Type":9}')

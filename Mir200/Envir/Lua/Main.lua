@@ -44,6 +44,7 @@ safeRequire("Envir/Lua/LuaLib/npc_guard.lua")
 safeRequire("Envir/Extension/UtilServer/Bag.lua")
 --release_print("--------------------玩家接口--------------------")
 safeRequire("Envir/Extension/UtilServer/Player.lua")
+safeRequire("Envir/Lua/LuaLib/cross_server_guard.lua")
 --release_print("--------------------物品接口--------------------")
 safeRequire("Envir/Extension/UtilServer/Item.lua")
 
