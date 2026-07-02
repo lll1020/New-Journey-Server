@@ -3126,22 +3126,12 @@ function ontimer6(play)
         end
         return num
     end
-    -- 首充礼包（p3=5）可领取判定
+    -- 首充礼包（p3=5）可领取判定：当前结构为主礼包一次领取，ok=1 且未领取时亮红点。
     local can_sc = false
-    local sc_cfg = teshudata["anniu_501"] or {}
     local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
-    if tonumber(sc_data["ok"] or 0) == 1 then
-        if tonumber(sc_data["首充"] or 0) == 1 then
-            local day_list = (sc_cfg.details and sc_cfg.details["首充"]) or {}
-            local max_day = #day_list
-            if max_day > 0 then
-                local claimed = tonumber(sc_data["other_lb"] or 0) or 0
-                local next_idx = claimed + 1
-                if next_idx <= max_day and Player.dl_sz_notip(play, next_idx) then
-                    can_sc = true
-                end
-            end
-        end
+    local sc_claimed = tonumber(sc_data.main_claimed or sc_data.other_lb or 0) or 0
+    if tonumber(sc_data["ok"] or 0) == 1 and sc_claimed < 1 then
+        can_sc = true
     end
     -- 福利大厅（p3=2）可领取判定：七日登录/在线/杀怪/首杀首爆任一可领则亮
     local can_fldt = false

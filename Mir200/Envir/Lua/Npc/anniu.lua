@@ -1201,6 +1201,30 @@ local function _sc_refresh_treasure_task_progress(play)
     end
     newchangetask(play, 23, have)
 end
+local function _sc_grant_slot_item_rewards(play)
+    local skipReward = {
+        ["天选资格"] = true,
+        ["群体施毒术"] = true,
+        ["智能巡航"] = true,
+        ["定点传送功能"] = true,
+        ["半月弯刀"] = true,
+        ["护体光环"] = true,
+    }
+    local rewards = {}
+    for _, slot in ipairs(_sc_get_slot_list() or {}) do
+        for _, item in ipairs(slot.show or {}) do
+            local name = tostring(item[1] or "")
+            local count = tonumber(item[2] or 0) or 0
+            if name ~= "" and count > 0 and not skipReward[name] and string.find(name, "时装：", 1, true) ~= 1 then
+                rewards[#rewards + 1] = {name, count}
+            end
+        end
+    end
+    if #rewards > 0 then
+        Player.rwjl(play, rewards, "首充礼包", 1, 0)
+        _sc_refresh_treasure_task_progress(play)
+    end
+end
 local function _sc_apply_main_reward(play, data)
     local poisonSkill = getskillindex and getskillindex("群体施毒术") or 0
     if tonumber(poisonSkill or 0) > 0 then
@@ -1210,8 +1234,9 @@ local function _sc_apply_main_reward(play, data)
     if tonumber(halfMoon or 0) > 0 then
         addskill(play, halfMoon, 3)
     end
-    local tb = rawget(_G, "__treasure_basin_module") or dofile("Envir/Lua/LuaLib/treasure_basin.lua")
-    if tb and type(tb.activate) == "function" then tb.activate(play, "首充礼包") end
+
+    -- 首充只发放聚宝盆碎片；聚宝盆本体必须通过 106 修复任务获得。
+    _sc_grant_slot_item_rewards(play)
 
     local sz_data = Player.getJsonTableByVar(play, VarCfg.T_szjl) or {}
     sz_data.yjs = sz_data.yjs or {}

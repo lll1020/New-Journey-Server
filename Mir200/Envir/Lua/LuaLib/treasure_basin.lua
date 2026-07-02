@@ -905,7 +905,13 @@ end
 
 local function _on_daily(play)
     setplaydef(play, "J_Ω˚∆˜ººƒ‹_CD", 0)
+    _set_progress(play, 0)
+    _set_claimed(play, false)
     _refresh_item_bar(play)
+end
+
+function TreasureBasin.resetDaily(play)
+    _on_daily(play)
 end
 
 local function _continent_by_map_name(mapName)
@@ -970,6 +976,7 @@ end
 GameEvent.add(EventCfg.onLogin, _on_login, "æ€±¶≈Ë")
 GameEvent.add(EventCfg.onKFLogin, _on_login, "æ€±¶≈Ë")
 GameEvent.add(EventCfg.goDailyUpdate, _on_daily, "æ€±¶≈Ë")
+GameEvent.add(EventCfg.onKillMon, TreasureBasin.onKillMon, "æ€±¶≈Ë")
 GameEvent.add(EventCfg.onExitGame, TreasureBasin.onExitGame, "æ€±¶≈Ë")
 GameEvent.add(EventCfg.onTakeOnEx, _on_take_on, "æ€±¶≈Ë")
 GameEvent.add(EventCfg.onTakeOffEx, _on_take_off, "æ€±¶≈Ë")
