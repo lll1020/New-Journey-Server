@@ -35,6 +35,8 @@ local _config = {
     [231] = {"森罗魔域",0,0,nil,nil,6, mob_name = "森罗魔主?灭世", mob_shape = 16170, min_map = "10244", other_name = "森罗魔域"},
     [232] = {"边关烽城",0,0,nil,nil,6, mob_name = "镇关大将军?烈锋", mob_shape = 16170, min_map = "10244", other_name = "边关烽城"},
     [233] = {"盛世古城",0,0,nil,nil,6, mob_name = "古城守护神?天佑 [神圣]", mob_shape = 16170, min_map = "10244", other_name = "盛世古城"},
+    [234] = {"兵道古藏",0,0,nil,nil,6, mob_name = "神道兵魂", mob_shape = 16170, min_map = "10244", other_name = "兵道古藏"},
+    [235] = {"鬼道古藏",0,0,nil,nil,6, mob_name = "鬼道残魂", mob_shape = 16170, min_map = "10244", other_name = "鬼道古藏"},
 }
 local _config_spa = {
     --{"地图名",x,y,限制fun,提示文字,所属大陆}
@@ -59,7 +61,21 @@ local _config_spa = {
     [318] = {"灵域·秘境", 21, 20,nil,nil,4, mob_name = "★灵域秘境·原初主宰★", mob_shape = 16149, min_map = "027186"},
 }
 -- 三大陆地图统一拦截：未开辟仙府时，只允许通过 NPC 200 进入灰界。
+local function _has_shendao_cert(play, god)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_登神之路"] or "T_登神之路") or {}
+    local gods = type(data.gods) == "table" and data.gods or {}
+    local info = gods[tostring(god)] or gods[god] or {}
+    return (tonumber(info.cert or 0) or 0) >= 1
+end
 local function _ensure_continent_map_access(play, continent, map_name)
+    if map_name == "兵道古藏" and not _has_shendao_cert(play, 1) then
+        Player.sendmsgEx(play, "需要完成兵神道自证后才可进入#57")
+        return false
+    end
+    if map_name == "鬼道古藏" and not _has_shendao_cert(play, 2) then
+        Player.sendmsgEx(play, "需要完成鬼神道自证后才可进入#57")
+        return false
+    end
     if continent == 3 then
         return Player.ensureThirdContinentMapAccess(
             play,

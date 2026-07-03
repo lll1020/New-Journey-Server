@@ -6,6 +6,7 @@ local _var_name = VarCfg["T_武器性格"] or "T68"
 local _attr_list_name = tostring(_config.attr_list_name or "武器性格")
 local _temp_attr_list_name = tostring(_config.temp_attr_list_name or "武器性格_临时")
 local _tick_cmd = "@weapon_personality_tick"
+local _weapon_where = 1
 
 -- 统一处理可能为空的数值。
 local function _toint(v)
@@ -40,6 +41,60 @@ end
 -- 读取单个性格的显示名称。
 local function _personality_name(idx)
     return tostring(_personality_cfg(idx).name or "")
+end
+
+local function _weapon_itemobj(play)
+    local itemobj = linkbodyitem(play, _weapon_where)
+    if itemobj and itemobj ~= "0" then
+        return itemobj
+    end
+    return nil
+end
+
+local function _clear_weapon_display(play, itemobj)
+    itemobj = itemobj or _weapon_itemobj(play)
+    if not itemobj or itemobj == "0" then
+        return
+    end
+    for idx = 0, 2 do
+        setcustomitemprogressbar(play, itemobj, idx, tbl2json({open = 0}))
+    end
+    refreshitem(play, itemobj)
+end
+
+local function _refresh_weapon_display(play, data)
+    local itemobj = _weapon_itemobj(play)
+    if not itemobj then
+        return
+    end
+    data = data or _get_data(play)
+    local cur_cfg = _personality_cfg(data.personality)
+    local desc = tostring(cur_cfg.desc or "")
+    local line3 = ""
+    if tostring(cur_cfg.key or "") == "baonu" then
+        line3 = string.format("当前层数：%d", math.max(0, _toint(data.kill_player_layer)))
+    elseif tostring(cur_cfg.key or "") == "shixue" then
+        line3 = string.format("当前击杀：%d", math.max(0, _toint(data.same_map_kill)))
+    elseif tostring(cur_cfg.key or "") == "tanlan" then
+        line3 = string.format("今日金币：%d", math.max(0, _toint(data.greed_gold)))
+    elseif _toint(data.temp_gap) > 0 then
+        line3 = string.format("当前增幅：%d%%", _toint(data.temp_gap))
+    end
+
+    setcustomitemprogressbar(play, itemobj, 0, tbl2json({
+        open = 1, show = 0, name = "今日性格：" .. tostring(cur_cfg.name or "无"), color = 253, imgcount = 1,
+    }))
+    setcustomitemprogressbar(play, itemobj, 1, tbl2json({
+        open = 1, show = 0, name = desc, color = 249, imgcount = 1,
+    }))
+    if line3 ~= "" then
+        setcustomitemprogressbar(play, itemobj, 2, tbl2json({
+            open = 1, show = 0, name = line3, color = 223, imgcount = 1,
+        }))
+    else
+        setcustomitemprogressbar(play, itemobj, 2, tbl2json({open = 0}))
+    end
+    refreshitem(play, itemobj)
 end
 
 -- 从配置池中抽取当天的武器性格。
@@ -224,6 +279,7 @@ local function _prepare_state(play, force_roll)
     _roll_daily_if_needed(play, data, force_roll)
     _normalize_runtime(play, data)
     _refresh_attrs(play, data)
+    _refresh_weapon_display(play, data)
     _schedule_tick(play, data)
     return data
 end
@@ -272,6 +328,7 @@ local function _set_temp_relation(play, data, relation_key, gap)
     data.temp_end = _now() + keep_sec
     _save_data(play, data)
     _refresh_attrs(play, data)
+    _refresh_weapon_display(play, data)
     _schedule_tick(play, data)
     return true
 end
@@ -451,6 +508,7 @@ local function _on_kill_play(play, target)
     data.kill_player_expire = now + math.max(1, _toint(cur_cfg.layer_keep_sec or 300))
     _save_data(play, data)
     _refresh_attrs(play, data)
+    _refresh_weapon_display(play, data)
     _schedule_tick(play, data)
 end
 
@@ -473,6 +531,7 @@ local function _on_kill_mon(play, mob)
         end
         _save_data(play, data)
         _refresh_attrs(play, data)
+        _refresh_weapon_display(play, data)
     elseif cur_key == "tanlan" then
         if _toint(daluditu and daluditu[cur_map]) == _toint(cur_cfg.continent or 6) then
             local add_gold = _pick_greed_gold(cur_cfg)
@@ -480,6 +539,7 @@ local function _on_kill_mon(play, mob)
                 data.greed_gold = _toint(data.greed_gold) + add_gold
                 _save_data(play, data)
                 changemoney(play, _toint(cur_cfg.money_id or 3), "+", add_gold, tostring(cur_cfg.money_reason or "武器性格"), true)
+                _refresh_weapon_display(play, data)
             end
         end
     end
@@ -514,11 +574,25 @@ local function _on_attack_damage_player(play, target)
 end
 npc.onKillMon = _on_kill_mon
 
+local function _on_take_on(actor, itemobj, where, itemname, makeid)
+    if where == _weapon_where then
+        _prepare_state(actor, false)
+    end
+end
+
+local function _on_take_off(actor, itemobj, where, itemname, makeid)
+    if where == _weapon_where then
+        _clear_weapon_display(actor, itemobj)
+    end
+end
+
 GameEvent.add(EventCfg.onLogin, _on_login, "武器性格")
 GameEvent.add(EventCfg.goDailyUpdate, _on_daily, "武器性格")
 GameEvent.add(EventCfg.goSwitchMap, _on_switch_map, "武器性格")
 GameEvent.add(EventCfg.onkillplay, _on_kill_play, "武器性格")
 GameEvent.add(EventCfg.onAttackDamagePlayer, _on_attack_damage_player, "武器性格")
+GameEvent.add(EventCfg.onTakeOnEx, _on_take_on, "武器性格")
+GameEvent.add(EventCfg.onTakeOffEx, _on_take_off, "武器性格")
 
 return npc
 

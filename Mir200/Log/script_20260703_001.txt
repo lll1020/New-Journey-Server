@@ -2,3 +2,32 @@
 
 [2026-07-03 04:28:26:356] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：78; NpcThreadId: 107588, CurPlayThreadId: 107588
 
+[2026-07-03 21:19:30:145] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：141; NpcThreadId: 107588, CurPlayThreadId: 107588
+
+[2026-07-03 21:39:54:220] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：32; NpcThreadId: 107588, CurPlayThreadId: 107588
+[2026-07-03 21:39:54:220] [玩家名字]Lua执行耗时过高:32ms msgid:101 517 3 0 
+
+[2026-07-03 21:44:16:570] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 107588, CurPlayThreadId: 107588
+[2026-07-03 21:44:16:570] [玩家名字]Lua执行耗时过高:31ms msgid:100 503 1 0 
+
+[2026-07-03 22:00:00:373] LuaNPC:系统控制 ID:999999999 执行 jqr_wudaohui_end player:系统控制 耗时：31; NpcThreadId: 107588, CurPlayThreadId: 107588
+
+[2026-07-03 22:10:00:508] LuaNPC:系统控制 ID:999999999 执行 jqr_zxdz_end player:系统控制 耗时：31; NpcThreadId: 107588, CurPlayThreadId: 107588
+
+[2026-07-03 23:49:36:191] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 107588, CurPlayThreadId: 107588
+
+[2026-07-04 00:00:00:378] LuaNPC:系统控制 ID:999999999 执行 jqr_qingli player:系统控制 耗时：32; NpcThreadId: 107588, CurPlayThreadId: 107588
+
+[2026-07-04 00:05:46:208] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：46; NpcThreadId: 107588, CurPlayThreadId: 107588
+
+[2026-07-04 04:54:37:475] LuaNPC:玩家名字 ID:999999999 执行 sendability player:玩家名字 耗时：46; NpcThreadId: 107588, CurPlayThreadId: 107588
+[2026-07-04 04:54:37:529] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：218; NpcThreadId: 107588, CurPlayThreadId: 107588
+
+[2026-07-04 06:50:57:580] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 107588, CurPlayThreadId: 107588
+
+[2026-07-04 07:03:52:317] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 107588, CurPlayThreadId: 107588
+[2026-07-04 07:03:52:317] [玩家名字]Lua执行耗时过高:31ms msgid:100 77 1 1 {"god":1,"path":2}
+
+[2026-07-04 07:06:16:112] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：32; NpcThreadId: 107588, CurPlayThreadId: 107588
+[2026-07-04 07:06:16:112] [玩家名字]Lua执行耗时过高:32ms msgid:100 77 1 1 {"god":1,"path":1}
+

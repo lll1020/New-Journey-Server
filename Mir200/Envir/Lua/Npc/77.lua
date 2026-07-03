@@ -8,6 +8,10 @@ local function _toint(v) return tonumber(v) or 0 end
 local function _god_key(god) return tostring(_toint(god)) end
 local function _god_cfg(god) return ((_config.shendao or {})[_toint(god)] or {}) end
 local function _path_cfg(god, path) return ((_god_cfg(god).paths or {})[_toint(path)] or {}) end
+local function _map_continent(play)
+    local mapName = tostring(getbaseinfo(play, 3) or "")
+    return _toint(daluditu and daluditu[mapName])
+end
 
 local function _get_data(play)
     local data = Player.getJsonTableByVar(play, _var_name) or {}
@@ -72,7 +76,7 @@ local function _build_payload(play)
         shaguai.jia(play, 42)
     end
     _rebuild_attr(play, data)
-    return {T_data = data, config = _config}
+    return {T_data = data}
 end
 
 local function _send(play, npcid, p2, p3)
@@ -162,6 +166,9 @@ function npc.add_power(play, god, num, reason)
 end
 
 function npc.onKillMon(play, mob)
+    if _map_continent(play) ~= 6 then
+        return
+    end
     local data = _get_data(play)
     for god in pairs(_config.shendao or {}) do
         local info = _god_data(data, god)

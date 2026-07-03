@@ -272,10 +272,10 @@ local function _set_tianshu_shaqi_customabil(play, itemobj, T_data)
     local attack_value = T_data.shaqi * (tonumber(_config.shaqi_attack_per) or 1)
     local hp_value = T_data.shaqi * (tonumber(_config.shaqi_hp_per) or 20)
     if attack_value > 0 then
-        table.insert(attr_list, {254, tonumber(_config.shaqi_attack_attr) or 4, attack_value, 0, 20, 1, 1})
+        table.insert(attr_list, {254, tonumber(_config.shaqi_attack_attr) or 4, attack_value, 0, 0, 1, 1})
     end
     if hp_value > 0 then
-        table.insert(attr_list, {254, tonumber(_config.shaqi_hp_attr) or 1, hp_value, 0, 21, 2, 2})
+        table.insert(attr_list, {254, tonumber(_config.shaqi_hp_attr) or 1, hp_value, 0, 0, 2, 2})
     end
     item_json.abil[idx] = {i = abil_i or (idx - 1), t = "[É±ÆøÊôĞÔ]", c = 251, v = attr_list}
     setitemcustomabil(play, itemobj, tbl2json(item_json))

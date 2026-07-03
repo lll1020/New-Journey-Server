@@ -1383,7 +1383,7 @@ teshudata = {
         compat = {
             wine_items = {"æ∆œ…Ω£", "æ∆œ…Ω£1"},
             shendao_tasks = {"npc_680", "npc_681"},
-            yehuo_flags = {"npc_78", "npc_80", "npc_81"},
+            yehuo_flags = {"npc_80", "npc_81"}, -- npc_78 ‘› ±Õ£”√
         },
     },
     ["npc_72"] = {

@@ -248,7 +248,7 @@ local function _give_rewards(play, reward, reason)
         items[#items + 1] = item
     end
     if #items > 0 then
-        Player.rwjl(play, items, reason or "¾Û±¦Åè", 1, 0)
+        Player.rwjl(play, items, reason or "¾Û±¦Åè", 1, 999)
     end
 end
 
@@ -266,6 +266,10 @@ local function _forbidden_used_count(play)
     return _toint(getplaydef(play, "J_½ûÆ÷¼¼ÄÜ_CD")) >= 1 and 1 or 0
 end
 
+local function _has_super_privilege(play)
+    return checktitle(play, "³¬¼¶ÌØÈ¨")
+end
+
 local function _refresh_item_bar(play)
     local itemobj = _equipped_itemobj(play)
     if not itemobj then
@@ -278,10 +282,15 @@ local function _refresh_item_bar(play)
     setcustomitemprogressbar(play, itemobj, 0, tbl2json({
         open = 1, show = 0, name = string.format("%s Lv.%d", lvCfg.name, data.level), color = 253, imgcount = 1,
     }))
-    setcustomitemprogressbar(play, itemobj, 1, tbl2json({
-        open = 1, show = 2, name = "¾ÛÄÜ´æ´¢", color = 249, imgcount = 1,
-        cur = math.floor(data.energy_sec), max = math.max(1, _cap_seconds(data.level)), level = 1,
-    }))
+    if _cap_seconds(data.level) > 0 then
+        local percent = math.floor(math.max(0, math.min(100, (tonumber(data.energy_sec) or 0) / math.max(1, _cap_seconds(data.level)) * 100)))
+        setcustomitemprogressbar(play, itemobj, 1, tbl2json({
+            open = 1, show = 2, name = "¾ÛÄÜ´æ´¢", color = 249, imgcount = 1,
+            cur = percent, max = 100, level = 1,
+        }))
+    else
+        setcustomitemprogressbar(play, itemobj, 1, tbl2json({open = 0}))
+    end
     setcustomitemprogressbar(play, itemobj, 2, tbl2json({
         open = 1, show = 0,
         name = string.format("¿ÉÁì½ğ±Ò£º%d", reward.gold),
@@ -341,7 +350,7 @@ function TreasureBasin.activate(play, reason)
         changed = true
     end
     if not _has_artifact(play) then
-        Player.rwjl(play, {{_artifact_name, 1}}, reason or "¾Û±¦Åè", 1, 0)
+        Player.rwjl(play, {{_artifact_name, 1}}, reason or "¾Û±¦Åè", 1, 999)
         changed = true
     end
     if changed then
@@ -490,7 +499,7 @@ local function _grant_artifact_if_needed(play, data)
         changed = true
     end
     if data.rebuilt >= 1 and data.granted_item < 1 and not hasArtifact then
-        Player.rwjl(play, _artifact_reward(), "¾Û±¦ÅèÖØÖı", 1)
+        Player.rwjl(play, _artifact_reward(), "¾Û±¦ÅèÖØÖı", 1, 999)
         data.granted_item = 1
         changed = true
         Player.sendmsgEx(play, "»ñµÃ±³°üÉñÆ÷£º|¡¾".._artifact_show_name().."¡¿#218|")
@@ -837,7 +846,7 @@ local function _claim_forbidden_reward(play, npcid, id)
     elseif showId == 2 then
         setplaydef(play, "N$¾Û±¦Åè»ÆÈª½µÊÀ", _now() + 300)
     elseif showId == 3 then
-        Player.rwjl(play, {{"·ï»ËÖ®Í«", 5}}, "½ûÆ÷¼¼ÄÜ", 1, 0)
+        Player.rwjl(play, {{"·ï»ËÖ®Í«", 5}}, "½ûÆ÷¼¼ÄÜ", 1, 999)
     end
     Player.sendmsgEx(play, "³É¹¦ÊÍ·ÅÍâÏÔ½ûÆ÷¼¼ÄÜ£º#57|¡¾" .. tostring(cfg.name or "½ûÆ÷") .. "¡¿#218|")
     _refresh_item_bar(play)
@@ -933,31 +942,15 @@ function TreasureBasin.onKillMon(play, mob)
     local dl = _continent_by_map_name(mapName)
     local mobName = tostring(getbaseinfo(mob, 1) or "")
     local gtype = _toint(guaiwutype and guaiwutype[mobName])
-    local isRed = gtype >= 1
-    local isBoss = gtype >= 2
-
-    -- ¾Û±¦Ä§Ê¯£ºÈ«´óÂ½ 1/100£¬ºìÃû¹Ö¼°ÒÔÉÏ±Øµô 1 ¸ö¡£
-    if isRed or math.random(100) == 1 then
+    local isBig = gtype >= 1
+    -- ¾Û±¦Ä§Ê¯£ºÈ«´óÂ½ 1/100£¬´ó¹Ö¼°ÒÔÉÏ±Øµô 1 ¸ö¡£
+    if isBig or math.random(100) == 1 then
         shaguai.temp_drop(play, mob, "¾Û±¦Ä§Ê¯")
     end
 
-    -- ×¨Êô±¦Ê¯£º¶ÔÓ¦´óÂ½Ğ¡¹Ö/¾«Ó¢¸ÅÂÊµô°ó¶¨£¬BOSS±Øµô·Ç°ó£¬ºìÃû¹Ö¸ÅÂÊµô·Ç°ó¡£
-    if dl >= 2 and dl <= 6 then
-        local bindCfg = _stone_list[dl]
-        local nonBindCfg = _stone_list[dl + 5]
-        if bindCfg and math.random(_toint(bindCfg.rate or 999)) == 1 then
-            shaguai.temp_drop(play, mob, bindCfg.name)
-        end
-        if nonBindCfg then
-            if isBoss then
-                shaguai.temp_drop(play, mob, nonBindCfg.name)
-            elseif isRed and math.random(_toint(nonBindCfg.red_rate or 999)) == 1 then
-                shaguai.temp_drop(play, mob, nonBindCfg.name)
-            end
-        end
-    end
-end
+    -- ×¨Êô±¦Ê¯µôÂäÒÑÇ¨»Ø¸÷´óÂ½±¬ÂÊÎÄ¼ş£¬ÕâÀï²»ÔÙÍ¨¹ıÉ±¹Ö¼àÌıÖ±½Ó²ú³ö¡£
 
+end
 local function _on_take_on(actor, itemobj, where, itemname, makeid)
     if not _is_artifact_name(itemname) and not _equipped_where(actor) then return end
     TreasureBasin.activate(actor, "¾Û±¦Åè")
