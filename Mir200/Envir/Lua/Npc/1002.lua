@@ -87,7 +87,7 @@ function npc.link(play,npcid,ew,aid,data)
     end
     ew = __guardAction
     -- npc_guard: 操作白名单（优化：限定合法操作编号）
-    local __guardAllowedActions = Guard.newActionSet({1,2})
+    local __guardAllowedActions = Guard.newActionSet({1,2,3})
     if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
         return
     end
@@ -152,6 +152,30 @@ function npc.link(play,npcid,ew,aid,data)
             data["body_aura"] = buildBodyAuraData(play)
             sendluamsg(play,100,npcid,1,0,tbl2json(data))
         end
+    elseif ew == 3 then ----护体光环
+        local idx = tonumber(aid) or tonumber(data) or 0
+        if idx < -1 or idx > 3 then
+            Player.sendmsgEx(play, "参数错误#57")
+            return
+        end
+
+        if idx >= 0 then
+            local auraData = buildBodyAuraData(play)
+            local aura = auraData.aura or {}
+            if idx > 0 and (not aura[idx] or aura[idx].open ~= 1) then
+                Player.sendmsgEx(play, "该光环尚未解锁#57")
+                return
+            end
+            setplaydef(play, VarCfg["U_护体光环激活"], idx)
+            if Buff and Buff.refreshHuTiGuangHuan then
+                Buff.refreshHuTiGuangHuan(play)
+            end
+        end
+
+        local data = {}
+        data["T_data"] = T_data
+        data["body_aura"] = buildBodyAuraData(play)
+        sendluamsg(play,100,npcid,1,0,tbl2json(data))
     end
 end
 

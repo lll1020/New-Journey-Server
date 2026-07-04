@@ -26,7 +26,7 @@ local function _toint(v, d)
 end
 
 local function _real_charge(play)
-    return math.max(_toint(querymoney(play, 23)), _toint(getplaydef(play, VarCfg["U_真实充值"])))
+    return _toint(getplaydef(play, VarCfg["U_真实充值"]))
 end
 
 local function _ensure_pet_data(T_data)

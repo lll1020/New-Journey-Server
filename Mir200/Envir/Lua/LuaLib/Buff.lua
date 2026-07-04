@@ -4732,7 +4732,10 @@ function Buff.login(play)
     local attrs = {}
     local attrsstr = ""
     for i=1,5 do
-        attrs[teshudata["npc_11"].attrID[i]] = (data[""..i] or 0) * teshudata["npc_11"].config[i].ratio
+        attrs[teshudata["npc_11"].attrID[i]] = ((data[""..i] or 0) >= 10 and 10 or (data[""..i] or 0)) * teshudata["npc_11"].config[i].ratio
+    end
+    for i=1,5 do
+        attrs[teshudata["npc_54"].attrID[i]] = ((data[""..i] or 0) >= 10 and ((data[""..i] or 0) - 10) or 0) * teshudata["npc_54"].config[i].ratio
     end
     attrsstr = Player.getAttrTableToStr(attrs)
     Player.add_attlist(play, "Áé¸ùĞŞÁ¶", "=", attrsstr, 1)

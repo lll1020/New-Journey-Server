@@ -14,27 +14,52 @@ local _forbidden_attr_list = "聚宝盆禁器属性"
 local _artifact_name = "聚宝盆"
 local _artifact_names = {"聚宝盆", "聚宝盆[封印]"}
 
-local _levels = {
-    [1] = {name = "凡品聚宝盆", charge = 0, speed = 1.0, cap = 0},
-    [2] = {name = "人品聚宝盆", charge = 98, speed = 1.2, cap = 3 * 3600},
-    [3] = {name = "地品聚宝盆", charge = 198, speed = 1.4, cap = 5 * 3600},
-    [4] = {name = "天品聚宝盆", charge = 328, speed = 1.7, cap = 8 * 3600},
-    [5] = {name = "极品聚宝盆", charge = 988, speed = 2.0, cap = 12 * 3600},
-}
+local function _cfg_int(v, default)
+    v = tonumber(v)
+    if v == nil then return default or 0 end
+    return v
+end
 
-local _stone_list = {
-    [1] = {name = "聚宝魔石", kind = "normal", continent = 0, bind = 0, time = 30 * 60},
-    [2] = {name = "极光·专属宝石·绑定", kind = "exclusive", continent = 2, bind = 1, time = 2 * 3600, rate = 123},
-    [3] = {name = "苍云·专属宝石·绑定", kind = "exclusive", continent = 3, bind = 1, time = 6 * 3600, rate = 222},
-    [4] = {name = "若水·专属宝石·绑定", kind = "exclusive", continent = 4, bind = 1, time = 12 * 3600, rate = 333},
-    [5] = {name = "红尘·专属宝石·绑定", kind = "exclusive", continent = 5, bind = 1, time = 24 * 3600, rate = 666},
-    [6] = {name = "灵虚·专属宝石·绑定", kind = "exclusive", continent = 6, bind = 1, time = 48 * 3600, rate = 888},
-    [7] = {name = "极光·专属宝石·非绑", kind = "exclusive", continent = 2, bind = 0, time = 2 * 3600, red_rate = 100},
-    [8] = {name = "苍云·专属宝石·非绑", kind = "exclusive", continent = 3, bind = 0, time = 6 * 3600, red_rate = 150},
-    [9] = {name = "若水·专属宝石·非绑", kind = "exclusive", continent = 4, bind = 0, time = 12 * 3600, red_rate = 266},
-    [10] = {name = "红尘·专属宝石·非绑", kind = "exclusive", continent = 5, bind = 0, time = 24 * 3600, red_rate = 300},
-    [11] = {name = "灵虚·专属宝石·非绑", kind = "exclusive", continent = 6, bind = 0, time = 48 * 3600, red_rate = 888},
-}
+local function _parse_stone_time(v)
+    if type(v) == "number" then return math.floor(v) end
+    v = tostring(v or "")
+    local n = tonumber((string.match(v, "(%d+)") or "0")) or 0
+    if string.find(v, "分钟") then return n * 60 end
+    if string.find(v, "小时") then return n * 3600 end
+    return n
+end
+
+local _levels = {}
+for idx, cfg in pairs(_config.levels or {}) do
+    local id = tonumber(idx) or idx
+    _levels[id] = {
+        level = _cfg_int(cfg.level, id),
+        name = cfg.name,
+        charge = _cfg_int(cfg.charge),
+        speed = _cfg_int(cfg.speed, 100) / 100,
+        cap = _cfg_int(cfg.cap) * 3600,
+        cap_text = cfg.cap_text,
+    }
+end
+if not _levels[1] then
+    _levels[1] = {level = 1, name = "凡品聚宝盆", charge = 0, speed = 1.0, cap = 0, cap_text = "无存储"}
+end
+
+local _stone_list = {}
+for idx, cfg in pairs(_config.stones or {}) do
+    local id = tonumber(idx) or idx
+    _stone_list[id] = {
+        id = id,
+        name = cfg.name,
+        kind = cfg.kind or (((tonumber(cfg.continent or 0) or 0) <= 0) and "normal" or "exclusive"),
+        continent = _cfg_int(cfg.continent),
+        bind = _cfg_int(cfg.bind),
+        time = _parse_stone_time(cfg.time),
+        rate = _cfg_int(cfg.rate),
+        red_rate = _cfg_int(cfg.red_rate),
+        desc = cfg.desc,
+    }
+end
 
 local _stone_by_name = {}
 for id, cfg in pairs(_stone_list) do
@@ -51,19 +76,17 @@ local _exclusive_pools = {
     [6] = {equips = {"雷霆幻", "龙鳞震岳", "啸风逐电", "天罚雷击", "烈焰焚天", "霜雪之间"}, mat = "六重转生石"},
 }
 
-local _forbidden = {
-    [1] = {name = "焚天禁器·炎狱龙尊", skill = "天地异象", plus = "最大攻击+1%"},
-    [2] = {name = "幽狱禁器·冥河鬼主", skill = "黄泉降世", plus = "最大生命+1%"},
-    [3] = {name = "万灵禁器·太古神凰", skill = "万灵朝凤", plus = "人物双防+1%"},
-}
-local _forbidden_grade = {"未激活", "凡", "人", "地", "天", "极"}
-local _forbidden_cost = {
-    [1] = {yuanbao = 180000, crystal = 1, need_level = 1},
-    [2] = {yuanbao = 500000, crystal = 3, need_level = 2},
-    [3] = {yuanbao = 1000000, crystal = 5, need_level = 3},
-    [4] = {yuanbao = 2000000, crystal = 7, need_level = 4},
-    [5] = {yuanbao = 3000000, crystal = 9, need_level = 5},
-}
+local _forbidden = _config.forbidden or {}
+local _forbidden_grade = _config.grades or {"未激活", "凡", "人", "地", "天", "极"}
+local _forbidden_cost = {}
+for idx, cfg in pairs(_config.forbidden_cost or {}) do
+    local id = tonumber(idx) or idx
+    _forbidden_cost[id] = {
+        yuanbao = _cfg_int(cfg.yuanbao),
+        crystal = _cfg_int(cfg.crystal),
+        need_level = _cfg_int(cfg.need_level),
+    }
+end
 
 local _forbidden_title_name = "初识禁器"
 
@@ -122,7 +145,7 @@ local function _check_forbidden_title(play, data)
 end
 
 local function _recharge_total(play)
-    return math.max(_toint(querymoney(play, 23)), _toint(getplaydef(play, "U_真实充值")))
+    return _toint(getplaydef(play, "U_真实充值"))
 end
 
 local function _level_by_charge(play)
@@ -136,13 +159,34 @@ local function _level_by_charge(play)
     return lv
 end
 
-local function _sync_level(play, data)
-    local newLv = _level_by_charge(play)
-    if newLv > _toint(data.level) then
-        data.level = newLv
-        return true
+local function _can_upgrade_level(play, data)
+    data = data or _get_state(play)
+    local curLv = math.max(1, _toint(data.level))
+    local nextCfg = _levels[curLv + 1]
+    if not nextCfg then
+        return false, "当前已是最高品阶"
     end
-    return false
+    local charge = _recharge_total(play)
+    local needCharge = _toint(nextCfg.charge)
+    if charge < needCharge then
+        return false, "真实充值不足，还差#57|【" .. tostring(needCharge - charge) .. "】#218|"
+    end
+    return true, nil, nextCfg
+end
+
+local function _upgrade_level(play, npcid)
+    local data = _get_state(play)
+    local ok, err = _can_upgrade_level(play, data)
+    if not ok then
+        Player.sendmsgEx(play, err or "当前无法升级")
+        return false
+    end
+    data.level = math.max(1, _toint(data.level)) + 1
+    _save_state(play, data)
+    _refresh_attr(play)
+    _refresh_item_bar(play)
+    Player.sendmsgEx(play, "聚宝盆已提升至#57|【Lv." .. tostring(data.level) .. "】#218|")
+    return true
 end
 
 local function _is_artifact_name(name)
@@ -276,7 +320,6 @@ local function _refresh_item_bar(play)
         return
     end
     local data = _get_state(play)
-    _sync_level(play, data)
     local lvCfg = _levels[data.level] or _levels[1]
     local reward = _calc_energy_reward(data.energy_sec)
     setcustomitemprogressbar(play, itemobj, 0, tbl2json({
@@ -345,7 +388,7 @@ function TreasureBasin.activate(play, reason)
     if data.activated < 1 then
         data.activated = 1
         data.rebuilt = 1
-        data.level = math.max(1, _level_by_charge(play))
+        data.level = math.max(1, _toint(data.level))
         data.last_tick = _now()
         changed = true
     end
@@ -401,7 +444,7 @@ local function _tick_energy(play, onlineSec, offlineSec)
         data.activated = 1
         data.rebuilt = 1
     end
-    local changed = _sync_level(play, data)
+    local changed = false
     if _add_energy_seconds(play, data, onlineSec) then
         changed = true
     end
@@ -541,7 +584,6 @@ local function _build_payload(play)
         data.activated = 1
         data.rebuilt = 1
     end
-    _sync_level(play, data)
     _check_forbidden_title(play, data)
     _save_state(play, data)
     local reward = _calc_energy_reward(data.energy_sec)
@@ -661,8 +703,7 @@ local function _start_refine(play, npcid, msgData)
         return _send_panel(play, 2, npcid)
     end
     Player.takeItemByTable(play, {{stoneName, 1}}, "聚宝盆炼灵", nil)
-    local speed = (_levels[data.level] or _levels[1]).speed or 1
-    data.refine = {stone = stoneName, end_at = _now() + math.ceil(cfg.time / speed), continent = cfg.continent, bind = cfg.bind, kind = cfg.kind}
+    data.refine = {stone = stoneName, end_at = _now() + math.ceil(cfg.time), continent = cfg.continent, bind = cfg.bind, kind = cfg.kind}
     _save_state(play, data)
     Player.sendmsgEx(play, "已放入#57|【" .. stoneName .. "】#218|开始炼灵")
     _send_panel(play, 2, npcid)
@@ -878,6 +919,9 @@ function TreasureBasin.linkFeature(play, npcid, p2, p3, msgData)
         _set_show_forbidden(play, npcid, p3)
     elseif action == 7 then
         _claim_forbidden_reward(play, npcid, p3)
+    elseif action == 9 then
+        _upgrade_level(play, npcid)
+        _send_panel(play, action, npcid)
     else
         _send_panel(play, action, npcid)
     end
@@ -899,7 +943,6 @@ local function _on_login(play)
         data.activated = 1
         data.rebuilt = 1
     end
-    _sync_level(play, data)
     local lastLogout = _toint(data.last_logout)
     if data.activated >= 1 and lastLogout > 0 then
         _add_energy_seconds(play, data, math.max(0, _now() - lastLogout) * 0.5)

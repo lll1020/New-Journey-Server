@@ -6,6 +6,34 @@ npc = {}
 local _config = Guard.getConfig("npc_11")
 local _advanced_config = Guard.getConfig("npc_54") or {}
 
+
+local function AllMaxLevel(play)
+    if checktitle(play, _config.title) or (_advanced_config.title and checktitle(play, _advanced_config.title)) then
+        Player.sendmsgEx(play, "你已拥有#57|【该称号】#218|，无需重复领取#57")
+        return
+    end
+
+    Player.title_give(play, _config.title)
+    local dj_data = Player.getJsonTableByVar(play, VarCfg["T_灵根修炼"])
+    local attrs = {}
+    local attrsstr = ""
+    for i=1,5 do
+        dj_data[""..i] = 10
+        attrs[_config.attrID[i]] = (dj_data[""..i] or 0) * _config.config[i].ratio
+    end
+    attrsstr = Player.getAttrTableToStr(attrs)
+    Player.del_attlist(play, "灵根修炼")
+    Player.add_attlist(play, "灵根修炼", "=", attrsstr, 1)
+    Player.setJsonVarByTable(play, VarCfg["T_灵根修炼"], dj_data)
+    local data = {}
+    data["dj_data"] = dj_data
+    sendluamsg(play,100,11,1,0,tbl2json(data))
+    Player.sendmsgEx(play, "恭喜你获得称号：|【".._config.title.."】#218|，称号属性永久生效")
+
+end
+
+
+
 function npc.main(play,npcid)
     local data = {}
     data["dj_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根修炼"])
@@ -82,39 +110,15 @@ function npc.link(play, npcid, p2, p3, msgData)
             return
         end
     elseif p2 == 2 then
+        release_print("领取称号")
+        local name, num = Player.checkItemNumByTable(play, _config.max_cost)
+        if name then
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+            return
+        end
+        Player.takeItemByTable(play, _config.max_cost, ",灵根修炼",nil)
         AllMaxLevel(play)
     end
-end
-
-
-function AllMaxLevel(play)
-    if checktitle(play, _config.title) or (_advanced_config.title and checktitle(play, _advanced_config.title)) then
-        Player.sendmsgEx(play, "你已拥有#57|【该称号】#218|，无需重复领取#57")
-        return
-    end
-    local name, num = Player.checkItemNumByTable(play, _config.max_cost)
-    if name then
-        Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
-        return
-    end
-    Player.takeItemByTable(play, _config.max_cost, ",灵根修炼",nil)
-    Player.title_give(play, _config.title)
-    local dj_data = Player.getJsonTableByVar(play, VarCfg["T_灵根修炼"])
-    local attrs = {}
-    local attrsstr = ""
-    for i=1,5 do
-        dj_data[""..i] = 10
-        attrs[_config.attrID[i]] = (dj_data[""..i] or 0) * _config.config[i].ratio
-    end
-    attrsstr = Player.getAttrTableToStr(attrs)
-    Player.del_attlist(play, "灵根修炼")
-    Player.add_attlist(play, "灵根修炼", "=", attrsstr, 1)
-    Player.setJsonVarByTable(play, VarCfg["T_灵根修炼"], dj_data)
-    local data = {}
-    data["dj_data"] = dj_data
-    sendluamsg(play,100,11,1,0,tbl2json(data))
-    Player.sendmsgEx(play, "恭喜你获得称号：|【".._config.title.."】#218|，称号属性永久生效")
-
 end
 
 
