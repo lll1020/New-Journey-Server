@@ -78,6 +78,7 @@ local _exclusive_pools = {
 
 local _forbidden = _config.forbidden or {}
 local _forbidden_grade = _config.grades or {"未激活", "凡", "人", "地", "天", "极"}
+local _forbidden_skill_cd = 24 * 3600
 local _forbidden_cost = {}
 for idx, cfg in pairs(_config.forbidden_cost or {}) do
     local id = tonumber(idx) or idx
@@ -120,6 +121,7 @@ local function _get_state(play)
     data.forbidden.show = _toint(data.forbidden.show)
     data.forbidden.list = type(data.forbidden.list) == "table" and data.forbidden.list or {}
     data.forbidden.title_given = _toint(data.forbidden.title_given)
+    data.forbidden.skill_cd_at = _toint(data.forbidden.skill_cd_at)
     return data
 end
 
@@ -270,6 +272,12 @@ local function _format_time(sec)
     return string.format("%02d:%02d", m, s)
 end
 
+local function _forbidden_skill_cd_left(data)
+    data = data or {}
+    local forbidden = type(data.forbidden) == "table" and data.forbidden or {}
+    return math.max(0, _toint(forbidden.skill_cd_at) - _now())
+end
+
 local function _give_rewards(play, reward, reason)
     reward = reward or {}
     if _toint(reward.gold) > 0 then
@@ -306,8 +314,8 @@ local function _clear_item_bar(play, itemobj)
     refreshitem(play, itemobj)
 end
 
-local function _forbidden_used_count(play)
-    return _toint(getplaydef(play, "J_禁器技能_CD")) >= 1 and 1 or 0
+local function _forbidden_used_count(play, data)
+    return _forbidden_skill_cd_left(data) > 0 and 1 or 0
 end
 
 local function _has_super_privilege(play)
@@ -346,7 +354,9 @@ local function _refresh_item_bar(play)
     }))
     setcustomitemprogressbar(play, itemobj, 4, tbl2json({
         open = 1, show = 0,
-        name = string.format("禁器技能：今日剩余%d/1", 1 - _forbidden_used_count(play)),
+        name = _forbidden_used_count(play, data) >= 1
+            and ("禁器技能：冷却" .. _format_time(_forbidden_skill_cd_left(data)))
+            or "禁器技能：今日剩余1/1",
         color = 223, imgcount = 1,
     }))
     refreshitem(play, itemobj)
@@ -477,7 +487,7 @@ end
 
 local function _build_forbidden_payload(play, data)
     local list = {}
-    local used = _forbidden_used_count(play)
+    local used = _forbidden_used_count(play, data)
     for id, _ in ipairs(_forbidden) do
         local node = data.forbidden.list[tostring(id)] or data.forbidden.list[id] or {}
         list[#list + 1] = {
@@ -602,6 +612,9 @@ local function _build_payload(play)
         refine = _build_refine_payload(data),
         forbidden_point = _toint(data.forbidden.point),
         forbidden = _build_forbidden_payload(play, data),
+        forbidden_skill_cd_at = _toint(data.forbidden.skill_cd_at),
+        forbidden_skill_cd_left = _forbidden_skill_cd_left(data),
+        forbidden_skill_cd_text = _format_time(_forbidden_skill_cd_left(data)),
         today = _today_key(),
         has_forbidden_title = _toint(data.forbidden.title_given),
     }
@@ -618,6 +631,12 @@ function TreasureBasin.main(play, npcid)
     _send_task_panel(play, 0, npcid or 106)
 end
 
+function TreasureBasin.openTaskPanel(play, npcid, msgType)
+    _grant_artifact_if_needed(play, _get_state(play))
+    _refresh_attr(play)
+    _refresh_item_bar(play)
+    _send_task_panel(play, msgType or 0, npcid or 106)
+end
 function TreasureBasin.link(play, npcid, p2, p3, msgData)
     if not Guard.ensurePlayer(play, npcid) then return end
     local action = Guard.normalizeAction(play, npcid, p2)
@@ -872,12 +891,13 @@ local function _claim_forbidden_reward(play, npcid, id)
         Player.sendmsgEx(play, "请先激活当前外显禁器")
         return false
     end
-    local jKey = "J_禁器技能_CD"
-    if _toint(getplaydef(play, jKey)) >= 1 then
-        Player.sendmsgEx(play, "禁器技能冷却中")
+    local left = _forbidden_skill_cd_left(data)
+    if left > 0 then
+        Player.sendmsgEx(play, "禁器技能冷却中，剩余#57|【" .. _format_time(left) .. "】#218|")
         return false
     end
-    setplaydef(play, jKey, 1)
+    data.forbidden.skill_cd_at = _now() + _forbidden_skill_cd
+    setplaydef(play, "J_禁器技能_CD", 1)
     local cfg = _forbidden[showId]
     if showId == 1 then
         local gold = math.random(100000, 300000)
@@ -889,6 +909,7 @@ local function _claim_forbidden_reward(play, npcid, id)
     elseif showId == 3 then
         Player.rwjl(play, {{"凤凰之瞳", 5}}, "禁器技能", 1, 999)
     end
+    _save_state(play, data)
     Player.sendmsgEx(play, "成功释放外显禁器技能：#57|【" .. tostring(cfg.name or "禁器") .. "】#218|")
     _refresh_item_bar(play)
     _send_panel(play, 7, npcid)

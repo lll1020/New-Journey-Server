@@ -377,9 +377,20 @@ local function _zxrw_guide_treasure_basin(play, rwid, xylCfg)
     local yd = xylCfg and xylCfg.yd or {}
     local targetX = tonumber(yd[3]) or 106
     local targetY = tonumber(yd[4]) or 106
-    mapmove(play, "极光城郊", targetX, targetY, 3)
     if _zxrw_try_open_submit_npc(play, rwid, xylCfg) then
         return true
+    end
+    mapmove(play, "极光城郊", targetX, targetY, 3)
+    local mod = rawget(_G, "__treasure_basin_module")
+    if not mod then
+        mod = dofile("Envir/Lua/LuaLib/treasure_basin.lua")
+    end
+    if mod and type(mod.openTaskPanel) == "function" then
+        mod.openTaskPanel(play, 106, 0)
+    elseif Npclib and Npclib[106] and Npclib[106].main then
+        Npclib[106].main(play, 106)
+    else
+        sendluamsg(play, 105, 106, 106, 0, "")
     end
     _zxrw_mark_treasure_basin_started(play)
     startautoattack(play)

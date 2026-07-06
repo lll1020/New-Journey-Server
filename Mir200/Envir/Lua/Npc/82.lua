@@ -62,38 +62,92 @@ local function _clear_weapon_display(play, itemobj)
     refreshitem(play, itemobj)
 end
 
+local function _is_personality_unlocked(play)
+    if Player and type(Player.dl_sz) == "function" then
+        if type(Player.dl_sz_notip) == "function" then
+            return Player.dl_sz_notip(play, 6) and true or false
+        end
+        return Player.dl_sz(play, 6) and true or false
+    end
+    return true
+end
+
+local function _format_personality_bonus(value, scale100)
+    value = _toint(value)
+    if scale100 then
+        local num = value / 100
+        if math.floor(num) == num then
+            return string.format("%d%%", num)
+        end
+        return string.format("%.2f%%", num)
+    end
+    return string.format("%d%%", value)
+end
+
+local function _calc_greed_range(cur_cfg)
+    local minValue, maxValue = 0, 0
+    for _, one in ipairs(cur_cfg.gold_roll or {}) do
+        local curMin = _toint(one.min)
+        local curMax = _toint(one.max)
+        if minValue == 0 or curMin < minValue then
+            minValue = curMin
+        end
+        if curMax > maxValue then
+            maxValue = curMax
+        end
+    end
+    return minValue, maxValue
+end
+
+local function _build_personality_attr_line(data, cur_cfg)
+    local cur_key = tostring(cur_cfg.key or "")
+    if cur_key == "baonu" then
+        local layer = math.max(0, _toint(data.kill_player_layer))
+        local attackPct = layer * _toint(cur_cfg.attack_per_layer or 2)
+        local critPct = layer >= _toint(cur_cfg.layer_max or 5) and _toint(cur_cfg.full_crit_bonus or 10) or 0
+        if critPct > 0 then
+            return string.format("攻击：+%s  暴伤：+%s", _format_personality_bonus(attackPct), _format_personality_bonus(critPct))
+        end
+        return string.format("攻击：+%s", _format_personality_bonus(attackPct))
+    elseif cur_key == "lianmin" then
+        return string.format("暴伤：+%s", _format_personality_bonus(math.max(0, _toint(data.temp_gap))))
+    elseif cur_key == "shixue" then
+        local active = tostring(data.same_map or "") ~= "" and _toint(data.same_map_kill) >= _toint(cur_cfg.kill_need or 100)
+        local bonus = active and _toint(cur_cfg.mon_damage_bonus or 500) or 0
+        return string.format("对怪增伤：+%s", _format_personality_bonus(bonus, true))
+    elseif cur_key == "tanlan" then
+        local minValue, maxValue = _calc_greed_range(cur_cfg)
+        return string.format("额外金币：%d-%d", minValue, maxValue)
+    elseif cur_key == "lumang" then
+        return string.format("暴抗：+%s", _format_personality_bonus(math.max(0, _toint(data.temp_gap))))
+    end
+    return "暂无属性"
+end
+
 local function _refresh_weapon_display(play, data)
     local itemobj = _weapon_itemobj(play)
     if not itemobj then
         return
     end
     data = data or _get_data(play)
-    local cur_cfg = _personality_cfg(data.personality)
-    local desc = tostring(cur_cfg.desc or "")
-    local line3 = ""
-    if tostring(cur_cfg.key or "") == "baonu" then
-        line3 = string.format("当前层数：%d", math.max(0, _toint(data.kill_player_layer)))
-    elseif tostring(cur_cfg.key or "") == "shixue" then
-        line3 = string.format("当前击杀：%d", math.max(0, _toint(data.same_map_kill)))
-    elseif tostring(cur_cfg.key or "") == "tanlan" then
-        line3 = string.format("今日金币：%d", math.max(0, _toint(data.greed_gold)))
-    elseif _toint(data.temp_gap) > 0 then
-        line3 = string.format("当前增幅：%d%%", _toint(data.temp_gap))
+    if not _is_personality_unlocked(play) then
+        setcustomitemprogressbar(play, itemobj, 0, tbl2json({
+            open = 1, show = 0, name = "[无武器性格]", color = 253, imgcount = 1,
+        }))
+        setcustomitemprogressbar(play, itemobj, 1, tbl2json({open = 0}))
+        setcustomitemprogressbar(play, itemobj, 2, tbl2json({open = 0}))
+        refreshitem(play, itemobj)
+        return
     end
 
+    local cur_cfg = _personality_cfg(data.personality)
     setcustomitemprogressbar(play, itemobj, 0, tbl2json({
-        open = 1, show = 0, name = "今日性格：" .. tostring(cur_cfg.name or "无"), color = 253, imgcount = 1,
+        open = 1, show = 0, name = "当前性格：" .. tostring(cur_cfg.name or "无"), color = 253, imgcount = 1,
     }))
     setcustomitemprogressbar(play, itemobj, 1, tbl2json({
-        open = 1, show = 0, name = desc, color = 249, imgcount = 1,
+        open = 1, show = 0, name = _build_personality_attr_line(data, cur_cfg), color = 249, imgcount = 1,
     }))
-    if line3 ~= "" then
-        setcustomitemprogressbar(play, itemobj, 2, tbl2json({
-            open = 1, show = 0, name = line3, color = 223, imgcount = 1,
-        }))
-    else
-        setcustomitemprogressbar(play, itemobj, 2, tbl2json({open = 0}))
-    end
+    setcustomitemprogressbar(play, itemobj, 2, tbl2json({open = 0}))
     refreshitem(play, itemobj)
 end
 
@@ -276,6 +330,16 @@ end
 -- 统一入口：负责重抽、校正、刷新与重设定时。
 local function _prepare_state(play, force_roll)
     local data = _get_data(play)
+    if not _is_personality_unlocked(play) then
+        _apply_attr_list(play, _attr_list_name)
+        _apply_attr_list(play, _temp_attr_list_name)
+        _refresh_weapon_display(play, data)
+        if _toint(data.next_tick_at) ~= 0 then
+            data.next_tick_at = 0
+            _save_data(play, data)
+        end
+        return data
+    end
     _roll_daily_if_needed(play, data, force_roll)
     _normalize_runtime(play, data)
     _refresh_attrs(play, data)
@@ -283,6 +347,7 @@ local function _prepare_state(play, force_roll)
     _schedule_tick(play, data)
     return data
 end
+
 
 -- 清理保底与莽撞效果使用的临时等级差状态。
 local function _clear_temp_relation(play, data, relation_key)
@@ -362,27 +427,30 @@ end
 -- 组装武器性格面板下发给客户端的数据。
 local function _build_payload(play)
     local data = _prepare_state(play, false)
-    local cur_cfg = _personality_cfg(data.personality)
+    local unlocked = _is_personality_unlocked(play)
+    local cur_cfg = unlocked and _personality_cfg(data.personality) or {}
     local now = _now()
     local cur_map = _current_map(play)
-    local layer = (data.kill_player_expire > now) and data.kill_player_layer or 0
-    local temp_gap = (data.temp_end > now) and data.temp_gap or 0
+    local layer = unlocked and ((data.kill_player_expire > now) and data.kill_player_layer or 0) or 0
+    local temp_gap = unlocked and ((data.temp_end > now) and data.temp_gap or 0) or 0
     return {
         T_data = data,
-        current_idx = data.personality,
-        current_key = tostring(cur_cfg.key or ""),
-        current_name = tostring(cur_cfg.name or ""),
-        current_desc = tostring(cur_cfg.desc or ""),
+        unlocked = unlocked and 1 or 0,
+        current_idx = unlocked and data.personality or 0,
+        current_key = unlocked and tostring(cur_cfg.key or "") or "",
+        current_name = unlocked and tostring(cur_cfg.name or "") or "无武器性格",
+        current_desc = unlocked and tostring(cur_cfg.desc or "") or "六大陆解锁后开启",
         layer = layer,
-        layer_remain = math.max(0, _toint(data.kill_player_expire) - now),
-        same_map = data.same_map,
-        same_map_kill = data.same_map_kill,
-        same_map_active = (tostring(cur_cfg.key or "") == "shixue" and data.same_map ~= "" and data.same_map == cur_map and data.same_map_kill >= _toint(cur_cfg.kill_need or 100)) and 1 or 0,
-        greed_gold = data.greed_gold,
+        layer_remain = unlocked and math.max(0, _toint(data.kill_player_expire) - now) or 0,
+        same_map = unlocked and data.same_map or "",
+        same_map_kill = unlocked and data.same_map_kill or 0,
+        same_map_active = unlocked and ((tostring(cur_cfg.key or "") == "shixue" and data.same_map ~= "" and data.same_map == cur_map and data.same_map_kill >= _toint(cur_cfg.kill_need or 100)) and 1 or 0) or 0,
+        greed_gold = unlocked and data.greed_gold or 0,
         temp_gap = temp_gap,
         cur_map = cur_map,
     }
 end
+
 
 -- 打开武器性格面板。
 function npc.main(play, npcid)
@@ -408,12 +476,18 @@ end
 
 -- 用于清理运行态状态的定时入口。
 function weapon_personality_tick(play)
+    if not _is_personality_unlocked(play) then
+        return
+    end
     _prepare_state(play, false)
 end
 
 -- 攻击方伤害修正，处理保底与莽撞逻辑。
 function weapon_personality_attack_adjust(play, target, damage, magicid, model)
     if not play or not target or _toint(damage) <= 0 then
+        return damage
+    end
+    if not _is_personality_unlocked(play) then
         return damage
     end
     local data = _prepare_state(play, false)
@@ -440,6 +514,9 @@ end
 -- 受击方伤害修正，并更新临时状态。
 function weapon_personality_struck_adjust(play, damage, hiter, magicid)
     if not play or _toint(damage) <= 0 then
+        return damage
+    end
+    if not _is_personality_unlocked(play) then
         return damage
     end
     local data = _prepare_state(play, false)
@@ -495,6 +572,9 @@ end
 
 -- 玩家击杀玩家时叠加暴怒性格层数。
 local function _on_kill_play(play, target)
+    if not _is_personality_unlocked(play) then
+        return
+    end
     local data = _prepare_state(play, false)
     local cur_cfg = _personality_cfg(data.personality)
     if tostring(cur_cfg.key or "") ~= "baonu" then
@@ -515,6 +595,9 @@ end
 -- 击杀怪物时更新嗜血与贪婪性格进度。
 local function _on_kill_mon(play, mob)
     if not play or not mob then
+        return
+    end
+    if not _is_personality_unlocked(play) then
         return
     end
     local data = _prepare_state(play, false)
@@ -548,6 +631,9 @@ end
 -- 攻击其他玩家时更新临时等级差状态。
 local function _on_attack_damage_player(play, target)
     if not play or not target then
+        return
+    end
+    if not _is_personality_unlocked(play) then
         return
     end
     local data = _prepare_state(play, false)

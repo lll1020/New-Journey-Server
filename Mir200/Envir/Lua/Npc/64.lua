@@ -181,7 +181,7 @@ end
 function npc.syncContractState(play)
     _settle_due_hatch(play, 0, true)
     local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
-    sendluamsg(play,100,64,0,0,tbl2json({T_data = T_data, server_time = os.time(), sync_only = 1}))
+    sendluamsg(play,100,64,0,0,tbl2json({T_data = T_data, server_time = os.time(), sync_only = 1, main_unlocked = Player.dl_sz_notip(play, 4) and 1 or 0}))
 end
 function npc.main(play,npcid)
     local contractOnly = tonumber(npcid) == 1064
@@ -190,16 +190,14 @@ function npc.main(play,npcid)
         _settle_due_hatch(play, 0, true)
         T_data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
     end
-    if (not contractOnly) and (not Player.dl_sz(play, 4)) then
-        Player.sendmsgEx(play, "灵兽系统需要达到四大陆后开启！#57")
-        return
-    end
+    local mainUnlocked = Player.dl_sz_notip(play, 4) and 1 or 0
     if contractOnly then
         local ok, msg = _is_lingshou_contract_open(play, T_data)
         if not ok then
             local syncData = {}
             syncData["T_data"] = T_data
             syncData["server_time"] = os.time()
+            syncData["main_unlocked"] = mainUnlocked
             sendluamsg(play,100,64,0,0,tbl2json(syncData))
             if not ((tonumber(T_data and T_data.dqzh or 0) or 0) > 0) then
                 Player.sendmsgEx(play, msg)
@@ -210,6 +208,7 @@ function npc.main(play,npcid)
     local data = {}
     data["T_data"] = T_data
     data["server_time"] = os.time()
+    data["main_unlocked"] = mainUnlocked
     if contractOnly then data["open_contract"] = 1 end
     sendluamsg(play,100,npcid == 69 and 69 or 64,0,0,tbl2json(data))
 end
