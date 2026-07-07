@@ -223,8 +223,14 @@ function npc.link(play,npcid,ew,aid,data)
     end
     ew = __guardAction
     -- npc_guard: 操作白名单（优化：限定合法操作编号）
-    local __guardAllowedActions = Guard.newActionSet({1,2,3,4,5,6,7})
+    local __guardAllowedActions = Guard.newActionSet({1,2,3,4,5,6,7,8})
     if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
+        return
+    end
+    if ew == 8 then -- 灵兽静默同步：只回传数据，不打开界面
+        _settle_due_hatch(play, 0, true)
+        local syncData = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
+        sendluamsg(play,100,64,0,0,tbl2json({T_data = syncData, server_time = os.time(), sync_only = 1, main_unlocked = Player.dl_sz_notip(play, 4) and 1 or 0}))
         return
     end
     local json_data = json2tbl(data) or {}

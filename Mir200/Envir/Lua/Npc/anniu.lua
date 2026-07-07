@@ -157,6 +157,14 @@ npc[6] = function(play, p2, p3, data) -- 屏蔽系统消息
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>正常接收系统消息...</font>","Type":9}')
     end
 end
+npc[64] = function(play, p2, p3, data) -- 灵兽静默同步
+    if tonumber(p2) ~= 8 then
+        return
+    end
+    if Npclib and Npclib[64] and Npclib[64].syncContractState then
+        return Npclib[64].syncContractState(play)
+    end
+end
 ---异闻录
 local npc_xyl = dofile('Envir/Lua/Data/npc_xyl.lua')
 local daluditu = dofile('Envir/Lua/Data/daluditu.lua')

@@ -1,0 +1,24 @@
+[2026-07-07 06:27:55:543] LuaNPC: ID:999999999 执行 startup player: 耗时：125; NpcThreadId: 174600, CurPlayThreadId: 174600
+
+[2026-07-07 06:30:06:859] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：1594; NpcThreadId: 174600, CurPlayThreadId: 174600
+
+[2026-07-07 06:30:22:468] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 174600, CurPlayThreadId: 174600
+[2026-07-07 06:30:22:468] [玩家名字]Lua执行耗时过高:31ms msgid:100 501 1 0 
+
+[2026-07-07 07:34:17:021] .\Envir\QuestDiary/cfg_gm_box.lua time：188
+
+[2026-07-07 07:36:16:248] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：391; NpcThreadId: 172084, CurPlayThreadId: 172084
+
+[2026-07-07 07:38:57:343] LuaNPC:玩家名字 ID:999999999 执行 yc_fuhuo_hc player:玩家名字 耗时：78; NpcThreadId: 172084, CurPlayThreadId: 172084
+
+[2026-07-07 07:40:47:409] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：218; NpcThreadId: 158896, CurPlayThreadId: 158896
+
+[2026-07-07 07:50:15:324] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：94; NpcThreadId: 172404, CurPlayThreadId: 172404
+
+[2026-07-07 07:55:17:136] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：94; NpcThreadId: 151168, CurPlayThreadId: 151168
+
+[2026-07-07 09:58:28:454] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：219; NpcThreadId: 151168, CurPlayThreadId: 151168
+
+[2026-07-07 09:59:07:236] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：422; NpcThreadId: 151168, CurPlayThreadId: 151168
+[2026-07-07 09:59:07:236] [玩家名字]Lua执行耗时过高:422ms msgid:100 77 1 1 {"god":1,"path":1}
+
