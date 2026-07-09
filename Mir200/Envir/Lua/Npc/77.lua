@@ -28,6 +28,11 @@ local function _god_data(data, god)
     info.power = _toint(info.power)
     info.kills = type(info.kills) == "table" and info.kills or {}
     info.cert = _toint(info.cert)
+    info.growth = type(info.growth) == "table" and info.growth or {}
+    info.growth.total = _toint(info.growth.total)
+    info.growth.monster = _toint(info.growth.monster)
+    info.growth.player = _toint(info.growth.player)
+    info.growth_attr = type(info.growth_attr) == "table" and info.growth_attr or {}
     return info
 end
 
@@ -39,16 +44,55 @@ local function _set_power(info, value)
     info.power = math.max(0, math.min(_toint(_config.power_max or 1000), _toint(value)))
 end
 
+local function _rank_mul(rank)
+    rank = math.max(1, _toint(rank))
+    local rankMul = _config.rank_mul
+    if type(rankMul) == "table" and rankMul[rank] then
+        return tonumber(rankMul[rank]) or 1
+    end
+    local rankRate = _config.rank_rate
+    if type(rankRate) == "table" and rankRate[rank] then
+        return tonumber(rankRate[rank]) or 1
+    end
+    return 1 + (rank - 1) * tonumber(_config.rank_mul_step or 1)
+end
+
+local function _add_growth(info, pcfg, eventKey)
+    if type(pcfg) ~= "table" then return 0 end
+    local attrs = pcfg.attr or {}
+    if #attrs <= 0 then return 0 end
+    local mul = _rank_mul(info.rank)
+    local added = 0
+    for _, attr in ipairs(attrs) do
+        local attrId = _toint(attr[1])
+        local baseVal = _toint(attr[2])
+        if attrId > 0 and baseVal > 0 then
+            local gain = math.max(0, math.floor(baseVal * mul))
+            if gain > 0 then
+                local key = tostring(attrId)
+                info.growth_attr[key] = _toint(info.growth_attr[key]) + gain
+                added = added + gain
+            end
+        end
+    end
+    if added > 0 then
+        eventKey = tostring(eventKey or "")
+        if eventKey ~= "" then
+            info.growth[eventKey] = _toint(info.growth[eventKey]) + added
+        end
+        info.growth.total = _toint(info.growth.total) + added
+    end
+    return added
+end
+
 local function _rebuild_attr(play, data)
     local attrs = {}
     for god in pairs(_config.shendao or {}) do
         local info = _god_data(data, god)
         local pcfg = _path_cfg(god, info.path)
-        local eventKey = tostring(pcfg.event or "")
-        local kill = _toint(info.kills[eventKey])
         for _, attr in ipairs(pcfg.attr or {}) do
             local attrId = _toint(attr[1])
-            local val = _toint(attr[2]) * kill
+            local val = _toint(info.growth_attr[tostring(attrId)])
             if attrId > 0 and val > 0 then attrs[#attrs + 1] = {attrId, val, attr[3]} end
         end
     end
@@ -134,20 +178,20 @@ function npc.link(play, npcid, p2, p3, msgData)
         _send(play, npcid, 2, god)
     elseif p2 == 3 then
         if info.path <= 0 then Player.sendmsgEx(play, "请先选择该神道路线#57") return end
-        if info.rank < _toint(_config.max_rank or 9) then Player.sendmsgEx(play, "神道达到九阶后才可自证#57") return end
-        if info.cert >= 1 then Player.sendmsgEx(play, "该神道已经完成自证#57") return end
+            if info.rank < _toint(_config.max_rank or 9) then Player.sendmsgEx(play, "神道阶级未满，无法自证#57") return end
+        if info.cert >= 1 then Player.sendmsgEx(play, "该神道已圆满完成自证#57") return end
         local needPower = _toint(_config.certify_cost_power or 1000)
         if info.power < needPower then Player.sendmsgEx(play, string.format("神力值不足，需要 %d", needPower)) return end
         local cost = {{"元宝", _toint(_config.certify_cost_yb or 4500000)}}
         if not _check_cost(play, cost) then return end
-        Player.takeItemByTable(play, cost, "神道自证")
+        Player.takeItemByTable(play, cost, "登神之路自证")
         _set_power(info, info.power - needPower)
         info.cert = 1
         _save_data(play, data)
         local title = tostring(_god_cfg(god).certify_title or "")
         if title ~= "" then Player.title_give(play, title) end
         _sync_legacy_finish(play, god)
-        Player.sendmsgEx(play, string.format("完成#57|【%s】#218|自证", tostring(_god_cfg(god).name or "神道")))
+        Player.sendmsgEx(play, string.format("圆满完成#57|【%s】#218|自证", tostring(_god_cfg(god).name or "神道")))
         _send(play, npcid, 3, god)
     else
         _send(play, npcid, 9, 0)
@@ -176,7 +220,11 @@ function npc.onKillMon(play, mob)
         if tostring(pcfg.event or "") == "monster" then
             info.kills.monster = _toint(info.kills.monster) + 1
             _set_power(info, info.power + _toint(_god_cfg(god).power_kill_mon or 1))
-            Player.sendmsgEx(play, string.format("击杀六大陆怪物，#57|【%s】#218|+%d", tostring(_god_cfg(god).power_name or "神力值"), _toint(_god_cfg(god).power_kill_mon or 1)))
+            local add = _add_growth(info, pcfg, "monster")
+                Player.sendmsgEx(play, string.format("击杀六大陆怪物，#57|【%s】#218|+%d", tostring(_god_cfg(god).power_name or "神力值"), _toint(_god_cfg(god).power_kill_mon or 1)))
+            if add > 0 then
+                Player.sendmsgEx(play, string.format("当前%d阶成长，成长+#57|%d", _toint(info.rank), add))
+            end
         end
     end
     _save_data(play, data)
@@ -191,7 +239,11 @@ local function _on_kill_play(play, target)
         if tostring(pcfg.event or "") == "player" then
             info.kills.player = _toint(info.kills.player) + 1
             _set_power(info, info.power + _toint(_god_cfg(god).power_kill_player or 20))
+            local add = _add_growth(info, pcfg, "player")
             Player.sendmsgEx(play, string.format("击杀玩家，#57|【%s】#218|+%d", tostring(_god_cfg(god).power_name or "神力值"), _toint(_god_cfg(god).power_kill_player or 20)))
+            if add > 0 then
+                Player.sendmsgEx(play, string.format("当前%d阶成长，成长+#57|%d", _toint(info.rank), add))
+            end
         end
     end
     _save_data(play, data)
