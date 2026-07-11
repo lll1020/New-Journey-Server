@@ -2572,8 +2572,8 @@ local function _mskh_start(dqfz, cfg, fromBot)
     setsysvar(VarCfg["G_美食狂欢状态"], 1)
     _mskh_save_state(state)
     _mskh_tick_runtime(cfg, state)
-    sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《美食狂欢》已开启，请尽快前往【" .. tostring(cfg.map or "天材地宝") .. "】参与...")
-    sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《美食狂欢》已开启，击杀鸡羊鹿会直接掉落对应肉类...")
+    sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《美食狂欢》已开启，请尽快前往【" .. tostring(cfg.map or "美食狂欢") .. "】参与...")
+    sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《美食狂欢》已开启，击杀鸡-羊-鹿会直接掉落对应肉类...")
     for _, player in ipairs(getplayerlst() or {}) do
         sendluamsg(player, 101, 12, 1, 6, '{"sk":' .. tostring(tonumber(cfg.duration_min) or 30) .. ',"kf":2,"idx":6}')
     end

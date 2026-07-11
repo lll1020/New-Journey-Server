@@ -1878,7 +1878,7 @@ npc[507] = function(play, p2, p3, msgData) --活动面板
             _activity507_enter_notice(play, 5, "土城跑酷")
         elseif p3 == 6 then
             local mskh_cfg = MskhApi and MskhApi.get_cfg and MskhApi.get_cfg() or (teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].mskh or {})
-            map(play, tostring(mskh_cfg.map or "天材地宝"))
+            map(play, tostring(mskh_cfg.map or "美食狂欢"))
             if MskhApi and MskhApi.add_activity_score then
                 MskhApi.add_activity_score(play, mskh_cfg)
             end

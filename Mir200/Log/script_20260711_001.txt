@@ -1,0 +1,46 @@
+[2026-07-11 14:57:07:840] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：1172; NpcThreadId: 14996, CurPlayThreadId: 14996
+
+[2026-07-11 14:57:14:086] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：31; NpcThreadId: 14996, CurPlayThreadId: 14996
+
+[2026-07-11 15:14:39:514] LuaNPC:玩家名字 ID:999999999 执行 sendability player:玩家名字 耗时：94; NpcThreadId: 14996, CurPlayThreadId: 14996
+[2026-07-11 15:14:39:540] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：984; NpcThreadId: 14996, CurPlayThreadId: 14996
+
+[2026-07-11 15:19:55:490] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：157; NpcThreadId: 14996, CurPlayThreadId: 14996
+[2026-07-11 15:19:55:490] [玩家名字]Lua执行耗时过高:157ms msgid:101 507 0 0 
+
+[2026-07-11 15:21:42:082] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：328; NpcThreadId: 14996, CurPlayThreadId: 14996
+
+[2026-07-11 15:50:26:659] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：1265; NpcThreadId: 14996, CurPlayThreadId: 14996
+
+[2026-07-11 15:53:22:498] .\Envir\QuestDiary/cfg_gm_box.lua time：500
+[2026-07-11 15:53:22:661] .\Envir\lua/Data/fairy_fate_cfg.lua time：156
+
+[2026-07-11 15:53:46:053] LuaNPC: ID:999999999 执行 startup player: 耗时：437; NpcThreadId: 35296, CurPlayThreadId: 35296
+
+[2026-07-11 15:58:09:989] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：110; NpcThreadId: 33144, CurPlayThreadId: 33144
+
+[2026-07-11 15:58:42:862] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：32; NpcThreadId: 33144, CurPlayThreadId: 33144
+
+[2026-07-11 16:30:00:466] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：172; NpcThreadId: 33144, CurPlayThreadId: 33144
+[2026-07-11 16:30:00:466] [玩家名字]Lua执行耗时过高:172ms msgid:100 85 1 0 {"stage":1}
+
+[2026-07-11 16:30:47:630] LuaNPC:玩家名字 ID:999999999 执行 entermap player:玩家名字 耗时：328; NpcThreadId: 33144, CurPlayThreadId: 33144
+
+[2026-07-11 16:30:52:416] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：921; NpcThreadId: 33144, CurPlayThreadId: 33144
+
+[2026-07-11 16:31:06:973] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：516; NpcThreadId: 33144, CurPlayThreadId: 33144
+[2026-07-11 16:31:06:973] [玩家名字]Lua执行耗时过高:516ms msgid:100 506 1 0 
+
+[2026-07-11 16:48:25:420] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：219; NpcThreadId: 33144, CurPlayThreadId: 33144
+
+[2026-07-11 16:48:33:742] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：610; NpcThreadId: 33144, CurPlayThreadId: 33144
+
+[2026-07-11 16:49:52:653] .\Envir\QuestDiary/game/safeRequire.lua time：187
+
+[2026-07-11 16:50:03:984] .\Envir\lua/LuaLib/fairy_fate.lua time：344
+
+[2026-07-11 16:56:26:590] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：125; NpcThreadId: 33144, CurPlayThreadId: 33144
+[2026-07-11 16:56:26:590] [玩家名字]Lua执行耗时过高:125ms msgid:100 85 2 0 {"node":5,"stage":1}
+
+[2026-07-11 18:00:15:015] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：625; NpcThreadId: 33144, CurPlayThreadId: 33144
+
