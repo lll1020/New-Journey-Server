@@ -1,11 +1,11 @@
-npc = {}
+ï»¿npc = {}
 
 
 local NPC_ID = 738
 local _cfg_key = "npc_" .. tostring(NPC_ID)
 local _config = Guard.getConfig(_cfg_key)
 local _task_cfg = (_config and _config.task_cfg) or {}
-local DROP_RULES = {{map = "Õò¹ØË§¸®", item = "Õò¹ØÁéÆì", rate = 5000}, {map = "Õò¹ØË§¸®", item = "´óÊ¦ÃÜÁî", rate = 3000}}
+local DROP_RULES = {{map = "é•‡å…³å¸…åºœ", item = "é•‡å…³çµæ——", rate = 5000}, {map = "é•‡å…³å¸…åºœ", item = "å¤§å¸…å¯†ä»¤", rate = 3000}}
 local KILL_ONLY = false
 local ALLOW_PRESTART_DROP = false
 
@@ -27,11 +27,11 @@ local function _save_story(play, data)
 end
 
 local function _get_kill(play)
-    return Player.getJsonTableByVar(play, VarCfg["T_¸÷¾çÇéÉ±¹Ö"]) or {}
+    return Player.getJsonTableByVar(play, VarCfg["T_å„å‰§æƒ…æ€æ€ª"]) or {}
 end
 
 local function _save_kill(play, data)
-    Player.setJsonVarByTable(play, VarCfg["T_¸÷¾çÇéÉ±¹Ö"], data or {})
+    Player.setJsonVarByTable(play, VarCfg["T_å„å‰§æƒ…æ€æ€ª"], data or {})
 end
 
 local function _send_state(play, npcid)
@@ -67,11 +67,11 @@ local function _finish(play, reason, noReward)
     _save_story(play, jq)
     local levelReward = _toint(_task_cfg.level_reward)
     if not noReward and levelReward <= 0 then
-        Guard.giveTaskReward(play, _config, reason or ((_config.name or "µÚÁùÕÂ¾çÇé") .. "½±Àø"))
+        Guard.giveTaskReward(play, _config, reason or ((_config.name or "ç¬¬å…­ç« å‰§æƒ…") .. "å¥–åŠ±"))
     end
     if levelReward > 0 then
         callscriptex(play, "CHANGELEVEL", "+", levelReward)
-        Player.sendmsgEx(play, "µÈ¼¶ÌáÉı+" .. levelReward .. "#57")
+        Player.sendmsgEx(play, "ç­‰çº§æå‡+" .. levelReward .. "#57")
     end
     sendluamsg(play, 101, 1005, 0, 0, "rwwc")
 end
@@ -84,7 +84,7 @@ local function _ensure_started(play)
     if _toint(jq[_cfg_key]) < 1 then
         jq[_cfg_key] = 1
         _save_story(play, jq)
-        Player.sendmsgEx(play, "ÁìÈ¡|¡¾" .. (_config.name or "µÚÁùÕÂ¾çÇé") .. "¡¿#218|")
+        Player.sendmsgEx(play, "é¢†å–|ã€" .. (_config.name or "ç¬¬å…­ç« å‰§æƒ…") .. "ã€‘#218|")
         sendluamsg(play, 101, 1005, 0, 0, "rwjs")
         local shaguaiId = _toint(_config.shaguai_id)
         if shaguaiId > 0 then
@@ -101,10 +101,10 @@ local function _need_map_ok(play, taskCfg)
         return true
     end
     local cur = getbaseinfo(play, 3)
-    if cur == map or cur == "xtc" or cur == "Áù´óÂ½Ö÷³Ç" then
+    if cur == map or cur == "xtc" or cur == "å…­å¤§é™†ä¸»åŸ" then
         return true
     end
-    Player.sendmsgEx(play, "ÇëÇ°Íù#57|¡¾" .. map .. "¡¿#218|Íê³ÉºóÔÙÌá½»#57")
+    Player.sendmsgEx(play, "è¯·å‰å¾€#57|ã€" .. map .. "ã€‘#218|å®Œæˆåå†æäº¤#57")
     return false
 end
 
@@ -116,7 +116,7 @@ local function _check_kill(play, need)
     local sg = _get_kill(play)
     local cur = _toint(sg[_cfg_key])
     if cur < need then
-        Player.sendmsgEx(play, string.format("»÷É±²»×ã£º#57|¡¾%d/%d¡¿#218|", cur, need))
+        Player.sendmsgEx(play, string.format("å‡»æ€ä¸è¶³ï¼š#57|ã€%d/%dã€‘#218|", cur, need))
         return false
     end
     return true
@@ -133,7 +133,7 @@ end
 local function _generic_submit(play)
     local state = _toint((_get_story(play))[_cfg_key])
     if state >= 2 then
-        Player.sendmsgEx(play, "ÄãÒÑ¾­Íê³É#57|¡¾" .. (_config.name or "¸ÃÈÎÎñ") .. "¡¿#218|")
+        Player.sendmsgEx(play, "ä½ å·²ç»å®Œæˆ#57|ã€" .. (_config.name or "è¯¥ä»»åŠ¡") .. "ã€‘#218|")
         return
     end
     local ready = _ensure_started(play)
@@ -146,10 +146,10 @@ local function _generic_submit(play)
     if not _check_kill(play, _task_cfg.kill_count) then
         return
     end
-    if not _consume_cost(play, _task_cfg.submit or _config.cost or {}, "," .. (_config.name or "µÚÁùÕÂ¾çÇé")) then
+    if not _consume_cost(play, _task_cfg.submit or _config.cost or {}, "," .. (_config.name or "ç¬¬å…­ç« å‰§æƒ…")) then
         return
     end
-    _finish(play, (_config.name or "µÚÁùÕÂ¾çÇé") .. "½±Àø")
+    _finish(play, (_config.name or "ç¬¬å…­ç« å‰§æƒ…") .. "å¥–åŠ±")
 end
 
 
@@ -161,11 +161,11 @@ local function _is_six_continent_map(map)
         return true
     end
     local known = {
-        ["Áù´óÂ½Ö÷³Ç"] = true, ["±ù´¨Ñ©Óò"] = true, ["¶³»ê±ù¿ß"] = true,
-        ["É­ÂŞÄ§Óò"] = true, ["Ä§Ñæ¼ÀÌ³"] = true, ["±ß¹Ø·é³Ç"] = true,
-        ["Õò¹ØË§¸®"] = true, ["Ê¢ÊÀ¹Å³Ç"] = true, ["³¤°²Î÷ÊĞ"] = true,
-        ["ÂåÑôÌì½Ö"] = true, ["ãê¾©Óù½Ö"] = true, ["ÁÙ°²¹Å¶É"] = true,
-        ["ÑªÆõÖ®µØ"] = true, ["ÑªÆõÖ®µØ¶ş²ã"] = true,
+        ["å…­å¤§é™†ä¸»åŸ"] = true, ["å†°å·é›ªåŸŸ"] = true, ["å†»é­‚å†°çªŸ"] = true,
+        ["æ£®ç½—é­”åŸŸ"] = true, ["é­”ç„°ç¥­å›"] = true, ["è¾¹å…³çƒ½åŸ"] = true,
+        ["é•‡å…³å¸…åºœ"] = true, ["ç››ä¸–å¤åŸ"] = true, ["é•¿å®‰è¥¿å¸‚"] = true,
+        ["æ´›é˜³å¤©è¡—"] = true, ["æ±´äº¬å¾¡è¡—"] = true, ["ä¸´å®‰å¤æ¸¡"] = true,
+        ["è¡€å¥‘ä¹‹åœ°"] = true, ["è¡€å¥‘ä¹‹åœ°äºŒå±‚"] = true,
     }
     return known[map] == true
 end
@@ -202,7 +202,7 @@ local function _drop_by_rule(play, mob, state)
             if not rule.max_bag or getbagitemcount(play, rule.item) < _toint(rule.max_bag) then
                 local rate = math.max(1, _toint(rule.rate, 1))
                 if math.random(rate) == 1 and _sg_drop(play, mob, rule.item) then
-                    Player.sendmsgEx(play, "´ò¹ÖµôÂä¡¾" .. rule.item .. "¡¿#57")
+                    Player.sendmsgEx(play, "æ‰“æ€ªæ‰è½ã€" .. rule.item .. "ã€‘#57")
                 end
             end
         end
@@ -249,10 +249,10 @@ local function _onKillMon(play, mob)
     cur = math.min(cur + 1, need)
     sg[_cfg_key] = cur
     _save_kill(play, sg)
-    Player.sendmsgEx(play, (_config.name or _cfg_key) .. "½ø¶È+1 ( " .. cur .. "/" .. need .. " )#57")
+    Player.sendmsgEx(play, (_config.name or _cfg_key) .. "è¿›åº¦+1 ( " .. cur .. "/" .. need .. " )#57")
     if cur >= need then
         _sg_remove(play, NPC_ID)
-        messagebox(play, "ÈÎÎñÄ¿±êÍê³É,ÇëÇ°ÍùÌá½»")
+        messagebox(play, "ä»»åŠ¡ç›®æ ‡å®Œæˆ,è¯·å‰å¾€æäº¤")
     end
 end
 

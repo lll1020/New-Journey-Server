@@ -57,32 +57,47 @@ local function _rank_mul(rank)
     return 1 + (rank - 1) * tonumber(_config.rank_mul_step or 1)
 end
 
-local function _add_growth(info, pcfg, eventKey)
+local function _event_count(info, eventKey)
+    eventKey = tostring(eventKey or "")
+    if eventKey == "" then
+        return 0
+    end
+    return _toint((info.kills or {})[eventKey])
+end
+
+local function _recalc_growth(info, pcfg)
+    info.growth_attr = {}
+    info.growth = type(info.growth) == "table" and info.growth or {}
+    info.growth.total = 0
+    info.growth.monster = 0
+    info.growth.player = 0
     if type(pcfg) ~= "table" then return 0 end
     local attrs = pcfg.attr or {}
     if #attrs <= 0 then return 0 end
+    local eventKey = tostring(pcfg.event or "")
+    local count = _event_count(info, eventKey)
+    if count <= 0 then
+        return 0
+    end
     local mul = _rank_mul(info.rank)
-    local added = 0
+    local total = 0
     for _, attr in ipairs(attrs) do
         local attrId = _toint(attr[1])
         local baseVal = _toint(attr[2])
         if attrId > 0 and baseVal > 0 then
-            local gain = math.max(0, math.floor(baseVal * mul))
+            local gain = math.max(0, math.floor(baseVal * mul * count))
             if gain > 0 then
                 local key = tostring(attrId)
-                info.growth_attr[key] = _toint(info.growth_attr[key]) + gain
-                added = added + gain
+                info.growth_attr[key] = gain
+                total = total + gain
             end
         end
     end
-    if added > 0 then
-        eventKey = tostring(eventKey or "")
-        if eventKey ~= "" then
-            info.growth[eventKey] = _toint(info.growth[eventKey]) + added
-        end
-        info.growth.total = _toint(info.growth.total) + added
+    if eventKey ~= "" then
+        info.growth[eventKey] = total
     end
-    return added
+    info.growth.total = total
+    return total
 end
 
 local function _rebuild_attr(play, data)
@@ -90,6 +105,7 @@ local function _rebuild_attr(play, data)
     for god in pairs(_config.shendao or {}) do
         local info = _god_data(data, god)
         local pcfg = _path_cfg(god, info.path)
+        _recalc_growth(info, pcfg)
         for _, attr in ipairs(pcfg.attr or {}) do
             local attrId = _toint(attr[1])
             local val = _toint(info.growth_attr[tostring(attrId)])
@@ -220,10 +236,10 @@ function npc.onKillMon(play, mob)
         if tostring(pcfg.event or "") == "monster" then
             info.kills.monster = _toint(info.kills.monster) + 1
             _set_power(info, info.power + _toint(_god_cfg(god).power_kill_mon or 1))
-            local add = _add_growth(info, pcfg, "monster")
+            local total = _recalc_growth(info, pcfg)
                 Player.sendmsgEx(play, string.format("击杀六大陆怪物，#57|【%s】#218|+%d", tostring(_god_cfg(god).power_name or "神力值"), _toint(_god_cfg(god).power_kill_mon or 1)))
-            if add > 0 then
-                Player.sendmsgEx(play, string.format("当前%d阶成长，成长+#57|%d", _toint(info.rank), add))
+            if total > 0 then
+                Player.sendmsgEx(play, string.format("当前%d阶成长，累计属性=#57|%d", _toint(info.rank), total))
             end
         end
     end
@@ -239,10 +255,10 @@ local function _on_kill_play(play, target)
         if tostring(pcfg.event or "") == "player" then
             info.kills.player = _toint(info.kills.player) + 1
             _set_power(info, info.power + _toint(_god_cfg(god).power_kill_player or 20))
-            local add = _add_growth(info, pcfg, "player")
-            Player.sendmsgEx(play, string.format("击杀玩家，#57|【%s】#218|+%d", tostring(_god_cfg(god).power_name or "神力值"), _toint(_god_cfg(god).power_kill_player or 20)))
-            if add > 0 then
-                Player.sendmsgEx(play, string.format("当前%d阶成长，成长+#57|%d", _toint(info.rank), add))
+            local total = _recalc_growth(info, pcfg)
+            Player.sendmsgEx(play, string.format("%s+#57|%d", tostring(_god_cfg(god).power_name or "神力值"), _toint(_god_cfg(god).power_kill_player or 20)))
+            if total > 0 then
+                Player.sendmsgEx(play, string.format("当前%d阶成长，累计属性=#57|%d", _toint(info.rank), total))
             end
         end
     end
@@ -250,5 +266,15 @@ local function _on_kill_play(play, target)
     _rebuild_attr(play, data)
 end
 
-GameEvent.add(EventCfg.onkillplay, _on_kill_play, "登神之路")
+local function _on_login_sync(play)
+    if not play then
+        return
+    end
+    local data = _get_data(play)
+    _rebuild_attr(play, data)
+end
+
+GameEvent.add(EventCfg.onLoginEnd, _on_login_sync, "god_road")
+GameEvent.add(EventCfg.onKFLogin, _on_login_sync, "god_road")
+GameEvent.add(EventCfg.onkillplay, _on_kill_play, "god_road")
 return npc
