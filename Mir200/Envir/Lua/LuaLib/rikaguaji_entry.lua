@@ -5,13 +5,13 @@ local function _toint(v, default)
 end
 
 local _cfg = {
-    [1018] = {name = "æå…‰[æŒ‚æœº]", map = "æå…‰[æŒ‚æœº]", img = "æå…‰"},
-    [1019] = {name = "è‹äº‘[æŒ‚æœº]", map = "è‹äº‘[æŒ‚æœº]", img = "è‹äº‘"},
-    [1020] = {name = "è‹¥æ°´[æŒ‚æœº]", map = "è‹¥æ°´[æŒ‚æœº]", img = "è‹¥æ°´"},
-    [1021] = {name = "çº¢å°˜[æŒ‚æœº]", map = "çº¢å°˜[æŒ‚æœº]", img = "çº¢å°˜"},
-    [1022] = {name = "çµè™š[æŒ‚æœº]", map = "çµè™š[æŒ‚æœº]", img = "çµè™š"},
-    [1023] = {name = "ä¸‡çµ[æŒ‚æœº]", map = "ä¸‡çµ[æŒ‚æœº]", img = "ä¸‡çµ"},
-    [1024] = {name = "è¯¸å¤©[æŒ‚æœº]", map = "è¯¸å¤©[æŒ‚æœº]", img = "è¯¸å¤©"},
+    [1018] = {name = "¼«¹â[¹Ò»ú]", map = "¼«¹â[¹Ò»ú]", img = "¼«¹â"},
+    [1019] = {name = "²ÔÔÆ[¹Ò»ú]", map = "²ÔÔÆ[¹Ò»ú]", img = "²ÔÔÆ"},
+    [1020] = {name = "ÈôË®[¹Ò»ú]", map = "ÈôË®[¹Ò»ú]", img = "ÈôË®"},
+    [1021] = {name = "ºì³¾[¹Ò»ú]", map = "ºì³¾[¹Ò»ú]", img = "ºì³¾"},
+    [1022] = {name = "ÁéĞé[¹Ò»ú]", map = "ÁéĞé[¹Ò»ú]", img = "ÁéĞé"},
+    [1023] = {name = "ÍòÁé[¹Ò»ú]", map = "ÍòÁé[¹Ò»ú]", img = "ÍòÁé"},
+    [1024] = {name = "ÖîÌì[¹Ò»ú]", map = "ÖîÌì[¹Ò»ú]", img = "ÖîÌì"},
 }
 
 local function _get_cfg(npcid)
@@ -19,15 +19,15 @@ local function _get_cfg(npcid)
 end
 
 local function _has_day_card(play)
-    return checktitle(play, "æ—¥å¡")
+    return checktitle(play, "ÈÕ¿¨")
 end
 
 local function _check_enter(play, cfg)
     if not cfg then
-        return false, "æŒ‚æœºåœ°å›¾é…ç½®ä¸å­˜åœ¨"
+        return false, "¹Ò»úµØÍ¼ÅäÖÃ²»´æÔÚ"
     end
     if not _has_day_card(play) then
-        return false, "å¼€é€šæ—¥å¡åæ‰å¯è¿›å…¥æŒ‚æœºåœ°å›¾"
+        return false, "¿ªÍ¨ÈÕ¿¨ºó²Å¿É½øÈë¹Ò»úµØÍ¼"
     end
     return true
 end
@@ -36,10 +36,10 @@ function RiKaGuaJiEntry.main(play, npcid)
     local cfg = _get_cfg(npcid)
     local ok, err = _check_enter(play, cfg)
     sendluamsg(play, 100, npcid, 0, 0, tbl2json({
-        name = cfg and cfg.name or "æ—¥å¡æŒ‚æœº",
+        name = cfg and cfg.name or "ÈÕ¿¨¹Ò»ú",
         map = cfg and cfg.map or "",
         img = cfg and cfg.img or "",
-        need_desc = "å¼€é€šæ—¥å¡",
+        need_desc = "¿ªÍ¨ÈÕ¿¨",
         can_enter = ok and 1 or 0,
         error = err or "",
     }))
@@ -52,7 +52,7 @@ function RiKaGuaJiEntry.link(play, npcid, action)
     local cfg = _get_cfg(npcid)
     local ok, err = _check_enter(play, cfg)
     if not ok then
-        Player.sendmsgEx(play, (err or "æœªæ»¡è¶³è¿›å…¥æ¡ä»¶") .. "#57")
+        Player.sendmsgEx(play, (err or "Î´Âú×ã½øÈëÌõ¼ş") .. "#57")
         return
     end
     mapmove(play, cfg.map, cfg.x or 45, cfg.y or 45, cfg.range or 5)

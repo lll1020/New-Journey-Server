@@ -8,7 +8,7 @@ local function _msg(play, text)
     if Player and Player.sendmsgEx then
         Player.sendmsgEx(play, tostring(text or "") .. "#57")
     else
-        sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[è·¨æœ]</font><font color=\'#ff0000\'>' .. tostring(text or "") .. '</font>","Type":9}')
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[¿ç·ş]</font><font color=\'#ff0000\'>' .. tostring(text or "") .. '</font>","Type":9}')
     end
 end
 
@@ -22,11 +22,11 @@ local function _has_any_title(play, titles)
 end
 
 local function _open_day()
-    local day = _toint(getsysvar(VarCfg["G_å¼€åŒºå¤©æ•°"]), 0)
+    local day = _toint(getsysvar(VarCfg["G_¿ªÇøÌìÊı"]), 0)
     if day > 0 then
         return day
     end
-    local minute = _toint(getsysvar(VarCfg["G_å¼€åŒºåˆ†é’Ÿ"]), 0)
+    local minute = _toint(getsysvar(VarCfg["G_¿ªÇø·ÖÖÓ"]), 0)
     if minute <= 0 then
         return 1
     end
@@ -34,11 +34,11 @@ local function _open_day()
 end
 
 local function _has_day_card(play)
-    return checktitle(play, "æ—¥å¡")
+    return checktitle(play, "ÈÕ¿¨")
 end
 
 local function _has_all_linggen(play)
-    local data = Player.getJsonTableByVar(play, VarCfg["T_çµæ ¹"]) or {}
+    local data = Player.getJsonTableByVar(play, VarCfg["T_Áé¸ù"]) or {}
     local levels = type(data.level) == "table" and data.level or {}
     for i = 1, 10 do
         if _toint(levels[tostring(i)] or levels[i], 0) <= 0 then
@@ -57,61 +57,61 @@ end
 
 local _cfg = {
     [1013] = {
-        name = "å¹½é‚ƒåœ°çªŸ",
-        map = "å¹½é‚ƒåœ°çªŸ",
+        name = "ÓÄåäµØ¿ß",
+        map = "ÓÄåäµØ¿ß",
         open_day = 1,
-        condition_desc = "ç©å®¶ç­‰çº§è¾¾åˆ°150çº§+æ—¥å¡",
+        condition_desc = "Íæ¼ÒµÈ¼¶´ïµ½150¼¶+ÈÕ¿¨",
         check = function(play)
             if _toint(getbaseinfo(play, 6), 0) < 150 then
-                return false, "ç©å®¶ç­‰çº§è¾¾åˆ°150çº§åæ‰å¯è¿›å…¥"
+                return false, "Íæ¼ÒµÈ¼¶´ïµ½150¼¶ºó²Å¿É½øÈë"
             end
             return true
         end,
     },
     [1014] = {
-        name = "æ‘„é­‚çº¢å°˜",
-        map = "æ‘„é­‚çº¢å°˜",
+        name = "Éã»êºì³¾",
+        map = "Éã»êºì³¾",
         open_day = 5,
-        condition_desc = "æ¿€æ´»å…¨éƒ¨çµæ ¹+æ—¥å¡",
+        condition_desc = "¼¤»îÈ«²¿Áé¸ù+ÈÕ¿¨",
         check = function(play)
             if not _has_all_linggen(play) then
-                return false, "éœ€è¦æ¿€æ´»å…¨éƒ¨çµæ ¹åæ‰å¯è¿›å…¥"
+                return false, "ĞèÒª¼¤»îÈ«²¿Áé¸ùºó²Å¿É½øÈë"
             end
             return true
         end,
     },
     [1015] = {
-        name = "é€†çµç¦»å¿ƒ",
-        map = "é€†çµç¦»å¿ƒ",
+        name = "ÄæÁéÀëĞÄ",
+        map = "ÄæÁéÀëĞÄ",
         open_day = 10,
-        condition_desc = "å®Œæˆå¤©é“å‘½ç›˜+æ—¥å¡",
+        condition_desc = "Íê³ÉÌìµÀÃüÅÌ+ÈÕ¿¨",
         check = function(play)
             if not _has_all_destiny(play) then
-                return false, "éœ€è¦å®Œæˆå¤©é“å‘½ç›˜åæ‰å¯è¿›å…¥"
+                return false, "ĞèÒªÍê³ÉÌìµÀÃüÅÌºó²Å¿É½øÈë"
             end
             return true
         end,
     },
     [1016] = {
-        name = "ç”Ÿæ­»ä¹‹é—¨",
-        map = "ç”Ÿæ­»ä¹‹é—¨",
+        name = "ÉúËÀÖ®ÃÅ",
+        map = "ÉúËÀÖ®ÃÅ",
         open_day = 15,
-        condition_desc = "æ‹¥æœ‰ç§°å·ï¼šä¸–ç•Œç¬¦æ–‡Â·[çœŸæˆ‘]+æ—¥å¡",
+        condition_desc = "ÓµÓĞ³ÆºÅ£ºÊÀ½ç·ûÎÄ¡¤[ÕæÎÒ]+ÈÕ¿¨",
         check = function(play)
-            if not checktitle(play, "ä¸–ç•Œç¬¦æ–‡Â·[çœŸæˆ‘]") then
-                return false, "éœ€è¦è·å¾—ä¸–ç•Œç¬¦æ–‡Â·[çœŸæˆ‘]ç§°å·åæ‰å¯è¿›å…¥"
+            if not checktitle(play, "ÊÀ½ç·ûÎÄ¡¤[ÕæÎÒ]") then
+                return false, "ĞèÒª»ñµÃÊÀ½ç·ûÎÄ¡¤[ÕæÎÒ]³ÆºÅºó²Å¿É½øÈë"
             end
             return true
         end,
     },
     [1017] = {
-        name = "è·¨æœç§˜å¢ƒ",
-        map = "è·¨æœç§˜å¢ƒ",
+        name = "¿ç·şÃØ¾³",
+        map = "¿ç·şÃØ¾³",
         open_day = 3,
-        condition_desc = "è‡³å°ŠèµåŠ©ç©å®¶+æ—¥å¡",
+        condition_desc = "ÖÁ×ğÔŞÖúÍæ¼Ò+ÈÕ¿¨",
         check = function(play)
-            if not _has_any_title(play, {"è‡³å°Šç©å®¶", "è‡³å°Šç©å®¶èµåŠ©"}) then
-                return false, "éœ€è¦è‡³å°Šç©å®¶èµåŠ©åæ‰å¯è¿›å…¥"
+            if not _has_any_title(play, {"ÖÁ×ğÍæ¼Ò", "ÖÁ×ğÍæ¼ÒÔŞÖú"}) then
+                return false, "ĞèÒªÖÁ×ğÍæ¼ÒÔŞÖúºó²Å¿É½øÈë"
             end
             return true
         end,
@@ -124,22 +124,22 @@ end
 
 local function _check_enter(play, cfg)
     if not cfg then
-        return false, "è·¨æœåœ°å›¾é…ç½®ä¸å­˜åœ¨"
+        return false, "¿ç·şµØÍ¼ÅäÖÃ²»´æÔÚ"
     end
     if not checkkuafuconnect() then
-        return false, "è·¨æœæœªå¼€å¯ï¼Œè¯·ç¨åå†è¯•"
+        return false, "¿ç·şÎ´¿ªÆô£¬ÇëÉÔºóÔÙÊÔ"
     end
     local needDay = _toint(cfg.open_day, 1)
     if _open_day() < needDay then
-        return false, "åœ°å›¾æš‚æœªå¼€æ”¾"
+        return false, "µØÍ¼ÔİÎ´¿ª·Å"
     end
     if not _has_day_card(play) then
-        return false, "éœ€è¦å…ˆé¢†å–æ—¥å¡åæ‰å¯è¿›å…¥"
+        return false, "ĞèÒªÏÈÁìÈ¡ÈÕ¿¨ºó²Å¿É½øÈë"
     end
     if cfg.check then
         local ok, err = cfg.check(play)
         if not ok then
-            return false, err or "æœªæ»¡è¶³è¿›å…¥æ¡ä»¶"
+            return false, err or "Î´Âú×ã½øÈëÌõ¼ş"
         end
     end
     return true
@@ -148,7 +148,7 @@ end
 function KuafuMapEntry.main(play, npcid)
     local cfg = _get_cfg(npcid)
     local data = {
-        name = cfg and cfg.name or "è·¨æœåœ°å›¾",
+        name = cfg and cfg.name or "¿ç·şµØÍ¼",
         map = cfg and cfg.map or "",
         open_day = cfg and cfg.open_day or 0,
         condition_desc = cfg and cfg.condition_desc or "",
@@ -171,7 +171,7 @@ function KuafuMapEntry.link(play, npcid, action)
         return
     end
     mapmove(play, cfg.map, cfg.x or 45, cfg.y or 45, cfg.range or 4)
-    sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[è·¨æœ]</font><font color=\'#00ff00\'>è·¨æœä¼ é€æˆåŠŸ</font>","Type":9}')
+    sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[¿ç·ş]</font><font color=\'#00ff00\'>¿ç·ş´«ËÍ³É¹¦</font>","Type":9}')
 end
 
 return KuafuMapEntry

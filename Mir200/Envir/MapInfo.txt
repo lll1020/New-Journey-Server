@@ -66,13 +66,13 @@ kfhg 23 26 -> kfhjsbk 86 102
 [生死之门|wbmh   生死之门] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu
 [跨服秘境|wbmh   跨服秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu
 
-[极光[挂机]|4dlzc   极光[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[苍云[挂机]|4dlzc   苍云[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[若水[挂机]|4dlzc   若水[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[红尘[挂机]|4dlzc   红尘[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[灵虚[挂机]|4dlzc   灵虚[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[万灵[挂机]|4dlzc   万灵[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[诸天[挂机]|4dlzc   诸天[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[极光[挂机]|4dlzc   极光[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
+[苍云[挂机]|4dlzc   苍云[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
+[若水[挂机]|4dlzc   若水[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
+[红尘[挂机]|4dlzc   红尘[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
+[灵虚[挂机]|4dlzc   灵虚[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
+[万灵[挂机]|4dlzc   万灵[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
+[诸天[挂机]|4dlzc   诸天[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
 
 
 
