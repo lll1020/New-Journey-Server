@@ -44,3 +44,29 @@
 
 [2026-07-11 18:00:15:015] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：625; NpcThreadId: 33144, CurPlayThreadId: 33144
 
+[2026-07-11 19:00:14:509] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：109; NpcThreadId: 33144, CurPlayThreadId: 33144
+
+[2026-07-12 00:00:04:275] LuaNPC:玩家名字 ID:999999999 执行 resetday player:玩家名字 耗时：32; NpcThreadId: 33144, CurPlayThreadId: 33144
+
+[2026-07-12 05:57:31:713] LuaNPC:玩家名字 ID:999999999 执行 entermap player:玩家名字 耗时：47; NpcThreadId: 33144, CurPlayThreadId: 33144
+
+[2026-07-12 08:44:21:977] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：110; NpcThreadId: 33144, CurPlayThreadId: 33144
+
+[2026-07-12 10:31:59:212] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：3141; NpcThreadId: 33144, CurPlayThreadId: 33144
+
+[2026-07-12 11:15:58:637] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 33144, CurPlayThreadId: 33144
+
+[2026-07-12 11:34:18:088] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：63; NpcThreadId: 33144, CurPlayThreadId: 33144
+
+[2026-07-12 11:40:39:696] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 33144, CurPlayThreadId: 33144
+
+[2026-07-12 11:53:14:790] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 33144, CurPlayThreadId: 33144
+
+[2026-07-12 11:58:04:827] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 33144, CurPlayThreadId: 33144
+
+[2026-07-12 11:59:36:541] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 33144, CurPlayThreadId: 33144
+
+[2026-07-12 12:21:48:007] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：796; NpcThreadId: 33144, CurPlayThreadId: 33144
+
+[2026-07-12 12:22:51:075] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：109; NpcThreadId: 33144, CurPlayThreadId: 33144
+

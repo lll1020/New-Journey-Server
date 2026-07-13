@@ -1,0 +1,31 @@
+[2026-07-13 08:59:52:263] LuaNPC: ID:999999999 执行 startup player: 耗时：31; NpcThreadId: 8388, CurPlayThreadId: 8388
+
+[2026-07-13 09:01:14:826] LuaNPC:玩家名字 ID:999999999 执行 sendability player:玩家名字 耗时：32; NpcThreadId: 8388, CurPlayThreadId: 8388
+[2026-07-13 09:01:14:839] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：407; NpcThreadId: 8388, CurPlayThreadId: 8388
+
+[2026-07-13 09:01:23:674] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 8388, CurPlayThreadId: 8388
+
+[2026-07-13 09:09:09:257] LuaNPC:玩家名字 ID:999999999 执行 ontimer1 player:玩家名字 耗时：32; NpcThreadId: 8388, CurPlayThreadId: 8388
+
+[2026-07-13 09:09:37:098] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：47; NpcThreadId: 8388, CurPlayThreadId: 8388
+
+[2026-07-13 09:22:00:134] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：641; NpcThreadId: 8388, CurPlayThreadId: 8388
+
+[2026-07-13 09:29:27:033] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：47; NpcThreadId: 8388, CurPlayThreadId: 8388
+[2026-07-13 09:29:27:033] [玩家名字]Lua执行耗时过高:47ms msgid:100 1025 1 1 {"idx":1}
+[2026-07-13 09:29:27:738] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 8388, CurPlayThreadId: 8388
+[2026-07-13 09:29:27:738] [玩家名字]Lua执行耗时过高:31ms msgid:100 1025 1 2 {"idx":2}
+[2026-07-13 09:29:27:987] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 8388, CurPlayThreadId: 8388
+[2026-07-13 09:29:27:987] [玩家名字]Lua执行耗时过高:31ms msgid:100 1025 1 3 {"idx":3}
+
+[2026-07-13 09:29:28:357] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 8388, CurPlayThreadId: 8388
+[2026-07-13 09:29:28:357] [玩家名字]Lua执行耗时过高:31ms msgid:100 1025 1 4 {"idx":4}
+
+[2026-07-13 10:00:52:360] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：63; NpcThreadId: 8388, CurPlayThreadId: 8388
+
+[2026-07-13 10:44:44:499] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：32; NpcThreadId: 8388, CurPlayThreadId: 8388
+
+[2026-07-13 10:45:04:204] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：547; NpcThreadId: 8388, CurPlayThreadId: 8388
+
+[2026-07-13 11:02:30:325] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：32; NpcThreadId: 8388, CurPlayThreadId: 8388
+
