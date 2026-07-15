@@ -62,19 +62,19 @@ kfhjsbk 78 105 -> kfhg 10 29
 kfhjsbk 89 96 -> kfhg 26 20
 kfhg 23 26 -> kfhjsbk 86 102
  
-[幽邃地窟|wbmh   幽邃地窟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu
-[摄魂红尘|wbmh   摄魂红尘] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu
-[逆灵离心|wbmh   逆灵离心] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu
-[生死之门|wbmh   生死之门] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu
-[跨服秘境|wbmh   跨服秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu
+[幽邃地窟|SbkDixiacheng   幽邃地窟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu
+[摄魂红尘|4dlzc    摄魂红尘] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu
+[逆灵离心|ldlzc   逆灵离心] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu
+[生死之门|GhFuben20    生死之门] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu
+[跨服秘境|dwsl   跨服秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu
 
-[极光[挂机]|4dlzc   极光[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
-[苍云[挂机]|4dlzc   苍云[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
-[若水[挂机]|4dlzc   若水[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
-[红尘[挂机]|4dlzc   红尘[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
-[灵虚[挂机]|4dlzc   灵虚[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
-[万灵[挂机]|4dlzc   万灵[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
-[诸天[挂机]|4dlzc   诸天[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
+[极光[挂机]|E12   极光[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
+[苍云[挂机]|E12   苍云[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
+[若水[挂机]|E12   若水[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
+[红尘[挂机]|E12   红尘[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
+[灵虚[挂机]|E12   灵虚[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
+[万灵[挂机]|E12   万灵[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
+[诸天[挂机]|E12   诸天[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
 
 
 
@@ -85,13 +85,13 @@ kfhg 23 26 -> kfhjsbk 86 102
 [mwsl 太虚幻境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
 [副本|mwsl 任务副本] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE
 
-[极光秘境|4dlzc   极光秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[苍云秘境|4dlzc   苍云秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[若水秘境|4dlzc   若水秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[红尘秘境|4dlzc   红尘秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[灵虚秘境|4dlzc   灵虚秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[万灵秘境|4dlzc   万灵秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[诸天秘境|4dlzc   诸天秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[极光秘境|E12   极光秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[苍云秘境|E12   苍云秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[若水秘境|E12   若水秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[红尘秘境|E12   红尘秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[灵虚秘境|E12   灵虚秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[万灵秘境|E12   万灵秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[诸天秘境|E12   诸天秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 
 ;==============================================额外杀怪地图==============================
@@ -129,7 +129,7 @@ kfhg 23 26 -> kfhjsbk 86 102
 [特殊秘境副本二|new_44   特殊秘境副本] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 [野火帮|GhFuben20   野火帮] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[野火帮大营|D30042   野火帮大营] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[野火帮大营|D30042   野火大本营] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 野火帮 106 198 -> 野火帮大营 56 275
 
 
@@ -184,7 +184,7 @@ kfhg 23 26 -> kfhjsbk 86 102
 ;藏星海
 [藏星海|xlgm   藏星海] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[藏星外海|yyxy   藏星外海] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[藏星外海|yyxy   葬星外海] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 [神秘岛屿|12   神秘岛屿] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 [黑暗洞窟|D1421   黑暗洞窟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
@@ -192,7 +192,7 @@ kfhg 23 26 -> kfhjsbk 86 102
 [船长室|D2205   船长室] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 [水手舱|D5073   水手舱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
-[藏星内海|ID7_003   藏星内海] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[藏星内海|ID7_003   葬星内海] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 [七星岛|E15   七星岛] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 [葬星城|14   葬星城] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 

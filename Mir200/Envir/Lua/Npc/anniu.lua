@@ -2592,6 +2592,10 @@ npc[511] = function(play, p2, p3, msgData) --¸£Àû´óÌü
             end
             local data = fldt_build_qqsb_view(play, T_qrbq, qqsb)
             sendluamsg(play, 101, 511, 2, 6, tbl2json(data))
+        elseif p3 == 8 then
+            local levelRushNpc = Npclib and Npclib[102]
+            local data = levelRushNpc and type(levelRushNpc.buildPayload) == "function" and levelRushNpc.buildPayload(play) or {}
+            sendluamsg(play, 101, 511, 2, 8, tbl2json(data))
         end
     end
 end

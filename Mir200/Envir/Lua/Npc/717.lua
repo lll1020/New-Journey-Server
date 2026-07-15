@@ -35,10 +35,10 @@ local function _state_clear(dtm)
     end
 end
 
--- 夜晚判定：默认 18:00~次日06:00
+-- 夜晚判定：默认 20:00~次日06:00
 local function _is_night_open()
     local hour = tonumber(os.date("%H")) or 12
-    local start_h = tonumber(_task_cfg.night_start or 18) or 18
+    local start_h = tonumber(_task_cfg.night_start or 20) or 20
     local end_h = tonumber(_task_cfg.night_end or 6) or 6
 
     if start_h == end_h then
@@ -268,10 +268,10 @@ function npc.link(play,npcid,ew,aid)
         return
     end
 
-    -- if not _is_night_open() then
-    --     Player.sendmsgEx(play, "该副本仅夜晚可进入（默认18:00-06:00）#57")
-    --     return
-    -- end
+    if not _is_night_open() then
+        Player.sendmsgEx(play, "该副本仅夜晚可进入（默认20:00-06:00）#57")
+        return
+    end
 
     if state < 1 then
         jq_data[_cfg_key] = 1

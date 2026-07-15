@@ -1,0 +1,31 @@
+[2026-07-15 13:45:37:020] LuaNPC: ID:999999999 执行 startup player: 耗时：31; NpcThreadId: 29572, CurPlayThreadId: 29572
+
+[2026-07-15 13:46:10:150] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：875; NpcThreadId: 29572, CurPlayThreadId: 29572
+
+[2026-07-15 13:46:18:125] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：47; NpcThreadId: 29572, CurPlayThreadId: 29572
+[2026-07-15 13:46:18:125] [玩家名字]Lua执行耗时过高:47ms msgid:100 501 1 0 
+
+[2026-07-15 13:48:58:115] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：32; NpcThreadId: 29572, CurPlayThreadId: 29572
+
+[2026-07-15 15:39:47:718] LuaNPC:玩家名字 ID:999999999 执行 entermap player:玩家名字 耗时：31; NpcThreadId: 29572, CurPlayThreadId: 29572
+[2026-07-15 15:39:47:718] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 29572, CurPlayThreadId: 29572
+[2026-07-15 15:39:47:732] [玩家名字]Lua执行耗时过高:31ms msgid:100 228 1 0 
+[2026-07-15 15:39:47:997] LuaNPC:玩家名字 ID:999999999 执行 npc_200_fbjs player:玩家名字 耗时：32; NpcThreadId: 29572, CurPlayThreadId: 29572
+
+[2026-07-15 15:44:31:561] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：78; NpcThreadId: 29572, CurPlayThreadId: 29572
+
+[2026-07-15 16:33:50:781] LuaNPC:玩家名字 ID:999999999 执行 stdmodefunc10 player:玩家名字 耗时：31; NpcThreadId: 29572, CurPlayThreadId: 29572
+
+[2026-07-15 16:52:33:471] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 29572, CurPlayThreadId: 29572
+[2026-07-15 16:52:33:471] [玩家名字]Lua执行耗时过高:31ms msgid:101 512 0 0 
+
+[2026-07-15 17:33:39:896] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 29572, CurPlayThreadId: 29572
+
+[2026-07-15 18:00:37:134] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：94; NpcThreadId: 29572, CurPlayThreadId: 29572
+
+[2026-07-15 18:10:34:793] LuaNPC:玩家名字 ID:999999999 执行 entermap player:玩家名字 耗时：62; NpcThreadId: 29572, CurPlayThreadId: 29572
+[2026-07-15 18:10:34:793] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：62; NpcThreadId: 29572, CurPlayThreadId: 29572
+[2026-07-15 18:10:34:793] [玩家名字]Lua执行耗时过高:62ms msgid:101 507 1 1 
+
+[2026-07-15 18:10:43:484] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：32; NpcThreadId: 29572, CurPlayThreadId: 29572
+

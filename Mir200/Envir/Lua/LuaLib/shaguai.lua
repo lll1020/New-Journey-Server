@@ -1877,6 +1877,30 @@ shaguai = {
 			Npclib[77].onKillMon(play, mob)
 		end
 	end,
+	-- ["43"] = function(play,mob)      --跨服勋章：改走 MonItems 爆率文件，监听只保留跨服怪校验入口
+	-- 	if not play or not mob then
+	-- 		return
+	-- 	end
+	-- 	local mapName = tostring(getbaseinfo(mob, 3) or "")
+	-- 	if mapName ~= "幽邃地窟" and mapName ~= "摄魂红尘" and mapName ~= "逆灵离心" and mapName ~= "生死之门" and mapName ~= "跨服秘境" then
+	-- 		return
+	-- 	end
+	-- 	local mobName = tostring(getbaseinfo(mob, 1) or "")
+	-- 	if mobName ~= "幽邃小怪—[跨服]"
+	-- 		and mobName ~= "幽邃精英—[跨服]"
+	-- 		and mobName ~= "摄魂小怪—[跨服]"
+	-- 		and mobName ~= "摄魂精英—[跨服]"
+	-- 		and mobName ~= "逆灵小怪—[跨服]"
+	-- 		and mobName ~= "逆灵精英—[跨服]"
+	-- 		and mobName ~= "生死小怪—[跨服]"
+	-- 		and mobName ~= "生死精英—[跨服]"
+	-- 		and mobName ~= "跨服小怪—[跨服]"
+	-- 		and mobName ~= "跨服精英—[跨服]"
+	-- 		and mobName ~= "跨服boss—[跨服]" then
+	-- 		return
+	-- 	end
+	-- 	return
+	-- end,
 	["41"] = function(play,mob)      --保卫村庄：统一走 shaguai 击杀结算
 		if BwczApi and BwczApi.onKillMon then
 			BwczApi.onKillMon(play, mob)

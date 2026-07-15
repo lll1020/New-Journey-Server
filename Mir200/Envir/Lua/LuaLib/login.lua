@@ -106,6 +106,7 @@ function Login.main(play)
     shaguai.jia(play,39)
     shaguai.jia(play,40)
     shaguai.jia(play,41)
+    -- shaguai.jia(play,43)
     --全区通报登录
     if checktitle(play,"踏月主宰") then
         sendmovemsg("0", 1, 253, 0, 200, 1,"[冠名]玩家《"..getbaseinfo(play, 1).."》登录，全服瞩目...")

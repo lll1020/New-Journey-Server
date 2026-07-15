@@ -103,6 +103,8 @@ local function _build_payload(play)
     }
 end
 
+npc.buildPayload = _build_payload
+
 local function _refresh_panel(play, ew, aid)
     sendluamsg(play, 100, _npcid, ew or 0, aid or 0, tbl2json(_build_payload(play)))
 end

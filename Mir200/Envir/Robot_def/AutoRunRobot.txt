@@ -39,6 +39,12 @@
 #AutoRun NPC RunOnDay 22:00:00 @jqr_zxht_change 0
 #AutoRun NPC RunOnDay 23:00:00 @jqr_zxht_change 0
 #AutoRun NPC RunOnDay 24:00:00 @jqr_zxht_change 0
+#AutoRun NPC RunOnDay 03:00:00 @jqr_kuafu_mon_spawn 1
+#AutoRun NPC RunOnDay 09:00:00 @jqr_kuafu_mon_spawn 1
+#AutoRun NPC RunOnDay 12:00:00 @jqr_kuafu_mon_spawn 1
+#AutoRun NPC RunOnDay 15:00:00 @jqr_kuafu_mon_spawn 1
+#AutoRun NPC RunOnDay 18:00:00 @jqr_kuafu_mon_spawn 1
+#AutoRun NPC RunOnDay 24:00:00 @jqr_kuafu_mon_spawn 1
 ;天下第一武道会（跨服功能，确认跨服地图 kftt1~kftt100 后开启）
 #AutoRun NPC RUNONWEEK 1:20:00 @jqr_wudaohui_start 0
 #AutoRun NPC RUNONWEEK 1:22:00 @jqr_wudaohui_end 0
