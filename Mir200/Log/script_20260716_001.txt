@@ -1,0 +1,21 @@
+[2026-07-16 03:59:55:106] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：297; NpcThreadId: 16152, CurPlayThreadId: 16152
+[2026-07-16 03:59:55:131] LuaNPC:玩家名字 ID:999999999 执行 sendability player:玩家名字 耗时：31; NpcThreadId: 16152, CurPlayThreadId: 16152
+
+[2026-07-16 18:53:52:861] LuaNPC: ID:999999999 执行 startup player: 耗时：47; NpcThreadId: 27484, CurPlayThreadId: 27484
+
+[2026-07-16 18:54:52:966] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：93; NpcThreadId: 27484, CurPlayThreadId: 27484
+
+[2026-07-16 18:55:14:357] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：797; NpcThreadId: 27484, CurPlayThreadId: 27484
+
+[2026-07-16 18:55:39:379] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 27484, CurPlayThreadId: 27484
+
+[2026-07-16 19:10:27:872] LuaNPC:玩家名字 ID:999999999 执行 ontimer1 player:玩家名字 耗时：79; NpcThreadId: 27484, CurPlayThreadId: 27484
+
+[2026-07-16 19:13:38:205] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：110; NpcThreadId: 26880, CurPlayThreadId: 26880
+
+[2026-07-16 19:39:36:455] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：5813; NpcThreadId: 26880, CurPlayThreadId: 26880
+
+[2026-07-16 19:40:38:901] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：6203; NpcThreadId: 26880, CurPlayThreadId: 26880
+
+[2026-07-16 19:51:38:533] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：78; NpcThreadId: 6344, CurPlayThreadId: 6344
+

@@ -507,48 +507,96 @@ kfhg 23 26 -> kfhjsbk 86 102
 
 
 
+
 ;==============================================六大陆野外地图==============================
 ;登神之路
-[登神之路|new_44   登神之路] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[鬼道古藏|new_44   鬼道古藏] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[兵道古藏|new_44   兵道古藏] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[鬼道古藏深处|new_44   鬼道古藏深处] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[兵道古藏深处|new_44   兵道古藏深处] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[登神之路|bls   登神之路] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[鬼道古藏|csz   鬼道古藏] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[兵道古藏|czj   兵道古藏] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[鬼道古藏深处|dhzj   鬼道古藏深处] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[兵道古藏深处|ddjt   兵道古藏深处] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 
 
 ;血契之地
-[血契之地|new_44   血契之地] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[血契之地二层|new_44   血契之地二层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[血契之地|BQdixiacheng02   血契之地] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[血契之地二层|BQdixiacheng03   血契之地二层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 ;冰川雪域
-[冰川雪域|new_44   冰川雪域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[凛冬冰原|new_44   凛冬冰原] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[碎星冰谷|new_44   碎星冰谷] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[寒峰圣坛|new_44   寒峰圣坛] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[冻魂冰窟|new_44   冻魂冰窟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[星陨冰窟|new_44   星陨冰窟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[冰川雪域|D21056   冰川雪域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[凛冬冰原|D3804_1   凛冬冰原] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[碎星冰谷|D2102   碎星冰谷] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[寒峰圣坛|D2103   寒峰圣坛] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[冻魂冰窟|D2104   冻魂冰窟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[星陨冰窟|D2101   星陨冰窟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 ;森罗魔域
-[森罗魔域|new_44   森罗魔域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[邪影回廊|new_44   邪影回廊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[噬魂魔窟|new_44   噬魂魔窟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[幽冥血沼|new_44   幽冥血沼] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[魔焰祭坛|new_44   魔焰祭坛] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[森罗魔域|ID1_003   森罗魔域] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[邪影回廊|ID7_000   邪影回廊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[噬魂魔窟|WomaDYFb03   噬魂魔窟] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[幽冥血沼|ID8_001   幽冥血沼] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[魔焰祭坛|ldlzc   魔焰祭坛] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 ;边关烽城
-[边关烽城|new_44   边关烽城] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[魔渊关隘|new_44   魔渊关隘] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[灵脉戍楼|new_44   灵脉戍楼] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[残垣烽火|new_44   残垣烽火] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[镇关帅府|new_44   镇关帅府] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[边关烽城|EV_MysticVil   边关烽城] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[魔渊关隘|EV_bandit   魔渊关隘] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[灵脉戍楼|ER51_Ice   灵脉戍楼] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[残垣烽火|D010   残垣烽火] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[镇关帅府|zzmj   镇关帅府] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 ;盛世古城
-[盛世古城|new_44   盛世古城] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[长安西市|new_44   长安西市] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[洛阳天街|new_44   洛阳天街] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[汴京御街|new_44   汴京御街] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
-[临安古渡|new_44   临安古渡] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[盛世古城|xwzl   盛世古城] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[长安西市|8   长安西市] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[洛阳天街|dzsj   洛阳天街] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[汴京御街|tzj   汴京御街] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[临安古渡|jtjp   临安古渡] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+
+
+登神之路 17 89 -> 鬼道古藏 27 30
+登神之路 84 26 -> 兵道古藏 15 76
+鬼道古藏 95 115 -> 鬼道古藏深处 45 39
+兵道古藏 74 18 -> 兵道古藏深处 12 21
+血契之地 205 277 -> 血契之地二层 270 45
+冰川雪域 31 69 -> 凛冬冰原 293 293
+冰川雪域 66 64 -> 星陨冰窟 278 274
+凛冬冰原 114 115 -> 碎星冰谷 277 250
+碎星冰谷 19 31 -> 寒峰圣坛 263 258
+寒峰圣坛 41 29 -> 冻魂冰窟 284 270
+森罗魔域 44 149 -> 邪影回廊 14 44
+邪影回廊 80 36 -> 噬魂魔窟 18 20
+噬魂魔窟 85 82 -> 幽冥血沼 107 120
+幽冥血沼 25 22 -> 魔焰祭坛 32 152
+边关烽城 36 48 -> 魔渊关隘 27 219
+魔渊关隘 214 30 -> 灵脉戍楼 237 39
+灵脉戍楼 267 267 -> 残垣烽火 108 643
+残垣烽火 704 76 -> 镇关帅府 31 36
+盛世古城 55 82 -> 长安西市 181 132
+长安西市 49 326 -> 洛阳天街 143 109
+洛阳天街 36 33 -> 汴京御街 135 100
+汴京御街 127 19 -> 临安古渡 9 127
+
+鬼道古藏 27 30 -> 登神之路 17 89
+兵道古藏 15 76 -> 登神之路 84 26
+鬼道古藏深处 45 39 -> 鬼道古藏 95 115 
+兵道古藏深处 12 21 -> 兵道古藏 74 18
+血契之地二层 270 45 -> 血契之地 205 277
+凛冬冰原 293 293 -> 冰川雪域 31 69
+星陨冰窟 278 274 -> 冰川雪域 66 64
+碎星冰谷 277 250 -> 凛冬冰原 114 115
+寒峰圣坛 263 258 -> 碎星冰谷 19 31
+冻魂冰窟 284 270 -> 寒峰圣坛 41 29
+邪影回廊 14 44 -> 森罗魔域 44 149 
+噬魂魔窟 18 20 -> 邪影回廊 80 36
+幽冥血沼 107 120 -> 噬魂魔窟 85 82
+魔焰祭坛 32 152 -> 幽冥血沼 25 22
+魔渊关隘 27 219 -> 边关烽城 36 48
+灵脉戍楼 237 39 -> 魔渊关隘 214 30 
+残垣烽火 108 643 -> 灵脉戍楼 267 267
+镇关帅府 31 36 -> 残垣烽火 704 76 
+长安西市 181 132 -> 盛世古城 55 82
+洛阳天街 143 109 -> 长安西市 49 326 
+汴京御街 135 100 -> 洛阳天街 36 33
+临安古渡 9 127 -> 汴京御街 127 19 
 
 ;[六大陆地图一|new_44   六大陆地图一] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 ;[六大陆地图二|new_44   六大陆地图二] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
