@@ -883,8 +883,8 @@ end
 local function _dl_has_all_linggen(actor)
     local data = Player.getJsonTableByVar(actor, VarCfg["T_Áé¸ù"]) or {}
     local levels = type(data.level) == "table" and data.level or {}
-    for i = 1, 10 do
-        if (tonumber(levels[tostring(i)] or levels[i] or 0) or 0) <= 0 then
+    for i = 1, 5 do
+        if (tonumber(levels[tostring(i)] or levels[i] or 0) or 0) == 0 then
             return false
         end
     end

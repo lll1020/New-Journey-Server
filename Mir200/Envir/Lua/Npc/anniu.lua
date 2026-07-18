@@ -680,6 +680,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
         _ywl_send_current_task(play)
     elseif p2 == 1 then
         --传送
+        stopautoattack(play)
         local sj = json2tbl(data)
         if
             sj.i
@@ -713,15 +714,18 @@ npc[11] = function(play, p2, p3, data) --异闻录
                 end
             end
             if _ywl_can_transfer(play, sj, use_shuju) then
-                    local shuju = use_shuju
+                local shuju = use_shuju
+                local yd = type(shuju) == "table" and type(shuju.yd) == "table" and shuju.yd or nil
                 local is_transfer_ok = false
-                if shuju.yd[1] == 0 then
+                if not yd or yd[1] == nil then
                     sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>当前剧情未配置传送坐标...</font>","Type":9}')
-                elseif shuju.yd[1] == 1 then
-                    local targetMap = shuju.yd[2]
-                    local targetNpc = shuju.yd[3]
-                    local targetX = shuju.yd[4]
-                    local targetY = shuju.yd[5]
+                elseif yd[1] == 0 then
+                    sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>当前剧情未配置传送坐标...</font>","Type":9}')
+                elseif yd[1] == 1 then
+                    local targetMap = yd[2]
+                    local targetNpc = yd[3]
+                    local targetX = yd[4]
+                    local targetY = yd[5]
                     -- 这里不再对未完成三大陆主线的玩家自动兜底传送到灰界，是否可传送统一前置到 _ywl_can_transfer 里拦截。
                     local skipNpcGuide = _ywl_is_auto_receive_map_task(play, sj, shuju)
                     mapmove(play, targetMap, targetX, targetY, 5)
@@ -730,19 +734,19 @@ npc[11] = function(play, p2, p3, data) --异闻录
                     end
                     sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
                     is_transfer_ok = true
-                elseif shuju.yd[1] == 2 then
-                    sendluamsg(play, 101, 0, 1, 1, '{"lx":1,"fx":1,"an":' .. shuju.yd[3] .. ',"ms":"点击按钮"}')
+                elseif yd[1] == 2 then
+                    sendluamsg(play, 101, 0, 1, 1, '{"lx":1,"fx":1,"an":' .. yd[3] .. ',"ms":"点击按钮"}')
                     sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
                     sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
                     is_transfer_ok = true
-                elseif shuju.yd[1] == 3 then
-                    sendluamsg(play, 101, 0, 1, 1, '{"lx":' .. shuju.yd[2] .. '}')
+                elseif yd[1] == 3 then
+                    sendluamsg(play, 101, 0, 1, 1, '{"lx":' .. yd[2] .. '}')
                     sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
                     is_transfer_ok = true
-                elseif shuju.yd[1] == 4 then
-                    local msgId = tonumber(shuju.yd[2]) or 0
-                    local targetNpc = tonumber(shuju.yd[3]) or 0
-                    local targetParam = tonumber(shuju.yd[4]) or targetNpc
+                elseif yd[1] == 4 then
+                    local msgId = tonumber(yd[2]) or 0
+                    local targetNpc = tonumber(yd[3]) or 0
+                    local targetParam = tonumber(yd[4]) or targetNpc
                     if msgId == 105 and Npclib and Npclib[targetNpc] and Npclib[targetNpc].main then
                         Npclib[targetNpc].main(play, targetParam)
                     else
@@ -803,6 +807,7 @@ npc[11] = function(play, p2, p3, data) --异闻录
             
         end
     elseif p2 == 3 then --单个任务奖励
+        stopautoattack(play)
         local sj = json2tbl(data)
         if
             sj.i

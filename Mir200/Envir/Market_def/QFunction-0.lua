@@ -646,9 +646,6 @@ local function _magtag_play_effect(obj, effectId)
 end
 
 local function _magtag_cast_feedback(play, name)
-    if release_print then
-        release_print("linggen_skill_cast", tostring(getbaseinfo(play, 1) or ""), tostring(name or ""), tostring(getbaseinfo(play, 3) or ""), tostring(getbaseinfo(play, 4) or ""), tostring(getbaseinfo(play, 5) or ""))
-    end
     sendmsg(play, 1, '{"Msg":"<font color=\'#c0c0c0\' size=\'14\'> Õ∑≈</font><font color=\'#ff3131\' size=\'14\'>°æ' .. tostring(name or '') .. '°ø</font>","Type":9}')
 end
 local function _magtag_heal_self(play, pct)

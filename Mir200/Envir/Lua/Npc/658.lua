@@ -60,6 +60,9 @@ function npc.link(play,npcid,ew,aid,data)
         if jq_data[key] == 1 then
             if sg_data[key] and sg_data[key] >= (_config.num or 0) then
                 local answer = tostring(data or "")
+                if answer == "" and aid ~= nil then
+                    answer = tostring(aid or "")
+                end
                 local expect = tostring(_config.value or "")
                 if answer == "" or answer ~= expect then
                     Player.sendmsgEx(play, "字谜答案不正确#57")
@@ -89,5 +92,6 @@ function npc.link(play,npcid,ew,aid,data)
 end
 
 return npc
+
 
 

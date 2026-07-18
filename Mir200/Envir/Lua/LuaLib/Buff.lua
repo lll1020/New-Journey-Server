@@ -242,7 +242,7 @@ local function _sync_item_named_cut_attr(play, itemobj, tagName, stack)
     local cutValue = tonumber(stack or 0) or 0
     local attr_list = {}
     if cutValue > 0 then
-        table.insert(attr_list, {254, 244, cutValue, 0, 20, 1, 1})
+        table.insert(attr_list, {254, 244, cutValue, 0, 0, 1, 1})
     end
     item_json.abil[idx] = {i = abil_i or (idx - 1), t = tagName, c = 251, v = attr_list}
     setitemcustomabil(play, itemobj, tbl2json(item_json))

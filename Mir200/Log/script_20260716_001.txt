@@ -19,3 +19,11 @@
 
 [2026-07-16 19:51:38:533] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：78; NpcThreadId: 6344, CurPlayThreadId: 6344
 
+[2026-07-16 22:00:01:252] LuaNPC:系统控制 ID:999999999 执行 jqr_wudaohui_end player:系统控制 耗时：844; NpcThreadId: 6344, CurPlayThreadId: 6344
+
+[2026-07-16 22:10:00:842] LuaNPC:系统控制 ID:999999999 执行 jqr_zxdz_end player:系统控制 耗时：406; NpcThreadId: 6344, CurPlayThreadId: 6344
+
+[2026-07-16 22:13:08:204] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：32; NpcThreadId: 6344, CurPlayThreadId: 6344
+
+[2026-07-17 00:30:50:086] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 6344, CurPlayThreadId: 6344
+

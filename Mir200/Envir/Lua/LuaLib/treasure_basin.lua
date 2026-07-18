@@ -1,10 +1,6 @@
 -- æ€±¶≈Ë£∫–¬∞Êæ€ƒ‹ ’“Ê°¢¡∂¡È±¶ Ø°¢Ω˚∆˜œµÕ≥°£
-local TreasureBasin = rawget(_G, "__treasure_basin_module")
-if TreasureBasin then
-    return TreasureBasin
-end
-
-TreasureBasin = {}
+local TreasureBasin = rawget(_G, "__treasure_basin_module") or {}
+local _first_init = next(TreasureBasin) == nil
 _G.__treasure_basin_module = TreasureBasin
 
 local _config = Guard.getConfig("npc_106") or {}
@@ -147,6 +143,8 @@ local function _check_forbidden_title(play, data)
 end
 
 local function _recharge_total(play)
+    -- local moneyCharge = _toint(querymoney(play, 23))
+    -- local totalCharge = _toint(getplaydef(play, "U_’Ê µ≥‰÷µ"))
     return _toint(getplaydef(play, "U_’Ê µ≥‰÷µ"))
 end
 
@@ -604,6 +602,8 @@ local function _build_payload(play)
         equipped = _equipped_where(play) and 1 or 0,
         level = data.level,
         charge = _recharge_total(play),
+        real_charge = _toint(getplaydef(play, VarCfg["U_’Ê µ≥‰÷µ"])),
+        money23 = _toint(querymoney(play, 23)),
         cap = _cap_seconds(data.level),
         cap_sec = _cap_seconds(data.level),
         energy_sec = math.floor(data.energy_sec),
@@ -1030,13 +1030,16 @@ local function _on_take_off(actor, itemobj, where, itemname, makeid)
     _refresh_item_bar(actor)
 end
 
-GameEvent.add(EventCfg.onLogin, _on_login, "æ€±¶≈Ë")
-GameEvent.add(EventCfg.onKFLogin, _on_login, "æ€±¶≈Ë")
-GameEvent.add(EventCfg.goDailyUpdate, _on_daily, "æ€±¶≈Ë")
-GameEvent.add(EventCfg.onKillMon, TreasureBasin.onKillMon, "æ€±¶≈Ë")
-GameEvent.add(EventCfg.onExitGame, TreasureBasin.onExitGame, "æ€±¶≈Ë")
-GameEvent.add(EventCfg.onTakeOnEx, _on_take_on, "æ€±¶≈Ë")
-GameEvent.add(EventCfg.onTakeOffEx, _on_take_off, "æ€±¶≈Ë")
+if _first_init and not TreasureBasin.__events_registered then
+    GameEvent.add(EventCfg.onLogin, _on_login, "æ€±¶≈Ë")
+    GameEvent.add(EventCfg.onKFLogin, _on_login, "æ€±¶≈Ë")
+    GameEvent.add(EventCfg.goDailyUpdate, _on_daily, "æ€±¶≈Ë")
+    GameEvent.add(EventCfg.onKillMon, TreasureBasin.onKillMon, "æ€±¶≈Ë")
+    GameEvent.add(EventCfg.onExitGame, TreasureBasin.onExitGame, "æ€±¶≈Ë")
+    GameEvent.add(EventCfg.onTakeOnEx, _on_take_on, "æ€±¶≈Ë")
+    GameEvent.add(EventCfg.onTakeOffEx, _on_take_off, "æ€±¶≈Ë")
+    TreasureBasin.__events_registered = true
+end
 
 return TreasureBasin
 

@@ -724,7 +724,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 3, 14 },
+                    yd = { 1, "二大陆主城", 24, 100, 106 },
                     desc = "闯过种植仙草，证我道途",
                 },
                 {
@@ -737,7 +737,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 3, 14 },
+                    yd = { 1, "二大陆主城", 24, 100, 106 },
                     desc = "行走了解砍树，破除迷障",
                 },
                 {
@@ -1004,6 +1004,7 @@ local npc_xyl = {
                     "拥有传说神石",
                     id = 999,
                     jl = { { "剧情点", 3 } },
+                    yd = { 1, "三大陆主城", 53, 161, 230 },
                     fwdjy = function(play)
                         return _xyl_check_task(play, "拥有传说神石")
                     end,
@@ -1022,7 +1023,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "三大陆主城", 51, 172, 226 },
+                    yd = { 1, "三大陆主城", 51, 153, 230 },
                     desc = "深入传说·斗笠，寻回失落线索",
                 },
                 {
@@ -1035,12 +1036,12 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "三大陆主城", 52, 172, 231 },
+                    yd = { 1, "三大陆主城", 52, 157, 230 },
                     desc = "踏入神·酒葫芦，循迹而行",
                 },
                 {
                     "高级淬体",
-                    tk = "npc_53",
+                    tk = "npc_54",
                     id = 999,
                     jl = { { "剧情点", 2 } },
                     fwdjy = function(play, tk)
@@ -1052,6 +1053,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
+                    yd = { 1, "三大陆主城", 53, 161, 230 },
                     desc = "踏入高级淬体，循迹而行",
                 },
                 {
@@ -1075,100 +1077,16 @@ local npc_xyl = {
         },
     },
     {
-        {
-            jq = {
-                {
-                    "灵兽全一星",
-                    id = 999,
-                    jl = { { "剧情点", 3 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "灵兽全一星")
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "四大陆主城", 64, 24, 23 },
-                    desc = "前往灵兽全一星，探寻其中机缘",
-                },
-                {
-                    "灵兽全二星",
-                    id = 999,
-                    jl = { { "剧情点", 5 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "灵兽全二星")
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "四大陆主城", 64, 24, 23 },
-                    desc = "前往灵兽全二星，探寻其中机缘",
-                },
-                {
-                    "灵兽全三星",
-                    id = 999,
-                    jl = { { "剧情点", 10 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "灵兽全三星")
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "四大陆主城", 64, 24, 23 },
-                    desc = "踏入灵兽全三星，循迹而行",
-                },
-                {
-                    "唐代古玩",
-                    id = 999,
-                    jl = { { "剧情点", 3 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "唐代古玩")
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "四大陆主城", 65, 28, 23 },
-                    desc = "踏破唐代古玩，守护一方安宁",
-                },
-                {
-                    "红色仙法",
-                    id = 999,
-                    jl = { { "剧情点", 3 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "红色仙法")
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 3, 14 },
-                    desc = "闯过红色仙法，证我道途",
-                },
-                {
-                    "转生·四",
-                    id = 999,
-                    jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "转生·四")
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "四大陆主城", 35, 16, 31 },
-                    desc = "探访转生·四，揭开真相",
-                },
-            },
-            name = "若水秘闻",
-            jqd = 21,
-
-            jl = { { "等级卷轴", 20 }, { "1元真实充值", 25 } },
-        },
+        
         {
             jq = {
                 {
                     "捉鬼人",
+                    tk = "npc_666",
                     id = 999,
                     jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "捉鬼人")
+                    fwdjy = function(play,tk)
+                        return _xyl_check_task(play, tk)
                     end,
                     khdjy = function()
                         return true
@@ -1436,7 +1354,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "四大陆主城", 641, 20, 27 },
+                    yd = { 1, "四大陆主城", 641, 37, 42 },
                     desc = "直面重走西游路，化解其中隐患",
                 },
             },
@@ -1795,7 +1713,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "羿射九日", 675, 358, 114 },
+                   yd = { 1, "羿射九日", 675, 358, 114 },
                     desc = "行走羿射九日，破除迷障",
                 },
                 {
@@ -1904,6 +1822,92 @@ local npc_xyl = {
             name = "修复传说",
             jqd = 51,
             jl = { { "等级卷轴", 10 }, { "1元真实充值", 15 } },
+        },
+        {
+            jq = {
+                {
+                    "灵兽全一星",
+                    id = 999,
+                    jl = { { "剧情点", 3 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "灵兽全一星")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "四大陆主城", 64, 38, 27 },
+                    desc = "前往灵兽全一星，探寻其中机缘",
+                },
+                {
+                    "灵兽全二星",
+                    id = 999,
+                    jl = { { "剧情点", 5 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "灵兽全二星")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "四大陆主城", 64, 38, 27 },
+                    desc = "前往灵兽全二星，探寻其中机缘",
+                },
+                {
+                    "灵兽全三星",
+                    id = 999,
+                    jl = { { "剧情点", 10 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "灵兽全三星")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "四大陆主城", 64, 38, 27 },
+                    desc = "踏入灵兽全三星，循迹而行",
+                },
+                {
+                    "唐代古玩",
+                    id = 999,
+                    jl = { { "剧情点", 3 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "唐代古玩")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "四大陆主城", 65, 28, 23 },
+                    desc = "踏破唐代古玩，守护一方安宁",
+                },
+                {
+                    "红色仙法",
+                    id = 999,
+                    jl = { { "剧情点", 3 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "红色仙法")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 3, 14 },
+                    desc = "闯过红色仙法，证我道途",
+                },
+                {
+                    "转生·四",
+                    id = 999,
+                    jl = { { "剧情点", 1 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "转生·四")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "四大陆主城", 35, 16, 31 },
+                    desc = "探访转生·四，揭开真相",
+                },
+            },
+            name = "若水秘闻",
+            jqd = 21,
+
+            jl = { { "等级卷轴", 20 }, { "1元真实充值", 25 } },
         },
     },
     {
@@ -2464,6 +2468,366 @@ local npc_xyl = {
             name = "重启世界",
             jqd = 81,
             jl = { { "等级卷轴", 10 }, { "1元真实充值", 15 } },
+        },
+    },
+    {
+        {
+            jq = {
+                {
+                    "恶魔契约",
+                    tk = "npc_728",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "血契之地二层", 728, 66, 27},
+                    desc = "以血换契，每十名玩家可得一次抽奖",
+                },
+            },
+            name = "灵虚秘闻",
+            jqd = 61,
+            jl = {{"等级卷轴", 10}, {"1元真实充值", 15}},
+        },
+        {
+            jq = {
+                {
+                    "天机道长",
+                    tk = "npc_721",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "六大陆主城", 721, 25, 149},
+                    desc = "星图已见三光，前往冰川雪域寻回帝星遗失的线索",
+                },
+                {
+                    "星儿",
+                    tk = "npc_722",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "六大陆主城", 722, 108, 44},
+                    desc = "玉佩重铸，六大陆可爆玉佩碎片",
+                },
+                {
+                    "凌雪",
+                    tk = "npc_723",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "冰川雪域", 723, 58, 50},
+                    desc = "冰川下的寒意并未散去",
+                },
+                {
+                    "守城士兵甲",
+                    tk = "npc_724",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "边关烽城", 724, 152, 155},
+                    desc = "边关告急，先守住城，再去见赤焰",
+                },
+                {
+                    "赤焰",
+                    tk = "npc_725",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "边关烽城", 725, 39, 91},
+                    desc = "护送赤焰，途中有刺客潜伏",
+                },
+                {
+                    "幽影",
+                    tk = "npc_726",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "森罗魔域", 726, 108, 91},
+                    desc = "幽影盗走帝星本源，森罗魔气尚未平息",
+                },
+            },
+            name = "星图之谜",
+            jqd = 66,
+            jl = {{"等级卷轴", 10}, {"1元真实充值", 15}},
+        },
+        {
+            jq = {
+                {
+                    "雪域特使",
+                    tk = "npc_729",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "冰川雪域", 729, 47, 48},
+                    desc = "击穿雪域封锁，打开下一张地图",
+                },
+                {
+                    "魔域特使",
+                    tk = "npc_730",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "森罗魔域", 730, 137, 44},
+                    desc = "击穿魔域封锁，打开下一张地图",
+                },
+                {
+                    "边关特使",
+                    tk = "npc_731",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "边关烽城", 731, 269, 70},
+                    desc = "击穿边关封锁，打开下一张地图",
+                },
+                {
+                    "古城特使",
+                    tk = "npc_732",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "盛世古城", 732, 26, 50},
+                    desc = "击穿古城封锁，打开下一张地图",
+                },
+            },
+            name = "特使之令",
+            jqd = 71,
+            jl = {{"等级卷轴", 10}, {"1元真实充值", 15}},
+        },
+        {
+            jq = {
+                {
+                    "盛世重游",
+                    tk = "npc_733",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "六大陆主城", 733, 82, 113},
+                    desc = "重游古城，集齐四地信物再来交付",
+                },
+                {
+                    "万国之首",
+                    tk = "npc_734",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "长安西市", 734, 209, 126},
+                    desc = "商契残页散落西市",
+                },
+                {
+                    "洛水杜康",
+                    tk = "npc_735",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "洛阳天街", 735, 85, 68},
+                    desc = "酒意与泉眼相合，方得杜康",
+                },
+                {
+                    "大宋的菜肴",
+                    tk = "npc_736",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "汴京御街", 736, 91, 53},
+                    desc = "食盒空置，菜肴才是答案",
+                },
+                {
+                    "天青色的秘密",
+                    tk = "npc_737",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "临安古渡", 737, 44, 73},
+                    desc = "窑火三开，青釉方成",
+                },
+            },
+            name = "盛世重游",
+            jqd = 76,
+            jl = {{"等级卷轴", 10}, {"1元真实充值", 15}},
+        },
+        {
+            jq = {
+                {
+                    "镇关帅府",
+                    tk = "npc_738",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "镇关帅府", 738, 17, 21},
+                    desc = "护灵旗碎，密令方出",
+                },
+                {
+                    "魔焰祭坛",
+                    tk = "npc_739",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "魔焰祭坛", 739, 138, 30},
+                    desc = "先揭弱点，再入副本",
+                },
+                {
+                    "冻魂冰窟",
+                    tk = "npc_740",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "冻魂冰窟", 740, 162, 108},
+                    desc = "寒冰剑成，剑诀方可出世",
+                },
+            },
+            name = "密令护灵",
+            jqd = 81,
+            jl = {{"等级卷轴", 10}, {"1元真实充值", 15}},
         },
     },
 }

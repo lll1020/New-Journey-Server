@@ -143,9 +143,34 @@ function npc.link(play,npcid,ew,aid)
         end
 
         jq_data[subKey] = 2
+        local done = 0
+        for i = 1, #details do
+            if jq_data[key.."_"..i] and jq_data[key.."_"..i] >= 2 then
+                done = done + 1
+            end
+        end
+        if done >= #details and #details > 0 then
+            jq_data[key] = 2
+            if (jq_data[key] or 0) >= 2 then
+                Guard.clearTaskTemp(jq_data, key)
+                jq_data[key] = 2
+            end
+        end
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         Player.sendmsgEx(play, "提交成功")
+        if done >= #details and #details > 0 then
+            Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成#57")
+            if _config.ch then
+                Player.title_give(play, _config.ch)
+            end
+            local reward = _config.jl or _config.rwjl
+            if reward then
+                Player.rwjl(play, reward, (_config.name or "剧情任务").."奖励", 1)
+            end
+            sendluamsg(play,101,1005,0,0,"rwwc")
+        end
         sendluamsg(play,100,npcid,1,idx,"")
+        sendluamsg(play,101,11,0,0,'{"dljq":' .. getplaydef(play, VarCfg.T_dljq) .. ',"zxrw":' .. getplaydef(play, VarCfg.T_zxrw) .. ',"ywl":' .. getplaydef(play, VarCfg.T_ywl) .. "}")
         return
     end
 end

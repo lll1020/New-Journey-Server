@@ -903,8 +903,8 @@ shaguai = {
 		if config.details then
 			for _, v in ipairs(config.details) do
 				if v.a_num and xilieditu[map] and xilieditu[map] == 2 then add_a = true end
-				if v.b_num and map == "ÁùµÀÂÖ»Ø" then add_b = true end
-				if v.c_num and mob_name == "¼¦" then add_c = true end
+				if v.b_num and map == "ÁùµÀÂÖ»Ø"  and (guaiwutype[mob_name] and guaiwutype[mob_name] == 2) then add_b = true end
+				if v.c_num and mob_name == "Èõ¼¦" then add_c = true end
 			end
 		end
 		if add_a then
