@@ -445,12 +445,10 @@ local function _xyl_has_lingshou_star(play, star)
     if count <= 0 then
         return false
     end
-    local data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"]) or {}
+    local data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
     local ls_sp = data.ls_sp or {}
-    star = tonumber(star) or 0
     for i = 1, count do
-        local curStar = tonumber(ls_sp[tostring(i)] or 0) or 0
-        if curStar < star then
+        if (ls_sp[tostring(i)] or 0) < star then
             return false
         end
     end
@@ -518,38 +516,6 @@ local function _xyl_has_all_tianming(play)
     return true
 end
 
-
-local function _xyl_has_zhuri_bow_full(play)
-    local where = Player.hasEquipInArtifactSlot(play, "逐日弓")
-    if not where then
-        return false
-    end
-    local itemobj = linkbodyitem(play, where)
-    if not itemobj or itemobj == "0" then
-        return false
-    end
-    local ok, item_json = pcall(json2tbl, getitemcustomabil(play, itemobj))
-    item_json = ok and type(item_json) == "table" and item_json or {}
-    if type(item_json.zhuri_affixes) == "table" then
-        local count = 0
-        for _, one in ipairs(item_json.zhuri_affixes) do
-            if type(one) == "table" then
-                count = count + 1
-            end
-        end
-        if count >= 9 then
-            return true
-        end
-    end
-    if type(item_json.abil) == "table" then
-        for _, abil in ipairs(item_json.abil) do
-            if type(abil) == "table" and tostring(abil.t or "") == "[逐日神秘属性]" and type(abil.v) == "table" then
-                return #abil.v >= 9
-            end
-        end
-    end
-    return false
-end
 -- 备注：剧情点验证入口（优先特殊逻辑，其次剧情完成）
 local function _xyl_check_task(play, name)
     local key = _xyl_norm_name(name)
@@ -613,15 +579,14 @@ local function _xyl_check_task(play, name)
         ["聚宝盆任务"] = _xyl_has_treasure_basin_fixed,
         ["激活全部圣遗物"] = _xyl_has_all_syw,
         ["激活全部天命装备"] = _xyl_has_all_tianming,
-        ["羿射九日"] = _xyl_has_zhuri_bow_full,
         ["灵兽全一星"] = function(play)
-            return _xyl_has_lingshou_star(play, 1)
-        end,
-        ["灵兽全二星"] = function(play)
             return _xyl_has_lingshou_star(play, 2)
         end,
-        ["灵兽全三星"] = function(play)
+        ["灵兽全二星"] = function(play)
             return _xyl_has_lingshou_star(play, 3)
+        end,
+        ["灵兽全三星"] = function(play)
+            return _xyl_has_lingshou_star(play, 4)
         end,
         ["唐代古玩"] = _xyl_has_tang_antique,
         ["红色仙法"] = _xyl_has_red_xianfa,
@@ -1870,7 +1835,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "四大陆主城", 64, 25, 27 },
+                    yd = { 1, "五大陆主城", 69, 75, 27 },
                     desc = "前往灵兽全一星，探寻其中机缘",
                 },
                 {
@@ -1883,7 +1848,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "四大陆主城", 64, 25, 27 },
+                    yd = { 1, "五大陆主城", 69, 75, 27 },
                     desc = "前往灵兽全二星，探寻其中机缘",
                 },
                 {
@@ -1896,7 +1861,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "四大陆主城", 64, 25, 27 },
+                    yd = { 1, "五大陆主城", 69, 75, 27 },
                     desc = "踏入灵兽全三星，循迹而行",
                 },
                 {
@@ -2144,7 +2109,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "五大陆主城", 690, 81, 37 },
+                    yd = { 1, "五大陆主城", 690, 24, 13 },
                     desc = "直面时空守护者，守护时空秩序",
                 },
             },
@@ -2236,7 +2201,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "五大陆主城", 692, 89, 37 },
+                    yd = { 1, "五大陆主城", 692, 32, 13 },
                     desc = "破解生命边界之谜",
                 },
             },
@@ -2496,7 +2461,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "五大陆主城", 691, 85, 37 },
+                    yd = { 1, "五大陆主城", 691, 28, 13 },
                     desc = "完成重启世界，开启新篇",
                 },
             },
@@ -2868,9 +2833,6 @@ local npc_xyl = {
 }
 npc_xyl.check_task = _xyl_check_task
 return npc_xyl
-
-
-
 
 
 

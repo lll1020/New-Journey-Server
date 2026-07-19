@@ -1536,6 +1536,7 @@ shaguai = {
                 return
             end
         end
+		end
 		local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
 		local state = tonumber(jq_data[key] or 0) or 0
 		if state < 1 then

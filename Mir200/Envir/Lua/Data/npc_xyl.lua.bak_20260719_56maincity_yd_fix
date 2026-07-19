@@ -2144,7 +2144,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "五大陆主城", 690, 81, 37 },
+                    yd = { 1, "五大陆主城", 690, 24, 13 },
                     desc = "直面时空守护者，守护时空秩序",
                 },
             },
@@ -2236,7 +2236,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "五大陆主城", 692, 89, 37 },
+                    yd = { 1, "五大陆主城", 692, 32, 13 },
                     desc = "破解生命边界之谜",
                 },
             },
@@ -2496,7 +2496,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "五大陆主城", 691, 85, 37 },
+                    yd = { 1, "五大陆主城", 691, 28, 13 },
                     desc = "完成重启世界，开启新篇",
                 },
             },
@@ -2868,7 +2868,6 @@ local npc_xyl = {
 }
 npc_xyl.check_task = _xyl_check_task
 return npc_xyl
-
 
 
 

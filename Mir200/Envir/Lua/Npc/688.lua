@@ -25,6 +25,13 @@ local function _is_unlocked(jq_data, suffix)
     return tonumber(jq_data[_flag_key(suffix)] or 0) == 1
 end
 
+local function _send_state(play, npcid, p2)
+    local data = {}
+    data["T_dljq"] = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+    data["sg_data"] = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
+    sendluamsg(play, 100, npcid, p2 or 1, 0, tbl2json(data))
+end
+
 local function _try_tp(play, jq_data, idx)
     local list = _unlock_list()
     local node = list[idx]
@@ -55,10 +62,7 @@ function npc.main(play,npcid)
     if not _config then
         return
     end
-    local data = {}
-    data["T_dljq"] = Player.getJsonTableByVar(play, VarCfg.T_dljq)
-    data["sg_data"] = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
-    sendluamsg(play,100,npcid,0,0,tbl2json(data))
+    _send_state(play, npcid, 0)
 end
 
 function npc.link(play,npcid,ew,aid)
@@ -96,13 +100,13 @@ function npc.link(play,npcid,ew,aid)
         Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#218|")
         if npcid then Guard.closeNpcAndAuto(play, npcid) end
         sendluamsg(play,101,1005,0,0,"rwjs")
-        sendluamsg(play,100,npcid,1,0,"")
+        _send_state(play, npcid)
         return
     end
 
     if state >= 2 then
         Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|已完成，可直接传送#57")
-        sendluamsg(play,100,npcid,1,3,"")
+        _send_state(play, npcid)
         return
     end
 
@@ -132,7 +136,7 @@ function npc.link(play,npcid,ew,aid)
         Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成#57")
         if npcid then Guard.closeNpc(play, npcid) end
         sendluamsg(play,101,1005,0,0,"rwwc")
-        sendluamsg(play,100,npcid,1,#list,"")
+        _send_state(play, npcid)
         return
     end
 
@@ -169,7 +173,7 @@ function npc.link(play,npcid,ew,aid)
     end
 
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-    sendluamsg(play,100,npcid,1,new_unlocked_count,"")
+    _send_state(play, npcid)
 end
 
 return npc

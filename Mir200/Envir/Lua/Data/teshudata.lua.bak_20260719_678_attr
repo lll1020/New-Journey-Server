@@ -1828,14 +1828,14 @@ teshudata = {
     ["npc_677"]  = {id = 677, name = "女娲补天",cost = {{"五彩石",1}},max_num = 9,ch = "补天神子",jl_c = {{"若水·专属宝石·绑定",1},{"绑定金币",1880000},{"修为丹（大）",1},{"1元真实充值",1}},},
     ["npc_678"]  = {id = 678, name = "后土娘娘",ch = "后土之力",
         details = {
-            {idx = 1,name = "崔珏",cost = {{"判官笔",1}},attr = {{245,300}},attr_desc = "对怪增伤+3%"},
-            {idx = 2,name = "钟馗",map = "后土娘娘",shaguai_id = 678,num = 100,attr = {{81,100}},attr_desc = "对怪吸血+1%"},
-            {idx = 3,name = "牛头",cost = {{"牛头的鼻环",1}},attr = {{244,1999}},attr_desc = "打怪切割+1999"},
-            {idx = 4,name = "马面",cost = {{"马面的梳子",1}},attr = {{255,1999}},attr_desc = "怪物格挡+1999"},
-            {idx = 5,name = "金枷",cost = {{"金币",8880000}},attr = {{204,100}},attr_desc = "回收效率+1%"},
-            {idx = 6,name = "银锁",cost = {{"灵石",200}},attr = {{23,1}},attr_desc = "暴击抵抗+1%"},
-            {idx = 7,name = "白无常",xz = {679},attr = {{243,1}},attr_desc = "移动速度+1%"},
-            {idx = 8,name = "黑无常",xz = {679},attr = {{200,100},{201,100}},attr_desc = "攻击速度+1%"},
+            {idx = 1,cost = {{"判官笔",1}}},
+            {idx = 2,map = "后土娘娘",shaguai_id = 678,num = 100,},
+            {idx = 3,cost = {{"牛头的鼻环",1}}},
+            {idx = 4,cost = {{"马面的梳子",1}}},
+            {idx = 5,cost = {{"金币",8880000}}},
+            {idx = 6,cost = {{"灵石",200}}},
+            {idx = 7,xz = {679}},
+            {idx = 8,xz = {679}},
         },
     },
     ["npc_679"]  = {id = 679, name = "黑白无常",cost = {{"友情的力量",10}},ch = '世事无常-天下太平'},
@@ -1878,7 +1878,7 @@ teshudata = {
     ["npc_714"] = { id = 714, name = "屠龙宝刀", shaguai_id = 714, task_cfg = { chapter = 5, task_type = "trial_chain", map = "冰火岛", kill_count = 10, kill_boss = "BOSS", scale_item = "冰火龙鳞", scale_drop_rate = 1000, artifact_item = "屠龙刀", artifact_upgrade_item = "真·屠龙刀", upgrade_submit = { {"冰火龙鳞",100}, {"元宝",1000000}, }, }, },
     ["npc_715"] = { id = 715, name = "围攻光明顶", ch = "乾坤大挪移", task_cfg = { chapter = 5, task_type = "trial_chain", map = "光明顶", submit = { {"乾坤大挪移残页",66}, {"元宝",500000}, }, }, },
     ["npc_716"] = { id = 716, name = "孤身战吕布", ch = "吕布之力",jl = {{"时装：吕奉先",1}}, task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "虎牢关", fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "吕布", boss_pos = {32,36}, submit = { {"刘备祝福",3}, {"张飞祝福",3}, {"关羽祝福",3}, }, }, },
-    ["npc_717"] = { id = 717, name = "火烧赤壁", ch = "火中取胜", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "赤壁", fb_map = "sg169", fb_time = 300, enter_pos = {35,33}, boss = "≮火烧连营·天命策尊≯", boss_pos = {29,29}, night_only = 1, night_start = 18, night_end = 6, fire_effect_id = 23, fire_tick_hurt_pct = 2, fire_burst_hurt_pct = 20, submit = {{"赤壁密函",10}}, }, },
+    ["npc_717"] = { id = 717, name = "火烧赤壁", ch = "火中取胜", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "赤壁", fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "≮火烧连营·天命策尊≯", boss_pos = {32,36}, night_only = 1, night_start = 18, night_end = 6, fire_effect_id = 19, fire_tick_hurt_pct = 2, fire_burst_hurt_pct = 20, submit = {{"赤壁密函",10}}, }, },
     ["npc_718"] = { id = 718, name = "景阳冈打虎", shaguai_id = 718, ch = "打虎英雄", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "景阳冈", fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "吊睛白额虎", boss_pos = {32,36}, submit = {{"武松的酒",3}}, drop_item = "武松的酒", drop_rate = 2500, }, },
     ["npc_719"] = { id = 719, name = "血溅狮子楼", shaguai_id = 719, ch = "侠义祝福", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "狮子楼", fb_map = "mwsl", limit_time_sec = 1200, enter_pos = {29,27}, submit = {{"净化水晶",1}}, drop_item = "净化水晶", drop_rate = 3000, stage1_mob = "暗影打手", stage1_count = 20, stage1_timeout = 300, stage1_elite_mob = "暗影打手·精英", stage1_elite_count = 2, stage2_boss = "王婆", stage2_boss_count = 1, stage2_mob = "暗影侍女", stage2_mob_count = 2, stage3_boss = "邪恶西门庆", stage3_boss_count = 1, stage3_mob = "暗影侍女", stage3_mob_count = 4, boss_pos = {32,36}, mob_center = {32,36}, rage_hp_pct = 50, explode_hurt_pct = 12, explode_effect_id = 4011, }, },
     ["npc_721"] = { id = 721, name = "天机道长", jl = {{"星儿的玉佩碎片",1}}, task_cfg = { chapter = 6, task_type = "auto_claim", map = "六大陆主城", need_star_stage = 3, target = {"冰川雪域",723,120,120}, }, },
@@ -3272,8 +3272,6 @@ teshudata = {
     },
 }
 return teshudata
-
-
 
 
 

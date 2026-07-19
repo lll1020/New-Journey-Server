@@ -1515,6 +1515,7 @@ shaguai = {
 		end
 		-- 任务击杀进度：可选只统计指定BOSS击杀（kill_boss）
 		local need_boss = task_cfg.kill_boss or task_cfg.boss_mob
+		if type(need_boss) == "string" and need_boss ~= "" then
         if type(need_boss) == "string" and need_boss ~= "" then
             if need_boss == "BOSS" then
                 local mob_type = tonumber((guaiwutype and guaiwutype[mob_name]) or 0) or 0
@@ -1524,18 +1525,17 @@ shaguai = {
             elseif mob_name ~= need_boss then
                 return
             end
-        elseif type(need_boss) == "table" then
-            local _match = false
-            for _, _name in ipairs(need_boss) do
-                if mob_name == _name then
-                    _match = true
-                    break
-                end
-            end
-            if not _match then
-                return
-            end
-        end
+			local _match = false
+			for _, _name in ipairs(need_boss) do
+				if mob_name == _name then
+					_match = true
+					break
+				end
+			end
+			if not _match then
+				return
+			end
+		end
 		local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
 		local state = tonumber(jq_data[key] or 0) or 0
 		if state < 1 then

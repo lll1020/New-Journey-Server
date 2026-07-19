@@ -1007,8 +1007,8 @@ function TreasureBasin.onKillMon(play, mob)
     local mobName = tostring(getbaseinfo(mob, 1) or "")
     local gtype = _toint(guaiwutype and guaiwutype[mobName])
     local isBig = gtype >= 1
-    -- 聚宝魔石：全大陆 1/100，大怪及以上必掉 1 个。
-    if isBig or math.random(100) == 1 then
+    -- 聚宝魔石：全大陆 1/1000，大怪及以上必掉 1 个。
+    if isBig or math.random(1000) == 1 then
         shaguai.temp_drop(play, mob, "聚宝魔石")
     end
 
@@ -1042,6 +1042,7 @@ if _first_init and not TreasureBasin.__events_registered then
 end
 
 return TreasureBasin
+
 
 
 

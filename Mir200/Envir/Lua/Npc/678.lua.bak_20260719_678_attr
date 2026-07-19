@@ -5,46 +5,6 @@ npc = {}
 
 local _config = Guard.getConfig("npc_678")
 
-local _attr_list_name = "后土娘娘"
-
-local function _build_detail_attr_map(jq_data)
-    local attrs = {}
-    local details = (_config and _config.details) or {}
-    for i = 1, #details do
-        local cfg = details[i]
-        if cfg and cfg.attr and jq_data["npc_678_"..i] and jq_data["npc_678_"..i] >= 2 then
-            for _, it in ipairs(cfg.attr) do
-                local aid = tonumber(it[1] or 0) or 0
-                local val = tonumber(it[2] or 0) or 0
-                if aid > 0 and val ~= 0 then
-                    attrs[aid] = (attrs[aid] or 0) + val
-                end
-            end
-        end
-    end
-    return attrs
-end
-
-local function _apply_detail_attrs(play)
-    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
-    local attrs = _build_detail_attr_map(jq_data)
-    Player.del_attlist(play, _attr_list_name)
-    if next(attrs) then
-        Player.add_attlist(play, _attr_list_name, "=", Player.getAttrTableToStr(attrs), 1)
-    end
-end
-
-local function _ensure_kill_listener(play)
-    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
-    local key = "npc_678"
-    if tonumber(jq_data[key] or 0) ~= 1 then
-        return
-    end
-    if tonumber(jq_data[key.."_2"] or 0) >= 2 then
-        return
-    end
-    shaguai.jia(play, _config.shaguai_id or 678)
-end
 
 
 
@@ -197,7 +157,6 @@ function npc.link(play,npcid,ew,aid)
             end
         end
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        _apply_detail_attrs(play)
         Player.sendmsgEx(play, "提交成功")
         if done >= #details and #details > 0 then
             Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成#57")
@@ -216,15 +175,7 @@ function npc.link(play,npcid,ew,aid)
     end
 end
 
-
-function Login_jq_678(play)
-    _apply_detail_attrs(play)
-    _ensure_kill_listener(play)
-end
-GameEvent.add(EventCfg.onLogin, Login_jq_678, "Login_后土娘娘")
-
 return npc
-
 
 
 

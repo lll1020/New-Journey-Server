@@ -1510,7 +1510,8 @@ Buff = {
             local hurt = math.floor(maxmp * 0.05)
             if hurt > 0 then
                 setplaydef(play, "N$buff332cd", now)
-                rangeharm(play, getbaseinfo(Target, ConstCfg.gbase.x), getbaseinfo(Target, ConstCfg.gbase.y), 1, hurt, 0, 0, 0, 2, 20310, 12)
+                playeffect(Target, 20301, 0, 0, 1, 0, 0)
+                rangeharm(play, getbaseinfo(Target, ConstCfg.gbase.x), getbaseinfo(Target, ConstCfg.gbase.y), 1, hurt, 0, 0, 0, 2, 0, 12)
             end
             return 0
         end

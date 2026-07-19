@@ -511,25 +511,6 @@ function takeonbeforeex(play,item,where,makeIndex)
             end
         end
     end
-    if where >= 77 and where <= 88 then
-        local itemName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "")
-        local baseName = string.match(itemName, "^(.-)【") or itemName
-        if baseName == "逐日弓" then
-            for pos = 77, 88 do
-                if pos ~= where then
-                    local bodyItem = linkbodyitem(play, pos)
-                    if bodyItem and bodyItem ~= "0" then
-                        local bodyName = tostring(getiteminfo(play, bodyItem, ConstCfg.iteminfo.name) or "")
-                        local bodyBaseName = string.match(bodyName, "^(.-)【") or bodyName
-                        if bodyBaseName == "逐日弓" then
-                            Player.sendmsgEx(play, "逐日弓在背包神器位同时只能装备一把#57")
-                            return false
-                        end
-                    end
-                end
-            end
-        end
-    end
     return true
 end
 --穿套装

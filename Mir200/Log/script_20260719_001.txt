@@ -1,0 +1,32 @@
+[2026-07-19 18:10:46:193] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：172; NpcThreadId: 28148, CurPlayThreadId: 28148
+
+[2026-07-19 19:38:17:355] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 28148, CurPlayThreadId: 28148
+
+[2026-07-19 19:52:14:686] LuaNPC:玩家名字 ID:999999999 执行 attack player:玩家名字 耗时：31; NpcThreadId: 28148, CurPlayThreadId: 28148
+
+[2026-07-19 19:52:49:248] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：47; NpcThreadId: 28148, CurPlayThreadId: 28148
+
+[2026-07-19 20:32:58:166] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 28148, CurPlayThreadId: 28148
+[2026-07-19 20:32:58:166] [玩家名字]Lua执行耗时过高:31ms msgid:100 716 1 0 
+
+[2026-07-19 20:47:22:362] LuaNPC:玩家名字 ID:999999999 执行 ontimer1 player:玩家名字 耗时：31; NpcThreadId: 28148, CurPlayThreadId: 28148
+
+[2026-07-19 20:57:22:594] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：234; NpcThreadId: 28148, CurPlayThreadId: 28148
+
+[2026-07-19 23:38:19:088] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：187; NpcThreadId: 20756, CurPlayThreadId: 20756
+
+[2026-07-19 23:54:54:052] LuaNPC: ID:999999999 执行 npc_718_dsq player: 耗时：32; NpcThreadId: 20756, CurPlayThreadId: 20756
+
+[2026-07-20 01:44:47:394] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：31; NpcThreadId: 20756, CurPlayThreadId: 20756
+
+[2026-07-20 02:03:16:582] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 20756, CurPlayThreadId: 20756
+[2026-07-20 02:03:16:582] [玩家名字]Lua执行耗时过高:31ms msgid:105 698 698 0 
+
+[2026-07-20 02:05:54:880] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 20756, CurPlayThreadId: 20756
+[2026-07-20 02:05:54:880] [玩家名字]Lua执行耗时过高:31ms msgid:101 11 1 0 {"i":5,"j":3,"k":0,"z":5}
+
+[2026-07-20 04:00:22:390] LuaNPC:玩家名字 ID:999999999 执行 attack player:玩家名字 耗时：47; NpcThreadId: 20756, CurPlayThreadId: 20756
+
+[2026-07-20 04:00:43:417] LuaNPC:玩家名字 ID:999999999 执行 playlevelup player:玩家名字 耗时：31; NpcThreadId: 20756, CurPlayThreadId: 20756
+[2026-07-20 04:00:43:419] LuaNPC: ID:999999999 执行 npc_702_dsq player: 耗时：31; NpcThreadId: 20756, CurPlayThreadId: 20756
+

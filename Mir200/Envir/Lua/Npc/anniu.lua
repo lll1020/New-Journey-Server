@@ -305,6 +305,10 @@ local _ywl_map_gate = {
     ["亥猪灵域"] = {mode = "ge", key = "npc_664", value = 2, tip = "灵域使者·二"},
     ["灵域·三层"] = {mode = "ge", key = "npc_664", value = 2, tip = "灵域使者·二"},
     ["灵域·秘境"] = {mode = "ge", key = "npc_665", value = 2, tip = "灵域使者·三"},
+    ["大地禁墟三层"] = {mode = "eq", key = "npc_689_a", value = 1, tip = "禁墟之门·大地禁墟"},
+    ["天空禁墟三层"] = {mode = "eq", key = "npc_689_b", value = 1, tip = "禁墟之门·天空禁墟"},
+    ["海洋禁墟三层"] = {mode = "eq", key = "npc_689_c", value = 1, tip = "禁墟之门·海洋禁墟"},
+    ["青铜禁墟三层"] = {mode = "eq", key = "npc_689_d", value = 1, tip = "禁墟之门·青铜禁墟"},
 }
 local function _ywl_check_map_gate(play, shuju)
     if type(shuju) ~= "table" or type(shuju.yd) ~= "table" then
@@ -3074,6 +3078,7 @@ for npcId, handler in pairs(npc) do
     end
 end
 return npc
+
 
 
 

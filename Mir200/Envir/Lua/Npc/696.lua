@@ -247,7 +247,8 @@ function npc.link(play,npcid,ew,aid)
         if npcid then Guard.closeNpcAndAuto(play, npcid) end
         _ensure_kill_listener(play, jq_data)
         sendluamsg(play,101,1005,0,0,"rwjs")
-        sendluamsg(play,100,npcid,1,0,"")
+        local data = { T_dljq = jq_data, sg_data = Player.getJsonTableByVar(play, VarCfg["T_¸÷¾çÇéÉ±¹Ö"]) }
+        sendluamsg(play,100,npcid,1,tonumber(jq_data[_pos_key] or 0) or 0,tbl2json(data))
         return
     end
 
@@ -316,12 +317,14 @@ function npc.link(play,npcid,ew,aid)
 
     if moves >= max_moves and pos >= goal then
         _complete_task(play, jq_data)
-        sendluamsg(play,100,npcid,1,moves,"")
+        local data = { T_dljq = jq_data, sg_data = Player.getJsonTableByVar(play, VarCfg["T_¸÷¾çÇéÉ±¹Ö"]) }
+        sendluamsg(play,100,npcid,1,pos,tbl2json(data))
         return
     end
 
     _ensure_kill_listener(play, jq_data)
-    sendluamsg(play,100,npcid,1,moves,"")
+    local data = { T_dljq = jq_data, sg_data = Player.getJsonTableByVar(play, VarCfg["T_¸÷¾çÇéÉ±¹Ö"]) }
+    sendluamsg(play,100,npcid,1,pos,tbl2json(data))
 end
 
 -- µÇÂ¼¼àÌı£º1) »Ø¹àÊôĞÔ 2) »Ö¸´»÷É±¼àÌı
@@ -334,6 +337,8 @@ end
 GameEvent.add(EventCfg.onLogin, Login_jq_696, "Login_ÉñÃíÌÓÍö")
 
 return npc
+
+
 
 
 

@@ -14,7 +14,6 @@ local _run_map_var = "S$npc717_map"
 local _run_boss_state_var = "U$npc717_boss_state" -- 0=无, 1=主BOSS存活, 2=主BOSS已击杀
 local _run_half_fire_var = "U$npc717_half_fire"   -- 0=未触发, 1=已触发50%全屏烈火
 local _run_spawn_ok_var = "U$npc717_spawn_ok"     -- 0=未成功刷出主BOSS, 1=已成功刷出主BOSS
-local _fire_effect_prefix = "npc717_fire_"
 
 -- 717副本运行态（按镜像地图dtm存储，避免计时器回调玩家句柄差异）
 local _run_state = {}
@@ -29,30 +28,9 @@ local function _state_get(dtm)
     return st
 end
 
-local function _clear_fire_map_effects(dtm, boss_x, boss_y, radius)
-    if not dtm or dtm == "" then
-        return
-    end
-    radius = tonumber(radius or 3) or 3
-    boss_x = tonumber(boss_x or 0) or 0
-    boss_y = tonumber(boss_y or 0) or 0
-    if boss_x <= 0 or boss_y <= 0 then
-        return
-    end
-
-    for dx = -radius, radius do
-        for dy = -radius, radius do
-            delmapeffect(_fire_effect_prefix .. dtm .. "_" .. (boss_x + dx) .. "_" .. (boss_y + dy))
-        end
-    end
-end
-
 -- 清理运行态
 local function _state_clear(dtm)
     if dtm and dtm ~= "" then
-        local boss_pos = _task_cfg.boss_pos or {32, 36}
-        local fire_radius = tonumber(_task_cfg.fire_ground_radius or 3) or 3
-        _clear_fire_map_effects(dtm, tonumber(boss_pos[1] or 32) or 32, tonumber(boss_pos[2] or 36) or 36, fire_radius)
         _run_state[dtm] = nil
     end
 end
@@ -82,13 +60,10 @@ local function _fb_cfg()
     cfg.enter_pos = _task_cfg.enter_pos or {29, 27}
     cfg.boss = _task_cfg.boss or "请配置717任务BOSS名"
     cfg.boss_pos = _task_cfg.boss_pos or {32, 36}
-    cfg.fire_effect_id = tonumber(_task_cfg.fire_effect_id or 23) or 23
-    cfg.fire_ground_effect_id = tonumber(_task_cfg.fire_ground_effect_id or _task_cfg.boss_effect or 92) or 92
+    cfg.fire_effect_id = tonumber(_task_cfg.fire_effect_id or 4011) or 4011
     cfg.fire_tick_hurt_pct = tonumber(_task_cfg.fire_tick_hurt_pct or 2) or 2
     cfg.fire_burst_hurt_pct = tonumber(_task_cfg.fire_burst_hurt_pct or 20) or 20
     cfg.half_fire_hp_pct = tonumber(_task_cfg.half_fire_hp_pct or 50) or 50
-    cfg.fire_ground_radius = tonumber(_task_cfg.fire_ground_radius or 3) or 3
-    cfg.fire_ground_keep = tonumber(_task_cfg.fire_ground_keep or 2) or 2
     return cfg
 end
 
@@ -129,27 +104,6 @@ local function _find_mon_by_name(dtm, name)
         end
     end
     return nil
-end
-
-local function _fire_ground_map(dtm, boss_x, boss_y, effect_id, radius, keep_sec)
-    if not dtm or dtm == "" then
-        return
-    end
-    boss_x = tonumber(boss_x or 0) or 0
-    boss_y = tonumber(boss_y or 0) or 0
-    radius = tonumber(radius or 3) or 3
-    keep_sec = tonumber(keep_sec or 2) or 2
-    if boss_x <= 0 or boss_y <= 0 then
-        return
-    end
-
-    for dx = -radius, radius do
-        for dy = -radius, radius do
-            local x = boss_x + dx
-            local y = boss_y + dy
-            mapeffect(_fire_effect_prefix .. dtm .. "_" .. x .. "_" .. y, dtm, x, y, effect_id, keep_sec, 2, 0)
-        end
-    end
 end
 
 -- 对副本内玩家执行火焰攻击（特效+扣血）
@@ -401,9 +355,6 @@ function npc_717_dsq(xt,play,dtm,data)
             setplaydef(run_play, _run_spawn_ok_var, 1)
         end
 
-
-        -- BOSS附近铺满地火
-        _fire_ground_map(dtm, tonumber(cfg.boss_pos[1] or 32) or 32, tonumber(cfg.boss_pos[2] or 36) or 36, cfg.fire_ground_effect_id, cfg.fire_ground_radius, cfg.fire_ground_keep)
         -- 常驻火焰攻击：BOSS持续释放火焰伤害
         _fire_attack_map(run_play, dtm, cfg.fire_effect_id, cfg.fire_tick_hurt_pct)
 
@@ -467,4 +418,3 @@ function npc_717_timeout(play)
 end
 
 return npc
-
