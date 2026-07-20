@@ -8,6 +8,8 @@ local _task_cfg = (_config and _config.task_cfg) or {}
 local DROP_RULES = {}
 local KILL_ONLY = false
 local ALLOW_PRESTART_DROP = false
+local DIALOG_GIVE_ITEM = {{"星儿的玉佩碎片", 1}}
+local DIALOG_SUBMIT_ITEM = {{"被盗走的帝星本源", 1}}
 
 
 local function _toint(v, d)
@@ -73,7 +75,16 @@ end
 
 local function _star_stage(play)
     local data = Player.getJsonTableByVar(play, VarCfg["T_星象圣图"]) or {}
-    return _toint(data.stage or data.lv or data.level)
+    local stages = type(data.stage) == "table" and data.stage or {}
+    local full = 0
+    for i = 1, 3 do
+        local info = stages[tostring(i)] or stages[i] or {}
+        if _toint(info.full) ~= 1 then
+            break
+        end
+        full = i
+    end
+    return full
 end
 
 local function _is_six_continent_map(map)
@@ -179,6 +190,20 @@ local function _onKillMon(play, mob)
     end
 end
 
+local function _give_dialog_reward(play, jq)
+    jq = jq or _get_story(play)
+    if _toint(jq[_cfg_key .. "_got"]) >= 1 then
+        Player.sendmsgEx(play, "天机道长已交付线索#57")
+        return false
+    end
+    Player.rwjl(play, DIALOG_GIVE_ITEM, "天机道长交付道具", 1)
+    jq[_cfg_key] = math.max(1, _toint(jq[_cfg_key]))
+    jq[_cfg_key .. "_got"] = 1
+    _save_story(play, jq)
+    Player.sendmsgEx(play, "获得天机道长交付的线索#57")
+    return true
+end
+
 local function _handle(play, npcid, action, aid)
     if _star_stage(play) < 3 then
         Player.sendmsgEx(play, "星象圣图达到三星后再来#57")
@@ -189,11 +214,26 @@ local function _handle(play, npcid, action, aid)
         Player.sendmsgEx(play, "天机已明，继续追查帝星本源#57")
         return
     end
+    if action == 2 then
+        _give_dialog_reward(play, jq)
+        return
+    end
+    if _toint(jq[_cfg_key .. "_got"]) < 1 then
+        Player.sendmsgEx(play, "请先听完天机道长的指引#57")
+        return
+    end
+    if not Guard.ensureCost(play, DIALOG_SUBMIT_ITEM) then
+        return
+    end
+    Guard.consumeCost(play, DIALOG_SUBMIT_ITEM, "天机道长提交道具")
     _finish(play, "天机道长奖励")
 end
-
 function npc.main(play, npcid)
     if not _config then
+        return
+    end
+    if _star_stage(play) < 3 then
+        Player.sendmsgEx(play, "请先将星象圣图提升至三星#57")
         return
     end
     _send_state(play, npcid or NPC_ID)
@@ -222,3 +262,5 @@ function npc.link(play, npcid, ew, aid, msgData)
 end
 
 return npc
+
+

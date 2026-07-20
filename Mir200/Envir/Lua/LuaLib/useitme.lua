@@ -912,19 +912,21 @@ local function _msfc_open_box_say(play, boxName, poolKey)
         Player.sendmsgEx(play, "材料自选箱配置不存在#57")
         return false
     end
-    local height = math.max(180, 92 + #pool * 30)
+    local height = math.max(220, 118 + #pool * 38)
     local lines = {
-        '<Img|id=ui_msfc_bg|x=0|y=0|width=332|height=' .. tostring(height) .. '|img=public/bg_npc_01.png|bg=1|esc=1|move=0|reset=1|show=0|scale9l=15|scale9r=15|scale9t=15|scale9b=15>',
-        '<Layout|id=ui_msfc_close_area|x=329|y=3|width=30|height=40|link=@exit>',
-        '<Button|id=ui_msfc_close|x=332|y=3|width=26|height=40|nimg=public/1900000510.png|pimg=public/1900000511.png|color=255|size=18|link=@exit>',
+        '<Img|id=ui_msfc_bg|x=0|y=0|width=372|height=' .. tostring(height) .. '|img=public/bg_npc_01.png|bg=1|esc=1|move=0|reset=1|show=0|scale9l=15|scale9r=15|scale9t=15|scale9b=15>',
+        '<Layout|id=ui_msfc_close_area|x=330|y=3|width=36|height=40|link=@exit>',
+        '<Button|id=ui_msfc_close|x=335|y=3|width=26|height=40|nimg=public/1900000510.png|pimg=public/1900000511.png|color=255|size=18|link=@exit>',
         '<Text|id=ui_msfc_title|x=27|y=23|color=251|size=18|text=' .. tostring(boxName) .. '：点击奖励直接领取>',
     }
     for i, reward in ipairs(pool) do
-        local y = 60 + (i - 1) * 30
-        lines[#lines + 1] = '<Text|id=ui_' .. tostring(i) .. '|x=45|y=' .. tostring(y) .. '|color=255|size=18|text=' .. _msfc_reward_label(reward) .. '|link=@msfcbox,' .. tostring(_msfc_box_code(poolKey, i)) .. '>'
+        local y = 62 + (i - 1) * 38
+        local code = tostring(_msfc_box_code(poolKey, i))
+        local link = "@msfcbox," .. code
+        lines[#lines + 1] = '<Layout|id=ui_msfc_hit_' .. tostring(i) .. '|x=31|y=' .. tostring(y - 3) .. '|width=310|height=36|link=' .. link .. '>'
+        lines[#lines + 1] = '<Button|id=ui_msfc_btn_' .. tostring(i) .. '|x=38|y=' .. tostring(y) .. '|width=292|height=30|nimg=public/1900000651_1.png|pimg=public/1900000651_1.png|color=255|size=18|text=' .. _msfc_reward_label(reward) .. '|link=' .. link .. '>'
     end
     lines[#lines + 1] = '</Img>'
-    -- release_print("打开自选箱界面，奖励列表长度:", table.concat(lines, "\r\n"))
     say(play, table.concat(lines, "\r\n"))
 end
 local function _msfc_submit_box_choice(play, boxName, poolKey, choiceIdx)
@@ -1115,8 +1117,11 @@ local function _refresh_1002_attr(play, T_data)
 end
 local function _grant_duplicate_fashion_reward(play, item, fashionName)
     delitembymakeindex(play, getiteminfo(play, item, 1), 1)
-    Player.rwjl(play, {{"绑定元宝", 660000}}, ",fashion_duplicate", 1, 999)
-    Player.sendmsgEx(play, "已拥有|【" .. tostring(fashionName or "该时装") .. "】#218|，重复时装已自动分解为|【绑定元宝*660000】#249|")
+    local reward = (((teshudata or {})["npc_101"] or {}).duplicate_fashion_reward) or {{"元宝", 660000}}
+    Player.rwjl(play, reward, ",fashion_duplicate", 1, 999)
+    local rewardName = reward[1] and reward[1][1] or "元宝"
+    local rewardNum = reward[1] and reward[1][2] or 660000
+    Player.sendmsgEx(play, "已拥有|【" .. tostring(fashionName or "该时装") .. "】#218|，重复时装已自动分解为|【" .. tostring(rewardName) .. "*" .. tostring(rewardNum) .. "】#249|")
 end
 local function _use_1002_unlock(play, item, keyName, listName, label)
     local idx = tonumber(getstditeminfo(getiteminfo(play, item, 2), 8) or 0) or 0
@@ -1605,4 +1610,9 @@ local function _get_zhuji_dan_record(play)
     end
     return rec
 end
+
+
+
+
+
 

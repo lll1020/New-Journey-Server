@@ -262,11 +262,17 @@ function npc.main(play, npcid)
     if not _config then
         return
     end
+    if not Guard.ensureStoryPrerequisite(play, _config, NPC_ID) then
+        return
+    end
     _send_state(play, npcid or NPC_ID)
 end
 
 function npc.link(play, npcid, ew, aid, msgData)
     if not _config then
+        return
+    end
+    if not Guard.ensureStoryPrerequisite(play, _config, NPC_ID) then
         return
     end
     if not Guard.ensurePlayer(play, npcid) then

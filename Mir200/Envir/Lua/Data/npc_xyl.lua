@@ -550,10 +550,57 @@ local function _xyl_has_zhuri_bow_full(play)
     end
     return false
 end
+-- 备注：六大陆灵虚秘闻，检查指定神道是否完成自证。
+local function _xyl_has_shendao_cert(play, god)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_登神之路"] or "T72") or {}
+    local gods = type(data.gods) == "table" and data.gods or {}
+    local info = gods[tostring(tonumber(god) or 0)] or gods[tonumber(god) or 0] or {}
+    return (tonumber(info.cert) or 0) >= 1
+end
+
+-- 备注：六大陆灵虚秘闻，统计已激活的世界符文数量。
+local function _xyl_has_world_runes(play, need)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_世界符文"] or "T65") or {}
+    local runes = type(data.runes) == "table" and data.runes or {}
+    local count = 0
+    for i = 1, 7 do
+        if (tonumber(runes[tostring(i)] or runes[i]) or 0) >= 1 then
+            count = count + 1
+        end
+    end
+    return count >= (tonumber(need) or 7)
+end
+
+-- 备注：六大陆灵虚秘闻，检查星象圣图指定阶段是否全部点亮。
+local function _xyl_has_star_stage(play, stage)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_星象圣图"] or "T64") or {}
+    local stages = type(data.stage) == "table" and data.stage or {}
+    local info = stages[tostring(tonumber(stage) or 0)] or stages[tonumber(stage) or 0] or {}
+    return (tonumber(info.full) or 0) >= 1
+end
+
 -- 备注：剧情点验证入口（优先特殊逻辑，其次剧情完成）
 local function _xyl_check_task(play, name)
     local key = _xyl_norm_name(name)
+    local cfg = (teshudata or {})[key]
+    local taskCfg = type(cfg) == "table" and cfg.task_cfg or nil
+    local prevTask = type(taskCfg) == "table" and taskCfg.prev_task or nil
+    if type(prevTask) == "string" and prevTask ~= "" then
+        local story = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
+        local needPrev = tonumber(taskCfg.prev_need or taskCfg.prev_state) or 2
+        if (tonumber(story[prevTask]) or 0) < needPrev then
+            return false
+        end
+    end
     local special = {
+        ["完成兵神道自证"] = function(play) return _xyl_has_shendao_cert(play, 1) end,
+        ["完成鬼神道自证"] = function(play) return _xyl_has_shendao_cert(play, 2) end,
+        ["获得全部世界符文"] = function(play) return _xyl_has_world_runes(play, 7) end,
+        ["星象圣图达到耀星"] = function(play) return _xyl_has_star_stage(play, 6) end,
+        ["星象圣图达到圣星"] = function(play) return _xyl_has_star_stage(play, 7) end,
+        ["星象圣图达到帝星"] = function(play) return _xyl_has_star_stage(play, 8) end,
+        ["转生·六"] = function(play) return _xyl_has_rebirth(play, 60) end,
+        ["完成转生·六"] = function(play) return _xyl_has_rebirth(play, 60) end,
         ["天书强化"] = _xyl_has_tianshu_level,
         ["初识仙法"] = _xyl_has_any_xianfa,
         ["天书仙法"] = _xyl_has_any_xianfa,
@@ -2509,21 +2556,74 @@ local npc_xyl = {
         {
             jq = {
                 {
-                    "恶魔契约",
-                    tk = "npc_728",
+                    "完成兵神道自证",
+                    tk = "完成兵神道自证",
                     id = 999,
                     jl = {{"剧情点", 1}},
-                    fwdjy = function(play, tk)
-                        if tk then
-                            return _xyl_check_task(play, tk)
-                        end
-                        return false
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = {1, "血契之地二层", 728, 66, 27},
-                    desc = "以血换契，每十名玩家可得一次抽奖",
+                    fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
+                    khdjy = function() return true end,
+                    yd = {1, "六大陆主城", 77, 77, 113},
+                    desc = "完成兵神道自证",
+                },
+                {
+                    "完成鬼神道自证",
+                    tk = "完成鬼神道自证",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
+                    khdjy = function() return true end,
+                    yd = {1, "六大陆主城", 77, 77, 113},
+                    desc = "完成鬼神道自证",
+                },
+                {
+                    "获得全部世界符文",
+                    tk = "获得全部世界符文",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
+                    khdjy = function() return true end,
+                    yd = {1, "六大陆主城", 84, 95, 129},
+                    desc = "激活全部世界符文",
+                },
+                {
+                    "星象圣图达到耀星",
+                    tk = "星象圣图达到耀星",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
+                    khdjy = function() return true end,
+                    yd = {1, "六大陆主城", 85, 89, 113},
+                    desc = "完成星象圣图耀星阶段的全部点亮",
+                },
+                {
+                    "星象圣图达到圣星",
+                    tk = "星象圣图达到圣星",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
+                    khdjy = function() return true end,
+                    yd = {1, "六大陆主城", 85, 89, 113},
+                    desc = "完成星象圣图圣星阶段的全部点亮",
+                },
+                {
+                    "星象圣图达到帝星",
+                    tk = "星象圣图达到帝星",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
+                    khdjy = function() return true end,
+                    yd = {1, "六大陆主城", 85, 89, 113},
+                    desc = "完成星象圣图帝星阶段的全部点亮",
+                },
+                {
+                    "完成转生·六",
+                    tk = "完成转生·六",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
+                    khdjy = function() return true end,
+                    yd = {1, "六大陆主城", 36, 83, 121},
+                    desc = "完成转生·六，跨入更高境界",
                 },
             },
             name = "灵虚秘闻",
@@ -2552,6 +2652,10 @@ local npc_xyl = {
                 {
                     "星儿",
                     tk = "npc_722",
+                    side_task = 1,
+                    prev_task = "npc_721",
+                    prev_need = 1,
+                    prev_name = "天机道长",
                     id = 999,
                     jl = {{"剧情点", 1}},
                     fwdjy = function(play, tk)
@@ -2569,6 +2673,9 @@ local npc_xyl = {
                 {
                     "凌雪",
                     tk = "npc_723",
+                    prev_task = "npc_721",
+                    prev_need = 1,
+                    prev_name = "天机道长",
                     id = 999,
                     jl = {{"剧情点", 1}},
                     fwdjy = function(play, tk)
@@ -2586,6 +2693,8 @@ local npc_xyl = {
                 {
                     "守城士兵甲",
                     tk = "npc_724",
+                    prev_task = "npc_723",
+                    prev_name = "凌雪",
                     id = 999,
                     jl = {{"剧情点", 1}},
                     fwdjy = function(play, tk)
@@ -2603,6 +2712,8 @@ local npc_xyl = {
                 {
                     "赤焰",
                     tk = "npc_725",
+                    prev_task = "npc_724",
+                    prev_name = "守城士兵甲",
                     id = 999,
                     jl = {{"剧情点", 1}},
                     fwdjy = function(play, tk)
@@ -2620,6 +2731,8 @@ local npc_xyl = {
                 {
                     "幽影",
                     tk = "npc_726",
+                    prev_task = "npc_725",
+                    prev_name = "赤焰",
                     id = 999,
                     jl = {{"剧情点", 1}},
                     fwdjy = function(play, tk)
@@ -2634,84 +2747,48 @@ local npc_xyl = {
                     yd = {1, "森罗魔域", 726, 108, 91},
                     desc = "幽影盗走帝星本源，森罗魔气尚未平息",
                 },
+                {
+                    "幽影的分身",
+                    tk = "npc_739",
+                    prev_task = "npc_726",
+                    prev_need = 1,
+                    prev_name = "幽影",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "魔焰祭坛", 739, 138, 30},
+                    desc = "先揭弱点，再入副本",
+                },
+                {
+                    "天玑道长",
+                    tk = "npc_727",
+                    prev_task = "npc_739",
+                    prev_name = "幽影的分身",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "六大陆主城", 727, 17, 74},
+                    desc = "帝星本源归位，解除星象圣图封印",
+                },
             },
             name = "星图之谜",
             jqd = 66,
-            jl = {{"等级卷轴", 10}, {"1元真实充值", 15}},
-        },
-        {
-            jq = {
-                {
-                    "雪域特使",
-                    tk = "npc_729",
-                    id = 999,
-                    jl = {{"剧情点", 1}},
-                    fwdjy = function(play, tk)
-                        if tk then
-                            return _xyl_check_task(play, tk)
-                        end
-                        return false
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = {1, "冰川雪域", 729, 47, 48},
-                    desc = "击穿雪域封锁，打开下一张地图",
-                },
-                {
-                    "魔域特使",
-                    tk = "npc_730",
-                    id = 999,
-                    jl = {{"剧情点", 1}},
-                    fwdjy = function(play, tk)
-                        if tk then
-                            return _xyl_check_task(play, tk)
-                        end
-                        return false
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = {1, "森罗魔域", 730, 137, 44},
-                    desc = "击穿魔域封锁，打开下一张地图",
-                },
-                {
-                    "边关特使",
-                    tk = "npc_731",
-                    id = 999,
-                    jl = {{"剧情点", 1}},
-                    fwdjy = function(play, tk)
-                        if tk then
-                            return _xyl_check_task(play, tk)
-                        end
-                        return false
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = {1, "边关烽城", 731, 269, 70},
-                    desc = "击穿边关封锁，打开下一张地图",
-                },
-                {
-                    "古城特使",
-                    tk = "npc_732",
-                    id = 999,
-                    jl = {{"剧情点", 1}},
-                    fwdjy = function(play, tk)
-                        if tk then
-                            return _xyl_check_task(play, tk)
-                        end
-                        return false
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = {1, "盛世古城", 732, 26, 50},
-                    desc = "击穿古城封锁，打开下一张地图",
-                },
-            },
-            name = "特使之令",
-            jqd = 71,
             jl = {{"等级卷轴", 10}, {"1元真实充值", 15}},
         },
         {
@@ -2803,13 +2880,105 @@ local npc_xyl = {
                 },
             },
             name = "盛世重游",
+            jqd = 71,
+            jl = {{"等级卷轴", 10}, {"1元真实充值", 15}},
+        },
+        {
+            jq = {
+                {
+                    "雪域特使",
+                    tk = "npc_729",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "冰川雪域", 729, 47, 48},
+                    desc = "击穿雪域封锁，打开下一张地图",
+                },
+                {
+                    "魔域特使",
+                    tk = "npc_730",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "森罗魔域", 730, 137, 44},
+                    desc = "击穿魔域封锁，打开下一张地图",
+                },
+                {
+                    "边关特使",
+                    tk = "npc_731",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "边关烽城", 731, 269, 70},
+                    desc = "击穿边关封锁，打开下一张地图",
+                },
+                {
+                    "古城特使",
+                    tk = "npc_732",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "盛世古城", 732, 26, 50},
+                    desc = "击穿古城封锁，打开下一张地图",
+                },
+            },
+            name = "特使之令",
             jqd = 76,
             jl = {{"等级卷轴", 10}, {"1元真实充值", 15}},
         },
         {
             jq = {
                 {
-                    "镇关帅府",
+                    "恶魔契约",
+                    tk = "npc_728",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = {1, "血契之地二层", 728, 66, 27},
+                    desc = "以血换契，每十名玩家可得一次抽奖",
+                },
+                {
+                    "密令护灵旗",
                     tk = "npc_738",
                     id = 999,
                     jl = {{"剧情点", 1}},
@@ -2826,24 +2995,7 @@ local npc_xyl = {
                     desc = "护灵旗碎，密令方出",
                 },
                 {
-                    "魔焰祭坛",
-                    tk = "npc_739",
-                    id = 999,
-                    jl = {{"剧情点", 1}},
-                    fwdjy = function(play, tk)
-                        if tk then
-                            return _xyl_check_task(play, tk)
-                        end
-                        return false
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = {1, "魔焰祭坛", 739, 138, 30},
-                    desc = "先揭弱点，再入副本",
-                },
-                {
-                    "冻魂冰窟",
+                    "上古寒冰剑",
                     tk = "npc_740",
                     id = 999,
                     jl = {{"剧情点", 1}},
@@ -2860,7 +3012,7 @@ local npc_xyl = {
                     desc = "寒冰剑成，剑诀方可出世",
                 },
             },
-            name = "密令护灵",
+            name = "灵虚游历",
             jqd = 81,
             jl = {{"等级卷轴", 10}, {"1元真实充值", 15}},
         },
@@ -2868,6 +3020,7 @@ local npc_xyl = {
 }
 npc_xyl.check_task = _xyl_check_task
 return npc_xyl
+
 
 
 

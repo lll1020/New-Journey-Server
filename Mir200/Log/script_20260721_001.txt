@@ -1,0 +1,27 @@
+[2026-07-21 05:39:01:428] LuaNPC: ID:999999999 执行 startup player: 耗时：31; NpcThreadId: 40084, CurPlayThreadId: 40084
+
+[2026-07-21 05:39:21:865] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：2093; NpcThreadId: 40084, CurPlayThreadId: 40084
+
+[2026-07-21 05:39:28:574] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：31; NpcThreadId: 40084, CurPlayThreadId: 40084
+[2026-07-21 05:39:28:574] [玩家名字k]Lua执行耗时过高:31ms msgid:101 11 0 0 
+
+[2026-07-21 05:39:52:352] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：516; NpcThreadId: 40084, CurPlayThreadId: 40084
+[2026-07-21 05:39:52:352] [玩家名字k]Lua执行耗时过高:516ms msgid:100 725 1 0 
+
+[2026-07-21 05:47:59:711] Func Fail, obj is nil: GetBaseInfo Chrid: E30B0100E80B0100F03CF667F8010000 Npc:  tc:stack traceback:
+	[C]: at 0x01751d60
+	[C]: in function 'pcall'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/725.lua:58: in function '_is_dart_obj_alive'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/725.lua:153: in function <E:\新起航\服务端\Mir200\Envir/lua/Npc/725.lua:147>
+
+[2026-07-21 05:48:11:360] Func Fail, obj is nil: GetBaseInfo Chrid: E30B0100E80B0100F03CF667F8010000 Npc:  tc:stack traceback:
+	[C]: at 0x01751d60
+	[C]: in function 'pcall'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/725.lua:58: in function '_is_dart_obj_alive'
+	E:\新起航\服务端\Mir200\Envir/lua/Npc/725.lua:153: in function <E:\新起航\服务端\Mir200\Envir/lua/Npc/725.lua:147>
+
+[2026-07-21 05:55:48:702] LuaNPC:玩家名字k ID:999999999 执行 attackdamage player:玩家名字k 耗时：32; NpcThreadId: 40084, CurPlayThreadId: 40084
+
+[2026-07-21 06:37:56:304] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：47; NpcThreadId: 40084, CurPlayThreadId: 40084
+[2026-07-21 06:37:56:304] [玩家名字k]Lua执行耗时过高:47ms msgid:100 739 3 0 
+

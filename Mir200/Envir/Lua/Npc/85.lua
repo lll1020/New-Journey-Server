@@ -581,6 +581,18 @@ function star_chart_refresh(play)
     _refresh_domain_target(play)
 end
 
+-- 前三星用于开启星图之谜；三星完成后，完成天机道长对话3即可解锁后续星图。
+local function _ensure_story_unlocked(play, data)
+    if _full_stage_count(data) < 3 then
+        return true
+    end
+    local story = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
+    if (tonumber(story["npc_721"]) or 0) >= 2 then
+        return true
+    end
+    Player.sendmsgEx(play, "请先完成#57|【天机道长对话3】#218|后再继续提升星象圣图")
+    return false
+end
 -- 组装星象圣图面板下发给客户端的数据。
 local function _build_payload(play, data)
     return {
@@ -594,6 +606,9 @@ end
 -- 打开星象圣图面板。
 function npc.main(play, npcid)
     local data = _get_data(play)
+    if not _ensure_story_unlocked(play, data) then
+        return
+    end
     star_chart_refresh(play)
     sendluamsg(play, 100, npcid, 0, 0, tbl2json(_build_payload(play, data)))
     openhyperlink(play, 1, 2)
@@ -616,6 +631,9 @@ function npc.link(play, npcid, p2, p3, msgData)
 
     local data = _get_data(play)
     local json_data = json2tbl(msgData) or {}
+    if not _ensure_story_unlocked(play, data) then
+        return
+    end
     if p2 == 1 then
         local stage_idx = _toint(json_data.stage or json_data.idx)
         local stage_cfg = (_config.stages or {})[stage_idx]
@@ -693,6 +711,14 @@ function npc.link(play, npcid, p2, p3, msgData)
         data.stage[tostring(stage_idx)] = stage_data
         _save_data(play, data)
         star_chart_refresh(play)
+        if stage_idx == 3 and _toint(stage_data.full) == 1 then
+            local story = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
+            if (tonumber(story["npc_721"]) or 0) < 2 then
+                Player.sendmsgEx(play, "三星已完成，请完成#57|【天机道长对话3】#218|以解锁后续星象圣图")
+                Guard.closeNpc(play, npcid)
+                return
+            end
+        end
         sendluamsg(play, 100, npcid, 2, 0, tbl2json(_build_payload(play, data)))
     end
 end

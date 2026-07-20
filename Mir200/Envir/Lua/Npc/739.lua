@@ -130,6 +130,235 @@ local function _consume_cost(play, cost, reason)
     return true
 end
 
+local _back_pos_var = "S$npc739_back"
+local _run_map_var = "S$npc739_map"
+local _run_boss_state_var = "U$npc739_boss_state"
+local _run_spawn_ok_var = "U$npc739_spawn_ok"
+local _run_fail_var = "U$npc739_fail"
+local _run_state = {}
+
+local function _has_zhuque_pet(play)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"]) or {}
+    return _toint(data.dqzh) == 3
+end
+local function _state_get(dtm)
+    local st = _run_state[dtm]
+    if not st then
+        st = {boss_state = 0, spawn_ok = 0, failed = 0}
+        _run_state[dtm] = st
+    end
+    return st
+end
+
+local function _state_clear(dtm)
+    if dtm and dtm ~= "" then
+        _run_state[dtm] = nil
+    end
+end
+
+local function _find_mon_by_name(dtm, name)
+    if not dtm or dtm == "" or not name or name == "" then
+        return nil
+    end
+    local list = getobjectinmap(dtm, 0, 0, 999, 2)
+    if list then
+        for _, v in ipairs(list) do
+            if getbaseinfo(v, 1) == name then
+                local hp = tonumber(getbaseinfo(v, 9) or 0) or 0
+                if hp > 0 then
+                    return v
+                end
+            end
+        end
+    end
+    return nil
+end
+
+local function _save_back_pos(play)
+    setplaydef(play, _back_pos_var, tostring(getbaseinfo(play, 3) or "") .. "," .. tostring(getbaseinfo(play, 4) or 0) .. "," .. tostring(getbaseinfo(play, 5) or 0))
+end
+
+local function _clear_run_vars(play, dtm)
+    setplaydef(play, _back_pos_var, "")
+    setplaydef(play, _run_map_var, "")
+    setplaydef(play, _run_boss_state_var, 0)
+    setplaydef(play, _run_spawn_ok_var, 0)
+    setplaydef(play, _run_fail_var, 0)
+    _state_clear(dtm)
+end
+
+local function _back(play)
+    local dtm = getplaydef(play, _run_map_var)
+    local back = tostring(getplaydef(play, _back_pos_var) or "")
+    if back ~= "" then
+        local parts = split(back, ",")
+        local map = parts[1]
+        local x = tonumber(parts[2]) or 0
+        local y = tonumber(parts[3]) or 0
+        if map and map ~= "" and x > 0 and y > 0 then
+            mapmove(play, map, x, y, 2)
+        else
+            mapmove(play, "六大陆主城", 17, 74, 2)
+        end
+    else
+        mapmove(play, "六大陆主城", 17, 74, 2)
+    end
+    _clear_run_vars(play, dtm)
+end
+
+local function _on_pass(play)
+    local jq = _get_story(play)
+    if _toint(jq[_cfg_key]) >= 2 then
+        return
+    end
+    Guard.clearTaskTemp(jq, _cfg_key)
+    jq[_cfg_key] = 2
+    _save_story(play, jq)
+    local sg = _get_kill(play)
+    sg[_cfg_key] = _toint(_task_cfg.kill_count, 1)
+    _save_kill(play, sg)
+    _sg_remove(play, NPC_ID)
+    sendluamsg(play, 101, 1005, 0, 0, "rwwc")
+    Player.sendmsgEx(play, "|【" .. (_config.name or "任务") .. "】#218|完成，获得称号|【幽影之力】#218|")
+    Guard.giveTaskReward(play, _config, (_config.name or "剧情任务") .. "奖励")
+end
+
+local function _fail(play, dtm)
+    local st = _state_get(dtm)
+    if _toint(st.failed) > 0 then
+        return
+    end
+    st.failed = 1
+    setplaydef(play, _run_fail_var, 1)
+    Player.sendmsgEx(play, "幽影逃走了#57")
+    messagebox(play, "幽影逃走了")
+    if getbaseinfo(play, 3) == dtm then
+        _back(play)
+    else
+        _clear_run_vars(play, dtm)
+    end
+    if checkmirrormap(dtm) then
+        setenvirofftimer(dtm, 1)
+        delmirrormap(dtm)
+    end
+end
+
+local function _enter_dungeon(play, npcid)
+    local jq = _get_story(play)
+    if _toint(jq[_cfg_key]) >= 2 then
+        Player.sendmsgEx(play, "你已经完成#57|【" .. (_config.name or "该任务") .. "】#218|")
+        return
+    end
+    if _toint(jq[_cfg_key]) < 1 then
+        jq[_cfg_key] = 1
+        _save_story(play, jq)
+    end
+    _sg_add(play, NPC_ID)
+    _save_back_pos(play)
+    local baseMap = _task_cfg.fb_map or _task_cfg.map or "魔焰祭坛"
+    local dtm = tostring(getbaseinfo(play, 1) or "player") .. "_npc739"
+    if checkmirrormap(dtm) then
+        delmirrormap(dtm)
+    end
+    _state_clear(dtm)
+    addmirrormap(baseMap, dtm, "幽影的分身", _task_cfg.fb_time or 300, "xtc")
+    local pos = _task_cfg.enter_pos or {29, 27}
+    mapmove(play, dtm, tonumber(pos[1] or 29) or 29, tonumber(pos[2] or 27) or 27, 2)
+    local bossPos = _task_cfg.boss_pos or {32, 36}
+    genmonex(dtm, tonumber(bossPos[1] or 32) or 32, tonumber(bossPos[2] or 36) or 36, _task_cfg.boss or "幽影的分身", 1, 1, 0, 54, "", 0)
+    local st = _state_get(dtm)
+    st.boss_state = 1
+    st.spawn_ok = 1
+    st.failed = 0
+    setplaydef(play, _run_map_var, dtm)
+    setplaydef(play, _run_boss_state_var, 1)
+    setplaydef(play, _run_spawn_ok_var, 1)
+    setplaydef(play, _run_fail_var, 0)
+    startautoattack(play)
+    setenvirontimer(dtm, 1, 1, "@npc_739_dsq," .. play .. "," .. dtm)
+    senddelaymsg(play, "距离副本结束剩余%s", _task_cfg.fb_time or 300, 250, 1, "@npc_739_timeout")
+    if npcid then
+        Guard.closeNpcAndAuto(play, npcid)
+    end
+    if _has_zhuque_pet(play) then
+        Player.sendmsgEx(play, "已携带灵兽朱雀，幽影无法逃走#57")
+    else
+        Player.sendmsgEx(play, "未携带灵兽朱雀，幽影半血会逃走#57")
+    end
+end
+
+function npc_739_dsq(xt, play, dtm, data)
+    local pc = getplaycount(dtm, false, true)
+    local run_play = play
+    if type(pc) == "table" then
+        if pc[1] then
+            run_play = pc[1]
+        else
+            for _, p in pairs(pc) do
+                run_play = p
+                break
+            end
+        end
+    end
+    local no_player = (pc == "0" or pc == 0 or (type(pc) == "table" and next(pc) == nil))
+    if no_player then
+        setenvirofftimer(dtm, 1)
+        if checkmirrormap(dtm) then
+            delmirrormap(dtm)
+        end
+        if run_play then
+            _clear_run_vars(run_play, dtm)
+        end
+        return
+    end
+    local st = _state_get(dtm)
+    local boss = _find_mon_by_name(dtm, _task_cfg.boss or "幽影的分身")
+    if boss then
+        st.boss_state = 1
+        st.spawn_ok = 1
+        local curhp = tonumber(getbaseinfo(boss, 9) or 0) or 0
+        local maxhp = tonumber(getbaseinfo(boss, 10) or 0) or 0
+        local failPct = tonumber(_task_cfg.half_fail_hp_pct or 50) or 50
+        if not _has_zhuque_pet(run_play) and maxhp > 0 and curhp > 0 and curhp * 100 <= maxhp * failPct then
+            _fail(run_play, dtm)
+        end
+        return
+    end
+    if _toint(st.spawn_ok) == 1 and _toint(st.boss_state) >= 1 then
+        if not _has_zhuque_pet(run_play) then
+            _fail(run_play, dtm)
+            return
+        end
+        _on_pass(run_play)
+        if getbaseinfo(run_play, 3) == dtm then
+            _back(run_play)
+        else
+            _clear_run_vars(run_play, dtm)
+        end
+        if checkmirrormap(dtm) then
+            setenvirofftimer(dtm, 1)
+            delmirrormap(dtm)
+        end
+    end
+end
+
+function npc_739_timeout(play)
+    local dtm = getplaydef(play, _run_map_var)
+    if not dtm or dtm == "" then
+        return
+    end
+    Player.sendmsgEx(play, "副本时间结束#57")
+    if getbaseinfo(play, 3) == dtm then
+        _back(play)
+    else
+        _clear_run_vars(play, dtm)
+    end
+    if checkmirrormap(dtm) then
+        setenvirofftimer(dtm, 1)
+        delmirrormap(dtm)
+    end
+end
+
 local function _generic_submit(play)
     local state = _toint((_get_story(play))[_cfg_key])
     if state >= 2 then
@@ -252,6 +481,15 @@ local function _onKillMon(play, mob)
     Player.sendmsgEx(play, (_config.name or _cfg_key) .. "进度+1 ( " .. cur .. "/" .. need .. " )#57")
     if cur >= need then
         _sg_remove(play, NPC_ID)
+        if _task_cfg.task_type == "weakness_dungeon" then
+            if _has_zhuque_pet(play) then
+                _on_pass(play)
+            else
+                Player.sendmsgEx(play, "幽影逃走了#57")
+                messagebox(play, "幽影逃走了")
+            end
+            return
+        end
         messagebox(play, "任务目标完成,请前往提交")
     end
 end
@@ -260,6 +498,10 @@ local function _handle(play, npcid, action, aid)
     local taskCfg = _task_cfg
     if action == 2 then
         local jq = _get_story(play)
+        if _toint(jq[_cfg_key]) >= 2 then
+            Player.sendmsgEx(play, "你已经完成#57|【" .. (_config.name or "该任务") .. "】#218|")
+            return
+        end
         if _toint(jq[_cfg_key .. "_weak"]) == 1 then
             Player.sendmsgEx(play, "幽影弱点已揭示，可进入副本挑战#57")
             return
@@ -270,29 +512,22 @@ local function _handle(play, npcid, action, aid)
         jq[_cfg_key] = 1
         jq[_cfg_key .. "_weak"] = 1
         _save_story(play, jq)
-        Player.sendmsgEx(play, "已揭示弱点：幽影分身惧寒，击杀后可完成任务#57")
+        _sg_add(play, NPC_ID)
+        Player.sendmsgEx(play, "已揭示弱点：击杀幽影的分身后自动完成任务#57")
         return
     end
     if action == 3 then
-        local jq = _get_story(play)
-        if _toint(jq[_cfg_key .. "_weak"]) ~= 1 then
-            Player.sendmsgEx(play, "请先提交幽影密函残页揭示弱点#57")
-            return
-        end
-        local baseMap = taskCfg.fb_map or taskCfg.map or "魔焰祭坛"
-        local dtm = baseMap .. getbaseinfo(play, 2)
-        addmirrormap(baseMap, dtm, "幽影的分身", taskCfg.fb_time or 300, "xtc")
-        local pos = taskCfg.enter_pos or {29, 27}
-        mapmove(play, dtm, pos[1] or 29, pos[2] or 27, 2)
-        local bossPos = taskCfg.boss_pos or {32, 36}
-        genmonex(dtm, bossPos[1] or 32, bossPos[2] or 36, taskCfg.boss or "幽影的分身", 1, 1, 0, 54, "", 0)
+        _enter_dungeon(play, npcid)
         return
     end
-    _generic_submit(play)
+    Player.sendmsgEx(play, "该任务击杀幽影的分身后会自动完成#57")
 end
 
 function npc.main(play, npcid)
     if not _config then
+        return
+    end
+    if not Guard.ensureStoryPrerequisite(play, _config, NPC_ID) then
         return
     end
     _send_state(play, npcid or NPC_ID)
@@ -302,6 +537,9 @@ function npc.link(play, npcid, ew, aid, msgData)
     if not _config then
         return
     end
+    if not Guard.ensureStoryPrerequisite(play, _config, NPC_ID) then
+        return
+    end
     if not Guard.ensurePlayer(play, npcid) then
         return
     end
@@ -309,7 +547,7 @@ function npc.link(play, npcid, ew, aid, msgData)
     if not action then
         return
     end
-    if not Guard.ensureActionAllowed(play, npcid, action, Guard.newActionSet({1, 2, 3, 4})) then
+    if not Guard.ensureActionAllowed(play, npcid, action, Guard.newActionSet({2, 3, 4})) then
         return
     end
     if action == 4 then
@@ -321,3 +559,6 @@ function npc.link(play, npcid, ew, aid, msgData)
 end
 
 return npc
+
+
+

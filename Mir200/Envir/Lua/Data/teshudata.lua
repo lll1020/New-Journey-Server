@@ -1824,7 +1824,7 @@ teshudata = {
     ["npc_673"]  = {id = 673, name = "传说修复局",xz = {674,675,676,677,678,679,680,681,},difficulty = {2,3,3,4,5,5,5,5},ch = "传说之神"},
     ["npc_674"]  = {id = 674, name = "盘古开天",cost = {{"洪荒真气",3}},ch = '我是盘古？'},
     ["npc_675"]  = {id = 675, name = "羿射九日",bag_cost = {{"逐日弓",1}},cost = {{"箭矢",1}},ch = '太阳杀手',hb = {{"元宝",1000000}},attr = {{244,1888}},max_num = 9},
-    ["npc_676"]  = {id = 676, name = "共公怒触不周山",map = "不周山",shaguai_id = 676,num = 500,jl_num = 100,ch = "五拳轰碎不周山",jl_c = {{"五行石",2},{"神五行石",1},{"聚宝魔石",1},{"若水·专属宝石·绑定",1},{"杀伐神石[大]",1}},},
+    ["npc_676"]  = {id = 676, name = "共公怒触不周山",map = "不周山",shaguai_id = 676,num = 500,jl_num = 100,ch = "五拳轰碎不周山",jl_c = {{"五行石",2},{"神·五行石",1},{"聚宝魔石",1},{"若水·专属宝石·绑定",1},{"杀伐神石[大]",1}},},
     ["npc_677"]  = {id = 677, name = "女娲补天",cost = {{"五彩石",1}},max_num = 9,ch = "补天神子",jl_c = {{"若水·专属宝石·绑定",1},{"绑定金币",1880000},{"修为丹（大）",1},{"1元真实充值",1}},},
     ["npc_678"]  = {id = 678, name = "后土娘娘",ch = "后土之力",
         details = {
@@ -1881,12 +1881,13 @@ teshudata = {
     ["npc_717"] = { id = 717, name = "火烧赤壁", ch = "火中取胜", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "赤壁", fb_map = "sg169", fb_time = 300, enter_pos = {35,33}, boss = "≮火烧连营·天命策尊≯", boss_pos = {29,29}, night_only = 1, night_start = 18, night_end = 6, fire_effect_id = 23, fire_tick_hurt_pct = 2, fire_burst_hurt_pct = 20, submit = {{"赤壁密函",10}}, }, },
     ["npc_718"] = { id = 718, name = "景阳冈打虎", shaguai_id = 718, ch = "打虎英雄", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "景阳冈", fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "吊睛白额虎", boss_pos = {32,36}, submit = {{"武松的酒",3}}, drop_item = "武松的酒", drop_rate = 2500, }, },
     ["npc_719"] = { id = 719, name = "血溅狮子楼", shaguai_id = 719, ch = "侠义祝福", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "狮子楼", fb_map = "mwsl", limit_time_sec = 1200, enter_pos = {29,27}, submit = {{"净化水晶",1}}, drop_item = "净化水晶", drop_rate = 3000, stage1_mob = "暗影打手", stage1_count = 20, stage1_timeout = 300, stage1_elite_mob = "暗影打手·精英", stage1_elite_count = 2, stage2_boss = "王婆", stage2_boss_count = 1, stage2_mob = "暗影侍女", stage2_mob_count = 2, stage3_boss = "邪恶西门庆", stage3_boss_count = 1, stage3_mob = "暗影侍女", stage3_mob_count = 4, boss_pos = {32,36}, mob_center = {32,36}, rage_hp_pct = 50, explode_hurt_pct = 12, explode_effect_id = 4011, }, },
-    ["npc_721"] = { id = 721, name = "天机道长", jl = {{"星儿的玉佩碎片",1}}, task_cfg = { chapter = 6, task_type = "auto_claim", map = "六大陆主城", need_star_stage = 3, target = {"冰川雪域",723,120,120}, }, },
-    ["npc_722"] = { id = 722, name = "星儿", shaguai_id = 722, jl = {{"星儿的玉佩",1}}, task_cfg = { chapter = 6, task_type = "craft", map = "六大陆主城", submit = {{"星儿的玉佩碎片",66},{"元宝",1000000}}, craft_cost = {{"星儿的玉佩碎片",66},{"元宝",1000000}}, craft_reward = {{"星儿的玉佩",1}}, actions = {[1]="提交任务",[2]="合成玉佩"}, }, },
-    ["npc_723"] = { id = 723, name = "凌雪", shaguai_id = 723, jl = {{"星晶碎片",20}}, task_cfg = { chapter = 6, task_type = "submit", map = "冰川雪域", submit = {{"星力冰晶",10}}, hidden_map = "星陨冰窟", hidden_drop_item = "高阶星尘", hidden_drop_rate = 6000, }, },
-    ["npc_724"] = { id = 724, name = "守城士兵甲", jl = {{"赤火令",1}}, task_cfg = { chapter = 6, task_type = "auto_claim", map = "边关烽城", }, },
-    ["npc_725"] = { id = 725, name = "赤焰", shaguai_id = 725, jl = {{"镇烽令牌",1}}, task_cfg = { chapter = 6, task_type = "escort", map = "边关烽城", kill_count = 1, submit = {{"赤火令",1},{"密信",1}}, drop_item = "密信", escort_boss = "刺客", }, },
-    ["npc_726"] = { id = 726, name = "幽影", shaguai_id = 726, jl = {{"被盗走的帝星本源",1},{"帝星本源",1}}, task_cfg = { chapter = 6, task_type = "boss_submit", map = "森罗魔域", kill_count = 888, submit = {{"森罗魔气",100}}, boss_map = "魔焰祭坛", boss = "幽影的分身", }, },
+    ["npc_721"] = { id = 721, name = "天机道长", ch = "帝星归位", task_cfg = { chapter = 6, task_type = "auto_claim", map = "六大陆主城", need_star_stage = 3, target = {"冰川雪域",723,120,120}, }, },
+    ["npc_722"] = { id = 722, name = "星儿", shaguai_id = 722, jl = {{"星儿的玉佩",1}}, task_cfg = { chapter = 6, side_task = 1, prev_task = "npc_721", prev_need = 1, prev_name = "天机道长", task_type = "craft", map = "六大陆主城", submit = {{"星儿的玉佩碎片",66},{"元宝",1000000}}, craft_cost = {{"星儿的玉佩碎片",66},{"元宝",1000000}}, craft_reward = {{"星儿的玉佩",1}}, actions = {[2]="合成玉佩"}, }, },
+    ["npc_723"] = { id = 723, name = "凌雪", shaguai_id = 723, jl = {{"星晶碎片",20}}, task_cfg = { chapter = 6, prev_task = "npc_721", prev_need = 1, prev_name = "天机道长", task_type = "dialog_submit", map = "冰川雪域", first_submit = {{"星儿的玉佩碎片",1}}, submit = {{"星力冰晶",10}}, actions = {[1]="提交碎片",[3]="提交任务"}, hidden_map = "星陨冰窟", hidden_drop_item = "高阶星尘", hidden_drop_rate = 6000, }, },
+    ["npc_724"] = { id = 724, name = "守城士兵甲", jl = {{"赤火令",1}}, task_cfg = { chapter = 6, prev_task = "npc_723", prev_name = "凌雪", task_type = "auto_claim", map = "边关烽城", kill_count = 300, actions = {[1]="领取/提交"}, }, },
+    ["npc_725"] = { id = 725, name = "赤焰", shaguai_id = 725, jl = {{"镇烽令牌",1}}, task_cfg = { chapter = 6, prev_task = "npc_724", prev_name = "守城士兵甲", task_type = "escort", map = "边关烽城", dart_mob = "军师", dart_target = {135,26}, dart_time = 60, assassin_delay = 30, drop_item = "密信", escort_boss = "刺客", actions = {[1]="领取护送"}, }, },
+    ["npc_726"] = { id = 726, name = "幽影", shaguai_id = 726, jl = {{"被盗走的帝星本源",1},{"帝星本源",1}}, task_cfg = { chapter = 6, prev_task = "npc_725", prev_name = "赤焰", task_type = "boss_submit", map = "森罗魔域", kill_count = 888, submit = {{"森罗魔气",100}}, require_task = "npc_739", require_name = "幽影的分身", boss_map = "魔焰祭坛", boss = "幽影的分身", actions = {[1]="领取/提交"}, }, },
+    ["npc_727"] = { id = 727, name = "天玑道长", task_cfg = { chapter = 6, task_type = "auto_claim", map = "六大陆主城", prev_task = "npc_739", prev_name = "幽影的分身", }, },
     ["npc_728"] = { id = 728, name = "恶魔契约", task_cfg = { chapter = 6, task_type = "kill_player_lottery", map = "血契之地二层", kill_per_draw = 10, max_draw = 10, draw_pool = {{"业火结晶",5},{"元宝",100000},{"星晶碎片",3},{"神石碎片",3}}, actions = {[1]="查看契约",[2]="开始抽奖"}, }, },
     ["npc_729"] = { id = 729, name = "雪域特使", shaguai_id = 729, task_cfg = { chapter = 6, task_type = "map_unlock", map = "冰川雪域", kill_count = 200, submit = {{"元宝",1280000}}, unlock_map = "冻魂冰窟", }, },
     ["npc_730"] = { id = 730, name = "魔域特使", shaguai_id = 730, task_cfg = { chapter = 6, task_type = "map_unlock", map = "森罗魔域", kill_count = 200, submit = {{"元宝",1280000}}, unlock_map = "魔焰祭坛", }, },
@@ -1898,8 +1899,8 @@ teshudata = {
     ["npc_736"] = { id = 736, name = "大宋的菜肴", shaguai_id = 736, jl = {{"大宋食盒",1}}, task_cfg = { chapter = 6, task_type = "submit", map = "汴京御街", submit = {{"空的食盒",1},{"美味的大宋菜肴",10}}, }, },
     ["npc_737"] = { id = 737, name = "天青色的秘密", shaguai_id = 737, jl = {{"青釉瓷碗",1}}, task_cfg = { chapter = 6, task_type = "burn", map = "临安古渡", submit = {{"神秘瓷釉",5},{"泥碗素胚",5},{"金币",8880000}}, burn_rewards = {"冰雪瓷碗","朱砂瓷碗","青釉瓷碗"}, actions = {[1]="开始烧制"}, }, },
     ["npc_738"] = { id = 738, name = "密令护灵旗", shaguai_id = 738, jl = {{"密令护灵旗",1}}, task_cfg = { chapter = 6, task_type = "submit", map = "镇关帅府", submit = {{"镇关灵旗",5},{"大帅密令",10},{"金币",18880000}}, }, },
-    ["npc_739"] = { id = 739, name = "幽影的分身", shaguai_id = 739, task_cfg = { chapter = 6, task_type = "weakness_dungeon", map = "魔焰祭坛", kill_count = 1, reveal_cost = {{"幽影密函残页",10}}, fb_map = "魔焰祭坛", fb_time = 300, enter_pos = {29,27}, boss = "幽影的分身", boss_pos = {32,36}, actions = {[1]="提交任务",[2]="揭示弱点",[3]="进入副本"}, }, },
-    ["npc_740"] = { id = 740, name = "上古寒冰剑", shaguai_id = 740, rwjl = {{"寒冰剑诀",1}}, task_cfg = { chapter = 6, task_type = "weapon_craft", map = "冻魂冰窟", submit = {{"寒冰剑诀",1}}, craft_cost = {{"上古玄冰",55},{"千年陨铁",99},{"元宝",1000000},{"极寒之心",1}}, craft_reward = {{"寒冰剑",1}}, skill_item = "寒冰剑诀", weapon = "寒冰剑", actions = {[1]="提交任务",[2]="立即合成"}, }, },
+    ["npc_739"] = { id = 739, name = "幽影的分身", shaguai_id = 739, ch = "幽影之力", task_cfg = { chapter = 6, prev_task = "npc_726", prev_name = "幽影", prev_need = 1, task_type = "weakness_dungeon", map = "魔焰祭坛", kill_count = 1, reveal_cost = {{"幽影密函残页",10}}, fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "幽影的分身", boss_pos = {32,36}, half_fail_hp_pct = 50, actions = {[2]="揭示弱点",[3]="进入副本"}, }, },
+    ["npc_740"] = { id = 740, name = "上古寒冰剑", shaguai_id = 740, rwjl = {}, task_cfg = { chapter = 6, task_type = "weapon_craft", map = "冻魂冰窟", skill_title = "寒冰剑诀", craft_cost = {{"上古玄冰",55},{"千年陨铁",99},{"元宝",1000000},{"极寒之心",1}}, craft_reward = {{"寒冰剑",1}}, skill_item = "寒冰剑诀", weapon = "寒冰剑", actions = {[2]="立即合成"}, }, },
     ["npc_103"] = {
         id = 103,
         name = "天书试炼",
@@ -2734,7 +2735,7 @@ teshudata = {
         draw_ten_cost = 10, -- 十连消耗次数
         crown_cost = 588, -- 天下谁人不识君累计充值
         day_card = {need_charge = 28, title = "日卡", rewards = {{"元宝",100000},{"灵石",280}}, token_count = 10}, -- 日卡礼包：今日累计充值达到金额后可领取
-        duplicate_fashion_reward = {{"绑定元宝",660000}}, -- 时装重复补偿
+        duplicate_fashion_reward = {{"元宝",660000}}, -- 时装重复补偿
         title_reward = {
             name = "马上发财",
             -- attr = {{280,0},{281,188},{282,188},{283,188},{284,188},{285,188},{286,188},{287,188},{288,188},{289,188},{290,188},{291,188},{300,188}} ,
@@ -2779,21 +2780,19 @@ teshudata = {
             low = {
                 {kind = "item", give = {{"千年玄铁",88}}, label = "千年玄铁*88"},
                 {kind = "item", give = {{"五行石",10}}, label = "五行石*10"},
-                {kind = "item", give = {{"强化石",20}}, label = "强化石*20"},
+                {kind = "item", give = {{"修为丹（小）",20}}, label = "修为丹（小）*20"},
                 {kind = "item", give = {{"杀伐神石[小]",20}}, label = "杀伐神石[小]*20"},
-                {kind = "item", give = {{"强化石",20}}, label = "强化石*20"},
             },
             high = {
-                {kind = "item", give = {{"辉耀水晶",10}}, label = "辉耀水晶*10"},
+                {kind = "item", give = {{"辉耀水晶",40}}, label = "辉耀水晶*40"},
                 {kind = "item", give = {{"天道命石",1}}, label = "天道命石*1"},
                 {kind = "item", give = {{"神·五行石",10}}, label = "神·五行石*10"},
                 {kind = "item", give = {{"神石宝箱钥匙",10}}, label = "神石宝箱钥匙*10"},
-                {kind = "item", give = {{"禁元神晶",1}}, label = "禁元神晶*1"},
             },
             super = {
                 {kind = "item", give = {{"圣星核",1}}, label = "圣星核*1"},
                 {kind = "item", give = {{"灵兽蛋",6}}, label = "灵兽蛋*6"},
-                {kind = "item", give = {{"鉴古符",3}}, label = "鉴古符*3"},
+                {kind = "item", give = {{"天道·渡劫丹",3}}, label = "天道·渡劫丹*3"},
                 {kind = "item", give = {{"鉴古符",3}}, label = "鉴古符*3"},
             },
             relic = {
@@ -3272,6 +3271,17 @@ teshudata = {
     },
 }
 return teshudata
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,15 +1,24 @@
 npc = {}
 
-
 local NPC_ID = 725
 local _cfg_key = "npc_" .. tostring(NPC_ID)
 local _config = Guard.getConfig(_cfg_key)
 local _task_cfg = (_config and _config.task_cfg) or {}
-local DROP_RULES = {{map = "边关烽城", item = "密信", rate = 1, max_bag = 1}}
-local KILL_ONLY = false
-local ALLOW_PRESTART_DROP = false
+
+local ESCORT_MAP = "边关烽城"
+local DART_MOB = "军师"
+local ASSASSIN_MOB = "刺客"
+local DART_TARGET_X = 135
+local DART_TARGET_Y = 26
+local DART_RANGE = 120
+local DART_OFFLINE_TIME = 600
+local DART_OFFLINE_KEEP = 1
+local ASSASSIN_DELAY = 30000
 
 
+local DART_OBJ_KEY = "S$npc_725_dart_mob"
+
+local ASSASSIN_TIME_KEY = "N$npc_725_assassin_at"
 local function _toint(v, d)
     local n = tonumber(v)
     if n == nil then
@@ -30,236 +39,184 @@ local function _get_kill(play)
     return Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"]) or {}
 end
 
-local function _save_kill(play, data)
-    Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], data or {})
-end
-
 local function _send_state(play, npcid)
     local data = {T_dljq = _get_story(play), sg_data = _get_kill(play)}
     sendluamsg(play, 100, npcid or NPC_ID, 0, 0, tbl2json(data))
 end
 
-
-local function _sg_add(play, id)
-    if shaguai and shaguai.jia then
-        shaguai.jia(play, id)
-    end
+local function _set_assassin_time(play, ts)
+    setplaydef(play, ASSASSIN_TIME_KEY, tonumber(ts) or 0)
 end
 
-local function _sg_remove(play, id)
-    if shaguai and shaguai.jian then
-        shaguai.jian(play, id)
-    end
+local function _get_assassin_time(play)
+    return tonumber(getplaydef(play, ASSASSIN_TIME_KEY) or 0) or 0
+end
+local function _set_dart_obj(play, mob)
+    setplaydef(play, DART_OBJ_KEY, tostring(mob or ""))
 end
 
-local function _sg_drop(play, mob, item)
-    if shaguai and shaguai.temp_drop then
-        return shaguai.temp_drop(play, mob, item)
+local function _get_dart_obj(play)
+    return tostring(getplaydef(play, DART_OBJ_KEY) or "")
+end
+
+local function _is_dart_obj_alive(play)
+    local mob = _get_dart_obj(play)
+    if mob == "" or mob == "0" then
+        return false
     end
-    additemtodroplist(play, mob, item)
+    local okName, name = pcall(getbaseinfo, mob, 1)
+    local okDie, isDie = pcall(getbaseinfo, mob, 0)
+    local okHp, curHp = pcall(getbaseinfo, mob, 9)
+    local okMaxHp, maxHp = pcall(getbaseinfo, mob, 10)
+    if not okName or name == nil or tostring(name) == "" or tostring(name) == "0" then
+        return false
+    end
+    if okDie and (isDie == true or tonumber(isDie) == 1 or tostring(isDie) == "true") then
+        return false
+    end
+    if okHp and tonumber(curHp) ~= nil and tonumber(curHp) <= 0 then
+        return false
+    end
     return true
 end
+local function _set_escort_flag(play, value)
+    setplaydef(play, "N$npc_725_escort", tonumber(value) or 0)
+end
 
-local function _finish(play, reason, noReward)
+local function _is_escort_running(play)
+    return _toint(getplaydef(play, "N$npc_725_escort")) == 1
+end
+
+local function _finish(play, reason)
     local jq = _get_story(play)
+    if _toint(jq[_cfg_key]) == 2 then
+        return
+    end
     jq[_cfg_key] = 2
     jq[_cfg_key .. "_a"] = nil
     _save_story(play, jq)
-    local levelReward = _toint(_task_cfg.level_reward)
-    if not noReward and levelReward <= 0 then
-        Guard.giveTaskReward(play, _config, reason or ((_config.name or "第六章剧情") .. "奖励"))
-    end
-    if levelReward > 0 then
-        callscriptex(play, "CHANGELEVEL", "+", levelReward)
-        Player.sendmsgEx(play, "等级提升+" .. levelReward .. "#57")
-    end
+    _set_escort_flag(play, 0)
+    _set_dart_obj(play, "")
+    _set_assassin_time(play, 0)
+    Guard.giveTaskReward(play, _config, reason or "赤焰护送奖励")
     sendluamsg(play, 101, 1005, 0, 0, "rwwc")
+    Player.sendmsgEx(play, "军师已抵达目的地，护送完成#57")
 end
 
-local function _ensure_started(play)
+local function _mark_reward_ready(play)
     local jq = _get_story(play)
-    if _toint(jq[_cfg_key]) >= 2 then
-        return true
+    if _toint(jq[_cfg_key]) == 2 then
+        return
     end
-    if _toint(jq[_cfg_key]) < 1 then
-        jq[_cfg_key] = 1
-        _save_story(play, jq)
-        Player.sendmsgEx(play, "领取|【" .. (_config.name or "第六章剧情") .. "】#218|")
-        sendluamsg(play, 101, 1005, 0, 0, "rwjs")
-        local shaguaiId = _toint(_config.shaguai_id)
-        if shaguaiId > 0 then
-            _sg_add(play, shaguaiId)
-        end
-        return false
-    end
-    return true
+    jq[_cfg_key] = 3
+    jq[_cfg_key .. "_a"] = nil
+    _save_story(play, jq)
+    _set_escort_flag(play, 0)
+    _set_dart_obj(play, "")
+    _set_assassin_time(play, 0)
+    Player.sendmsgEx(play, "军师已抵达目的地，请领取奖励#57")
+    sendluamsg(play, 101, 1005, 0, 0, "rwjs")
 end
 
-local function _need_map_ok(play, taskCfg)
-    local map = taskCfg.map
-    if not map or map == "" then
-        return true
+local function _fail(play, reason)
+    local jq = _get_story(play)
+    if _toint(jq[_cfg_key]) == 2 then
+        return
     end
-    local cur = getbaseinfo(play, 3)
-    if cur == map or cur == "xtc" or cur == "六大陆主城" then
-        return true
-    end
-    Player.sendmsgEx(play, "请前往#57|【" .. map .. "】#218|完成后再提交#57")
-    return false
+    jq[_cfg_key] = 0
+    jq[_cfg_key .. "_a"] = nil
+    _save_story(play, jq)
+    _set_escort_flag(play, 0)
+    _set_dart_obj(play, "")
+    _set_assassin_time(play, 0)
+    Player.sendmsgEx(play, reason or "护送失败，请重新领取任务#57")
+    sendluamsg(play, 101, 1005, 0, 0, "rwjs")
 end
 
-local function _check_kill(play, need)
-    need = _toint(need)
-    if need <= 0 then
-        return true
+local function _start_escort(play)
+    local jq = _get_story(play)
+    local state = _toint(jq[_cfg_key])
+    if state == 3 then
+        _finish(play, "赤焰护送奖励")
+        return
     end
-    local sg = _get_kill(play)
-    local cur = _toint(sg[_cfg_key])
-    if cur < need then
-        Player.sendmsgEx(play, string.format("击杀不足：#57|【%d/%d】#218|", cur, need))
-        return false
-    end
-    return true
-end
-
-local function _consume_cost(play, cost, reason)
-    if not Guard.ensureCost(play, cost) then
-        return false
-    end
-    Guard.consumeCost(play, cost, reason)
-    return true
-end
-
-local function _generic_submit(play)
-    local state = _toint((_get_story(play))[_cfg_key])
     if state >= 2 then
         Player.sendmsgEx(play, "你已经完成#57|【" .. (_config.name or "该任务") .. "】#218|")
         return
     end
-    local ready = _ensure_started(play)
-    if not ready and _task_cfg.task_type ~= "auto_claim" then
+    if _is_escort_running(play) then
+        Player.sendmsgEx(play, "军师正在护送途中#57")
         return
     end
-    if not _need_map_ok(play, _task_cfg) then
+    if getbaseinfo(play, 3) ~= ESCORT_MAP and getbaseinfo(play, 3) ~= "xtc" and getbaseinfo(play, 3) ~= "六大陆主城" then
+        Player.sendmsgEx(play, "请前往#57|【" .. ESCORT_MAP .. "】#218|领取护送任务#57")
         return
     end
-    if not _check_kill(play, _task_cfg.kill_count) then
-        return
-    end
-    if not _consume_cost(play, _task_cfg.submit or _config.cost or {}, "," .. (_config.name or "第六章剧情")) then
-        return
-    end
-    _finish(play, (_config.name or "第六章剧情") .. "奖励")
+    jq[_cfg_key] = 1
+    _save_story(play, jq)
+    _set_escort_flag(play, 1)
+    local dartMob = recallmob(play, DART_MOB, 1, 0, 0, 0, 1)
+    _set_dart_obj(play, dartMob)
+    _set_assassin_time(play, os.time() + math.ceil(ASSASSIN_DELAY / 1000))
+    dartmap(play, DART_TARGET_X, DART_TARGET_Y, DART_RANGE)
+    darttime(play, DART_OFFLINE_TIME, DART_OFFLINE_KEEP)
+    delaygoto(play, ASSASSIN_DELAY, "@npc_725_spawn_assassin", 1)
+    Player.sendmsgEx(play, "护送开始：请保护#57|【" .. DART_MOB .. "】#218|前往目标点#57")
+    sendluamsg(play, 101, 1005, 0, 0, "rwjs")
 end
 
-
-local function _is_six_continent_map(map)
-    if not map or map == "" then
-        return false
-    end
-    if daluditu and _toint(daluditu[map]) == 6 then
-        return true
-    end
-    local known = {
-        ["六大陆主城"] = true, ["冰川雪域"] = true, ["冻魂冰窟"] = true,
-        ["森罗魔域"] = true, ["魔焰祭坛"] = true, ["边关烽城"] = true,
-        ["镇关帅府"] = true, ["盛世古城"] = true, ["长安西市"] = true,
-        ["洛阳天街"] = true, ["汴京御街"] = true, ["临安古渡"] = true,
-        ["血契之地"] = true, ["血契之地二层"] = true,
-    }
-    return known[map] == true
-end
-
-local function _has_post_done_drop(play)
-    for _, rule in ipairs(DROP_RULES) do
-        if rule.require_done then
-            return true
-        end
-    end
-    return false
-end
-
-local function _drop_by_rule(play, mob, state)
-    local map = tostring(getbaseinfo(play, 3) or "")
-    for _, rule in ipairs(DROP_RULES) do
-        local ok = true
-        if rule.map and rule.map ~= map then
-            ok = false
-        end
-        if rule.continent and not _is_six_continent_map(map) then
-            ok = false
-        end
-        if rule.require_done and state < 2 then
-            ok = false
-        end
-        if rule.require_craft then
-            local jq = _get_story(play)
-            if _toint(jq[_cfg_key .. "_done"]) < 1 then
-                ok = false
-            end
-        end
-        if ok and rule.item and rule.item ~= "" then
-            if not rule.max_bag or getbagitemcount(play, rule.item) < _toint(rule.max_bag) then
-                local rate = math.max(1, _toint(rule.rate, 1))
-                if math.random(rate) == 1 and _sg_drop(play, mob, rule.item) then
-                    Player.sendmsgEx(play, "打怪掉落【" .. rule.item .. "】#57")
-                end
-            end
-        end
-    end
-end
-
-local function _onKillMon(play, mob)
-    local state = _toint((_get_story(play))[_cfg_key])
-    if state >= 2 and not _has_post_done_drop(play) then
-        _sg_remove(play, NPC_ID)
+function npc.spawnAssassin(play)
+    if not _is_escort_running(play) then
         return
     end
-    if state < 1 and not ALLOW_PRESTART_DROP then
+    local assassinAt = _get_assassin_time(play)
+    if assassinAt <= 0 or os.time() < assassinAt then
         return
     end
-    _drop_by_rule(play, mob, state)
-    local need = _toint(_task_cfg.kill_count)
-    if need <= 0 and not KILL_ONLY then
+    local jq = _get_story(play)
+    if not _is_dart_obj_alive(play) then
+        _fail(play, "护送失败：军师已阵亡，请重新领取任务#57")
+        _send_state(play, NPC_ID)
         return
     end
-    if state >= 2 then
+    if _toint(jq[_cfg_key]) ~= 1 then
         return
     end
     local map = tostring(getbaseinfo(play, 3) or "")
-    local reqMap = _task_cfg.map
-    local bossName = _task_cfg.boss or _task_cfg.escort_boss
-    local mobName = tostring(getbaseinfo(mob, 1) or "")
-    local countThis = false
-    if (_task_cfg.task_type == "weakness_dungeon" or _task_cfg.task_type == "escort") and bossName and bossName ~= "" then
-        countThis = mobName == bossName
-    elseif bossName and bossName ~= "" and mobName == bossName then
-        countThis = true
-    elseif reqMap and reqMap == map then
-        countThis = true
-    end
-    if not countThis then
+    if map ~= ESCORT_MAP then
         return
     end
-    local sg = _get_kill(play)
-    local cur = _toint(sg[_cfg_key])
-    if cur >= need then
-        return
-    end
-    cur = math.min(cur + 1, need)
-    sg[_cfg_key] = cur
-    _save_kill(play, sg)
-    Player.sendmsgEx(play, (_config.name or _cfg_key) .. "进度+1 ( " .. cur .. "/" .. need .. " )#57")
-    if cur >= need then
-        _sg_remove(play, NPC_ID)
-        messagebox(play, "任务目标完成,请前往提交")
-    end
+    local x = _toint(getbaseinfo(play, 4), 0)
+    local y = _toint(getbaseinfo(play, 5), 0)
+    genmon(map, x + 2, y + 2, ASSASSIN_MOB, 3, 1, 0)
+    Player.sendmsgEx(play, "刺客现身，击杀可获得#57|【密信】#218|#57")
 end
 
-local function _handle(play, npcid, action, aid) _generic_submit(play) end
-
+function npc.carpathend(play)
+    if not _is_escort_running(play) then
+        return
+    end
+    _mark_reward_ready(play)
+end
+function npc.losercar(play)
+    if not _is_escort_running(play) then
+        return
+    end
+    _fail(play, "护送失败：军师已丢失，请重新领取任务#57")
+    _send_state(play, NPC_ID)
+end
+function npc.cardie(play)
+    if not _is_escort_running(play) then
+        return
+    end
+    _fail(play, "护送失败：军师已阵亡，请重新领取任务#57")
+    _send_state(play, NPC_ID)
+end
 function npc.main(play, npcid)
     if not _config then
+        return
+    end
+    if not Guard.ensureStoryPrerequisite(play, _config, NPC_ID) then
         return
     end
     _send_state(play, npcid or NPC_ID)
@@ -269,6 +226,9 @@ function npc.link(play, npcid, ew, aid, msgData)
     if not _config then
         return
     end
+    if not Guard.ensureStoryPrerequisite(play, _config, NPC_ID) then
+        return
+    end
     if not Guard.ensurePlayer(play, npcid) then
         return
     end
@@ -276,15 +236,22 @@ function npc.link(play, npcid, ew, aid, msgData)
     if not action then
         return
     end
-    if not Guard.ensureActionAllowed(play, npcid, action, Guard.newActionSet({1, 2, 3, 4})) then
+    if not Guard.ensureActionAllowed(play, npcid, action, Guard.newActionSet({1})) then
         return
     end
-    if action == 4 then
-        _onKillMon(play, aid)
-        return
-    end
-    _handle(play, npcid or NPC_ID, action, aid)
+    _start_escort(play)
     _send_state(play, npcid or NPC_ID)
 end
 
 return npc
+
+
+
+
+
+
+
+
+
+
+

@@ -115,7 +115,7 @@ function npc.link(play,npcid,ew,aid,data)
 
     if ew == 1 then
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_dljq"])
-        T_data["npc_46"] = T_data["npc_46"] or {}
+        T_data["npc_46"] = type(T_data["npc_46"]) == "table" and T_data["npc_46"] or {}
 
         local missing_name = _get_missing_task_name(T_data)
         if missing_name then
@@ -147,3 +147,4 @@ function npc.link(play,npcid,ew,aid,data)
 end
 
 return npc
+

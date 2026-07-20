@@ -197,13 +197,7 @@ end
 
 local function _handle(play, npcid, action, aid)
     if action ~= 2 then
-        local jq = _get_story(play)
-        if _toint(jq[_cfg_key]) < 1 then
-            jq[_cfg_key] = 1
-            _save_story(play, jq)
-            sendluamsg(play, 101, 1005, 0, 0, "rwjs")
-        end
-        Player.sendmsgEx(play, "每击杀10名玩家可抽奖一次，最多10次#57")
+        Player.sendmsgEx(play, "进入血契之地击杀玩家自动累计，每击杀10名玩家可抽奖一次，最多10次#57")
         return
     end
     local taskCfg = _task_cfg
@@ -267,3 +261,4 @@ function npc.link(play, npcid, ew, aid, msgData)
 end
 
 return npc
+

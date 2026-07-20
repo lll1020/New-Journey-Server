@@ -216,6 +216,11 @@ local function _ywl_to_pre_list(pre)
     end
     return nil
 end
+local function _ywl_is_admin_continent_unlocked(play, continent)
+    local admin_unlock = tonumber(getplaydef(play, "U_全大陆解锁") or 0) or 0
+    continent = tonumber(continent) or 0
+    return admin_unlock == 1 or (continent > 0 and admin_unlock >= continent)
+end
 local function _ywl_check_chapter_pre(play, pre)
     if type(pre) ~= "table" then
         return true
@@ -246,6 +251,9 @@ local function _ywl_is_chapter_open(play, i, j)
     end
     if not npc_xyl[i] or not npc_xyl[i][j] then
         return false
+    end
+    if _ywl_is_admin_continent_unlocked(play, i) then
+        return true
     end
     if tonumber(i) < 3 then
         local need_jqd = tonumber(npc_xyl[i][j].jqd) or 0
@@ -310,11 +318,15 @@ local _ywl_map_gate = {
     ["海洋禁墟三层"] = {mode = "eq", key = "npc_689_c", value = 1, tip = "禁墟之门·海洋禁墟"},
     ["青铜禁墟三层"] = {mode = "eq", key = "npc_689_d", value = 1, tip = "禁墟之门·青铜禁墟"},
 }
-local function _ywl_check_map_gate(play, shuju)
+local function _ywl_check_map_gate(play, shuju, sj)
     if type(shuju) ~= "table" or type(shuju.yd) ~= "table" then
         return true
     end
     local target_map = shuju.yd[2]
+    local target_dl = (target_map and daluditu[target_map]) or tonumber(sj and sj.i) or nil
+    if _ywl_is_admin_continent_unlocked(play, target_dl) then
+        return true
+    end
     local cfg = target_map and _ywl_map_gate[target_map] or nil
     if not cfg then
         return true
@@ -334,23 +346,34 @@ local function _ywl_check_map_gate(play, shuju)
     return false
 end
 local function _ywl_can_transfer(play, sj, shuju)
+    local prevTask = type(shuju) == "table" and shuju.prev_task or nil
+    if type(prevTask) == "string" and prevTask ~= "" and not _ywl_is_admin_continent_unlocked(play, _ywl_get_target_dl(sj, shuju)) then
+        local story = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
+        local needPrev = tonumber(shuju.prev_need or shuju.prev_state) or 2
+        if (tonumber(story[prevTask]) or 0) < needPrev then
+            local prevCfg = (teshudata or {})[prevTask] or {}
+            local prevName = shuju.prev_name or prevCfg.name or "前置剧情"
+            Player.sendmsgEx(play, "请先完成#57|【" .. prevName .. "】#218|")
+            return false
+        end
+    end
     local need_dl = _ywl_get_target_dl(sj, shuju)
     if need_dl > 0 and not Player.dl_sz(play, need_dl) then
         return false
     end
     -- 三大陆相关异闻录功能必须在玩家真正完成【灾厄入侵】并实际进入三大陆后才能使用。
     -- 仅保留仙府、灾厄主线入口等例外 NPC（44、46、55），避免通过异闻录提前绕进三大陆功能。
-    if need_dl == 3 and not Player.hasThirdContinentPass(play) then
+    if need_dl == 3 and not _ywl_is_admin_continent_unlocked(play, need_dl) and not Player.hasThirdContinentPass(play) then
         local targetNpc = shuju and shuju.yd and shuju.yd[3] or 0
         if targetNpc ~= 44 and targetNpc ~= 46 and targetNpc ~= 55 then
             Player.sendmsgEx(play, "请先真正完成#57|【灾厄入侵】#218|并进入#57|【三大陆】#218|后再使用该异闻录功能")
             return false
         end
     end
-    if not _ywl_check_map_gate(play, shuju) then
+    if not _ywl_check_map_gate(play, shuju, sj) then
         return false
     end
-    if shuju.ydtk and shuju.fwdjy and not shuju.fwdjy(play, shuju.ydtk, shuju) then
+    if shuju.ydtk and shuju.fwdjy and not _ywl_is_admin_continent_unlocked(play, need_dl) and not shuju.fwdjy(play, shuju.ydtk, shuju) then
         local ydtip = shuju.ydtip or "进入地图前置任务"
         Player.sendmsgEx(play, "请先完成#57|【" .. ydtip .. "】#218|")
         return false
@@ -382,6 +405,9 @@ local function _ywl_is_current_task_in_continent(T_ywl, i)
     local dq = tostring(T_ywl and T_ywl.dq or "")
     return dq:match("^" .. tostring(i) .. "_%d+_%d+$") ~= nil
 end
+local function _ywl_is_side_task(shuju)
+    return type(shuju) == "table" and tonumber(shuju.side_task or 0) == 1
+end
 local function _ywl_find_first_unfinished_task(play, T_ywl, i)
     local chapters = npc_xyl[i] or {}
     for j = 1, #chapters do
@@ -391,7 +417,8 @@ local function _ywl_find_first_unfinished_task(play, T_ywl, i)
         if T_ywl["jl_" .. i .. "_" .. j] ~= 1 then
             local tasks = chapters[j].jq or {}
             for z = 1, #tasks do
-                if T_ywl["jl_" .. i .. "_" .. j .. "_" .. z] ~= 1 then
+                local shuju = tasks[z]
+                if not _ywl_is_side_task(shuju) and T_ywl["jl_" .. i .. "_" .. j .. "_" .. z] ~= 1 then
                     return {i = i, j = j, z = z}
                 end
             end
@@ -539,8 +566,14 @@ Guard.syncXylCurrentTask = _ywl_sync_auto_current_task
 local function _ywl_refresh_clicknewtask_block(play)
     setplaydef(play, "N$XYL2_BlockClickNewTask", 0)
 end
+local _ywl_get_current_task
 local function _ywl_push_current_task(play)
     local T_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
+    local sj, shuju = _ywl_get_current_task(T_ywl)
+    if _ywl_is_side_task(shuju) then
+        _ywl_clear_current_task_value(T_ywl)
+        setplaydef(play, VarCfg.T_ywl, tbl2json(T_ywl))
+    end
     local dq = T_ywl.dq or ""
     sendluamsg(play, 101, 11, 9, 0, '{"dq":"' .. dq .. '"}')
 end
@@ -570,7 +603,7 @@ _ywl_try_clear_current_task = function(play, T_ywl, sj)
     end
     return T_ywl, false
 end
-local function _ywl_get_current_task(T_ywl)
+_ywl_get_current_task = function(T_ywl)
     local dq = tostring(T_ywl and T_ywl.dq or "")
     local i, j, z = dq:match("^(%d+)_(%d+)_(%d+)$")
     i, j, z = tonumber(i), tonumber(j), tonumber(z)
@@ -680,11 +713,15 @@ npc[11] = function(play, p2, p3, data) --异闻录
     if p2 == 0 then
         _ywl_sync_auto_current_task(play)
         _ywl_refresh_clicknewtask_block(play)
-        sendluamsg(play, 101, 11, 0, 0, '{"dljq":' .. getplaydef(play, VarCfg.T_dljq) .. ',"zxrw":' .. getplaydef(play, VarCfg.T_zxrw) .. ',"ywl":' .. getplaydef(play, VarCfg.T_ywl) .. "}")
+        local admin_unlock = tonumber(getplaydef(play, "U_全大陆解锁") or 0) or 0
+        sendluamsg(play, 103, 1, 0, 0, tbl2json({dl_all_unlock = admin_unlock}))
+        sendluamsg(play, 101, 11, 0, 0, '{"dljq":' .. getplaydef(play, VarCfg.T_dljq) .. ',"zxrw":' .. getplaydef(play, VarCfg.T_zxrw) .. ',"ywl":' .. getplaydef(play, VarCfg.T_ywl) .. ',"dl_all_unlock":' .. admin_unlock .. "}")
         _ywl_send_current_task(play)
     elseif p2 == 1 then
         --传送
         stopautoattack(play)
+        local admin_unlock = tonumber(getplaydef(play, "U_全大陆解锁") or 0) or 0
+        sendluamsg(play, 103, 1, 0, 0, tbl2json({dl_all_unlock = admin_unlock}))
         local sj = json2tbl(data)
         if
             sj.i
@@ -759,8 +796,10 @@ npc[11] = function(play, p2, p3, data) --异闻录
                     sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
                     is_transfer_ok = true
                 end
-                if is_transfer_ok then
+                if is_transfer_ok and not _ywl_is_side_task(shuju) then
                     _ywl_set_current_task(play, sj)
+                elseif is_transfer_ok then
+                    _ywl_push_current_task(play)
                 end
             end
         end
@@ -1849,7 +1888,10 @@ npc[507] = function(play, p2, p3, msgData) --活动面板
         }
         sendluamsg(play, 101, 507, 0, 0, tbl2json(payload))
     elseif p2 == 1 then
-        if p3 == 1 then
+        if p3 == 0 then
+            Player.sendmsgEx(play, "暂未开放#57")
+            return
+        elseif p3 == 1 then
             local bwcz_cfg = BwczApi and BwczApi.get_cfg and BwczApi.get_cfg() or (teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].bwcz or {})
             local enter_pos = type(bwcz_cfg.enter_pos) == "table" and bwcz_cfg.enter_pos or {126, 107}
             mapmove(play, tostring(bwcz_cfg.map or "村庄"), tonumber(enter_pos[1]) or 126, tonumber(enter_pos[2]) or 107, 2)

@@ -146,6 +146,14 @@ local function _generic_submit(play)
     if not _check_kill(play, _task_cfg.kill_count) then
         return
     end
+    local requireTask = _task_cfg.require_task
+    if type(requireTask) == "string" and requireTask ~= "" then
+        local jq = _get_story(play)
+        if _toint(jq[requireTask]) < 2 then
+            Player.sendmsgEx(play, "请先完成#57|【" .. (_task_cfg.require_name or "前置任务") .. "】#218|")
+            return
+        end
+    end
     if not _consume_cost(play, _task_cfg.submit or _config.cost or {}, "," .. (_config.name or "第六章剧情")) then
         return
     end
@@ -262,11 +270,17 @@ function npc.main(play, npcid)
     if not _config then
         return
     end
+    if not Guard.ensureStoryPrerequisite(play, _config, NPC_ID) then
+        return
+    end
     _send_state(play, npcid or NPC_ID)
 end
 
 function npc.link(play, npcid, ew, aid, msgData)
     if not _config then
+        return
+    end
+    if not Guard.ensureStoryPrerequisite(play, _config, NPC_ID) then
         return
     end
     if not Guard.ensurePlayer(play, npcid) then
@@ -288,3 +302,4 @@ function npc.link(play, npcid, ew, aid, msgData)
 end
 
 return npc
+

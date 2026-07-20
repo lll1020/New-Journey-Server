@@ -7,7 +7,7 @@ local _config = Guard.getConfig(_cfg_key)
 local _task_cfg = (_config and _config.task_cfg) or {}
 local DROP_RULES = {{map = "汴京御街", item = "空的食盒", rate = 5100, max_bag = 1}, {map = "汴京御街", item = "美味的大宋菜肴", rate = 1500}}
 local KILL_ONLY = false
-local ALLOW_PRESTART_DROP = false
+local ALLOW_PRESTART_DROP = true
 
 
 local function _toint(v, d)
@@ -75,26 +75,6 @@ local function _finish(play, reason, noReward)
     end
     sendluamsg(play, 101, 1005, 0, 0, "rwwc")
 end
-
-local function _ensure_started(play)
-    local jq = _get_story(play)
-    if _toint(jq[_cfg_key]) >= 2 then
-        return true
-    end
-    if _toint(jq[_cfg_key]) < 1 then
-        jq[_cfg_key] = 1
-        _save_story(play, jq)
-        Player.sendmsgEx(play, "领取|【" .. (_config.name or "第六章剧情") .. "】#218|")
-        sendluamsg(play, 101, 1005, 0, 0, "rwjs")
-        local shaguaiId = _toint(_config.shaguai_id)
-        if shaguaiId > 0 then
-            _sg_add(play, shaguaiId)
-        end
-        return false
-    end
-    return true
-end
-
 local function _need_map_ok(play, taskCfg)
     local map = taskCfg.map
     if not map or map == "" then
@@ -132,14 +112,6 @@ end
 
 local function _generic_submit(play)
     local state = _toint((_get_story(play))[_cfg_key])
-    if state >= 2 then
-        Player.sendmsgEx(play, "你已经完成#57|【" .. (_config.name or "该任务") .. "】#218|")
-        return
-    end
-    local ready = _ensure_started(play)
-    if not ready and _task_cfg.task_type ~= "auto_claim" then
-        return
-    end
     if not _need_map_ok(play, _task_cfg) then
         return
     end
@@ -149,10 +121,12 @@ local function _generic_submit(play)
     if not _consume_cost(play, _task_cfg.submit or _config.cost or {}, "," .. (_config.name or "第六章剧情")) then
         return
     end
-    _finish(play, (_config.name or "第六章剧情") .. "奖励")
+    if state < 2 then
+        _finish(play, (_config.name or "第六章剧情") .. "奖励")
+    else
+        Guard.giveTaskReward(play, _config, (_config.name or "第六章剧情") .. "重复提交")
+    end
 end
-
-
 local function _is_six_continent_map(map)
     if not map or map == "" then
         return false
@@ -211,10 +185,6 @@ end
 
 local function _onKillMon(play, mob)
     local state = _toint((_get_story(play))[_cfg_key])
-    if state >= 2 and not _has_post_done_drop(play) then
-        _sg_remove(play, NPC_ID)
-        return
-    end
     if state < 1 and not ALLOW_PRESTART_DROP then
         return
     end
@@ -262,9 +232,11 @@ function npc.main(play, npcid)
     if not _config then
         return
     end
+    if shaguai and shaguai.jia then
+        shaguai.jia(play, NPC_ID)
+    end
     _send_state(play, npcid or NPC_ID)
 end
-
 function npc.link(play, npcid, ew, aid, msgData)
     if not _config then
         return
@@ -288,3 +260,8 @@ function npc.link(play, npcid, ew, aid, msgData)
 end
 
 return npc
+
+
+
+
+

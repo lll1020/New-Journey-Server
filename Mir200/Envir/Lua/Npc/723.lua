@@ -8,6 +8,7 @@ local _task_cfg = (_config and _config.task_cfg) or {}
 local DROP_RULES = {{map = "冰川雪域", item = "星力冰晶", rate = 8000}, {map = "星陨冰窟", item = "高阶星尘", rate = 6000, require_done = true}}
 local KILL_ONLY = false
 local ALLOW_PRESTART_DROP = false
+local FIRST_SUBMIT_ITEM = {{"星儿的玉佩碎片", 1}}
 
 
 local function _toint(v, d)
@@ -256,10 +257,53 @@ local function _onKillMon(play, mob)
     end
 end
 
-local function _handle(play, npcid, action, aid) _generic_submit(play) end
+local function _handle(play, npcid, action, aid)
+    local jq = _get_story(play)
+    local state = _toint(jq[_cfg_key])
+    if state >= 2 then
+        Player.sendmsgEx(play, "你已经完成#57|【" .. (_config.name or "该任务") .. "】#218|")
+        return
+    end
+    if action == 1 then
+        if state >= 1 then
+            Player.sendmsgEx(play, "碎片已提交，请继续完成凌雪的请求#57")
+            return
+        end
+        if not Guard.ensureCost(play, FIRST_SUBMIT_ITEM) then
+            return
+        end
+        Guard.consumeCost(play, FIRST_SUBMIT_ITEM, "凌雪提交碎片")
+        jq[_cfg_key] = 1
+        _save_story(play, jq)
+        local shaguaiId = _toint(_config.shaguai_id)
+        if shaguaiId > 0 then
+            _sg_add(play, shaguaiId)
+        end
+        Player.sendmsgEx(play, "碎片已提交，请继续追查星力冰晶#57")
+        sendluamsg(play, 101, 1005, 0, 0, "rwjs")
+        return
+    end
+    if action == 3 then
+        if state < 1 then
+            Player.sendmsgEx(play, "请先提交星儿的玉佩碎片#57")
+            return
+        end
+        if not _need_map_ok(play, _task_cfg) then
+            return
+        end
+        if not Guard.ensureCost(play, _task_cfg.submit or {}) then
+            return
+        end
+        Guard.consumeCost(play, _task_cfg.submit or {}, "凌雪提交星力冰晶")
+        _finish(play, "凌雪奖励")
+    end
+end
 
 function npc.main(play, npcid)
     if not _config then
+        return
+    end
+    if not Guard.ensureStoryPrerequisite(play, _config, NPC_ID) then
         return
     end
     _send_state(play, npcid or NPC_ID)
@@ -267,6 +311,9 @@ end
 
 function npc.link(play, npcid, ew, aid, msgData)
     if not _config then
+        return
+    end
+    if not Guard.ensureStoryPrerequisite(play, _config, NPC_ID) then
         return
     end
     if not Guard.ensurePlayer(play, npcid) then

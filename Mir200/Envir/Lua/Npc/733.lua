@@ -75,26 +75,6 @@ local function _finish(play, reason, noReward)
     end
     sendluamsg(play, 101, 1005, 0, 0, "rwwc")
 end
-
-local function _ensure_started(play)
-    local jq = _get_story(play)
-    if _toint(jq[_cfg_key]) >= 2 then
-        return true
-    end
-    if _toint(jq[_cfg_key]) < 1 then
-        jq[_cfg_key] = 1
-        _save_story(play, jq)
-        Player.sendmsgEx(play, "领取|【" .. (_config.name or "第六章剧情") .. "】#218|")
-        sendluamsg(play, 101, 1005, 0, 0, "rwjs")
-        local shaguaiId = _toint(_config.shaguai_id)
-        if shaguaiId > 0 then
-            _sg_add(play, shaguaiId)
-        end
-        return false
-    end
-    return true
-end
-
 local function _need_map_ok(play, taskCfg)
     local map = taskCfg.map
     if not map or map == "" then
@@ -130,28 +110,72 @@ local function _consume_cost(play, cost, reason)
     return true
 end
 
-local function _generic_submit(play)
-    local state = _toint((_get_story(play))[_cfg_key])
-    if state >= 2 then
+local function _get_submit_list()
+    return _task_cfg.submit or _config.cost or {}
+end
+
+local function _get_submit_state(jq)
+    jq = jq or {}
+    local state = jq[_cfg_key .. "_submit"]
+    if type(state) ~= "table" then
+        state = {}
+    end
+    return state
+end
+
+local function _all_submit_done(state, total)
+    total = _toint(total)
+    if total <= 0 then
+        return false
+    end
+    for i = 1, total do
+        if _toint(state[tostring(i)]) < 1 then
+            return false
+        end
+    end
+    return true
+end
+
+local function _submit_one(play, aid)
+    local submitList = _get_submit_list()
+    local idx = _toint(aid, 1)
+    if idx < 1 or idx > #submitList then
+        Player.sendmsgEx(play, "提交项不存在#57")
+        return
+    end
+    local jq = _get_story(play)
+    if _toint(jq[_cfg_key]) >= 2 then
         Player.sendmsgEx(play, "你已经完成#57|【" .. (_config.name or "该任务") .. "】#218|")
         return
     end
-    local ready = _ensure_started(play)
-    if not ready and _task_cfg.task_type ~= "auto_claim" then
-        return
-    end
+
     if not _need_map_ok(play, _task_cfg) then
         return
     end
     if not _check_kill(play, _task_cfg.kill_count) then
         return
     end
-    if not _consume_cost(play, _task_cfg.submit or _config.cost or {}, "," .. (_config.name or "第六章剧情")) then
+    jq = _get_story(play)
+    local state = _get_submit_state(jq)
+    if _toint(state[tostring(idx)]) >= 1 then
+        Player.sendmsgEx(play, "该项已经提交过了#57")
         return
     end
-    _finish(play, (_config.name or "第六章剧情") .. "奖励")
+    local item = submitList[idx]
+    if not _consume_cost(play, {item}, "," .. (_config.name or "第六章剧情")) then
+        return
+    end
+    state[tostring(idx)] = 1
+    jq[_cfg_key .. "_submit"] = state
+    _save_story(play, jq)
+    Player.sendmsgEx(play, "提交成功：|【" .. tostring(item[1]) .. "*" .. tostring(item[2] or 1) .. "】#218|")
+    if _all_submit_done(state, #submitList) then
+        _finish(play, (_config.name or "第六章剧情") .. "奖励")
+    end
 end
-
+local function _generic_submit(play)
+    Player.sendmsgEx(play, "请逐项提交任务物品#57")
+end
 
 local function _is_six_continent_map(map)
     if not map or map == "" then
@@ -256,7 +280,13 @@ local function _onKillMon(play, mob)
     end
 end
 
-local function _handle(play, npcid, action, aid) _generic_submit(play) end
+local function _handle(play, npcid, action, aid)
+    if action == 1 then
+        _submit_one(play, aid)
+        return
+    end
+    _generic_submit(play)
+end
 
 function npc.main(play, npcid)
     if not _config then
@@ -288,3 +318,7 @@ function npc.link(play, npcid, ew, aid, msgData)
 end
 
 return npc
+
+
+
+

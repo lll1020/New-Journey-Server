@@ -94,6 +94,20 @@ local function _ff9999_award_rewards(play, rewardList, reason)
     end
 end
 
+local function _ff9999_mark_story_node_done(jq_data, key)
+    key = tostring(key or "")
+    if key == "" then
+        return
+    end
+    if key == "npc_46" then
+        local node = type(jq_data[key]) == "table" and jq_data[key] or {}
+        node.wc = 1
+        jq_data[key] = node
+    else
+        jq_data[key] = 2
+    end
+end
+
 local function _ff9999_finish_second_continent_xyl(play)
     -- 一键完成二大陆 XYL，并补发对应任务/章节奖励。
     local xyl_cfg = include("lua/Data/npc_xyl.lua") or {}
@@ -121,7 +135,7 @@ local function _ff9999_finish_second_continent_xyl(play)
                 ywl[taskKey] = 1
             end
             if type(task) == "table" and task.tk then
-                jq_data[tostring(task.tk)] = 2
+                _ff9999_mark_story_node_done(jq_data, task.tk)
             end
         end
         if not chapterDone then
@@ -151,6 +165,9 @@ local function _ff9999_mark_xyl_story_received(play, continents)
         return false
     end
     local ywl = Player.getJsonTableByVar(play, VarCfg.T_ywl) or {}
+    ywl = type(ywl) == "table" and ywl or {}
+    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
+    jq_data = type(jq_data) == "table" and jq_data or {}
     for _, continent in ipairs(continents or {}) do
         local chapters = xyl[continent]
         if type(chapters) == "table" then
@@ -159,15 +176,9 @@ local function _ff9999_mark_xyl_story_received(play, continents)
                 if type(tasks) == "table" then
                     local chapter_key = "jl_" .. continent .. "_" .. chapter_idx
                     for task_idx, task in ipairs(tasks) do
-                        local has_story_point = false
-                        for _, reward in ipairs(task.jl or {}) do
-                            if type(reward) == "table" and reward[1] == "剧情点" then
-                                has_story_point = true
-                                break
-                            end
-                        end
-                        if has_story_point then
-                            ywl[chapter_key .. "_" .. task_idx] = 1
+                        ywl[chapter_key .. "_" .. task_idx] = 1
+                        if type(task) == "table" and task.tk then
+                            _ff9999_mark_story_node_done(jq_data, task.tk)
                         end
                     end
                     ywl[chapter_key] = 1
@@ -175,10 +186,109 @@ local function _ff9999_mark_xyl_story_received(play, continents)
             end
         end
     end
+    ywl.dq = ""
+    ywl.dq_i = nil
+    ywl.dq_j = nil
+    ywl.dq_z = nil
+    ywl.dq_id = nil
     Player.setJsonVarByTable(play, VarCfg.T_ywl, ywl)
+    Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
     return true
 end
 
+local function _ff9999_clear_xyl_story(play, continent)
+    continent = tonumber(continent) or 0
+    if continent <= 0 then
+        return false
+    end
+    local ok, xyl = pcall(dofile, 'Envir/Lua/Data/npc_xyl.lua')
+    if not ok or type(xyl) ~= "table" or type(xyl[continent]) ~= "table" then
+        return false
+    end
+    local ywl = Player.getJsonTableByVar(play, VarCfg.T_ywl) or {}
+    ywl = type(ywl) == "table" and ywl or {}
+    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
+    jq_data = type(jq_data) == "table" and jq_data or {}
+    for chapter_idx, chapter in ipairs(xyl[continent]) do
+        local chapter_key = "jl_" .. continent .. "_" .. chapter_idx
+        ywl[chapter_key] = nil
+        local tasks = type(chapter) == "table" and chapter.jq or nil
+        if type(tasks) == "table" then
+            for task_idx, task in ipairs(tasks) do
+                ywl[chapter_key .. "_" .. task_idx] = nil
+                if type(task) == "table" and task.tk then
+                    jq_data[tostring(task.tk)] = nil
+                end
+            end
+        end
+    end
+    Player.setJsonVarByTable(play, VarCfg.T_ywl, ywl)
+    Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+    return true
+end
+local function _ff9999_set_min_level_and_rebirth(play, level, zs)
+    level = tonumber(level) or 0
+    zs = tonumber(zs) or 0
+    local cur_level = tonumber(getbaseinfo(play, 6)) or 0
+    if level > 0 and cur_level < level then
+        callscriptex(play, "CHANGELEVEL", "=", level)
+    end
+    local cur_zs_var = tonumber(getplaydef(play, VarCfg["U_转生等级"]) or 0) or 0
+    if zs > 0 and cur_zs_var < zs then
+        setplaydef(play, VarCfg["U_转生等级"], zs)
+    end
+    local cur_zs_base = tonumber(getbaseinfo(play, 39)) or 0
+    if zs > 0 and cur_zs_base < zs then
+        setbaseinfo(play, 39, zs)
+    end
+end
+
+local function _ff9999_complete_destiny_plate(play)
+    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
+    jq_data = type(jq_data) == "table" and jq_data or {}
+    local destiny_state = type(jq_data["npc_74"]) == "table" and jq_data["npc_74"] or {}
+    local destiny_need = tonumber((((teshudata or {})["npc_74"] or {}).all) or 4) or 4
+    for i = 1, destiny_need do
+        destiny_state[tostring(i)] = 1
+    end
+    destiny_state.all = destiny_need
+    destiny_state.level_bonus = 1
+    jq_data["npc_74"] = destiny_state
+    Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+end
+local function _ff9999_complete_continent_gates(play, continent)
+    continent = math.max(2, math.min(6, tonumber(continent) or 2))
+    local min_zs = {
+        [2] = 20,
+        [3] = 30,
+        [4] = 40,
+        [5] = 50,
+        [6] = 60,
+    }
+    if continent >= 2 then
+        local cur_task = tonumber(getplaydef(play, VarCfg.U_zxrw[1])) or 0
+        if cur_task < 35 then
+            setplaydef(play, VarCfg.U_zxrw[1], 35)
+            setplaydef(play, VarCfg.U_zxrw[2], 0)
+            sendluamsg(play, 103, 1, 0, 0, '{"rwid":35}')
+        end
+    end
+    _ff9999_set_min_level_and_rebirth(play, 150, min_zs[continent] or 0)
+    _ff9999_clear_xyl_story(play, continent)
+    if continent >= 6 then
+        _ff9999_complete_destiny_plate(play)
+    end
+    local xyl_continent = continent - 1
+    if xyl_continent == 2 then
+        _ff9999_finish_second_continent_xyl(play)
+    elseif xyl_continent >= 3 then
+        local list = {}
+        for i = 3, xyl_continent do
+            list[#list + 1] = i
+        end
+        _ff9999_mark_xyl_story_received(play, list)
+    end
+end
 local _admin_test_monsters = {
     -- "测试怪物名",
 ---灰界---
@@ -597,13 +707,28 @@ local function _admin_hdjd_finish(play)
 end
 local function _ff9999_unlock_continent(play, continent)
     continent = math.max(2, math.min(6, tonumber(continent) or 2))
+    _ff9999_complete_continent_gates(play, continent)
     local current = tonumber(getplaydef(play, "U_全大陆解锁") or 0) or 0
     local unlocked = current == 1 and 1 or math.max(current, continent)
     setplaydef(play, "U_全大陆解锁", unlocked)
     sendluamsg(play, 103, 1, 0, 0, tbl2json({dl_all_unlock = unlocked}))
-    Player.sendmsgEx(play, tostring(continent) .. "大陆已解锁，当前最高解锁至#57|【" .. (unlocked == 1 and "全部大陆" or (tostring(unlocked) .. "大陆")) .. "】#218|")
+    Player.sendmsgEx(play, tostring(continent) .. "大陆已解锁，并已补齐对应xyl、转生、主线与功能门槛，当前最高解锁至#57|【" .. (unlocked == 1 and "全部大陆" or (tostring(unlocked) .. "大陆")) .. "】#218|")
 end
 
+
+local function _ff9999_clear_npc_725(play)
+    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
+    jq_data = type(jq_data) == "table" and jq_data or {}
+    jq_data["npc_725"] = nil
+    jq_data["npc_725_a"] = nil
+    if Guard and Guard.clearTaskTemp then
+        Guard.clearTaskTemp(jq_data, "npc_725")
+    end
+    Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+    setplaydef(play, "N$npc_725_escort", 0)
+    sendluamsg(play, 100, 725, 0, 0, tbl2json({T_dljq = jq_data, sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"]) or {}}))
+    Player.sendmsgEx(play, "已清空725赤焰护送任务状态，可重新测试#218")
+end
 function npc.main(play,npcid)
     local zhid = tonumber(getconst(play,"<$USERACCOUNT>"))
     if constant.pz_htqx[zhid] or getconst(play, '<$SERVERNAME>') == "" or getconst(play, '<$SERVERNAME>') == "测试区" then
@@ -659,6 +784,7 @@ function npc.main(play,npcid)
             <Button|id=ui_72|x=414|y=350|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=4大陆解锁|link=@ggna,59>
             <Button|id=ui_73|x=526|y=350|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=5大陆解锁|link=@ggna,60>
             <Button|id=ui_74|x=638|y=350|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=6大陆解锁|link=@ggna,61>
+            <Button|id=ui_75|x=18|y=400|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=清空725|link=@ggna,62>
                 ]])
     end
 end
@@ -996,6 +1122,8 @@ function ggna(play,id)
         _ff9999_unlock_continent(play, 5)
     elseif id == "61" then
         _ff9999_unlock_continent(play, 6)
+    elseif id == "62" then
+        _ff9999_clear_npc_725(play)
     elseif id == "25" then
         setplaydef(play, "U_全大陆解锁", 1)
         sendluamsg(play, 103, 1, 0, 0, '{"dl_all_unlock":1}')
@@ -1375,3 +1503,14 @@ function ggna(play,id)
     end
 end
 return npc
+
+
+
+
+
+
+
+
+
+
+

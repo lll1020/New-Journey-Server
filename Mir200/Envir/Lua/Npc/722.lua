@@ -277,17 +277,24 @@ local function _onKillMon(play, mob)
 end
 
 local function _handle(play, npcid, action, aid)
-    if action == 2 then
-        if _craft(play, {{"ĞÇ¶ùµÄÓñÅå", 1}}, "_craft") then
-            _finish(play, "ĞÇ¶ù½±Àø", true)
-        end
+    local state = _toint((_get_story(play))[_cfg_key])
+    if state >= 2 then
+        Player.sendmsgEx(play, "ÄãÒÑ¾­Íê³É#57|¡¾" .. (_config.name or "¸ÃÈÎÎñ") .. "¡¿#218|")
         return
     end
-    _generic_submit(play)
+    if action ~= 2 then
+        return
+    end
+    if _craft(play, {{"ĞÇ¶ùµÄÓñÅå", 1}}, "_craft") then
+        _finish(play, "ĞÇ¶ù½±Àø", true)
+    end
 end
 
 function npc.main(play, npcid)
     if not _config then
+        return
+    end
+    if not Guard.ensureStoryPrerequisite(play, _config, NPC_ID) then
         return
     end
     _send_state(play, npcid or NPC_ID)
@@ -295,6 +302,9 @@ end
 
 function npc.link(play, npcid, ew, aid, msgData)
     if not _config then
+        return
+    end
+    if not Guard.ensureStoryPrerequisite(play, _config, NPC_ID) then
         return
     end
     if not Guard.ensurePlayer(play, npcid) then

@@ -213,8 +213,27 @@ function ai_ksgj(play)
     startautoattack(play)
 end
 --------------------«–ªªµÿÕº¥•∑¢-------------------
+local function _zxht_switch_left_seconds()
+    local now = os.date("*t")
+    local left = (60 - (tonumber(now.min) or 0)) * 60 - (tonumber(now.sec) or 0)
+    if left <= 0 or left > 3600 then
+        left = 3600
+    end
+    return left
+end
+
+local function _zxht_show_switch_countdown(play)
+    local dt = getbaseinfo(play,3)
+    if dt ~= "‘·–«∫£Ã≤" and dt ~= "‘·–«∫£Ã≤1" then
+        return
+    end
+    senddelaymsg(play, "æ‡¿Î’«¬‰≥±«–ªª £”‡%s", _zxht_switch_left_seconds(), 250, 1)
+end
+
+
 function entermap(play)
     local dt = getbaseinfo(play,3)
+    _zxht_show_switch_countdown(play)
     if getplaydef(play,"S$dtm") ~= dt then
         sendluamsg(play,101,1002,0,0,getmapname(dt))
     end
@@ -2876,5 +2895,59 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
         end
 	end
 end
+
+
+
+function msfcbox(play, code)
+    local mod = dofile('Envir/Lua/LuaLib/useitme.lua')
+    if _G.msfcbox then
+        return _G.msfcbox(play, code)
+    end
+    Player.sendmsgEx(play, "≤ƒ¡œ◊‘—°œ‰ªÿµ˜“Ï≥£#57")
+    return false
+end
+local function _qf_npc_725()
+    if Npclib and Npclib[725] then
+        return Npclib[725]
+    end
+    local ok, mod = pcall(dofile, 'Envir/Lua/Npc/725.lua')
+    if ok and type(mod) == "table" then
+        return mod
+    end
+    return nil
+end
+
+function npc_725_spawn_assassin(play)
+    local mod = _qf_npc_725()
+    if mod and mod.spawnAssassin then
+        return mod.spawnAssassin(play)
+    end
+end
+
+function carpathend(play)
+    local mod = _qf_npc_725()
+    if mod and mod.carpathend then
+        return mod.carpathend(play)
+    end
+end
+
+function losercar(play,car)
+    local mod = _qf_npc_725()
+    if mod and mod.losercar then
+        return mod.losercar(play)
+    end
+end
+
+function cardie(play,car)
+    local mod = _qf_npc_725()
+    if mod and mod.cardie then
+        return mod.cardie(play)
+    end
+end
+
+function carDie(play, car)
+    return cardie(play)
+end
+
 
 

@@ -192,26 +192,18 @@ end
 local function _handle(play, npcid, action, aid)
     local taskCfg = _task_cfg
     local jq = _get_story(play)
-    if _toint(jq[_cfg_key]) >= 2 then
-        Player.sendmsgEx(play, "你已经烧制出青釉瓷碗#57")
-        return
-    end
-    local times = _toint(jq[_cfg_key .. "_burn"])
-    if times >= 3 then
-        Player.sendmsgEx(play, "本轮烧制已达上限#57")
-        return
-    end
+    local state = _toint(jq[_cfg_key])
     if not _consume_cost(play, taskCfg.submit or {}, ",天青色的秘密烧制") then
         return
     end
-    times = times + 1
-    jq[_cfg_key] = 1
+    local times = _toint(jq[_cfg_key .. "_burn"]) + 1
     jq[_cfg_key .. "_burn"] = times
     _save_story(play, jq)
     local rewards = taskCfg.burn_rewards or {"冰雪瓷碗", "朱砂瓷碗", "青釉瓷碗"}
-    local item = rewards[times] or rewards[#rewards]
+    local rewardIndex = ((times - 1) % #rewards) + 1
+    local item = rewards[rewardIndex] or rewards[#rewards]
     _give_items(play, {{item, 1}}, "天青色的秘密烧制")
-    if item == "青釉瓷碗" or times >= 3 then
+    if state < 2 then
         _finish(play, "天青色的秘密奖励", true)
     end
 end

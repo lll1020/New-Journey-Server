@@ -200,6 +200,24 @@ function Guard.giveTaskReward(play, config, rewardReason)
         end
     end
 end
+-- 校验线性剧情任务的前置 NPC 是否已经完成。
+function Guard.ensureStoryPrerequisite(play, config, npcId)
+    local taskCfg = type(config) == "table" and config.task_cfg or nil
+    local prevKey = type(taskCfg) == "table" and taskCfg.prev_task or nil
+    if type(prevKey) ~= "string" or prevKey == "" then
+        return true
+    end
+    local story = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
+    local needPrev = tonumber(taskCfg.prev_need or taskCfg.prev_state) or 2
+    if (tonumber(story[prevKey]) or 0) >= needPrev then
+        return true
+    end
+    local prevCfg = (teshudata or {})[prevKey] or {}
+    local prevName = taskCfg.prev_name or prevCfg.name or "前置剧情"
+    local tip = needPrev <= 1 and "请先领取#57|【" or "请先完成#57|【"
+    Player.sendmsgEx(play, tip .. prevName .. "】#218|")
+    return false
+end
 -- JSON 解码增加长度限制与异常提示，防止卡死。
 function Guard.safeJsonDecode(play, raw, maxLength, fallback)
     fallback = fallback or {}
@@ -245,4 +263,6 @@ end
 _G.Guard = Guard
 
 return Guard
+
+
 

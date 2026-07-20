@@ -7,7 +7,7 @@ local _config = Guard.getConfig(_cfg_key)
 local _task_cfg = (_config and _config.task_cfg) or {}
 local DROP_RULES = {{map = "ÂåÑôÌì½Ö", item = "¶Å¿µÖ®Á¦", rate = 5000}, {map = "ÂåÑôÌì½Ö", item = "Íòô¥ÇåÈª", rate = 2000}}
 local KILL_ONLY = false
-local ALLOW_PRESTART_DROP = false
+local ALLOW_PRESTART_DROP = true
 
 
 local function _toint(v, d)
@@ -160,10 +160,6 @@ end
 
 local function _onKillMon(play, mob)
     local state = _toint((_get_story(play))[_cfg_key])
-    if state >= 2 and not _has_post_done_drop(play) then
-        _sg_remove(play, NPC_ID)
-        return
-    end
     if state < 1 and not ALLOW_PRESTART_DROP then
         return
     end
@@ -206,14 +202,19 @@ local function _onKillMon(play, mob)
 end
 
 local function _handle(play, npcid, action, aid)
+    local state = _toint((_get_story(play))[_cfg_key])
     if _craft(play, {{"¶Å¿µ¾Æ", 1}}) then
-        _finish(play, "ÂåË®¶Å¿µ½±Àø", true)
+        if state < 2 then
+            _finish(play, "ÂåË®¶Å¿µ½±Àø", true)
+        end
     end
 end
-
 function npc.main(play, npcid)
     if not _config then
         return
+    end
+    if shaguai and shaguai.jia then
+        shaguai.jia(play, NPC_ID)
     end
     _send_state(play, npcid or NPC_ID)
 end
@@ -229,7 +230,7 @@ function npc.link(play, npcid, ew, aid, msgData)
     if not action then
         return
     end
-    if not Guard.ensureActionAllowed(play, npcid, action, Guard.newActionSet({1, 2, 3, 4})) then
+    if not Guard.ensureActionAllowed(play, npcid, action, Guard.newActionSet({1, 4})) then
         return
     end
     if action == 4 then
@@ -241,3 +242,7 @@ function npc.link(play, npcid, ew, aid, msgData)
 end
 
 return npc
+
+
+
+

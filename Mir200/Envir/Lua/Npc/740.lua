@@ -5,7 +5,7 @@ local NPC_ID = 740
 local _cfg_key = "npc_" .. tostring(NPC_ID)
 local _config = Guard.getConfig(_cfg_key)
 local _task_cfg = (_config and _config.task_cfg) or {}
-local DROP_RULES = {{map = "¶³»ê±ù¿ß", item = "ÉÏ¹ÅÐþ±ù", rate = 5000}, {map = "¶³»ê±ù¿ß", item = "Ç§ÄêÔÉÌú", rate = 3500}, {map = "¶³»ê±ù¿ß", item = "¼«º®Ö®ÐÄ", rate = 8000}, {map = "¶³»ê±ù¿ß", item = "º®±ù½£¾÷", rate = 10000, require_craft = true}}
+local DROP_RULES = {{map = "¶³»ê±ù¿ß", item = "ÉÏ¹ÅÐþ±ù", rate = 5000}, {map = "¶³»ê±ù¿ß", item = "Ç§ÄêÔÉÌú", rate = 3500}, {map = "¶³»ê±ù¿ß", item = "¼«º®Ö®ÐÄ", rate = 8000}, {map = "¶³»ê±ù¿ß", title = "º®±ù½£¾÷", rate = 10000, require_craft = true}}
 local KILL_ONLY = false
 local ALLOW_PRESTART_DROP = true
 
@@ -65,6 +65,39 @@ local function _sg_drop(play, mob, item)
     return true
 end
 
+local function _find_item_by_name(play, itemName)
+    for pos = 0, 90 do
+        local ok, itemobj = pcall(linkbodyitem, play, pos)
+        if ok and itemobj and itemobj ~= "0" and tostring(getiteminfo(play, itemobj, 7) or "") == itemName then
+            return itemobj
+        end
+    end
+    local bagItems = getbagitems(play, itemName) or getbagitems(play) or {}
+    for _, itemobj in ipairs(bagItems) do
+        if itemobj and itemobj ~= "0" and tostring(getiteminfo(play, itemobj, 7) or "") == itemName then
+            return itemobj
+        end
+    end
+    return nil
+end
+
+local function _activate_hanbingjianjue(play)
+    local itemobj = _find_item_by_name(play, _task_cfg.weapon or "º®±ù½£")
+    if not itemobj or itemobj == "0" then
+        Player.sendmsgEx(play, "ÇëÏÈ³ÖÓÐº®±ù½££¬ÔÙ¼¤»îº®±ù½£¾÷#57")
+        return false
+    end
+    Player.title_give(play, _task_cfg.skill_title or "º®±ù½£¾÷")
+    setcustomitemprogressbar(play, itemobj, 0, tbl2json({
+        ["open"] = 1,
+        ["show"] = 0,
+        ["name"] = "¡¾ÒÑ¼¤»îº®±ù½£¾÷¡¿",
+        ["color"] = 251,
+    }))
+    refreshitem(play, itemobj)
+    Player.sendmsgEx(play, "º®±ù½£¾÷ÒÑ¼¤»î#57")
+    return true
+end
 local function _finish(play, reason, noReward)
     local jq = _get_story(play)
     jq[_cfg_key] = 2
@@ -82,21 +115,6 @@ local function _finish(play, reason, noReward)
 end
 
 local function _ensure_started(play)
-    local jq = _get_story(play)
-    if _toint(jq[_cfg_key]) >= 2 then
-        return true
-    end
-    if _toint(jq[_cfg_key]) < 1 then
-        jq[_cfg_key] = 1
-        _save_story(play, jq)
-        Player.sendmsgEx(play, "ÁìÈ¡|¡¾" .. (_config.name or "µÚÁùÕÂ¾çÇé") .. "¡¿#218|")
-        sendluamsg(play, 101, 1005, 0, 0, "rwjs")
-        local shaguaiId = _toint(_config.shaguai_id)
-        if shaguaiId > 0 then
-            _sg_add(play, shaguaiId)
-        end
-        return false
-    end
     return true
 end
 
@@ -192,7 +210,7 @@ end
 
 local function _has_post_done_drop(play)
     for _, rule in ipairs(DROP_RULES) do
-        if rule.require_done then
+        if rule.require_done or rule.require_craft or rule.title then
             return true
         end
     end
@@ -212,17 +230,24 @@ local function _drop_by_rule(play, mob, state)
         if rule.require_done and state < 2 then
             ok = false
         end
+        if state >= 2 and not rule.require_done and not rule.require_craft and not rule.title then
+            ok = false
+        end
         if rule.require_craft then
             local jq = _get_story(play)
             if _toint(jq[_cfg_key .. "_done"]) < 1 then
                 ok = false
             end
         end
-        if ok and rule.item and rule.item ~= "" then
-            if not rule.max_bag or getbagitemcount(play, rule.item) < _toint(rule.max_bag) then
-                local rate = math.max(1, _toint(rule.rate, 1))
-                if math.random(rate) == 1 and _sg_drop(play, mob, rule.item) then
-                    Player.sendmsgEx(play, "´ò¹ÖµôÂä¡¾" .. rule.item .. "¡¿#57")
+        if ok then
+            local rate = math.max(1, _toint(rule.rate, 1))
+            if math.random(rate) == 1 then
+                if rule.title and rule.title ~= "" then
+                    _activate_hanbingjianjue(play)
+                elseif rule.item and rule.item ~= "" then
+                    if (not rule.max_bag or getbagitemcount(play, rule.item) < _toint(rule.max_bag)) and _sg_drop(play, mob, rule.item) then
+                        Player.sendmsgEx(play, "´ò¹ÖµôÂä¡¾" .. rule.item .. "¡¿#57")
+                    end
                 end
             end
         end
@@ -277,21 +302,29 @@ local function _onKillMon(play, mob)
 end
 
 local function _handle(play, npcid, action, aid)
-    if action == 2 then
-        if _craft(play, {{"º®±ù½£", 1}}, "_craft") then
-            local jq = _get_story(play)
-            jq[_cfg_key .. "_done"] = 1
-            _save_story(play, jq)
-        end
+    if action ~= 2 then
+        Player.sendmsgEx(play, "ÊÕ¼¯²ÄÁÏºóµã»÷Á¢¼´ºÏ³Éº®±ù½£¼´¿ÉÍê³ÉÈÎÎñ#57")
         return
     end
-    _generic_submit(play)
+    local jq = _get_story(play)
+    if _toint(jq[_cfg_key]) >= 2 then
+        Player.sendmsgEx(play, "ÄãÒÑ¾­Íê³É#57|¡¾" .. (_config.name or "¸ÃÈÎÎñ") .. "¡¿#218|")
+        return
+    end
+    if _craft(play, {{"º®±ù½£", 1}}, "_craft") then
+        jq = _get_story(play)
+        jq[_cfg_key .. "_done"] = 1
+        _save_story(play, jq)
+        _finish(play, (_config.name or "µÚÁùÕÂ¾çÇé") .. "½±Àø", true)
+        _sg_add(play, NPC_ID)
+    end
 end
 
 function npc.main(play, npcid)
     if not _config then
         return
     end
+    _sg_add(play, NPC_ID)
     _send_state(play, npcid or NPC_ID)
 end
 
@@ -314,7 +347,10 @@ function npc.link(play, npcid, ew, aid, msgData)
         return
     end
     _handle(play, npcid or NPC_ID, action, aid)
+    _sg_add(play, NPC_ID)
     _send_state(play, npcid or NPC_ID)
 end
 
 return npc
+
+
