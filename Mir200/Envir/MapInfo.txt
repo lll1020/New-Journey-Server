@@ -248,7 +248,7 @@ kfhg 23 26 -> kfhjsbk 86 102
 
 ;无主深渊
 [无主深渊|D3603   无主深渊] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)\
-四大陆主城 17 19 -> 无主深渊 10 10
+四大陆主城 17 19 -> 无主深渊 199 162
 
 ;[深渊1层|D3603_14   深渊1层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 ;[深渊2层|D3603_24   深渊2层] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)

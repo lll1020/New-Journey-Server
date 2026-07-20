@@ -927,9 +927,7 @@ local function _dl_check(actor, dl)
     if dl == 1 then
         return true
     end
-    local admin_unlock = tonumber(getplaydef(actor, "U_全大陆解锁")) or 0
-    -- 兼容旧值：1 代表全大陆解锁；2~6 代表后台逐步解锁到对应大陆。
-    if admin_unlock == 1 or admin_unlock >= dl then
+    if (tonumber(getplaydef(actor, "U_全大陆解锁")) or 0) >= 1 then
         return true
     end
     local state = _dl_get_base_state(actor)

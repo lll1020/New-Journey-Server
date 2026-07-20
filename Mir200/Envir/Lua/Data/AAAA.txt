@@ -1,43 +1,140 @@
-    ["白蛇传说"] = 4,
+local npc = {}
+
+npc._config = teshudata["npc_675"]
+
+local WINDOW_OPTS = {
+    background = {skin = "res/custom/all_story_mission/4/675_bg.png"},
+    closeButton = {x = 747, y = 380},
+}
+
+local btn_pos = {600, 110}
+local cost_pos = {643, 195}
+local bow_slot_pos = {303 - 100, 195 + 30}
+
+local function n(v)
+    return tonumber(v or 0) or 0
+end
+
+local function ensureWindow(npcId)
+    local opts = {}
+    for k, v in pairs(WINDOW_OPTS) do
+        opts[k] = v
+    end
+    opts.titleText = NPC_UI_HELPER.formatNpcTitle(npcId, npc._config)
+    opts.subTitle = npc._config and npc._config.title
+    npc._window = NPC_UI_HELPER.ensureWindow(npc._window, npcId, opts)
+    npc.bg = npc._window.bg
+    npc.node = npc._window.node
+    return npc.node
+end
+
+local function updateUI(npcId, node)
+    if not node then
+        return
+    end
+    GUI:removeAllChildren(node)
+
+    local affixCount = n(npc.data and npc.data.affix_count)
+    local maxNum = n((npc.data and npc.data.max_num) or (npc._config and npc._config.max_num) or 9)
+    local bagBowCount = n(npc.data and npc.data.bag_bow_count)
+    local hasEquippedBow = n(npc.data and npc.data.has_equipped_bow) >= 1
+    local equippedSlot = n(npc.data and npc.data.equipped_slot)
+    local equippedBowIndex = n(npc.data and npc.data.equipped_bow_index)
+    local taskDone = n(npc.data and npc.data.task_done) >= 1
+
+    if npc._config.cost then
+        local costNode = checkItemNumByTable_img_kuang(npc._config.cost, nil, GUI:Node_Create(node, "cost_node", 0, 0))
+        if costNode then
+            GUI:setPosition(costNode, cost_pos[1], cost_pos[2])
+        end
+    end
+
+    GUI:RichText_Create(node, "cost_hb", 274, 162, ItemNumByTable(npc._config.hb), 502, 18, "#f7f7de", 3, nil, nil, {outlineSize = 2, outlineColor = SL:ConvertColorFromHexString("#100808")})
 
 
+    local mysteryText = GUI:Text_Create(node, "mystery_attr", 550, 162, 20, "#FF3030", "神秘属性")
+    GUI:Text_setFontName(mysteryText, "fonts/502.ttf")
+    GUI:Text_enableOutline(mysteryText, "#100808", 2)
 
-    ["灵兽谷"] = 5,
-    ["青龙之境"] = 5,
-    ["朱雀之境"] = 5,
-    ["玄武之境"] = 5,
-    ["白虎之境"] = 5,
-    ["麒麟之境"] = 5,
-    ["时空裂隙"] = 5,
-    ["倚天江湖"] = 5,
-    ["冰火岛"] = 5,
-    ["光明顶"] = 5,
-    ["三国乱世"] = 5,
-    ["虎牢关"] = 5,
-    ["赤壁"] = 5,
-    ["水浒再临"] = 5,
-    ["景阳冈"] = 5,
-    ["狮子楼"] = 5,
-    ["生命边界"] = 5,
-    ["白骨神庙"] = 5,
-    ["红尘秘境"] = 5,
-    ["神庙暗廊"] = 5,
-    ["诡冥墨河"] = 5,
-    ["河神寝宫"] = 5,
-    ["赤焰焚殿"] = 5,
-    ["赤焰焚殿二层"] = 5,
-    ["赤焰焚殿三层"] = 5,
-    ["葬天旧土"] = 5,
-    ["聊斋志异"] = 5,
-    ["兰若寺"] = 5,
-    ["画壁"] = 5,
-    ["崂山"] = 5,
-    ["罗刹海市"] = 5,
-    ["敦煌遗梦"] = 5,
-    ["莫高窟"] = 5,
-    ["月牙泉?"] = 5,
-    ["玉门关"] = 5,
-    ["阳关道"] = 5,
-    ["世界禁墟"] = 5,
-    ["大地禁墟一层"] = 5,
-    ["大地禁墟二层"] = 5,
+    local cost = ItemNumByTable_img_new(npc._config.bag_cost, nil,GUI:Node_Create(node, "cost_node2", 0, 0))
+    GUI:setPosition(cost, cost_pos[1] - 340, cost_pos[2])
+
+    local center_x, center_y = 524, 330 + 50
+    local spread_w, spread_h = 300, 100
+    local min_spacing = 30  jid：
+    local half_w = spread_w / 2
+    local half_h = spread_h / 2 的大商店是的撒阿城的撒旦撒  盛大撒旦撒  商店是三十神但是  
+    local positions = {}撒旦撒大SSDD撒  撒  大瓦发的f
+        local tries = 0
+        while true do
+            tries = tries + 1的哈斯偶哦跑回家死地  大祭司艾瑞网大但是  撒护肤洒大
+            y = center_y - half_h + math.random() * spread_h 商店
+            local valid = true
+            for j = 1, #positions do
+                local dx = x - positions[j][1]
+                local dy = y - positions[j][2]
+                if dx * dx + dy * dy < min_spacing * min_spacing then
+                    valid = false
+                    break
+                end
+            end
+            if valid or tries >= 200 then
+                break
+            end
+        end
+        positions[#positions + 1] = {x, y}
+        local star = GUI:Image_Create(node, "star_" .. i, x, y, "res/custom/all_story_mission/4/675/t.png")
+        GUI:setAnchorPoint(star, 0.5, 0.5)
+        GUI:Image_setGrey(star, i <= affixCount)
+    end
+
+    if taskDone and affixCount >= maxNum then
+        GUI:Image_Create(node, "finish_img", btn_pos[1], btn_pos[2], "res/wy/public/7_1.png")
+    else
+        local shootBtn = GUI:Button_Create(node, "shoot_btn", btn_pos[1], btn_pos[2], "res/custom/all_story_mission/4/675/btn_1.png")
+        GUI:setAnchorPoint(shootBtn, 0.5, 0.5)
+        GUI:addOnClickEvent(shootBtn, function()
+            SL:SendLuaNetMsg(100, npcId, 1, 0, "")
+        end)
+    end
+
+    if bagBowCount <= 0 then
+        local buyBtn = GUI:Button_Create(node, "buy_btn", btn_pos[1] - 300, btn_pos[2], "res/custom/all_story_mission/4/675/btn_2.png")
+        GUI:setAnchorPoint(buyBtn, 0.5, 0.5)
+        GUI:addOnClickEvent(buyBtn, function()
+            SL:SendLuaNetMsg(100, npcId, 2, 0, "")
+        end)
+    else
+        local mysteryText = GUI:Text_Create(node, "mystery_attr12", 550 -442 + 40, 162 - 60, 25, "#FF3030", "当前装备：")
+        GUI:Text_setFontName(mysteryText, "fonts/502.ttf")
+        GUI:Text_enableOutline(mysteryText, "#100808", 2)
+
+
+        local bowFrame = GUI:Image_Create(node, "equipped_bow_frame", bow_slot_pos[1], bow_slot_pos[2], "res/wy/public/70_70_k.png")
+        GUI:setAnchorPoint(bowFrame, 0.5, 0.5)
+        if hasEquippedBow then
+            local equippedBow = nil
+            if equippedSlot > 0 then
+                equippedBow = SL:GetMetaValue("EQUIP_DATA", equippedSlot) or SL:GetMetaValue("L.M.EQUIP_DATA", equippedSlot)
+            end
+            local bow = GUI:ItemShow_Create(bowFrame, "equipped_bow", 35, 35, {
+                itemData = equippedBow,
+                index = equippedBow and equippedBow.Index or equippedBowIndex,
+                look = true,
+                bgVisible = false,
+                disShowCount = true,
+            })
+            GUI:setAnchorPoint(bow, 0.5, 0.5)
+        end
+    end
+end
+
+function npc.main(npcId, p2, p3, msgData)
+    if p2 == 0 or p2 == 1 then
+        npc.data = SL:JsonDecode(msgData, false) or {}
+        ensureWindow(npcId)
+        updateUI(npcId, npc.node)
+    end
+end
+
+return npc

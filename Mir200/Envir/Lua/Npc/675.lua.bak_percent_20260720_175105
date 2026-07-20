@@ -7,15 +7,6 @@ local BOW_NAME = "逐日弓"
 local AFFIX_TAG = "[逐日神秘属性]"
 local MAX_AFFIX = tonumber(_config and _config.max_num or 9) or 9
 
-local PERCENT_AFFIX_IDS = {
-    [21] = true,
-    [25] = true,
-    [81] = true,
-    [242] = true,
-    [243] = true,
-    [245] = true,
-}
-
 local AFFIX_POOL = {
     {
         label = "打怪切割",
@@ -191,9 +182,7 @@ local function _rebuild_item_abil(item_json)
     end
     local attr_list = {}
     for idx, one in ipairs(affixes) do
-        local attr_id = tonumber(one.attr_id or 0) or 0
-        local is_percent = PERCENT_AFFIX_IDS[attr_id] and 1 or 0
-        table.insert(attr_list, {254, attr_id, tonumber(one.value or 0) or 0, is_percent, 0, idx, idx})
+        table.insert(attr_list, {254, tonumber(one.attr_id or 0) or 0, tonumber(one.value or 0) or 0, 0, 0, idx, idx})
     end
     if #attr_list > 0 then
         table.insert(keep, {i = #keep, t = AFFIX_TAG, c = 251, v = attr_list})
@@ -225,14 +214,7 @@ local function _build_client_data(play)
     local itemobj, where = _get_equipped_bow(play)
     local affixes = {}
     if itemobj then
-        local item_json = _get_item_json(play, itemobj)
-        affixes = _normalize_affixes(item_json)
-        if tonumber(item_json.zhuri_percent_format or 0) ~= 1 then
-            _rebuild_item_abil(item_json)
-            item_json.zhuri_percent_format = 1
-            setitemcustomabil(play, itemobj, tbl2json(item_json))
-            refreshitem(play, itemobj)
-        end
+        affixes = _normalize_affixes(_get_item_json(play, itemobj))
     end
     local affix_list = {}
     for i, one in ipairs(affixes) do
@@ -367,4 +349,3 @@ end
 GameEvent.add(EventCfg.onLogin, Login_jq_675, "Login_后羿射日")
 
 return npc
-

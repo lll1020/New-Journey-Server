@@ -86,11 +86,6 @@ for idx, cfg in pairs(_config.forbidden_cost or {}) do
 end
 
 local _forbidden_title_name = "初识禁器"
-local _huangquan_state_var = (VarCfg and VarCfg["A_黄泉降世json"]) or "A17"
-local _huangquan_attr_list = "黄泉降世全服祝福"
-local _huangquan_player_flag = "N$聚宝盆黄泉降世生效"
-local _huangquan_duration = 5 * 60
-local _huangquan_refine_rate = 0.10
 
 
 local function _toint(v)
@@ -128,106 +123,6 @@ end
 
 local function _save_state(play, data)
     Player.setJsonVarByTable(play, _state_var, data or {})
-end
-
-local function _get_huangquan_state()
-    local raw = tostring(getsysvar(_huangquan_state_var) or "")
-    if raw == "" then return {} end
-    local ok, state = pcall(json2tbl, raw)
-    return ok and type(state) == "table" and state or {}
-end
-
-local function _save_huangquan_state(state)
-    setsysvar(_huangquan_state_var, tbl2json(state or {}))
-end
-
-function TreasureBasin.isHuangquanActive()
-    return _toint(_get_huangquan_state().end_at) > _now()
-end
-
-local function _refresh_huangquan_player(play)
-    if not play then return end
-    local active = TreasureBasin.isHuangquanActive()
-    local applied = _toint(getplaydef(play, _huangquan_player_flag)) >= 1
-    if active then
-        setcandlevalue(play, 10)
-        if not applied then
-            Player.del_attlist(play, _huangquan_attr_list)
-            Player.add_attlist(play, _huangquan_attr_list, "=", Player.getAttrTableToStr({[242] = 1000}), 1)
-            setplaydef(play, _huangquan_player_flag, 1)
-        end
-    elseif applied then
-        Player.del_attlist(play, _huangquan_attr_list)
-        setplaydef(play, _huangquan_player_flag, 0)
-        if Login and type(Login.refreshGrayWorldVision) == "function" then
-            Login.refreshGrayWorldVision(play)
-        else
-            setcandlevalue(play, 20)
-        end
-    end
-end
-
-local function _advance_huangquan_refine(data)
-    local state = _get_huangquan_state()
-    local startAt = _toint(state.start_at)
-    local endAt = _toint(state.end_at)
-    local ref = type(data.refine) == "table" and data.refine or nil
-    if not ref or tostring(ref.stone or "") == "" or startAt <= 0 or endAt <= startAt then return false end
-    local now = _now()
-    local lastAt = math.max(startAt, _toint(ref.huangquan_tick_at))
-    local stopAt = math.min(now, endAt)
-    local changed = false
-    if stopAt > lastAt then
-        local totalBonus = (stopAt - lastAt) * _huangquan_refine_rate + (tonumber(ref.huangquan_bonus_carry) or 0)
-        local bonusSec = math.floor(totalBonus)
-        ref.huangquan_bonus_carry = totalBonus - bonusSec
-        ref.huangquan_tick_at = stopAt
-        if bonusSec > 0 then ref.end_at = math.max(0, _toint(ref.end_at) - bonusSec) end
-        changed = true
-    end
-    if now >= endAt and (_toint(ref.huangquan_tick_at) > 0 or tonumber(ref.huangquan_bonus_carry or 0) > 0) then
-        ref.huangquan_tick_at = nil
-        ref.huangquan_bonus_carry = nil
-        changed = true
-    end
-    return changed
-end
-
-local function _mail_online_players(title, memo, rewardBuilder)
-    local count = 0
-    for _, target in ipairs(getplayerlst() or {}) do
-        local rewards = type(rewardBuilder) == "function" and rewardBuilder(target) or rewardBuilder
-        local attachment = type(rewards) == "table" and #rewards > 0 and Player.jl_mail(rewards) or ""
-        sendmail(getbaseinfo(target, 2), 0, title, memo, attachment)
-        count = count + 1
-    end
-    return count
-end
-
-local function _start_huangquan_blessing(ownerName)
-    local now = _now()
-    local state = _get_huangquan_state()
-    local wasActive = _toint(state.end_at) > now
-    state.start_at = wasActive and math.min(_toint(state.start_at), now) or now
-    state.end_at = now + _huangquan_duration
-    state.owner = tostring(ownerName or "神秘玩家")
-    _save_huangquan_state(state)
-    for _, target in ipairs(getplayerlst() or {}) do
-        local data = _get_state(target)
-        if not wasActive and type(data.refine) == "table" and tostring(data.refine.stone or "") ~= "" then
-            data.refine.huangquan_tick_at = now
-            data.refine.huangquan_bonus_carry = 0
-            _save_state(target, data)
-        end
-        _refresh_huangquan_player(target)
-    end
-end
-
-local function _broadcast_huangquan(ownerName)
-    ownerName = tostring(ownerName or "神秘玩家")
-    sendmovemsg("0", 1, 249, 0, 300, 3, "【黄泉降世】玩家《" .. ownerName .. "》唤醒冥河鬼主，全服坠入黑暗！")
-    sendmovemsg("0", 1, 249, 0, 270, 3, "【黄泉赐福】持续5分钟：聚宝盆炼化速度+10%，打怪爆率+10%！")
-    sendmovemsg("0", 1, 249, 0, 240, 3, "愿黄泉幽光护佑诸位，秘宝临身，诸邪退避！")
 end
 
 local function _check_forbidden_title(play, data)
@@ -693,7 +588,6 @@ local function _send_task_panel(play, msgType, npcid)
 end
 local function _build_payload(play)
     local data = _get_state(play)
-    _advance_huangquan_refine(data)
     if data.activated < 1 and _has_artifact(play) then
         data.activated = 1
         data.rebuilt = 1
@@ -828,11 +722,7 @@ local function _start_refine(play, npcid, msgData)
         return _send_panel(play, 2, npcid)
     end
     Player.takeItemByTable(play, {{stoneName, 1}}, "聚宝盆炼灵", nil)
-    data.refine = {stone = stoneName, end_at = _now() + math.ceil(cfg.time), started_at = _now(), continent = cfg.continent, bind = cfg.bind, kind = cfg.kind}
-    if TreasureBasin.isHuangquanActive() then
-        data.refine.huangquan_tick_at = _now()
-        data.refine.huangquan_bonus_carry = 0
-    end
+    data.refine = {stone = stoneName, end_at = _now() + math.ceil(cfg.time), continent = cfg.continent, bind = cfg.bind, kind = cfg.kind}
     _save_state(play, data)
     Player.sendmsgEx(play, "已放入#57|【" .. stoneName .. "】#218|开始炼灵")
     _send_panel(play, 2, npcid)
@@ -840,9 +730,6 @@ end
 
 local function _claim_refine(play, npcid)
     local data = _get_state(play)
-    if _advance_huangquan_refine(data) then
-        _save_state(play, data)
-    end
     local ref = data.refine or {}
     if tostring(ref.stone or "") == "" then
         Player.sendmsgEx(play, "当前没有正在炼灵的宝石")
@@ -1012,35 +899,18 @@ local function _claim_forbidden_reward(play, npcid, id)
     data.forbidden.skill_cd_at = _now() + _forbidden_skill_cd
     setplaydef(play, "J_禁器技能_CD", 1)
     local cfg = _forbidden[showId]
-    local ownerName = tostring(getbaseinfo(play, 1) or "神秘玩家")
-    local onlineCount = 0
     if showId == 1 then
-        onlineCount = _mail_online_players(
-            "天地异象·全服祝福",
-            "玩家【" .. ownerName .. "】释放禁器技能【天地异象】，为全服在线勇士送来财运祝福。愿诸位财源广进，征途满载！",
-            function()
-                return {{"金币", math.random(100000, 300000)}, {"元宝", math.random(1000, 3000)}}
-            end
-        )
-        sendmovemsg("0", 1, 253, 0, 280, 2, "【天地异象】玩家《" .. ownerName .. "》赐福全服在线勇士，金币元宝奖励已发送至邮件！")
+        local gold = math.random(100000, 300000)
+        local yb = math.random(1000, 3000)
+        changemoney(play, 3, "+", gold, "禁器技能", true)
+        changemoney(play, 4, "+", yb, "禁器技能", true)
     elseif showId == 2 then
-        _start_huangquan_blessing(ownerName)
-        onlineCount = _mail_online_players(
-            "黄泉降世·全服祝福",
-            "玩家【" .. ownerName .. "】释放禁器技能【黄泉降世】。全服进入5分钟黑暗状态，期间聚宝盆炼化速度提高10%、打怪爆率提高10%。愿黄泉幽光护佑诸位，秘宝临身，诸邪退避！",
-            nil
-        )
-        _broadcast_huangquan(ownerName)
+        setplaydef(play, "N$聚宝盆黄泉降世", _now() + 300)
     elseif showId == 3 then
-        onlineCount = _mail_online_players(
-            "万灵朝凤·全服祝福",
-            "玩家【" .. ownerName .. "】释放禁器技能【万灵朝凤】，为全服在线勇士送来神凰祝福。愿凤鸣九天，鸿运长伴！",
-            {{"凤凰之瞳", 5}}
-        )
-        sendmovemsg("0", 1, 253, 0, 280, 2, "【万灵朝凤】玩家《" .. ownerName .. "》赐福全服在线勇士，凤凰之瞳已发送至邮件！")
+        Player.rwjl(play, {{"凤凰之瞳", 5}}, "禁器技能", 1, 999)
     end
     _save_state(play, data)
-    Player.sendmsgEx(play, "成功释放外显禁器技能：#57|【" .. tostring(cfg.name or "禁器") .. "】#218|，已祝福在线玩家#57|【" .. tostring(onlineCount) .. "】#218|名")
+    Player.sendmsgEx(play, "成功释放外显禁器技能：#57|【" .. tostring(cfg.name or "禁器") .. "】#218|")
     _refresh_item_bar(play)
     _send_panel(play, 7, npcid)
 end
@@ -1079,11 +949,6 @@ function TreasureBasin.linkFeature(play, npcid, p2, p3, msgData)
 end
 
 function TreasureBasin.onTimer60(play)
-    local data = _get_state(play)
-    if _advance_huangquan_refine(data) then
-        _save_state(play, data)
-    end
-    _refresh_huangquan_player(play)
     _tick_energy(play, 60, 0)
 end
 
@@ -1106,9 +971,7 @@ local function _on_login(play)
     end
     data.last_tick = _now()
     _check_forbidden_title(play, data)
-    _advance_huangquan_refine(data)
     _save_state(play, data)
-    _refresh_huangquan_player(play)
     _refresh_attr(play)
     _refresh_item_bar(play)
 end

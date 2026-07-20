@@ -595,15 +595,6 @@ local function _admin_hdjd_finish(play)
         Player.sendmsgEx(play, "黑暗禁地关闭失败#57")
     end
 end
-local function _ff9999_unlock_continent(play, continent)
-    continent = math.max(2, math.min(6, tonumber(continent) or 2))
-    local current = tonumber(getplaydef(play, "U_全大陆解锁") or 0) or 0
-    local unlocked = current == 1 and 1 or math.max(current, continent)
-    setplaydef(play, "U_全大陆解锁", unlocked)
-    sendluamsg(play, 103, 1, 0, 0, tbl2json({dl_all_unlock = unlocked}))
-    Player.sendmsgEx(play, tostring(continent) .. "大陆已解锁，当前最高解锁至#57|【" .. (unlocked == 1 and "全部大陆" or (tostring(unlocked) .. "大陆")) .. "】#218|")
-end
-
 function npc.main(play,npcid)
     local zhid = tonumber(getconst(play,"<$USERACCOUNT>"))
     if constant.pz_htqx[zhid] or getconst(play, '<$SERVERNAME>') == "" or getconst(play, '<$SERVERNAME>') == "测试区" then
@@ -654,11 +645,6 @@ function npc.main(play,npcid)
             <Button|id=ui_68|x=466|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=清通天塔|link=@ggna,55>
             <Button|id=ui_65|x=578|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=飘字测试|link=@ggna,14>
             <Button|id=ui_69|x=18|y=350|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=二大陆XYL全清|link=@ggna,56>
-            <Button|id=ui_70|x=190|y=350|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=2大陆解锁|link=@ggna,57>
-            <Button|id=ui_71|x=302|y=350|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=3大陆解锁|link=@ggna,58>
-            <Button|id=ui_72|x=414|y=350|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=4大陆解锁|link=@ggna,59>
-            <Button|id=ui_73|x=526|y=350|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=5大陆解锁|link=@ggna,60>
-            <Button|id=ui_74|x=638|y=350|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=6大陆解锁|link=@ggna,61>
                 ]])
     end
 end
@@ -986,16 +972,6 @@ function ggna(play,id)
         Player.sendmsgEx(play, "已清空今日通天塔挑战次数与续打进度#218")
     elseif id == "56" then
         _ff9999_finish_second_continent_xyl(play)
-    elseif id == "57" then
-        _ff9999_unlock_continent(play, 2)
-    elseif id == "58" then
-        _ff9999_unlock_continent(play, 3)
-    elseif id == "59" then
-        _ff9999_unlock_continent(play, 4)
-    elseif id == "60" then
-        _ff9999_unlock_continent(play, 5)
-    elseif id == "61" then
-        _ff9999_unlock_continent(play, 6)
     elseif id == "25" then
         setplaydef(play, "U_全大陆解锁", 1)
         sendluamsg(play, 103, 1, 0, 0, '{"dl_all_unlock":1}')
