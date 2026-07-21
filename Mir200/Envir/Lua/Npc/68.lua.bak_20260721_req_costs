@@ -30,19 +30,6 @@ local function _check_trial_limit(play, aid)
     Player.sendmsgEx(play, "进入该灵根试炼需要先拥有称号或背包神器位装备：#57|【"..need.."】#218|")
     return false
 end
-local function _take_trial_cost(play)
-    local cost = (_config and _config.cost) or {}
-    if type(cost) ~= "table" or #cost <= 0 then
-        return true
-    end
-    local name, num = Player.checkItemNumByTable(play, cost)
-    if name then
-        Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
-        return false
-    end
-    Player.takeItemByTable(play, cost, ",灵根试炼", nil)
-    return true
-end
 function npc.main(play,npcid)
     local data = {}
     data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
@@ -79,9 +66,6 @@ function npc.link(play,npcid,ew,aid)
             return
         end
         if not _check_trial_limit(play, aid) then
-            return
-        end
-        if not _take_trial_cost(play) then
             return
         end
         T_dljq["npc_68"][""..aid] = 0
@@ -148,8 +132,3 @@ function npc_68_fb_end(play)
     end
 end
 return npc
-
-
-
-
-

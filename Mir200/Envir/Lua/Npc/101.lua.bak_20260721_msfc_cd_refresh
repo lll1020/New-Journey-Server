@@ -159,7 +159,6 @@ local function _refresh_bonus(play, T_data)
     local footstepCount = _count_pool_owned(unlockData.yjszj, _config.footstep_pool, "zj")
     if footstepCount >= 5 then
         _merge_attrs(attrs, _config.footstep_bonus[5].attr)
-        setskilldeccd(play, _config.footstep_bonus[5].skill.name, "=", 0)
         setskilldeccd(play, _config.footstep_bonus[5].skill.name, "=", _config.footstep_bonus[5].skill.dec_cd)
     else
         setskilldeccd(play, _skill_name, "=", 0)
@@ -567,17 +566,9 @@ function npc.link(play, npcid, p2, p3, msgData)
         _refresh_panel(play, npcid, p2)
     end
 end
-local function _on_skin_update(play)
-    local T_data = _get_data(play)
-    _save_data(play, T_data)
-    _refresh_bonus(play, T_data)
-end
 GameEvent.add(EventCfg.onLoginEnd, _on_login, _token_name)
 GameEvent.add(EventCfg.onKFLogin, _on_login, _token_name)
-GameEvent.add(EventCfg.onUPSkin, _on_skin_update, _token_name)
 return npc
-
-
 
 
 

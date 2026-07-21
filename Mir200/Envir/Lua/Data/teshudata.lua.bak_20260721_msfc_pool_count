@@ -2751,12 +2751,12 @@ teshudata = {
             [5] = {attr = {{79,500}}, skill = {name = "十步一杀", dec_cd = 10}},
         },
         fashion_pool = {
-            {idx = 2, name = "时装：拉大车"},
-            {idx = 3, name = "时装：圣诞老人"},
-            {idx = 4, name = "时装：暗黑天使"},
-            {idx = 5, name = "时装：熊猫人"},
-            {idx = 6, name = "时装：开挖掘机"},
-            {idx = 7, name = "时装：天刀"},
+            {idx = 1, name = "时装：拉大车"},
+            {idx = 2, name = "时装：圣诞老人"},
+            {idx = 3, name = "时装：暗黑天使"},
+            {idx = 4, name = "时装：熊猫人"},
+            {idx = 5, name = "时装：开挖掘机"},
+            {idx = 6, name = "时装：天刀"},
         },
         footstep_pool = {
             {idx = 1, name = "足迹：冰霜"},
@@ -3273,7 +3273,6 @@ teshudata = {
     },
 }
 return teshudata
-
 
 
 

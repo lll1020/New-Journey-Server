@@ -35,40 +35,6 @@ local function _count_owned(tbl)
     end
     return num
 end
-local function _find_1002_idx_by_name(listName, itemName)
-    local cfg1002 = teshudata and teshudata["npc_1002"]
-    local cfgList = (((cfg1002 or {}).details or {})[listName]) or {}
-    for idx, cfg in ipairs(cfgList) do
-        if cfg and cfg.name == itemName then
-            return idx
-        end
-    end
-    return 0
-end
-local function _resolve_pool_idx(poolCfg, listName)
-    local idx = tonumber(poolCfg and poolCfg.idx or 0) or 0
-    local cfg1002 = teshudata and teshudata["npc_1002"]
-    local cfgList = (((cfg1002 or {}).details or {})[listName]) or {}
-    if idx > 0 and cfgList[idx] and (not poolCfg.name or cfgList[idx].name == poolCfg.name) then
-        return idx
-    end
-    if poolCfg and poolCfg.name then
-        return _find_1002_idx_by_name(listName, poolCfg.name)
-    end
-    return idx
-end
-local function _count_pool_owned(ownedTbl, pool, listName)
-    local num = 0
-    local used = {}
-    for _, cfg in ipairs(pool or {}) do
-        local idx = _resolve_pool_idx(cfg, listName)
-        if idx > 0 and not used[idx] and tonumber((ownedTbl or {})[tostring(idx)]) == 1 then
-            used[idx] = true
-            num = num + 1
-        end
-    end
-    return num
-end
 local function _get_1002_unlock_data(play)
     local T_szjl = Player.getJsonTableByVar(play, VarCfg.T_szjl)
     T_szjl.yjs = T_szjl.yjs or {}
@@ -150,16 +116,15 @@ local function _refresh_bonus(play, T_data)
     if tonumber(T_data.flags.title_msfc) == 1 and _config.title_reward then
         _merge_attrs(attrs, _config.title_reward.attr)
     end
-    local fashionCount = _count_pool_owned(unlockData.yjs, _config.fashion_pool, "sz")
+    local fashionCount = _count_owned(unlockData.yjs)
     if fashionCount >= 6 then
         _merge_attrs(attrs, _config.fashion_bonus[6].attr)
     elseif fashionCount >= 3 then
         _merge_attrs(attrs, _config.fashion_bonus[3].attr)
     end
-    local footstepCount = _count_pool_owned(unlockData.yjszj, _config.footstep_pool, "zj")
+    local footstepCount = _count_owned(unlockData.yjszj)
     if footstepCount >= 5 then
         _merge_attrs(attrs, _config.footstep_bonus[5].attr)
-        setskilldeccd(play, _config.footstep_bonus[5].skill.name, "=", 0)
         setskilldeccd(play, _config.footstep_bonus[5].skill.name, "=", _config.footstep_bonus[5].skill.dec_cd)
     else
         setskilldeccd(play, _skill_name, "=", 0)
@@ -391,8 +356,8 @@ local function _build_panel_data(play)
     }
     data.logs = {}
     data.placeholder = T_data.placeholder
-    data.fashion_count = _count_pool_owned(unlockData.yjs, _config.fashion_pool, "sz")
-    data.footstep_count = _count_pool_owned(unlockData.yjszj, _config.footstep_pool, "zj")
+    data.fashion_count = _count_owned(unlockData.yjs)
+    data.footstep_count = _count_owned(unlockData.yjszj)
     data.title_owned = tonumber(T_data.flags.title_msfc) or 0
     data.today_charge = _get_today_charge(play)
     data.day_card_need_charge = tonumber((_config.day_card or {}).need_charge) or 28
@@ -567,19 +532,9 @@ function npc.link(play, npcid, p2, p3, msgData)
         _refresh_panel(play, npcid, p2)
     end
 end
-local function _on_skin_update(play)
-    local T_data = _get_data(play)
-    _save_data(play, T_data)
-    _refresh_bonus(play, T_data)
-end
 GameEvent.add(EventCfg.onLoginEnd, _on_login, _token_name)
 GameEvent.add(EventCfg.onKFLogin, _on_login, _token_name)
-GameEvent.add(EventCfg.onUPSkin, _on_skin_update, _token_name)
 return npc
-
-
-
-
 
 
 

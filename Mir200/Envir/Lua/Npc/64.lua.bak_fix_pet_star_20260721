@@ -267,16 +267,13 @@ function npc.link(play,npcid,ew,aid,data)
             Player.updateSomeAddr(play,nil, _config.config.wy.det[T_data.ls[""..randomNum]].attr)
             TMLP_refresh_pet_bonus(play)
         else
-        -- 最大星级以配置 max_star 为准
-            local starKey = ""..randomNum
-            local curStar = _toint(T_data.ls_sp[starKey], 1)
-            local maxStar = _toint(_config.max_star, 3)
-            if curStar >= maxStar then
+        -- 最大星级4
+            if T_data.ls_sp[""..randomNum] >= _config.max_star then
                 Player.sendmsgEx(play, string.format("你抽取到的灵兽|【%s】#218|已达最大星级,转换为材料", _config.config.ls[randomNum].name))
                 Player.rwjl(play, {{"若水宝玉",3},{"灵石",500},{"妖怪精魄",10}}, "灵兽抽取",1,1000)
                 return
             end
-            T_data.ls_sp[starKey] = math.min(maxStar, curStar + 1)
+            T_data.ls_sp[""..randomNum] = T_data.ls_sp[""..randomNum] + 1
             Player.sendmsgEx(play, string.format("你成功抽取到灵兽|【%s】#218|x1已自动转换为星级", _config.config.ls[randomNum].name))
             Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
             if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
@@ -515,6 +512,3 @@ function npc.onBabyExpired(play, itemobj)
     return ok
 end
 return npc
-
-
-

@@ -5,27 +5,6 @@ npc = {}
 
 local _config = Guard.getConfig("npc_649")
 
-local ATTR_KEY = "真假经书"
-local CUT_SAVE_KEY = "zhenjing_cut"
-local CUT_ATTR_ID = 244
-local TRUE_BOOK_EXP = 1000
-local TRUE_BOOK_CUT = 999
-
-local function _refresh_true_book_attr(play, jq_data)
-    jq_data = jq_data or Player.getJsonTableByVar(play, VarCfg.T_dljq)
-    local cut = tonumber(jq_data[CUT_SAVE_KEY] or 0) or 0
-    Player.del_attlist(play, ATTR_KEY)
-    if cut > 0 then
-        local attrs = {}
-        attrs[CUT_ATTR_ID] = cut
-        Player.add_attlist(play, ATTR_KEY, "=", Player.getAttrTableToStr(attrs), 1)
-    end
-end
-
-local function Login_npc649_true_book(play)
-    _refresh_true_book_attr(play)
-end
-GameEvent.add(EventCfg.onLogin, Login_npc649_true_book, "Login_npc649_true_book")
 
 
 
@@ -76,11 +55,7 @@ function npc.link(play,npcid,ew,aid)
 
         local success = FProbabilityHit(_config.gl or 0)
         if success then
-                        jq_data[ok_key] = (jq_data[ok_key] or 0) + 1
-            jq_data[CUT_SAVE_KEY] = (tonumber(jq_data[CUT_SAVE_KEY] or 0) or 0) + TRUE_BOOK_CUT
-            setplaydef(play, VarCfg["U_境界修炼"][2], (tonumber(getplaydef(play, VarCfg["U_境界修炼"][2]) or 0) or 0) + TRUE_BOOK_EXP)
-            _refresh_true_book_attr(play, jq_data)
-            Player.sendmsgEx(play, string.format("鉴定为真经书：修为+#57|【%d】#218|，打怪切割+#57|【%d】#218|", TRUE_BOOK_EXP, TRUE_BOOK_CUT))
+            jq_data[ok_key] = (jq_data[ok_key] or 0) + 1
             Player.sendmsgEx(play, string.format("提交成功：|【%d/%d】#218|", jq_data[ok_key], (_config.num or 0)))
             sendluamsg(play,100,npcid,1,1,tbl2json({try_key = jq_data[try_key], ok_key = jq_data[ok_key]}))
         else
@@ -112,7 +87,5 @@ function npc.link(play,npcid,ew,aid)
 end
 
 return npc
-
-
 
 
