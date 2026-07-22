@@ -1,0 +1,4 @@
+[2026-07-22 05:23:31:859] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：813; NpcThreadId: 6420, CurPlayThreadId: 6420
+
+[2026-07-22 06:25:37:678] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：47; NpcThreadId: 6420, CurPlayThreadId: 6420
+

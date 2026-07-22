@@ -151,7 +151,7 @@ function npc.link(play,npcid,ew,aid,data)
     end
     ew = __guardAction
     -- npc_guard: 操作白名单（优化：限定合法操作编号）
-    local __guardAllowedActions = Guard.newActionSet({1,2,3,4,5,6})
+    local __guardAllowedActions = Guard.newActionSet({1,2,3,4,5})
     if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
         return
     end
@@ -201,11 +201,9 @@ function npc.link(play,npcid,ew,aid,data)
 
         local true_rate = _get_cfg({"true_rate"}, 90)
         if not _roll_success(true_rate) then
-            local item_name = string.format("【赝品】%s", base_name)
-            state = { active = 1, idx = idx, era = 6, stage = 0, can_final = 0, collect_pending = 1, pending_fake = 1 }
-            _set_state(play, state)
+                        local item_name = _give_fake(play, base_name)
             Player.sendmsgEx(play, "很遗憾，本件古玩是赝品#57")
-            sendluamsg(play,100,npcid,1,0,tbl2json({stage=0,result="fake",item=item_name,idx=idx,collect=1}))
+            sendluamsg(play,100,npcid,1,0,tbl2json({stage=1,result="fake",item=item_name,idx=idx}))
             return
         end
 
@@ -219,6 +217,7 @@ function npc.link(play,npcid,ew,aid,data)
     end
 
     if not state or state.active ~= 1 then
+        Player.sendmsgEx(play, "暂无可操作的古玩鉴定记录#57")
         return
     end
 
@@ -232,6 +231,7 @@ function npc.link(play,npcid,ew,aid,data)
     
     if ew == 2 then -- 保守鉴定（确定年份）
         if state.stage ~= 1 then
+            Player.sendmsgEx(play, "当前阶段无法进行保守鉴定#57")
             return
         end
         local cost = _get_cfg({"cost","conservative"}, {})
@@ -239,15 +239,14 @@ function npc.link(play,npcid,ew,aid,data)
             return
         end
         _consume_cost(play, cost, "古玩鉴定")
-        local item_name = string.format("【%s】%s", _get_cfg({"eras"}, {"唐代","宋代","元代","明代","清代","近代"})[state.era] or "近代", base_name)
-        state.collect_pending = 1
-        state.pending_fake = 0
-        _set_state(play, state)
-        Player.sendmsgEx(play, "保守鉴定完成，请点击结果领取古玩#57")
-        sendluamsg(play,100,npcid,1,0,tbl2json({stage=2,result="conservative",item=item_name,era=state.era,idx=state.idx,collect=1}))
+        local item_name = _give_antique(play, base_name, state.era)
+        _clear_state(play)
+        Player.sendmsgEx(play, string.format("你获得了|【%s】#218|", item_name))
+        sendluamsg(play,100,npcid,1,0,tbl2json({stage=2,result="conservative",item=item_name,era=state.era,idx=state.idx}))
         return
     elseif ew == 3 then -- 断代鉴定（初次升级）
         if state.stage ~= 1 then
+            Player.sendmsgEx(play, "当前阶段无法进行断代鉴定#57")
             return
         end
         local cost = _get_cfg({"cost","segment"}, {})
@@ -282,6 +281,7 @@ function npc.link(play,npcid,ew,aid,data)
         return
     elseif ew == 4 then -- 终极鉴定（2次升级）
         if state.stage ~= 2 or state.can_final ~= 1 then
+            Player.sendmsgEx(play, "当前阶段无法进行终极鉴定#57")
             return
         end
         local cost = _get_cfg({"cost","final"}, {})
@@ -306,41 +306,19 @@ function npc.link(play,npcid,ew,aid,data)
         end
         state.era = new_era
 
+        local item_name = _give_antique(play, base_name, state.era)
+        _clear_state(play)
+
         local msg = success and "终极鉴定成功，古玩年代+1级" or "终极鉴定失败，古玩年代-1级"
-        local item_name = string.format("【%s】%s", _get_cfg({"eras"}, {"唐代","宋代","元代","明代","清代","近代"})[state.era] or "近代", base_name)
-        state.stage = 2
-        state.collect_pending = 1
-        state.pending_fake = 0
-        _set_state(play, state)
         Player.sendmsgEx(play, msg)
-        sendluamsg(play,100,npcid,1,0,tbl2json({stage=2,result="segment",success=success,era=state.era,idx=state.idx,collect=1,can_final=0}))
+        sendluamsg(play,100,npcid,1,0,tbl2json({stage=3,result="final",success=success,item=item_name,era=state.era,idx=state.idx}))
         return
-    elseif ew == 5 then -- 收下古玩：只打开本次鉴定结果页，不直接发物品
-        if state.stage ~= 2 and state.collect_pending ~= 1 then
+    elseif ew == 5 then -- 收下古玩（断代后放弃终鉴）
+        if state.stage ~= 2 then
+            Player.sendmsgEx(play, "当前阶段无法收下古玩#57")
             return
         end
-        state.collect_pending = 1
-        state.pending_fake = state.pending_fake or 0
-        _set_state(play, state)
-        local item_name
-        if state.pending_fake == 1 then
-            item_name = string.format("【赝品】%s", base_name)
-        else
-            item_name = string.format("【%s】%s", _get_cfg({"eras"}, {"唐代","宋代","元代","明代","清代","近代"})[state.era] or "近代", base_name)
-        end
-        Player.sendmsgEx(play, "请点击结果领取古玩#57")
-        sendluamsg(play,100,npcid,1,0,tbl2json({stage=2,result="collect_preview",item=item_name,era=state.era,idx=state.idx,collect=1}))
-        return
-    elseif ew == 6 then -- 结果页点击物品后，才真正发放古玩
-        if state.collect_pending ~= 1 then
-            return
-        end
-        local item_name
-        if state.pending_fake == 1 then
-            item_name = _give_fake(play, base_name)
-        else
-            item_name = _give_antique(play, base_name, state.era)
-        end
+        local item_name = _give_antique(play, base_name, state.era)
         _clear_state(play)
         Player.sendmsgEx(play, string.format("你获得了|【%s】#218|", item_name))
         sendluamsg(play,100,npcid,1,0,tbl2json({stage=3,result="collect",item=item_name,era=state.era,idx=state.idx}))
