@@ -1879,8 +1879,6 @@ npc[507] = function(play, p2, p3, msgData) --活动面板
         end
         local payload = {
             kqfz = tonumber(getsysvar(VarCfg["G_开区分钟"]) or 0) or 0,
-            now_minute = (tonumber(os.date("%H")) or 0) * 60 + (tonumber(os.date("%M")) or 0),
-            now_weekday = tonumber(os.date("%w")) or 0,
             hdjl = Player.getJsonTableByVar(play, VarCfg.T_hdjl),
             qmdt = json2tbl(qmdt_state) or {},
             qmdk = qmdk_tb,

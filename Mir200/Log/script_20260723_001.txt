@@ -1,0 +1,7 @@
+[2026-07-23 09:49:51:038] LuaNPC: ID:999999999 执行 startup player: 耗时：31; NpcThreadId: 19328, CurPlayThreadId: 19328
+
+[2026-07-23 09:50:42:283] LuaNPC:玩家名字k ID:999999999 执行 sendability player:玩家名字k 耗时：31; NpcThreadId: 19328, CurPlayThreadId: 19328
+[2026-07-23 09:50:42:414] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：375; NpcThreadId: 19328, CurPlayThreadId: 19328
+
+[2026-07-23 10:06:11:078] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：47; NpcThreadId: 19328, CurPlayThreadId: 19328
+

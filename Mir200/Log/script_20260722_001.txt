@@ -2,3 +2,19 @@
 
 [2026-07-22 06:25:37:678] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：47; NpcThreadId: 6420, CurPlayThreadId: 6420
 
+[2026-07-22 21:57:17:019] LuaNPC:玩家名字k ID:999999999 执行 entermap player:玩家名字k 耗时：63; NpcThreadId: 6420, CurPlayThreadId: 6420
+
+[2026-07-22 21:57:24:844] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：62; NpcThreadId: 6420, CurPlayThreadId: 6420
+[2026-07-22 21:57:27:108] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：32; NpcThreadId: 6420, CurPlayThreadId: 6420
+
+[2026-07-22 21:57:31:250] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：47; NpcThreadId: 6420, CurPlayThreadId: 6420
+
+[2026-07-22 21:57:39:405] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：47; NpcThreadId: 6420, CurPlayThreadId: 6420
+
+[2026-07-22 21:59:27:680] LuaNPC:玩家名字k ID:999999999 执行 clicknpc player:玩家名字k 耗时：31; NpcThreadId: 6420, CurPlayThreadId: 6420
+
+[2026-07-22 22:00:42:525] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：79; NpcThreadId: 6420, CurPlayThreadId: 6420
+[2026-07-22 22:00:42:525] [玩家名字k]Lua执行耗时过高:79ms msgid:105 9999 9999 0 
+
+[2026-07-23 00:00:04:277] LuaNPC:玩家名字k ID:999999999 执行 resetday player:玩家名字k 耗时：32; NpcThreadId: 6420, CurPlayThreadId: 6420
+
