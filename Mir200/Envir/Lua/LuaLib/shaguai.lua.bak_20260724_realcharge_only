@@ -1711,7 +1711,7 @@ shaguai = {
 		if math.random(100) == 1 then
 			shaguai.temp_drop(play, mob, "修为丹（小）")
 		end
-		local realCharge = tonumber(getplaydef(play, VarCfg["U_真实充值"]) or 0) or 0
+		local realCharge = math.max(tonumber(querymoney(play, 23) or 0) or 0, tonumber(getplaydef(play, VarCfg["U_真实充值"]) or 0) or 0)
 		if realCharge > 100 and math.random(1000) == 1 then
 			shaguai.temp_drop(play, mob, "修为丹（大）")
 		end
@@ -1957,5 +1957,4 @@ if GameEvent and EventCfg and EventCfg.onKillMon and not rawget(_G, "__equip_kil
 	end, "equip_killed_boss_record")
 end
 return shaguai
-
 

@@ -176,7 +176,7 @@ function bl_zyjhl10(play,mingzi)
     if mingzi ~= "斗笠碎片" then
         return false
     end
-    local total_charge = tonumber(getplaydef(play, VarCfg["U_真实充值"]) or 0) or 0
+    local total_charge = math.max(tonumber(querymoney(play,23) or 0) or 0, tonumber(getplaydef(play, VarCfg["U_真实充值"]) or 0) or 0)
     if total_charge > 0 then
         return true
     end
@@ -278,4 +278,3 @@ function bl_zyjhl14(play,mingzi)
     Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
     return true
 end
-

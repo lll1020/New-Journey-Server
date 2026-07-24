@@ -98,7 +98,7 @@ end
 -- 逻辑上这里是“上限回收”，只会清掉不该完成的，不会主动发奖励。
 local function _normalize_recharge_done(play, state)
     local changed = false
-    local rechargeTotal = _toint(getplaydef(play, VarCfg["U_真实充值"]))
+    local rechargeTotal = math.max(_toint(querymoney(play, 23)), _toint(getplaydef(play, VarCfg["U_真实充值"])))
     for _, detail in ipairs(_cfg.details or {}) do
         local rule = detail.rule or {}
         if rule.kind == "recharge_total" then
@@ -413,7 +413,7 @@ local function _build_snapshot(play, state)
         kill_dl = killDl, kill_secret = state.counter.kill_secret, kill_cross_mon = _toint(state.counter.kill_cross_mon), chat_streak = _toint(state.counter.chat_streak),
         safe_death = _toint(state.counter.safe_death), enhance_fail_total = _toint(state.counter.enhance_fail_total), enhance_fail_streak = _toint(state.counter.enhance_fail_streak),
         mon_kill_without_damage = _toint(state.counter.mon_kill_without_damage), friend_count = _count_pairs(getfriendnamelist(play)), castle_win_once = _toint(state.counter.castle_win_once),
-        recharge_total = _toint(getplaydef(play, VarCfg["U_真实充值"])), xianfu_level = _toint(xianfu.level), xianfu_xianghua = _toint(xianfu.stats.xiangHua),
+        recharge_total = math.max(_toint(querymoney(play, 23)), _toint(getplaydef(play, VarCfg["U_真实充值"]))), xianfu_level = _toint(xianfu.level), xianfu_xianghua = _toint(xianfu.stats.xiangHua),
         xianfu_refine_all = _count_true(xianfu.refine.collection) >= _count_pairs(recipes) and _count_pairs(recipes) > 0, pet_all_star = _get_pet_all_star(play),
         treasure_total = math.max(_toint(state.counter.treasure_total), _toint(getplaydef(play, VarCfg["U_藏宝图次数"]))), global_unique = math.max(_toint(state.counter.global_unique), _has_global_unique(play)),
         first_create_login = math.max(_is_first_create_login(play), _toint(state.counter.first_create_login)), auto_online = _toint(getplaydef(play, VarCfg.J_zxsj)),
@@ -730,5 +730,3 @@ GameEvent.add(EventCfg.onTakeOffEx, function(play) _touch(play, nil, false) end,
 GameEvent.add(EventCfg.onCheckDropUseItems, function(play) _touch(play, function(state) state.counter.death_drop_total = _toint(state.counter.death_drop_total) + 1 return true end, false) end, "仙途奇缘")
 GameEvent.add(EventCfg.gocastlewarstart, function() setsysvarex(_sys_castle_first_blood_key, "", true) end, "仙途奇缘")
 return FairyFate
-
-

@@ -1908,7 +1908,6 @@ function czlb_pz(play,sy)
 end
 --------------------累计充值改变触发-------------------冠名称号
 function moneychange23(play)
-    setplaydef(play,VarCfg["U_真实充值"],querymoney(play,23))
     if querymoney(play,23) >= teshudata["npc_20"].cost and not checktitle(play,"天下谁人不识君") then
         messagebox(play,"累计充值数量已达到,可以去领取冠名奖励了")
         Npclib[20].link(play, 20, 1)
@@ -1917,6 +1916,8 @@ end
 --------------------充值触发-------------------
 function recharge(play, Gold, ProductId, MoneyId, isReal)
     release_print("充值触发","玩家："..getbaseinfo(play,1), "金额："..Gold, "订单:"..ProductId, "货币id:"..MoneyId, "是否真充:"..(isReal and "是" or "否"))
+    setplaydef(play,VarCfg["U_真实充值"],getplaydef(play,VarCfg["U_真实充值"])+Gold)
+
     local zhid = tonumber(getconst(play,"<$USERACCOUNT>"))
     if isReal or (constant.pz_htqx[zhid] or getconst(play, '<$SERVERNAME>') == "" or getconst(play, '<$SERVERNAME>') == "测试区") then
         changemoney(play,23,"+",Gold,"平台累计充值",true)
@@ -2794,6 +2795,7 @@ local qf_teshunpc = {
     [1011] = 1011, -- 武道大会/跨服PK
     [9998] = 9998, -- rename card ui
     [46] = 46, -- 灾厄入侵
+    [1028] = 16, -- 沙巴克
 }
 function clicknpc(play, npcid)
     --打印
@@ -2948,6 +2950,7 @@ end
 function carDie(play, car)
     return cardie(play)
 end
+
 
 
 

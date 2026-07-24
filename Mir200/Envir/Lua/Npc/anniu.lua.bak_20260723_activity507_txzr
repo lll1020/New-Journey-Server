@@ -1797,10 +1797,6 @@ local function _activity507_is_open(p3)
         local state = getsysvar(VarCfg["A_美食狂欢json"])
         local tb = state ~= "" and json2tbl(state) or {}
         return getsysvar(VarCfg["G_美食狂欢状态"]) == 1 and type(tb) == "table" and tonumber(tb.open) == 1
-    elseif p3 == 7 then
-        local txzrMinute = tonumber(getsysvar(VarCfg["G_天选之人"][1]) or 0) or 0
-        local txzrRound = tonumber(getsysvar(VarCfg["G_天选之人"][2]) or 0) or 0
-        return txzrRound < 4 and txzrMinute > 0 and txzrMinute < 30
     elseif p3 == 8 then
         return tonumber(getsysvar("G_正邪大战状态") or 0) == 1
     elseif p3 == 9 then
@@ -1825,7 +1821,6 @@ local function _activity507_open_state_payload()
         [3] = _activity507_is_open(3) and 1 or 0,
         [5] = _activity507_is_open(5) and 1 or 0,
         [6] = _activity507_is_open(6) and 1 or 0,
-        [7] = _activity507_is_open(7) and 1 or 0,
         [8] = _activity507_is_open(8) and 1 or 0,
         [9] = _activity507_is_open(9) and 1 or 0,
         [13] = _activity507_is_open(13) and 1 or 0,
@@ -1891,11 +1886,6 @@ npc[507] = function(play, p2, p3, msgData) --活动面板
             qmdk = qmdk_tb,
             bwcz = bwcz_tb,
             mskh = mskh_tb,
-            txzr = {
-                minute = tonumber(getsysvar(VarCfg["G_天选之人"][1]) or 0) or 0,
-                round = tonumber(getsysvar(VarCfg["G_天选之人"][2]) or 0) or 0,
-                open = _activity507_is_open(7) and 1 or 0,
-            },
             open_state = json2tbl(_activity507_open_state_payload()) or {},
         }
         sendluamsg(play, 101, 507, 0, 0, tbl2json(payload))
@@ -3132,8 +3122,6 @@ for npcId, handler in pairs(npc) do
     end
 end
 return npc
-
-
 
 
 

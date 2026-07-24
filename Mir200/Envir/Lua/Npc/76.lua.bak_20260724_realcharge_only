@@ -557,7 +557,7 @@ local function _on_kill_mon_danjie(play, mob)
     end
     local drop_cfg = _config.dujie_drop or {}
     local need_charge = tonumber(drop_cfg.need_charge or 100) or 100
-    local charge = tonumber(getplaydef(play, VarCfg["U_真实充值"]) or 0) or 0
+    local charge = math.max(tonumber(querymoney(play, 23) or 0) or 0, tonumber(getplaydef(play, VarCfg["U_真实充值"]) or 0) or 0)
     if charge <= need_charge then
         return
     end
@@ -571,4 +571,3 @@ end
 npc.onKillMonDanjie = _on_kill_mon_danjie
 
 return npc
-

@@ -1891,11 +1891,6 @@ npc[507] = function(play, p2, p3, msgData) --活动面板
             qmdk = qmdk_tb,
             bwcz = bwcz_tb,
             mskh = mskh_tb,
-            txzr = {
-                minute = tonumber(getsysvar(VarCfg["G_天选之人"][1]) or 0) or 0,
-                round = tonumber(getsysvar(VarCfg["G_天选之人"][2]) or 0) or 0,
-                open = _activity507_is_open(7) and 1 or 0,
-            },
             open_state = json2tbl(_activity507_open_state_payload()) or {},
         }
         sendluamsg(play, 101, 507, 0, 0, tbl2json(payload))
@@ -3132,7 +3127,6 @@ for npcId, handler in pairs(npc) do
     end
 end
 return npc
-
 
 
 

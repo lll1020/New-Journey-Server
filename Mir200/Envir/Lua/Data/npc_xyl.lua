@@ -806,7 +806,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "二大陆主城", 24, 100, 106 },
+                    yd = { 1, "三大陆主城", 44, 149, 223 },
                     desc = "闯过种植仙草，证我道途",
                 },
                 {
@@ -819,7 +819,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "二大陆主城", 24, 100, 106 },
+                    yd = { 1, "三大陆主城", 44, 149, 223 },
                     desc = "行走了解砍树，破除迷障",
                 },
                 {

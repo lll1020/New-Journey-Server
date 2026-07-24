@@ -1678,18 +1678,15 @@ shaguai = {
             Player.sendmsgEx(play, "打怪掉落【"..itemName.."】#57")
         end
     end,
-	["34"] = function(play,mob)      --筑基丹碎片：仅二大陆普通怪每累计 100 只保底掉落，总上限 30 个碎片
+	["34"] = function(play,mob)      --筑基丹碎片：聚宝盆修复后，二三大陆普通怪每累计 100 只保底掉落
 		local record = Player.getJsonTableByVar(play, "T39") or {}
 		local jz_count = tonumber(record.jz_dan_count or 0) or 0
-		local frag_count = tonumber(getbagitemcount(play, "筑基丹碎片") or 0) or 0
-		local dan_count = tonumber(getbagitemcount(play, "筑基丹") or 0) or 0
-		local total_frag_progress = jz_count * 10 + dan_count * 10 + frag_count
-		if jz_count >= 3 or total_frag_progress >= 30 then
+		if jz_count >= 3 then
 			return
 		end
 		local mapName = tostring(getbaseinfo(play,3) or "")
 		local dl = tonumber((daluditu and daluditu[mapName]) or 0) or 0
-		if dl ~= 2 then
+		if dl ~= 2 and dl ~= 3 then
 			return
 		end
 		local key = "kill_pity_筑基丹碎片"
@@ -1711,7 +1708,7 @@ shaguai = {
 		if math.random(100) == 1 then
 			shaguai.temp_drop(play, mob, "修为丹（小）")
 		end
-		local realCharge = tonumber(getplaydef(play, VarCfg["U_真实充值"]) or 0) or 0
+		local realCharge = math.max(tonumber(querymoney(play, 23) or 0) or 0, tonumber(getplaydef(play, VarCfg["U_真实充值"]) or 0) or 0)
 		if realCharge > 100 and math.random(1000) == 1 then
 			shaguai.temp_drop(play, mob, "修为丹（大）")
 		end
@@ -1957,5 +1954,3 @@ if GameEvent and EventCfg and EventCfg.onKillMon and not rawget(_G, "__equip_kil
 	end, "equip_killed_boss_record")
 end
 return shaguai
-
-
