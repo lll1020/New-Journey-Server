@@ -2013,3 +2013,30 @@
 [00007FF9F980AD6C] RtlUserThreadStart
 
 
+[2026-07-25 17:30:46:861] ProgramException Except：Cannot create file "E:\新起航\服务端\Mir200\GlobalVal.ini". 另一个程序正在使用此文件，进程无法访问。[0000000001428281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001427AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000014279B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[000000000142AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001419702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[000000000141996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001419AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004523B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000452418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[000000000055B9D4] System.Classes._ZN6System7Classes11TFileStreamC3ENS_13UnicodeStringEt (Line 9547, "System.Classes.pas" + 6)
+[0000000000556540] System.Classes._ZN6System7Classes8TStrings10SaveToFileENS_13UnicodeStringEPNS_8Sysutils9TEncodingE (Line 7183, "System.Classes.pas" + 1)
+[00000000005F3497] System.IniFiles._ZN6System8Inifiles11TMemIniFile10UpdateFileEv (Line 1214, "System.IniFiles.pas" + 13)
+[000000000172F294] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 323, "svMain.pas" + 21)
+[000000000172F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[000000000071AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[000000000071AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000578A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FF9F895C396] Unknown function at CallWindowProcW
+[00007FF9F895A7ED] Unknown function at IsWindowUnicode
+[00000000007B42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[00000000007B4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[00000000007B47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[00000000017413E2] M2Server._ZN8M2server14initializationEv
+[00007FF9F8BAE957] BaseThreadInitThunk
+[00007FF9F980AD6C] RtlUserThreadStart
+
+
