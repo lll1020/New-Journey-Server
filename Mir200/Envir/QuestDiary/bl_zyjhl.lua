@@ -312,4 +312,47 @@ function bl_zyjhl15(play,mingzi)
     end
     return math.random(math.max(1, tonumber(one.rate) or 1)) == 1
 end
+--------------------爆率监听触发-------------------秘境额外产出单次掉落
+function bl_zyjhl16(play,mingzi)
+    if not mingzi or mingzi == "" then
+        return false
+    end
+    local titleMap = {
+        ["极光使者[可使用]"] = "极光使者",
+        ["白云苍狗[可使用]"] = "白云苍狗",
+        ["上善若水[可使用]"] = "上善若水",
+        ["看破红尘[可使用]"] = "看破红尘",
+        ["归入灵虚[可使用]"] = "归入灵虚",
+    }
+    local allowMap = {
+        ["极光石"] = true,
+        ["苍云镜"] = true,
+        ["若水灵珠"] = true,
+        ["斩红尘"] = true,
+        ["灵虚剑"] = true,
+        ["极光使者[可使用]"] = true,
+        ["白云苍狗[可使用]"] = true,
+        ["上善若水[可使用]"] = true,
+        ["看破红尘[可使用]"] = true,
+        ["归入灵虚[可使用]"] = true,
+    }
+    if not allowMap[mingzi] then
+        return false
+    end
+    local titleName = titleMap[mingzi]
+    if titleName and checktitle(play, titleName) then
+        return false
+    end
+    local data = Player.getJsonTableByVar(play, VarCfg["T_物品掉落记录"])
+    if not data then
+        data = {}
+    end
+    local key = "mijing_extra_once_" .. mingzi
+    if tonumber(data[key] or 0) >= 1 then
+        return false
+    end
+    data[key] = 1
+    Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
+    return true
+end
 
