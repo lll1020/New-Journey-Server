@@ -59,7 +59,10 @@ function npc.link(play,npcid,ew,aid)
                 Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成")
                 sendluamsg(play,101,1005,0,0,"rwwc")
         if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "任务") end
-                Player.rwjl(play, _config.rwjl or {{"绑定元宝",1},{"绑定金币",1}}, (_config.name or "剧情任务").."奖励", 1)
+                local rewards = type(_config.rwjl) == "table" and #_config.rwjl > 0 and _config.rwjl or nil
+                if rewards then
+                    Player.rwjl(play, rewards, (_config.name or "剧情任务").."奖励", 1)
+                end
                 if _config.ch then
                     Player.title_give(play, _config.ch)
                     Player.sendmsgEx(play, "恭喜获得称号|【".._config.ch.."】#218|")

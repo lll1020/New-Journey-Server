@@ -81,7 +81,10 @@ function npc.link(play,npcid,ew,aid,data)
                     Player.title_give(play, _config.ch)
                 end
                 sendluamsg(play,101,1005,0,0,"rwwc")
-                Player.rwjl(play, _config.rwjl or { {"绑定元宝",1} }, (_config.name or "剧情任务").."奖励", 0)
+                local rewards = type(_config.rwjl) == "table" and #_config.rwjl > 0 and _config.rwjl or nil
+                if rewards then
+                    Player.rwjl(play, rewards, (_config.name or "剧情任务").."奖励", 0)
+                end
                 sendluamsg(play,100,npcid,1,2,"")
             else
                 Player.sendmsgEx(play, "你还没有完成#57|【"..(_config.name or "该任务").."】#218|")

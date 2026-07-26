@@ -1648,7 +1648,7 @@ shaguai = {
 			mod.link(play, 740, 4, mob)
 		end
 	end,
-    ["33"] = function(play,mob)      -- 聚宝盆碎片：接到聚宝盆任务后，极光城郊怪物按 1/70 + 20 杀保底掉落
+    ["33"] = function(play,mob)      -- 聚宝盆碎片：接到聚宝盆任务后，极光城郊怪物按 1/100 + 100 杀保底掉落
         if getbaseinfo(play,3) ~= "极光城郊" then
             return
         end
@@ -1661,9 +1661,9 @@ shaguai = {
         local key = "kill_pity_聚宝盆碎片"
         local cur, dropData = _sg_drop_record_inc(play, key)
         local dropped = false
-        if math.random(70) == 1 then
+        if math.random(100) == 1 then
             dropped = shaguai.temp_drop(play, mob, itemName)
-        elseif cur >= 20 then
+        elseif cur >= 100 then
             dropped = shaguai.temp_drop(play, mob, itemName)
         end
         if dropped then
