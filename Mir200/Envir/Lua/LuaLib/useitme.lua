@@ -2,6 +2,7 @@ release_print("useitme.lua")
 local RANDOM_TRANSFER_WINDOW_SEC = 3
 local RANDOM_TRANSFER_WINDOW_LIMIT = 3
 local RANDOM_TRANSFER_CD = 3
+local RETURN_STONE_CD = 3
 local _equip_slots = {0,1,3,4,5,6,7,8,9,10,11,13,14,16,30,31,32,33,34,35,36,37,38,39,40,41}
 local function _has_equip_name(play, itemname)
     if not play or not itemname or itemname == "" then
@@ -18,6 +19,15 @@ local function _random_transfer_cd_left(play, now)
     local nextTime = tonumber(getplaydef(play, "N$随机传送CD") or 0) or 0
     local left = nextTime - (now or os.time())
     return left > 0 and left or 0
+end
+local function _return_stone_cd_left(play, now)
+    local nextTime = tonumber(getplaydef(play, "N$回城石CD") or 0) or 0
+    local left = nextTime - (now or os.time())
+    return left > 0 and left or 0
+end
+local function _record_return_stone_use(play, now)
+    now = now or os.time()
+    setplaydef(play, "N$回城石CD", now + RETURN_STONE_CD)
 end
 local function _pk_combat_left(play, now)
     now = now or os.time()
@@ -94,6 +104,11 @@ function stdmodefunc10(play, item)
     setplaydef(play,"S$dtm",getbaseinfo(play, 3))
     local du = getbaseinfo(play, 3)
     local now = os.time()
+    local cdLeft = _return_stone_cd_left(play, now)
+    if cdLeft > 0 then
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>不要过于频繁回城！还剩下' .. math.max(1, math.ceil(cdLeft)) .. '秒才可以回城！</font>","Type":9}')
+        return false
+    end
     if getplaydef(play,"N$PK脱战") < now or _has_equip_name(play, "遮云日") then
         if du == "xtc" or du == "二大陆主城" or du == "三大陆主城" or du == "四大陆主城" or du == "五大陆主城" or du == "六大陆主城" or du == "七大陆主城" or du == "八大陆主城" or du == "九大陆主城" then
             mapmove(play, 'xtc', 137,138,8)
@@ -137,6 +152,7 @@ function stdmodefunc10(play, item)
             addhpper(play, '=', 100)
             addmpper(play, '=', 100)
         end
+        _record_return_stone_use(play, now)
     else
         sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗中不能传送,剩余' .. math.max(1, _pk_combat_left(play, now)) .. '秒</font>","Type":9}')
     end

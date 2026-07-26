@@ -60,6 +60,15 @@ local _config_spa = {
     [317] = {"灵域·三层", 63, 61,nil,nil,4, mob_name = "≮灵域三层·终序主宰≯", mob_shape = 16149, min_map = "029405"},
     [318] = {"灵域·秘境", 21, 20,nil,nil,4, mob_name = "★灵域秘境·原初主宰★", mob_shape = 16149, min_map = "027186"},
 }
+local function _is_after_merge()
+    if not globalinfo then
+        return false
+    end
+    return (tonumber(globalinfo(3) or 0) or 0) >= 1
+end
+local function _get_first_continent_merge_tip()
+    return "合区后，不可进入"
+end
 -- 三大陆地图统一拦截：未开辟仙府时，只允许通过 NPC 200 进入灰界。
 local function _has_shendao_cert(play, god)
     local data = Player.getJsonTableByVar(play, VarCfg["T_登神之路"] or "T_登神之路") or {}
@@ -68,6 +77,10 @@ local function _has_shendao_cert(play, god)
     return (tonumber(info.cert or 0) or 0) >= 1
 end
 local function _ensure_continent_map_access(play, continent, map_name)
+    if continent == 1 and _is_after_merge() then
+        Player.sendmsgEx(play, _get_first_continent_merge_tip() .. "#57")
+        return false
+    end
     if map_name == "兵道古藏" and not _has_shendao_cert(play, 1) then
         Player.sendmsgEx(play, "需要完成兵神道自证后才可进入#57")
         return false
@@ -87,6 +100,12 @@ local function _ensure_continent_map_access(play, continent, map_name)
 end
 function npc.main(play,npcid)
     sendluamsg(play,100,npcid,0,0,"")
+    local cfg = _config[npcid]
+    if cfg and cfg[6] == 1 and _is_after_merge() then
+        sendluamsg(play,100,npcid,1,0,tbl2json({
+            mergeTip = _get_first_continent_merge_tip(),
+        }))
+    end
 end
 function npc.link(play,npcid,ew,aid)
     -- npc_guard: 入参校验

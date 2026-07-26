@@ -1001,8 +1001,8 @@ local function _claim_forbidden_reward(play, npcid, id)
         return false
     end
     local node = data.forbidden.list[tostring(showId)] or {}
-    if _toint(node.lv) <= 0 then
-        Player.sendmsgEx(play, "请先激活当前外显禁器")
+    if _toint(node.lv) < 5 then
+        Player.sendmsgEx(play, "当前外显禁器需升至#57|【Lv.5】#218|后才可释放技能")
         return false
     end
     local left = _forbidden_skill_cd_left(data)
