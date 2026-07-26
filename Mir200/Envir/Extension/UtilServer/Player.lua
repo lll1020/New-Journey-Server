@@ -879,6 +879,77 @@ local function _dl_has_story_progress(actor, continent, need_percent)
     end
     return received * 100 >= total * (tonumber(need_percent) or 100)
 end
+local function _dl_has_story_task_count(actor, continent, need_count, debug)
+    local cfg = _dl_get_xyl_cfg()
+    local chapters = type(cfg) == "table" and cfg[continent] or nil
+    if type(chapters) ~= "table" then
+        return false
+    end
+    local ywl = Player.getJsonTableByVar(actor, VarCfg.T_ywl) or {}
+    local done = 0
+    local miss = {}
+    for chapter_idx, chapter in ipairs(chapters) do
+        local tasks = type(chapter) == "table" and chapter.jq or nil
+        if type(tasks) == "table" then
+            local chapter_key = "jl_" .. continent .. "_" .. chapter_idx
+            local chapter_received = tonumber(ywl[chapter_key] or 0) == 1
+            for task_idx, task in ipairs(tasks) do
+                if not (type(task) == "table" and tonumber(task.side_task or 0) == 1) then
+                    local finished = chapter_received or tonumber(ywl[chapter_key .. "_" .. task_idx] or 0) == 1
+                    if not finished and type(task) == "table" and type(task.fwdjy) == "function" then
+                        local ok, ret = pcall(task.fwdjy, actor, task.tk, task)
+                        finished = ok and ret and true or false
+                    end
+                    if finished then
+                        done = done + 1
+                    elseif debug then
+                        miss[#miss + 1] = tostring(chapter_idx) .. "_" .. tostring(task_idx) .. ":" .. tostring(type(task) == "table" and task[1] or "?")
+                    end
+                end
+            end
+        end
+    end
+    local need = tonumber(need_count) or 0
+    if debug then
+    end
+    return done >= need, done, need
+end
+local function _dl_has_story_point_count(actor, continent, need_count, debug)
+    local cfg = _dl_get_xyl_cfg()
+    local chapters = type(cfg) == "table" and cfg[continent] or nil
+    if type(chapters) ~= "table" then
+        return false
+    end
+    local ywl = Player.getJsonTableByVar(actor, VarCfg.T_ywl) or {}
+    local done = 0
+    local miss = {}
+    for chapter_idx, chapter in ipairs(chapters) do
+        local tasks = type(chapter) == "table" and chapter.jq or nil
+        if type(tasks) == "table" then
+            local chapter_key = "jl_" .. continent .. "_" .. chapter_idx
+            local chapter_received = tonumber(ywl[chapter_key] or 0) == 1
+            for task_idx, task in ipairs(tasks) do
+                local point = _dl_get_task_story_point(task)
+                if point > 0 and not (type(task) == "table" and tonumber(task.side_task or 0) == 1) then
+                    local finished = chapter_received or tonumber(ywl[chapter_key .. "_" .. task_idx] or 0) == 1
+                    if not finished and type(task) == "table" and type(task.fwdjy) == "function" then
+                        local ok, ret = pcall(task.fwdjy, actor, task.tk, task)
+                        finished = ok and ret and true or false
+                    end
+                    if finished then
+                        done = done + point
+                    elseif debug then
+                        miss[#miss + 1] = tostring(chapter_idx) .. "_" .. tostring(task_idx) .. ":" .. tostring(type(task) == "table" and task[1] or "?") .. "(" .. tostring(point) .. ")"
+                    end
+                end
+            end
+        end
+    end
+    local need = tonumber(need_count) or 0
+    if debug then
+    end
+    return done >= need, done, need
+end
 -- 五大陆门槛：10 种灵根均已激活。
 local function _dl_has_all_linggen(actor)
     local data = Player.getJsonTableByVar(actor, VarCfg["T_灵根"]) or {}
@@ -948,25 +1019,32 @@ local function _dl_check(actor, dl)
         end
         return false, "需跟随主线引导后才可进入三大陆"
     elseif dl == 4 then
-        if _dl_has_story_progress(actor, 3, 85) and zslv >= 30 and level >= 150 then
+        local story_ok, story_done, story_need = _dl_has_story_point_count(actor, 3, 25, true)
+        if story_ok and zslv >= 30 and level >= 150 then
             return true
         end
-        return false, "需三大陆剧情完成度达到85%、完成三大陆转生且玩家等级达到150级后才可进入四大陆"
+        return false, "需三大陆剧情点达到25点、完成三大陆转生且人物等级达到150级后才可进入四大陆"
     elseif dl == 5 then
-        if _dl_has_story_progress(actor, 4, 95) and zslv >= 40 and _dl_has_all_linggen(actor) then
+        local story_ok, story_done, story_need = _dl_has_story_point_count(actor, 4, 69, true)
+        local linggen_ok = _dl_has_all_linggen(actor)
+        if story_ok and zslv >= 40 and linggen_ok then
             return true
         end
-        return false, "需四大陆剧情完成度达到95%、完成四大陆转生且激活全部灵根后才可进入五大陆"
+        return false, "需四大陆剧情点达到69点、完成四大陆转生且全部基础灵根达到Lv.1后才可进入五大陆"
     elseif dl == 6 then
-        if _dl_has_story_progress(actor, 5, 95) and zslv >= 50 and _dl_has_all_destiny(actor) then
+        local story_ok, story_done, story_need = _dl_has_story_point_count(actor, 5, 61, true)
+        local destiny_ok = _dl_has_all_destiny(actor)
+        if story_ok and zslv >= 50 and destiny_ok then
             return true
         end
-        return false, "需五大陆剧情完成度达到95%、完成五大陆转生且完成天道命盘后才可进入六大陆"
+        return false, "需五大陆剧情点达到61点、完成五大陆转生且完成天道命盘后才可进入六大陆"
     elseif dl == 7 then
-        if _dl_has_story_progress(actor, 6, 100) and zslv >= 60 and Player.hasSeventhContinentPass(actor) then
+        local story_ok, story_done, story_need = _dl_has_story_point_count(actor, 6, 81, true)
+        local pass_ok = Player.hasSeventhContinentPass(actor)
+        if story_ok and zslv >= 60 and pass_ok then
             return true
         end
-        return false, "需六大陆剧情完成度达到100%、完成六大陆转生且获得#57|【世界符文·[真我]】#218|后才可进入七大陆"
+        return false, "需六大陆剧情点达到81点、完成六大陆转生且获得#57|【世界符文·[真我]】#218|后才可进入七大陆"
     elseif dl == 8 then
         if zslv >= 70 then
             return true
