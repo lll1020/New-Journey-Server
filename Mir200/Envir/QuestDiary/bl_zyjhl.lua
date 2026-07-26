@@ -278,4 +278,38 @@ function bl_zyjhl14(play,mingzi)
     Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
     return true
 end
+--------------------爆率监听触发-------------------聚宝盆专属宝石固定概率
+function bl_zyjhl15(play,mingzi)
+    if not mingzi or mingzi == "" then
+        return false
+    end
+    local cur_map = tostring(getbaseinfo(play, 3) or "")
+    local dl = 0
+    if cur_map ~= "" and daluditu then
+        dl = tonumber(daluditu[cur_map] or 0) or 0
+    end
+    local cfg = {
+        ["极光·专属宝石·绑定"] = {dl = 2, rate = 123, bind = 1},
+        ["苍云·专属宝石·绑定"] = {dl = 3, rate = 222, bind = 1},
+        ["若水·专属宝石·绑定"] = {dl = 4, rate = 333, bind = 1},
+        ["红尘·专属宝石·绑定"] = {dl = 5, rate = 666, bind = 1},
+        ["灵虚·专属宝石·绑定"] = {dl = 6, rate = 888, bind = 1},
+        ["极光·专属宝石·非绑"] = {dl = 2, rate = 100, bind = 0},
+        ["苍云·专属宝石·非绑"] = {dl = 3, rate = 150, bind = 0},
+        ["若水·专属宝石·非绑"] = {dl = 4, rate = 266, bind = 0},
+        ["红尘·专属宝石·非绑"] = {dl = 5, rate = 300, bind = 0},
+        ["灵虚·专属宝石·非绑"] = {dl = 6, rate = 888, bind = 0},
+    }
+    local one = cfg[mingzi]
+    if not one then
+        return false
+    end
+    if dl ~= tonumber(one.dl or 0) then
+        return false
+    end
+    if tonumber(one.bind or 0) == 0 and not checktitle(play, "超级特权") then
+        return false
+    end
+    return math.random(math.max(1, tonumber(one.rate) or 1)) == 1
+end
 

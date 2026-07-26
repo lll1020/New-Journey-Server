@@ -426,7 +426,6 @@ end
 local function _has_super_privilege(play)
     return checktitle(play, "超级特权")
 end
-
 _refresh_item_bar = function(play)
     local itemobj = _equipped_itemobj(play)
     if not itemobj then
@@ -1145,14 +1144,11 @@ function TreasureBasin.onKillMon(play, mob)
     local dl = _continent_by_map_name(mapName)
     local mobName = tostring(getbaseinfo(mob, 1) or "")
     local gtype = _toint(guaiwutype and guaiwutype[mobName])
-    local isBig = gtype >= 1
-    -- 聚宝魔石：全大陆 1/1000，大怪及以上必掉 1 个。
+    local isBig = gtype >= 2
+    -- 聚宝魔石：全大陆 1/1000，gtype>=2 的怪物必掉 1 个。
     if isBig or math.random(1000) == 1 then
         shaguai.temp_drop(play, mob, "聚宝魔石")
     end
-
-    -- 专属宝石掉落已迁回各大陆爆率文件，这里不再通过杀怪监听直接产出。
-
 end
 local function _on_take_on(actor, itemobj, where, itemname, makeid)
     if not _is_artifact_name(itemname) and not _equipped_where(actor) then return end
@@ -1181,6 +1177,10 @@ if _first_init and not TreasureBasin.__events_registered then
 end
 
 return TreasureBasin
+
+
+
+
 
 
 

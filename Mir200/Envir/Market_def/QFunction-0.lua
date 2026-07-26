@@ -2796,6 +2796,7 @@ local qf_teshunpc = {
     [9998] = 9998, -- rename card ui
     [46] = 46, -- 灾厄入侵
     [1028] = 16, -- 沙巴克
+    [53] = 53, -- 神石
 }
 function clicknpc(play, npcid)
     --打印
