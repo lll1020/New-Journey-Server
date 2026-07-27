@@ -77,6 +77,7 @@ local function _get_data(play)
     data.active_floor = tonumber(data.active_floor or 0) or 0
     data.in_run = tonumber(data.in_run or 0) or 0
     data.points = tonumber(data.points or 0) or 0
+    data.total_runs = tonumber(data.total_runs or 0) or 0
     data.exchange_life = data.exchange_life or {}
     _reset_daily(data)
     return data
@@ -123,6 +124,7 @@ local function _consume_challenge_count(play, data)
     _reset_daily(data)
     if data.daily.free < _config.free_daily then
         data.daily.free = data.daily.free + 1
+        data.total_runs = (tonumber(data.total_runs or 0) or 0) + 1
         _save_data(play, data)
         return true
     end
@@ -132,6 +134,7 @@ local function _consume_challenge_count(play, data)
         end
         Guard.consumeCost(play, _config.paid_cost, ",通天塔付费挑战")
         data.daily.paid = data.daily.paid + 1
+        data.total_runs = (tonumber(data.total_runs or 0) or 0) + 1
         _save_data(play, data)
         return true
     end

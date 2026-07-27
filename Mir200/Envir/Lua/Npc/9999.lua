@@ -776,7 +776,7 @@ function npc.main(play,npcid)
             <Button|id=ui_64|x=130|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=禁地结束|link=@ggna,51>
             <Button|id=ui_66|x=242|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=成就测试|link=@ggna,52>
             <Button|id=ui_67|x=354|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=刷怪测试|link=@ggna,53>
-            <Button|id=ui_68|x=466|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=清通天塔|link=@ggna,55>
+            <Button|id=ui_68|x=466|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=清锁妖塔|link=@ggna,55>
             <Button|id=ui_65|x=578|y=300|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=飘字测试|link=@ggna,14>
             <Button|id=ui_69|x=18|y=350|width=160|height=40|nimg=public/1900000660.png|color=251|size=16|text=二大陆XYL全清|link=@ggna,56>
             <Button|id=ui_70|x=190|y=350|width=106|height=40|nimg=public/1900000660.png|color=251|size=16|text=2大陆解锁|link=@ggna,57>
@@ -1109,7 +1109,7 @@ function ggna(play,id)
         if checkmirrormap(dtm) then
             delmirrormap(dtm)
         end
-        Player.sendmsgEx(play, "已清空今日通天塔挑战次数与续打进度#218")
+        Player.sendmsgEx(play, "已清空今日锁妖塔挑战次数与续打进度#218")
     elseif id == "56" then
         _ff9999_finish_second_continent_xyl(play)
     elseif id == "57" then
@@ -1401,6 +1401,7 @@ function ggna(play,id)
     end
 end
 return npc
+
 
 
 

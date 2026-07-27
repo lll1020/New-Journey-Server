@@ -836,7 +836,7 @@ local npc_xyl = {
                     desc = "行走寻宝大师，破除迷障",
                 },
             },
-            name = "仙府功能",
+            name = "壮志凌云",
             jqd = 0,
             pre = {
                 check = function(play)

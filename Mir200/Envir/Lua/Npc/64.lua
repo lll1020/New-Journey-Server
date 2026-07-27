@@ -29,6 +29,10 @@ local function _real_charge(play)
     return _toint(getplaydef(play, VarCfg["U_真实充值"]))
 end
 
+local function _rebirth_level(play)
+    return _toint(getplaydef(play, VarCfg["U_转生等级"]))
+end
+
 local function _ensure_pet_data(T_data)
     T_data = T_data or {}
     T_data.ls = T_data.ls or {}
@@ -47,11 +51,10 @@ local function _is_lingshou_contract_open(play, T_data)
     if _toint(T_data.baby_choice) > 0 then
         return true
     end
-    local rwid = _toint(getplaydef(play, VarCfg.U_zxrw[1]))
-    if rwid >= 28 then
+    if _rebirth_level(play) >= 25 then
         return true
     end
-    return false, "请先推进主线至【灵兽孵化】#57"
+    return false, "完成三阶转生·五重后，才可领取灵兽蛋"
 end
 local function _has_pet_linggen_synergy(play, T_data)
     T_data = T_data or {}
@@ -191,6 +194,10 @@ function npc.main(play,npcid)
         T_data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
     end
     local mainUnlocked = Player.dl_sz_notip(play, 4) and 1 or 0
+    if not contractOnly and mainUnlocked ~= 1 then
+        Player.sendmsgEx(play, "四大陆解锁后，才可打开灵兽主界面#57")
+        return
+    end
     if contractOnly then
         local ok, msg = _is_lingshou_contract_open(play, T_data)
         if not ok then

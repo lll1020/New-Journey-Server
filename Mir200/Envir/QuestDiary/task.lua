@@ -71,6 +71,10 @@ local function _zxrw_get_main_task_cfg(rwid)
     local cfg = constant.rw_syb[tonumber(rwid) or 0]
     return type(cfg) == "table" and type(cfg.task) == "table" and cfg.task or nil
 end
+local function _zxrw_direct_skip_on_arrive(rwid)
+    rwid = tonumber(rwid) or 0
+    return rwid == 22 or rwid == 28
+end
 local function _zxrw_get_json(play, varName)
     local data = Player.getJsonTableByVar(play, varName)
     return type(data) == "table" and data or {}
@@ -566,6 +570,10 @@ function task_login(play)
                 setplaydef(play,VarCfg.N_znpc,1)
             end
         end
+        if _zxrw_direct_skip_on_arrive(rwid) then
+            newdeletetask(play,rwid)
+            return
+        end
         if _zxrw_is_precompleted(play, rwid) then
             newdeletetask(play,rwid)
             return
@@ -655,7 +663,6 @@ function moni_dj_rw(actor, rwid) --模拟点击任务
     end
     clicknewtask(actor,rwid)
 end
---------------------点击任务触发-------------------
 function clicknewtask(play,rwid)
     if _zxrw_block_click_during_xyl_guide(play) then
         return
@@ -665,6 +672,11 @@ function clicknewtask(play,rwid)
     end
      ---------------------------------------------------任务逻辑处理
     if constant.rw_syb[rwid] then
+        if _zxrw_direct_skip_on_arrive(rwid) then
+            newdeletetask(play,rwid)
+            playeffect(play,4011,25,-50,1,0,0)
+            return
+        end
         if _zxrw_is_precompleted(play, rwid) then
             newdeletetask(play,rwid)
             playeffect(play,4011,25,-50,1,0,0)
@@ -899,12 +911,16 @@ function deletetask(play,rwid)
         end
         _zxrw_register_sjwp_progress(play, rwid + 1)
         _zxrw_sync_story_kill_task_progress(play, rwid + 1)
+        if _zxrw_direct_skip_on_arrive(rwid + 1) then
+            newdeletetask(play, rwid + 1)
+            return
+        end
         if rwid+1 < 900 then
             if constant.rw_syb[rwid+1].jx then
                 navigation(play, 110, rwid+1, "点击继续任务")
             end
         end
-    end
+        end
     if constant.rw_syb[rwid] then
         local lx = constant.rw_syb[rwid][1]
         if lx == 2 then

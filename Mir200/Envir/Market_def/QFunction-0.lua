@@ -2874,7 +2874,8 @@ function handlerequest(play, msgID, p1, p2, p3, msgData)
             return
         end
         if p1 == 64 and (p2 == 64 or p2 == 1064) then
-            if Npclib[64] and Npclib[64].main then Npclib[64].main(play, 1064) else release_print("handlerequest", "NPC模块不存在", "npcid：64") end
+            local openNpcid = (p2 == 1064) and 1064 or 64
+            if Npclib[64] and Npclib[64].main then Npclib[64].main(play, openNpcid) else release_print("handlerequest", "NPC模块不存在", "npcid：64") end
             return
         end
         if qf_teshunpc[p1] then

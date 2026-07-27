@@ -744,3 +744,9 @@
 
 [2026-07-27 05:16:41:123] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：47; NpcThreadId: 19396, CurPlayThreadId: 19396
 
+[2026-07-27 05:52:24:911] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 19396, CurPlayThreadId: 19396
+
+[2026-07-27 06:30:20:140] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：63; NpcThreadId: 19396, CurPlayThreadId: 19396
+
+[2026-07-27 06:49:28:273] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：63; NpcThreadId: 19396, CurPlayThreadId: 19396
+

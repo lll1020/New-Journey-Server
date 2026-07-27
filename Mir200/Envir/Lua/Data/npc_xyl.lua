@@ -269,6 +269,12 @@ local function _xyl_has_rebirth(play, level)
     return (getplaydef(play, VarCfg["U_转生等级"]) or 0) >= (level or 1)
 end
 
+-- 备注：通天塔累计挑战次数是否达到指定次数
+local function _xyl_has_tongtian_runs(play, need)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_锁妖塔"] or "T51") or {}
+    return (tonumber(data.total_runs or 0) or 0) >= (tonumber(need or 1) or 1)
+end
+
 -- 备注：判断斗笠低阶名称（低阶不算完成传说/更高）
 local function _xyl_is_lower_hat_name(name)
     if not name or name == "" then
@@ -601,6 +607,7 @@ local function _xyl_check_task(play, name)
         ["星象圣图达到帝星"] = function(play) return _xyl_has_star_stage(play, 8) end,
         ["转生·六"] = function(play) return _xyl_has_rebirth(play, 60) end,
         ["完成转生·六"] = function(play) return _xyl_has_rebirth(play, 60) end,
+        ["挑战六次通天塔"] = function(play) return _xyl_has_tongtian_runs(play, 6) end,
         ["天书强化"] = _xyl_has_tianshu_level,
         ["初识仙法"] = _xyl_has_any_xianfa,
         ["天书仙法"] = _xyl_has_any_xianfa,
@@ -797,6 +804,19 @@ local npc_xyl = {
         {
             jq = {
                 {
+                    "挑战六次通天塔",
+                    id = 999,
+                    jl = { { "剧情点", 1 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "挑战六次通天塔")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "三大陆主城", 93, 161, 230 },
+                    desc = "累计挑战通天塔六次，证明自身底蕴，完成苍云秘闻的额外试炼",
+                },
+                {
                     "种植仙草",
                     id = 999,
                     jl = { { "剧情点", 1 }, { "藏宝图碎片", 5 } },
@@ -836,7 +856,7 @@ local npc_xyl = {
                     desc = "行走寻宝大师，破除迷障",
                 },
             },
-            name = "仙府功能",
+            name = "壮志凌云",
             jqd = 0,
             pre = {
                 check = function(play)
