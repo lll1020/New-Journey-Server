@@ -254,10 +254,13 @@ function npc_626_finish(play)
         jq_data[_main_key] = 2
     end
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+    _remove_finish_item(play, _prep_item_name())
+
     if hasbuff(play, 20112) then
         delbuff(play, 20112)
     end
     Player.sendmsgEx(play, "|"..(_config.name or "任务").."#249|完成#57")
+
     if npcid then Guard.closeNpc(play, npcid) end
     sendluamsg(play,101,1005,0,0,"rwwc")
     _try_send_gray_entry_guide(play)

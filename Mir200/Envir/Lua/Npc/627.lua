@@ -87,7 +87,7 @@ local function _kill_main_mob(play, dtm)
         end
     end
 end
-    
+
 local function _spawn_main_mob(dtm)
     local mob_name = _config.mob or "π÷ŒÔ"
     local pos = {
@@ -305,6 +305,8 @@ function npc_627_finish(play)
         jq_data[_main_key] = 2
     end
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+    _remove_finish_item(play, _prep_item_name())
+
     if hasbuff(play, 20111) then
         delbuff(play, 20111)
     end
