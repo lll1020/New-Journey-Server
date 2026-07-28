@@ -1,2 +1,38 @@
 [2026-07-28 08:31:43:869] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：172; NpcThreadId: 12256, CurPlayThreadId: 12256
 
+[2026-07-28 09:01:51:063] LuaNPC:玩家名字 ID:999999999 执行 mondropitemex player:玩家名字 耗时：31; NpcThreadId: 12256, CurPlayThreadId: 12256
+
+[2026-07-28 09:05:29:048] LuaNPC:玩家名字 ID:999999999 执行 mondropitemex player:玩家名字 耗时：31; NpcThreadId: 12256, CurPlayThreadId: 12256
+
+[2026-07-28 10:18:19:815] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 12256, CurPlayThreadId: 12256
+
+[2026-07-28 11:01:20:379] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：31; NpcThreadId: 12256, CurPlayThreadId: 12256
+
+[2026-07-28 11:01:25:687] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：32; NpcThreadId: 12256, CurPlayThreadId: 12256
+
+[2026-07-28 11:01:52:660] LuaNPC:玩家名字 ID:999999999 执行 addbag player:玩家名字 耗时：31; NpcThreadId: 12256, CurPlayThreadId: 12256
+
+[2026-07-28 11:02:49:050] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：31; NpcThreadId: 12256, CurPlayThreadId: 12256
+
+[2026-07-28 11:16:08:523] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：32; NpcThreadId: 12256, CurPlayThreadId: 12256
+
+[2026-07-28 11:31:16:076] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 12256, CurPlayThreadId: 12256
+
+[2026-07-28 11:34:33:101] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：31; NpcThreadId: 12256, CurPlayThreadId: 12256
+
+[2026-07-28 11:48:26:077] LuaNPC:玩家名字 ID:999999999 执行 addbag player:玩家名字 耗时：31; NpcThreadId: 12256, CurPlayThreadId: 12256
+
+[2026-07-28 12:01:58:530] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：31; NpcThreadId: 12256, CurPlayThreadId: 12256
+
+[2026-07-28 12:23:58:654] LuaNPC:玩家名字 ID:999999999 执行 entermap player:玩家名字 耗时：31; NpcThreadId: 12256, CurPlayThreadId: 12256
+
+[2026-07-28 12:33:47:328] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：31; NpcThreadId: 12256, CurPlayThreadId: 12256
+
+[2026-07-28 13:04:53:022] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：32; NpcThreadId: 12256, CurPlayThreadId: 12256
+
+[2026-07-28 13:10:11:170] LuaNPC:玩家名字 ID:999999999 执行 entermap player:玩家名字 耗时：31; NpcThreadId: 12256, CurPlayThreadId: 12256
+
+[2026-07-28 13:57:35:455] LuaNPC:玩家名字 ID:999999999 执行 entermap player:玩家名字 耗时：31; NpcThreadId: 12256, CurPlayThreadId: 12256
+
+[2026-07-28 14:02:40:404] LuaNPC:玩家名字 ID:999999999 执行 mondropitemex player:玩家名字 耗时：31; NpcThreadId: 12256, CurPlayThreadId: 12256
+

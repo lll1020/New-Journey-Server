@@ -17,28 +17,43 @@ local function _sg_color_text(text, color)
         code = "#249"
     elseif c == "#f7f7de" or c == "#ffffff" or c == "white" then
         code = "#250"
+    elseif c == "#ffd36b" or c == "#ffcc66" or c == "gold" or c == "yellow" then
+        code = "#218"
     end
     return code .. "|" .. tostring(text or "")
+end
+local function _sg_progress_text(cur, need)
+    return _sg_color_text(tostring(cur or 0), "#ff3030") ..
+        _sg_color_text("/", "#f7f7de") ..
+        _sg_color_text(tostring(need or 0), "#00ff00")
+end
+local function _sg_short_target_name(name, fallback)
+    local text = tostring(name or fallback or "目标")
+    text = string.gsub(text, "[★☆≮≯]", "")
+    local short = string.match(text, "·([^·]+)$")
+    if short and short ~= "" then
+        text = short
+    end
+    text = string.gsub(text, "^%s+", "")
+    text = string.gsub(text, "%s+$", "")
+    if text == "" then
+        text = tostring(fallback or "目标")
+    end
+    return text
 end
 local function _sg_kill_tip(play, title, cur, need, action)
     title = tostring(title or "任务")
     action = tostring(action or "击杀")
-    cur = tostring(cur or 0)
-    need = tostring(need or 0)
     Player.sendmsgEx(play,
-        _sg_color_text(title .. action .. "+1", "#00ff00") ..
-        _sg_color_text("（", "#f7f7de") ..
-        _sg_color_text(cur, "#ff3030") ..
-        _sg_color_text("/", "#f7f7de") ..
-        _sg_color_text(need, "#00ff00") ..
-        _sg_color_text("）", "#f7f7de"))
+        _sg_color_text("【" .. title .. "】", "#ffd36b") ..
+        _sg_color_text(action .. "进度 ", "#f7f7de") ..
+        _sg_progress_text(cur, need))
 end
 local function _sg_kill_multi_tip(play, title, action, content)
     Player.sendmsgEx(play,
-        _sg_color_text(tostring(title or "任务") .. tostring(action or "击杀") .. "+1", "#00ff00") ..
-        _sg_color_text("（", "#00ff00") ..
-        tostring(content or "") ..
-        _sg_color_text("）", "#00ff00"))
+        _sg_color_text("【" .. tostring(title or "任务") .. "】", "#ffd36b") ..
+        _sg_color_text(tostring(action or "击杀") .. "进度 ", "#f7f7de") ..
+        tostring(content or ""))
 end
 local _zxrw_story_kill_rwid = {
     [603] = 19,
@@ -1012,7 +1027,7 @@ shaguai = {
 			shaguai.jian(play,648)
 			messagebox(play,"任务完成,立即前往提交")
 		end
-		_sg_kill_multi_tip(play, (config.name or "任务"), "击杀", _sg_color_text(a, "#ff3030") .. _sg_color_text("/"..(config.num_a or 0).."，", "#00ff00") .. _sg_color_text(b, "#ff3030") .. _sg_color_text("/"..(config.num_b or 0).."，", "#00ff00") .. _sg_color_text(c, "#ff3030") .. _sg_color_text("/"..(config.num_c or 0), "#00ff00"))
+        _sg_kill_multi_tip(play, (config.name or "任务"), "击杀", _sg_color_text(_sg_short_target_name(config.mob_a, "目标一") .. " ", "#ffd36b") .. _sg_progress_text(a, (config.num_a or 0)) .. _sg_color_text("  " .. _sg_short_target_name(config.mob_b, "目标二") .. " ", "#ffd36b") .. _sg_progress_text(b, (config.num_b or 0)) .. _sg_color_text("  " .. _sg_short_target_name(config.mob_c, "目标三") .. " ", "#ffd36b") .. _sg_progress_text(c, (config.num_c or 0)))
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
 	["631"] = function(play,mob)      --谁是内鬼
@@ -1114,7 +1129,7 @@ shaguai = {
 			shaguai.jian(play,642)
 			messagebox(play,"任务完成,立即前往提交")
 		end
-		_sg_kill_multi_tip(play, (config.name or "任务"), "击杀小怪/首领", _sg_color_text(a, "#ff3030") .. _sg_color_text("/"..(config.num_a or 0).."，", "#00ff00") .. _sg_color_text(b, "#ff3030") .. _sg_color_text("/"..(config.num_b or 0), "#00ff00"))
+		_sg_kill_multi_tip(play, (config.name or "任务"), "击杀", _sg_color_text("小怪 ", "#ffd36b") .. _sg_progress_text(a, (config.num_a or 0)) .. _sg_color_text("  首领 ", "#ffd36b") .. _sg_progress_text(b, (config.num_b or 0)))
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
 	["644"] = function(play,mob)      --我的袈裟！
