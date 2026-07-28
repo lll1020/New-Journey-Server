@@ -117,7 +117,7 @@ local function npc_628_kill_by_name(play, dtm, name)
     if list then
         for _, v in ipairs(list) do
             if getbaseinfo(v,1) == name then
-                humanhp(v, "-", 999999999, 107, 0, play)
+                humanhp(v, "-", 999999999, 0, 0, play,0)
             end
         end
     end

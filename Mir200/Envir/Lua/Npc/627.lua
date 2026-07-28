@@ -49,6 +49,19 @@ local function _remove_finish_item(play, item_name)
     return false
 end
 
+local function _auto_use_prep_item(play)
+    if hasbuff(play, 20111) then
+        return true
+    end
+    local item_name = _prep_item_name()
+    if getbagitemcount(play, item_name) < 1 then
+        return false
+    end
+    addbuff(play, 20111)
+    Player.sendmsgEx(play, "检测到背包中拥有#57|【"..item_name.."】#218|，已自动获得定身效果#57")
+    return true
+end
+
 local function _count_main_mob(dtm)
     local name = _config.mob or "怪物"
     local list = getobjectinmap(dtm, 0, 0, 999, 2)
@@ -69,12 +82,12 @@ local function _kill_main_mob(play, dtm)
     if list then
         for _, v in ipairs(list) do
             if getbaseinfo(v, 1) == name then
-                humanhp(v, "-", 999999999, 107, 0, play)
+                humanhp(v, "-", 999999999, 0, 0, play,0)
             end
         end
     end
 end
-
+    
 local function _spawn_main_mob(dtm)
     local mob_name = _config.mob or "怪物"
     local pos = {
@@ -231,6 +244,7 @@ function npc_627_enter(play)
     local base_map = _config.fb_map or "mwsl"
     addmirrormap(base_map, dtm, "叹息旷野", 300, "xtc")
     mapmove(play, dtm, 29, 27, 2)
+    _auto_use_prep_item(play)
 
     local mob_name = _config.mob or "怪物"
     genmonex(dtm, 32, 36, mob_name, 1, 1, 0, 54, "", 0)
@@ -291,7 +305,6 @@ function npc_627_finish(play)
         jq_data[_main_key] = 2
     end
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-    _remove_finish_item(play, _prep_item_name())
     if hasbuff(play, 20111) then
         delbuff(play, 20111)
     end
