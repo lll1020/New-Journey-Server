@@ -1015,7 +1015,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "葬星海滩1", 632, 62, 22 },
+                    yd = { 1, "藏星海", 304, 44, 133 },
                     desc = "直面海滩拾贝，化解其中隐患",
                 },
                 {
@@ -1032,7 +1032,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "葬星海滩1", 633, 33, 36 },
+                    yd = { 1, "藏星海", 304, 44, 133 },
                     desc = "深入海盗宝藏，寻回失落线索",
                 },
             },

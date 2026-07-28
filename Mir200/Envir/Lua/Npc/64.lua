@@ -5,7 +5,7 @@ npc = {}
 
 local _config = Guard.getConfig("npc_64")
 local FairyFate = include("lua/LuaLib/fairy_fate.lua")
-local LINGSHOU_BABY_SECONDS = 48 * 3600
+local LINGSHOU_BABY_SECONDS = 36 * 3600
 local LINGSHOU_BABY_CFG = {
     [1] = {pet = "麒麟", item = "麒麟幼崽"},
     [2] = {pet = "青龙", item = "青龙幼崽"},
@@ -335,7 +335,7 @@ function npc.link(play,npcid,ew,aid,data)
         sendluamsg(play,100,npcid,3,0,tbl2json({T_data = T_data, server_time = os.time()}))
         Player.sendmsgEx(play, string.format("你成功喂养灵兽|【%s】#218|，当前喂养次数|【%d】#218", _config.config.ls[json_data.idx].name, T_data.ls[""..json_data.idx]))
     elseif ew == 4 then -- 灵兽升星
-    elseif ew == 6 then -- 灵兽契约：领取48小时幼崽
+    elseif ew == 6 then -- 灵兽契约：领取36小时幼崽
         T_data = _ensure_pet_data(T_data)
         local openOk, openMsg = _is_lingshou_contract_open(play, T_data)
         if not openOk then
@@ -362,7 +362,7 @@ function npc.link(play,npcid,ew,aid,data)
         Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
         if Player.trySyncSecondContinentXyl then Player.trySyncSecondContinentXyl(play) end
         if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "任务") end
-        Player.sendmsgEx(play, string.format("已选择|【%s】#218|，48小时后自动孵化#57", cfg.item))
+        Player.sendmsgEx(play, string.format("已选择|【%s】#218|，36小时后自动孵化#57", cfg.item))
         _refresh_pet_panel(play, npcid, 6, T_data)
     elseif ew == 7 then -- 灵兽契约：真实累计充值99元立即点化
         T_data = _ensure_pet_data(T_data)
