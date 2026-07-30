@@ -2013,69 +2013,7 @@ local npc_xyl = {
         },
     },
     {
-        {
-            jq = {
-                {
-                    "灵兽奥秘",
-                    tk = "npc_682",
-                    id = 999,
-                    jl = {},
-                    fwdjy = function(play, tk)
-                        if tk then
-                            return _xyl_check_task(play, tk)
-                        end
-                        return false
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "灵兽谷", 682, 88, 91 },
-                    desc = "踏入灵兽奥秘，探寻灵兽之源",
-                },
-                {
-                    "激活全部圣遗物",
-                    id = 999,
-                    jl = { { "剧情点", 5 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "激活全部圣遗物")
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "五大陆主城", 69, 75, 27 },
-                    desc = "为全部灵兽激活圣遗物",
-                },
-                {
-                    "激活全部天命装备",
-                    id = 999,
-                    jl = { { "剧情点", 5 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "激活全部天命装备")
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "五大陆主城", 75, 95, 22 },
-                    desc = "集齐并激活全部天命装备",
-                },
-                {
-                    "完成转生·五",
-                    id = 999,
-                    jl = { { "剧情点", 1 } },
-                    fwdjy = function(play)
-                        return _xyl_check_task(play, "完成转生·五")
-                    end,
-                    khdjy = function()
-                        return true
-                    end,
-                    yd = { 1, "五大陆主城", 36, 71, 28 },
-                    desc = "完成转生·五，跨入更高境界",
-                },
-            },
-            name = "红尘秘闻",
-            jqd = 61,
-            jl = { { "等级卷轴", 20 }, { "1元真实充值", 25 } },
-        },
+        
         {
             jq = {
                 {
@@ -2098,6 +2036,9 @@ local npc_xyl = {
                 {
                     "屠龙宝刀",
                     tk = "npc_714",
+                    prev_task = "npc_688_a",
+                    prev_need = 1,
+                    prev_name = "时空之门·倚天江湖",
                     id = 999,
                     jl = { { "剧情点", 2 } },
                     fwdjy = function(play, tk)
@@ -2115,6 +2056,9 @@ local npc_xyl = {
                 {
                     "围攻光明顶",
                     tk = "npc_715",
+                    prev_task = "npc_688_a",
+                    prev_need = 1,
+                    prev_name = "时空之门·倚天江湖",
                     id = 999,
                     jl = { { "剧情点", 2 } },
                     fwdjy = function(play, tk)
@@ -2132,6 +2076,9 @@ local npc_xyl = {
                 {
                     "孤身战吕布",
                     tk = "npc_716",
+                    prev_task = "npc_688_b",
+                    prev_need = 1,
+                    prev_name = "时空之门·三国乱世",
                     id = 999,
                     jl = { { "剧情点", 3 } },
                     fwdjy = function(play, tk)
@@ -2149,6 +2096,9 @@ local npc_xyl = {
                 {
                     "火烧赤壁",
                     tk = "npc_717",
+                    prev_task = "npc_688_b",
+                    prev_need = 1,
+                    prev_name = "时空之门·三国乱世",
                     id = 999,
                     jl = { { "剧情点", 3 } },
                     fwdjy = function(play, tk)
@@ -2166,6 +2116,9 @@ local npc_xyl = {
                 {
                     "景阳冈打虎",
                     tk = "npc_718",
+                    prev_task = "npc_688_c",
+                    prev_need = 1,
+                    prev_name = "时空之门·水浒再临",
                     id = 999,
                     jl = { { "剧情点", 2 } },
                     fwdjy = function(play, tk)
@@ -2183,6 +2136,9 @@ local npc_xyl = {
                 {
                     "血溅狮子楼",
                     tk = "npc_719",
+                    prev_task = "npc_688_c",
+                    prev_need = 1,
+                    prev_name = "时空之门·水浒再临",
                     id = 999,
                     jl = { { "剧情点", 3 } },
                     fwdjy = function(play, tk)
@@ -2571,85 +2527,72 @@ local npc_xyl = {
             jqd = 81,
             jl = { { "等级卷轴", 10 }, { "1元真实充值", 15 } },
         },
-    },
-    {
         {
             jq = {
                 {
-                    "完成兵神道自证",
-                    tk = "完成兵神道自证",
+                    "灵兽奥秘",
+                    tk = "npc_682",
                     id = 999,
-                    jl = {{"剧情点", 1}},
-                    fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
-                    khdjy = function() return true end,
-                    yd = {1, "六大陆主城", 77, 77, 113},
-                    desc = "完成兵神道自证",
+                    jl = {},
+                    fwdjy = function(play, tk)
+                        if tk then
+                            return _xyl_check_task(play, tk)
+                        end
+                        return false
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "灵兽谷", 682, 88, 91 },
+                    desc = "踏入灵兽奥秘，探寻灵兽之源",
                 },
                 {
-                    "完成鬼神道自证",
-                    tk = "完成鬼神道自证",
+                    "激活全部圣遗物",
                     id = 999,
-                    jl = {{"剧情点", 1}},
-                    fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
-                    khdjy = function() return true end,
-                    yd = {1, "六大陆主城", 77, 77, 113},
-                    desc = "完成鬼神道自证",
+                    jl = { { "剧情点", 5 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "激活全部圣遗物")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "五大陆主城", 69, 75, 27 },
+                    desc = "为全部灵兽激活圣遗物",
                 },
                 {
-                    "获得全部世界符文",
-                    tk = "获得全部世界符文",
+                    "激活全部天命装备",
                     id = 999,
-                    jl = {{"剧情点", 1}},
-                    fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
-                    khdjy = function() return true end,
-                    yd = {1, "六大陆主城", 84, 95, 129},
-                    desc = "激活全部世界符文",
+                    jl = { { "剧情点", 5 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "激活全部天命装备")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "五大陆主城", 75, 95, 22 },
+                    desc = "集齐并激活全部天命装备",
                 },
                 {
-                    "星象圣图达到耀星",
-                    tk = "星象圣图达到耀星",
+                    "完成转生·五",
                     id = 999,
-                    jl = {{"剧情点", 1}},
-                    fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
-                    khdjy = function() return true end,
-                    yd = {1, "六大陆主城", 85, 89, 113},
-                    desc = "完成星象圣图耀星阶段的全部点亮",
-                },
-                {
-                    "星象圣图达到圣星",
-                    tk = "星象圣图达到圣星",
-                    id = 999,
-                    jl = {{"剧情点", 1}},
-                    fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
-                    khdjy = function() return true end,
-                    yd = {1, "六大陆主城", 85, 89, 113},
-                    desc = "完成星象圣图圣星阶段的全部点亮",
-                },
-                {
-                    "星象圣图达到帝星",
-                    tk = "星象圣图达到帝星",
-                    id = 999,
-                    jl = {{"剧情点", 1}},
-                    fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
-                    khdjy = function() return true end,
-                    yd = {1, "六大陆主城", 85, 89, 113},
-                    desc = "完成星象圣图帝星阶段的全部点亮",
-                },
-                {
-                    "完成转生·六",
-                    tk = "完成转生·六",
-                    id = 999,
-                    jl = {{"剧情点", 1}},
-                    fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
-                    khdjy = function() return true end,
-                    yd = {1, "六大陆主城", 36, 83, 121},
-                    desc = "完成转生·六，跨入更高境界",
+                    jl = { { "剧情点", 1 } },
+                    fwdjy = function(play)
+                        return _xyl_check_task(play, "完成转生·五")
+                    end,
+                    khdjy = function()
+                        return true
+                    end,
+                    yd = { 1, "五大陆主城", 36, 71, 28 },
+                    desc = "完成转生·五，跨入更高境界",
                 },
             },
-            name = "灵虚秘闻",
+            name = "红尘秘闻",
             jqd = 61,
-            jl = {{"等级卷轴", 10}, {"1元真实充值", 15}},
+            jl = { { "等级卷轴", 20 }, { "1元真实充值", 25 } },
         },
+    },
+    {
+        
         {
             jq = {
                 {
@@ -3036,10 +2979,93 @@ local npc_xyl = {
             jqd = 81,
             jl = {{"等级卷轴", 10}, {"1元真实充值", 15}},
         },
+        {
+            jq = {
+                {
+                    "完成兵神道自证",
+                    tk = "完成兵神道自证",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
+                    khdjy = function() return true end,
+                    yd = {1, "六大陆主城", 77, 77, 113},
+                    desc = "完成兵神道自证",
+                },
+                {
+                    "完成鬼神道自证",
+                    tk = "完成鬼神道自证",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
+                    khdjy = function() return true end,
+                    yd = {1, "六大陆主城", 77, 77, 113},
+                    desc = "完成鬼神道自证",
+                },
+                {
+                    "获得全部世界符文",
+                    tk = "获得全部世界符文",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
+                    khdjy = function() return true end,
+                    yd = {1, "六大陆主城", 84, 95, 129},
+                    desc = "激活全部世界符文",
+                },
+                {
+                    "星象圣图达到耀星",
+                    tk = "星象圣图达到耀星",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
+                    khdjy = function() return true end,
+                    yd = {1, "六大陆主城", 85, 89, 113},
+                    desc = "完成星象圣图耀星阶段的全部点亮",
+                },
+                {
+                    "星象圣图达到圣星",
+                    tk = "星象圣图达到圣星",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
+                    khdjy = function() return true end,
+                    yd = {1, "六大陆主城", 85, 89, 113},
+                    desc = "完成星象圣图圣星阶段的全部点亮",
+                },
+                {
+                    "星象圣图达到帝星",
+                    tk = "星象圣图达到帝星",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
+                    khdjy = function() return true end,
+                    yd = {1, "六大陆主城", 85, 89, 113},
+                    desc = "完成星象圣图帝星阶段的全部点亮",
+                },
+                {
+                    "完成转生·六",
+                    tk = "完成转生·六",
+                    id = 999,
+                    jl = {{"剧情点", 1}},
+                    fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
+                    khdjy = function() return true end,
+                    yd = {1, "六大陆主城", 36, 83, 121},
+                    desc = "完成转生·六，跨入更高境界",
+                },
+            },
+            name = "灵虚秘闻",
+            jqd = 61,
+            jl = {{"等级卷轴", 10}, {"1元真实充值", 15}},
+        },
     },
 }
 npc_xyl.check_task = _xyl_check_task
 return npc_xyl
+
+
+
+
+
+
 
 
 

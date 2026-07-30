@@ -994,6 +994,20 @@ local function _dl_get_base_state(actor)
         zxrw = tonumber(getplaydef(actor, VarCfg.U_zxrw[1]) or 0) or 0,
     }
 end
+local function _dl_mark_unlocked(actor, dl)
+    dl = tonumber(dl) or 0
+    if dl <= 1 then
+        return
+    end
+    local admin_unlock = tonumber(getplaydef(actor, "U_全大陆解锁") or 0) or 0
+    if admin_unlock == 1 or admin_unlock >= dl then
+        return
+    end
+    setplaydef(actor, "U_全大陆解锁", dl)
+    if sendluamsg then
+        sendluamsg(actor, 103, 1, 0, 0, tbl2json({dl_all_unlock = dl}))
+    end
+end
 local function _dl_check(actor, dl)
     if dl == 1 then
         return true
@@ -1010,17 +1024,20 @@ local function _dl_check(actor, dl)
     local zxrw = state.zxrw
     if dl == 2 then
         if zxrw >= 16 then
+            _dl_mark_unlocked(actor, 2)
             return true
         end
         return false, "需完成主线引导后才可进入二大陆"
     elseif dl == 3 then
         if zxrw >= 35 then
+            _dl_mark_unlocked(actor, 3)
             return true
         end
         return false, "需跟随主线引导后才可进入三大陆"
     elseif dl == 4 then
         local story_ok, story_done, story_need = _dl_has_story_point_count(actor, 3, 25, true)
         if story_ok and zslv >= 30 and level >= 150 then
+            _dl_mark_unlocked(actor, 4)
             return true
         end
         return false, "需三大陆剧情点达到25点、完成三大陆转生且人物等级达到150级后才可进入四大陆"
@@ -1028,6 +1045,7 @@ local function _dl_check(actor, dl)
         local story_ok, story_done, story_need = _dl_has_story_point_count(actor, 4, 69, true)
         local linggen_ok = _dl_has_all_linggen(actor)
         if story_ok and zslv >= 40 and linggen_ok then
+            _dl_mark_unlocked(actor, 5)
             return true
         end
         return false, "需四大陆剧情点达到69点、完成四大陆转生且全部基础灵根达到Lv.1后才可进入五大陆"
@@ -1035,6 +1053,7 @@ local function _dl_check(actor, dl)
         local story_ok, story_done, story_need = _dl_has_story_point_count(actor, 5, 61, true)
         local destiny_ok = _dl_has_all_destiny(actor)
         if story_ok and zslv >= 50 and destiny_ok then
+            _dl_mark_unlocked(actor, 6)
             return true
         end
         return false, "需五大陆剧情点达到61点、完成五大陆转生且完成天道命盘后才可进入六大陆"
@@ -1042,11 +1061,13 @@ local function _dl_check(actor, dl)
         local story_ok, story_done, story_need = _dl_has_story_point_count(actor, 6, 81, true)
         local pass_ok = Player.hasSeventhContinentPass(actor)
         if story_ok and zslv >= 60 and pass_ok then
+            _dl_mark_unlocked(actor, 7)
             return true
         end
         return false, "需六大陆剧情点达到81点、完成六大陆转生且获得#57|【世界符文·[真我]】#218|后才可进入七大陆"
     elseif dl == 8 then
         if zslv >= 70 then
+            _dl_mark_unlocked(actor, 8)
             return true
         end
         return false, "需完成七大陆转生后才可进入八大陆"
@@ -1804,5 +1825,7 @@ GameEvent.add(EventCfg.onKFLogin, _player_level_cap_on_login, "角色等级上限")
 GameEvent.add(EventCfg.onPlayLevelUp, _player_level_cap_on_level, "角色等级上限")
 
 return Player
+
+
 
 

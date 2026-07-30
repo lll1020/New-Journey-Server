@@ -356,3 +356,35 @@ function bl_zyjhl16(play,mingzi)
     return true
 end
 
+--------------------爆率监听触发-------------------圣遗物固定概率
+function bl_zyjhl17(play,mingzi)
+    if not mingzi or mingzi == "" then
+        print("[bl_zyjhl17] mingzi empty")
+        return false
+    end
+    local cur_map = tostring(getbaseinfo(play, 3) or "")
+    local cfg = {
+        ["上古麒麟怒角"] = {map = "麒麟之境", rate = 200},
+        ["上古青龙逆鳞"] = {map = "青龙之境", rate = 200},
+        ["上古朱雀火羽"] = {map = "朱雀之境", rate = 200},
+        ["上古白虎獠牙"] = {map = "白虎之境", rate = 200},
+        ["上古玄武鎏甲"] = {map = "玄武之境", rate = 200},
+    }
+    local one = cfg[mingzi]
+    if not one then
+        print("[bl_zyjhl17] no cfg,item=" .. tostring(mingzi))
+        return false
+    end
+    if cur_map ~= tostring(one.map or "") then
+        print("[bl_zyjhl17] map mismatch,item=" .. tostring(mingzi) .. ",cur_map=" .. tostring(cur_map) .. ",need_map=" .. tostring(one.map or ""))
+        return false
+    end
+    local rate = math.max(1, tonumber(one.rate) or 1)
+    local roll = math.random(rate)
+    local ok = roll == 1
+    print("[bl_zyjhl17] item=" .. tostring(mingzi) .. ",map=" .. tostring(cur_map) .. ",roll=" .. tostring(roll) .. "/" .. tostring(rate) .. ",ok=" .. tostring(ok))
+    return ok
+end
+
+
+

@@ -1,0 +1,81 @@
+[2026-07-31 03:39:18:325] LuaNPC: ID:999999999 执行 startup player: 耗时：31; NpcThreadId: 33148, CurPlayThreadId: 33148
+
+[2026-07-31 03:40:18:399] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：47; NpcThreadId: 33148, CurPlayThreadId: 33148
+
+[2026-07-31 03:51:20:387] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：1234; NpcThreadId: 33148, CurPlayThreadId: 33148
+
+[2026-07-31 03:56:52:173] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 33148, CurPlayThreadId: 33148
+
+[2026-07-31 03:57:44:245] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：32; NpcThreadId: 33148, CurPlayThreadId: 33148
+
+[2026-07-31 04:05:20:190] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 33148, CurPlayThreadId: 33148
+
+[2026-07-31 04:08:39:028] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 33148, CurPlayThreadId: 33148
+
+[2026-07-31 04:09:04:163] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 33148, CurPlayThreadId: 33148
+
+[2026-07-31 04:10:28:267] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 33148, CurPlayThreadId: 33148
+
+[2026-07-31 04:11:45:380] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 33148, CurPlayThreadId: 33148
+
+[2026-07-31 04:13:09:983] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 33148, CurPlayThreadId: 33148
+
+[2026-07-31 04:15:28:880] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 33148, CurPlayThreadId: 33148
+
+[2026-07-31 04:16:48:376] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 33148, CurPlayThreadId: 33148
+[2026-07-31 04:16:48:376] [玩家名字]Lua执行耗时过高:31ms msgid:100 503 1 0 
+
+[2026-07-31 04:20:54:764] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：109; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 04:21:15:946] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 04:21:34:147] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：63; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 04:21:39:436] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：31; NpcThreadId: 32972, CurPlayThreadId: 32972
+[2026-07-31 04:21:39:436] [玩家名字k]Lua执行耗时过高:31ms msgid:105 201 201 0 
+
+[2026-07-31 04:21:47:817] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 04:25:15:256] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 04:25:34:248] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：32; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 04:26:14:348] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 04:27:31:431] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 04:28:13:974] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 04:29:00:377] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 04:29:34:348] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 04:30:09:034] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 04:30:49:102] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 04:31:06:718] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 04:31:31:231] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 04:32:27:969] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 32972, CurPlayThreadId: 32972
+[2026-07-31 04:32:27:969] [玩家名字]Lua执行耗时过高:31ms msgid:105 688 688 0 
+
+[2026-07-31 04:35:31:363] >>>>>>HumTime id:0  onTimer6-16 
+
+[2026-07-31 04:41:18:172] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 04:59:26:564] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 05:02:57:581] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：46; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 05:04:39:076] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：46; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 05:05:52:566] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 05:06:48:542] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：32; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 05:07:07:548] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 32972, CurPlayThreadId: 32972
+
+[2026-07-31 05:07:45:914] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 32972, CurPlayThreadId: 32972
+
