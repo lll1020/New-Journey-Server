@@ -289,16 +289,16 @@ function bl_zyjhl15(play,mingzi)
         dl = tonumber(daluditu[cur_map] or 0) or 0
     end
     local cfg = {
-        ["极光·专属宝石·绑定"] = {dl = 2, rate = 123, bind = 1},
-        ["苍云·专属宝石·绑定"] = {dl = 3, rate = 222, bind = 1},
-        ["若水·专属宝石·绑定"] = {dl = 4, rate = 333, bind = 1},
-        ["红尘·专属宝石·绑定"] = {dl = 5, rate = 666, bind = 1},
-        ["灵虚·专属宝石·绑定"] = {dl = 6, rate = 888, bind = 1},
-        ["极光·专属宝石·非绑"] = {dl = 2, rate = 100, bind = 0},
-        ["苍云·专属宝石·非绑"] = {dl = 3, rate = 150, bind = 0},
-        ["若水·专属宝石·非绑"] = {dl = 4, rate = 266, bind = 0},
-        ["红尘·专属宝石·非绑"] = {dl = 5, rate = 300, bind = 0},
-        ["灵虚·专属宝石·非绑"] = {dl = 6, rate = 888, bind = 0},
+        ["极光·专属宝石·绑定"] = {dl = 2, rate = 1230, bind = 1},
+        ["苍云·专属宝石·绑定"] = {dl = 3, rate = 2220, bind = 1},
+        ["若水·专属宝石·绑定"] = {dl = 4, rate = 3330, bind = 1},
+        ["红尘·专属宝石·绑定"] = {dl = 5, rate = 6660, bind = 1},
+        ["灵虚·专属宝石·绑定"] = {dl = 6, rate = 8880, bind = 1},
+        ["极光·专属宝石·非绑"] = {dl = 2, rate = 1000, bind = 0},
+        ["苍云·专属宝石·非绑"] = {dl = 3, rate = 1500, bind = 0},
+        ["若水·专属宝石·非绑"] = {dl = 4, rate = 2660, bind = 0},
+        ["红尘·专属宝石·非绑"] = {dl = 5, rate = 3000, bind = 0},
+        ["灵虚·专属宝石·非绑"] = {dl = 6, rate = 8880, bind = 0},
     }
     local one = cfg[mingzi]
     if not one then

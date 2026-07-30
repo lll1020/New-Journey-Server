@@ -211,7 +211,7 @@ function npc.link(play,npcid,ew,aid)
             sendluamsg(play,101,1005,0,0,"rwwc")
         end
         sendluamsg(play,100,npcid,1,idx,"")
-        sendluamsg(play,101,11,0,0,'{"dljq":' .. getplaydef(play, VarCfg.T_dljq) .. ',"zxrw":' .. getplaydef(play, VarCfg.T_zxrw) .. ',"ywl":' .. getplaydef(play, VarCfg.T_ywl) .. "}")
+        -- sendluamsg(play,101,11,0,0,'{"dljq":' .. getplaydef(play, VarCfg.T_dljq) .. ',"zxrw":' .. getplaydef(play, VarCfg.T_zxrw) .. ',"ywl":' .. getplaydef(play, VarCfg.T_ywl) .. "}")
         return
     end
 end

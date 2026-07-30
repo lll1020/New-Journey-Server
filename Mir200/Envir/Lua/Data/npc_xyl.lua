@@ -1456,7 +1456,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "四大陆主城", 641, 37, 42 },
+                    yd = { 1, "四大陆主城", 641, 33, 34 },
                     desc = "直面重走西游路，化解其中隐患",
                 },
             },
@@ -1755,7 +1755,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "四大陆主城", 67, 36, 23 },
+                    yd = { 1, "四大陆主城", 67, 36, 27 },
                     desc = "行走生肖守护，破除迷障",
                 },
             },
@@ -1781,7 +1781,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "四大陆主城", 673, 20, 31 },
+                    yd = { 1, "四大陆主城", 673, 38, 35 },
                     desc = "历经传说修复局，收获机缘",
                 },
                 {
@@ -2002,7 +2002,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "四大陆主城", 35, 16, 31 },
+                    yd = { 1, "四大陆主城", 35, 23, 31 },
                     desc = "探访转生·四，揭开真相",
                 },
             },

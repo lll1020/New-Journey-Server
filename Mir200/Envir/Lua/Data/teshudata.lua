@@ -1788,10 +1788,10 @@ teshudata = {
     ["npc_665"]  = {id = 665, name = "灵域使者·三",xz = {659,660,661,662,}},
     ["npc_666"]  = {id = 666, name = "酆都鬼城",map = "酆都鬼城",shaguai_id = 666,num = 100,cost = {{"亡者灵魂",30}},ch = '捉鬼人'},
     ["npc_667"]  = {id = 667, name = "买路钱",cost = {{"鬼界令牌",5},{"金币",3880000}}},
-    ["npc_668"]  = {id = 668, name = "思念之人",cost = {{"彼岸花",520},{"金币",1314}},ch = '深情的家伙'},
+    ["npc_668"]  = {id = 668, name = "思念之人",cost = {{"彼岸花",520},{"金币",1314}},ch = '深情的家伙', task_cfg = { prev_task = "npc_667", prev_name = "买路钱" }},
     ["npc_669"]  = {id = 669, name = "忘却前生情",cost = {{"孟婆汤",10}},ch = '新的开始'},
-    ["npc_670"]  = {id = 670, name = "讨伐六天宫",cost = {{"六天宫残魂",10}},ch = '讨伐六天宫'},
-    ["npc_671"]  = {id = 671, name = "地狱使者",jl = {{'地狱使者之剑',1}},
+    ["npc_670"]  = {id = 670, name = "讨伐六天宫",cost = {{"六天宫残魂",10}},ch = '讨伐六天宫', task_cfg = { prev_task = "npc_669", prev_name = "忘却前生情" }},
+    ["npc_671"]  = {id = 671, name = "地狱使者",jl = {{'地狱使者之剑',1}}, task_cfg = { prev_task = "npc_669", prev_name = "忘却前生情" },
         details = {
             {idx = 1,fb_map = "mwsl",mob = "嘲灾",jl = {{"地狱信物（一层）★",1}}},
             {idx = 2,fb_map = "mwsl",mob = "嘲灾",jl = {{"地狱信物（二层）★",1}}},
@@ -1813,7 +1813,7 @@ teshudata = {
             {idx = 18,fb_map = "mwsl",mob = "嘲灾",jl = {{"地狱信物（十八层）★",1}}},
         },
     },
-    ["npc_672"]  = {id = 672, name = "轮回之路",ch = '六道仙人', shaguai_id = 672,
+    ["npc_672"]  = {id = 672, name = "轮回之路",ch = '六道仙人', shaguai_id = 672, task_cfg = { prev_task = "npc_669", prev_name = "忘却前生情" },
         details = {
             {idx = 1,wz = "在当前系列地图累计击杀15只BOSS",a_num = 15,},
             {idx = 2,wz = "提交99个人间道令牌",cost = {{"人间道令牌",99}},},
@@ -3228,16 +3228,16 @@ teshudata = {
         energy = {gold_per_sec = 1000, iron_per_sec = 0.01, hat_per_sec = 0.01, offline_ratio = 50},
         stones = {
             [1] = {name = "聚宝魔石", kind = "normal", continent = 0, bind = 0, time = "30分钟", desc = "全大陆掉落，炼灵后随机获得灵石、金币或千年玄铁。"},
-            [2] = {name = "极光·专属宝石·绑定", kind = "exclusive", continent = 2, bind = 1, time = "2小时", rate = 123, desc = "产出二大陆专属装备，装备绑定。"},
-            [3] = {name = "苍云·专属宝石·绑定", kind = "exclusive", continent = 3, bind = 1, time = "6小时", rate = 222, desc = "产出三大陆专属装备，装备绑定。"},
-            [4] = {name = "若水·专属宝石·绑定", kind = "exclusive", continent = 4, bind = 1, time = "12小时", rate = 333, desc = "产出四大陆专属装备，装备绑定。"},
-            [5] = {name = "红尘·专属宝石·绑定", kind = "exclusive", continent = 5, bind = 1, time = "24小时", rate = 666, desc = "产出五大陆专属装备，装备绑定。"},
-            [6] = {name = "灵虚·专属宝石·绑定", kind = "exclusive", continent = 6, bind = 1, time = "48小时", rate = 888, desc = "产出六大陆专属装备，装备绑定。"},
-            [7] = {name = "极光·专属宝石·非绑", kind = "exclusive", continent = 2, bind = 0, time = "2小时", red_rate = 100, desc = "产出二大陆专属装备，可交易。"},
-            [8] = {name = "苍云·专属宝石·非绑", kind = "exclusive", continent = 3, bind = 0, time = "6小时", red_rate = 150, desc = "产出三大陆专属装备，可交易。"},
-            [9] = {name = "若水·专属宝石·非绑", kind = "exclusive", continent = 4, bind = 0, time = "12小时", red_rate = 266, desc = "产出四大陆专属装备，可交易。"},
-            [10] = {name = "红尘·专属宝石·非绑", kind = "exclusive", continent = 5, bind = 0, time = "24小时", red_rate = 300, desc = "产出五大陆专属装备，可交易。"},
-            [11] = {name = "灵虚·专属宝石·非绑", kind = "exclusive", continent = 6, bind = 0, time = "48小时", red_rate = 888, desc = "产出六大陆专属装备，可交易。"},
+            [2] = {name = "极光·专属宝石·绑定", kind = "exclusive", continent = 2, bind = 1, time = "2小时", rate = 1230, desc = "产出二大陆专属装备，装备绑定。"},
+            [3] = {name = "苍云·专属宝石·绑定", kind = "exclusive", continent = 3, bind = 1, time = "6小时", rate = 2220, desc = "产出三大陆专属装备，装备绑定。"},
+            [4] = {name = "若水·专属宝石·绑定", kind = "exclusive", continent = 4, bind = 1, time = "12小时", rate = 3330, desc = "产出四大陆专属装备，装备绑定。"},
+            [5] = {name = "红尘·专属宝石·绑定", kind = "exclusive", continent = 5, bind = 1, time = "24小时", rate = 6660, desc = "产出五大陆专属装备，装备绑定。"},
+            [6] = {name = "灵虚·专属宝石·绑定", kind = "exclusive", continent = 6, bind = 1, time = "48小时", rate = 8880, desc = "产出六大陆专属装备，装备绑定。"},
+            [7] = {name = "极光·专属宝石·非绑", kind = "exclusive", continent = 2, bind = 0, time = "2小时", red_rate = 1000, desc = "产出二大陆专属装备，可交易。"},
+            [8] = {name = "苍云·专属宝石·非绑", kind = "exclusive", continent = 3, bind = 0, time = "6小时", red_rate = 1500, desc = "产出三大陆专属装备，可交易。"},
+            [9] = {name = "若水·专属宝石·非绑", kind = "exclusive", continent = 4, bind = 0, time = "12小时", red_rate = 2660, desc = "产出四大陆专属装备，可交易。"},
+            [10] = {name = "红尘·专属宝石·非绑", kind = "exclusive", continent = 5, bind = 0, time = "24小时", red_rate = 3000, desc = "产出五大陆专属装备，可交易。"},
+            [11] = {name = "灵虚·专属宝石·非绑", kind = "exclusive", continent = 6, bind = 0, time = "48小时", red_rate = 8880, desc = "产出六大陆专属装备，可交易。"},
         },
         forbidden = {
             [1] = {name = "焚天禁器·炎狱龙尊", skill = "天地异象", plus = "最大攻击+1%"},
@@ -3273,6 +3273,12 @@ teshudata = {
     },
 }
 return teshudata
+
+
+
+
+
+
 
 
 

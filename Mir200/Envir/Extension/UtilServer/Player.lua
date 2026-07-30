@@ -1489,6 +1489,29 @@ local function hs_auto_use_gold_items(play)
         changemoney(play, getflagstatus(play, VarCfg.BS_mztq) == 1 and 1 or 3, '+', total, '回收自动吃金币', true)
     end
 end
+local function hs_recycle_selected_once(play)
+    local pz = Player.ensureRecycleSelectConfig(play) or {}
+    local reward = {coin = 0, yb = 0, lingshi = 0, hlsj = 0, items = {}}
+    local sq = ''
+    local item = getbagitems(play)
+    for _, v in pairs(item or {}) do
+        local idx = getiteminfo(play, v, 2)
+        local group_name, cfg = hs_pick_cfg(idx)
+        if cfg and hs_match_pz(pz, idx, group_name, cfg) then
+            sq = sq .. getiteminfo(play, v, 1) .. ','
+            hs_collect_reward(reward, group_name, idx, cfg)
+        end
+    end
+    if sq ~= '' then
+        delitembymakeindex(play, sq)
+        local gz = getflagstatus(play, VarCfg.BS_mztq) == 1 and 0 or 850
+        hs_apply_reward(play, reward, gz)
+        Login_msg(play,10,reward.coin,reward.yb)
+        hs_auto_use_gold_items(play)
+        return true
+    end
+    return false
+end
 function Player.huishou(play, hs_constant)
     if hs_constant == nil then
         -- 模式1：全背包自动回收（由开关控制）。
@@ -1578,6 +1601,7 @@ function Player.huishou(play, hs_constant)
         hs_auto_use_gold_items(play)
     end
 end
+Player.huishou_selected_once = hs_recycle_selected_once
 function Player.addteshuhuihsou(play, t)
     local T_tshs = json2tbl(getplaydef(play, VarCfg.T_tshs))
     local hspz = json2tbl(getplaydef(play,VarCfg.T_hsdg))
@@ -1780,3 +1804,5 @@ GameEvent.add(EventCfg.onKFLogin, _player_level_cap_on_login, "角色等级上限")
 GameEvent.add(EventCfg.onPlayLevelUp, _player_level_cap_on_level, "角色等级上限")
 
 return Player
+
+

@@ -256,6 +256,19 @@ local function _ff9999_complete_destiny_plate(play)
     jq_data["npc_74"] = destiny_state
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
 end
+local function _ff9999_complete_basic_linggen(play)
+    local linggen_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"]) or {}
+    linggen_data = type(linggen_data) == "table" and linggen_data or {}
+    linggen_data.level = type(linggen_data.level) == "table" and linggen_data.level or {}
+    for i = 1, 5 do
+        if (tonumber(linggen_data.level[tostring(i)]) or 0) < 1 then
+            linggen_data.level[tostring(i)] = 1
+        end
+    end
+    linggen_data.main = tonumber(linggen_data.main or 4) or 4
+    linggen_data.other = tonumber(linggen_data.other or 3) or 3
+    Player.setJsonVarByTable(play, VarCfg["T_灵根"], linggen_data)
+end
 local function _ff9999_complete_continent_gates(play, continent)
     continent = math.max(2, math.min(6, tonumber(continent) or 2))
     local min_zs = {
@@ -275,6 +288,9 @@ local function _ff9999_complete_continent_gates(play, continent)
     end
     _ff9999_set_min_level_and_rebirth(play, 150, min_zs[continent] or 0)
     _ff9999_clear_xyl_story(play, continent)
+    if continent >= 5 then
+        _ff9999_complete_basic_linggen(play)
+    end
     if continent >= 6 then
         _ff9999_complete_destiny_plate(play)
     end
@@ -705,6 +721,21 @@ local function _admin_hdjd_finish(play)
         Player.sendmsgEx(play, "黑暗禁地关闭失败#57")
     end
 end
+local function _ff9999_get_continent_unlock_desc(continent)
+    continent = tonumber(continent) or 0
+    if continent == 2 then
+        return "对应主线门槛"
+    elseif continent == 3 then
+        return "对应主线门槛"
+    elseif continent == 4 then
+        return "对应xyl、转生、等级与主线门槛"
+    elseif continent == 5 then
+        return "对应xyl、转生与全部基础灵根Lv.1门槛"
+    elseif continent == 6 then
+        return "对应xyl、转生与天道命盘门槛"
+    end
+    return "对应xyl、转生、主线与功能门槛"
+end
 local function _ff9999_unlock_continent(play, continent)
     continent = math.max(2, math.min(6, tonumber(continent) or 2))
     _ff9999_complete_continent_gates(play, continent)
@@ -712,7 +743,7 @@ local function _ff9999_unlock_continent(play, continent)
     local unlocked = current == 1 and 1 or math.max(current, continent)
     setplaydef(play, "U_全大陆解锁", unlocked)
     sendluamsg(play, 103, 1, 0, 0, tbl2json({dl_all_unlock = unlocked}))
-    Player.sendmsgEx(play, tostring(continent) .. "大陆已解锁，并已补齐对应xyl、转生、主线与功能门槛，当前最高解锁至#57|【" .. (unlocked == 1 and "全部大陆" or (tostring(unlocked) .. "大陆")) .. "】#218|")
+    Player.sendmsgEx(play, tostring(continent) .. "大陆已解锁，并已补齐" .. _ff9999_get_continent_unlock_desc(continent) .. "，当前最高解锁至#57|【" .. (unlocked == 1 and "全部大陆" or (tostring(unlocked) .. "大陆")) .. "】#218|")
 end
 
 
@@ -1401,6 +1432,10 @@ function ggna(play,id)
     end
 end
 return npc
+
+
+
+
 
 
 
