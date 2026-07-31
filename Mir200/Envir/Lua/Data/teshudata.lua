@@ -1014,9 +1014,9 @@ teshudata = {
         weight = "1#70|2#20|3#10",
         max = 3,
         details = {
-            {item = "王室藏宝图",mob_name = "王室宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "藏星内海",map_x = 51,map_y = 178},{map_name = "黑暗洞窟",map_x = 214,map_y = 91},{map_name = "苍云城郊外",map_x = 135,map_y = 92}}},
-            {item = "贵族藏宝图",mob_name = "贵族宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "山脉入口",map_x = 131,map_y = 129},{map_name = "旷野之原",map_x = 87,map_y = 148},{map_name = "恐怖裂隙",map_x = 161,map_y = 67},{map_name = "海峰孤岛",map_x = 79,map_y = 53}}},
-            {item = "普通藏宝图",mob_name = "普通宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "草药古深处",map_x = 37,map_y = 54},{map_name = "丹道古藏",map_x = 188,map_y = 432}}},
+            {item = "王室藏宝图",mob_name = "王室宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "藏星内海",map_x = 152,map_y = 229},{map_name = "苍云城郊外",map_x = 32,map_y = 107},{map_name = "草药谷",map_x = 93,map_y = 140},{map_name = "丹道古藏",map_x = 140,map_y = 266},}},
+            {item = "贵族藏宝图",mob_name = "贵族宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "草药古深处",map_x = 48,map_y = 46},{map_name = "苍云城",map_x = 57,map_y = 145},{map_name = "葬星城",map_x = 87,map_y = 159},{map_name = "七星岛",map_x = 509,map_y = 307},{map_name = "灰界",map_x = 146,map_y = 98},}},
+            {item = "普通藏宝图",mob_name = "普通宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "灰界",map_x = 100,map_y = 188},{map_name = "黑暗洞窟",map_x = 348,map_y = 220},{map_name = "神秘岛屿",map_x = 208,map_y = 283},}},
         },
     },
     ["npc_49"] = {

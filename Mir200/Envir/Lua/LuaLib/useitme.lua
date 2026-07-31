@@ -586,7 +586,8 @@ function stdmodefunc35(play, item) --藏宝图
             local gw = genmonex(map_name,map_x,map_y,teshudata["npc_47"].details[getstditeminfo(getiteminfo(play, item, 2), 8)].mob_name,1,1,0,54,"",0)
             return true
         else
-            Player.sendmsgEx(play, "当前位置不是藏宝图指定的坐标，无法使用！#218")
+            gotonow(play, map_x, map_y)
+            Player.sendmsgEx(play, "已为你引路至藏宝图指定坐标，请到达目标点后再次使用！#218")
             return false
         end
     else
@@ -1626,6 +1627,7 @@ local function _get_zhuji_dan_record(play)
     end
     return rec
 end
+
 
 
 
