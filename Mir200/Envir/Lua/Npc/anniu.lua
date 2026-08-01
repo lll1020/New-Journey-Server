@@ -333,9 +333,17 @@ local function _ywl_check_map_gate(play, shuju, sj)
     end
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     local cur = jq_data[cfg.key]
+    local parent_ok = false
+    if type(cfg.key) == "string" then
+        if string.find(cfg.key, "npc_689_", 1, true) == 1 then
+            parent_ok = (tonumber(jq_data["npc_689"]) or 0) >= 2
+        elseif string.find(cfg.key, "npc_688_", 1, true) == 1 then
+            parent_ok = (tonumber(jq_data["npc_688"]) or 0) >= 2
+        end
+    end
     local ok = false
     if cfg.mode == "eq" then
-        ok = cur == cfg.value
+        ok = cur == cfg.value or parent_ok
     else
         ok = (tonumber(cur) or 0) >= (cfg.value or 0)
     end
@@ -350,7 +358,13 @@ local function _ywl_can_transfer(play, sj, shuju)
     if type(prevTask) == "string" and prevTask ~= "" and not _ywl_is_admin_continent_unlocked(play, _ywl_get_target_dl(sj, shuju)) then
         local story = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
         local needPrev = tonumber(shuju.prev_need or shuju.prev_state) or 2
-        if (tonumber(story[prevTask]) or 0) < needPrev then
+        local prevOk = (tonumber(story[prevTask]) or 0) >= needPrev
+        if not prevOk and string.find(prevTask, "npc_688_", 1, true) == 1 then
+            prevOk = (tonumber(story["npc_688"]) or 0) >= 2
+        elseif not prevOk and string.find(prevTask, "npc_689_", 1, true) == 1 then
+            prevOk = (tonumber(story["npc_689"]) or 0) >= 2
+        end
+        if not prevOk then
             local prevCfg = (teshudata or {})[prevTask] or {}
             local prevName = shuju.prev_name or prevCfg.name or "前置剧情"
             Player.sendmsgEx(play, "请先完成#57|【" .. prevName .. "】#218|")
@@ -3117,6 +3131,8 @@ for npcId, handler in pairs(npc) do
     end
 end
 return npc
+
+
 
 
 
