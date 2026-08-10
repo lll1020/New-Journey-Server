@@ -1054,13 +1054,13 @@ local function _dl_check(actor, dl)
         end
         return false, "需四大陆剧情点达到57点、完成四大陆转生且全部基础灵根达到Lv.1后才可进入五大陆"
     elseif dl == 6 then
-        local story_ok, story_done, story_need = _dl_has_story_point_count(actor, 5, 61, true)
+        local story_ok, story_done, story_need = _dl_has_story_point_count(actor, 5, 50, true)
         local destiny_ok = _dl_has_all_destiny(actor)
         if story_ok and zslv >= 50 and destiny_ok then
             _dl_mark_unlocked(actor, 6)
             return true
         end
-        return false, "需五大陆剧情点达到61点、完成五大陆转生且完成天道命盘后才可进入六大陆"
+        return false, "需五大陆剧情点达到50点、完成五大陆转生且完成天道命盘后才可进入六大陆"
     elseif dl == 7 then
         local story_ok, story_done, story_need = _dl_has_story_point_count(actor, 6, 81, true)
         local pass_ok = Player.hasSeventhContinentPass(actor)
