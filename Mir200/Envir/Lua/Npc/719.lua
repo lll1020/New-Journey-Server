@@ -288,7 +288,7 @@ local function _enter_fb(play)
 
     _save_pos(play)
     _state_clear(dtm)
-    addmirrormap(cfg.base_map, dtm, _config.name or "副本", cfg.limit_time_sec, "xtc")
+    addmirrormap(cfg.base_map, dtm, _config.name or "副本", cfg.limit_time_sec,"xtc",136,136)
     mapmove(play, dtm, tonumber(cfg.enter_pos[1] or 29) or 29, tonumber(cfg.enter_pos[2] or 27) or 27, 2)
 
     setplaydef(play, _run_map_var, dtm)

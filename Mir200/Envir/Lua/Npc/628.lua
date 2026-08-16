@@ -231,7 +231,7 @@ function npc_628_enter(play)
         delmirrormap(dtm)
     end
     local base_map = _config.fb_map or "mwsl"
-    addmirrormap(base_map, dtm, "ĞéÍıÉ½Âö", 300, "xtc")
+    addmirrormap(base_map, dtm, "ĞéÍıÉ½Âö", 300,"xtc",136,136)
     mapmove(play, dtm, 29, 27, 2)
 
     if _has_prep_item_equipped(play) then

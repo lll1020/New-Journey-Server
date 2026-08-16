@@ -220,26 +220,6 @@ local function _build_payload(play)
 end
 
 -- 总奖励领取后，等级达到门槛时补发后置等级奖励。
-local function _try_grant_level_bonus(play, data)
-    if _toint(data.claim) ~= 1 then
-        return false
-    end
-    if _toint(data.level_bonus) == 1 then
-        return false
-    end
-    if (tonumber(getbaseinfo(play, 6)) or 0) < _all_level_need then
-        return false
-    end
-    data.level_bonus = 1
-    _save_state(play, data)
-    local _, realAdd = Player.addRoleLevel(play, _all_level_add, false)
-    if realAdd > 0 then
-        Player.sendmsgEx(play, string.format("你已获得称号#57|【%s】#218|，额外获得#57|【%d级】#218|", _title_name, realAdd))
-    else
-        Player.sendmsgEx(play, string.format("你已获得称号#57|【%s】#218|，但当前等级已达#57|【%d级】#218|上限，未获得额外等级#57", _title_name, Player.getRoleLevelCap()))
-    end
-    return true
-end
 
 -- 打开世界符文面板。
 function npc.main(play, npcid)
@@ -305,31 +285,13 @@ function npc.link(play, npcid, p2, p3, msgData)
         if not checktitle(play, _title_name) then
             Player.title_give(play, _title_name, 1)
         end
-        if not _try_grant_level_bonus(play, data) then
-            if (tonumber(getbaseinfo(play, 6)) or 0) < _all_level_need then
-                Player.sendmsgEx(play, string.format("你已获得#57|【%s】#218|，达到#57|【%d级】#218|后可额外获得#57|【%d级】#218|", _title_name, _all_level_need, _all_level_add))
-            end
-        end
         sendluamsg(play, 100, npcid, 2, 0, tbl2json(_build_payload(play)))
     elseif p2 == 9 then
         sendluamsg(play, 100, npcid, 9, idx, tbl2json(_build_payload(play)))
     end
 end
 
--- 登录时补发延迟的等级奖励。
-local function _world_rune_on_login(play)
-    local data = _get_state(play)
-    _try_grant_level_bonus(play, data)
-end
 
--- 升级后补发延迟的等级奖励。
-local function _world_rune_on_level(play)
-    local data = _get_state(play)
-    _try_grant_level_bonus(play, data)
-end
-
-GameEvent.add(EventCfg.onLogin, _world_rune_on_login, "世界符文")
-GameEvent.add(EventCfg.onPlayLevelUp, _world_rune_on_level, "世界符文")
 
 return npc
 

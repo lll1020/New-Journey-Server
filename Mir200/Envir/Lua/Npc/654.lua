@@ -96,7 +96,7 @@ function npc.link(play,npcid,ew,aid)
         end
 
         local limit = _config.time or 600
-        addmirrormap(base_map, dtm, (_config.name or "»¸≈‹"), limit, "xtc")
+        addmirrormap(base_map, dtm, (_config.name or "»¸≈‹"), limit,"xtc",136,136)
 
         local sx = (_config.start_pos and _config.start_pos[1]) or 0
         local sy = (_config.start_pos and _config.start_pos[2]) or 0

@@ -726,16 +726,135 @@ function Player.updata_zdl(actor, desc) --战斗力更新
         setplaydef(actor, VarCfg["B_记录战斗力"], zdl)
     end
 end
-local function _change_title_level(actor, title_name, op)
+local function _get_title_level_cfg(title_name)
     local cfg = constant.title_level_change or {}
-    local delta = tonumber(cfg[title_name] or 0) or 0
-    if delta <= 0 then
+    local entry = cfg[title_name]
+    if type(entry) == "number" then
+        local delta = tonumber(entry) or 0
+        if delta > 0 then
+            return {mode = "direct", level_add = delta}
+        end
+    elseif type(entry) == "table" then
+        local levelAdd = tonumber(entry.level_add or entry.add or entry[1]) or 0
+        if levelAdd > 0 then
+            return {
+                mode = "deferred",
+                level_add = levelAdd,
+                level_need = tonumber(entry.level_need or entry.need or entry[2]) or 0,
+                legacy_var = entry.legacy_var,
+                legacy_key = entry.legacy_key,
+            }
+        end
+    end
+    return nil
+end
+
+local function _get_title_level_bonus_data(actor)
+    local varName = VarCfg["T_称号等级奖励"]
+    if not varName or varName == "" then
+        return {}
+    end
+    return Player.getJsonTableByVar(actor, varName) or {}
+end
+
+local function _save_title_level_bonus_data(actor, data)
+    local varName = VarCfg["T_称号等级奖励"]
+    if not varName or varName == "" then
+        return
+    end
+    Player.setJsonVarByTable(actor, varName, data or {})
+end
+
+local function _mark_title_level_bonus(actor, title_name, state)
+    local data = _get_title_level_bonus_data(actor)
+    if state then
+        data[title_name] = 1
+    else
+        data[title_name] = nil
+    end
+    _save_title_level_bonus_data(actor, data)
+end
+
+local function _has_title_level_bonus(actor, title_name)
+    local data = _get_title_level_bonus_data(actor)
+    if tonumber(data[title_name] or 0) == 1 then
+        return true
+    end
+    local cfg = _get_title_level_cfg(title_name)
+    if type(cfg) == "table" and cfg.mode == "deferred" and cfg.legacy_var then
+        local legacyVar = VarCfg[cfg.legacy_var] or cfg.legacy_var
+        if legacyVar and legacyVar ~= "" then
+            local legacyData = Player.getJsonTableByVar(actor, legacyVar) or {}
+            local legacyKey = tostring(cfg.legacy_key or "level_bonus")
+            if tonumber(legacyData[legacyKey] or 0) == 1 then
+                data[title_name] = 1
+                _save_title_level_bonus_data(actor, data)
+                return true
+            end
+        end
+    end
+    return false
+end
+
+function Player.hasTitleLevelBonusReward(actor, title_name)
+    return _has_title_level_bonus(actor, title_name)
+end
+
+local function _try_title_level_bonus(actor, title_name)
+    local cfg = _get_title_level_cfg(title_name)
+    if type(cfg) ~= "table" or cfg.mode ~= "deferred" then
+        return false, "not_deferred"
+    end
+    if not checktitle(actor, title_name) then
+        return false, "no_title"
+    end
+    if _has_title_level_bonus(actor, title_name) then
+        return false, "claimed"
+    end
+    local curLevel = tonumber(getbaseinfo(actor, 6) or 0) or 0
+    if cfg.level_need > 0 and curLevel < cfg.level_need then
+        return false, "need_level"
+    end
+    _mark_title_level_bonus(actor, title_name, true)
+    local _, realAdd = Player.addRoleLevel(actor, cfg.level_add, false)
+    if realAdd > 0 then
+        Player.sendmsgEx(actor, string.format("你已获得称号#57|【%s】#218|的等级奖励，额外获得#57|【%d级】#218|", title_name, realAdd))
+    else
+        Player.sendmsgEx(actor, string.format("你已获得称号#57|【%s】#218|的等级奖励，但当前等级已达#57|【%d级】#218|上限，未获得额外等级#57", title_name, Player.getRoleLevelCap()))
+    end
+    return true, "granted"
+end
+
+local function _try_all_title_level_bonus(actor)
+    local cfg = constant.title_level_change or {}
+    for title_name, entry in pairs(cfg) do
+        if type(entry) == "table" then
+            _try_title_level_bonus(actor, title_name)
+        end
+    end
+end
+
+local function _change_title_level(actor, title_name, op)
+    local cfg = _get_title_level_cfg(title_name)
+    if not cfg or (tonumber(cfg.level_add or 0) or 0) <= 0 then
         return
     end
     if op == "+" then
-        Player.addRoleLevel(actor, delta, false)
+        if cfg.mode == "deferred" then
+            local ok, reason = _try_title_level_bonus(actor, title_name)
+            if not ok and reason == "need_level" then
+                Player.sendmsgEx(actor, string.format("你已获得#57|【%s】#218|，达到#57|【%d级】#218|后可额外获得#57|【%d级】#218|", title_name, cfg.level_need, cfg.level_add))
+            end
+        else
+            Player.addRoleLevel(actor, cfg.level_add, false)
+        end
+    elseif cfg.mode == "deferred" then
+        if _has_title_level_bonus(actor, title_name) then
+            _mark_title_level_bonus(actor, title_name, false)
+            callscriptex(actor, "CHANGELEVEL", "-", cfg.level_add)
+        end
     else
-        callscriptex(actor, "CHANGELEVEL", op, delta)
+        callscriptex(actor, "CHANGELEVEL", op, cfg.level_add)
     end
 end
 function Player.title_give(actor, title_name) --给称号
@@ -1816,11 +1935,13 @@ end
 
 -- 登录预留：当前不再做人物等级封顶，仅保留函数壳避免旧事件报错。
 local function _player_level_cap_on_login(actor)
+    _try_all_title_level_bonus(actor)
     return
 end
 
 -- 升级预留：当前不再拦截非经验丹的升级来源。
 local function _player_level_cap_on_level(actor, curLevel)
+    _try_all_title_level_bonus(actor)
     return
 end
 

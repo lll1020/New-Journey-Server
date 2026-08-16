@@ -165,7 +165,7 @@ function npc_702_enter(play)
     end
 
     _state_clear(dtm)
-    addmirrormap(cfg.base_map, dtm, _config.name or "副本", cfg.fb_time, "xtc")
+    addmirrormap(cfg.base_map, dtm, _config.name or "副本", cfg.fb_time,"xtc",136,136)
     mapmove(play, dtm, tonumber(cfg.enter_pos[1] or 29) or 29, tonumber(cfg.enter_pos[2] or 27) or 27, 2)
 
     _spawn_main_boss(dtm)

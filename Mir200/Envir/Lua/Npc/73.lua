@@ -53,7 +53,7 @@ function fbtz_73(play,idx)
     if checkmirrormap(dtm) then
         delmirrormap(dtm)
     end
-    addmirrormap("D3804_2",dtm,"深渊",300,"xtc")
+    addmirrormap("D3804_2",dtm,"深渊",300,"xtc",136,136)
     --设置玩家进入镜像地图
     mapmove(play,dtm,29,27,2)
     local gw = genmonex(dtm,29,31,_config.mob[idx][1],10,_config.mob[idx][2],0,54,"",0)

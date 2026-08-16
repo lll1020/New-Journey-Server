@@ -118,7 +118,7 @@ function npc.link(play,npcid,ew,aid)
         if checkmirrormap(dtm) then
             delmirrormap(dtm)
         end
-        addmirrormap(cfg.fb_map, dtm, (_config.name or "ÃÙ’Ω")..next_lv.."≤„", 300, "xtc")
+        addmirrormap(cfg.fb_map, dtm, (_config.name or "ÃÙ’Ω")..next_lv.."≤„", 300,"xtc",136,136)
         mapmove(play, dtm, 29, 27, 2)
         genmonex(dtm, 29, 31, cfg.mob, 1, 1, 0, 54, "", 0)
 

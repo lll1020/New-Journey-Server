@@ -364,7 +364,7 @@ function syt_jrdt_93(play)
     if checkmirrormap(dtm) then
         delmirrormap(dtm)
     end
-    addmirrormap(_config.map_src, dtm, "通天塔第" .. tostring(nextFloor) .. "层", 300, "xtc")
+    addmirrormap(_config.map_src, dtm, "通天塔第" .. tostring(nextFloor) .. "层", 300,"xtc",136,136)
     mapmove(play, dtm, _config.map_x, _config.map_y, 2)
     local mobName = _config.floor_mobs[nextFloor] or "≮通天塔主≯"
     genmonex(dtm, _config.mob_x, _config.mob_y, mobName, 2, 1, 0, 54, "", 0)

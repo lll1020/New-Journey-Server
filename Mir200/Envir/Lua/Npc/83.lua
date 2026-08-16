@@ -39,32 +39,6 @@ local function _has_title(play)
     return checktitle(play, _title_name)
 end
 
--- 称号达到指定等级后补发等级奖励，只发一次。
-local function _try_grant_level_bonus(play, data)
-    if _toint(data.title_claim) ~= 1 and not _has_title(play) then
-        return false
-    end
-    if _toint(data.level_bonus) == 1 then
-        return false
-    end
-    local need = _toint(_title_cfg.level_need)
-    local add = _toint(_title_cfg.level_add)
-    if need <= 0 or add <= 0 then
-        return false
-    end
-    if _toint(getbaseinfo(play, 6)) < need then
-        return false
-    end
-    data.level_bonus = 1
-    _save_data(play, data)
-    local _, realAdd = Player.addRoleLevel(play, add, false)
-    if realAdd > 0 then
-        Player.sendmsgEx(play, string.format("你已获得称号#57|【%s】#218|的等级奖励，额外获得#57|【%d级】#218|", _title_name, realAdd))
-    else
-        Player.sendmsgEx(play, string.format("你已获得称号#57|【%s】#218|的等级奖励，但当前等级已达#57|【%d级】#218|上限，未获得额外等级#57", _title_name, Player.getRoleLevelCap()))
-    end
-    return true
-end
 
 -- 组装商店面板下发给客户端的数据。
 local function _build_payload(play)
@@ -74,7 +48,7 @@ local function _build_payload(play)
         point = data.point,
         fire = data.fire,
         has_title = _has_title(play) and 1 or 0,
-        title_bonus_done = data.level_bonus or 0,
+        title_bonus_done = Player.hasTitleLevelBonusReward(play, _title_name) and 1 or 0,
     }
 end
 
@@ -152,11 +126,9 @@ function npc.link(play, npcid, p2, p3, msgData)
         data.point = data.point - cost
         data.buy[tostring(idx)] = _get_buy_num(data, idx) + 1
         _save_data(play, data)
-        _try_grant_level_bonus(play, data)
         Player.sendmsgEx(play, string.format("兑换成功，获得#57|【%s】#218|", tostring(cfg.name or "奖励")))
         sendluamsg(play, 100, npcid, 1, idx, tbl2json(_build_payload(play)))
     elseif p2 == 2 then
-        _try_grant_level_bonus(play, data)
         sendluamsg(play, 100, npcid, 2, 0, tbl2json(_build_payload(play)))
     elseif p2 == 9 then
         sendluamsg(play, 100, npcid, 9, idx, tbl2json(_build_payload(play)))
@@ -215,17 +187,6 @@ function npc.get_data(play)
     return _get_data(play)
 end
 
--- 登录时补发称号等级奖励。
-local function _on_login(play)
-    local data = _get_data(play)
-    _try_grant_level_bonus(play, data)
-end
-
--- 升级后补发称号等级奖励。
-local function _on_level(play)
-    local data = _get_data(play)
-    _try_grant_level_bonus(play, data)
-end
 
 -- 残魂值先按“被玩家击杀+10”落地，后续业火系统可直接复用 add_point。
 local function _on_playdie(play, killer)
@@ -257,8 +218,6 @@ local function _on_attack_damage_monster(play, target, damage)
     end
 end
 
-GameEvent.add(EventCfg.onLogin, _on_login, "残魂商店")
-GameEvent.add(EventCfg.onPlayLevelUp, _on_level, "残魂商店")
 GameEvent.add(EventCfg.onPlaydie, _on_playdie, "残魂商店")
 GameEvent.add(EventCfg.onAttackDamageMonster, _on_attack_damage_monster, "残魂商店")
 

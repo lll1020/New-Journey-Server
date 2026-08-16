@@ -198,6 +198,7 @@ VarCfg["A_黄泉降世json"]           = "A17"                                      
 VarCfg["T_美食狂欢"]           = "T70"                                                                         --T_美食狂欢
 VarCfg["T_新区冲级"]           = "T71"                                                                         --新区冲级个人领取记录
 VarCfg["T_登神之路"]           = "T72"                                                                         --登神之路  
+VarCfg["T_称号等级奖励"]           = "T73"                                                                         --T_称号等级奖励
 VarCfg.S_cur_mapid                           = "S99"                 --当前所在地图id，切换地图时候获取上一次的地图id
 --引擎变量 M
 VarCfg["M_标识"]                  = "M1"                 --M_标识

@@ -124,7 +124,7 @@ function npc_718_enter(play)
 
     _save_pos(play)
     _state_clear(dtm)
-    addmirrormap(cfg.base_map, dtm, _config.name or "副本", cfg.fb_time, "xtc")
+    addmirrormap(cfg.base_map, dtm, _config.name or "副本", cfg.fb_time,"xtc",136,136)
     mapmove(play, dtm, tonumber(cfg.enter_pos[1] or 29) or 29, tonumber(cfg.enter_pos[2] or 27) or 27, 2)
 
     Player.sendmsgEx(play, "武松连喝三碗酒，酒劲上头，虎胆大增！#57")

@@ -109,6 +109,8 @@ constant.title_level_change = {
     ["讨伐六天宫"] = 1,
     ["六道仙人"] = 2,
     ["帝星归位"] = 10,
+    ["向死而生"] = {level_need = 150, level_add = 1, legacy_var = "T_残魂商店", legacy_key = "level_bonus"},
+    ["世界符文·[真我]"] = {level_need = 150, level_add = 10, legacy_var = "T_世界符文", legacy_key = "level_bonus"},
 }
 -- 任务引导：1.按钮  2.NPC  3.地图  4.直接结束  5.双击 NPC 并刷新杀怪按钮
 --验证类型  1.字符串,变量,键值,数值   2.装备位置,装备IDX  3.称号名字  4.装备附加属性 位置,组别,比例,dj

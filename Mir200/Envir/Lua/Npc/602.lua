@@ -120,7 +120,7 @@
 --     if checkmirrormap(dtm) then
 --         delmirrormap(dtm)
 --     end
---     addmirrormap("D3804_2",dtm,"灵根副本",300,"xtc")
+--     addmirrormap("D3804_2",dtm,"灵根副本",300,"xtc",136,136)
 --     --设置玩家进入镜像地图
 --     mapmove(play,dtm,29,27,2)
 --     local gw = genmonex(dtm,29,31,_config.details[idx].mob_name,2,1,0,54,"",0)

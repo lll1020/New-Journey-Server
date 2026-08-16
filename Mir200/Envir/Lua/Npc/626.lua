@@ -188,7 +188,7 @@ function npc_626_enter(play)
         delmirrormap(dtm)
     end
     local base_map = _config.fb_map or "mwsl"
-    addmirrormap(base_map, dtm, "禁忌之海", 300, "xtc")
+    addmirrormap(base_map, dtm, "禁忌之海", 300,"xtc",136,136)
     mapmove(play, dtm, 29, 27, 2)
     _auto_use_prep_item(play)
 

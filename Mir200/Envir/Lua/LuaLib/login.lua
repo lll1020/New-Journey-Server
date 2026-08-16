@@ -24,13 +24,17 @@ function Login.refreshGrayWorldVision(play)
     local basin = rawget(_G, "__treasure_basin_module")
     if basin and type(basin.isHuangquanActive) == "function" and basin.isHuangquanActive() then
         setcandlevalue(play, 10)
+        delbuff(play, 20131)
         return
     end
     local cur_map = tostring(getbaseinfo(play, 3) or "")
-    if Login.isGrayWorldMap(cur_map) and not checktitle(play, "÷Ó–∞ÕÀ…¢") then
+    local suppressed = Login.isGrayWorldMap(cur_map) and not checktitle(play, "÷Ó–∞ÕÀ…¢")
+    if suppressed then
         setcandlevalue(play, 10)
+        addbuff(play, 20131)
     else
         setcandlevalue(play, 20)
+        delbuff(play, 20131)
     end
 end
 function Login.main(play)

@@ -212,7 +212,7 @@ local function _enter_trial(play, idx)
     local st = _state_get(dtm)
     st.idx = idx
 
-    addmirrormap(cfg.fb_map or "mwsl", dtm, (_config.details[idx] and _config.details[idx].name or "ÃÏ√¸ ‘¡∂"), tonumber(cfg.fb_time or 300) or 300, "xtc")
+    addmirrormap(cfg.fb_map or "mwsl", dtm, (_config.details[idx] and _config.details[idx].name or "ÃÏ√¸ ‘¡∂"), tonumber(cfg.fb_time or 300) or 300,"xtc",136,136)
     local enter_pos = cfg.enter_pos or {29, 27}
     mapmove(play, dtm, tonumber(enter_pos[1] or 29) or 29, tonumber(enter_pos[2] or 27) or 27, 2)
     setplaydef(play, _run_map_var, dtm)

@@ -1895,7 +1895,7 @@ teshudata = {
     ["npc_730"] = { id = 730, name = "魔域特使", shaguai_id = 730, task_cfg = { chapter = 6, task_type = "map_unlock", map = "森罗魔域", kill_count = 200, submit = {{"元宝",1280000}}, unlock_map = "魔焰祭坛", }, },
     ["npc_731"] = { id = 731, name = "边关特使", shaguai_id = 731, task_cfg = { chapter = 6, task_type = "map_unlock", map = "边关烽城", kill_count = 200, submit = {{"元宝",1280000}}, unlock_map = "镇关帅府", }, },
     ["npc_732"] = { id = 732, name = "古城特使", shaguai_id = 732, task_cfg = { chapter = 6, task_type = "map_unlock", map = "盛世古城", kill_count = 200, submit = {{"元宝",1280000}}, unlock_map = "长安西市", }, },
-    ["npc_733"] = { id = 733, name = "盛世重游", jl = {{"等级卷轴",5}}, task_cfg = { chapter = 6, task_type = "submit", map = "盛世古城", submit = {{"万国通商契",1},{"杜康酒",1},{"大宋食盒",1},{"青釉瓷碗",1}}, level_reward = 5, }, },
+    ["npc_733"] = { id = 733, name = "盛世重游", jl = {{"等级卷轴",5}}, task_cfg = { chapter = 6, task_type = "submit", map = "盛世古城", submit = {{"万国通商契",1},{"杜康酒",1},{"大宋食盒",1},{"青釉瓷碗",1}}, }, },
     ["npc_734"] = { id = 734, name = "万国之首", shaguai_id = 734, jl = {{"万国通商契",1}}, task_cfg = { chapter = 6, task_type = "submit", map = "长安西市", submit = {{"商契残页",88}}, }, },
     ["npc_735"] = { id = 735, name = "洛水杜康", shaguai_id = 735, jl = {{"杜康酒",1}}, task_cfg = { chapter = 6, task_type = "craft", map = "洛阳天街", submit = {{"杜康之力",1},{"酒糟",100},{"万籁清泉",50},{"金币",18880000}}, craft_cost = {{"杜康之力",1},{"酒糟",100},{"万籁清泉",50},{"金币",18880000}}, craft_reward = {{"杜康酒",1}}, }, },
     ["npc_736"] = { id = 736, name = "大宋的菜肴", shaguai_id = 736, jl = {{"大宋食盒",1}}, task_cfg = { chapter = 6, task_type = "submit", map = "汴京御街", submit = {{"空的食盒",1},{"美味的大宋菜肴",10}}, }, },

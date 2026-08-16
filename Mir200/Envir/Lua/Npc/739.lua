@@ -261,7 +261,7 @@ local function _enter_dungeon(play, npcid)
         delmirrormap(dtm)
     end
     _state_clear(dtm)
-    addmirrormap(baseMap, dtm, "幽影的分身", _task_cfg.fb_time or 300, "xtc")
+    addmirrormap(baseMap, dtm, "幽影的分身", _task_cfg.fb_time or 300,"xtc",136,136)
     local pos = _task_cfg.enter_pos or {29, 27}
     mapmove(play, dtm, tonumber(pos[1] or 29) or 29, tonumber(pos[2] or 27) or 27, 2)
     local bossPos = _task_cfg.boss_pos or {32, 36}
