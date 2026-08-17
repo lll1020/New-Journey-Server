@@ -1769,7 +1769,7 @@ teshudata = {
     ["npc_646"]  = {id = 646, name = "你竟是女王？",cost = {{"元宝",660000}},attr_wz = "切割+8000"},
     ["npc_647"]  = {id = 647, name = "驮我过河",attr_wz = "人物体力+5%"},
     ["npc_648"]  = {id = 648, name = "大闹狮驼岭",map = "狮驼岭",desc = "击杀怪物各1只",shaguai_id = 648,num_a = 1,num_b = 1,num_c = 1,mob_a = "★狮驼三王·青狮★",mob_b = "★狮驼三王·白象★",mob_c = "★狮驼三王·大鹏★",attr_wz = "最终攻击+1%，最终生命+1%，最终防御+1%"},
-    ["npc_649"]  = {id = 649, name = "真假经书",cost = {{"经书",1},{"元宝",10000}},jl = {{"天竺·真经",1}},gl = 50,num = 81,desc = "每本收费1w元宝，鉴定为真经书时获得修为+1000、打怪切割+999"},
+    ["npc_649"]  = {id = 649, name = "真假经书",cost = {{"经书",1},{"元宝",10000}},jl = {{"天竺·真经",1}},gl = 40,num = 81,desc = "每本收费1w元宝，鉴定为真经书时获得修为+1000、打怪切割+999"},
     ["npc_650"]  = {id = 650, name = "铁扇公主",cost = {{"红孩儿的火尖枪",1},{"牛魔王的鼻环",1},{"铁扇公主的芭蕉扇",1}},jl = {{"芭蕉扇",1}}},
     ["npc_651"]  = {id = 651, name = "天鼠的游戏",jl = {{"生肖守护[鼠]",1}},ch = "天鼠的认可",answer = {4,4,3}},
     ["npc_652"]  = {id = 652, name = "天牛的游戏",jl = {{"生肖守护[牛]",1}},ch = "天牛的认可",value = 500000},
@@ -1881,7 +1881,7 @@ teshudata = {
     ["npc_715"] = { id = 715, name = "围攻光明顶", ch = "乾坤大挪移", task_cfg = { chapter = 5, task_type = "trial_chain", map = "光明顶", submit = { {"乾坤大挪移残页",66}, {"元宝",500000}, }, }, },
     ["npc_716"] = { id = 716, name = "孤身战吕布", ch = "吕布之力",jl = {{"时装：吕奉先",1}}, task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "虎牢关", fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "吕布", boss_pos = {32,36}, submit = { {"刘备祝福",3}, {"张飞祝福",3}, {"关羽祝福",3}, }, }, },
     ["npc_717"] = { id = 717, name = "火烧赤壁", ch = "火中取胜", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "赤壁", fb_map = "sg169", fb_time = 300, enter_pos = {35,33}, boss = "≮火烧连营·天命策尊≯", boss_pos = {29,29}, night_only = 1, night_start = 18, night_end = 6, fire_effect_id = 23, fire_tick_hurt_pct = 2, fire_burst_hurt_pct = 20, submit = {{"赤壁密函",10}}, }, },
-    ["npc_718"] = { id = 718, name = "景阳冈打虎", shaguai_id = 718, ch = "打虎英雄", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "景阳冈", fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "吊睛白额虎", boss_pos = {32,36}, submit = {{"武松的酒",3}}, drop_item = "武松的酒", drop_rate = 2500, }, },
+    ["npc_718"] = { id = 718, name = "景阳冈打虎", shaguai_id = 718, ch = "打虎英雄", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "景阳冈", fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "吊睛白额虎", boss_pos = {32,36}, submit = {{"武松的酒",3}}, }, },
     ["npc_719"] = { id = 719, name = "血溅狮子楼", shaguai_id = 719, ch = "侠义祝福", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "狮子楼", fb_map = "mwsl", limit_time_sec = 1200, enter_pos = {29,27}, submit = {{"净化水晶",1}}, drop_item = "净化水晶", drop_rate = 3000, stage1_mob = "暗影打手", stage1_count = 20, stage1_timeout = 300, stage1_elite_mob = "暗影打手·精英", stage1_elite_count = 2, stage2_boss = "王婆", stage2_boss_count = 1, stage2_mob = "暗影侍女", stage2_mob_count = 2, stage3_boss = "邪恶西门庆", stage3_boss_count = 1, stage3_mob = "暗影侍女", stage3_mob_count = 4, boss_pos = {32,36}, mob_center = {32,36}, rage_hp_pct = 50, explode_hurt_pct = 12, explode_effect_id = 4011, }, },
     ["npc_721"] = { id = 721, name = "天机道长", ch = "帝星归位", task_cfg = { chapter = 6, task_type = "auto_claim", map = "六大陆主城", need_star_stage = 3, target = {"冰川雪域",723,120,120}, }, },
     ["npc_722"] = { id = 722, name = "星儿", shaguai_id = 722, jl = {{"星儿的玉佩",1}}, task_cfg = { chapter = 6, side_task = 1, prev_task = "npc_721", prev_need = 1, prev_name = "天机道长", task_type = "craft", map = "六大陆主城", submit = {{"星儿的玉佩碎片",66},{"元宝",1000000}}, craft_cost = {{"星儿的玉佩碎片",66},{"元宝",1000000}}, craft_reward = {{"星儿的玉佩",1}}, actions = {[2]="合成玉佩"}, }, },
@@ -3273,6 +3273,7 @@ teshudata = {
     },
 }
 return teshudata
+
 
 
 

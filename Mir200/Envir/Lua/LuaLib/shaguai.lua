@@ -1971,6 +1971,36 @@ if GameEvent and EventCfg and EventCfg.onKillMon and not rawget(_G, "__equip_kil
 		_sg_record_killed_boss(play, mob)
 	end, "equip_killed_boss_record")
 end
+local _sg_star_chart_world_boss = {
+    ["大陆BOSS—荒穹主宰—二十倍爆率"] = true,
+    ["大陆BOSS—万骸狱主—二十倍爆率"] = true,
+    ["大陆BOSS—沧溟蛟皇—二十倍爆率"] = true,
+    ["大陆BOSS—鸿蒙戾尊—二十倍爆率"] = true,
+}
+if GameEvent and EventCfg and EventCfg.onKillMon and not rawget(_G, "__star_chart_material_drop_event") then
+    _G.__star_chart_material_drop_event = true
+    GameEvent.add(EventCfg.onKillMon, function(play, mob)
+        if not play or not mob then
+            return
+        end
+        local mapName = tostring(getbaseinfo(mob, 3) or getbaseinfo(play, 3) or "")
+        local dl = tonumber((daluditu and daluditu[mapName]) or 0) or 0
+        if dl < 4 or dl > 6 then
+            return
+        end
+        local mobName = tostring(getbaseinfo(mob, 1) or "")
+        if mobName == "" then
+            return
+        end
+        local guaiType = tonumber((guaiwutype and guaiwutype[mobName]) or 0) or 0
+        if dl == 6 and guaiType == 2 then
+            shaguai.temp_drop(play, mob, "星晶碎片")
+        end
+        if _sg_star_chart_world_boss[mobName] then
+            shaguai.temp_drop(play, mob, "完整星晶")
+        end
+    end, "star_chart_material_drop")
+end
 return shaguai
 
 

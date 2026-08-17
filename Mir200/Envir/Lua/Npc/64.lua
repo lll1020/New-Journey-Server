@@ -280,7 +280,7 @@ function npc.link(play,npcid,ew,aid,data)
             local maxStar = _toint(_config.max_star, 3)
             if curStar >= maxStar then
                 Player.sendmsgEx(play, string.format("你抽取到的灵兽|【%s】#218|已达最大星级,转换为材料", _config.config.ls[randomNum].name))
-                Player.rwjl(play, {{"若水宝玉",3},{"灵石",500},{"妖怪精魄",10}}, "灵兽抽取",1,1000)
+                Player.rwjl(play, {{"灵石",500},{"妖怪精魄",10}}, "灵兽抽取",1,1000)
                 return
             end
             T_data.ls_sp[starKey] = math.min(maxStar, curStar + 1)
@@ -522,6 +522,7 @@ function npc.onBabyExpired(play, itemobj)
     return ok
 end
 return npc
+
 
 
 
