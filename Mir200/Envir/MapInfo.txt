@@ -70,13 +70,13 @@ kfhg 23 26 -> kfhjsbk 86 102
 [生死之门|GhFuben20    生死之门] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu
 [跨服秘境|dwsl   跨服秘境] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) Kuafu
 
-[极光[挂机]|E12   极光[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
-[苍云[挂机]|E12   苍云[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
-[若水[挂机]|E12   若水[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
-[红尘[挂机]|E12   红尘[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
-[灵虚[挂机]|E12   灵虚[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
-[万灵[挂机]|E12   万灵[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
-[诸天[挂机]|E12   诸天[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
+[极光挂机|E12   极光[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
+[苍云挂机|E12   苍云[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
+[若水挂机|E12   若水[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
+[红尘挂机|E12   红尘[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
+[灵虚挂机|E12   灵虚[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
+[万灵挂机|E12   万灵[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
+[诸天挂机|E12   诸天[挂机]] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) safe
 
 
 
@@ -277,6 +277,25 @@ kfhg 23 26 -> kfhjsbk 86 102
 ;奈何桥 14 65 -> 罗酆六天 71 78
 罗酆六天 286 192 -> 十八层地狱 113 149
 十八层地狱 23 119 -> 六道轮回 97 74
+
+[拔舌地狱|ttyj   拔舌地狱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[剪刀地狱|ttyj   剪刀地狱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[铁树地狱|ttyj   铁树地狱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[孽镜地狱|ttyj   孽镜地狱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[蒸笼地狱|ttyj   蒸笼地狱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[铜柱地狱|ttyj   铜柱地狱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[刀山地狱|ttyj   刀山地狱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[冰山地狱|ttyj   冰山地狱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[油锅地狱|ttyj   油锅地狱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[牛坑地狱|ttyj   牛坑地狱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[石压地狱|ttyj   石压地狱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[舂臼地狱|ttyj   舂臼地狱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[血池地狱|ttyj   血池地狱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[枉死地狱|ttyj   枉死地狱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[磔刑地狱|ttyj   磔刑地狱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[火山地狱|ttyj   火山地狱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[石磨地狱|ttyj   石磨地狱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[刀锯地狱|ttyj   刀锯地狱] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 
 ;四大陆地图二
 [大唐·长安城|bjzc   大唐·长安城] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)

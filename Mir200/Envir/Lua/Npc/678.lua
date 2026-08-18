@@ -166,6 +166,17 @@ function npc.link(play,npcid,ew,aid)
             return
         end
 
+        if cfg.xz and not check_xz_done(play, cfg.xz) then
+            local targetMap = "黑白无常"
+            local targetNpc = 679
+            local targetX, targetY = 101, 57
+            if npcid then Guard.closeNpcAndAuto(play, npcid) end
+            mapmove(play, targetMap, targetX, targetY, 5)
+            sendluamsg(play, 101, 0, 1, 1,
+                '{"lx":2,"npcdt":"' .. targetMap .. '","npcid":' .. targetNpc .. ',"xx":' .. targetX .. ',"yy":' .. targetY .. '}')
+            return
+        end
+
         if cfg.num and (sg_data[key] or 0) < cfg.num then
             Player.sendmsgEx(play, string.format("击杀不足：#57|【%d/%d】#218|", (sg_data[key] or 0), cfg.num))
             return
@@ -176,12 +187,6 @@ function npc.link(play,npcid,ew,aid)
         if cfg.cost then
             Guard.consumeCost(play, cfg.cost, ","..(_config.name or "剧情任务"))
         end
-        if cfg.xz and not check_xz_done(play, cfg.xz) then
-            Player.sendmsgEx(play, "前置任务未完成#57")
-            if npcid then Guard.closeNpcAndAuto(play, npcid) end
-            return
-        end
-
         jq_data[subKey] = 2
         local done = 0
         for i = 1, #details do

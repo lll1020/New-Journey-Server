@@ -109,6 +109,7 @@ constant.title_level_change = {
     ["讨伐六天宫"] = 1,
     ["六道仙人"] = 2,
     ["帝星归位"] = 10,
+    ["鸡你太美"] = 1,
     ["向死而生"] = {level_need = 150, level_add = 1, legacy_var = "T_残魂商店", legacy_key = "level_bonus"},
     ["世界符文·[真我]"] = {level_need = 150, level_add = 10, legacy_var = "T_世界符文", legacy_key = "level_bonus"},
 }

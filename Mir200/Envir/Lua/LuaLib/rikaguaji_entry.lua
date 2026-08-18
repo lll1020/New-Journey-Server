@@ -5,13 +5,13 @@ local function _toint(v, default)
 end
 
 local _cfg = {
-    [1018] = {name = "极光[挂机]", map = "极光[挂机]", img = "极光"},
-    [1019] = {name = "苍云[挂机]", map = "苍云[挂机]", img = "苍云"},
-    [1020] = {name = "若水[挂机]", map = "若水[挂机]", img = "若水"},
-    [1021] = {name = "红尘[挂机]", map = "红尘[挂机]", img = "红尘"},
-    [1022] = {name = "灵虚[挂机]", map = "灵虚[挂机]", img = "灵虚"},
-    [1023] = {name = "万灵[挂机]", map = "万灵[挂机]", img = "万灵"},
-    [1024] = {name = "诸天[挂机]", map = "诸天[挂机]", img = "诸天"},
+    [1018] = {name = "极光[挂机]", map = "极光挂机", img = "极光"},
+    [1019] = {name = "苍云[挂机]", map = "苍云挂机", img = "苍云"},
+    [1020] = {name = "若水[挂机]", map = "若水挂机", img = "若水"},
+    [1021] = {name = "红尘[挂机]", map = "红尘挂机", img = "红尘"},
+    [1022] = {name = "灵虚[挂机]", map = "灵虚挂机", img = "灵虚"},
+    [1023] = {name = "万灵[挂机]", map = "万灵挂机", img = "万灵"},
+    [1024] = {name = "诸天[挂机]", map = "诸天挂机", img = "诸天"},
 }
 
 local function _get_cfg(npcid)
@@ -55,6 +55,7 @@ function RiKaGuaJiEntry.link(play, npcid, action)
         Player.sendmsgEx(play, (err or "未满足进入条件") .. "#57")
         return
     end
+    -- release_print("日卡挂机地图进入", play.pid, npcid, cfg.map)
     mapmove(play, cfg.map, cfg.x or 45, cfg.y or 45, cfg.range or 5)
     Guard.closeNpcAndAuto(play, npcid)
 end

@@ -1143,7 +1143,7 @@ local npc_xyl = {
                 },
                 {
                     "高级淬体",
-                    tk = "npc_54",
+                    tk = "高级淬体",
                     id = 999,
                     jl = { { "剧情点", 2 } },
                     fwdjy = function(play, tk)
@@ -1155,7 +1155,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "三大陆主城", 53, 161, 230 },
+                    yd = { 1, "三大陆主城", 54, 161, 230 },
                     desc = "踏入高级淬体，循迹而行",
                 },
                 {

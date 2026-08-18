@@ -1464,6 +1464,7 @@ local MIJING_TITLE_USE_ITEMS = {
     ["上善若水"] = "上善若水",
     ["看破红尘"] = "看破红尘",
     ["归入灵虚"] = "归入灵虚",
+    ["鸡你太美"] = "鸡你太美",
 }
 function stdmodefunc65(play, item) --沙巴克攻防药剂
     local itemName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "")

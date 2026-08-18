@@ -1032,7 +1032,7 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
 		local zd = getbaseinfo(Target, 12)
 		local sy = -1
 		if zd == 0 or true then
-			local zhi = getbaseinfo(play, 51, 244)
+			local zhi = getbaseinfo(play, 51, 244) * (1 + getbaseinfo(play,51,253)/ 10000)
 			if zhi > 0 then
                 zhi = math.floor(zhi * huijie_damage_rate)
                 if zhi > 0 then

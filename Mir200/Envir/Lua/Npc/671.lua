@@ -5,54 +5,34 @@ npc = {}
 
 local _config = Guard.getConfig("npc_671")
 
+local function _sync_671_progress(jq_data, total)
+    jq_data = jq_data or {}
+    total = tonumber(total) or 0
+    local token = tonumber(jq_data["npc_671_token"] or 0) or 0
+    if token < 0 then
+        token = 0
+    end
+    if total > 0 and token > total then
+        token = total
+    end
+    jq_data["npc_671_token"] = token
+    jq_data["npc_671_lv"] = token
+    jq_data["npc_671_cur"] = 0
+    return jq_data
+end
+
 
 function npc.main(play,npcid)
     if not _config then
         return
     end
     local data = {}
-    data["T_dljq"] = Player.getJsonTableByVar(play, VarCfg.T_dljq)
-    sendluamsg(play,100,npcid,0,0,tbl2json(data))
-end
-
-local function npc_671_savepos(play)
-    local map = getbaseinfo(play,3)
-    local x = getbaseinfo(play,4)
-    local y = getbaseinfo(play,5)
-    setplaydef(play, "S$npc671_back", map..","..x..","..y)
-end
-
-local function npc_671_back(play)
-    local back = getplaydef(play, "S$npc671_back")
-    if back and back ~= "" then
-        local parts = split(back, ",")
-        local map = parts[1]
-        local x = tonumber(parts[2]) or 0
-        local y = tonumber(parts[3]) or 0
-        if map and map ~= "" and x > 0 and y > 0 then
-            mapmove(play, map, x, y, 2)
-        end
-    end
-    setplaydef(play, "S$npc671_back", "")
-end
-
-local function npc_671_finish_level(play, dtm, level)
     local details = _config.details or {}
-    local cfg = details[level]
-
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
-    jq_data["npc_671_lv"] = level
-    jq_data["npc_671_cur"] = nil
+    jq_data = _sync_671_progress(jq_data, #details)
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-
-    if cfg and cfg.jl then
-        Player.rwjl(play, cfg.jl, (_config.name or "剧情任务").."奖励", 1)
-    end
-    npc_671_back(play)
-    if dtm and checkmirrormap(dtm) then
-        setenvirofftimer(dtm,1)
-        delmirrormap(dtm)
-    end
+    data["T_dljq"] = jq_data
+    sendluamsg(play,100,npcid,0,0,tbl2json(data))
 end
 
 function npc.link(play,npcid,ew,aid)
@@ -78,6 +58,7 @@ function npc.link(play,npcid,ew,aid)
     local total = #details
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     local key = "npc_671"
+    jq_data = _sync_671_progress(jq_data, total)
 
     if ew == 1 then
         if jq_data[key] and jq_data[key] >= 2 then
@@ -85,47 +66,24 @@ function npc.link(play,npcid,ew,aid)
             return
         end
 
-        -- local cur = jq_data["npc_671_cur"]
-        -- if cur and cur > 0 then
-        --     Player.sendmsgEx(play, "正在挑战中，请先完成当前层#57")
         if npcid then Guard.closeNpcAndAuto(play, npcid) end
-        --     return
-        -- end
 
-        local next_lv = (jq_data["npc_671_lv"] or 0) + 1
+        local next_lv = (jq_data["npc_671_token"] or 0) + 1
         if next_lv > total then
             Player.sendmsgEx(play, "已完成全部挑战，请领取最终奖励#57")
             return
         end
 
-        if next_lv > 1 then
-            local prev_done = jq_data["npc_671_lv"] or 0
-            if prev_done < (next_lv - 1) then
-                Player.sendmsgEx(play, "请先成功挑战上一层#57")
-                return
-            end
-        end
-
         local cfg = details[next_lv]
-        if not cfg or not cfg.fb_map or not cfg.mob then
-            Player.sendmsgEx(play, "挑战配置缺失#57")
+        if not cfg or not cfg.map then
+            Player.sendmsgEx(play, "地图配置缺失#57")
             if npcid then Guard.closeNpcAndAuto(play, npcid) end
             return
         end
 
-        npc_671_savepos(play)
-        local dtm = getbaseinfo(play,1).."_npc671"
-        if checkmirrormap(dtm) then
-            delmirrormap(dtm)
-        end
-        addmirrormap(cfg.fb_map, dtm, (_config.name or "挑战")..next_lv.."层", 300,"xtc",136,136)
-        mapmove(play, dtm, 29, 27, 2)
-        genmonex(dtm, 29, 31, cfg.mob, 1, 1, 0, 54, "", 0)
-
-        jq_data["npc_671_cur"] = next_lv
+        local tp = cfg.tp or {54, 85}
+        map(play, cfg.map)
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-
-        setenvirontimer(dtm, 1, 1, "@npc_671_dsq,"..play..","..dtm)
         return
     end
 
@@ -146,9 +104,11 @@ function npc.link(play,npcid,ew,aid)
         end
         local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
         jq_data["npc_671_token"] = (jq_data["npc_671_token"] or 0) + total_get
+        jq_data = _sync_671_progress(jq_data, total)
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         Player.sendmsgEx(play, string.format("已回收信物：|【%d个】#218|", total_get))
         Player.sendmsgEx(play, string.format("共计已回收信物：|【%d个】#218|", jq_data["npc_671_token"] or 0))
+        sendluamsg(play,100,npcid,0,0,tbl2json({T_dljq = jq_data}))
         return
     end
 
@@ -173,26 +133,6 @@ function npc.link(play,npcid,ew,aid)
         else
             Player.sendmsgEx(play, string.format("当前进度：|【%d/%d】#218|", npc_671_token, total))
         end
-    end
-end
-
-function npc_671_dsq(xt,play,dtm,data)
-    if getplaycount(dtm,false,true) == "0" then
-        setenvirofftimer(dtm, 1)
-        if checkmirrormap(dtm) then
-            delmirrormap(dtm)
-        end
-        return
-    end
-
-    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
-    local cur = jq_data["npc_671_cur"] or 0
-    if cur <= 0 then
-        return
-    end
-
-    if getmoncount(dtm,-1,true) < 1 then
-        npc_671_finish_level(play, dtm, cur)
     end
 end
 

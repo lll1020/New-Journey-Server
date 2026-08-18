@@ -507,7 +507,7 @@ function TreasureBasin.activate(play, reason)
         changed = true
     end
     if not _has_artifact(play) then
-        Player.rwjl(play, {{_artifact_name, 1}}, reason or "¾Û±¦Åè", 1, 999)
+        Player.rwjl(play, {{_artifact_name, 1}}, reason or "¾Û±¦Åè", 1, 0)
         changed = true
     end
     if changed then
@@ -604,6 +604,93 @@ local function _build_forbidden_payload(play, data)
     return list
 end
 
+local function _continent_open(play, continent)
+    continent = _toint(continent)
+    if continent <= 1 then
+        return true
+    end
+    if type(Player) == "table" and type(Player.dl_sz) == "function" then
+        return Player.dl_sz_notip(play, continent) == true
+    end
+    return false
+end
+
+function TreasureBasin.getRedState(play, data)
+    data = type(data) == "table" and data or _get_state(play)
+    local active = _toint(data.activated) >= 1 or _toint(data.rebuilt) >= 1 or _has_artifact(play)
+    local result = {
+        energy = false,
+        refine = false,
+        refine_start = false,
+        refine_claim = false,
+        level = false,
+        forbidden = false,
+        forbidden_unlock = {},
+        forbidden_upgrade = {},
+        forbidden_skill = false,
+        any = false,
+    }
+
+    if active then
+        local energy = _toint(data.energy_sec)
+        local reward = type(data.energy_reward) == "table" and data.energy_reward or {}
+        result.energy = energy >= 60
+            or _toint(reward.gold) > 0
+            or _toint(reward.iron) > 0
+            or _toint(reward.hat) > 0
+
+        local refine = type(data.refine) == "table" and data.refine or {}
+        result.refine_claim = tostring(refine.stone or "") ~= "" and _toint(refine.end_at) <= _now()
+        if tostring(refine.stone or "") == "" then
+            for _, stone in pairs(_stone_list or {}) do
+                if _continent_open(play, stone.continent) and getbagitemcount(play, tostring(stone.name or "")) > 0 then
+                    result.refine_start = true
+                    break
+                end
+            end
+        end
+        result.refine = result.refine_start or result.refine_claim
+
+        local level = math.max(1, _toint(data.level))
+        local nextLevelCfg = _levels[level + 1]
+        local realCharge = math.max(_toint(data.charge), _toint(data.real_charge), _recharge_total(play))
+        if nextLevelCfg and realCharge >= _toint(nextLevelCfg.charge) then
+            result.level = true
+        end
+
+        local forbidden = type(data.forbidden) == "table" and data.forbidden or {}
+        local list = type(forbidden.list) == "table" and forbidden.list or {}
+        local point = _toint(forbidden.point)
+        local selectedId = _toint(forbidden.show)
+        local money = _toint(querymoney(play, 4))
+        local crystal = getbagitemcount(play, "½ûÔªÉñ¾§")
+        for id, _ in ipairs(_forbidden) do
+            local node = list[tostring(id)] or list[id] or {}
+            local lv = _toint(node.lv)
+            if lv <= 0 then
+                if point >= 8888 then
+                    result.forbidden_unlock[id] = true
+                end
+            elseif lv < 5 then
+                local cost = _forbidden_cost[lv + 1] or {}
+                if level >= _toint(cost.need_level)
+                    and money >= _toint(cost.yuanbao)
+                    and crystal >= _toint(cost.crystal) then
+                    result.forbidden_upgrade[id] = true
+                end
+            end
+        end
+        if selectedId > 0 then
+            local node = list[tostring(selectedId)] or list[selectedId] or {}
+            result.forbidden_skill = _toint(node.lv) >= 5 and _forbidden_skill_cd_left(data) <= 0
+        end
+        result.forbidden = result.forbidden_skill or next(result.forbidden_unlock) ~= nil or next(result.forbidden_upgrade) ~= nil
+    end
+
+    result.any = result.energy or result.refine or result.level or result.forbidden
+    return result
+end
+
 local function _artifact_item_name()
     return tostring(_config.artifact_name or "¾Û±¦Åè")
 end
@@ -681,6 +768,7 @@ local function _build_task_payload(play)
         artifact_reward = _artifact_reward(),
         activated = data.rebuilt >= 1 and 1 or 0,
         equipped = _equipped_where(play) and 1 or 0,
+        red_state = TreasureBasin.getRedState(play, data),
         progress_cur = _get_progress(play),
         progress_need = _progress_need(),
         claimed = _is_claimed(play) and 1 or 0,
@@ -724,6 +812,7 @@ local function _build_payload(play)
         forbidden_skill_cd_text = _format_time(_forbidden_skill_cd_left(data)),
         today = _today_key(),
         has_forbidden_title = _toint(data.forbidden.title_given),
+        red_state = TreasureBasin.getRedState(play, data),
     }
 end
 
@@ -1177,6 +1266,7 @@ if _first_init and not TreasureBasin.__events_registered then
 end
 
 return TreasureBasin
+
 
 
 

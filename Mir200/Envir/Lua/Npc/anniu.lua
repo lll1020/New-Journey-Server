@@ -3091,15 +3091,57 @@ npc[998] = function(play, p2, p3, msg) --后台
         end
     end
 end
+local function _buildLookJingjiePayload(actor)
+    local rec = json2tbl(getplaydef(actor, VarCfg["T_物品使用记录"]))
+    if type(rec) ~= "table" then
+        rec = {}
+    end
+    local jzCount = tonumber(rec.jz_dan_count or 0) or 0
+    return {
+        level = getplaydef(actor, VarCfg["U_境界修炼"][1]),
+        exp = getplaydef(actor, VarCfg["U_境界修炼"][2]),
+        jz_dan_count = jzCount,
+        jz_dan_ready = jzCount >= 1 and 1 or 0,
+        jz_dan_text = jzCount >= 1 and "已服用" or "未服用",
+        jz_dan_color = jzCount >= 1 and 250 or 249,
+    }
+end
+
+local function _buildLookTianshuPayload(actor)
+    local T_data = Player.getJsonTableByVar(actor, VarCfg["T_天书"]) or {}
+    if type(T_data) ~= "table" then
+        T_data = {}
+    end
+    T_data.level = tonumber(T_data.level) or 0
+    T_data.jf = tonumber(T_data.jf) or 0
+    T_data.shaqi = tonumber(T_data.shaqi) or 0
+    T_data.caowei = T_data.caowei or {}
+    return {
+        T_data = T_data,
+        xianfa_all_unlock = checktitle(actor, "九五至尊") and 1 or 0,
+    }
+end
+
 npc[1004] = function(play, p2, p3, msg) --排行榜查询
     if p2 == 1 then
         local dx = getplayerbyid(msg)
         if dx then
-            Player.sendmsgEx(dx, 1, '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'></font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>在偷偷打量你</outline>","Type":1}')
-            local payload = {userid = tostring(msg), zdl = querymoney(dx, 29), linggen = Player.getJsonTableByVar(dx, VarCfg["T_灵根"]) or {}}
+            Player.sendmsgEx(dx, 1, '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'></font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>正在偷偷观察你</outline>","Type":1}')
+            local linggen = Player.getJsonTableByVar(dx, VarCfg["T_灵根"]) or {}
+            local jingjie = _buildLookJingjiePayload(dx)
+            local tianshu = _buildLookTianshuPayload(dx)
+            jingjie.lookPlayer = 1
+            tianshu.lookPlayer = 1
+            local payload = {
+                userid = tostring(msg),
+                zdl = querymoney(dx, 29),
+                linggen = linggen,
+                jingjie = jingjie,
+                tianshu = tianshu,
+            }
             sendluamsg(play, 101, 1004, 0, 0, tbl2json(payload))
         else
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>玩家不在线</font>","Type":9}')
+            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>玩家不存在</font>","Type":9}')
         end
     end
 end

@@ -3240,12 +3240,18 @@ function ontimer6(play)
     end
     local can_jbp = false
     local jbp_state = Player.getJsonTableByVar(play, "T44") or {}
-    local jbp_active = (tonumber(jbp_state.activated or jbp_state.rebuilt or 0) or 0) >= 1
-    if jbp_active then
-        local energy_sec = tonumber(jbp_state.energy_sec or 0) or 0
-        local refine = type(jbp_state.refine) == "table" and jbp_state.refine or {}
-        if energy_sec >= 60 or (tostring(refine.stone or "") ~= "" and (tonumber(refine.end_at or 0) or 0) <= os.time()) then
-            can_jbp = true
+    local basinMod = rawget(_G, "__treasure_basin_module")
+    if basinMod and type(basinMod.getRedState) == "function" then
+        local redState = basinMod.getRedState(play, jbp_state)
+        can_jbp = redState and redState.any == true
+    else
+        local jbp_active = (tonumber(jbp_state.activated or jbp_state.rebuilt or 0) or 0) >= 1
+        if jbp_active then
+            local energy_sec = tonumber(jbp_state.energy_sec or 0) or 0
+            local refine = type(jbp_state.refine) == "table" and jbp_state.refine or {}
+            if energy_sec >= 60 or (tostring(refine.stone or "") ~= "" and (tonumber(refine.end_at or 0) or 0) <= os.time()) then
+                can_jbp = true
+            end
         end
     end
     -- 仙途奇缘顶部红点：存在任一里程碑奖励可领取时点亮。
@@ -3452,5 +3458,7 @@ function hd_tcppk(xx,ditu)
         end
     end
 end
+
+
 
 
