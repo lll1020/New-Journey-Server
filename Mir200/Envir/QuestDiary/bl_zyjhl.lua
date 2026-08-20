@@ -386,5 +386,34 @@ function bl_zyjhl17(play,mingzi)
     return ok
 end
 
+--------------------±¬ÂÊ¼àÌı´¥·¢-------------------ÈË¼äµÀ/ĞŞÂŞµÀÁîÅÆ
+function bl_zyjhl18(play, mingzi)
+    local cur_map = tostring(getbaseinfo(play, 3) or "")
+    if xilieditu[cur_map] ~= 2 then
+        return false
+    end
+
+    local rate = nil
+    if mingzi == "ÈË¼äµÀÁîÅÆ" then
+        rate = 1
+    elseif mingzi == "ĞŞÂŞµÀÁîÅÆ" then
+        rate = 1
+    else
+        return false
+    end
+
+    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+    jq_data = type(jq_data) == "table" and jq_data or {}
+    local task_opened = (tonumber(jq_data["npc_670"] or 0) or 0) >= 1
+    if not task_opened then
+        local have = tonumber(getbagitemcount(play, mingzi) or 0) or 0
+        if have >= 60 then
+            return false
+        end
+    end
+
+    return math.random(rate) == 1
+end
+
 
 

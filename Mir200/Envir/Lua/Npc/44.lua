@@ -423,6 +423,7 @@ function Storage.buildPublicSnapshot(record)
         key = record.meta.key,
         name = record.meta.name,
         xiangHua = record.stats.xiangHua or 0,
+        likenum = record.stats.likenum or 0,
         herbs = record.herbs,
         fields = record.fields,
         level = record.level or 1,
@@ -653,25 +654,38 @@ end
 local Steal = {}
 
 local function pickStealPlot(record, gridId)
-    local id = tonumber(gridId)
-    if not id then
-        return nil, nil, "请指定可偷取的地块位置"
+    local function resolvePlot(id)
+        id = tonumber(id)
+        if not id then
+            return nil, nil
+        end
+        local plot = record.fields[id]
+        if type(plot) ~= "table" then
+            return nil, nil
+        end
+        if plot.state ~= "mature" then
+            return nil, nil
+        end
+        local cfg = PlantCfg[plot.seedId]
+        if not (cfg and cfg.canSteal) then
+            return nil, nil
+        end
+        return plot, cfg
     end
-    local plot = record.fields[id]
-    if type(plot) ~= "table" then
-        return nil, nil, "目标地块不存在"
+
+    local plot, cfg = resolvePlot(gridId)
+    if plot then
+        return plot, cfg
     end
-    if plot.state ~= "mature" then
-        return nil, nil, "目标地块尚未成熟"
+
+    for candidateIndex, candidate in ipairs(record.fields or {}) do
+        local candidatePlot, candidateCfg = resolvePlot(candidate and (candidate.gridId or candidateIndex))
+        if candidatePlot then
+            return candidatePlot, candidateCfg
+        end
     end
-    if not plot.product or #plot.product == 0 then
-        return nil, nil, "目标地块没有可偷的灵草"
-    end
-    local cfg = PlantCfg[plot.seedId]
-    if not (cfg and cfg.canSteal) then
-        return nil, nil, "该地块禁止偷取"
-    end
-    return plot, cfg
+
+    return nil, nil, "当前没有可偷取的成熟灵草"
 end
 
 local function ensureStealCooldown(stat)
@@ -704,7 +718,7 @@ local function splitStealReward(plot)
     return reward, left
 end
 
-function Steal.try(play, thiefRecord, targetRecord, now, gridId)
+function Steal.try(play, thiefRecord, targetRecord, now, gridId, targetActor)
     if thiefRecord.meta.key == targetRecord.meta.key then
         return false, "不能偷取自己"
     end
@@ -722,13 +736,9 @@ function Steal.try(play, thiefRecord, targetRecord, now, gridId)
     if targetRecord.guard.daily.count >= (StealCfg.perTargetDailyLimit or 0) then
         return false, "对方今日被偷次数已满"
     end
-    local bucket = ensureStealCooldown(thiefRecord.steal)
-    local cd = bucket[targetRecord.meta.key] or 0
-    if cd > now then
-        return false, "仍在冷却中"
-    end
     if not plot.product or #plot.product == 0 then
-        return false, "没有剩余灵草"
+        local generated = buildPlantReward(targetActor or play, cfg)
+        plot.product = cloneRewardList(generated)
     end
     local reward, left = splitStealReward(plot)
     if not reward then
@@ -738,7 +748,6 @@ function Steal.try(play, thiefRecord, targetRecord, now, gridId)
     addProductStat(thiefRecord, reward)
     thiefRecord.steal.daily.count = thiefRecord.steal.daily.count + 1
     targetRecord.guard.daily.count = targetRecord.guard.daily.count + 1
-    bucket[targetRecord.meta.key] = now + (StealCfg.cooldown or 0)
     applyGrowth(thiefRecord, "steal", 1, now)
     if left and #left > 0 then
         plot.product = left
@@ -1728,7 +1737,7 @@ end
 
 function ActionHandler.steal(play, npcid, state, params)
     handleVisit(play, npcid, state, params or {}, function(actor, targetRecord, visitParams)
-        local ok, res = Steal.try(play, state.record, targetRecord, state.now, tonumber(visitParams.gridId))
+        local ok, res = Steal.try(play, state.record, targetRecord, state.now, tonumber(visitParams.gridId), actor)
         if ok then
             Visitor.push(targetRecord, state.record.meta.name, "steal", "-" .. summarizeReward(res.product), state.now)
             Storage.savePlayer(actor, targetRecord)

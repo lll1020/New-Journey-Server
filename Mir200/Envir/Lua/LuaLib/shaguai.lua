@@ -917,9 +917,9 @@ shaguai = {
 		local add_a, add_b, add_c = false, false, false
 		if config.details then
 			for _, v in ipairs(config.details) do
-				if v.a_num and xilieditu[map] and xilieditu[map] == 2 then add_a = true end
-				if v.b_num and map == "六道轮回"  and (guaiwutype[mob_name] and guaiwutype[mob_name] == 2) then add_b = true end
-				if v.c_num and mob_name == "弱鸡" then add_c = true end
+				if v.a_num and xilieditu[map] and xilieditu[map] == 2 and (guaiwutype[mob_name] and guaiwutype[mob_name] == 2) then add_a = true end
+				if v.b_num and map == "六道轮回" then add_b = true end
+				if v.c_num and (mob_name == "弱鸡" or mob_name == "鸡") then add_c = true end
 			end
 		end
 		if add_a then
@@ -931,6 +931,7 @@ shaguai = {
 		if add_c then
 			sg_data[key.."_c"] = (sg_data[key.."_c"] or 0) + 1
 		end
+		-- release_print("轮回之路击杀统计", add_a, add_b, add_c, sg_data[key.."_a"], sg_data[key.."_b"], sg_data[key.."_c"])
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
 	["676"] = function(play,mob)      --共公怒触不周山

@@ -889,7 +889,7 @@ teshudata = {
         StealCfg = {                               -- 偷菜规则
             dailyStealLimit = 10,                  -- 每日偷菜总次数
             perTargetDailyLimit = 2,               -- 同一目标每日可被偷次数
-            cooldown = 5 * 60,                     -- 偷同一目标冷却(秒)
+            cooldown = 0,                     -- 偷同一目标冷却(秒)
             stealAmount = 1,                       -- 单次偷取株数
         },
         LikeCfg = {                                -- 点赞规则
