@@ -37,3 +37,12 @@
 
 [2026-08-20 12:38:20:967] LuaNPC:玩家名字 ID:999999999 执行 stdmodefunc10 player:玩家名字 耗时：578; NpcThreadId: 15776, CurPlayThreadId: 15776
 
+[2026-08-20 16:00:47:495] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：672; NpcThreadId: 15776, CurPlayThreadId: 15776
+
+[2026-08-20 16:30:47:048] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：203; NpcThreadId: 15776, CurPlayThreadId: 15776
+
+[2026-08-20 17:18:51:248] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：32; NpcThreadId: 15776, CurPlayThreadId: 15776
+[2026-08-20 17:18:51:248] [玩家名字]Lua执行耗时过高:32ms msgid:105 9999 9999 0 
+[2026-08-20 17:18:53:101] LuaNPC:玩家名字 ID:999999999 执行 playlevelup player:玩家名字 耗时：31; NpcThreadId: 15776, CurPlayThreadId: 15776
+[2026-08-20 17:18:53:137] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：62; NpcThreadId: 15776, CurPlayThreadId: 15776
+

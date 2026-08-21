@@ -5,59 +5,6 @@ npc = {}
 
 local _config = Guard.getConfig("npc_672")
 
-local function _detail_title(cfg, idx)
-    if cfg and cfg.name and cfg.name ~= "" then
-        return tostring(cfg.name)
-    end
-    if cfg and cfg.wz and cfg.wz ~= "" then
-        return tostring(cfg.wz)
-    end
-    return "第" .. tostring(idx or "") .. "项"
-end
-
-local function _detail_missing(play, cfg, sg_data, key, idx)
-    local title = _detail_title(cfg, idx)
-    if cfg.a_num then
-        local cur = tonumber(sg_data[key.."_a"] or 0) or 0
-        local need = tonumber(cfg.a_num or 0) or 0
-        if cur < need then
-            return string.format("【%s】系列BOSS还差#57|【%d只】#218|（#57|【%d/%d】#218|）", title, need - cur, cur, need)
-        end
-    end
-    if cfg.b_num then
-        local cur = tonumber(sg_data[key.."_b"] or 0) or 0
-        local need = tonumber(cfg.b_num or 0) or 0
-        if cur < need then
-            return string.format("【%s】六道轮回还差#57|【%d只】#218|（#57|【%d/%d】#218|）", title, need - cur, cur, need)
-        end
-    end
-    if cfg.c_num then
-        local cur = tonumber(sg_data[key.."_c"] or 0) or 0
-        local need = tonumber(cfg.c_num or 0) or 0
-        if cur < need then
-            return string.format("【%s】弱鸡还差#57|【%d只】#218|（#57|【%d/%d】#218|）", title, need - cur, cur, need)
-        end
-    end
-    if cfg.cost then
-        local name, num = Player.checkItemNumByTable(play, cfg.cost)
-        if name then
-            return string.format("【%s】还差#57|【%s x %d】#218|", title, tostring(name), tonumber(num or 0) or 0)
-        end
-    end
-    return nil
-end
-
-local function _unfinished_details(play, details, jq_data, sg_data, key)
-    local result = {}
-    for i = 1, #details do
-        if not (jq_data[key.."_"..i] and jq_data[key.."_"..i] >= 2) then
-            result[#result + 1] = _detail_missing(play, details[i], sg_data, key, i)
-                or ("【" .. _detail_title(details[i], i) .. "】待提交")
-        end
-    end
-    return result
-end
-
 
 
 
@@ -133,9 +80,16 @@ function npc.link(play,npcid,ew,aid)
             return
         end
 
-        local missing = _detail_missing(play, cfg, sg_data, key, idx)
-        if missing then
-            Player.sendmsgEx(play, missing)
+        if cfg.a_num and (sg_data[key.."_a"] or 0) < cfg.a_num then
+            Player.sendmsgEx(play, "击杀数量不足#57")
+            return
+        end
+        if cfg.b_num and (sg_data[key.."_b"] or 0) < cfg.b_num then
+            Player.sendmsgEx(play, "击杀数量不足#57")
+            return
+        end
+        if cfg.c_num and (sg_data[key.."_c"] or 0) < cfg.c_num then
+            Player.sendmsgEx(play, "击杀数量不足#57")
             return
         end
         if cfg.cost and not Guard.ensureCost(play, cfg.cost) then
@@ -178,12 +132,7 @@ function npc.link(play,npcid,ew,aid)
             end
             sendluamsg(play,100,npcid,1,2,"")
         else
-            local msg = string.format("进度：|【%d/%d】#218|", done, #details)
-            local undone = _unfinished_details(play, details, jq_data, sg_data, key)
-            if #undone > 0 then
-                msg = msg .. "\n" .. table.concat(undone, "\n")
-            end
-            Player.sendmsgEx(play, msg)
+            Player.sendmsgEx(play, string.format("进度：|【%d/%d】#218|", done, #details))
         end
         return
     end

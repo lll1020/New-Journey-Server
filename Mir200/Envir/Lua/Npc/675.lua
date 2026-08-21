@@ -349,8 +349,10 @@ function npc.link(play, npcid, ew, aid)
             _send_state(play, npcid, 1)
             return
         end
-        if not _config.hb or not Guard.ensureCost(play, _config.hb) then
-            _send_state(play, npcid, 1)
+        if not _config.hb then
+            return
+        end
+        if not Guard.ensureCost(play, _config.hb) then
             return
         end
         Guard.consumeCost(play, _config.hb, "," .. (_config.name or "æÁ«È»ŒŒÒ"))

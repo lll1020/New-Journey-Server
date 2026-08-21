@@ -5,39 +5,15 @@ npc = {}
 
 local _config = Guard.getConfig("npc_671")
 
-local function _layer_key(index)
-    return "npc_671_done_" .. tostring(index)
-end
-
-local function _layer_item(cfg)
-    return cfg and cfg.jl and cfg.jl[1] and cfg.jl[1][1]
-end
-
 local function _sync_671_progress(jq_data, total)
     jq_data = jq_data or {}
     total = tonumber(total) or 0
-    local has_layer_state = false
-    for i = 1, total do
-        if tonumber(jq_data[_layer_key(i)] or 0) >= 1 then
-            has_layer_state = true
-            break
-        end
+    local token = tonumber(jq_data["npc_671_token"] or 0) or 0
+    if token < 0 then
+        token = 0
     end
-
-    -- 兼容旧版总数进度：旧数据无法区分层级，按已完成数量顺序补齐逐层标记。
-    if not has_layer_state then
-        local legacy_token = tonumber(jq_data["npc_671_token"] or 0) or 0
-        legacy_token = math.max(0, math.min(legacy_token, total))
-        for i = 1, legacy_token do
-            jq_data[_layer_key(i)] = 1
-        end
-    end
-
-    local token = 0
-    for i = 1, total do
-        if tonumber(jq_data[_layer_key(i)] or 0) >= 1 then
-            token = token + 1
-        end
+    if total > 0 and token > total then
+        token = total
     end
     jq_data["npc_671_token"] = token
     jq_data["npc_671_lv"] = token
@@ -113,36 +89,25 @@ function npc.link(play,npcid,ew,aid)
 
 
     if ew == 3 then
-        local next_lv = (jq_data["npc_671_token"] or 0) + 1
-        if next_lv > total then
-            Player.sendmsgEx(play, "十八层信物已全部提交，请领取最终奖励#57")
-            sendluamsg(play,100,npcid,0,0,tbl2json({T_dljq = jq_data}))
-            return
+        local total_get = 0
+        local details = _config.details or {}
+        for i = 1, #details do
+            local cfg = details[i]
+            local item = cfg and cfg.jl and cfg.jl[1] and cfg.jl[1][1]
+            if item and item ~= "" then
+                local name, num = Player.checkItemNumByTable(play, {{item,1}})
+                if not name then
+                    Guard.consumeCost(play, {{item,1}}, ",回收信物")
+                    total_get = total_get + 1
+                end
+            end
         end
-
-        local cfg = details[next_lv]
-        local item = _layer_item(cfg)
-        if not item or item == "" then
-            Player.sendmsgEx(play, "当前层级信物配置缺失#57")
-            return
-        end
-
-        local bag_count = tonumber(getbagitemcount(play, item) or 0) or 0
-        if bag_count < 1 then
-            Player.sendmsgEx(play, string.format("请先提交第%d层信物：#57|【%s】#218|还差|【%d个】#218|",
-                next_lv, item, 1 - bag_count))
-            sendluamsg(play,100,npcid,0,0,tbl2json({T_dljq = jq_data}))
-            return
-        end
-
-        Guard.consumeCost(play, {{item, bag_count}}, ",提交地狱信物")
-        jq_data[_layer_key(next_lv)] = 1
-        jq_data["npc_671_token"] = next_lv
+        local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+        jq_data["npc_671_token"] = (jq_data["npc_671_token"] or 0) + total_get
         jq_data = _sync_671_progress(jq_data, total)
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, string.format("已提交第%d层信物：|【%s】#218|，扣除|【%d个】#218|，本层只计1层",
-            next_lv, item, bag_count))
-        Player.sendmsgEx(play, string.format("当前进度：|【%d/%d层】#218|", jq_data["npc_671_token"] or 0, total))
+        Player.sendmsgEx(play, string.format("已回收信物：|【%d个】#218|", total_get))
+        Player.sendmsgEx(play, string.format("共计已回收信物：|【%d个】#218|", jq_data["npc_671_token"] or 0))
         sendluamsg(play,100,npcid,0,0,tbl2json({T_dljq = jq_data}))
         return
     end
@@ -166,17 +131,7 @@ function npc.link(play,npcid,ew,aid)
             end
             sendluamsg(play,100,npcid,1,2,"")
         else
-            local next_lv = npc_671_token + 1
-            local cfg = details[next_lv]
-            local item = _layer_item(cfg) or "当前层信物"
-            local name, num = Player.checkItemNumByTable(play, {{item, 1}})
-            if name then
-                Player.sendmsgEx(play, string.format("当前进度：|【%d/%d层】#218|还差|【%d层】#218|，第%d层信物|【%s】#218|还差|【%d个】#218|",
-                    npc_671_token, total, total - npc_671_token, next_lv, item, tonumber(num or 1) or 1))
-            else
-                Player.sendmsgEx(play, string.format("当前进度：|【%d/%d层】#218|，第%d层信物|【%s】#218|已拥有，请先提交该层信物#57",
-                    npc_671_token, total, next_lv, item))
-            end
+            Player.sendmsgEx(play, string.format("当前进度：|【%d/%d】#218|", npc_671_token, total))
         end
     end
 end

@@ -72,64 +72,6 @@ local function check_xz_done(play, list)
     return true
 end
 
-local function _detail_title(cfg, idx)
-    if cfg and cfg.name and cfg.name ~= "" then
-        return tostring(cfg.name)
-    end
-    return "第" .. tostring(idx or "") .. "项"
-end
-
-local function _unfinished_xz_names(play, list)
-    local names = {}
-    if not list or #list == 0 then
-        return names
-    end
-    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
-    for i = 1, #list do
-        local sub = "npc_"..list[i]
-        if not (jq_data[sub] and jq_data[sub] >= 2) then
-            local cfg = Guard.getConfig(sub)
-            names[#names + 1] = (cfg and cfg.name) or sub
-        end
-    end
-    return names
-end
-
-local function _detail_missing(play, cfg, sg_data, key, idx)
-    local title = _detail_title(cfg, idx)
-    if cfg.xz then
-        local undone = _unfinished_xz_names(play, cfg.xz)
-        if #undone > 0 then
-            return string.format("【%s】前置未完成：#57|【%s】#218|", title, table.concat(undone, "、"))
-        end
-    end
-    if cfg.num then
-        local cur = tonumber(sg_data[key] or 0) or 0
-        local need = tonumber(cfg.num or 0) or 0
-        if cur < need then
-            return string.format("【%s】还差#57|【%d只】#218|（#57|【%d/%d】#218|）", title, need - cur, cur, need)
-        end
-    end
-    if cfg.cost then
-        local name, num = Player.checkItemNumByTable(play, cfg.cost)
-        if name then
-            return string.format("【%s】还差#57|【%s x %d】#218|", title, tostring(name), tonumber(num or 0) or 0)
-        end
-    end
-    return nil
-end
-
-local function _unfinished_details(play, details, jq_data, sg_data, key)
-    local result = {}
-    for i = 1, #details do
-        if not (jq_data[key.."_"..i] and jq_data[key.."_"..i] >= 2) then
-            result[#result + 1] = _detail_missing(play, details[i], sg_data, key, i)
-                or ("【" .. _detail_title(details[i], i) .. "】待提交")
-        end
-    end
-    return result
-end
-
 function npc.link(play,npcid,ew,aid)
     if not _config then
         return
@@ -200,12 +142,7 @@ function npc.link(play,npcid,ew,aid)
             end
             sendluamsg(play,100,npcid,1,2,"")
         else
-            local msg = string.format("进度：|【%d/%d】#218|", done, #details)
-            local undone = _unfinished_details(play, details, jq_data, sg_data, key)
-            if #undone > 0 then
-                msg = msg .. "\n" .. table.concat(undone, "\n")
-            end
-            Player.sendmsgEx(play, msg)
+            Player.sendmsgEx(play, string.format("进度：|【%d/%d】#218|", done, #details))
         end
         return
     end
@@ -230,10 +167,6 @@ function npc.link(play,npcid,ew,aid)
         end
 
         if cfg.xz and not check_xz_done(play, cfg.xz) then
-            local missing = _detail_missing(play, cfg, sg_data, key, idx)
-            if missing then
-                Player.sendmsgEx(play, missing)
-            end
             local targetMap = "黑白无常"
             local targetNpc = 679
             local targetX, targetY = 101, 57
@@ -245,15 +178,8 @@ function npc.link(play,npcid,ew,aid)
         end
 
         if cfg.num and (sg_data[key] or 0) < cfg.num then
-            Player.sendmsgEx(play, _detail_missing(play, cfg, sg_data, key, idx))
+            Player.sendmsgEx(play, string.format("击杀不足：#57|【%d/%d】#218|", (sg_data[key] or 0), cfg.num))
             return
-        end
-        if cfg.cost then
-            local missing = _detail_missing(play, cfg, sg_data, key, idx)
-            if missing then
-                Player.sendmsgEx(play, missing)
-                return
-            end
         end
         if cfg.cost and not Guard.ensureCost(play, cfg.cost) then
             return

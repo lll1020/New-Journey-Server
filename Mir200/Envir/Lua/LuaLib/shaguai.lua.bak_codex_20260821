@@ -469,7 +469,7 @@ shaguai = {
 			shaguai.jian(play,603)
 			messagebox(play,"任务完成,立即前往提交")
 		end
-		_sg_kill_tip(play, (config.name or "任务"), sg_data[key], (config.num or 0))
+		-- _sg_kill_tip(play, (config.name or "任务"), sg_data[key], (config.num or 0))
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
 	-- ["604"] = function(play,mob)      --剿灭恶徒
@@ -534,7 +534,7 @@ shaguai = {
 			shaguai.jian(play,605)
 			messagebox(play,"任务完成,立即前往提交")
 		end
-		_sg_kill_tip(play, (config.name or "任务"), sg_data[key], (config.num or 0))
+		-- _sg_kill_tip(play, (config.name or "任务"), sg_data[key], (config.num or 0))
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
 	["606"] = function(play,mob)      --讨伐夜魔
@@ -558,7 +558,7 @@ shaguai = {
 			shaguai.jian(play,606)
 			messagebox(play,"任务完成,立即前往提交")
 		end
-		_sg_kill_tip(play, (config.name or "任务"), sg_data[key], (config.num or 0))
+		-- Player.sendmsgEx(play,  (config.name or "任务").."：击杀精英怪+"..1 .." ( "..(sg_data[key] or 0).."/"..(config.num or 0).." )#57")
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
 	["608"] = function(play,mob)      --守护森林
@@ -581,7 +581,7 @@ shaguai = {
 			shaguai.jian(play,608)
 			messagebox(play,"任务完成,立即前往提交")
 		end
-		_sg_kill_tip(play, (config.name or "任务"), sg_data[key], (config.num or 0))
+		-- _sg_kill_tip(play, (config.name or "任务"), sg_data[key], (config.num or 0))
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
 	["621"] = function(play,mob)      --踏入·虚妄山脉
@@ -603,7 +603,7 @@ shaguai = {
 			shaguai.jian(play,621)
 			messagebox(play,"任务完成,立即前往提交")
 		end
-		_sg_kill_tip(play, (config.name or "任务"), sg_data[key], (config.num or 0))
+		-- _sg_kill_tip(play, (config.name or "任务"), sg_data[key], (config.num or 0))
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
 	["622"] = function(play,mob)      --踏入·叹息旷野
@@ -625,7 +625,7 @@ shaguai = {
 			shaguai.jian(play,622)
 			messagebox(play,"任务完成,立即前往提交")
 		end
-		_sg_kill_tip(play, (config.name or "任务"), sg_data[key], (config.num or 0))
+		-- _sg_kill_tip(play, (config.name or "任务"), sg_data[key], (config.num or 0))
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
 	["623"] = function(play,mob)      --踏入·鬼嘲深渊
@@ -647,7 +647,7 @@ shaguai = {
 			shaguai.jian(play,623)
 			messagebox(play,"任务完成,立即前往提交")
 		end
-		_sg_kill_tip(play, (config.name or "任务"), sg_data[key], (config.num or 0))
+		-- _sg_kill_tip(play, (config.name or "任务"), sg_data[key], (config.num or 0))
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
 	["624"] = function(play,mob)      --踏入·禁忌之海
@@ -669,7 +669,7 @@ shaguai = {
 			shaguai.jian(play,624)
 			messagebox(play,"任务完成,立即前往提交")
 		end
-		_sg_kill_tip(play, (config.name or "任务"), sg_data[key], (config.num or 0))
+		-- _sg_kill_tip(play, (config.name or "任务"), sg_data[key], (config.num or 0))
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
 	["625"] = function(play,mob)      --嘲天笑地
@@ -689,7 +689,7 @@ shaguai = {
 			shaguai.jian(play,625)
 			messagebox(play,"任务完成,立即前往提交")
 		end
-		_sg_kill_tip(play, (prep.progress_name or prep.name or "任务"), sg_data[key], (prep.need or 0))
+		-- Player.sendmsgEx(play,  (prep.progress_name or "任务").."击杀+"..1 .." ( "..sg_data[key].."/"..(prep.need or 0).." )#57")
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
 	["626"] = function(play,mob)      --净化宝石
@@ -716,12 +716,6 @@ shaguai = {
 				messagebox(play,"任务完成,立即前往提交")
 			end
 		end
-		local killNeed = need * (tonumber(prep.drop_every or 5) or 5)
-		_sg_kill_multi_tip(play, (prep.name or "任务"), "收集",
-			_sg_color_text((prep.item_name or "净化之泪") .. " ", "#ffd36b") ..
-			_sg_progress_text(math.min(cur, need), need) ..
-			_sg_color_text("  击杀 ", "#ffd36b") ..
-			_sg_progress_text(math.min(tonumber(sg_data[killKey] or 0) or 0, killNeed), killNeed))
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
 	["627"] = function(play,mob)      --定身符
@@ -748,12 +742,6 @@ shaguai = {
 				messagebox(play,"任务完成,立即前往提交")
 			end
 		end
-		local killNeed = need * (tonumber(prep.drop_every or 5) or 5)
-		_sg_kill_multi_tip(play, (prep.name or "任务"), "收集",
-			_sg_color_text((prep.item_name or "定身符碎片") .. " ", "#ffd36b") ..
-			_sg_progress_text(math.min(cur, need), need) ..
-			_sg_color_text("  击杀 ", "#ffd36b") ..
-			_sg_progress_text(math.min(tonumber(sg_data[killKey] or 0) or 0, killNeed), killNeed))
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
 	["628"] = function(play,mob)      --真视之眼
@@ -784,13 +772,6 @@ shaguai = {
 			shaguai.jian(play,628)
 			messagebox(play,"任务完成,立即前往提交")
 		end
-		_sg_kill_multi_tip(play, (prep.name or "任务"), "收集",
-			_sg_color_text(leftName .. " ", "#ffd36b") ..
-			_sg_progress_text(math.min(getbagitemcount(play, leftName), 1), 1) ..
-			_sg_color_text("  " .. rightName .. " ", "#ffd36b") ..
-			_sg_progress_text(math.min(getbagitemcount(play, rightName), 1), 1) ..
-			_sg_color_text("  击杀 ", "#ffd36b") ..
-			_sg_progress_text(math.min(curKill, (prep.right_need or 35)), (prep.right_need or 35)))
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
 	["645"] = function(play,mob)      --黄风大圣
@@ -933,19 +914,9 @@ shaguai = {
 		local mob_name = getbaseinfo(mob,1)
 		local map = getbaseinfo(play,3)
 		local key = "npc_672"
-		local need_a, need_b, need_c = 0, 0, 0
 		local add_a, add_b, add_c = false, false, false
 		if config.details then
 			for _, v in ipairs(config.details) do
-				if v.a_num then
-					need_a = tonumber(v.a_num) or need_a
-				end
-				if v.b_num then
-					need_b = tonumber(v.b_num) or need_b
-				end
-				if v.c_num then
-					need_c = tonumber(v.c_num) or need_c
-				end
 				if v.a_num and xilieditu[map] and xilieditu[map] == 2 and (guaiwutype[mob_name] and guaiwutype[mob_name] == 2) then add_a = true end
 				if v.b_num and map == "六道轮回" then add_b = true end
 				if v.c_num and (mob_name == "弱鸡" or mob_name == "鸡") then add_c = true end
@@ -960,25 +931,7 @@ shaguai = {
 		if add_c then
 			sg_data[key.."_c"] = (sg_data[key.."_c"] or 0) + 1
 		end
-		if add_a or add_b or add_c then
-			local target_name, target_cur, target_need
-			if add_a then
-				target_name = "系列BOSS"
-				target_cur = tonumber(sg_data[key.."_a"] or 0) or 0
-				target_need = need_a
-			elseif add_b then
-				target_name = "六道轮回"
-				target_cur = tonumber(sg_data[key.."_b"] or 0) or 0
-				target_need = need_b
-			elseif add_c then
-				target_name = "弱鸡"
-				target_cur = tonumber(sg_data[key.."_c"] or 0) or 0
-				target_need = need_c
-			end
-			_sg_kill_multi_tip(play, (config.name or "任务"), "击杀",
-				_sg_color_text(target_name .. " ", "#ffd36b") ..
-				_sg_progress_text(math.min(target_cur, target_need), target_need))
-		end
+		-- release_print("轮回之路击杀统计", add_a, add_b, add_c, sg_data[key.."_a"], sg_data[key.."_b"], sg_data[key.."_c"])
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
 	["676"] = function(play,mob)      --共公怒触不周山
