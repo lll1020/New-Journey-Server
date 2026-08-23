@@ -717,11 +717,11 @@ shaguai = {
 			end
 		end
 		local killNeed = need * (tonumber(prep.drop_every or 5) or 5)
-		_sg_kill_multi_tip(play, (prep.name or "任务"), "收集",
-			_sg_color_text((prep.item_name or "净化之泪") .. " ", "#ffd36b") ..
-			_sg_progress_text(math.min(cur, need), need) ..
-			_sg_color_text("  击杀 ", "#ffd36b") ..
-			_sg_progress_text(math.min(tonumber(sg_data[killKey] or 0) or 0, killNeed), killNeed))
+		-- _sg_kill_multi_tip(play, (prep.name or "任务"), "收集",
+		-- 	_sg_color_text((prep.item_name or "净化之泪") .. " ", "#ffd36b") ..
+		-- 	_sg_progress_text(math.min(cur, need), need) ..
+		-- 	_sg_color_text("  击杀 ", "#ffd36b") ..
+		-- 	_sg_progress_text(math.min(tonumber(sg_data[killKey] or 0) or 0, killNeed), killNeed))
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
 	["627"] = function(play,mob)      --定身符
@@ -749,11 +749,11 @@ shaguai = {
 			end
 		end
 		local killNeed = need * (tonumber(prep.drop_every or 5) or 5)
-		_sg_kill_multi_tip(play, (prep.name or "任务"), "收集",
-			_sg_color_text((prep.item_name or "定身符碎片") .. " ", "#ffd36b") ..
-			_sg_progress_text(math.min(cur, need), need) ..
-			_sg_color_text("  击杀 ", "#ffd36b") ..
-			_sg_progress_text(math.min(tonumber(sg_data[killKey] or 0) or 0, killNeed), killNeed))
+		-- _sg_kill_multi_tip(play, (prep.name or "任务"), "收集",
+		-- 	_sg_color_text((prep.item_name or "定身符碎片") .. " ", "#ffd36b") ..
+		-- 	_sg_progress_text(math.min(cur, need), need) ..
+		-- 	_sg_color_text("  击杀 ", "#ffd36b") ..
+		-- 	_sg_progress_text(math.min(tonumber(sg_data[killKey] or 0) or 0, killNeed), killNeed))
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
 	["628"] = function(play,mob)      --真视之眼
@@ -784,13 +784,13 @@ shaguai = {
 			shaguai.jian(play,628)
 			messagebox(play,"任务完成,立即前往提交")
 		end
-		_sg_kill_multi_tip(play, (prep.name or "任务"), "收集",
-			_sg_color_text(leftName .. " ", "#ffd36b") ..
-			_sg_progress_text(math.min(getbagitemcount(play, leftName), 1), 1) ..
-			_sg_color_text("  " .. rightName .. " ", "#ffd36b") ..
-			_sg_progress_text(math.min(getbagitemcount(play, rightName), 1), 1) ..
-			_sg_color_text("  击杀 ", "#ffd36b") ..
-			_sg_progress_text(math.min(curKill, (prep.right_need or 35)), (prep.right_need or 35)))
+		-- _sg_kill_multi_tip(play, (prep.name or "任务"), "收集",
+		-- 	_sg_color_text(leftName .. " ", "#ffd36b") ..
+		-- 	_sg_progress_text(math.min(getbagitemcount(play, leftName), 1), 1) ..
+		-- 	_sg_color_text("  " .. rightName .. " ", "#ffd36b") ..
+		-- 	_sg_progress_text(math.min(getbagitemcount(play, rightName), 1), 1) ..
+		-- 	_sg_color_text("  击杀 ", "#ffd36b") ..
+		-- 	_sg_progress_text(math.min(curKill, (prep.right_need or 35)), (prep.right_need or 35)))
 		Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
 	end,
 	["645"] = function(play,mob)      --黄风大圣

@@ -134,7 +134,7 @@ function stdmodefunc10(play, item)
             else
                 Player.moveToThirdContinentFrontier(play)
             end
-        elseif daluditu[du] and daluditu[du] == 4 then mapmove(play, "四大陆主城",37,33,3) addhpper(play, '=', 100) addmpper(play, '=', 100)
+        elseif daluditu[du] and daluditu[du] == 4 then mapmove(play, "四大陆主城",32,29,3) addhpper(play, '=', 100) addmpper(play, '=', 100)
         elseif daluditu[du] and daluditu[du] == 5 then mapmove(play, "五大陆主城",87,28,4) addhpper(play, '=', 100) addmpper(play, '=', 100)
         elseif daluditu[du] and daluditu[du] == 6 then mapmove(play, "六大陆主城",83,121,4) addhpper(play, '=', 100) addmpper(play, '=', 100)
         elseif daluditu[du] and daluditu[du] == 7 then
@@ -940,10 +940,12 @@ local function _msfc_open_box_say(play, boxName, poolKey)
         local y = 62 + (i - 1) * 38
         local code = tostring(_msfc_box_code(poolKey, i))
         local link = "@msfcbox," .. code
-        lines[#lines + 1] = '<Layout|id=ui_msfc_hit_' .. tostring(i) .. '|x=31|y=' .. tostring(y - 3) .. '|width=310|height=36|link=' .. link .. '>'
+        lines[#lines + 1] = '<Layout|id=ui_msfc_hit_' .. tostring(i) .. '|x=31|y=' .. tostring(y - 3) .. '|width=310|height=36>'
         lines[#lines + 1] = '<Button|id=ui_msfc_btn_' .. tostring(i) .. '|x=38|y=' .. tostring(y) .. '|width=292|height=30|nimg=public/1900000651_1.png|pimg=public/1900000651_1.png|color=255|size=18|text=' .. _msfc_reward_label(reward) .. '|link=' .. link .. '>'
     end
-    lines[#lines + 1] = '</Img>'
+    
+    lines[#lines + 1] = '<Text|id=ui_msfc_title_tip|x=27|y=240|color=251|size=18|text=可以连续点击领取>'
+    -- lines[#lines + 1] = '</Img>'
     say(play, table.concat(lines, "\r\n"))
 end
 local function _msfc_submit_box_choice(play, boxName, poolKey, choiceIdx)
