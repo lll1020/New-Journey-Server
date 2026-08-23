@@ -1451,7 +1451,7 @@ teshudata = {
             {name = "灵兽", reward = {{"天道卷轴[天命·复活]",1}}, cost = {{"辉耀水晶",100}}, trial = {fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "≮火烧连营·天命策尊≯", boss_pos = {32,36}, boss_effect = 92, pet_tick_sec = 1, pet_hurt_pct = 4, pet_hint_sec = 5}},
             {name = "灵根", reward = {{"天道卷轴[天命·麻痹]",1}}, cost = {{"辉耀水晶",100}}, trial = {fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "王婆", boss_pos = {32,36}, elite = "暗影打手·精英", elite_count = 3, mob = "暗影打手", mob_count = 10, mob_center = {32,36}}},
             {name = "境界", reward = {{"天道卷轴[天命·神镰]",1}}, cost = {{"辉耀水晶",100}}, trial = {fb_map = "mwsl", fb_time = 120, enter_pos = {29,27}, need_success = 3, lightning_sec = 5, lightning_effect = 60463, dan_item = "天道·渡劫丹", dan_keep_sec = 3}},
-            {name = "天书仙法", reward = {{"天道卷轴[天命·神斧]",1}}, cost = {{"辉耀水晶",100}}, trial = {fb_map = "mwsl", fb_time = 90, enter_pos = {29,27}, total_round = 3, round_sec = 20, score_target = 10, score_tick_sec = 1, safe_radius = 3, safe_effect = 92, safe_points = {{29,27},{35,27},{29,35},{35,35},{32,31}}}},
+            {name = "天书仙法", reward = {{"天道卷轴[天命·神斧]",1}}, cost = {{"辉耀水晶",100}}, trial = {fb_map = "mwsl", fb_time = 90, enter_pos = {29,27}, total_round = 3, round_sec = 20, score_target = 10, score_tick_sec = 1, safe_radius = 0, safe_effect = 178, safe_points = {{29,27},{35,27},{29,35},{35,35},{32,31}}}},
         },
     },
     -- 六大陆功能：残魂商店与火毒值系统。

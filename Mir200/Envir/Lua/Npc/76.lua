@@ -10,7 +10,12 @@ local _run_map_var = "S$npc76_map"
 local _run_idx_var = "U$npc76_idx"
 local _dujie_end_var = "N$npc76_dj_end"
 local _safe_effect_prefix = "npc76_safe_"
+local _safe_effect_timer_id = 2
 local _run_state = {}
+
+local function _dbg(tag, ...)
+    -- release_print("[npc76][" .. tostring(tag) .. "]", ...)
+end
 
 local function _state_get(dtm)
     if not dtm or dtm == "" then
@@ -34,6 +39,25 @@ local function _safe_effect_id(dtm)
     return _safe_effect_prefix .. tostring(dtm or "")
 end
 
+local function _draw_xianfa_safe_effect(dtm, cfg, st)
+    if not dtm or dtm == "" or not checkmirrormap(dtm) or not st then
+        return
+    end
+    local x = tonumber(st.safe_x or 0) or 0
+    local y = tonumber(st.safe_y or 0) or 0
+    if x <= 0 or y <= 0 then
+        return
+    end
+    local effect_id = tonumber(cfg and cfg.safe_effect or 92) or 92
+    release_print("[npc76][_draw_xianfa_safe_effect] dtm=" .. tostring(dtm) .. " x=" .. tostring(x) .. " y=" .. tostring(y) .. " effect_id=" .. tostring(effect_id))
+    release_print(_safe_effect_id(dtm)..os.time())
+    mapeffect(_safe_effect_id(dtm)..os.time(), dtm, x, y, effect_id, 2, 0)
+    for i = 1, 50 do
+        mapeffect(_safe_effect_id(dtm).."lei"..os.time(), dtm, 33 + math.random(-30, 30), 37 + math.random(-30, 30), 56, 1, 0)
+    end
+    
+end
+
 local function _get_data(play)
     local T_data = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
     T_data[_pre_key] = T_data[_pre_key] or {}
@@ -48,8 +72,16 @@ end
 local function _build_panel_data(play)
     local data = {T_data = _get_data(play)}
     local run_map = tostring(getplaydef(play, _run_map_var) or "")
-    data.run_idx = tonumber(getplaydef(play, _run_idx_var) or 0) or 0
-    data.in_fb = (run_map ~= "" and getbaseinfo(play, 3) == run_map) and 1 or 0
+    local current_map = tostring(getbaseinfo(play, 3) or "")
+    local run_idx = tonumber(getplaydef(play, _run_idx_var) or 0) or 0
+    if run_idx < 1 or run_idx > 4 then
+        run_idx = tonumber(string.match(current_map, "_npc76_(%d+)$") or 0) or 0
+    end
+    if run_map == "" and run_idx >= 1 and run_idx <= 4 and checkmirrormap(current_map) then
+        run_map = current_map
+    end
+    data.run_idx = run_idx
+    data.in_fb = (run_map ~= "" and current_map == run_map) and 1 or 0
     return data
 end
 
@@ -60,6 +92,31 @@ end
 local function _trial_cfg(idx)
     local detail = _config and _config.details and _config.details[idx] or nil
     return detail and detail.trial or {}
+end
+
+local function _idx_from_map(dtm)
+    local idx = tonumber(string.match(tostring(dtm or ""), "_npc76_(%d+)$") or 0) or 0
+    if idx >= 1 and idx <= 4 then
+        return idx
+    end
+    return 0
+end
+
+local function _get_run_idx(play, dtm, st)
+    local idx = tonumber(st and st.idx or 0) or 0
+    if idx < 1 or idx > 4 then
+        idx = tonumber(getplaydef(play, _run_idx_var) or 0) or 0
+    end
+    if idx < 1 or idx > 4 then
+        idx = _idx_from_map(dtm)
+    end
+    if idx >= 1 and idx <= 4 then
+        if st then
+            st.idx = idx
+        end
+        setplaydef(play, _run_idx_var, idx)
+    end
+    return idx
 end
 
 local function _count_mon_by_name(dtm, name)
@@ -130,9 +187,32 @@ local function _clear_run(play)
     setplaydef(play, _dujie_end_var, 0)
 end
 
+local function _get_current_trial_map(play)
+    local run_map = tostring(getplaydef(play, _run_map_var) or "")
+    local current_map = tostring(getbaseinfo(play, 3) or "")
+    if run_map == "" and _idx_from_map(current_map) > 0 and checkmirrormap(current_map) then
+        run_map = current_map
+        setplaydef(play, _run_map_var, run_map)
+    end
+    return run_map
+end
+
+local function _get_active_trial_map(play)
+    local run_map = _get_current_trial_map(play)
+    if run_map == "" then
+        return ""
+    end
+    if checkmirrormap(run_map) then
+        return run_map
+    end
+    _clear_run(play)
+    return ""
+end
+
 local function _back(play)
-    local dtm = tostring(getplaydef(play, _run_map_var) or "")
+    local dtm = _get_current_trial_map(play)
     local back = tostring(getplaydef(play, _back_pos_var) or "")
+    _dbg("back", tostring(getbaseinfo(play, 1) or ""), "run_map=" .. dtm, "back=" .. back)
     delmapeffect(_safe_effect_id(dtm))
     if back ~= "" then
         local parts = split(back, ",")
@@ -149,8 +229,10 @@ end
 
 local function _close_map(dtm)
     if dtm and dtm ~= "" then
+        _dbg("close_map", "dtm=" .. tostring(dtm), "check=" .. tostring(checkmirrormap(dtm)))
         delmapeffect(_safe_effect_id(dtm))
         setenvirofftimer(dtm, 1)
+        setenvirofftimer(dtm, _safe_effect_timer_id)
         if checkmirrormap(dtm) then
             delmirrormap(dtm)
         end
@@ -169,6 +251,21 @@ local function _has_pet_ready(play)
 end
 
 local function _pick_safe_point(cfg, st)
+    local points = cfg.safe_points
+    if type(points) == "table" and #points > 0 then
+        local last_idx = tonumber(st.safe_idx or 0) or 0
+        local point_idx = math.random(#points)
+        if #points > 1 then
+            for _ = 1, 10 do
+                if point_idx ~= last_idx then
+                    break
+                end
+                point_idx = math.random(#points)
+            end
+        end
+        local point = points[point_idx] or {}
+        return {tonumber(point[1] or 32) or 32, tonumber(point[2] or 31) or 31}, point_idx
+    end
     local center = cfg.safe_center or {32, 31}
     local radius = tonumber(cfg.safe_spawn_radius or 5) or 5
     local cx = tonumber(center[1] or 32) or 32
@@ -196,14 +293,16 @@ local function _start_xianfa_round(play, dtm, cfg, st)
     st.round_end = os.time() + (tonumber(cfg.round_sec or 20) or 20)
     st.last_score_tick = 0
     delmapeffect(_safe_effect_id(dtm))
-    mapeffect(_safe_effect_id(dtm), dtm, st.safe_x, st.safe_y, tonumber(cfg.safe_effect or 92) or 92, tonumber(cfg.round_sec or 20) or 20, 2, 0)
+    _draw_xianfa_safe_effect(dtm, cfg, st)
     Player.sendmsgEx(play, string.format("第%d轮开始，前往安全区累计积分#57", st.round))
 end
 
 local function _enter_trial(play, idx)
     local cfg = _trial_cfg(idx)
     local dtm = tostring(getbaseinfo(play, 1) or "") .. "_npc76_" .. tostring(idx)
+    _dbg("enter_begin", "player=" .. tostring(getbaseinfo(play, 1) or ""), "idx=" .. tostring(idx), "dtm=" .. dtm, "map=" .. tostring(getbaseinfo(play, 3) or ""))
     if checkmirrormap(dtm) then
+        _dbg("enter_delete_old", "dtm=" .. dtm)
         delmirrormap(dtm)
     end
 
@@ -211,15 +310,23 @@ local function _enter_trial(play, idx)
     _state_clear(dtm)
     local st = _state_get(dtm)
     st.idx = idx
+    st.created_at = os.time()
+    st.last_player_seen = st.created_at
+    st.spawn_verified = false
+    st.spawn_grace_until = nil
 
     addmirrormap(cfg.fb_map or "mwsl", dtm, (_config.details[idx] and _config.details[idx].name or "天命试炼"), tonumber(cfg.fb_time or 300) or 300,"xtc",136,136)
+    _dbg("enter_map_created", "dtm=" .. dtm, "fb_map=" .. tostring(cfg.fb_map or "mwsl"), "fb_time=" .. tostring(cfg.fb_time or 300))
     local enter_pos = cfg.enter_pos or {29, 27}
-    mapmove(play, dtm, tonumber(enter_pos[1] or 29) or 29, tonumber(enter_pos[2] or 27) or 27, 2)
     setplaydef(play, _run_map_var, dtm)
     setplaydef(play, _run_idx_var, idx)
     setplaydef(play, _dujie_end_var, 0)
+    -- 先记录副本状态，再传送，避免切图后首个计时器读到默认 idx=0。
+    mapmove(play, dtm, tonumber(enter_pos[1] or 29) or 29, tonumber(enter_pos[2] or 27) or 27, 2)
+    _dbg("enter_mapmove_called", "player=" .. tostring(getbaseinfo(play, 1) or ""), "now_map=" .. tostring(getbaseinfo(play, 3) or ""), "target=" .. dtm)
 
     if idx == 1 then
+        st.spawn_grace_until = os.time() + 5
         local pos = cfg.boss_pos or {32, 36}
         genmonex(dtm, tonumber(pos[1] or 32) or 32, tonumber(pos[2] or 36) or 36, cfg.boss or "≮火烧连营·天命策尊≯", 1, 1, 0, 54, "", 0)
         if tonumber(cfg.boss_effect or 0) > 0 then
@@ -227,6 +334,7 @@ local function _enter_trial(play, idx)
         end
         Player.sendmsgEx(play, "灵兽试炼开启：只有灵兽攻击才能让BOSS掉血#57")
     elseif idx == 2 then
+        st.spawn_grace_until = os.time() + 5
         _spawn_many(dtm, cfg.mob or "暗影打手", tonumber(cfg.mob_count or 10) or 10, cfg.mob_center or {32, 36})
         _spawn_many(dtm, cfg.elite or "暗影打手·精英", tonumber(cfg.elite_count or 3) or 3, {34, 36})
         _spawn_many(dtm, cfg.boss or "王婆", 1, cfg.boss_pos or {32, 36})
@@ -245,6 +353,9 @@ local function _enter_trial(play, idx)
 
     startautoattack(play)
     setenvirontimer(dtm, 1, 1, "@npc_76_dsq," .. play .. "," .. dtm)
+    if idx == 4 then
+        setenvirontimer(dtm, _safe_effect_timer_id, 2, "@npc_76_safe_fx," .. dtm)
+    end
     senddelaymsg(play, "距离试炼结束剩余%s", tonumber(cfg.fb_time or 300) or 300, 250, 1, "@npc_76_timeout")
     _refresh_panel(play, 1, idx)
 end
@@ -252,7 +363,7 @@ end
 local function _finish_trial(play, idx, dtm)
     local T_data = _get_data(play)
     local state = T_data[_task_key]
-    if state[tostring(idx)] == 1 then
+    if tonumber(state[tostring(idx)] or 0) == 1 then
         _back(play)
         _close_map(dtm)
         return
@@ -297,9 +408,30 @@ local function _resolve_run_play(play, dtm)
     return run_play, no_player
 end
 
+local function _get_player_in_trial_map(dtm)
+    if not dtm or dtm == "" then
+        return nil
+    end
+    local players = getobjectinmap(dtm, 0, 0, 999, 1)
+    if type(players) ~= "table" then
+        return nil
+    end
+    for _, player in pairs(players) do
+        return player
+    end
+    return nil
+end
+
+local function _has_player_in_trial_map(dtm)
+    return _get_player_in_trial_map(dtm) ~= nil
+end
+
 local function _tick_pet_trial(play, dtm, cfg, st)
     local boss = _find_mon_by_name(dtm, cfg.boss or "≮火烧连营·天命策尊≯")
     if not boss then
+        if not st.spawn_verified and os.time() < (tonumber(st.spawn_grace_until or 0) or 0) then
+            return
+        end
         if tonumber(st.pet_damage_done or 0) >= 1 then
             _finish_trial(play, 1, dtm)
         else
@@ -307,6 +439,7 @@ local function _tick_pet_trial(play, dtm, cfg, st)
         end
         return
     end
+    st.spawn_verified = true
 
     local curhp = tonumber(getbaseinfo(boss, 9) or 0) or 0
     local maxhp = tonumber(getbaseinfo(boss, 10) or 0) or 0
@@ -353,7 +486,19 @@ local function _tick_linggen_trial(play, dtm, cfg)
     local total = _count_mon_by_name(dtm, cfg.mob or "暗影打手")
     total = total + _count_mon_by_name(dtm, cfg.elite or "暗影打手·精英")
     total = total + _count_mon_by_name(dtm, cfg.boss or "王婆")
+    if total > 0 then
+        local st = _state_get(dtm)
+        st.spawn_verified = true
+    end
     if total <= 0 then
+        local st = _state_get(dtm)
+        if not st.spawn_verified and os.time() < (tonumber(st.spawn_grace_until or 0) or 0) then
+            return
+        end
+        if not st.spawn_verified then
+            _fail_trial(play, dtm, "试炼怪物生成失败，请稍后重新挑战#57")
+            return
+        end
         _finish_trial(play, 2, dtm)
     end
 end
@@ -377,9 +522,13 @@ local function _tick_realm_trial(play, dtm, cfg, st)
 
     st.last_notice = -1
     st.next_lightning_at = now + (tonumber(cfg.lightning_sec or 5) or 5)
-    local protect_end = tonumber(getplaydef(play, _dujie_end_var) or 0) or 0
+    local protect_end = tonumber(st.dujie_end or 0) or 0
+    if protect_end <= 0 then
+        protect_end = tonumber(getplaydef(play, _dujie_end_var) or 0) or 0
+    end
     playeffect(play, tonumber(cfg.lightning_effect or 60463) or 60463, 0, 0, 1, 0, 0)
     if protect_end >= now then
+        st.dujie_end = 0
         setplaydef(play, _dujie_end_var, 0)
         st.success = (tonumber(st.success or 0) or 0) + 1
         Player.sendmsgEx(play, string.format("成功抵挡第%d次雷劫#57", st.success))
@@ -416,12 +565,14 @@ local function _tick_xianfa_trial(play, dtm, cfg, st)
     local py = tonumber(getbaseinfo(play, 5) or 0) or 0
     local dx = math.abs(px - (tonumber(st.safe_x or 0) or 0))
     local dy = math.abs(py - (tonumber(st.safe_y or 0) or 0))
-    if math.max(dx, dy) <= (tonumber(cfg.safe_radius or 2) or 2) then
+    if math.max(dx, dy) <= (tonumber(cfg.safe_radius or 2) or 2) and math.random(1, 100) <= 30 then
         st.score = (tonumber(st.score or 0) or 0) + 1
         Player.sendmsgEx(play, string.format("天书仙法积分+1 ( %d/%d )#57", st.score, tonumber(cfg.score_target or 10) or 10))
         if st.score >= (tonumber(cfg.score_target or 10) or 10) then
             _finish_trial(play, 4, dtm)
         end
+    else
+        addhpper(play, "-", 3)
     end
 end
 
@@ -445,6 +596,7 @@ function npc.link(play, npcid, p2, p3, msgData)
 
     local json_data = json2tbl(msgData) or {}
     local T_data = _get_data(play)
+    _dbg("link", "player=" .. tostring(getbaseinfo(play, 1) or ""), "p2=" .. tostring(p2), "idx=" .. tostring(json_data.idx), "map=" .. tostring(getbaseinfo(play, 3) or ""))
     if p2 == 1 then
         local idx = tonumber(json_data.idx)
         if not idx or not (_config.details and _config.details[idx]) then
@@ -452,26 +604,33 @@ function npc.link(play, npcid, p2, p3, msgData)
             return
         end
         if tonumber((T_data[_pre_key] or {})[tostring(idx)] or 0) ~= 1 then
+            _dbg("link_reject_pre", "idx=" .. tostring(idx), "pre=" .. tostring((T_data[_pre_key] or {})[tostring(idx)] or 0))
             Player.sendmsgEx(play, "你未激活对应命盘，无法进入该试炼#57")
             return
         end
         if tonumber((T_data[_task_key] or {})[tostring(idx)] or 0) == 1 then
+            _dbg("link_reject_done", "idx=" .. tostring(idx))
             Player.sendmsgEx(play, "该试炼已通关，无法重复挑战#57")
             return
         end
-        local run_map = tostring(getplaydef(play, _run_map_var) or "")
-        if run_map ~= "" and getbaseinfo(play, 3) == run_map then
-            Player.sendmsgEx(play, "你当前已经在天命试炼副本中#57")
+        local run_map = _get_active_trial_map(play)
+        if run_map ~= "" then
+            if getbaseinfo(play, 3) == run_map then
+                Player.sendmsgEx(play, "你当前已经在天命试炼副本中#57")
+            else
+                Player.sendmsgEx(play, "你已有进行中的天命试炼，请先完成或离开当前试炼#57")
+            end
             return
         end
         local cost = (_config.details[idx] and _config.details[idx].cost) or {}
         if not Guard.ensureCost(play, cost) then
+            _dbg("link_reject_cost", "idx=" .. tostring(idx))
             return
         end
         Guard.consumeCost(play, cost, ",天命试炼")
         _enter_trial(play, idx)
     elseif p2 == 2 then
-        local dtm = tostring(getplaydef(play, _run_map_var) or "")
+        local dtm = _get_current_trial_map(play)
         if dtm == "" or getbaseinfo(play, 3) ~= dtm then
             Player.sendmsgEx(play, "你当前不在天命试炼副本中#57")
             return
@@ -484,8 +643,8 @@ function npc.link(play, npcid, p2, p3, msgData)
 end
 
 function npc.use_dujie_dan(play, item)
-    local run_idx = tonumber(getplaydef(play, _run_idx_var) or 0) or 0
-    local run_map = tostring(getplaydef(play, _run_map_var) or "")
+    local run_map = _get_current_trial_map(play)
+    local run_idx = _get_run_idx(play, run_map, _state_get(run_map))
     if run_idx ~= 3 or run_map == "" or getbaseinfo(play, 3) ~= run_map then
         Player.sendmsgEx(play, "【天道·渡劫丹】只能在境界试炼中使用#57")
         return false
@@ -496,29 +655,58 @@ function npc.use_dujie_dan(play, item)
     setplaydef(play, _dujie_end_var, end_time)
     local st = _state_get(run_map)
     st.dujie_end = end_time
+    for i = 1, 50 do
+        mapeffect(run_map.."lei"..os.time(), run_map, 33 + math.random(-30, 30), 37 + math.random(-30, 30), 56, 1, 0)
+    end
     Player.sendmsgEx(play, string.format("你服用了【%s】, %d秒内可免疫1次雷劫#57", cfg.dan_item or "天道·渡劫丹", keep_sec))
 end
 
 function npc_76_dsq(xt, play, dtm, data)
+    local st = _state_get(dtm)
     local run_play, no_player = _resolve_run_play(play, dtm)
+    _dbg("tick_begin", "xt=" .. tostring(xt), "play=" .. tostring(play), "dtm=" .. tostring(dtm), "run_play=" .. tostring(run_play), "no_player=" .. tostring(no_player), "map=" .. tostring(getbaseinfo(run_play, 3) or ""))
     if no_player then
+        -- 镜像地图刚创建/刚切图时玩家列表可能短暂为空，不能立即销毁副本。
+        local now = os.time()
+        local created_at = tonumber(st.created_at or now) or now
+        local fallback_play = _get_player_in_trial_map(dtm)
+        if fallback_play then
+            run_play = fallback_play
+            st.last_player_seen = now
+            no_player = false
+            _dbg("tick_player_fallback", "dtm=" .. tostring(dtm))
+        elseif now - created_at < 8 then
+            _dbg("tick_grace", "dtm=" .. tostring(dtm), "age=" .. tostring(now - created_at))
+            return
+        elseif tonumber(st.last_player_seen or 0) > 0 and now - tonumber(st.last_player_seen) < 3 then
+            return
+        end
+    end
+    if no_player then
+        _dbg("tick_close_no_player", "dtm=" .. tostring(dtm))
+        if tostring(getplaydef(run_play, _run_map_var) or "") == dtm then
+            _clear_run(run_play)
+        end
         _close_map(dtm)
         return
     end
 
-    if tostring(getplaydef(run_play, _run_map_var) or "") ~= dtm then
+    local run_map = _get_current_trial_map(run_play)
+    if run_map ~= dtm then
+        _dbg("tick_close_run_map_mismatch", "dtm=" .. tostring(dtm), "run_map=" .. tostring(run_map or ""))
         _close_map(dtm)
         return
     end
 
-    local idx = tonumber(getplaydef(run_play, _run_idx_var) or 0) or 0
+    local idx = _get_run_idx(run_play, dtm, st)
+    _dbg("tick_state", "dtm=" .. tostring(dtm), "idx=" .. tostring(idx), "run_map=" .. tostring(run_map or ""))
     if idx < 1 or idx > 4 then
+        _dbg("tick_close_bad_idx", "dtm=" .. tostring(dtm), "idx=" .. tostring(idx))
         _close_map(dtm)
         return
     end
 
     local cfg = _trial_cfg(idx)
-    local st = _state_get(dtm)
     st.idx = idx
 
     if idx == 1 then
@@ -532,8 +720,24 @@ function npc_76_dsq(xt, play, dtm, data)
     end
 end
 
+function npc_76_safe_fx(xt, dtm, data)
+    if not dtm or dtm == "" or not checkmirrormap(dtm) then
+        if dtm and dtm ~= "" then
+            setenvirofftimer(dtm, _safe_effect_timer_id)
+        end
+        return
+    end
+    local st = _state_get(dtm)
+    local idx = tonumber(st.idx or _idx_from_map(dtm) or 0) or 0
+    if idx ~= 4 then
+        setenvirofftimer(dtm, _safe_effect_timer_id)
+        return
+    end
+    _draw_xianfa_safe_effect(dtm, _trial_cfg(idx), st)
+end
+
 function npc_76_timeout(play)
-    local dtm = tostring(getplaydef(play, _run_map_var) or "")
+    local dtm = _get_current_trial_map(play)
     if dtm == "" then
         return
     end
@@ -571,4 +775,3 @@ end
 npc.onKillMonDanjie = _on_kill_mon_danjie
 
 return npc
-

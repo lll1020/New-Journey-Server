@@ -1262,83 +1262,86 @@ function ggna(play,id)
             giveitem(play,v,1)
         end
     elseif id == "24" then
-        -- 测试脚本：调整地图怪物密度（逐图刷小怪，9x9检测饱和）
-        local map_list = {
 
-"极光挂机",
+        local jq_data = {}
+        Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+--         -- 测试脚本：调整地图怪物密度（逐图刷小怪，9x9检测饱和）
+--         local map_list = {
 
-        } -- TODO: 填入要调整的地图名
-        local normal_mobs = {"枯灯客"} -- TODO: 普通怪列表
+-- "极光挂机",
 
-        local range = 3 -- 刷怪点随机半径
-        local check_range = 6 -- 9x9检测半径(2*4+1)
-        local max_fail = 40 -- 连续失败上限(饱和)
-        local tries_per_spawn = 10 -- 每次刷怪找点尝试次数
-        local spawn_limit = 5000 -- 每张地图单次补怪上限
+--         } -- TODO: 填入要调整的地图名
+--         local normal_mobs = {"枯灯客"} -- TODO: 普通怪列表
 
-        for _, map in ipairs(map_list) do
-            local w = getmapinfo(map, 0) or 0
-            local h = getmapinfo(map, 1) or 0
-            if w > 0 and h > 0 then
-                -- 检测前先清空地图怪物
-                killmonsters(map, "*", 0, false)
+--         local range = 3 -- 刷怪点随机半径
+--         local check_range = 6 -- 9x9检测半径(2*4+1)
+--         local max_fail = 40 -- 连续失败上限(饱和)
+--         local tries_per_spawn = 10 -- 每次刷怪找点尝试次数
+--         local spawn_limit = 5000 -- 每张地图单次补怪上限
 
-                local counter = {n = 0}
-                local added_normal = 0
-                local sample_count = 0
-                local total_ncnt = 0
+--         for _, map in ipairs(map_list) do
+--             local w = getmapinfo(map, 0) or 0
+--             local h = getmapinfo(map, 1) or 0
+--             if w > 0 and h > 0 then
+--                 -- 检测前先清空地图怪物
+--                 killmonsters(map, "*", 0, false)
 
-                local fail_streak = 0
-                local used_points = {}
+--                 local counter = {n = 0}
+--                 local added_normal = 0
+--                 local sample_count = 0
+--                 local total_ncnt = 0
 
-                while fail_streak < max_fail do
-                    local rx = math.random(1, w)
-                    local ry = math.random(1, h)
+--                 local fail_streak = 0
+--                 local used_points = {}
 
-                    local key = rx.."_"..ry
-                    if used_points[key] then
-                        fail_streak = fail_streak + 1
-                    else
-                        local ok = true
-                        for k, _ in pairs(used_points) do
-                            local sx, sy = k:match("(%d+)_([%d]+)")
-                            if sx and sy then
-                                sx = tonumber(sx)
-                                sy = tonumber(sy)
-                                if math.abs(rx - sx) <= check_range and math.abs(ry - sy) <= check_range then
-                                    ok = false
-                                    break
-                                end
-                            end
-                        end
+--                 while fail_streak < max_fail do
+--                     local rx = math.random(1, w)
+--                     local ry = math.random(1, h)
 
-                        if ok then
-                            genmonex(map, rx, ry, normal_mobs[math.random(1, #normal_mobs)], 1, 1, 0, 54, "", 0)
-                            used_points[key] = true
-                            counter.n = counter.n + 1
-                            added_normal = added_normal + 1
-                            fail_streak = 0
-                        else
-                            fail_streak = fail_streak + 1
-                        end
-                    end
+--                     local key = rx.."_"..ry
+--                     if used_points[key] then
+--                         fail_streak = fail_streak + 1
+--                     else
+--                         local ok = true
+--                         for k, _ in pairs(used_points) do
+--                             local sx, sy = k:match("(%d+)_([%d]+)")
+--                             if sx and sy then
+--                                 sx = tonumber(sx)
+--                                 sy = tonumber(sy)
+--                                 if math.abs(rx - sx) <= check_range and math.abs(ry - sy) <= check_range then
+--                                     ok = false
+--                                     break
+--                                 end
+--                             end
+--                         end
 
-                    sample_count = sample_count + 1
-                    total_ncnt = total_ncnt + (used_points[key] and 1 or 0)
+--                         if ok then
+--                             genmonex(map, rx, ry, normal_mobs[math.random(1, #normal_mobs)], 1, 1, 0, 54, "", 0)
+--                             used_points[key] = true
+--                             counter.n = counter.n + 1
+--                             added_normal = added_normal + 1
+--                             fail_streak = 0
+--                         else
+--                             fail_streak = fail_streak + 1
+--                         end
+--                     end
 
-                    if counter.n >= spawn_limit then
-                        break
-                    end
-                end
-                    local avg_n = math.floor(total_ncnt / math.max(1, sample_count) + 0.5)
-                    sendmsg(play, 1, "{\"Msg\":\"<font color=\\\"#00ff00\\\">地图["..map.."] 小怪补："..added_normal.." 当前平均："..avg_n.."</font>\",\"Type\":9}")
-                    release_print("地图["..map.."] 小怪补："..added_normal)
-                    release_print("当前平均 小怪："..avg_n)
-            else
-                sendmsg(play, 1, '{"Msg":"<font color=\"#ff0000\">地图['..map..']尺寸获取失败</font>","Type":9}')
-            end
-        end
-        return
+--                     sample_count = sample_count + 1
+--                     total_ncnt = total_ncnt + (used_points[key] and 1 or 0)
+
+--                     if counter.n >= spawn_limit then
+--                         break
+--                     end
+--                 end
+--                     local avg_n = math.floor(total_ncnt / math.max(1, sample_count) + 0.5)
+--                     sendmsg(play, 1, "{\"Msg\":\"<font color=\\\"#00ff00\\\">地图["..map.."] 小怪补："..added_normal.." 当前平均："..avg_n.."</font>\",\"Type\":9}")
+--                     release_print("地图["..map.."] 小怪补："..added_normal)
+--                     release_print("当前平均 小怪："..avg_n)
+--             else
+--                 sendmsg(play, 1, '{"Msg":"<font color=\"#ff0000\">地图['..map..']尺寸获取失败</font>","Type":9}')
+--             end
+--         end
+--         return
         -- local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
         -- jq_data["npc_714"] = nil
         -- Player.setJsonTableByVar(play, VarCfg.T_dljq, jq_data)
