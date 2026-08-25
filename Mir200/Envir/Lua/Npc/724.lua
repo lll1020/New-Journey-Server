@@ -60,6 +60,29 @@ local function _sg_drop(play, mob, item)
     return true
 end
 
+local function _get_shaguai_id()
+    local sid = _toint(_config and _config.shaguai_id)
+    if sid > 0 then
+        return sid
+    end
+    if _toint(_task_cfg and _task_cfg.kill_count) > 0 then
+        return NPC_ID
+    end
+    return 0
+end
+local function _ensure_shaguai_active(play)
+    if not play then
+        return
+    end
+    local jq = _get_story(play)
+    if _toint(jq[_cfg_key]) == 1 then
+        local shaguaiId = _get_shaguai_id()
+        if shaguaiId > 0 then
+            _sg_add(play, shaguaiId)
+        end
+    end
+end
+
 local function _finish(play, reason, noReward)
     local jq = _get_story(play)
     jq[_cfg_key] = 2
@@ -86,7 +109,7 @@ local function _ensure_started(play)
         _save_story(play, jq)
         Player.sendmsgEx(play, "领取|【" .. (_config.name or "第六章剧情") .. "】#218|")
         sendluamsg(play, 101, 1005, 0, 0, "rwjs")
-        local shaguaiId = _toint(_config.shaguai_id)
+        local shaguaiId = _get_shaguai_id()
         if shaguaiId > 0 then
             _sg_add(play, shaguaiId)
         end
@@ -259,6 +282,7 @@ end
 local function _handle(play, npcid, action, aid) _generic_submit(play) end
 
 function npc.main(play, npcid)
+    _ensure_shaguai_active(play)
     if not _config then
         return
     end
@@ -269,6 +293,7 @@ function npc.main(play, npcid)
 end
 
 function npc.link(play, npcid, ew, aid, msgData)
+    _ensure_shaguai_active(play)
     if not _config then
         return
     end

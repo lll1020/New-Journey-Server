@@ -12,6 +12,18 @@ local attrwz = {
     [242] = 24,
 }
 
+local function AllMaxLevel(play)
+    if checktitle(play, _config.title) then
+        Player.sendmsgEx(play, "你已拥有#57|【该称号】#218|，无需重复领取#57")
+        return
+    end
+    Player.title_give(play, _config.title)
+    Player.sendmsgEx(play, "恭喜你获得称号：|【".._config.title.."】#218|，称号属性永久生效")
+
+end
+
+
+
 
 local function _get_item_json(play, itemobj)
     local ok, item_json = pcall(json2tbl, getitemcustomabil(play, itemobj))
@@ -155,7 +167,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         sendluamsg(play,100,npcid,1,0,tbl2json(data))
         Player.sendmsgEx(play,  string.format("成功，|【%s】#218|提升到了|【%d级】#218|", _config.config[jsonData.idx].cost[1][1], dj_data[""..jsonData.idx]))
         if isall then
-            npc.AllMaxLevel(play)
+            AllMaxLevel(play)
         end
     elseif p2 == 2 then ---全部使用  多的也收了 （一键使用）
         local equipLevel = Player.getEquipFieldByPos(play, _config.where, 1) or 0
@@ -220,21 +232,11 @@ function npc.link(play, npcid, p2, p3, msgData)
         end
     
         if isall then
-            npc.AllMaxLevel(play)
+            AllMaxLevel(play)
         end
     end
 end
 
-
-function npc.AllMaxLevel(play)
-    if checktitle(play, _config.title) then
-        Player.sendmsgEx(play, "你已拥有#57|【该称号】#218|，无需重复领取#57")
-        return
-    end
-    Player.title_give(play, _config.title)
-    Player.sendmsgEx(play, "恭喜你获得称号：|【".._config.title.."】#218|，称号属性永久生效")
-
-end
 
 
 
