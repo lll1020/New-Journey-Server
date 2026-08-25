@@ -151,6 +151,8 @@ function npc.add_point(play, num, reason)
 end
 
 -- 对外接口：扣除残魂积分。
+local _add_point = npc.add_point
+
 function npc.cost_point(play, num)
     num = _toint(num)
     if num <= 0 then
@@ -191,7 +193,7 @@ end
 -- 残魂值先按“被玩家击杀+10”落地，后续业火系统可直接复用 add_point。
 local function _on_playdie(play, killer)
     if killer and getbaseinfo(killer, ConstCfg.gbase.isplayer) then
-        npc.add_point(play, _toint(_config.die_add_point or 10), "你被玩家击杀")
+        _add_point(play, _toint(_config.die_add_point or 10), "你被玩家击杀")
     end
 end
 

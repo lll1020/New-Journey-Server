@@ -1680,18 +1680,22 @@ end
 function killplay(play,hiter)
     -- 杀人事件：派发给监听模块（如天书仙法）
     GameEvent.push(EventCfg.onkillplay, play, hiter)
-    setplaydef(play,VarCfg.U_srsl,getplaydef(play,VarCfg.U_srsl)+1)
+    local srsl = tonumber(getplaydef(play,VarCfg.U_srsl) or 0) or 0
+    setplaydef(play,VarCfg.U_srsl,srsl + 1)
     login_fhsx(play)
-    if getsysvar(VarCfg.G_kqfz) >= 40 and getsysvar(VarCfg.G_kqfz) <= 50 then
-        local jf = getplayvar(play, "HUMAN", "比武大会") + 50
+    local kqfz = tonumber(getsysvar(VarCfg.G_kqfz) or 0) or 0
+    if kqfz >= 40 and kqfz <= 50 then
+        local jf = (tonumber(getplayvar(play, "HUMAN", "比武大会") or 0) or 0) + 50
         setplayvar(play, "HUMAN", "比武大会", jf, 1)
         sendmsg(play,1,'{"Msg":"比武大会：当前积分:'..jf..'","FColor":253,"BColor":255,"Type":1}')
-        jf = getplayvar(hiter, "HUMAN", "比武大会") + 10
-        setplayvar(hiter, "HUMAN", "比武大会", jf, 1)
-        Player.sendmsgEx(hiter,1,'{"Msg":"比武大会：当前积分:'..jf..'","FColor":253,"BColor":255,"Type":1}')
+        if hiter then
+            jf = (tonumber(getplayvar(hiter, "HUMAN", "比武大会") or 0) or 0) + 10
+            setplayvar(hiter, "HUMAN", "比武大会", jf, 1)
+            Player.sendmsgEx(hiter,1,'{"Msg":"比武大会：当前积分:'..jf..'","FColor":253,"BColor":255,"Type":1}')
+        end
     end
     if getbaseinfo(play, 3) == _ZXDZ_MAP_NAME and _zxdz_toint(getsysvar(_ZXDZ_STATUS_VAR), 0) == 1 then
-        local jf = getplayvar(play, "HUMAN", _ZXDZ_SCORE_VAR) + 50
+        local jf = (tonumber(getplayvar(play, "HUMAN", _ZXDZ_SCORE_VAR) or 0) or 0) + 50
         setplayvar(play, "HUMAN", _ZXDZ_SCORE_VAR, jf, 1)
         if _zxdz_toint(getplaydef(play, _ZXDZ_CAMP_VAR), 0) == 1 then
             setsysvar(_ZXDZ_RED_SCORE_VAR, _zxdz_toint(getsysvar(_ZXDZ_RED_SCORE_VAR), 0) + 50)
@@ -1703,7 +1707,7 @@ function killplay(play,hiter)
         sendmsg(play, 1, '{"Msg":"正邪大战：当前积分:' .. jf .. '","FColor":253,"BColor":255,"Type":1}')
         zxdz_send_rank(play)
         if hiter and getbaseinfo(hiter, 3) == _ZXDZ_MAP_NAME then
-            local bjf = getplayvar(hiter, "HUMAN", _ZXDZ_SCORE_VAR) + 10
+            local bjf = (tonumber(getplayvar(hiter, "HUMAN", _ZXDZ_SCORE_VAR) or 0) or 0) + 10
             setplayvar(hiter, "HUMAN", _ZXDZ_SCORE_VAR, bjf, 1)
             zxdz_send_rank(hiter)
         end

@@ -109,10 +109,12 @@ local function _rebuild_attr(play, data)
         for _, attr in ipairs(pcfg.attr or {}) do
             local attrId = _toint(attr[1])
             local val = _toint(info.growth_attr[tostring(attrId)])
-            if attrId > 0 and val > 0 then attrs[#attrs + 1] = {attrId, val, attr[3]} end
+            if attrId > 0 and val > 0 then
+                attrs[attrId] = _toint(attrs[attrId]) + val
+            end
         end
     end
-    if #attrs > 0 then
+    if next(attrs) then
         Player.add_attlist(play, _attr_list_name, "=", Player.getAttrTableToStr(attrs), 1)
     else
         Player.del_attlist(play, _attr_list_name)
