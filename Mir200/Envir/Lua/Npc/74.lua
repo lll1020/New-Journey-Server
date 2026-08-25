@@ -40,12 +40,16 @@ local function _has_awakened_main_linggen_level(play, needLevel)
         return false, 0, 0
     end
     local cfg = (teshudata or {})["npc_22"] or {}
-    local pair = (cfg.awaken_pairs or {})[mainIdx]
-    if not pair or pair <= 5 then
+    local pair = tonumber((cfg.awaken_pairs or {})[mainIdx] or 0) or 0
+    if pair <= 0 then
         return false, pair or 0, 0
     end
-    local lv = tonumber((T_data.level or {})[tostring(pair)] or 0) or 0
-    return lv >= (needLevel or 3), pair, lv
+    local awakenIdx = mainIdx > 5 and mainIdx or pair
+    if awakenIdx <= 5 then
+        return false, awakenIdx, 0
+    end
+    local lv = tonumber((T_data.level or {})[tostring(awakenIdx)] or 0) or 0
+    return lv >= (needLevel or 3), awakenIdx, lv
 end
 local function _get_realm_level(play)
     return tonumber(getplaydef(play, VarCfg["U_æ≥ΩÁ–ﬁ¡∂"][1])) or 0

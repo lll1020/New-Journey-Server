@@ -1278,7 +1278,7 @@ teshudata = {
         
         cost = {{"辉耀水晶",5}},
         details = {
-            {mob_name= "雷灵根守护兽",mob_shape = 12034,scale = 0.7,time = 300,nandu = "ss",yq = "金灵根达到Lv.10",jl = "激活雷灵根", itme = "御雷丹",},
+            {mob_name= "雷灵根守护兽",mob_shape = 12034,scale = 0.7,time = 300,nandu = "ss",yq = "金灵根达到Lv.10",jl = "激活雷灵根",},
             {mob_name= "风灵根守护兽",mob_shape = 12035,time = 300,nandu = "ss",yq = "木灵根达到Lv.10",jl = "激活风灵根", itme = "定风珠",},
             {mob_name= "冰灵根守护兽",mob_shape = 12036,time = 300,nandu = "ss",yq = "水灵根达到Lv.10",jl = "激活冰灵根", itme = "深情的家伙",},
             {mob_name= "焚灵根守护兽",mob_shape = 12037,time = 300,nandu = "ss",yq = "火灵根达到Lv.10",jl = "激活焚灵根", itme = "芭蕉扇",},
