@@ -2707,6 +2707,10 @@ local function _zz516_get_cz502_requirement(config)
     return tonumber((config or {}).need_cz502 or 0) or 0, 0
 end
 local function _zz516_condition_tip(config)
+    local needItem = tostring((config or {}).need_item or "")
+    if needItem ~= "" then
+        return string.format("需要：%s", needItem)
+    end
     local needCz502, needCz502Idx = _zz516_get_cz502_requirement(config)
     if needCz502 > 0 then
         if needCz502Idx > 0 then
@@ -2733,6 +2737,10 @@ local function _zz516_condition_tip(config)
     return "暂未达到领取条件"
 end
 local function _zz516_check_cfg(play, config)
+    local needItem = tostring((config or {}).need_item or "")
+    if needItem ~= "" then
+        return (tonumber(getbagitemcount(play, needItem) or 0) or 0) >= 1
+    end
     local needCz502 = _zz516_get_cz502_requirement(config)
     if needCz502 > 0 then
         local czlb = json2tbl(getplaydef(play, VarCfg.T_czlb))

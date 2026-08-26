@@ -837,8 +837,11 @@ function TreasureBasin.link(play, npcid, p2, p3, msgData)
     if not Guard.ensurePlayer(play, npcid) then return end
     local action = Guard.normalizeAction(play, npcid, p2)
     if action == nil then return end
-    local allowed = Guard.newActionSet({1, 9})
+    local allowed = Guard.newActionSet({1, 9, 10})
     if not Guard.ensureActionAllowed(play, npcid, action, allowed) then return end
+    if action == 10 then
+        return sendluamsg(play, 101, 502, 8, 10, getplaydef(play, VarCfg.T_czlb))
+    end
     if action == 9 then
         return _send_task_panel(play, 9, npcid)
     end

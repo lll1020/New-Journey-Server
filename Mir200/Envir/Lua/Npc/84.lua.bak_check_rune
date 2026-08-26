@@ -8,7 +8,6 @@ local _npc_key = "npc_84"
 local _title_name = (_config and _config.title_reward) or "世界符文·[真我]"
 local _all_level_need = tonumber((_config and _config.all_level_need) or 150) or 150
 local _all_level_add = tonumber((_config and _config.all_level_add) or 10) or 10
-local _equip_slots = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,40,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88}
 
 -- 统一处理可能为空的数值。
 local function _toint(v)
@@ -43,29 +42,15 @@ end
 local function _has_all_linggen(play)
     local lg = Player.getJsonTableByVar(play, VarCfg["T_灵根"]) or {}
     local level = lg.level or {}
-    for i = 1, 5 do
-        local value = level[tostring(i)]
-        if value == nil then
-            value = level[i]
-        end
-        if _toint(value) < 10 then
-            return false
-        end
-    end
-
-    local jq = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
-    local trial = jq["npc_68"] or {}
-    for i = 1, 5 do
-        local value = trial[tostring(i)]
-        if value == nil then
-            value = trial[i]
-        end
-        if _toint(value) ~= 1 then
+    for i = 1, 10 do
+        if level[tostring(i)] == nil then
             return false
         end
     end
     return true
 end
+
+-- 检查灵兽条件是否达成。
 local function _has_all_lingshou(play)
     local cfg = ((teshudata or {})["npc_64"] or {}).config or {}
     local ls_cfg = cfg.ls or {}
@@ -75,16 +60,14 @@ local function _has_all_lingshou(play)
     local data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"]) or {}
     local ls = data.ls or {}
     for i = 1, #ls_cfg do
-        local value = ls[tostring(i)]
-        if value == nil then
-            value = ls[i]
-        end
-        if _toint(value) <= 0 then
+        if _toint(ls[tostring(i)]) <= 0 then
             return false
         end
     end
     return true
 end
+
+-- 检查境界修为完成条件是否达成。
 local function _has_realm_max(play)
     return _toint(getplaydef(play, VarCfg["U_境界修炼"][1])) >= 30
 end
@@ -125,15 +108,6 @@ end
 -- 检查双神道相关任务是否全部完成。
 local function _has_double_shendao(play)
     local compat = (_config and _config.compat) or {}
-    local god_data = Player.getJsonTableByVar(play, VarCfg["T_神道之路"] or "T_神道之路") or {}
-    local gods = type(god_data.gods) == "table" and god_data.gods or {}
-    local god_one = gods["1"] or gods[1] or {}
-    local god_two = gods["2"] or gods[2] or {}
-    if _toint(god_one.cert) >= 1 and _toint(god_two.cert) >= 1 then
-        return true
-    end
-
-    -- Keep the original task-progress check for players with legacy saves.
     local jq = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
     local tasks = compat.shendao_tasks or {}
     for _, entry in ipairs(tasks) do
@@ -147,6 +121,8 @@ local function _has_double_shendao(play)
     end
     return #tasks > 0
 end
+
+-- 检查命格节点是否全部点亮。
 local function _has_all_destiny(play)
     local jq = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
     local state = jq["npc_74"] or {}
@@ -166,24 +142,11 @@ local function _has_join_yehuo(play)
                 return true
             end
         end
-
-        -- The active replacement NPCs do not write T_dljq. Their crafted
-        -- item is reliable completion evidence whether it is in bag or gear.
-        local cfg = (teshudata or {})[key] or {}
-        local item_name = tostring(cfg.item_name or "")
-        if item_name ~= "" then
-            if _toint(getbagitemcount(play, item_name)) > 0 then
-                return true
-            end
-            for _, pos in ipairs(_equip_slots) do
-                if Player.hasEquipOnPos(play, pos, item_name) then
-                    return true
-                end
-            end
-        end
     end
     return false
 end
+
+-- 检查星象圣图是否达到帝星阶段。
 local function _has_star_emperor(play)
     local data = Player.getJsonTableByVar(play, VarCfg["T_星象圣图"]) or {}
     local stage = data.stage or {}
@@ -195,10 +158,10 @@ end
 local function _check_rune(play, idx)
     if idx == 1 then
         if not _has_all_linggen(play) then
-            return false, "需五项基础灵根达到Lv.10并完成全部高阶试炼#57"
+            return false, "需要先激活全部灵根#57"
         end
         if not _has_all_lingshou(play) then
-            return false, "需激活全部灵兽#57"
+            return false, "需要先激活全部灵兽#57"
         end
         return true
     elseif idx == 2 then

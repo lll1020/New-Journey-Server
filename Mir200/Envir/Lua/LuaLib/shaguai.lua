@@ -1905,7 +1905,7 @@ shaguai = {
 			return
 		end
 		if dl == 2 then
-			if math.random(12) == 1 then
+			if math.random(5) == 1 then
 				shaguai.temp_drop(play, mob, item)
 			end
 			return

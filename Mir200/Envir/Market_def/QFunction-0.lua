@@ -108,6 +108,10 @@ function resetday(play)
     if type(zz_data) ~= "table" then
         zz_data = {}
     end
+    -- 至尊黑卡按正常使用逻辑自动触发，避免跨天后忘记领取每日奖励。
+    if getbagitemcount(play, "至尊黑卡") >= 1 and type(stdmodefunc59) == "function" then
+        pcall(stdmodefunc59, play, nil)
+    end
     for i = #zz_cfg, 1, -1 do
         local detail = zz_cfg[i]
         local titleName = tostring((detail or {}).ch or "")
@@ -2801,6 +2805,7 @@ local qf_teshunpc = {
     [46] = 46, -- 灾厄入侵
     [1028] = 16, -- 沙巴克
     [53] = 53, -- 神石
+    [106] = 106, -- 神石
 }
 function clicknpc(play, npcid)
     --打印

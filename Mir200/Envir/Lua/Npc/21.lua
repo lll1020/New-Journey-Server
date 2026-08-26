@@ -103,7 +103,7 @@ function npc.link(play,npcid,ew,aid)
     end
 
     if ew == 2 then
-        sendluamsg(play, 101, 502, 8, 10, getplaydef(play, VarCfg.T_czlb))
+        sendluamsg(play, 101, 502, 8, 30, getplaydef(play, VarCfg.T_czlb))
         return
     end
 
