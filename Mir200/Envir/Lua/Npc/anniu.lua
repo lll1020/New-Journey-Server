@@ -101,8 +101,8 @@ npc[2] = function(play, p2, p3, msgData) --±³°ü  Ãæ°å
         end
     elseif p2 == 5 then
         if p3 == 1 then
-            local hs = json2tbl(msgData)
-            Player.huishou(play, hs)
+            Player.huishou(play)
+            refreshbag(play)
         end
     elseif p2 == 6 then --Ïú»Ù
         local hs = json2tbl(msgData)

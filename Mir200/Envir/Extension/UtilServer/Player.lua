@@ -1511,6 +1511,12 @@ local function hs_match_pz(pz, idx, group_name, cfg)
         return true
     end
     -- 当前数字前缀规则。
+    -- ??????????? clfj ??????: 6_7_[??????]
+    if group_name == "clfj" then
+        if pz["6_6"] or pz["6_6_" .. g2] or pz["6_7"] or pz["6_7_" .. g2] then
+            return true
+        end
+    end
     local prefix = hs_group_prefix[group_name]
     if prefix then
         if pz[prefix .. "_" .. g1] or pz[prefix .. "_" .. g1 .. "_" .. g2] then
@@ -1633,6 +1639,23 @@ local function hs_auto_use_gold_items(play)
         changemoney(play, getflagstatus(play, VarCfg.BS_mztq) == 1 and 1 or 3, '+', total, '回收自动吃金币', true)
     end
 end
+local function hs_get_recycle_item_by_ref(play, ref)
+    local item = getitembymakeindex(play, ref)
+    if item then
+        return item
+    end
+    local bag = getbagitems(play) or {}
+    for bag_key, bag_item in pairs(bag) do
+        if tostring(bag_key) == tostring(ref) then
+            return bag_item
+        end
+        if tostring(getiteminfo(play, bag_item, 1) or "") == tostring(ref) then
+            return bag_item
+        end
+    end
+    return nil
+end
+
 local function hs_recycle_selected_once(play)
     local pz = Player.ensureRecycleSelectConfig(play) or {}
     local reward = {coin = 0, yb = 0, lingshi = 0, hlsj = 0, items = {}}
@@ -1725,16 +1748,17 @@ function Player.huishou(play, hs_constant)
         local reward = {coin = 0, yb = 0, lingshi = 0, hlsj = 0, items = {}}
         local gz = getflagstatus(play,VarCfg.BS_mztq) == 1 and 0 or 850
         for k, v in pairs(hs) do
-            local wp = getitembymakeindex(play,v)
+            local wp = hs_get_recycle_item_by_ref(play, v)
             if wp then
                 local idx = getiteminfo(play,wp,2)
+                local makeIndex = getiteminfo(play, wp, 1)
                 if huishou.kexiaohui and huishou.kexiaohui[idx] then
                     -- 可销毁物品：直接删除，不产生回收奖励。
-                    delitembymakeindex(play,v,1)
+                    delitembymakeindex(play, makeIndex, 1)
                 else
                     -- 可回收物品：删除成功后累计奖励。
                     local group_name, cfg = hs_pick_cfg(idx)
-                    if cfg and delitembymakeindex(play,v,1) then
+                    if cfg and delitembymakeindex(play, makeIndex, 1) then
                         hs_collect_reward(reward, group_name, idx, cfg)
                     end
                 end
