@@ -50,6 +50,9 @@ function npc.link(play,npcid,ew,aid)
             Player.takeItemByTable(play, _config.cost, ",“ı—Ù”Ò≈Â",nil)
             T_dljq["npc_620"] = 2
             Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
+            if _config.give and #_config.give > 0 then
+                Player.rwjl(play, _config.give, tostring(_config.name or "npc_620") .. "_reward", 1, 0)
+            end
             sendluamsg(play,100,npcid,1,0,"")
             Player.sendmsgEx(play, "“ı—Ù”Ò≈Â∫œ≥…≥…π¶£¨ªÒµ√|°æ“ı—Ù”Ò≈Â°ø#218|")
             sendluamsg(play,101,1005,0,0,"rwwc")

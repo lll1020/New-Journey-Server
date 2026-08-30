@@ -1707,7 +1707,7 @@ local function _bwcz_get_cfg()
     cfg.player_hurt_scale = tonumber(cfg.player_hurt_scale) or 0
     cfg.enter_pos = type(cfg.enter_pos) == "table" and cfg.enter_pos or {108, 105}
     cfg.center_pos = type(cfg.center_pos) == "table" and cfg.center_pos or cfg.enter_pos
-    cfg.spawn_pos = type(cfg.spawn_pos) == "table" and cfg.spawn_pos or {67, 76}
+    cfg.spawn_pos = type(cfg.spawn_pos) == "table" and cfg.spawn_pos or {73, 81}
     cfg.kill_reward = type(cfg.kill_reward) == "table" and cfg.kill_reward or {}
     cfg.rank_rewards = type(cfg.rank_rewards) == "table" and cfg.rank_rewards or {}
     cfg.title_levels = type(cfg.title_levels) == "table" and cfg.title_levels or {}
@@ -1936,8 +1936,8 @@ local function _bwcz_spawn_mon(cfg, monName, hp)
     if mapW <= 0 or mapH <= 0 then
         return false
     end
-    local cx = tonumber((cfg.spawn_pos and cfg.spawn_pos[1]) or 67) or 67
-    local cy = tonumber((cfg.spawn_pos and cfg.spawn_pos[2]) or 76) or 76
+    local cx = tonumber((cfg.spawn_pos and cfg.spawn_pos[1]) or 73) or 73
+    local cy = tonumber((cfg.spawn_pos and cfg.spawn_pos[2]) or 81) or 81
     local radius = math.max(1, tonumber(cfg.spawn_radius) or 24)
     local tryCount = math.max(1, tonumber(cfg.spawn_try_count) or 60)
     local missionX = tonumber((cfg.center_pos and cfg.center_pos[1]) or 108) or 108
