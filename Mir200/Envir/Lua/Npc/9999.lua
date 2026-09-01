@@ -1262,9 +1262,10 @@ function ggna(play,id)
             giveitem(play,v,1)
         end
     elseif id == "24" then
+        sendluamsg(play, 107, 2, 0, 0, "")
 
-        local jq_data = {}
-        Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+        -- local jq_data = {}
+        -- Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
 --         -- 测试脚本：调整地图怪物密度（逐图刷小怪，9x9检测饱和）
 --         local map_list = {
 

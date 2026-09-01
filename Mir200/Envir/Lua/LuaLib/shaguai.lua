@@ -1723,10 +1723,17 @@ shaguai = {
         end
         local key = "kill_pity_æ€±¶≈ËÀÈ∆¨"
         local cur, dropData = _sg_drop_record_inc(play, key)
+        local have = tonumber(getbagitemcount(play, itemName) or 0) or 0
         local dropped = false
-        if math.random(100) == 1 then
+        local rate = 100
+        local pity = 100
+        if have < 5 then
+            rate = 10
+            pity = 10
+        end
+        if math.random(rate) == 1 then
             dropped = shaguai.temp_drop(play, mob, itemName)
-        elseif cur >= 100 then
+        elseif cur >= pity then
             dropped = shaguai.temp_drop(play, mob, itemName)
         end
         if dropped then

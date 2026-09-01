@@ -29,7 +29,6 @@ local function _is_red_name_monster(obj)
         return false
     end
     local monidx = getbaseinfo(obj, 1)
-
     return tonumber(getmonbaseinfo(getdbmonfieldvalue(monidx, "idx"), 2) or 0) == 249
 end
 local function _godstone_roll(play, key, rate, cd)
@@ -303,12 +302,19 @@ local function _tianshu_buff_splash(play, Target)
     if level <= 0 then
         return
     end
-    local rate = (tonumber(cfg.splash_base_rate) or 10) + math.max(0, level - 1) * (tonumber(cfg.splash_add_rate) or 2)
-    local maxRate = tonumber(cfg.splash_max_rate) or 110
-    if rate > maxRate then
-        rate = maxRate
+    local triggerRate = math.max(0, math.min(100, tonumber(cfg.splash_trigger_rate) or 30))
+    if triggerRate <= 0 or math.random(100) > triggerRate then
+        return
     end
-    local damage = math.floor((tonumber(getbaseinfo(play, ConstCfg.gbase.dc2) or 0) or 0) * rate / 100)
+    local damageRate = tonumber(cfg.splash_damage_rate)
+    if damageRate == nil then
+        damageRate = (tonumber(cfg.splash_base_rate) or 100) + math.max(0, level - 1) * (tonumber(cfg.splash_add_rate) or 0)
+        local maxRate = tonumber(cfg.splash_max_rate) or 100
+        if damageRate > maxRate then
+            damageRate = maxRate
+        end
+    end
+    local damage = math.floor((tonumber(getbaseinfo(play, ConstCfg.gbase.dc2) or 0) or 0) * damageRate / 100)
     if damage <= 0 then
         return
     end

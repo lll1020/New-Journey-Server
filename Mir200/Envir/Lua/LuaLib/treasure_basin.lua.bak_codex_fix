@@ -1,14 +1,14 @@
--- ¾Û±¦Åè£ºÐÂ°æ¾ÛÄÜÊÕÒæ¡¢Á¶Áé±¦Ê¯¡¢½ûÆ÷ÏµÍ³¡£
+-- ï¿½Û±ï¿½ï¿½è£ºï¿½Â°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ¡¢ï¿½ï¿½ï¿½é±¦Ê¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÏµÍ³ï¿½ï¿½
 local TreasureBasin = rawget(_G, "__treasure_basin_module") or {}
 local _first_init = next(TreasureBasin) == nil
 _G.__treasure_basin_module = TreasureBasin
 
 local _config = Guard.getConfig("npc_106") or {}
 local _state_var = "T44"
-local _attr_list_name = "¾Û±¦ÅèÊôÐÔ"
-local _forbidden_attr_list = "¾Û±¦Åè½ûÆ÷ÊôÐÔ"
-local _artifact_name = "¾Û±¦Åè"
-local _artifact_names = {"¾Û±¦Åè", "¾Û±¦Åè[·âÓ¡]"}
+local _attr_list_name = "ï¿½Û±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
+local _forbidden_attr_list = "ï¿½Û±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
+local _artifact_name = "ï¿½Û±ï¿½ï¿½ï¿½"
+local _artifact_names = {"ï¿½Û±ï¿½ï¿½ï¿½", "ï¿½Û±ï¿½ï¿½ï¿½[ï¿½ï¿½Ó¡]"}
 
 local function _cfg_int(v, default)
     v = tonumber(v)
@@ -20,7 +20,7 @@ local function _parse_stone_time(v)
     if type(v) == "number" then return math.floor(v) end
     v = tostring(v or "")
     local n = tonumber((string.match(v, "(%d+)") or "0")) or 0
-    if string.find(v, "·ÖÖÓ") then return n * 60 end
+    if string.find(v, "ï¿½ï¿½ï¿½ï¿½") then return n * 60 end
     if string.find(v, "Ð¡Ê±") then return n * 3600 end
     return n
 end
@@ -38,7 +38,7 @@ for idx, cfg in pairs(_config.levels or {}) do
     }
 end
 if not _levels[1] then
-    _levels[1] = {level = 1, name = "·²Æ·¾Û±¦Åè", charge = 0, speed = 1.0, cap = 0, cap_text = "ÎÞ´æ´¢"}
+    _levels[1] = {level = 1, name = "ï¿½ï¿½Æ·ï¿½Û±ï¿½ï¿½ï¿½", charge = 0, speed = 1.0, cap = 0, cap_text = "ï¿½Þ´æ´¢"}
 end
 
 local _stone_list = {}
@@ -63,17 +63,17 @@ for id, cfg in pairs(_stone_list) do
     _stone_by_name[cfg.name] = cfg
 end
 
--- ÁÙÊ±³Ø×Ó£ºÏÈ±£Ö¤¹¦ÄÜÅÜÍ¨£¬ºóÐø°´Êµ¼Ê×¨Êô×°±¸³ØÔÙÌæ»»¡£
+-- ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ó£ï¿½ï¿½È±ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½×¨ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ»»ï¿½ï¿½
 local _exclusive_pools = {
-    [2] = {equips = {"ÐÇ¿Õ¡¤µÀ¼«", "ÃüÔËÖ®ÂÖ", "ÂÖ»ØÖ®Á¦"}, mat = "¶þÖØ×ªÉúÊ¯"},
-    [3] = {equips = {"ËÀÖ®ÌÙÂû", "Á÷Ã÷", "¾ÉÈÕÖ§ÅäÕß"}, mat = "ÈýÖØ×ªÉúÊ¯"},
-    [4] = {equips = {"Ò®ÃÎ¼ÓµÃ", "ÄáµÂ»ô¸ñ", "Ñª¤Î¶÷´Í"}, mat = "ËÄÖØ×ªÉúÊ¯"},
-    [5] = {equips = {"ÊÀ½çÊ÷ÁéÖ¦", "ÎçÒ¹ºçÎü", "ÍõÖ®ÃïÊÓ"}, mat = "ÎåÖØ×ªÉúÊ¯"},
-    [6] = {equips = {"À×öª»Ã", "ÁúÁÛÕðÔÀ", "Ð¥·çÖðµç", "Ìì·£À×»÷", "ÁÒÑæ·ÙÌì", "ËªÑ©Ö®¼ä"}, mat = "ÁùÖØ×ªÉúÊ¯"},
+    [2] = {equips = {"ï¿½Ç¿Õ¡ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½Ö®ï¿½ï¿½", "ï¿½Ö»ï¿½Ö®ï¿½ï¿½"}, mat = "ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Ê¯"},
+    [3] = {equips = {"ï¿½ï¿½Ö®ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½ï¿½ï¿½"}, mat = "ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Ê¯"},
+    [4] = {equips = {"Ò®ï¿½Î¼Óµï¿½", "ï¿½ï¿½Â»ï¿½ï¿½ï¿½", "Ñªï¿½Î¶ï¿½ï¿½ï¿½"}, mat = "ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Ê¯"},
+    [5] = {equips = {"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¦", "ï¿½ï¿½Ò¹ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½Ö®ï¿½ï¿½ï¿½ï¿½"}, mat = "ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Ê¯"},
+    [6] = {equips = {"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "Ð¥ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ì·£ï¿½×»ï¿½", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ËªÑ©Ö®ï¿½ï¿½"}, mat = "ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Ê¯"},
 }
 
 local _forbidden = _config.forbidden or {}
-local _forbidden_grade = _config.grades or {"Î´¼¤»î", "·²", "ÈË", "µØ", "Ìì", "¼«"}
+local _forbidden_grade = _config.grades or {"Î´ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½"}
 local _forbidden_skill_cd = 24 * 3600
 local _forbidden_cost = {}
 for idx, cfg in pairs(_config.forbidden_cost or {}) do
@@ -85,10 +85,10 @@ for idx, cfg in pairs(_config.forbidden_cost or {}) do
     }
 end
 
-local _forbidden_title_name = "³õÊ¶½ûÆ÷"
-local _huangquan_state_var = (VarCfg and VarCfg["A_»ÆÈª½µÊÀjson"]) or "A17"
-local _huangquan_attr_list = "»ÆÈª½µÊÀÈ«·þ×£¸£"
-local _huangquan_player_flag = "N$¾Û±¦Åè»ÆÈª½µÊÀÉúÐ§"
+local _forbidden_title_name = "ï¿½ï¿½Ê¶ï¿½ï¿½ï¿½ï¿½"
+local _huangquan_state_var = (VarCfg and VarCfg["A_ï¿½ï¿½Èªï¿½ï¿½ï¿½ï¿½json"]) or "A17"
+local _huangquan_attr_list = "ï¿½ï¿½Èªï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½×£ï¿½ï¿½"
+local _huangquan_player_flag = "N$ï¿½Û±ï¿½ï¿½ï¿½ï¿½Èªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§"
 local _huangquan_duration = 5 * 60
 local _huangquan_refine_rate = 0.10
 
@@ -123,6 +123,8 @@ local function _get_state(play)
     data.forbidden.list = type(data.forbidden.list) == "table" and data.forbidden.list or {}
     data.forbidden.title_given = _toint(data.forbidden.title_given)
     data.forbidden.skill_cd_at = _toint(data.forbidden.skill_cd_at)
+    data.forbidden.anim_seq = _toint(data.forbidden.anim_seq)
+    data.forbidden.anim_show_id = _toint(data.forbidden.anim_show_id)
     return data
 end
 
@@ -204,20 +206,13 @@ local function _mail_online_players(title, memo, rewardBuilder)
     return count
 end
 
-local function _play_for_online_players(play, showId)
-    for _, target in ipairs(getplayerlst() or {}) do
-        if target ~= play then
-            sendluamsg(target, 107, showId, 0, 0, "")
-        end
-    end
-end
 local function _start_huangquan_blessing(ownerName)
     local now = _now()
     local state = _get_huangquan_state()
     local wasActive = _toint(state.end_at) > now
     state.start_at = wasActive and math.min(_toint(state.start_at), now) or now
     state.end_at = now + _huangquan_duration
-    state.owner = tostring(ownerName or "ÉñÃØÍæ¼Ò")
+    state.owner = tostring(ownerName or "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")
     _save_huangquan_state(state)
     for _, target in ipairs(getplayerlst() or {}) do
         local data = _get_state(target)
@@ -231,10 +226,10 @@ local function _start_huangquan_blessing(ownerName)
 end
 
 local function _broadcast_huangquan(ownerName)
-    ownerName = tostring(ownerName or "ÉñÃØÍæ¼Ò")
-    sendmovemsg("0", 1, 249, 0, 300, 3, "¡¾»ÆÈª½µÊÀ¡¿Íæ¼Ò¡¶" .. ownerName .. "¡·»½ÐÑÚ¤ºÓ¹íÖ÷£¬È«·þ×¹ÈëºÚ°µ£¡")
-    sendmovemsg("0", 1, 249, 0, 270, 3, "¡¾»ÆÈª´Í¸£¡¿³ÖÐø5·ÖÖÓ£º¾Û±¦ÅèÁ¶»¯ËÙ¶È+10%£¬´ò¹Ö±¬ÂÊ+10%£¡")
-    sendmovemsg("0", 1, 249, 0, 240, 3, "Ô¸»ÆÈªÓÄ¹â»¤ÓÓÖîÎ»£¬ÃØ±¦ÁÙÉí£¬ÖîÐ°ÍË±Ü£¡")
+    ownerName = tostring(ownerName or "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")
+    sendmovemsg("0", 1, 249, 0, 300, 3, "ï¿½ï¿½ï¿½ï¿½Èªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¡ï¿½" .. ownerName .. "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¤ï¿½Ó¹ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½×¹ï¿½ï¿½Ú°ï¿½ï¿½ï¿½")
+    sendmovemsg("0", 1, 249, 0, 270, 3, "ï¿½ï¿½ï¿½ï¿½Èªï¿½Í¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½5ï¿½ï¿½ï¿½Ó£ï¿½ï¿½Û±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½+10%ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½+10%ï¿½ï¿½")
+    sendmovemsg("0", 1, 249, 0, 240, 3, "Ô¸ï¿½ï¿½Èªï¿½Ä¹â»¤ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½Ø±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð°ï¿½Ë±Ü£ï¿½")
 end
 
 local function _check_forbidden_title(play, data)
@@ -249,13 +244,13 @@ local function _check_forbidden_title(play, data)
         Player.title_give(play, _forbidden_title_name, 1)
         data.forbidden.title_given = 1
         _save_state(play, data)
-        Player.sendmsgEx(play, "Èý´ó½ûÆ÷È«²¿¼¤»î£¬»ñµÃ³ÆºÅ#57|¡¾" .. _forbidden_title_name .. "¡¿#218|")
+        Player.sendmsgEx(play, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½î£¬ï¿½ï¿½Ã³Æºï¿½#57|ï¿½ï¿½" .. _forbidden_title_name .. "ï¿½ï¿½#218|")
     end
     return true
 end
 
 local function _recharge_total(play)
-    local totalCharge = _toint(getplaydef(play, VarCfg["U_ÕæÊµ³äÖµ"]))
+    local totalCharge = _toint(getplaydef(play, VarCfg["U_ï¿½ï¿½Êµï¿½ï¿½Öµ"]))
     return totalCharge
 end
 
@@ -275,12 +270,12 @@ local function _can_upgrade_level(play, data)
     local curLv = math.max(1, _toint(data.level))
     local nextCfg = _levels[curLv + 1]
     if not nextCfg then
-        return false, "µ±Ç°ÒÑÊÇ×î¸ßÆ·½×"
+        return false, "ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½"
     end
     local charge = _recharge_total(play)
     local needCharge = _toint(nextCfg.charge)
     if charge < needCharge then
-        return false, "ÕæÊµ³äÖµ²»×ã£¬»¹²î#57|¡¾" .. tostring(needCharge - charge) .. "¡¿#218|"
+        return false, "ï¿½ï¿½Êµï¿½ï¿½Öµï¿½ï¿½ï¿½ã£¬ï¿½ï¿½ï¿½ï¿½#57|ï¿½ï¿½" .. tostring(needCharge - charge) .. "ï¿½ï¿½#218|"
     end
     return true, nil, nextCfg
 end
@@ -292,14 +287,14 @@ local function _upgrade_level(play, npcid)
     local data = _get_state(play)
     local ok, err = _can_upgrade_level(play, data)
     if not ok then
-        Player.sendmsgEx(play, err or "µ±Ç°ÎÞ·¨Éý¼¶")
+        Player.sendmsgEx(play, err or "ï¿½ï¿½Ç°ï¿½Þ·ï¿½ï¿½ï¿½ï¿½ï¿½")
         return false
     end
     data.level = math.max(1, _toint(data.level)) + 1
     _save_state(play, data)
     _refresh_attr(play)
     _refresh_item_bar(play)
-    Player.sendmsgEx(play, "¾Û±¦ÅèÒÑÌáÉýÖÁ#57|¡¾Lv." .. tostring(data.level) .. "¡¿#218|")
+    Player.sendmsgEx(play, "ï¿½Û±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½#57|ï¿½ï¿½Lv." .. tostring(data.level) .. "ï¿½ï¿½#218|")
     return true
 end
 
@@ -393,26 +388,26 @@ end
 local function _give_rewards(play, reward, reason)
     reward = reward or {}
     if _toint(reward.gold) > 0 then
-        changemoney(play, 3, "+", _toint(reward.gold), reason or "¾Û±¦Åè", true)
+        changemoney(play, 3, "+", _toint(reward.gold), reason or "ï¿½Û±ï¿½ï¿½ï¿½", true)
     end
     if _toint(reward.yuanbao) > 0 then
-        changemoney(play, 4, "+", _toint(reward.yuanbao), reason or "¾Û±¦Åè", true)
+        changemoney(play, 4, "+", _toint(reward.yuanbao), reason or "ï¿½Û±ï¿½ï¿½ï¿½", true)
     end
     if _toint(reward.lingshi) > 0 then
-        changemoney(play, 7, "+", _toint(reward.lingshi), reason or "¾Û±¦Åè", true)
+        changemoney(play, 7, "+", _toint(reward.lingshi), reason or "ï¿½Û±ï¿½ï¿½ï¿½", true)
     end
     local items = {}
     if _toint(reward.iron) > 0 then
-        items[#items + 1] = {"Ç§ÄêÐþÌú", _toint(reward.iron)}
+        items[#items + 1] = {"Ç§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", _toint(reward.iron)}
     end
     if _toint(reward.hat) > 0 then
-        items[#items + 1] = {"¶·óÒËéÆ¬", _toint(reward.hat)}
+        items[#items + 1] = {"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¬", _toint(reward.hat)}
     end
     for _, item in ipairs(reward.items or {}) do
         items[#items + 1] = item
     end
     if #items > 0 then
-        Player.rwjl(play, items, reason or "¾Û±¦Åè", 1, 999)
+        Player.rwjl(play, items, reason or "ï¿½Û±ï¿½ï¿½ï¿½", 1, 999)
     end
 end
 
@@ -431,7 +426,7 @@ local function _forbidden_used_count(play, data)
 end
 
 local function _has_super_privilege(play)
-    return checktitle(play, "³¬¼¶ÌØÈ¨")
+    return checktitle(play, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¨")
 end
 _refresh_item_bar = function(play)
     local itemobj = _equipped_itemobj(play)
@@ -447,7 +442,7 @@ _refresh_item_bar = function(play)
     if _cap_seconds(data.level) > 0 then
         local percent = math.floor(math.max(0, math.min(100, (tonumber(data.energy_sec) or 0) / math.max(1, _cap_seconds(data.level)) * 100)))
         setcustomitemprogressbar(play, itemobj, 1, tbl2json({
-            open = 1, show = 2, name = "¾ÛÄÜ´æ´¢", color = 249, imgcount = 1,
+            open = 1, show = 2, name = "ï¿½ï¿½ï¿½Ü´æ´¢", color = 249, imgcount = 1,
             cur = percent, max = 100, level = 1,
         }))
     else
@@ -455,19 +450,19 @@ _refresh_item_bar = function(play)
     end
     setcustomitemprogressbar(play, itemobj, 2, tbl2json({
         open = 1, show = 0,
-        name = string.format("¿ÉÁì½ð±Ò£º%d", reward.gold),
+        name = string.format("ï¿½ï¿½ï¿½ï¿½ï¿½Ò£ï¿½%d", reward.gold),
         color = 223, imgcount = 1,
     }))
     setcustomitemprogressbar(play, itemobj, 3, tbl2json({
         open = 1, show = 0,
-        name = string.format("¿ÉÁì²ÄÁÏ£ºÇ§ÄêÐþÌú%d ¶·óÒËéÆ¬%d", reward.iron, reward.hat),
+        name = string.format("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï£ï¿½Ç§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½%d ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¬%d", reward.iron, reward.hat),
         color = 223, imgcount = 1,
     }))
     setcustomitemprogressbar(play, itemobj, 4, tbl2json({
         open = 1, show = 0,
         name = _forbidden_used_count(play, data) >= 1
-            and ("½ûÆ÷¼¼ÄÜ£ºÀäÈ´" .. _format_time(_forbidden_skill_cd_left(data)))
-            or "½ûÆ÷¼¼ÄÜ£º½ñÈÕÊ£Óà1/1",
+            and ("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½È´" .. _format_time(_forbidden_skill_cd_left(data)))
+            or "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½Ê£ï¿½ï¿½1/1",
         color = 223, imgcount = 1,
     }))
     refreshitem(play, itemobj)
@@ -481,7 +476,7 @@ _refresh_attr = function(play)
     if data.activated < 1 or not _equipped_where(play) then
         return
     end
-    -- ¾Û±¦Åè±¾Ìå±£Áô±³°üÉñÆ÷Éí·Ý£¬²»ÔÙ¸ø¾ÉµÄ´ò¹Ö¾­Ñé/½ð±Ò»ØÊÕÊôÐÔ¡£
+    -- ï¿½Û±ï¿½ï¿½è±¾ï¿½å±£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½Ù¸ï¿½ï¿½ÉµÄ´ï¿½Ö¾ï¿½ï¿½ï¿½/ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¡ï¿½
     local attrs = {}
     for id, node in pairs(data.forbidden.list or {}) do
         local lv = _toint(node.lv)
@@ -514,12 +509,12 @@ function TreasureBasin.activate(play, reason)
         changed = true
     end
     if not _has_artifact(play) then
-        Player.rwjl(play, {{_artifact_name, 1}}, reason or "¾Û±¦Åè", 1, 0)
+        Player.rwjl(play, {{_artifact_name, 1}}, reason or "ï¿½Û±ï¿½ï¿½ï¿½", 1, 0)
         changed = true
     end
     if changed then
         _save_state(play, data)
-        Player.sendmsgEx(play, "ÒÑ¼¤»î#57|¡¾¾Û±¦Åè¡¿#218|£¬¿ÉÔÚ±³°üÉñÆ÷Î»´©´÷²é¿´¾ÛÄÜ½ø¶È¡£")
+        Player.sendmsgEx(play, "ï¿½Ñ¼ï¿½ï¿½ï¿½#57|ï¿½ï¿½ï¿½Û±ï¿½ï¿½è¡¿#218|ï¿½ï¿½ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½é¿´ï¿½ï¿½ï¿½Ü½ï¿½ï¿½È¡ï¿½")
     end
     _refresh_attr(play)
     _refresh_item_bar(play)
@@ -542,12 +537,12 @@ function TreasureBasin.markTaskStarted(play)
     end
     data.task_started = 1
     _save_state(play, data)
-    local dropData = Player.getJsonTableByVar(play, VarCfg["T_ÎïÆ·µôÂä¼ÇÂ¼"])
+    local dropData = Player.getJsonTableByVar(play, VarCfg["T_ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½Â¼"])
     if type(dropData) ~= "table" then
         dropData = {}
     end
-    dropData["kill_pity_¾Û±¦ÅèËéÆ¬"] = 0
-    Player.setJsonVarByTable(play, VarCfg["T_ÎïÆ·µôÂä¼ÇÂ¼"], dropData)
+    dropData["kill_pity_ï¿½Û±ï¿½ï¿½ï¿½ï¿½ï¿½Æ¬"] = 0
+    Player.setJsonVarByTable(play, VarCfg["T_ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½Â¼"], dropData)
     return true
 end
 
@@ -670,7 +665,7 @@ function TreasureBasin.getRedState(play, data)
         local point = _toint(forbidden.point)
         local selectedId = _toint(forbidden.show)
         local money = _toint(querymoney(play, 4))
-        local crystal = getbagitemcount(play, "½ûÔªÉñ¾§")
+        local crystal = getbagitemcount(play, "ï¿½ï¿½Ôªï¿½ï¿½")
         for id, _ in ipairs(_forbidden) do
             local node = list[tostring(id)] or list[id] or {}
             local lv = _toint(node.lv)
@@ -699,11 +694,11 @@ function TreasureBasin.getRedState(play, data)
 end
 
 local function _artifact_item_name()
-    return tostring(_config.artifact_name or "¾Û±¦Åè")
+    return tostring(_config.artifact_name or "ï¿½Û±ï¿½ï¿½ï¿½")
 end
 
 local function _artifact_show_name()
-    return tostring(_config.artifact_display_name or _config.artifact_name or "¾Û±¦Åè")
+    return tostring(_config.artifact_display_name or _config.artifact_name or "ï¿½Û±ï¿½ï¿½ï¿½")
 end
 
 local function _artifact_reward()
@@ -721,19 +716,19 @@ local function _progress_need()
 end
 
 local function _get_progress(play)
-    return math.min(_toint(getplaydef(play, VarCfg["J_¾Û±¦Åè»ý·Ö"])), _progress_need())
+    return math.min(_toint(getplaydef(play, VarCfg["J_ï¿½Û±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"])), _progress_need())
 end
 
 local function _set_progress(play, value)
-    setplaydef(play, VarCfg["J_¾Û±¦Åè»ý·Ö"], math.max(0, math.min(_progress_need(), _toint(value))))
+    setplaydef(play, VarCfg["J_ï¿½Û±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"], math.max(0, math.min(_progress_need(), _toint(value))))
 end
 
 local function _is_claimed(play)
-    return _toint(getplaydef(play, VarCfg["J_¾Û±¦ÅèÁìÈ¡´ÎÊý"])) >= 1
+    return _toint(getplaydef(play, VarCfg["J_ï¿½Û±ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½"])) >= 1
 end
 
 local function _set_claimed(play, flag)
-    setplaydef(play, VarCfg["J_¾Û±¦ÅèÁìÈ¡´ÎÊý"], flag and 1 or 0)
+    setplaydef(play, VarCfg["J_ï¿½Û±ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½"], flag and 1 or 0)
 end
 
 local function _grant_artifact_if_needed(play, data)
@@ -750,10 +745,10 @@ local function _grant_artifact_if_needed(play, data)
         changed = true
     end
     if data.rebuilt >= 1 and data.granted_item < 1 and not hasArtifact then
-        Player.rwjl(play, _artifact_reward(), "¾Û±¦ÅèÖØÖý", 1, 999)
+        Player.rwjl(play, _artifact_reward(), "ï¿½Û±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", 1, 999)
         data.granted_item = 1
         changed = true
-        Player.sendmsgEx(play, "»ñµÃ±³°üÉñÆ÷£º|¡¾".._artifact_show_name().."¡¿#218|")
+        Player.sendmsgEx(play, "ï¿½ï¿½Ã±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½|ï¿½ï¿½".._artifact_show_name().."ï¿½ï¿½#218|")
     end
     if changed then
         _save_state(play, data)
@@ -763,7 +758,7 @@ end
 
 local function _build_task_payload(play)
     local data = _grant_artifact_if_needed(play, _get_state(play))
-    local itemName = tostring(_config.fragment_item or "¾Û±¦ÅèËéÆ¬")
+    local itemName = tostring(_config.fragment_item or "ï¿½Û±ï¿½ï¿½ï¿½ï¿½ï¿½Æ¬")
     return {
         mode = "task",
         T_data = data,
@@ -779,7 +774,7 @@ local function _build_task_payload(play)
         progress_cur = _get_progress(play),
         progress_need = _progress_need(),
         claimed = _is_claimed(play) and 1 or 0,
-        daily_reward = _config.daily_reward or {{"½ð±Ò",2000000}},
+        daily_reward = _config.daily_reward or {{"ï¿½ï¿½ï¿½",2000000}},
         attr = _config.attr or {},
     }
 end
@@ -804,7 +799,7 @@ local function _build_payload(play)
         equipped = _equipped_where(play) and 1 or 0,
         level = data.level,
         charge = _recharge_total(play),
-        real_charge = _toint(getplaydef(play, VarCfg["U_ÕæÊµ³äÖµ"])),
+        real_charge = _toint(getplaydef(play, VarCfg["U_ï¿½ï¿½Êµï¿½ï¿½Öµ"])),
         money23 = _toint(querymoney(play, 23)),
         cap = _cap_seconds(data.level),
         cap_sec = _cap_seconds(data.level),
@@ -817,6 +812,8 @@ local function _build_payload(play)
         forbidden_skill_cd_at = _toint(data.forbidden.skill_cd_at),
         forbidden_skill_cd_left = _forbidden_skill_cd_left(data),
         forbidden_skill_cd_text = _format_time(_forbidden_skill_cd_left(data)),
+        forbidden_anim_seq = _toint(data.forbidden.anim_seq),
+        forbidden_anim_show_id = _toint(data.forbidden.anim_show_id),
         today = _today_key(),
         has_forbidden_title = _toint(data.forbidden.title_given),
         red_state = TreasureBasin.getRedState(play, data),
@@ -854,31 +851,31 @@ function TreasureBasin.link(play, npcid, p2, p3, msgData)
     end
     local data = _grant_artifact_if_needed(play, _get_state(play))
     if data.rebuilt >= 1 or _has_artifact(play) then
-        Player.sendmsgEx(play, "ÄãÒÑÓµÓÐ#57|¡¾".._artifact_show_name().."¡¿#218|")
+        Player.sendmsgEx(play, "ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½#57|ï¿½ï¿½".._artifact_show_name().."ï¿½ï¿½#218|")
         _refresh_attr(play)
         _refresh_item_bar(play)
         return _send_task_panel(play, 1, npcid)
     end
-    local itemName = tostring(_config.fragment_item or "¾Û±¦ÅèËéÆ¬")
+    local itemName = tostring(_config.fragment_item or "ï¿½Û±ï¿½ï¿½ï¿½ï¿½ï¿½Æ¬")
     local needNum = _toint(_config.fragment_count or 20)
     local haveNum = getbagitemcount(play, itemName)
     if haveNum < needNum then
-        Player.sendmsgEx(play, string.format("»¹ÐèÒª#57|¡¾%s¡¿#218|£º#57|¡¾%d/%d¡¿#218|", itemName, haveNum, needNum))
+        Player.sendmsgEx(play, string.format("ï¿½ï¿½ï¿½ï¿½Òª#57|ï¿½ï¿½%sï¿½ï¿½#218|ï¿½ï¿½#57|ï¿½ï¿½%d/%dï¿½ï¿½#218|", itemName, haveNum, needNum))
         Guard.closeNpcAndAuto(play, npcid)
         return
     end
-    Player.takeItemByTable(play, {{itemName, needNum}}, "¾Û±¦ÅèÖØÖý", nil)
+    Player.takeItemByTable(play, {{itemName, needNum}}, "ï¿½Û±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", nil)
     data.rebuilt = 1
     data.activated = 1
     data.task_fixed = 1
     _save_state(play, data)
-    if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "ÈÎÎñ") end
+    if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "ï¿½ï¿½ï¿½ï¿½") end
     if shaguai and shaguai.jian then shaguai.jian(play, 33) end
     if shaguai and shaguai.jia then shaguai.jia(play, 34) end
     data = _grant_artifact_if_needed(play, data)
     _refresh_attr(play)
     _refresh_item_bar(play)
-    Player.sendmsgEx(play, "³É¹¦ÖØÖý#57|¡¾".._artifact_show_name().."¡¿#218|£¬ÒÑ·¢·ÅÊµÌå±³°üÉñÆ÷#57")
+    Player.sendmsgEx(play, "ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½#57|ï¿½ï¿½".._artifact_show_name().."ï¿½ï¿½#218|ï¿½ï¿½ï¿½Ñ·ï¿½ï¿½ï¿½Êµï¿½å±³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½#57")
     sendluamsg(play, 101, 9999, 0, 0, "npc_106")
     sendluamsg(play, 101, 0, 1, 1, '{"lx":3,"rwid":24}')
     _send_task_panel(play, 1, npcid)
@@ -886,7 +883,7 @@ end
 function TreasureBasin.mainFeature(play, npcid)
     local data = _get_state(play)
     if data.rebuilt < 1 and data.activated < 1 then
-        Player.sendmsgEx(play, "ÇëÏÈÍê³É¾Û±¦ÅèÈÎÎñ")
+        Player.sendmsgEx(play, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾Û±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")
         return
     end
     _refresh_attr(play)
@@ -898,11 +895,11 @@ local function _claim_energy(play, npcid)
     local data = _get_state(play)
     local reward = _calc_energy_reward(data.energy_sec)
     if reward.gold <= 0 and reward.iron <= 0 and reward.hat <= 0 then
-        Player.sendmsgEx(play, "µ±Ç°ÔÝÎÞ¿ÉÁìÈ¡µÄ¾ÛÄÜÊÕÒæ")
+        Player.sendmsgEx(play, "ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Þ¿ï¿½ï¿½ï¿½È¡ï¿½Ä¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")
         _send_panel(play, 1, npcid)
         return
     end
-    _give_rewards(play, reward, "¾Û±¦Åè¾ÛÄÜÊÕÒæ")
+    _give_rewards(play, reward, "ï¿½Û±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")
     data.energy_sec = 0
     data.last_tick = _now()
     _save_state(play, data)
@@ -916,25 +913,25 @@ local function _start_refine(play, npcid, msgData)
     local stoneName = tostring(req.stone or req.name or "")
     local cfg = _stone_by_name[stoneName]
     if not cfg then
-        Player.sendmsgEx(play, "ÇëÑ¡ÔñÒªÁ¶ÁéµÄ±¦Ê¯")
+        Player.sendmsgEx(play, "ï¿½ï¿½Ñ¡ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Ä±ï¿½Ê¯")
         return _send_panel(play, 2, npcid)
     end
     if tostring(data.refine.stone or "") ~= "" then
-        Player.sendmsgEx(play, "µ±Ç°ÒÑÓÐ±¦Ê¯ÕýÔÚÁ¶Áé£¬ÇëÏÈÁìÈ¡Íê³ÉµÄ²úÎï")
+        Player.sendmsgEx(play, "ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Ð±ï¿½Ê¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ÉµÄ²ï¿½ï¿½ï¿½")
         return _send_panel(play, 2, npcid)
     end
     if getbagitemcount(play, stoneName) < 1 then
-        Player.sendmsgEx(play, "±³°üÖÐÃ»ÓÐ#57|¡¾" .. stoneName .. "¡¿#218|")
+        Player.sendmsgEx(play, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½#57|ï¿½ï¿½" .. stoneName .. "ï¿½ï¿½#218|")
         return _send_panel(play, 2, npcid)
     end
-    Player.takeItemByTable(play, {{stoneName, 1}}, "¾Û±¦ÅèÁ¶Áé", nil)
+    Player.takeItemByTable(play, {{stoneName, 1}}, "ï¿½Û±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", nil)
     data.refine = {stone = stoneName, end_at = _now() + math.ceil(cfg.time), started_at = _now(), continent = cfg.continent, bind = cfg.bind, kind = cfg.kind}
     if TreasureBasin.isHuangquanActive() then
         data.refine.huangquan_tick_at = _now()
         data.refine.huangquan_bonus_carry = 0
     end
     _save_state(play, data)
-    Player.sendmsgEx(play, "ÒÑ·ÅÈë#57|¡¾" .. stoneName .. "¡¿#218|¿ªÊ¼Á¶Áé")
+    Player.sendmsgEx(play, "ï¿½Ñ·ï¿½ï¿½ï¿½#57|ï¿½ï¿½" .. stoneName .. "ï¿½ï¿½#218|ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½")
     _send_panel(play, 2, npcid)
 end
 
@@ -945,11 +942,11 @@ local function _claim_refine(play, npcid)
     end
     local ref = data.refine or {}
     if tostring(ref.stone or "") == "" then
-        Player.sendmsgEx(play, "µ±Ç°Ã»ÓÐÕýÔÚÁ¶ÁéµÄ±¦Ê¯")
+        Player.sendmsgEx(play, "ï¿½ï¿½Ç°Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½Ê¯")
         return _send_panel(play, 3, npcid)
     end
     if _toint(ref.end_at) > _now() then
-        Player.sendmsgEx(play, "Á¶ÁéÉÐÎ´Íê³É£¬Ê£Óà#57|¡¾" .. _format_time(_toint(ref.end_at) - _now()) .. "¡¿#218|")
+        Player.sendmsgEx(play, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î´ï¿½ï¿½É£ï¿½Ê£ï¿½ï¿½#57|ï¿½ï¿½" .. _format_time(_toint(ref.end_at) - _now()) .. "ï¿½ï¿½#218|")
         return _send_panel(play, 3, npcid)
     end
     local reward = {items = {}}
@@ -960,18 +957,18 @@ local function _claim_refine(play, npcid)
         elseif r <= 55 then
             reward.gold = 500000
         else
-            reward.items[#reward.items + 1] = {"Ç§ÄêÐþÌú", 10}
+            reward.items[#reward.items + 1] = {"Ç§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", 10}
         end
     else
         local pool = _exclusive_pools[_toint(ref.continent)] or _exclusive_pools[2]
         local equips = pool.equips or {}
-        local equipName = equips[math.random(math.max(1, #equips))] or "Áù´óÂ½×¨Êô×°±¸Ëæ»ú±¦Ïä"
+        local equipName = equips[math.random(math.max(1, #equips))] or "ï¿½ï¿½ï¿½ï¿½Â½×¨ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
         reward.items[#reward.items + 1] = {equipName, 1}
         if pool.mat and math.random(100) <= 50 then
             reward.items[#reward.items + 1] = {pool.mat, 1}
         end
     end
-    _give_rewards(play, reward, "¾Û±¦ÅèÁ¶Áé")
+    _give_rewards(play, reward, "ï¿½Û±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")
     if _toint(data.forbidden.show) > 0 then
         data.forbidden.point = _toint(data.forbidden.point) + math.max(1, _toint(ref.continent)) * 10
     end
@@ -988,11 +985,11 @@ local function _unlock_forbidden(play, npcid, id)
     local data = _get_state(play)
     local node = data.forbidden.list[tostring(id)] or {}
     if _toint(node.lv) > 0 then
-        Player.sendmsgEx(play, "¸Ã½ûÆ÷ÒÑ¼¤»î")
+        Player.sendmsgEx(play, "ï¿½Ã½ï¿½ï¿½ï¿½ï¿½Ñ¼ï¿½ï¿½ï¿½")
         return false
     end
     if _toint(data.forbidden.point) < 8888 then
-        Player.sendmsgEx(play, "¾Û±¦Öµ²»×ã£¬¼¤»î½ûÆ÷ÐèÒª#57|¡¾8888¡¿#218|µã")
+        Player.sendmsgEx(play, "ï¿½Û±ï¿½Öµï¿½ï¿½ï¿½ã£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òª#57|ï¿½ï¿½8888ï¿½ï¿½#218|ï¿½ï¿½")
         return false
     end
     data.forbidden.point = _toint(data.forbidden.point) - 8888
@@ -1002,7 +999,7 @@ local function _unlock_forbidden(play, npcid, id)
     _refresh_attr(play)
     _refresh_item_bar(play)
     _check_forbidden_title(play, data)
-    Player.sendmsgEx(play, "³É¹¦¼¤»î#57|¡¾" .. cfg.name .. "¡¿#218|")
+    Player.sendmsgEx(play, "ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½#57|ï¿½ï¿½" .. cfg.name .. "ï¿½ï¿½#218|")
     _send_panel(play, 4, npcid)
 end
 
@@ -1020,7 +1017,7 @@ function TreasureBasin.useForbiddenItem(play, itemName)
     local data = _get_state(play)
     local node = data.forbidden.list[tostring(id)] or {}
     if _toint(node.lv) > 0 then
-        Player.sendmsgEx(play, "¸Ã½ûÆ÷ÒÑ¼¤»î")
+        Player.sendmsgEx(play, "ï¿½Ã½ï¿½ï¿½ï¿½ï¿½Ñ¼ï¿½ï¿½ï¿½")
         return false
     end
     data.activated = 1
@@ -1030,7 +1027,7 @@ function TreasureBasin.useForbiddenItem(play, itemName)
     _save_state(play, data)
     _refresh_attr(play)
     _refresh_item_bar(play)
-    Player.sendmsgEx(play, "³É¹¦¼¤»î#57|¡¾" .. cfg.name .. "¡¿#218|")
+    Player.sendmsgEx(play, "ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½#57|ï¿½ï¿½" .. cfg.name .. "ï¿½ï¿½#218|")
     return true
 end
 local function _upgrade_forbidden(play, npcid, id)
@@ -1039,37 +1036,37 @@ local function _upgrade_forbidden(play, npcid, id)
     local node = data.forbidden.list[tostring(id)] or {}
     local lv = _toint(node.lv)
     if lv <= 0 then
-        Player.sendmsgEx(play, "ÇëÏÈ¼¤»î¸Ã½ûÆ÷")
+        Player.sendmsgEx(play, "ï¿½ï¿½ï¿½È¼ï¿½ï¿½ï¿½Ã½ï¿½ï¿½ï¿½")
         return false
     end
     if lv >= 5 then
-        Player.sendmsgEx(play, "¸Ã½ûÆ÷ÒÑÊÇ¼«Æ·")
+        Player.sendmsgEx(play, "ï¿½Ã½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¼ï¿½Æ·")
         return false
     end
     local nextLv = lv + 1
     local cost = _forbidden_cost[nextLv]
     if data.level < cost.need_level then
-        Player.sendmsgEx(play, "¾Û±¦ÅèÆ·½×²»×ã£¬ÎÞ·¨Éý¼¶¸Ã½ûÆ÷")
+        Player.sendmsgEx(play, "ï¿½Û±ï¿½ï¿½ï¿½Æ·ï¿½×²ï¿½ï¿½ã£¬ï¿½Þ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã½ï¿½ï¿½ï¿½")
         return false
     end
     if querymoney(play, 4) < cost.yuanbao then
-        Player.sendmsgEx(play, "Ôª±¦²»×ã£¬ÐèÒª#57|¡¾" .. cost.yuanbao .. "¡¿#218|")
+        Player.sendmsgEx(play, "Ôªï¿½ï¿½ï¿½ï¿½ï¿½ã£¬ï¿½ï¿½Òª#57|ï¿½ï¿½" .. cost.yuanbao .. "ï¿½ï¿½#218|")
         return false
     end
-    if getbagitemcount(play, "½ûÔªÉñ¾§") < cost.crystal then
-        Player.sendmsgEx(play, "½ûÔªÉñ¾§²»×ã£¬ÐèÒª#57|¡¾" .. cost.crystal .. "¡¿#218|¸ö")
+    if getbagitemcount(play, "ï¿½ï¿½Ôªï¿½ï¿½") < cost.crystal then
+        Player.sendmsgEx(play, "ï¿½ï¿½Ôªï¿½ñ¾§²ï¿½ï¿½ã£¬ï¿½ï¿½Òª#57|ï¿½ï¿½" .. cost.crystal .. "ï¿½ï¿½#218|ï¿½ï¿½")
         return false
     end
-    changemoney(play, 4, "-", cost.yuanbao, "½ûÆ÷Éý¼¶", true)
-    Player.takeItemByTable(play, {{"½ûÔªÉñ¾§", cost.crystal}}, "½ûÆ÷Éý¼¶", nil)
+    changemoney(play, 4, "-", cost.yuanbao, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", true)
+    Player.takeItemByTable(play, {{"ï¿½ï¿½Ôªï¿½ï¿½", cost.crystal}}, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", nil)
     data.forbidden.list[tostring(id)] = {lv = nextLv}
     _save_state(play, data)
     _refresh_attr(play)
     _refresh_item_bar(play)
-    local name = _forbidden[id] and _forbidden[id].name or "½ûÆ÷"
-    Player.sendmsgEx(play, "#57|¡¾" .. name .. "¡¿#218|Éý¼¶³É¹¦")
+    local name = _forbidden[id] and _forbidden[id].name or "ï¿½ï¿½ï¿½ï¿½"
+    Player.sendmsgEx(play, "#57|ï¿½ï¿½" .. name .. "ï¿½ï¿½#218|ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½")
     if nextLv >= 5 then
-        sendmovemsg("0", 1, 253, 0, 200, 1, "[½ûÆ÷]Íæ¼Ò¡¶" .. tostring(getbaseinfo(play, 1) or "") .. "¡·Á¶³É¼«Æ·" .. name .. "£¬ÌìµØÕð¶¯£¡")
+        sendmovemsg("0", 1, 253, 0, 200, 1, "[ï¿½ï¿½ï¿½ï¿½]ï¿½ï¿½Ò¡ï¿½" .. tostring(getbaseinfo(play, 1) or "") .. "ï¿½ï¿½ï¿½ï¿½ï¿½É¼ï¿½Æ·" .. name .. "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ð¶¯£ï¿½")
     end
     _send_panel(play, 5, npcid)
 end
@@ -1083,7 +1080,7 @@ local function _set_show_forbidden(play, npcid, id)
     data.forbidden.show = id
     _save_state(play, data)
     _refresh_item_bar(play)
-    Player.sendmsgEx(play, "ÒÑÑ¡Ôñ½ûÆ÷Õ¹Ê¾£º#57|¡¾" .. tostring(_forbidden[id].name or "½ûÆ÷") .. "¡¿#218|")
+    Player.sendmsgEx(play, "ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹Ê¾ï¿½ï¿½#57|ï¿½ï¿½" .. tostring(_forbidden[id].name or "ï¿½ï¿½ï¿½ï¿½") .. "ï¿½ï¿½#218|")
     _send_panel(play, 6, npcid)
 end
 
@@ -1091,58 +1088,59 @@ local function _claim_forbidden_reward(play, npcid, id)
     local data = _get_state(play)
     local showId = _toint(data.forbidden.show)
     if showId <= 0 or not _forbidden[showId] then
-        Player.sendmsgEx(play, "ÇëÏÈÑ¡ÔñÒ»¸öÍâÏÔ½ûÆ÷")
+        Player.sendmsgEx(play, "ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½")
         return false
     end
     id = _toint(id)
     if id > 0 and id ~= showId then
-        Player.sendmsgEx(play, "Ö»ÄÜÊÍ·Åµ±Ç°ÍâÏÔ½ûÆ÷¼¼ÄÜ")
+        Player.sendmsgEx(play, "Ö»ï¿½ï¿½ï¿½Í·Åµï¿½Ç°ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")
         return false
     end
     local node = data.forbidden.list[tostring(showId)] or {}
     if _toint(node.lv) < 5 then
-        Player.sendmsgEx(play, "µ±Ç°ÍâÏÔ½ûÆ÷ÐèÉýÖÁ#57|¡¾Lv.5¡¿#218|ºó²Å¿ÉÊÍ·Å¼¼ÄÜ")
+        Player.sendmsgEx(play, "ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½#57|ï¿½ï¿½Lv.5ï¿½ï¿½#218|ï¿½ï¿½Å¿ï¿½ï¿½Í·Å¼ï¿½ï¿½ï¿½")
         return false
     end
     local left = _forbidden_skill_cd_left(data)
     if left > 0 then
-        Player.sendmsgEx(play, "½ûÆ÷¼¼ÄÜÀäÈ´ÖÐ£¬Ê£Óà#57|¡¾" .. _format_time(left) .. "¡¿#218|")
+        Player.sendmsgEx(play, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È´ï¿½Ð£ï¿½Ê£ï¿½ï¿½#57|ï¿½ï¿½" .. _format_time(left) .. "ï¿½ï¿½#218|")
         return false
     end
     data.forbidden.skill_cd_at = _now() + _forbidden_skill_cd
-    setplaydef(play, "J_½ûÆ÷¼¼ÄÜ_CD", 1)
-    sendluamsg(play, 107, showId, 0, 0, "")
-    _play_for_online_players(play, showId)
+    setplaydef(play, "J_ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_CD", 1)
     local cfg = _forbidden[showId]
-    local ownerName = tostring(getbaseinfo(play, 1) or "ÉñÃØÍæ¼Ò")
+    local ownerName = tostring(getbaseinfo(play, 1) or "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")
     local onlineCount = 0
     if showId == 1 then
         onlineCount = _mail_online_players(
-            "ÌìµØÒìÏó¡¤È«·þ×£¸£",
-            "Íæ¼Ò¡¾" .. ownerName .. "¡¿ÊÍ·Å½ûÆ÷¼¼ÄÜ¡¾ÌìµØÒìÏó¡¿£¬ÎªÈ«·þÔÚÏßÓÂÊ¿ËÍÀ´²ÆÔË×£¸£¡£Ô¸ÖîÎ»²ÆÔ´¹ã½ø£¬Õ÷Í¾ÂúÔØ£¡",
+            "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½×£ï¿½ï¿½",
+            "ï¿½ï¿½Ò¡ï¿½" .. ownerName .. "ï¿½ï¿½ï¿½Í·Å½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó¡¿£ï¿½ÎªÈ«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×£ï¿½ï¿½ï¿½ï¿½Ô¸ï¿½ï¿½Î»ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¾ï¿½ï¿½ï¿½Ø£ï¿½",
             function()
-                return {{"½ð±Ò", math.random(100000, 300000)}, {"Ôª±¦", math.random(1000, 3000)}}
+                return {{"ï¿½ï¿½ï¿½", math.random(100000, 300000)}, {"Ôªï¿½ï¿½", math.random(1000, 3000)}}
             end
         )
-        sendmovemsg("0", 1, 253, 0, 280, 2, "¡¾ÌìµØÒìÏó¡¿Íæ¼Ò¡¶" .. ownerName .. "¡·´Í¸£È«·þÔÚÏßÓÂÊ¿£¬½ð±ÒÔª±¦½±ÀøÒÑ·¢ËÍÖÁÓÊ¼þ£¡")
+        sendmovemsg("0", 1, 253, 0, 280, 2, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¡ï¿½" .. ownerName .. "ï¿½ï¿½ï¿½Í¸ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¿ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½")
     elseif showId == 2 then
         _start_huangquan_blessing(ownerName)
         onlineCount = _mail_online_players(
-            "»ÆÈª½µÊÀ¡¤È«·þ×£¸£",
-            "Íæ¼Ò¡¾" .. ownerName .. "¡¿ÊÍ·Å½ûÆ÷¼¼ÄÜ¡¾»ÆÈª½µÊÀ¡¿¡£È«·þ½øÈë5·ÖÖÓºÚ°µ×´Ì¬£¬ÆÚ¼ä¾Û±¦ÅèÁ¶»¯ËÙ¶ÈÌá¸ß10%¡¢´ò¹Ö±¬ÂÊÌá¸ß10%¡£Ô¸»ÆÈªÓÄ¹â»¤ÓÓÖîÎ»£¬ÃØ±¦ÁÙÉí£¬ÖîÐ°ÍË±Ü£¡",
+            "ï¿½ï¿½Èªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½×£ï¿½ï¿½",
+            "ï¿½ï¿½Ò¡ï¿½" .. ownerName .. "ï¿½ï¿½ï¿½Í·Å½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¡ï¿½ï¿½ï¿½Èªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½5ï¿½ï¿½ï¿½ÓºÚ°ï¿½×´Ì¬ï¿½ï¿½ï¿½Ú¼ï¿½Û±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½ï¿½ï¿½ï¿½10%ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½10%ï¿½ï¿½Ô¸ï¿½ï¿½Èªï¿½Ä¹â»¤ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½Ø±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð°ï¿½Ë±Ü£ï¿½",
             nil
         )
         _broadcast_huangquan(ownerName)
     elseif showId == 3 then
         onlineCount = _mail_online_players(
-            "ÍòÁé³¯·ï¡¤È«·þ×£¸£",
-            "Íæ¼Ò¡¾" .. ownerName .. "¡¿ÊÍ·Å½ûÆ÷¼¼ÄÜ¡¾ÍòÁé³¯·ï¡¿£¬ÎªÈ«·þÔÚÏßÓÂÊ¿ËÍÀ´Éñ»Ë×£¸£¡£Ô¸·ïÃù¾ÅÌì£¬ºèÔË³¤°é£¡",
-            {{"·ï»ËÖ®Í«", 5}}
+            "ï¿½ï¿½ï¿½é³¯ï¿½ï¡¤È«ï¿½ï¿½×£ï¿½ï¿½",
+            "ï¿½ï¿½Ò¡ï¿½" .. ownerName .. "ï¿½ï¿½ï¿½Í·Å½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¡ï¿½ï¿½ï¿½ï¿½é³¯ï¿½ï¡¿ï¿½ï¿½ÎªÈ«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×£ï¿½ï¿½ï¿½ï¿½Ô¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì£¬ï¿½ï¿½ï¿½Ë³ï¿½ï¿½é£¡",
+            {{"ï¿½ï¿½ï¿½Ö®Í«", 5}}
         )
-        sendmovemsg("0", 1, 253, 0, 280, 2, "¡¾ÍòÁé³¯·ï¡¿Íæ¼Ò¡¶" .. ownerName .. "¡·´Í¸£È«·þÔÚÏßÓÂÊ¿£¬·ï»ËÖ®Í«ÒÑ·¢ËÍÖÁÓÊ¼þ£¡")
+        sendmovemsg("0", 1, 253, 0, 280, 2, "ï¿½ï¿½ï¿½ï¿½ï¿½é³¯ï¿½ï¡¿ï¿½ï¿½Ò¡ï¿½" .. ownerName .. "ï¿½ï¿½ï¿½Í¸ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¿ï¿½ï¿½ï¿½ï¿½ï¿½Ö®Í«ï¿½Ñ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½")
     end
+    data.forbidden.anim_seq = _toint(data.forbidden.anim_seq) + 1
+    data.forbidden.anim_show_id = showId
     _save_state(play, data)
-    Player.sendmsgEx(play, "³É¹¦ÊÍ·ÅÍâÏÔ½ûÆ÷¼¼ÄÜ£º#57|¡¾" .. tostring(cfg.name or "½ûÆ÷") .. "¡¿#218|£¬ÒÑ×£¸£ÔÚÏßÍæ¼Ò#57|¡¾" .. tostring(onlineCount) .. "¡¿#218|Ãû")
+    sendmsg(play, 1, '{"Msg":"[TB_FORBIDDEN_ANIM:' .. tostring(showId) .. ']","Type":9}')
+    Player.sendmsgEx(play, "ï¿½É¹ï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü£ï¿½#57|ï¿½ï¿½" .. tostring(cfg.name or "ï¿½ï¿½ï¿½ï¿½") .. "ï¿½ï¿½#218|ï¿½ï¿½ï¿½ï¿½×£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½#57|ï¿½ï¿½" .. tostring(onlineCount) .. "ï¿½ï¿½#218|ï¿½ï¿½")
     _refresh_item_bar(play)
     _send_panel(play, 7, npcid)
 end
@@ -1155,7 +1153,7 @@ function TreasureBasin.linkFeature(play, npcid, p2, p3, msgData)
     if not Guard.ensureActionAllowed(play, npcid, action, allowed) then return end
     local data = _get_state(play)
     if data.rebuilt < 1 and data.activated < 1 then
-        Player.sendmsgEx(play, "ÇëÏÈÍê³É¾Û±¦ÅèÈÎÎñ")
+        Player.sendmsgEx(play, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾Û±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")
         return _send_task_panel(play, action, 106)
     end
     if action == 1 then
@@ -1216,7 +1214,7 @@ local function _on_login(play)
 end
 
 local function _on_daily(play)
-    setplaydef(play, "J_½ûÆ÷¼¼ÄÜ_CD", 0)
+    setplaydef(play, "J_ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_CD", 0)
     _set_progress(play, 0)
     _set_claimed(play, false)
     _refresh_item_bar(play)
@@ -1246,14 +1244,14 @@ function TreasureBasin.onKillMon(play, mob)
     local mobName = tostring(getbaseinfo(mob, 1) or "")
     local gtype = _toint(guaiwutype and guaiwutype[mobName])
     local isBig = gtype >= 2
-    -- ¾Û±¦Ä§Ê¯£ºÈ«´óÂ½ 1/5000£¬gtype>=2 µÄ¹ÖÎï±Øµô 1 ¸ö¡£
+    -- ï¿½Û±ï¿½Ä§Ê¯ï¿½ï¿½È«ï¿½ï¿½Â½ 1/5000ï¿½ï¿½gtype>=2 ï¿½Ä¹ï¿½ï¿½ï¿½Øµï¿½ 1 ï¿½ï¿½ï¿½ï¿½
     if isBig or math.random(5000) == 1 then
-        shaguai.temp_drop(play, mob, "¾Û±¦Ä§Ê¯")
+        shaguai.temp_drop(play, mob, "ï¿½Û±ï¿½Ä§Ê¯")
     end
 end
 local function _on_take_on(actor, itemobj, where, itemname, makeid)
     if not _is_artifact_name(itemname) and not _equipped_where(actor) then return end
-    TreasureBasin.activate(actor, "¾Û±¦Åè")
+    TreasureBasin.activate(actor, "ï¿½Û±ï¿½ï¿½ï¿½")
     _refresh_attr(actor)
     _refresh_item_bar(actor)
 end
@@ -1267,17 +1265,20 @@ local function _on_take_off(actor, itemobj, where, itemname, makeid)
 end
 
 if _first_init and not TreasureBasin.__events_registered then
-    GameEvent.add(EventCfg.onLogin, _on_login, "¾Û±¦Åè")
-    GameEvent.add(EventCfg.onKFLogin, _on_login, "¾Û±¦Åè")
-    GameEvent.add(EventCfg.goDailyUpdate, _on_daily, "¾Û±¦Åè")
-    GameEvent.add(EventCfg.onKillMon, TreasureBasin.onKillMon, "¾Û±¦Åè")
-    GameEvent.add(EventCfg.onExitGame, TreasureBasin.onExitGame, "¾Û±¦Åè")
-    GameEvent.add(EventCfg.onTakeOnEx, _on_take_on, "¾Û±¦Åè")
-    GameEvent.add(EventCfg.onTakeOffEx, _on_take_off, "¾Û±¦Åè")
+    GameEvent.add(EventCfg.onLogin, _on_login, "ï¿½Û±ï¿½ï¿½ï¿½")
+    GameEvent.add(EventCfg.onKFLogin, _on_login, "ï¿½Û±ï¿½ï¿½ï¿½")
+    GameEvent.add(EventCfg.goDailyUpdate, _on_daily, "ï¿½Û±ï¿½ï¿½ï¿½")
+    GameEvent.add(EventCfg.onKillMon, TreasureBasin.onKillMon, "ï¿½Û±ï¿½ï¿½ï¿½")
+    GameEvent.add(EventCfg.onExitGame, TreasureBasin.onExitGame, "ï¿½Û±ï¿½ï¿½ï¿½")
+    GameEvent.add(EventCfg.onTakeOnEx, _on_take_on, "ï¿½Û±ï¿½ï¿½ï¿½")
+    GameEvent.add(EventCfg.onTakeOffEx, _on_take_off, "ï¿½Û±ï¿½ï¿½ï¿½")
     TreasureBasin.__events_registered = true
 end
 
 return TreasureBasin
+
+
+
 
 
 

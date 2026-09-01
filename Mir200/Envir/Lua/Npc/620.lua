@@ -53,7 +53,7 @@ function npc.link(play,npcid,ew,aid)
             if _config.give and #_config.give > 0 then
                 Player.rwjl(play, _config.give, tostring(_config.name or "npc_620") .. "_reward", 1, 0)
             end
-            sendluamsg(play,100,npcid,1,0,"")
+            sendluamsg(play,100,npcid,1,2,"")
             Player.sendmsgEx(play, "阴阳玉佩合成成功，获得|【阴阳玉佩】#218|")
             sendluamsg(play,101,1005,0,0,"rwwc")
         else
