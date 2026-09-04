@@ -471,10 +471,9 @@ local function _xyl_has_tang_antique(play)
     end
     local list = {}
     for _, it in ipairs(cfg.config) do
-        for _, jl in ipairs(it.jl or {}) do
-            if type(jl[1]) == "string" and jl[1]:find("【唐代】") then
-                table.insert(list, jl[1])
-            end
+        local baseName = tostring(it.name or "")
+        if baseName ~= "" then
+            list[#list + 1] = string.format("【唐代】%s", baseName)
         end
     end
     return _xyl_has_any_item(play, list)
@@ -483,7 +482,18 @@ end
 -- 备注：生肖守护是否全激活
 local function _xyl_has_shengxiao_guard(play)
     local data = Player.getJsonTableByVar(play, VarCfg["T_生肖守护"])
-    return (tonumber(data.level) or 0) >= 1
+    if tonumber(data.jl_all or 0) >= 1 then
+        return true
+    end
+    if checktitle(play, "生肖守护神") then
+        return true
+    end
+    for i = 1, 12 do
+        if tonumber(data[tostring(i)] or 0) < 1 then
+            return false
+        end
+    end
+    return true
 end
 
 -- 备注：是否已激活全部圣遗物（灵兽圣遗物）

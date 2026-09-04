@@ -2806,6 +2806,7 @@ local qf_teshunpc = {
     [1028] = 16, -- 沙巴克
     [53] = 53, -- 神石
     [106] = 106, -- 神石
+    [623] = 623, -- 可能会卡tp的 npc
 }
 function clicknpc(play, npcid)
     --打印

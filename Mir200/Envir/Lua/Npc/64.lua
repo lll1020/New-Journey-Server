@@ -25,6 +25,52 @@ local function _toint(v, d)
     return tonumber(v or d or 0) or (d or 0)
 end
 
+local function _star_upgrade_need()
+    local need = _config.star_upgrade_need or {}
+    local to2 = _toint(need[1], 3)
+    local to3 = _toint(need[2], 9)
+    if to2 < 1 then to2 = 1 end
+    if to3 < to2 then to3 = to2 end
+    return to2, to3
+end
+
+local function _get_star_progress(T_data, key, star)
+            T_data.ls_star_progress = T_data.ls_star_progress or {}
+    local progress = tonumber(T_data.ls_star_progress[key])
+    if progress == nil then
+        local to2, to3 = _star_upgrade_need()
+        if _toint(star) >= 3 then
+            progress = to3
+        elseif _toint(star) >= 2 then
+            progress = to2
+        else
+            progress = 0
+        end
+    end
+    local _, to3 = _star_upgrade_need()
+    return math.max(0, math.min(to3, progress))
+end
+
+local function _star_from_progress(progress)
+    local to2, to3 = _star_upgrade_need()
+    if progress >= to3 then
+        return 3
+    elseif progress >= to2 then
+        return 2
+    end
+    return 1
+end
+
+local function _star_progress_text(progress)
+    local to2, to3 = _star_upgrade_need()
+    progress = math.max(0, math.min(to3, _toint(progress)))
+    if progress >= to3 then
+        return string.format("%d/%d", to3, to3)
+    elseif progress < to2 then
+        return string.format("%d/%d", progress, to2)
+    end
+    return string.format("%d/%d", progress, to3)
+end
 local function _real_charge(play)
     return _toint(getplaydef(play, VarCfg["U_真实充值"]))
 end
@@ -37,6 +83,7 @@ local function _ensure_pet_data(T_data)
     T_data = T_data or {}
     T_data.ls = T_data.ls or {}
     T_data.ls_sp = T_data.ls_sp or {}
+            T_data.ls_star_progress = T_data.ls_star_progress or {}
     T_data.hatch = T_data.hatch or {}
     T_data.hatch_log = T_data.hatch_log or {}
     return T_data
@@ -94,6 +141,7 @@ local function _add_lingshou_star(play, idx, source, itemName)
     local T_data = _ensure_pet_data(Player.getJsonTableByVar(play, VarCfg["T_灵兽"]))
     local key = tostring(idx)
     local beforeStar = _toint(T_data.ls_sp[key])
+    local beforeProgress = _get_star_progress(T_data, key, beforeStar)
     local maxStar = _toint(_config.max_star, 3)
     if beforeStar >= maxStar then
         return false, "该灵兽星级已满，无法继续孵化#57"
@@ -102,7 +150,10 @@ local function _add_lingshou_star(play, idx, source, itemName)
         T_data.ls[key] = 1
         Player.updateSomeAddr(play, nil, _config.config.wy.det[1] and _config.config.wy.det[1].attr or nil)
     end
-    T_data.ls_sp[key] = math.min(maxStar, beforeStar + 1)
+    local _, to3 = _star_upgrade_need()
+    local progress = beforeStar > 0 and math.min(to3, beforeProgress + 1) or 0
+    T_data.ls_star_progress[key] = progress
+    T_data.ls_sp[key] = math.min(maxStar, beforeStar > 0 and _star_from_progress(progress) or 1)
     if T_data.hatch and T_data.hatch[key] then
         T_data.hatch[key].status = "done"
         T_data.hatch[key].doneAt = os.time()
@@ -112,7 +163,7 @@ local function _add_lingshou_star(play, idx, source, itemName)
     Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
     if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
     TMLP_refresh_pet_bonus(play)
-    return true, string.format("灵兽|【%s】#218|孵化成功，当前星级|【%d】#218", cfg.pet, T_data.ls_sp[key]), T_data
+    return true, string.format("灵兽|【%s】#218|孵化成功，当前星级|【%d】#218|%s", cfg.pet, T_data.ls_sp[key], _star_progress_text(progress)), T_data
 end
 
 
@@ -261,12 +312,15 @@ function npc.link(play,npcid,ew,aid,data)
         Player.takeItemByTable(play, _config.cost, ",灵兽抽取",nil)
         local randomNum = ransjstr(_config.weight, 1, 3)
         randomNum = tonumber(randomNum)
+        local to2, to3 = _star_upgrade_need()
         T_data.ls = T_data.ls or {}
         T_data.ls_sp = T_data.ls_sp or {}
-        if not T_data.ls[""..randomNum] then
+        T_data.ls_star_progress = T_data.ls_star_progress or {}
+        if _toint(T_data.ls[""..randomNum]) <= 0 then
             T_data.ls[""..randomNum] = 1
             T_data.ls_sp[""..randomNum] = 1
-            Player.sendmsgEx(play, string.format("你成功抽取到灵兽|【%s】#218|x1", _config.config.ls[randomNum].name))
+            T_data.ls_star_progress[""..randomNum] = 0
+            Player.sendmsgEx(play, string.format("你成功抽取到灵兽|【%s】#218|%s", _config.config.ls[randomNum].name, _star_progress_text(0)))
             Player.sendmsgEx(play, "你已获得该灵兽的|【初始星级】#218|，快去召唤它吧")
             Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
             if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
@@ -277,14 +331,18 @@ function npc.link(play,npcid,ew,aid,data)
         -- 最大星级以配置 max_star 为准
             local starKey = ""..randomNum
             local curStar = _toint(T_data.ls_sp[starKey], 1)
+            local currentProgress = _get_star_progress(T_data, starKey, curStar)
             local maxStar = _toint(_config.max_star, 3)
             if curStar >= maxStar then
-                Player.sendmsgEx(play, string.format("你抽取到的灵兽|【%s】#218|已达最大星级,转换为材料", _config.config.ls[randomNum].name))
+                Player.sendmsgEx(play, string.format("你抽取到的灵兽|【%s】#218", _config.config.ls[randomNum].name))
                 Player.rwjl(play, {{"灵石",500},{"妖怪精魄",10}}, "灵兽抽取",1,1000)
                 return
             end
-            T_data.ls_sp[starKey] = math.min(maxStar, curStar + 1)
-            Player.sendmsgEx(play, string.format("你成功抽取到灵兽|【%s】#218|x1已自动转换为星级", _config.config.ls[randomNum].name))
+
+            local progress = math.min(to3, currentProgress + 1)
+            T_data.ls_star_progress[starKey] = progress
+            T_data.ls_sp[starKey] = math.min(maxStar, _star_from_progress(progress))
+            Player.sendmsgEx(play, string.format("你成功抽取到灵兽|【%s】#218|%s", _config.config.ls[randomNum].name, _star_progress_text(progress)))
             Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
             if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
             sendluamsg(play,100,npcid,1,0,tbl2json({T_data = T_data, server_time = os.time()}))
@@ -295,6 +353,7 @@ function npc.link(play,npcid,ew,aid,data)
     elseif ew == 2 then -- 召唤灵兽
         T_data.ls = T_data.ls or {}
         T_data.ls_sp = T_data.ls_sp or {}
+        T_data.ls_star_progress = T_data.ls_star_progress or {}
         if not T_data.ls[""..json_data.idx] or T_data.ls[""..json_data.idx] <= 0 then
             Player.sendmsgEx(play, "你没有该灵兽，请先抽取灵兽#57")
             return
@@ -312,6 +371,7 @@ function npc.link(play,npcid,ew,aid,data)
         T_data.ls = T_data.ls or {}
         -- T_data.ls_sp 
         T_data.ls_sp = T_data.ls_sp or {}
+        T_data.ls_star_progress = T_data.ls_star_progress or {}
         if not T_data.ls[""..json_data.idx] or T_data.ls[""..json_data.idx] <= 0 then
             Player.sendmsgEx(play, "你没有该灵兽，请先抽取灵兽#57")
             return
@@ -424,8 +484,8 @@ function npc.link(play,npcid,ew,aid,data)
             sendluamsg(play,100,npcid,1,0,"")
         end
 
-            
-        
+
+
     end
 end
 
@@ -522,7 +582,3 @@ function npc.onBabyExpired(play, itemobj)
     return ok
 end
 return npc
-
-
-
-
