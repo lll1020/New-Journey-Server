@@ -348,8 +348,12 @@ local function _claim_day_card(play, T_data)
     if _get_today_charge(play) < needCharge then
         return false, string.format("今日累计充值不足%d元#57", needCharge)
     end
-    if titleName ~= "" and not checktitle(play, titleName) then
-        Player.title_give(play, titleName, 1)
+    if titleName ~= "" then
+        if checktitle(play, titleName) then
+            changetitletime(play, titleName, "+", 24)
+        else
+            Player.title_give(play, titleName, 1)
+        end
     end
     if type(cfg.rewards) == "table" and #cfg.rewards > 0 then
         Player.rwjl(play, cfg.rewards, ",msfc_day_card", 1, 0)

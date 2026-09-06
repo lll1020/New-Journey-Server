@@ -1,6 +1,15 @@
 npc = {}
 --灵根使者
 local _config = Guard.getConfig("npc_68")
+local function _check_linggen_unlock(play)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_锁妖塔"] or "T51") or {}
+    if (tonumber(data.total_runs or 0) or 0) >= 6 then
+        return true
+    end
+    Player.sendmsgEx(play, "请先完成异闻录任务【挑战六次通天塔】后再开启灵根功能#57")
+    return false
+end
+
 local function _check_trial_limit(play, aid)
     local cfg = _config and _config.details and _config.details[aid]
     if not cfg then
@@ -44,6 +53,9 @@ local function _take_trial_cost(play)
     return true
 end
 function npc.main(play,npcid)
+    if not _check_linggen_unlock(play) then
+        return
+    end
     local data = {}
     data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_灵根"])
     data["T_dljq"] = Player.getJsonTableByVar(play, VarCfg.T_dljq)
@@ -52,6 +64,9 @@ end
 function npc.link(play,npcid,ew,aid)
     -- npc_guard: 入参校验
     if not Guard.ensurePlayer(play, npcid) then
+        return
+    end
+    if not _check_linggen_unlock(play) then
         return
     end
     local __guardAction = Guard.normalizeAction(play, npcid, ew)

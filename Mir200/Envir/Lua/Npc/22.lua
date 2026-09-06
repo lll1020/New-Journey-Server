@@ -58,20 +58,6 @@ local function _activate_basic_roots(T_data)
     return T_data
 end
 
-local function _clear_basic_roots_before_mainline(T_data)
-    T_data = _ensure_data(T_data)
-    for i = 1, 5 do
-        local key = tostring(i)
-        if _toint(T_data.level[key], 0) <= 0 then
-            T_data.level[key] = nil
-        end
-    end
-    if _toint(T_data.main, 0) >= 1 and _toint(T_data.main, 0) <= 5 and not _has_root(T_data, T_data.main) then
-        T_data.main = nil
-    end
-    return T_data
-end
-
 local function _level(T_data, idx)
     if not _has_root(T_data, idx) then return 0 end
     return math.max(0, _toint(T_data.level[tostring(idx)], 0))
@@ -188,10 +174,6 @@ local function _take_change_cost(play)
     return true
 end
 
-local function _mainline_reached_linggen(play)
-    return (tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0) >= 22
-end
-
 local function _check_linggen_unlock(play)
     local data = Player.getJsonTableByVar(play, VarCfg["T_锁妖塔"] or "T51") or {}
     if (tonumber(data.total_runs or 0) or 0) >= 6 then
@@ -224,7 +206,7 @@ function npc.link(play, npcid, ew, aid)
     aid = _toint(aid, 0)
     local T_data = _activate_basic_roots(Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
 
-    if ew == 1 then -- 主线到达后选择基础灵根；基础灵根此时初始化为Lv0
+    if ew == 1 then -- 选择基础灵根；基础灵根此时初始化为Lv0
         if aid < 1 or aid > 5 then
             Player.sendmsgEx(play, "只能选择金木水火土基础灵根#57")
             return
@@ -364,10 +346,6 @@ end
 
 function Login_lg(play)
     local T_data = _ensure_data(Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
-    if not _mainline_reached_linggen(play) then
-        T_data = _clear_basic_roots_before_mainline(T_data)
-        Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
-    end
     _sync_linggen_skill(play, T_data)
     _refresh_linggen_special(play, T_data)
     local attrs = {}
@@ -415,7 +393,7 @@ function npc.lgcf(play, zt, Damage, Target, triggerType)
 end
 
 function LingGenGrantBasicUnlockChance(play, count)
-    if not _mainline_reached_linggen(play) then
+    if not _check_linggen_unlock(play) then
         return false
     end
     local T_data = _activate_basic_roots(Player.getJsonTableByVar(play, VarCfg["T_灵根"]))

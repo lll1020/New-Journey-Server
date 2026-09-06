@@ -208,3 +208,5 @@
 
 [2026-09-04 08:50:08:833] LuaNPC: ID:999999999 执行 npc_654_dsq player: 耗时：31; NpcThreadId: 550048, CurPlayThreadId: 550048
 
+[2026-09-04 08:54:54:034] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：46; NpcThreadId: 550048, CurPlayThreadId: 550048
+

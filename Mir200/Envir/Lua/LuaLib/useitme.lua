@@ -944,7 +944,7 @@ local function _msfc_open_box_say(play, boxName, poolKey)
         lines[#lines + 1] = '<Button|id=ui_msfc_btn_' .. tostring(i) .. '|x=38|y=' .. tostring(y) .. '|width=292|height=30|nimg=public/1900000651_1.png|pimg=public/1900000651_1.png|color=255|size=18|text=' .. _msfc_reward_label(reward) .. '|link=' .. link .. '>'
     end
     
-    lines[#lines + 1] = '<Text|id=ui_msfc_title_tip|x=27|y=240|color=251|size=18|text=可以连续点击领取>'
+    lines[#lines + 1] = '<Text|id=ui_msfc_title_tip|x=27|y=' .. tostring(height - 30) .. '|color=251|size=18|text=可以连续点击领取>'
     -- lines[#lines + 1] = '</Img>'
     say(play, table.concat(lines, "\r\n"))
 end
@@ -1280,6 +1280,33 @@ function stdmodefunc59(play, item) --至尊黑卡
         return false
     end
     rec.zzhk_date = today
+    local _stdmodefunc59_rwjl = Player.rwjl
+    if type(_stdmodefunc59_rwjl) == "function"
+        and type(checktitle) == "function"
+        and checktitle(play, "极光使者") then
+        Player.rwjl = function(target, rewards, ...)
+            Player.rwjl = _stdmodefunc59_rwjl
+            if type(rewards) ~= "table" then
+                return _stdmodefunc59_rwjl(target, rewards, ...)
+            end
+            local doubled = {}
+            for _, reward in ipairs(rewards) do
+                if type(reward) == "table" then
+                    local copy = {}
+                    for key, value in pairs(reward) do
+                        copy[key] = value
+                    end
+                    if tonumber(copy[2]) then
+                        copy[2] = tonumber(copy[2]) * 2
+                    end
+                    doubled[#doubled + 1] = copy
+                else
+                    doubled[#doubled + 1] = reward
+                end
+            end
+            return _stdmodefunc59_rwjl(target, doubled, ...)
+        end
+    end
     setplaydef(play, VarCfg["T_物品使用记录"], tbl2json(rec))
     Player.rwjl(play, {{"绑定金币",300000},{"绑定元宝",3000},{"绑定灵石",60}}, "至尊黑卡", 1)
     Player.sendmsgEx(play, "至尊黑卡使用成功，今日奖励已发放#57")
