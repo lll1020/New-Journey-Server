@@ -353,7 +353,8 @@ shaguai = {
 		end
 	end,
 	["340"] = function(play,mob)      --古刹魔瓶：装备背包神器后，击杀怪物有5%概率累计1点打怪切割
-		if not Player.hasEquipInArtifactSlot(play, "古刹魔瓶") then
+        if not Player.hasEquipInArtifactSlot(play, "古刹魔瓶")
+            and not Player.hasEquipInArtifactSlot(play, "古魔切割刀") then
 			shaguai.jian(play,340)
 			if Buff and Buff[340] then
 				Buff[340](play, 2)

@@ -1116,7 +1116,7 @@ local npc_xyl = {
                     "拥有传说神石",
                     id = 999,
                     jl = { { "剧情点", 3 } },
-                    yd = { 1, "三大陆主城", 53, 161, 230 },
+                    yd = { 1, "三大陆主城", 53, 161, 226 },
                     fwdjy = function(play)
                         return _xyl_check_task(play, "拥有传说神石")
                     end,
@@ -1135,7 +1135,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "三大陆主城", 51, 153, 230 },
+                    yd = { 1, "三大陆主城", 51, 169, 226 },
                     desc = "深入传说·斗笠，寻回失落线索",
                 },
                 {
@@ -1148,7 +1148,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "三大陆主城", 52, 157, 230 },
+                    yd = { 1, "三大陆主城", 52, 169, 226 },
                     desc = "踏入神·酒葫芦，循迹而行",
                 },
                 {
@@ -1165,7 +1165,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "三大陆主城", 54, 161, 230 },
+                    yd = { 1, "三大陆主城", 54, 169, 226 },
                     desc = "踏入高级淬体，循迹而行",
                 },
                 {
@@ -1178,7 +1178,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = { 1, "三大陆主城", 34, 142, 236 },
+                    yd = { 1, "三大陆主城", 34, 149, 235 },
                     desc = "历经转生·三，收获机缘",
                 },
             },

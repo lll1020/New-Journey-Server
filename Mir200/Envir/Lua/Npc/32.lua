@@ -5,10 +5,30 @@ npc = {}
 local _config = Guard.getConfig("npc_32")
 local FairyFate = include("lua/LuaLib/fairy_fate.lua")
 
+local function _get_map_continent(play)
+    local map = getbaseinfo(play, 3)
+    return tonumber(daluditu and daluditu[map] or 0) or 0
+end
+
+local function _get_required_continent(level)
+    return math.floor((tonumber(level) or 0) / 10) + 1
+end
+
+local function _can_upgrade_here(play, level)
+    local current_continent = _get_map_continent(play)
+    local required_continent = _get_required_continent(level)
+    return current_continent > 0 and current_continent == required_continent,
+        current_continent, required_continent
+end
+
 function npc.main(play,npcid)
     local data = {}
     local level = tonumber(getplaydef(play, VarCfg["U_转生等级"])) or 0
+    local can_upgrade, current_continent, required_continent = _can_upgrade_here(play, level)
     data["level"] = level
+    data["npc_continent"] = current_continent
+    data["required_continent"] = required_continent
+    data["can_upgrade"] = can_upgrade and level < _config.max_level
     if level > 0 then
         local config = _config.details[level]
         if config then
@@ -42,6 +62,11 @@ function npc.link(play,npcid,ew,aid)
         local level = tonumber(getplaydef(play, VarCfg["U_转生等级"])) or 0
         if level >= _config.max_level then
             Player.sendmsgEx(play, "已经满级")
+            return
+        end
+        local can_upgrade, _, required_continent = _can_upgrade_here(play, level)
+        if not can_upgrade then
+            Player.sendmsgEx(play, string.format("\199\235\199\176\205\249\181\218\37\100\180\243\194\189\181\196\215\170\201\250\78\80\67\201\253\188\182", required_continent))
             return
         end
         level = level + 1

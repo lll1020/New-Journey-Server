@@ -96,6 +96,11 @@ function npc.main(play, npcid)
     if not _ensure_second_continent(play) then
         return
     end
+    local welfare = _get_welfare_list()
+    if #welfare > 0 and (tonumber(data.welfare_claimed or 0) or 0) >= #welfare then
+        Player.sendmsgEx(play, "限时福利已全部领取")
+        return
+    end
     _ensure_stage_time(play, data)
     _mark_xyl_welfare_open(play)
     sendluamsg(play, 100, npcid, 0, 0, tbl2json(_build_payload(play, data)))

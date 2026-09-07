@@ -537,15 +537,15 @@ function takeonbeforeex(play,item,where,makeIndex)
     if where >= 77 and where <= 88 then
         local itemName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "")
         local baseName = string.match(itemName, "^(.-)【") or itemName
-        if baseName == "逐日弓" then
+        if baseName ~= "" then
             for pos = 77, 88 do
                 if pos ~= where then
                     local bodyItem = linkbodyitem(play, pos)
                     if bodyItem and bodyItem ~= "0" then
                         local bodyName = tostring(getiteminfo(play, bodyItem, ConstCfg.iteminfo.name) or "")
                         local bodyBaseName = string.match(bodyName, "^(.-)【") or bodyName
-                        if bodyBaseName == "逐日弓" then
-                            Player.sendmsgEx(play, "逐日弓在背包神器位同时只能装备一把#57")
+                        if bodyBaseName ~= "" and bodyBaseName == baseName then
+                            Player.sendmsgEx(play, string.format("同名背包神器仅可装备一个：%s#57", baseName))
                             return false
                         end
                     end
@@ -2683,8 +2683,8 @@ function triggerchat(play,sMsg,chat,msgType)
 end
 --------------------拿沙开始触发--------------------
 function castlewarstart()
-    sendmovemsg("0", 1, 253, 0, 300, 2,"沙巴克攻城战：今日沙城战已开放，勇士们快快前往沙城传送了解详情，攻城时服务器不再刷新新的怪物，期间死亡不会掉落狂暴之力请保持在线以免领取不到...")
-    sendmovemsg("0", 1, 249, 0, 250, 2,"沙巴克攻城战：今日沙城战已开放，勇士们快快前往沙城传送了解详情，攻城时服务器不再刷新新的怪物，期间死亡不会掉落狂暴之力请保持在线以免领取不到...")
+    sendmovemsg("0", 1, 253, 0, 300, 2,"沙巴克攻城战：今日沙城战已开放，勇士们快快前往沙城传送了解详情，攻城时服务器不再刷新新的怪物，期间死亡不会掉落狂暴之力,请保持在线以免奖励领取不到...")
+    sendmovemsg("0", 1, 249, 0, 250, 2,"沙巴克攻城战：今日沙城战已开放，勇士们快快前往沙城传送了解详情，攻城时服务器不再刷新新的怪物，期间死亡不会掉落狂暴之力,请保持在线以免奖励领取不到...")
     GameEvent.push(EventCfg.gocastlewarstart)
 end
 ---占领沙巴克触发

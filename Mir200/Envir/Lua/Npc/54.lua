@@ -45,6 +45,7 @@ end
 function npc.main(play,npcid)
     if not checktitle(play, _config.del_title) and not checktitle(play, _config.title) then 
         Player.sendmsgEx(play,  "你还未获得称号：#57|【".._config.del_title.."】#218|，无法进行高级淬体#57")
+        sendluamsg(play,100,npcid,2,11,"")
         return
     end
     local data = {}

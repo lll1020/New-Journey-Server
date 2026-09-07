@@ -135,7 +135,8 @@ local function _gcmp_refresh_item(play)
     if not _has_title_buff_flag(play, 340) then
         return
     end
-    local where = Player.hasEquipInArtifactSlot(play, "古刹魔瓶")
+    local where = Player.hasEquipInArtifactSlot(play, "古魔切割刀")
+        or Player.hasEquipInArtifactSlot(play, "古刹魔瓶")
     if not where then
         return
     end
@@ -195,16 +196,27 @@ local function _find_bag_item_obj_by_name(play, itemName)
     end
     return nil
 end
+local _gumo_blade_name = "古魔切割刀"
+local _gusha_bottle_name = "古刹魔瓶"
+local _cut_blade_name = "切割刀"
 local function _find_recharge_blade_item_obj(play)
-    -- 切割刀：优先读取当前已穿戴的神器位物品，未穿戴时再回退到背包同名物品。
-    local where = Player and Player.hasEquipInArtifactSlot and Player.hasEquipInArtifactSlot(play, "切割刀")
-    if where then
-        local itemobj = linkbodyitem(play, where)
+    local names = {_gumo_blade_name, _cut_blade_name}
+    for _, name in ipairs(names) do
+        local where = Player and Player.hasEquipInArtifactSlot and Player.hasEquipInArtifactSlot(play, name)
+        if where then
+            local itemobj = linkbodyitem(play, where)
+            if itemobj and itemobj ~= "0" then
+                return itemobj
+            end
+        end
+    end
+    for _, name in ipairs(names) do
+        local itemobj = _find_bag_item_obj_by_name(play, name)
         if itemobj and itemobj ~= "0" then
             return itemobj
         end
     end
-    return _find_bag_item_obj_by_name(play, "切割刀")
+    return nil
 end
 local function _sync_item_named_cut_attr(play, itemobj, tagName, stack)
     if not itemobj or itemobj == "0" then
@@ -245,13 +257,13 @@ local function _sync_item_named_cut_attr(play, itemobj, tagName, stack)
     end
     item_json.abil[idx] = {i = abil_i or (idx - 1), t = tagName, c = 251, v = attr_list}
     setitemcustomabil(play, itemobj, tbl2json(item_json))
-    setcustomitemprogressbar(play, itemobj, 0, tbl2json({
-        ["open"] = 1,
-        ["show"] = 0,
-        ["name"] = string.format("累计切割：+%d", cutValue),
-        ["color"] = 251,
-        ["imgcount"] = 1,
-    }))
+    -- setcustomitemprogressbar(play, itemobj, 0, tbl2json({
+    --     ["open"] = 1,
+    --     ["show"] = 0,
+    --     ["name"] = string.format("累计切割：+%d", cutValue),
+    --     ["color"] = 251,
+    --     ["imgcount"] = 1,
+    -- }))
     refreshitem(play, itemobj)
 end
 -- 30 元档切割刀：击杀怪物累积切割，最终同步到切割刀物品自定义属性。
@@ -287,6 +299,42 @@ local function Buff_refreshRechargeBlade(play)
     if bladeItem and bladeItem ~= "0" then
         _sync_item_named_cut_attr(play, bladeItem, "[累计切割]", stack)
     end
+end
+local function _try_compose_gumo_blade(play)
+    if not Player or not Player.hasEquipInArtifactSlot or tonumber(getplaydef(play, "N$gumo_cut_compose") or 0) == 1 then
+        return
+    end
+    local bottleWhere = Player.hasEquipInArtifactSlot(play, _gusha_bottle_name)
+    local cutWhere = Player.hasEquipInArtifactSlot(play, _cut_blade_name)
+    if not bottleWhere or not cutWhere then
+        return
+    end
+    local cutItem = linkbodyitem(play, cutWhere)
+    if not cutItem or cutItem == "0" then
+        return
+    end
+    local targetIdx = tonumber(getstditeminfo(_gumo_blade_name, ConstCfg.stditeminfo.idx) or 0) or 0
+    if targetIdx <= 0 then
+        return
+    end
+    local makeIdx = getiteminfo(play, cutItem, 1)
+    if not makeIdx or makeIdx == "" then
+        return
+    end
+    setplaydef(play, "N$gumo_cut_compose", 1)
+    changeitemidx(play, makeIdx, targetIdx)
+    local gumoWhere = Player.hasEquipInArtifactSlot(play, _gumo_blade_name)
+    if gumoWhere then
+        delbodyitem(play, bottleWhere, "古魔切割刀合成")
+        if Buff[340] then
+            Buff[340](play, 1)
+        end
+        if Buff[564] then
+            Buff[564](play, 1)
+        end
+        Buff_refreshRechargeBlade(play)
+    end
+    setplaydef(play, "N$gumo_cut_compose", 0)
 end
 local function _tianshu_buff_splash(play, Target)
     -- release_print("触发天书溅射buff")
@@ -4706,6 +4754,10 @@ function Buff.login(play)
             end
         end
     end
+    if Player.hasEquipInArtifactSlot(play, _gumo_blade_name) and Buff[564] then
+        Buff[564](play, 1)
+    end
+    _try_compose_gumo_blade(play)
     -------------------------------------------------------------------称号BUFF登录初始化
     local ch = gettitlelist(play)
     for _, v in pairs(ch) do
@@ -4758,7 +4810,8 @@ function Buff.login(play)
         Player.add_attlist(play, "福娃猜拳切割", "=", "3#" .. (teshudata["npc_66"].cut_attr or 244) .. "#" .. fuwa_cut, 1)
     end
     -- 古刹魔瓶：背包神器位不走常规装备位登录初始化，这里补一次。
-    if Player.hasEquipInArtifactSlot(play, "古刹魔瓶") then
+    if Player.hasEquipInArtifactSlot(play, "古刹魔瓶")
+        or Player.hasEquipInArtifactSlot(play, "古魔切割刀") then
         Buff[340](play, 1)
     else
         Buff[340](play, 2)
@@ -4813,16 +4866,35 @@ GameEvent.add(EventCfg.onPlaydie, function(play, killer)
 end, "Equip_OnPlaydie")
 Buff.refreshRechargeBlade = Buff_refreshRechargeBlade
 function Buff.chuan(play,item)
+    local itemName = getiteminfo(play, item, ConstCfg.iteminfo.name)
     local id = getstditeminfo(getiteminfo(play,item,2),8)
     if id > 0 and Buff[id]then
         Buff[id](play,1)
         release_print("装备BUFF触发，位置："..item.."，BUFFID："..id)
     end
+    if itemName == _gumo_blade_name then
+        if id ~= 340 and Buff[340] then
+            Buff[340](play, 1)
+        end
+        if id ~= 564 and Buff[564] then
+            Buff[564](play, 1)
+        end
+    end
+    _try_compose_gumo_blade(play)
 end
 function Buff.tuo(play,item)
+    local itemName = getiteminfo(play, item, ConstCfg.iteminfo.name)
     local id = getstditeminfo(getiteminfo(play,item,2),8)
     if id > 0 and Buff[id] then
         Buff[id](play,2)
+    end
+    if itemName == _gumo_blade_name then
+        if id ~= 340 and Buff[340] then
+            Buff[340](play, 2)
+        end
+        if id ~= 564 and Buff[564] then
+            Buff[564](play, 2)
+        end
     end
 end
 return Buff

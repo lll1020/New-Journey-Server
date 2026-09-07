@@ -6,7 +6,8 @@ npc = {}
 local _config = Guard.getConfig("npc_15")
 
 function npc.main(play,npcid)
-    sendluamsg(play,100,npcid,0,0,"")
+    local opened = checktitle(play, _config.give.ch) and 1 or 0
+    sendluamsg(play,100,npcid,0,0,'{"opened":'..opened..'}')
 end
 
 function npc.link(play,npcid,ew,aid)
@@ -41,6 +42,7 @@ function npc.link(play,npcid,ew,aid)
                 -- 开启狂暴后触发事件（用于刷新天书仙法等模块）
                 GameEvent.push(EventCfg.goKuangBao, play)
                 GameEvent.push(EventCfg.OpenKuangBao, play)
+                sendluamsg(play,100,npcid,1,0,'{"opened":1}')
             else
                 sendmsg(play,1,string.format('{"Msg":"<font color=\'#ff7700\'>[狂暴之力]</font><font color=\'#ff0000\'>您没有%d灵石，无法开启</font>","Type":9}', cost))
             end
