@@ -182,7 +182,7 @@ function npc.link(play,npcid,ew,aid,data)
 
         Player.setJsonTableByVar(play, VarCfg["T_¸£ÍÞ²ÂÈ­"], T_data)
         if shopItem.give then
-            Player.rwjl(play, shopItem.give, "¸£ÍÞ²ÂÈ­¶Ò»»½±Àø", 1)
+            Player.rwjl(play, shopItem.give, "¸£ÍÞ²ÂÈ­¶Ò»»½±Àø", 1, 1000)
             Player.sendmsgEx(play, string.format("Äã³É¹¦¶Ò»»ÁË|¡¾%s¡¿#218|x%d", shopItem.item, (shopItem.give and shopItem.give[1] and shopItem.give[1][2]) or 1))
         elseif shopItem.ch then
             Player.title_give(play, shopItem.ch)

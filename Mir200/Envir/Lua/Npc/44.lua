@@ -1846,7 +1846,7 @@ end
 function npc.main(play, npcid)
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     if not (jq_data["npc_55"] and jq_data["npc_55"] >= 2) then
-        Player.sendmsgEx(play, "你还未开启相关剧情，暂无法使用#57")
+        Player.sendmsgEx(play, "您还未开辟仙府，暂不可进入#57")
         return
     end
     local state = loadState(play)
@@ -1869,7 +1869,7 @@ function npc.link(play, npcid, p2, p3, msgData)
     end
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     if not (jq_data["npc_55"] and jq_data["npc_55"] >= 2) then
-        Player.sendmsgEx(play, "你还未开启相关剧情，暂无法使用#57")
+        Player.sendmsgEx(play, "您还未开辟仙府，暂不可进入#57")
         return
     end
     local payload = Guard.safeJsonDecode(play, msgData, nil, {})

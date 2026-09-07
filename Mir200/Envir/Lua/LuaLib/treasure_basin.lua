@@ -373,12 +373,17 @@ local function _add_energy_seconds(play, data, sec)
     return math.floor(before) ~= math.floor(data.energy_sec)
 end
 
-local function _calc_energy_reward(sec)
+local function _calc_energy_reward(sec, level)
     sec = math.max(0, math.floor(tonumber(sec) or 0))
+    local lv = math.max(1, _toint(level))
+    local energyCfg = _config.energy or {}
+    local goldRate = (tonumber(energyCfg.gold_per_sec) or 200) + (lv - 1) * (tonumber(energyCfg.gold_per_level) or 100)
+    local ironRate = (tonumber(energyCfg.iron_per_sec) or 0.01) + (lv - 1) * (tonumber(energyCfg.iron_per_level) or 0.01)
+    local hatRate = (tonumber(energyCfg.hat_per_sec) or 0.01) + (lv - 1) * (tonumber(energyCfg.hat_per_level) or 0.01)
     return {
-        gold = sec * 1000,
-        iron = math.floor(sec * 0.01),
-        hat = math.floor(sec * 0.01),
+        gold = math.floor(sec * goldRate),
+        iron = math.floor(sec * ironRate),
+        hat = math.floor(sec * hatRate),
     }
 end
 
@@ -449,7 +454,7 @@ _refresh_item_bar = function(play)
     end
     local data = _get_state(play)
     local lvCfg = _levels[data.level] or _levels[1]
-    local reward = _calc_energy_reward(data.energy_sec)
+    local reward = _calc_energy_reward(data.energy_sec, data.level)
     setcustomitemprogressbar(play, itemobj, 0, tbl2json({
         open = 1, show = 0, name = string.format("%s Lv.%d", lvCfg.name, data.level), color = 253, imgcount = 1,
     }))
@@ -802,7 +807,7 @@ local function _build_payload(play)
     end
     _check_forbidden_title(play, data)
     _save_state(play, data)
-    local reward = _calc_energy_reward(data.energy_sec)
+    local reward = _calc_energy_reward(data.energy_sec, data.level)
     return {
         mode = "feature",
         T_data = data,
@@ -902,7 +907,7 @@ end
 
 local function _claim_energy(play, npcid)
     local data = _get_state(play)
-    local reward = _calc_energy_reward(data.energy_sec)
+    local reward = _calc_energy_reward(data.energy_sec, data.level)
     if reward.gold <= 0 and reward.iron <= 0 and reward.hat <= 0 then
         Player.sendmsgEx(play, "当前暂无可领取的聚能收益")
         _send_panel(play, 1, npcid)
@@ -979,7 +984,11 @@ local function _claim_refine(play, npcid)
         end
     end
     _give_rewards(play, reward, "聚宝盆炼灵")
-    data.forbidden.point = _toint(data.forbidden.point) + math.max(1, _toint(ref.continent)) * 10
+    local pointAdd = 100
+    if tostring(ref.kind) ~= "normal" then
+        pointAdd = math.max(1, _toint(ref.continent)) * 100
+    end
+    data.forbidden.point = _toint(data.forbidden.point) + pointAdd
     data.refine = {}
     _save_state(play, data)
     _refresh_item_bar(play)

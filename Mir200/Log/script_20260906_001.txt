@@ -72,3 +72,24 @@
 
 [2026-09-07 13:56:14:832] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 5340, CurPlayThreadId: 5340
 
+[2026-09-07 14:35:20:257] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：31; NpcThreadId: 5340, CurPlayThreadId: 5340
+
+[2026-09-07 14:44:00:682] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 5340, CurPlayThreadId: 5340
+
+[2026-09-07 16:23:20:809] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：203; NpcThreadId: 5340, CurPlayThreadId: 5340
+[2026-09-07 16:23:20:809] [玩家名字]Lua执行耗时过高:203ms msgid:105 9999 9999 0 
+
+[2026-09-07 16:23:31:962] LuaNPC:玩家名字 ID:999999999 执行 entermap player:玩家名字 耗时：687; NpcThreadId: 5340, CurPlayThreadId: 5340
+[2026-09-07 16:23:31:962] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：687; NpcThreadId: 5340, CurPlayThreadId: 5340
+[2026-09-07 16:23:31:962] [玩家名字]Lua执行耗时过高:687ms msgid:101 507 1 1 
+
+[2026-09-07 16:31:49:016] .\Envir\QuestDiary/cfg_gm_box.lua time：516
+[2026-09-07 16:31:49:935] .\Envir\lua/Data/fairy_fate_cfg.lua time：906
+
+[2026-09-07 16:32:19:290] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：265; NpcThreadId: 5340, CurPlayThreadId: 5340
+
+[2026-09-07 16:33:00:741] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：140; NpcThreadId: 5340, CurPlayThreadId: 5340
+
+[2026-09-07 17:13:21:330] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：531; NpcThreadId: 5340, CurPlayThreadId: 5340
+[2026-09-07 17:13:21:470] LuaNPC:玩家名字k ID:999999999 执行 buffchufa player:玩家名字k 耗时：110; NpcThreadId: 5340, CurPlayThreadId: 5340
+

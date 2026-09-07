@@ -13,7 +13,7 @@ local cfg = {
         {count = 125, reward = "极品仙法卷轴*2", extra = ""},
         {count = 150, reward = "称号：成就卷轴Lv.4", extra = "全属性+10%"},
         {count = 170, reward = "帝星本源*3", extra = ""},
-        {count = 185, reward = "称号：大收藏家", extra = "（全属性+50%，对怪增伤+50%，对人攻速+100%，对怪攻速+100%）"},
+        {count = 180, reward = "称号：大收藏家", extra = "（全属性+50%，对怪增伤+50%，对人攻速+100%，对怪攻速+100%）"},
     },
     -- details: 单项成就列表，包含条件和奖励
     details = {

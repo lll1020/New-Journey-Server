@@ -1728,7 +1728,7 @@ shaguai = {
         local dropped = false
         local rate = 100
         local pity = 100
-        if have < 5 then
+        if have < 1 then
             rate = 10
             pity = 10
         end
@@ -1749,7 +1749,7 @@ shaguai = {
             Player.sendmsgEx(play, "打怪掉落【"..itemName.."】#57")
         end
     end,
-	["34"] = function(play,mob)      --筑基丹碎片：仅二大陆普通怪每累计 100 只保底掉落，总上限 30 个碎片
+	["34"] = function(play,mob)      --筑基丹碎片：二、三大陆普通怪每累计 100 只保底掉落，总上限 30 个碎片
 		local record = Player.getJsonTableByVar(play, "T39") or {}
 		local jz_count = tonumber(record.jz_dan_count or 0) or 0
 		local frag_count = tonumber(getbagitemcount(play, "筑基丹碎片") or 0) or 0
@@ -1760,7 +1760,7 @@ shaguai = {
 		end
 		local mapName = tostring(getbaseinfo(play,3) or "")
 		local dl = tonumber((daluditu and daluditu[mapName]) or 0) or 0
-		if dl ~= 2 then
+		if dl ~= 2 and dl ~= 3 then
 			return
 		end
 		local key = "kill_pity_筑基丹碎片"
@@ -1844,12 +1844,6 @@ shaguai = {
 		local normalBase = lowDanActive and math.floor(188 / 1.1) or 188
 		if math.random(math.max(1, normalBase)) == 1 then
 			shaguai.temp_drop(play, mob, "神石宝箱")
-		end
-	end,
-	["37"] = function(play,mob)      --聚宝盆：统一走 shaguai 杀怪进度
-		local mod = rawget(_G, "__treasure_basin_module")
-		if mod and mod.onKillMon then
-			mod.onKillMon(play, mob)
 		end
 	end,
 	["38"] = function(play,mob)      --天命试炼：统一走 shaguai 渡劫丹掉落

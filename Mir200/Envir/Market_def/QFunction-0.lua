@@ -1028,9 +1028,19 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
             end
         end
         -- 灰界压制：无【诸邪退散】时，对灰界怪物的所有输出统一按50%结算。
+        if MskhApi and MskhApi.get_cfg then
+            local mskh_cfg = MskhApi.get_cfg()
+            if mskh_cfg and getsysvar(VarCfg["G_美食狂欢状态"]) == 1 then
+                local targetMap = tostring(getbaseinfo(Target, 3) or "")
+                local targetName = tostring(getbaseinfo(Target, 1) or "")
+                if targetMap == tostring(mskh_cfg.map or "") and MskhApi.is_event_mon and MskhApi.is_event_mon(targetName, mskh_cfg) then
+                    return tonumber(mskh_cfg.fixed_damage) or 1
+                end
+            end
+        end
         local huijie_damage_rate = 1
         if Player and Player.getHuiJieMonsterDamageRate then
-            huijie_damage_rate = tonumber(Player.getHuiJieMonsterDamageRate(play) or 1) or 1
+            huijie_damage_rate = tonumber(Player.getHuiJieMonsterDamageRate(play, Target) or 1) or 1
         end
         ---------------------------------------------对怪切割计算
 		local zd = getbaseinfo(Target, 12)
@@ -2398,7 +2408,11 @@ function collectmonex(play,monIDX,monName,monMakeIndex)
         Player.sendmsgEx(play, "采集失败,你的背包格子不足!")
         return
     end
-    showprogressbardlg(play,3,"@func_cjcg","采集中%s..", 1,"@func_cjsb")
+    if checktitle(play,"自动拾取忘关了") then
+        showprogressbardlg(play, 2, "@func_cjcg", "采集中%s..", 1, "@func_cjsb")
+    else
+        showprogressbardlg(play, 3, "@func_cjcg", "采集中%s..", 1, "@func_cjsb")
+    end
     setplaydef(play,"S$采集目标",monMakeIndex)
     setplaydef(play,"S$采集目标名字",monName)
     setplaydef(play,"N$iscaiji",1)
@@ -2678,6 +2692,11 @@ function titlechanged_30405(play) seticon(play,1,1,30405,0,0,0,0,0) end
 function untitled_30405(play) seticon(play,1,-1) end
 --------------------聊天触发前置接口--------------------
 function triggerchat(play,sMsg,chat,msgType)
+    local firstChargeData = json2tbl(getplaydef(play, "T39")) or {}
+    if tonumber(firstChargeData.main_claimed or firstChargeData.other_lb or 0) ~= 1 then
+        Player.sendmsgEx(play, "领取首充才可发言#57")
+        return false
+    end
     GameEvent.push(EventCfg.onTriggerChat, play, sMsg, chat, msgType)
     return true
 end

@@ -115,9 +115,12 @@ end
 local function _is_day_card_claimed(T_data)
     return tostring(T_data.day_card_claim_date or "") == _today()
 end
-local function _is_day_card_unlocked()
-    -- 日卡不再受合区次数限制，开服后直接开放。
-    return true
+local function _has_first_charge(play)
+    local firstChargeData = Player.getJsonTableByVar(play, "T39") or {}
+    return (tonumber(firstChargeData.main_claimed or firstChargeData.other_lb or firstChargeData._lb or 0) or 0) >= 1
+end
+local function _is_day_card_unlocked(play)
+    return _has_first_charge(play)
 end
 local function _get_daily_kills(play)
     return (tonumber(getplaydef(play, VarCfg.J_jsgw[1]) or 0) or 0) + (tonumber(getplaydef(play, VarCfg.J_jsgw[2]) or 0) or 0)
@@ -339,8 +342,8 @@ local function _claim_day_card(play, T_data)
     local needCharge = tonumber(cfg.need_charge) or 28
     local titleName = tostring(cfg.title or "日卡")
     local tokenCount = tonumber(cfg.token_count) or 0
-    if not _is_day_card_unlocked() then
-        return false, "首次合区后开启#57"
+    if not _is_day_card_unlocked(play) then
+        return false, "请先领取首充礼包后再开启日卡#57"
     end
     if _is_day_card_claimed(T_data) then
         return false, "今日日卡礼包已领取#57"
@@ -400,7 +403,7 @@ local function _build_panel_data(play)
     data.title_owned = tonumber(T_data.flags.title_msfc) or 0
     data.today_charge = _get_today_charge(play)
     data.day_card_need_charge = tonumber((_config.day_card or {}).need_charge) or 28
-    data.day_card_unlocked = _is_day_card_unlocked() and 1 or 0
+    data.day_card_unlocked = _is_day_card_unlocked(play) and 1 or 0
     data.day_card_claimed = _is_day_card_claimed(T_data) and 1 or 0
     data.day_card_has_title = checktitle(play, ((_config.day_card or {}).title or "日卡")) and 1 or 0
     return data, T_data
@@ -471,12 +474,14 @@ local function _on_login(play)
 end
 -- 入口方法：打开活动面板
 function npc.main(play, npcid)
+
     local T_data = _get_data(play)
     _save_data(play, T_data)
     _refresh_panel(play, npcid, 0)
 end
 -- 交互方法：p2对应单抽十连兑换购买领奖开箱
 function npc.link(play, npcid, p2, p3, msgData)
+
     if not Guard.ensurePlayer(play, npcid) then return end
     local __guardAction = Guard.normalizeAction(play, npcid, p2)
     if __guardAction == nil then return end

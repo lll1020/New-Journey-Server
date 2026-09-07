@@ -41,7 +41,7 @@ end
 
 local function _give_items(play, reward, reason)
     if type(reward) == "table" and #reward > 0 then
-        Player.rwjl(play, reward, reason or "第六章剧情奖励", 1)
+        Player.rwjl(play, reward, reason or "第六章剧情奖励", 1, 1000)
     end
 end
 

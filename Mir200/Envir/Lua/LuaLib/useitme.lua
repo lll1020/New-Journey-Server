@@ -362,6 +362,9 @@ function stdmodefunc30(play, item)
         return false
     end
     local addOne = tonumber(getstditeminfo(getiteminfo(play, item, 2), 8) or 0) or 0
+    if getflagstatus(play, VarCfg.BS_sckg) == 1 then
+        addOne = math.floor(addOne * 1.1)
+    end
     if addOne <= 0 then
         return false
     end
@@ -992,7 +995,7 @@ function stdmodefunc41(play, item) --仙法卷轴残页  -- 10合一  仙法卷轴
     end
     local makeCount = math.floor(sl / needNum)
     _take_use_all_item(play, item, makeCount * needNum, itemName)
-    Player.rwjl(play, {{"仙法卷轴", makeCount}}, "仙法卷轴残页合成", 1)
+    Player.rwjl(play, {{"仙法卷轴", makeCount}}, "仙法卷轴残页合成", 1, 1000)
     Player.sendmsgEx(play, "合成成功，获得|仙法卷轴*" .. makeCount .. "#218")
     return false
 end
@@ -1657,7 +1660,6 @@ local function _get_zhuji_dan_record(play)
     end
     return rec
 end
-
 
 
 

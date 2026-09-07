@@ -407,7 +407,7 @@ local function _refresh_godstone_item(play, itemobj, item_name)
     if not level_found then
         return
     end
-    setitemaddvalue(play, itemobj, 2, 3, level_found)
+    -- setitemaddvalue(play, itemobj, 2, 3, level_found)
     local attrs = _build_item_attr_by_item(item_name_real)
     local attr_str = Player.getAttrTableToStr(attrs)
     setaddnewabil(play, -2, "=", attr_str, itemobj)

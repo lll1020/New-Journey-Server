@@ -2706,7 +2706,7 @@ local function _zz516_get_cz502_requirement(config)
     end
     return tonumber((config or {}).need_cz502 or 0) or 0, 0
 end
-local function _zz516_condition_tip(config)
+local function _zz516_condition_tip(play, config)
     local needItem = tostring((config or {}).need_item or "")
     if needItem ~= "" then
         return string.format("需要：%s", needItem)
@@ -2728,7 +2728,18 @@ local function _zz516_condition_tip(config)
     end
     local needRealCharge = tonumber((config or {}).need_real_charge or 0) or 0
     if needRealCharge > 0 then
-        return string.format("真实累计充值%s元后可领取", tostring(needRealCharge))
+        local currentRealCharge = math.max(0, _zz516_get_real_charge(play))
+        local displayCharge = math.min(currentRealCharge, needRealCharge)
+        local missingRealCharge = math.max(0, needRealCharge - currentRealCharge)
+        local currentColor = currentRealCharge >= needRealCharge and 218 or 249
+        local tip = string.format("赞助进度：#57|%d#%d|/%d#218|", displayCharge, currentColor, needRealCharge)
+        if missingRealCharge > 0 then
+            -- tip = tip .. string.format("，还差%d元#249|", missingRealCharge)
+            tip = tip 
+        else
+            tip = tip .. "，已达标#218|"
+        end
+        return tip
     end
     local needCharge = tonumber((config or {}).need_charge or (config or {}).sgsl or 0) or 0
     if needCharge > 0 then
@@ -2830,6 +2841,10 @@ GameEvent.add(EventCfg.onLogin, _zz516_login, "至尊赞助")
 --至尊赞助
 npc[516] = function(play, p2, p3, msgData) --至尊赞助
     if p2 == 0 then
+        if rwcf[516] and rwcf[516][1] == getplaydef(play, VarCfg.U_zxrw[1]) then
+            Player.zxrw_wancheng(play, rwcf[516][1], "npc516_view")
+            sendluamsg(play, 101, 9999, 0, 0, "npc_anniu_516")
+        end
         _zz516_send_panel(play, 0, 0)
     elseif p2 == 1 then
         local idx = tonumber(p3 or 0) or 0
@@ -2862,16 +2877,16 @@ npc[516] = function(play, p2, p3, msgData) --至尊赞助
                     return
                 end
             end
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0500\'>' .. _zz516_condition_tip(config) .. '...</font>","Type":9}')
+            Player.sendmsgEx(play, _zz516_condition_tip(play, config))
             return
         end
         T_data[key] = 1
         Player.setJsonVarByTable(play, VarCfg["T_免费赞助"], T_data)
-        if rwcf[516] and rwcf[516][1] == getplaydef(play, VarCfg.U_zxrw[1]) then
-            Player.zxrw_wancheng(play, rwcf[516][1], "任务")
-            sendluamsg(play, 101, 9999, 0, 0, "npc_anniu_516")
-        end
+
         _zz516_apply_title(play, T_data)
+        if idx == 1 then
+            addbuff(play, 20132)
+        end
         if type(config.jl) == "table" and #config.jl > 0 then
             Player.rwjl(play, config.jl, "至尊赞助奖励", 1)
         end

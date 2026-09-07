@@ -5,6 +5,10 @@ npc = {}
 local _config = Guard.getConfig("npc_21")
 local FairyFate = include("lua/LuaLib/fairy_fate.lua")
 
+local function _has_realm_task_access(play)
+    return (tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0) >= 32
+end
+
 local function _get_jz_dan_count(play)
     local rec = json2tbl(getplaydef(play, VarCfg["T_物品使用记录"]))
     if type(rec) ~= "table" then
@@ -82,11 +86,19 @@ local function _guide_cultivation_pill(play)
     return false
 end
 function npc.main(play,npcid)
+    if not _has_realm_task_access(play) then
+        Player.sendmsgEx(play, "请先到达主线任务【提升修为至筑基境】后再开启境界功能")
+        return
+    end
     _send_sync_data(play, npcid, 0)
     openhyperlink(play, 1, 2)
 end
 
 function npc.link(play,npcid,ew,aid)
+    if not _has_realm_task_access(play) then
+        Player.sendmsgEx(play, "请先到达主线任务【提升修为至筑基境】后再开启境界功能")
+        return
+    end
     -- npc_guard: 入参校验
     if not Guard.ensurePlayer(play, npcid) then
         return

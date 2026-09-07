@@ -48,7 +48,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         Player.takeItemByTable(play, config.cost, ",材料兑换",nil)
         dh_num = dh_num + 1
         setplaydef(play, VarCfg["J_今日材料兑换"], dh_num)
-        Player.rwjl(play,{{config.give,1}},"材料兑换",nil,1)
+        Player.rwjl(play,{{config.give,1}},"材料兑换",nil,1000)
         Player.sendmsgEx(play, "兑换成功，获得|【兑换奖励】#218|")
 
         local data = {}

@@ -1233,7 +1233,7 @@ end
 function Player.hasHuiJieImmunity(actor)
     return checktitle(actor, "诸邪退散")
 end
--- 灰界压制判定：在灰界且没有【诸邪退散】时，受到灰界环境压制。
+-- 灰界压制判定：没有称号时保留原有压制；有称号时按怪物颜色增加伤害。
 function Player.isHuiJieSuppressed(actor)
     if not actor then
         return false
@@ -1241,16 +1241,40 @@ function Player.isHuiJieSuppressed(actor)
     local map_name = tostring(getbaseinfo(actor, 3) or "")
     return Player.isHuiJieMap(map_name) and not Player.hasHuiJieImmunity(actor)
 end
--- 灰界压制下：对怪最终伤害降低50%。
-function Player.getHuiJieMonsterDamageRate(actor)
-    return Player.isHuiJieSuppressed(actor) and 0.5 or 1
+local _huijie_title_damage_rate = {
+    [224] = 1.8,
+    [146] = 1.5,
+    [249] = 1.3,
+}
+local function _huijie_target_color(target)
+    if not target or getbaseinfo(target, -1) then
+        return 0
+    end
+    local map_name = tostring(getbaseinfo(target, 3) or "")
+    if not Player.isHuiJieMap(map_name) then
+        return 0
+    end
+    local monster_name = tostring(getbaseinfo(target, 1) or "")
+    if monster_name == "" then
+        return 0
+    end
+    local monster_idx = getdbmonfieldvalue(monster_name, "idx")
+    return tonumber(getmonbaseinfo(monster_idx, 2) or 0) or 0
+end
+-- 灰界怪物伤害倍率：无称号时为50%；有称号时按绿、蓝、红怪分别为180%、150%、130%。
+function Player.getHuiJieMonsterDamageRate(actor, target)
+    if Player.isHuiJieSuppressed(actor) then
+        return 0.5
+    end
+    if not actor or not Player.hasHuiJieImmunity(actor) then
+        return 1
+    end
+    return _huijie_title_damage_rate[_huijie_target_color(target)] or 1
 end
 -- 灰界压制下：受到怪物最终伤害增加10%。
 function Player.getHuiJieMonsterHurtRate(actor)
     return Player.isHuiJieSuppressed(actor) and 1.1 or 1
 end
--- 三大陆正式开启判定：完成“开辟仙府”后，才可进入灰界之外的三大陆地图并使用相关功能。
--- 兼容旧号：若历史上已经完成过任务、手动开辟等，也同样视为已正式开辟。
 function Player.hasThirdContinentOpen(actor)
     local jq_data = Player.getJsonTableByVar(actor, VarCfg.T_dljq) or {}
     if tonumber(jq_data["npc_55"] or 0) >= 2 then

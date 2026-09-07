@@ -707,9 +707,9 @@ teshudata = {
             {cost = {{"元宝",100000},{"高阶强化石",20}},attr = {{3,600},{4,600},{1,6000},{9,300},{10,300},{11,300},{12,300}}},
         },
         other_attr = {
+            {{300,5,"全属性"},{280,5},{281,5},{282,5},{283,5},{284,5},{285,5},{286,5},{287,5},{288,5},{289,5},{290,5},{291,5}},
             {{300,10,"全属性"},{280,10},{281,10},{282,10},{283,10},{284,10},{285,10},{286,10},{287,10},{288,10},{289,10},{290,10},{291,10}},
             {{300,20,"全属性"},{280,20},{281,20},{282,20},{283,20},{284,20},{285,20},{286,20},{287,20},{288,20},{289,20},{290,20},{291,20}},
-            {{300,30,"全属性"},{280,30},{281,30},{282,30},{283,30},{284,30},{285,30},{286,30},{287,30},{288,30},{289,30},{290,30},{291,30}},
         },
     },
     ["npc_32"] = {
@@ -853,7 +853,7 @@ teshudata = {
                 id = 1,
                 name = "低阶灵草",
                 need_level = 1,
-                matureTime = 10 * 60,
+                matureTime = 30 * 60,
                 canSteal = true,
                 product = {
                     {rate = 80, give = {{"下品丹材",10}}},
@@ -864,7 +864,7 @@ teshudata = {
                 id = 2,
                 name = "中阶灵草",
                 need_level = 2,
-                matureTime = 30 * 60,
+                matureTime = 60 * 60,
                 canSteal = true,
                 product = {
                     {rate = 50, give = {{"中品丹材",10}}},
@@ -962,22 +962,22 @@ teshudata = {
             normal_pool = {"normal_1", "normal_2", "normal_3", "normal_4", "normal_5"},
             red_pool = {"red_1", "red_2", "red_3", "red_4", "red_5"},
             results = {
-                normal_1 = {id = "normal_1", name = "普通品娃娃1", quality = "normal", quality_name = "普通", asset_group = 1, attr = {{1,100}}, attr_desc = "固定生命+100"},
-                normal_2 = {id = "normal_2", name = "普通品娃娃2", quality = "normal", quality_name = "普通", asset_group = 2, attr = {{4,20}}, attr_desc = "固定攻击+20"},
-                normal_3 = {id = "normal_3", name = "普通品娃娃3", quality = "normal", quality_name = "普通", asset_group = 3, attr = {{10,5},{12,5}}, attr_desc = "固定双防+5"},
-                normal_4 = {id = "normal_4", name = "普通品娃娃4", quality = "normal", quality_name = "普通", asset_group = 4, attr = {{81,20}}, attr_desc = "对怪吸血+20"},
-                normal_5 = {id = "normal_5", name = "普通品娃娃5", quality = "normal", quality_name = "普通", asset_group = 5, attr = {{244,100}}, attr_desc = "打怪切割+100"},
-                red_1 = {id = "red_1", name = "红品质娃娃1", quality = "red", quality_name = "红", asset_group = 1, attr = {{1,1000}}, attr_desc = "固定生命+1000"},
-                red_2 = {id = "red_2", name = "红品质娃娃2", quality = "red", quality_name = "红", asset_group = 2, attr = {{4,200}}, attr_desc = "固定攻击+200"},
-                red_3 = {id = "red_3", name = "红品质娃娃3", quality = "red", quality_name = "红", asset_group = 3, attr = {{10,50},{12,50}}, attr_desc = "固定双防+50"},
-                red_4 = {id = "red_4", name = "红品质娃娃4", quality = "red", quality_name = "红", asset_group = 4, attr = {{81,200}}, attr_desc = "对怪吸血+200"},
-                red_5 = {id = "red_5", name = "红品质娃娃5", quality = "red", quality_name = "红", asset_group = 5, attr = {{244,1000}}, attr_desc = "打怪切割+1000"},
-                hidden_1 = {id = "hidden_1", name = "隐藏款娃娃1", quality = "hidden", quality_name = "隐藏", asset_group = 1, attr = {{242,5000},{300,5},{280,5},{281,5},{282,5},{283,5},{284,5},{285,5},{286,5},{287,5},{288,5},{289,5},{290,5},{291,5}}, attr_desc = "全属性+5% / 打怪爆率+50%"},
-                hidden_2 = {id = "hidden_2", name = "隐藏款娃娃2", quality = "hidden", quality_name = "隐藏", asset_group = 2, attr = {{242,5000},{300,5},{280,5},{281,5},{282,5},{283,5},{284,5},{285,5},{286,5},{287,5},{288,5},{289,5},{290,5},{291,5}}, attr_desc = "全属性+5% / 打怪爆率+50%"},
-                hidden_3 = {id = "hidden_3", name = "隐藏款娃娃3", quality = "hidden", quality_name = "隐藏", asset_group = 3, attr = {{242,5000},{300,5},{280,5},{281,5},{282,5},{283,5},{284,5},{285,5},{286,5},{287,5},{288,5},{289,5},{290,5},{291,5}}, attr_desc = "全属性+5% / 打怪爆率+50%"},
-                hidden_4 = {id = "hidden_4", name = "隐藏款娃娃4", quality = "hidden", quality_name = "隐藏", asset_group = 4, attr = {{242,5000},{300,5},{280,5},{281,5},{282,5},{283,5},{284,5},{285,5},{286,5},{287,5},{288,5},{289,5},{290,5},{291,5}}, attr_desc = "全属性+5% / 打怪爆率+50%"},
-                hidden_5 = {id = "hidden_5", name = "隐藏款娃娃5", quality = "hidden", quality_name = "隐藏", asset_group = 5, attr = {{242,5000},{300,5},{280,5},{281,5},{282,5},{283,5},{284,5},{285,5},{286,5},{287,5},{288,5},{289,5},{290,5},{291,5}}, attr_desc = "全属性+5% / 打怪爆率+50%"},
-            },
+                normal_1 = {id = "normal_1", name = "云水仙灵", quality = "normal", quality_name = "普通", asset_group = 1, attr = {{1,100}}, attr_desc = "固定生命+100"},
+                normal_2 = {id = "normal_2", name = "墨羽剑侍", quality = "normal", quality_name = "普通", asset_group = 2, attr = {{4,20}}, attr_desc = "固定攻击+20"},
+                normal_3 = {id = "normal_3", name = "月鹿灵", quality = "normal", quality_name = "普通", asset_group = 3, attr = {{10,5},{12,5}}, attr_desc = "固定双防+5"},
+                normal_4 = {id = "normal_4", name = "彩角灵鹿", quality = "normal", quality_name = "普通", asset_group = 4, attr = {{81,20}}, attr_desc = "对怪吸血+20"},
+                normal_5 = {id = "normal_5", name = "玄霜剑客", quality = "normal", quality_name = "普通", asset_group = 5, attr = {{244,100}}, attr_desc = "打怪切割+100"},
+                red_1 = {id = "red_1", name = "★九天瑶姬★", quality = "red", quality_name = "红", asset_group = 1, attr = {{1,1000}}, attr_desc = "固定生命+1000"},
+                red_2 = {id = "red_2", name = "★紫极剑仙★", quality = "red", quality_name = "红", asset_group = 2, attr = {{4,200}}, attr_desc = "固定攻击+200"},
+                red_3 = {id = "red_3", name = "★焚天赤麟★", quality = "red", quality_name = "红", asset_group = 3, attr = {{10,50},{12,50}}, attr_desc = "固定双防+50"},
+                red_4 = {id = "red_4", name = "★赤焰狻猊★", quality = "red", quality_name = "红", asset_group = 4, attr = {{81,200}}, attr_desc = "对怪吸血+200"},
+                red_5 = {id = "red_5", name = "★紫电仙子★", quality = "red", quality_name = "红", asset_group = 5, attr = {{244,1000}}, attr_desc = "打怪切割+1000"},
+                hidden_1 = {id = "hidden_1", name = "◇紫霄圣女◇", quality = "hidden", quality_name = "隐藏", asset_group = 1, attr = {{242,5000},{300,5},{280,5},{281,5},{282,5},{283,5},{284,5},{285,5},{286,5},{287,5},{288,5},{289,5},{290,5},{291,5}}, attr_desc = "全属性+5% / 打怪爆率+50%"},
+                hidden_2 = {id = "hidden_2", name = "◇碧落神女◇", quality = "hidden", quality_name = "隐藏", asset_group = 2, attr = {{242,5000},{300,5},{280,5},{281,5},{282,5},{283,5},{284,5},{285,5},{286,5},{287,5},{288,5},{289,5},{290,5},{291,5}}, attr_desc = "全属性+5% / 打怪爆率+50%"},
+                hidden_3 = {id = "hidden_3", name = "◇玄冰凶麟◇", quality = "hidden", quality_name = "隐藏", asset_group = 3, attr = {{242,5000},{300,5},{280,5},{281,5},{282,5},{283,5},{284,5},{285,5},{286,5},{287,5},{288,5},{289,5},{290,5},{291,5}}, attr_desc = "全属性+5% / 打怪爆率+50%"},
+                hidden_4 = {id = "hidden_4", name = "◇寒晶灵兽◇", quality = "hidden", quality_name = "隐藏", asset_group = 4, attr = {{242,5000},{300,5},{280,5},{281,5},{282,5},{283,5},{284,5},{285,5},{286,5},{287,5},{288,5},{289,5},{290,5},{291,5}}, attr_desc = "全属性+5% / 打怪爆率+50%"},
+                hidden_5 = {id = "hidden_5", name = "◇太虚战神◇", quality = "hidden", quality_name = "隐藏", asset_group = 5, attr = {{242,5000},{300,5},{280,5},{281,5},{282,5},{283,5},{284,5},{285,5},{286,5},{287,5},{288,5},{289,5},{290,5},{291,5}}, attr_desc = "全属性+5% / 打怪爆率+50%"},
+               },
             summary_labels = {
                 [1] = "固定生命",
                 [4] = "固定攻击",
@@ -1013,9 +1013,9 @@ teshudata = {
         weight = "1#70|2#20|3#10",
         max = 3,
         details = {
-            {item = "王室藏宝图",mob_name = "王室宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "藏星内海",map_x = 152,map_y = 229},{map_name = "苍云城郊外",map_x = 32,map_y = 107},{map_name = "草药谷",map_x = 93,map_y = 140},{map_name = "丹道古藏",map_x = 140,map_y = 266},}},
-            {item = "贵族藏宝图",mob_name = "贵族宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "草药古深处",map_x = 48,map_y = 46},{map_name = "苍云城",map_x = 57,map_y = 145},{map_name = "葬星城",map_x = 87,map_y = 159},{map_name = "七星岛",map_x = 509,map_y = 307},{map_name = "灰界",map_x = 146,map_y = 98},}},
-            {item = "普通藏宝图",mob_name = "普通宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "灰界",map_x = 100,map_y = 188},{map_name = "黑暗洞窟",map_x = 348,map_y = 220},{map_name = "神秘岛屿",map_x = 208,map_y = 283},}},
+            {item = "王室藏宝图",mob_name = "王室宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"绑定金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "藏星内海",map_x = 152,map_y = 229},{map_name = "苍云城郊外",map_x = 32,map_y = 107},{map_name = "草药谷",map_x = 93,map_y = 140},{map_name = "丹道古藏",map_x = 140,map_y = 266},}},
+            {item = "贵族藏宝图",mob_name = "贵族宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"绑定金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "草药古深处",map_x = 48,map_y = 46},{map_name = "苍云城",map_x = 57,map_y = 145},{map_name = "葬星城",map_x = 87,map_y = 159},{map_name = "七星岛",map_x = 509,map_y = 307},{map_name = "灰界",map_x = 146,map_y = 98},}},
+            {item = "普通藏宝图",mob_name = "普通宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"绑定金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "灰界",map_x = 100,map_y = 188},{map_name = "黑暗洞窟",map_x = 348,map_y = 220},{map_name = "神秘岛屿",map_x = 208,map_y = 283},}},
         },
     },
     ["npc_49"] = {
@@ -2014,9 +2014,9 @@ teshudata = {
         kf_winReward = 10000, -- 旧版跨服沙巴克胜利方总奖励
         kf_loserReward = 3000, -- 旧版跨服沙巴克失败方总奖励
         fixed_rewards = {
-            winner = {{"跨服积分",25},{"1元真实充值",20},{"金币",1000000},{"沙城征服者秘药",1}},
-            loser = {{"跨服积分",10},{"1元真实充值",5},{"金币",500000},{"沙城勇士药剂",1}},
-            chairman = {{"跨服积分",10},{"1元真实充值",8},{"金币",500000},{"沙城霸主秘药",1}},
+            winner = {{"跨服积分",25},{"1元真实充值",20},{"绑定金币",1000000},{"沙城征服者秘药",1}},
+            loser = {{"跨服积分",10},{"1元真实充值",5},{"绑定金币",500000},{"沙城勇士药剂",1}},
+            chairman = {{"跨服积分",10},{"1元真实充值",8},{"绑定金币",500000},{"沙城霸主秘药",1}},
         },
         chairman_title = {
             name = "沙城霸主",
@@ -2672,7 +2672,7 @@ teshudata = {
                 [4] = {value = 92, show = {{"时装：小小裁决战士",1}}},
             },
             welfare = {
-                [1] = {wait_sec = 20 * 60, reward = {{"金币",880000}}, label = "金币*88W"},
+                [1] = {wait_sec = 20 * 60, reward = {{"绑定金币",880000}}, label = "金币*88W"},
                 [2] = {wait_sec = 30 * 60, reward = {{"称号卷轴",10}}, label = "称号卷轴*10"},
                 [3] = {wait_sec = 45 * 60, reward = {{"五行石",10}}, label = "五行石*10"},
                 [4] = {wait_sec = 60 * 60, reward = {{"辉耀水晶",10}}, label = "辉耀水晶*10"},
@@ -2946,9 +2946,9 @@ teshudata = {
             start_minute_clock = 30,
             vision = 1,
             rewards = {
-                {rate = 6500, base = 10000, give = {{"金币", 380000}}, tip = "金币*38W"},
-                {rate = 700, base = 10000, give = {{"元宝", {2000, 8000}}}, tip = "元宝*2000-8000"},
-                {rate = 300, base = 10000, give = {{"1元真实充值", 1}}, tip = "1元真实充值*1"},
+                {rate = 6500, base = 10000, give = {{"绑定金币", 380000}}, tip = "金币*38W"},
+                {rate = 700, base = 10000, give = {{"绑定元宝", {2000, 8000}}}, tip = "元宝*2000-8000"},
+                {rate = 300, base = 10000, give = {{"真实充值", 1}}, tip = "1元真实充值*1"},
                 {rate = 2500, base = 10000, random_one = {
                     {{"五行石", 1}},
                     {{"杀伐神石[小]", 2}},
@@ -2979,9 +2979,9 @@ teshudata = {
             mail_title = "保卫村庄",
             rank_reward_need_title = "镇境武侯",
             kill_reward = {
-                small = {{"金币", 180000}},
-                elite = {{"金币", 880000}},
-                boss = {{"元宝", 50000}},
+                small = {{"绑定金币", 180000}},
+                elite = {{"绑定金币", 880000}},
+                boss = {{"绑定元宝", 50000}},
             },
             rank_rewards = {
                 {rank = 1, items = {{"50元真实充值", 1}}},
@@ -3081,6 +3081,7 @@ teshudata = {
             center_pos = {18, 18},
             spawn_radius = 16,
             spawn_try_count = 40,
+            fixed_damage = 1,
             respawn_sec = 8,
             initial_spawn = {
                 {name = "鸡", count = 10},
@@ -3196,7 +3197,7 @@ teshudata = {
         desc = "新区冲级赢豪礼！等待什么呢？",
         title_replace = true,
         rewards = {
-            {level = 70, title = "", limit = 0, desc = "金币*38w、千年玄铁*88、斗笠碎片*20", items = {{"金币", 380000}, {"千年玄铁", 88}, {"斗笠碎片", 20}}},
+            {level = 70, title = "", limit = 0, desc = "金币*38w、千年玄铁*88、斗笠碎片*20", items = {{"绑定金币", 380000}, {"千年玄铁", 88}, {"斗笠碎片", 20}}},
             {level = 80, title = "新兵", limit = 0, desc = "称号：新兵、仙法卷轴*1、千年玄铁*188", items = {{"仙法卷轴", 1}, {"千年玄铁", 188}}},
             {level = 90, title = "下士", limit = 30, desc = "称号：下士、修为丹（小）*20、杀伐神石[小]*10", items = {{"修为丹（小）", 20}, {"杀伐神石[小]", 10}}},
             {level = 100, title = "军士长", limit = 10, desc = "称号：军士长、修为丹（大）*2、杀伐神石[大]*2", items = {{"修为丹（大）", 2}, {"杀伐神石[大]", 2}}},
@@ -3208,8 +3209,8 @@ teshudata = {
         id = "anniu_516",
         name = "至尊赞助",
         details = {
-            {ch = "入门玩家", sgsl = 0, need_charge = 0},
-            {ch = "诸邪退散", sgsl = 0, need_real_charge = 88, extra_titles = {"高级玩家"}, desc = "灰界压制：未拥有该称号时，在灰界对怪伤害降低、受到灰界怪物伤害提升。获得后可破除灰界影响，并获得对红名怪额外真实伤害能力，同时激活传送CD缩减至3秒效果。"},
+            {ch = "入门玩家", sgsl = 0, need_real_charge = 16, show = {{"开荒BUFF",1}}},
+            {ch = "诸邪退散", sgsl = 0, need_real_charge = 108, extra_titles = {"高级玩家"}, desc = "灰界压制：未拥有该称号时，在灰界对怪伤害降低、受到灰界怪物伤害提升。获得后可破除灰界影响；对灰界绿怪额外造成80%伤害、蓝怪额外造成50%伤害、红怪额外造成30%伤害，同时激活传送CD缩减至3秒效果。"},
             {ch = "至尊玩家", sgsl = 0, need_item = "至尊黑卡", salary = {{"绑定金币",300000},{"绑定元宝",3000},{"绑定灵石",60}},jl = {{"斗笠之魂",1}}},
         },
     },
@@ -3225,7 +3226,7 @@ teshudata = {
             [4] = {level = 4, name = "天品聚宝盆", charge = 328, speed = 170, cap = 8, cap_text = "8小时"},
             [5] = {level = 5, name = "极品聚宝盆", charge = 988, speed = 200, cap = 12, cap_text = "12小时"},
         },
-        energy = {gold_per_sec = 1000, iron_per_sec = 0.01, hat_per_sec = 0.01, offline_ratio = 50},
+        energy = {gold_per_sec = 200, gold_per_level = 100, iron_per_sec = 0.01, iron_per_level = 0.01, hat_per_sec = 0.01, hat_per_level = 0.01, offline_ratio = 50},
         stones = {
             [1] = {name = "聚宝魔石", kind = "normal", continent = 0, bind = 0, time = "30分钟", desc = "全大陆掉落，炼灵后随机获得灵石、金币或千年玄铁。"},
             [2] = {name = "极光·专属宝石·绑定", kind = "exclusive", continent = 2, bind = 1, time = "2小时", rate = 1230, desc = "产出二大陆专属装备，装备绑定。"},
