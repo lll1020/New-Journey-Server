@@ -3220,10 +3220,10 @@ teshudata = {
         grades = {"未激活", "凡", "人", "地", "天", "极"},
         levels = {
             [1] = {level = 1, name = "凡品聚宝盆", charge = 0, speed = 100, cap = 0, cap_text = "无存储"},
-            [2] = {level = 2, name = "人品聚宝盆", charge = 98, speed = 100, cap = 3, cap_text = "3小时"},
-            [3] = {level = 3, name = "地品聚宝盆", charge = 198, speed = 100, cap = 5, cap_text = "5小时"},
-            [4] = {level = 4, name = "天品聚宝盆", charge = 328, speed = 100, cap = 8, cap_text = "8小时"},
-            [5] = {level = 5, name = "极品聚宝盆", charge = 988, speed = 100, cap = 12, cap_text = "12小时"},
+            [2] = {level = 2, name = "人品聚宝盆", charge = 98, speed = 120, cap = 3, cap_text = "3小时"},
+            [3] = {level = 3, name = "地品聚宝盆", charge = 198, speed = 140, cap = 5, cap_text = "5小时"},
+            [4] = {level = 4, name = "天品聚宝盆", charge = 328, speed = 170, cap = 8, cap_text = "8小时"},
+            [5] = {level = 5, name = "极品聚宝盆", charge = 988, speed = 200, cap = 12, cap_text = "12小时"},
         },
         energy = {gold_per_sec = 1000, iron_per_sec = 0.01, hat_per_sec = 0.01, offline_ratio = 50},
         stones = {

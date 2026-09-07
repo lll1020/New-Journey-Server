@@ -32,3 +32,43 @@
 
 [2026-09-07 09:51:07:945] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：156; NpcThreadId: 5340, CurPlayThreadId: 5340
 
+[2026-09-07 10:12:47:284] .\Envir\QuestDiary/cfg_gm_box.lua time：812
+
+[2026-09-07 10:22:24:448] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 5340, CurPlayThreadId: 5340
+
+[2026-09-07 10:49:01:321] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：390; NpcThreadId: 5340, CurPlayThreadId: 5340
+
+[2026-09-07 10:49:25:643] LuaNPC:玩家名字 ID:999999999 执行 yc_fuhuo_hc player:玩家名字 耗时：282; NpcThreadId: 5340, CurPlayThreadId: 5340
+
+[2026-09-07 10:49:59:479] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：344; NpcThreadId: 5340, CurPlayThreadId: 5340
+[2026-09-07 10:49:59:479] [玩家名字]Lua执行耗时过高:344ms msgid:105 634 634 0 
+
+[2026-09-07 11:03:09:860] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 5340, CurPlayThreadId: 5340
+
+[2026-09-07 11:16:04:463] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：344; NpcThreadId: 5340, CurPlayThreadId: 5340
+
+[2026-09-07 11:16:53:270] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：63; NpcThreadId: 5340, CurPlayThreadId: 5340
+
+[2026-09-07 11:20:51:279] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：94; NpcThreadId: 5340, CurPlayThreadId: 5340
+
+[2026-09-07 11:23:03:546] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 5340, CurPlayThreadId: 5340
+
+[2026-09-07 11:23:35:283] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 5340, CurPlayThreadId: 5340
+
+[2026-09-07 11:24:50:190] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 5340, CurPlayThreadId: 5340
+
+[2026-09-07 11:31:28:003] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 5340, CurPlayThreadId: 5340
+
+[2026-09-07 11:37:05:142] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：32; NpcThreadId: 5340, CurPlayThreadId: 5340
+
+[2026-09-07 11:37:31:313] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 5340, CurPlayThreadId: 5340
+
+[2026-09-07 13:15:29:401] .\Envir\QuestDiary/cfg_gm_box.lua time：329
+[2026-09-07 13:15:29:587] .\Envir\lua/Data/fairy_fate_cfg.lua time：187
+
+[2026-09-07 13:15:37:595] .\Envir\lua/LuaLib/fairy_fate.lua time：203
+
+[2026-09-07 13:29:01:774] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 5340, CurPlayThreadId: 5340
+
+[2026-09-07 13:56:14:832] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 5340, CurPlayThreadId: 5340
+

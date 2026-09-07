@@ -3111,8 +3111,11 @@ end
 function ontimer6(play)
     -- release_print("红点系统")
     -- 红点发送：客户端 npc[500] p2=10，p3 对应顶部 iconpx 槽位
-    local function _send_top_red(icon_idx)
-        sendluamsg(play, 101, 1, 10, icon_idx, "")
+    local function _send_top_red(icon_idx, enabled)
+        if enabled == nil then
+            enabled = true
+        end
+        sendluamsg(play, 101, 1, 10, icon_idx, enabled and "1" or "0")
     end
     local function _is_marked(v)
         return v == true or (tonumber(v or 0) or 0) >= 1
@@ -3243,13 +3246,16 @@ function ontimer6(play)
     local basinMod = rawget(_G, "__treasure_basin_module")
     if basinMod and type(basinMod.getRedState) == "function" then
         local redState = basinMod.getRedState(play, jbp_state)
-        can_jbp = redState and redState.any == true
+        can_jbp = redState and redState.energy == true
     else
         local jbp_active = (tonumber(jbp_state.activated or jbp_state.rebuilt or 0) or 0) >= 1
         if jbp_active then
             local energy_sec = tonumber(jbp_state.energy_sec or 0) or 0
-            local refine = type(jbp_state.refine) == "table" and jbp_state.refine or {}
-            if energy_sec >= 60 or (tostring(refine.stone or "") ~= "" and (tonumber(refine.end_at or 0) or 0) <= os.time()) then
+            local level = math.max(1, tonumber(jbp_state.level or 1) or 1)
+            local basin_cfg = (teshudata and teshudata["npc_106"]) or {}
+            local level_cfg = (basin_cfg.levels or {})[level] or {}
+            local energy_cap = math.max(0, tonumber(level_cfg.cap or 0) or 0) * 3600
+            if energy_cap > 0 and energy_sec >= energy_cap then
                 can_jbp = true
             end
         end
@@ -3333,15 +3339,11 @@ function ontimer6(play)
     if can_sc then
         _send_top_red(5)
     end
-    if can_ff then
-        _send_top_red(515)
-    end
+    _send_top_red(515, can_ff)
     if can_zz then
         _send_top_red(16)
     end
-    if can_jbp then
-        _send_top_red(17)
-    end
+    _send_top_red(17, can_jbp)
     if can_msfc then
         _send_top_red(31)
     end
@@ -3458,7 +3460,3 @@ function hd_tcppk(xx,ditu)
         end
     end
 end
-
-
-
-

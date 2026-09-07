@@ -349,6 +349,15 @@ local function _cap_seconds(level)
     return _toint(cfg.cap)
 end
 
+-- The configured speed is an efficiency multiplier: 120% means the base
+-- refining time is divided by 1.2.
+local function _refine_duration(data, baseTime)
+    local levelCfg = _levels[_toint(data and data.level) or 1] or _levels[1]
+    local speed = tonumber(levelCfg.speed) or 1
+    if speed <= 0 then speed = 1 end
+    return math.max(1, math.ceil((tonumber(baseTime) or 0) / speed))
+end
+
 local function _add_energy_seconds(play, data, sec)
     sec = tonumber(sec) or 0
     if data.activated < 1 or sec <= 0 then
@@ -640,11 +649,8 @@ function TreasureBasin.getRedState(play, data)
 
     if active then
         local energy = _toint(data.energy_sec)
-        local reward = type(data.energy_reward) == "table" and data.energy_reward or {}
-        result.energy = energy >= 60
-            or _toint(reward.gold) > 0
-            or _toint(reward.iron) > 0
-            or _toint(reward.hat) > 0
+        local energyCap = _cap_seconds(math.max(1, _toint(data.level)))
+        result.energy = energyCap > 0 and energy >= energyCap
 
         local refine = type(data.refine) == "table" and data.refine or {}
         result.refine_claim = tostring(refine.stone or "") ~= "" and _toint(refine.end_at) <= _now()
@@ -928,7 +934,8 @@ local function _start_refine(play, npcid, msgData)
         return _send_panel(play, 2, npcid)
     end
     Player.takeItemByTable(play, {{stoneName, 1}}, "¾Û±¦ÅèÁ¶Áé", nil)
-    data.refine = {stone = stoneName, end_at = _now() + math.ceil(cfg.time), started_at = _now(), continent = cfg.continent, bind = cfg.bind, kind = cfg.kind}
+    local now = _now()
+    data.refine = {stone = stoneName, end_at = now + _refine_duration(data, cfg.time), started_at = now, continent = cfg.continent, bind = cfg.bind, kind = cfg.kind}
     if TreasureBasin.isHuangquanActive() then
         data.refine.huangquan_tick_at = _now()
         data.refine.huangquan_bonus_carry = 0
@@ -972,9 +979,7 @@ local function _claim_refine(play, npcid)
         end
     end
     _give_rewards(play, reward, "¾Û±¦ÅèÁ¶Áé")
-    if _toint(data.forbidden.show) > 0 then
-        data.forbidden.point = _toint(data.forbidden.point) + math.max(1, _toint(ref.continent)) * 10
-    end
+    data.forbidden.point = _toint(data.forbidden.point) + math.max(1, _toint(ref.continent)) * 10
     data.refine = {}
     _save_state(play, data)
     _refresh_item_bar(play)
@@ -1236,9 +1241,7 @@ function TreasureBasin.onKillMon(play, mob)
     if data.activated < 1 and not _has_artifact(play) then return end
     data.activated = 1
     data.rebuilt = 1
-    if _toint(data.forbidden.show) > 0 then
-        data.forbidden.point = _toint(data.forbidden.point) + 1
-    end
+    data.forbidden.point = _toint(data.forbidden.point) + 1
     _save_state(play, data)
 
     local mapName = tostring(getbaseinfo(play, 3) or "")
