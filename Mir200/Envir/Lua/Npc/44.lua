@@ -1852,6 +1852,9 @@ function npc.main(play, npcid)
     local state = loadState(play)
     dollRefreshAttr(play, state.record)
     persistState(state)
+    if Npclib and Npclib["anniu"] and type(Npclib["anniu"].claimWoodcutStorage) == "function" then
+        pcall(Npclib["anniu"].claimWoodcutStorage, play)
+    end
     sendluamsg(play, 100, npcid, 0, 0, tbl2json(buildSnapshot(state)))
     openhyperlink(play, 1, 2)
 end

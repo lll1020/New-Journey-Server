@@ -72,3 +72,18 @@
 
 [2026-09-08 01:53:27:310] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：94; NpcThreadId: 24268, CurPlayThreadId: 24268
 
+[2026-09-08 11:58:28:255] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：32; NpcThreadId: 24268, CurPlayThreadId: 24268
+
+[2026-09-08 12:29:11:670] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：47; NpcThreadId: 24268, CurPlayThreadId: 24268
+[2026-09-08 12:29:11:670] [玩家名字]Lua执行耗时过高:47ms msgid:101 998 3 1 {"mz":"玩家名字","bl":"125","lx":2}
+
+[2026-09-08 12:29:28:183] LuaNPC:玩家名字l ID:999999999 执行 login player:玩家名字l 耗时：46; NpcThreadId: 24268, CurPlayThreadId: 24268
+
+[2026-09-08 14:09:00:145] LuaNPC:玩家名字l ID:999999999 执行 clicknpc player:玩家名字l 耗时：562; NpcThreadId: 24268, CurPlayThreadId: 24268
+
+[2026-09-08 14:10:23:575] LuaNPC:玩家名字l ID:999999999 执行 clicknpc player:玩家名字l 耗时：984; NpcThreadId: 24268, CurPlayThreadId: 24268
+
+[2026-09-08 14:11:23:690] LuaNPC:玩家名字l ID:999999999 执行 clicknpc player:玩家名字l 耗时：187; NpcThreadId: 24268, CurPlayThreadId: 24268
+
+[2026-09-08 15:00:28:425] LuaNPC:玩家名字l ID:999999999 执行 ontimer6 player:玩家名字l 耗时：31; NpcThreadId: 24268, CurPlayThreadId: 24268
+

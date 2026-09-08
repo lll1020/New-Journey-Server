@@ -122,6 +122,10 @@ function resetday(play)
             break
         end
     end
+    -- 自动砍树跨天：将已存储奖励通过邮件发放后清空。
+    if Npclib and Npclib["anniu"] and type(Npclib["anniu"].mailWoodcutStorage) == "function" then
+        pcall(Npclib["anniu"].mailWoodcutStorage, play)
+    end
     -- 聚宝盆每日进度：跨天清空击杀积分与自动发放标记，并刷新背包神器进度条。
     if TreasureBasin and TreasureBasin.resetDaily then
         TreasureBasin.resetDaily(play)

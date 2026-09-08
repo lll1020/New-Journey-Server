@@ -15,7 +15,7 @@ function npc.main(play,npcid)
     if equipLevel < 12 then
         local prerequisiteNpcid = equipLevel >= 11 and 41 or 8
         Player.sendmsgEx(play,  "请先装备#57|【".._config.now.."】#218|进行升级#57")
-        sendluamsg(play,100,npcid,2,prerequisiteNpcid,"")
+        
         return
     elseif equipLevel == 12 then
         sendluamsg(play,100,npcid,0,0,"")

@@ -1655,11 +1655,14 @@ Buff = {
         _toggle_buff_var(play, VarCfg.S_buffgjq, 570, zt == 1)
     end,
     [571] = function(play,zt,Damage,Target,MagicId) -- 灵虚剑
-        -- 特殊效果: 攻击怪物时0.01%概率秒杀; 神圣一击属性走装备属性配置。
+        -- 特殊效果: 攻击怪物时0.01%概率秒杀，触发后冷却60秒; 神圣一击属性走装备属性配置。
         if zt == 3 then
-            if _equip_is_mon(Target) and math.random(10000) == 1 then
+            local now = os.time()
+            local last = tonumber(getplaydef(play, "N$buff571_cd") or 0) or 0
+            if _equip_is_mon(Target) and now - last >= 60 and math.random(10000) == 1 then
                 local curhp = _equip_get_curhp(Target)
                 if curhp > 0 then
+                    setplaydef(play, "N$buff571_cd", now)
                     playeffect(Target, 60463, 0, 0, 1, 0, 0)
                     humanhp(Target, "-", curhp, 107, 0, play, 1)
                 end

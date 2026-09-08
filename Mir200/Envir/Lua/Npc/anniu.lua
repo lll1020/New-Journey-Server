@@ -1,4 +1,66 @@
 npc = {}
+
+-- 自动砍树奖励只先存储，打开仙府时领取，跨天时转邮件。
+local function _woodcut_merge_reward(storage, name, amount)
+    amount = tonumber(amount or 0) or 0
+    if name == nil or tostring(name) == "" or amount <= 0 then
+        return
+    end
+    for _, item in ipairs(storage) do
+        if item[1] == name then
+            item[2] = (tonumber(item[2] or 0) or 0) + amount
+            return
+        end
+    end
+    table.insert(storage, {name, amount})
+end
+
+function npc.addWoodcutStorage(play, rewards)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"]) or {}
+    data.wood_storage = type(data.wood_storage) == "table" and data.wood_storage or {}
+    for _, item in ipairs(rewards or {}) do
+        if type(item) == "table" then
+            _woodcut_merge_reward(data.wood_storage, item[1], item[2])
+        end
+    end
+    Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], data)
+    return data.wood_storage
+end
+
+local function _woodcut_flush_storage(play, asMail)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"]) or {}
+    local storage = type(data.wood_storage) == "table" and data.wood_storage or {}
+    if #storage <= 0 then
+        return nil
+    end
+    local rewards = {}
+    for _, item in ipairs(storage) do
+        if type(item) == "table" and item[1] ~= nil and (tonumber(item[2] or 0) or 0) > 0 then
+            table.insert(rewards, {item[1], tonumber(item[2]) or 0})
+        end
+    end
+    if #rewards <= 0 then
+        data.wood_storage = {}
+        Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], data)
+        return nil
+    end
+    if asMail then
+        sendmail(getbaseinfo(play, 2), 0, "砍树奖励", "跨天自动砍树奖励，请及时领取。", Player.jl_mail(rewards))
+    else
+        Player.rwjl(play, rewards, "自动砍树存储奖励", 1, 0)
+    end
+    data.wood_storage = {}
+    Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], data)
+    return rewards
+end
+
+function npc.claimWoodcutStorage(play)
+    return _woodcut_flush_storage(play, false)
+end
+
+function npc.mailWoodcutStorage(play)
+    return _woodcut_flush_storage(play, true)
+end
 local _fashionConfig1002 = Guard.getConfig("npc_1002")
 local _linggenConfig22 = Guard.getConfig("npc_22")
 local FairyFate = include("lua/LuaLib/fairy_fate.lua")
@@ -1110,24 +1172,15 @@ npc[30] = function(play, p2, p3, data) --砍树系统
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
         T_data.axe = T_data.axe or 1
         T_data.num = T_data.num or 0
-        if p3 == 1 then -- 打开页面时自动的奖励
-            -- release_print("砍树系统自动奖励触发")
-            -- release_print(os.time())
-            -- release_print(getplaydef(play,"N$自动砍树") + config.updata[1].details[T_data.axe].ratio * config.updata[2].details[T_data.auto].ratio * config.base_time)
-            if os.time() >= getplaydef(play,"N$自动砍树") + (config.updata[1].details[T_data.axe].ratio * config.updata[2].details[T_data.auto or 1].ratio * config.base_time) then
-                local jl = ransjstr(config.updata[1].details[T_data.axe].jl, 1, 3)
-                setplaydef(play,"N$自动砍树",os.time())
-                T_data.num = T_data.num + 1
-                Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
-                if FairyFate and FairyFate.touch then FairyFate.touch(play, "woodcut", 1) end
-                if Npclib and Npclib[44] and Npclib[44].touchGrowth then
-                    Npclib[44].touchGrowth(play, "woodcut", 1)
-                end
-                sendluamsg(play, 101, 30, 1, 0, tbl2json({T_data = T_data}))
-                Player.rwjl(play, {{jl,1}}, "砍树系统自动奖励", 1,0)
-                sendluamsg(play, 101, 30, 3, 0, tbl2json({{jl,1}}))   
-            else
-                return
+        if p3 == 1 then -- 打开页面时领取已存储奖励
+            local rewards = npc.claimWoodcutStorage(play)
+            local current = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
+            current.axe = current.axe or 1
+            current.auto = current.auto or 0
+            current.num = current.num or 0
+            sendluamsg(play, 101, 30, 1, 0, tbl2json({T_data = current}))
+            if rewards and #rewards > 0 then
+                sendluamsg(play, 101, 30, 3, 0, tbl2json(rewards))
             end
         elseif p3 == 2 then -- 打开页面时手动点击的奖励
             local name, num = Player.checkItemNumByTable(play, config.click.cost)

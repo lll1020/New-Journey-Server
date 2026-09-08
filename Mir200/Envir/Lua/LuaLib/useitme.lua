@@ -350,6 +350,8 @@ function FsendQfPz(actor,str,count)
     end
 end
 ---Ç§Àï´«Òô --end
+
+--ÐÞÎªµ¤
 function stdmodefunc30(play, item)
     local sl, itemName = _get_use_all_info(play, item)
     if sl < 1 then

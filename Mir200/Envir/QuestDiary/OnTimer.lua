@@ -3397,7 +3397,9 @@ function ontimer7(play)
     Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
     -- release_print("砍树系统奖励:",tbl2json(merged_jl))
     setplaydef(play,"N$自动砍树",os.time())
-    sendmail(getbaseinfo(play,2),0,"砍树奖励","每20分钟砍树奖励",Player.jl_mail(merged_jl))
+    if Npclib and Npclib["anniu"] and type(Npclib["anniu"].addWoodcutStorage) == "function" then
+        Npclib["anniu"].addWoodcutStorage(play, merged_jl)
+    end
 end
 ------------------------------------个人定时器end---------------------------------
 -----------------地图定时器----------------
