@@ -1172,7 +1172,7 @@ npc[30] = function(play, p2, p3, data) --砍树系统
         T_data.axe = T_data.axe or 1
         T_data.num = T_data.num or 0
         if p3 == 1 then -- 打开页面时领取已存储奖励
-            local rewards = npc.claimWoodcutStorage(play)
+            local rewards = _woodcut_flush_storage(play, false)
             local current = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
             current.axe = current.axe or 1
             current.auto = current.auto or 0

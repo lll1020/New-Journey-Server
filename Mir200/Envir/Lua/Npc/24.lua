@@ -439,20 +439,14 @@ function npc.link(play,npcid,ew,aid,data)
                 end
                 Player.takeItemByTable(play, need, ",天书仙法", nil)
             else
-                local cost_cfg = cfg.cost
+                local cost_cfg = cfg.cost and cfg.cost[1]
                 if cost_cfg then
-                    local name, num = Player.checkItemNumByTable(play, cost_cfg[1])
+                    local name, num = Player.checkItemNumByTable(play, cost_cfg)
                     if name then
-                        local name2, num2 = Player.checkItemNumByTable(play, cost_cfg[2])
-                        if name2 then
-                            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name2, num2))
-                            return
-                        end
-                        Player.sendmsgEx(play, "#57|【仙法卷轴】#218|不足，改用|【灵石】#218|消耗#57")
-                        Player.takeItemByTable(play, cost_cfg[2], ",天书仙法", nil)
-                    else
-                        Player.takeItemByTable(play, cost_cfg[1], ",天书仙法", nil)
+                        Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+                        return
                     end
+                    Player.takeItemByTable(play, cost_cfg, ",天书仙法", nil)
                 end
             end
 

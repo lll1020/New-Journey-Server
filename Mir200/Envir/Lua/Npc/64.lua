@@ -378,7 +378,7 @@ function npc.link(play,npcid,ew,aid,data)
         end
 
         if T_data.ls[""..json_data.idx] >= _config.config.wy.max_level then
-            Player.sendmsgEx(play, "该灵兽已达最大喂养次数，无法继续喂养#57")
+            Player.sendmsgEx(play, "该灵兽已达最大亲密度，无法继续培养#57")
             return
         end
         local name, num = Player.checkItemNumByTable(play, _config.config.wy.cost[T_data.ls[""..json_data.idx] + 1] or {})
@@ -393,7 +393,7 @@ function npc.link(play,npcid,ew,aid,data)
         Player.updateSomeAddr(play,_config.config.wy.det[T_data.ls[""..json_data.idx] - 1] and _config.config.wy.det[T_data.ls[""..json_data.idx] - 1].attr or nil, _config.config.wy.det[T_data.ls[""..json_data.idx]].attr)
         TMLP_refresh_pet_bonus(play)
         sendluamsg(play,100,npcid,3,0,tbl2json({T_data = T_data, server_time = os.time()}))
-        Player.sendmsgEx(play, string.format("你成功喂养灵兽|【%s】#218|，当前喂养次数|【%d】#218", _config.config.ls[json_data.idx].name, T_data.ls[""..json_data.idx]))
+        Player.sendmsgEx(play, string.format("你成功喂养灵兽|【%s】#218|，当前亲密度|【%d】#218", _config.config.ls[json_data.idx].name, T_data.ls[""..json_data.idx]))
     elseif ew == 4 then -- 灵兽升星
     elseif ew == 6 then -- 灵兽契约：领取36小时幼崽
         T_data = _ensure_pet_data(T_data)

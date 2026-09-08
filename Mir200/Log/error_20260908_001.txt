@@ -122,3 +122,623 @@
 [2026-09-09 01:36:17:558] NewHttpPost(0-0-0)-----------------------------------
 
 
+[2026-09-09 02:14:01:192] ---------------------线程耗时监控
+[2026-09-09 02:14:01:240] Frame-----------------------------------
+
+[2026-09-09 02:14:04:246] MainRunThread(2016)-----------------------------------
+
+[2026-09-09 02:14:04:276] DbThread(0-0)-----------------------------------
+
+[2026-09-09 02:14:04:303] BoxSellDbThread(0)-----------------------------------
+
+[2026-09-09 02:14:04:331] NewHttpPost(0-0-0)-----------------------------------
+
+[2026-09-09 02:14:04:341] ---------------------线程耗时监控
+[2026-09-09 02:14:04:370] Frame-----------------------------------
+
+[2026-09-09 02:14:04:651] MainRunThread(5172)-----------------------------------
+
+[2026-09-09 02:14:04:678] DbThread(0-0)-----------------------------------
+
+[2026-09-09 02:14:04:706] BoxSellDbThread(15)-----------------------------------
+
+[2026-09-09 02:14:04:732] NewHttpPost(15-0-0)-----------------------------------
+
+
+[2026-09-09 02:14:31:634] ---------------------线程耗时监控
+[2026-09-09 02:14:31:663] Frame-----------------------------------
+
+[2026-09-09 02:14:31:690] MainRunThread(0)-----------------------------------
+
+[2026-09-09 02:14:33:852] EnvirThread 0/0(2078-0)flag:50000003  lua: 15162 CallLua:getsysvar 126245-----------------------------------
+
+[2026-09-09 02:14:35:808] DbThread(1281-1)-----------------------------------
+
+[2026-09-09 02:14:35:840] BoxSellDbThread(0)-----------------------------------
+
+[2026-09-09 02:14:35:870] NewHttpPost(0-0-0)-----------------------------------
+
+[2026-09-09 02:14:35:883] ---------------------线程耗时监控
+[2026-09-09 02:14:35:914] Frame-----------------------------------
+
+[2026-09-09 02:14:35:945] MainRunThread(0)-----------------------------------
+
+[2026-09-09 02:14:40:009] EnvirThread 0/0(6328-0)flag:2000000200  lua:login 15192 CallLua:json2tbl 126254-----------------------------------
+
+[2026-09-09 02:14:40:040] DbThread(0-0)-----------------------------------
+
+[2026-09-09 02:14:40:077] BoxSellDbThread(0)-----------------------------------
+
+[2026-09-09 02:14:40:106] NewHttpPost(15-0-0)-----------------------------------
+
+
+[2026-09-09 02:14:46:842] ---------------------线程耗时监控
+[2026-09-09 02:14:46:874] Frame-----------------------------------
+
+[2026-09-09 02:14:46:905] MainRunThread(16)-----------------------------------
+
+[2026-09-09 02:14:48:837] EnvirThread 0/0(17297-0)flag:2000000200  lua:login 15192 CallLua:json2tbl 126254-----------------------------------
+
+[2026-09-09 02:14:48:874] DbThread(15-0)-----------------------------------
+
+[2026-09-09 02:14:48:909] BoxSellDbThread(15)-----------------------------------
+
+[2026-09-09 02:14:48:936] NewHttpPost(16-0-0)-----------------------------------
+
+[2026-09-09 02:14:49:012] ---------------------线程耗时监控
+[2026-09-09 02:14:49:047] Frame-----------------------------------
+
+[2026-09-09 02:14:49:079] MainRunThread(0)-----------------------------------
+
+[2026-09-09 02:14:49:109] EnvirThread 0/0(19468-0)flag:2000000200  lua:login 15192 CallLua:json2tbl 126254-----------------------------------
+
+[2026-09-09 02:14:49:140] DbThread(16-0)-----------------------------------
+
+[2026-09-09 02:14:49:173] BoxSellDbThread(16)-----------------------------------
+
+[2026-09-09 02:14:49:209] NewHttpPost(15-0-0)-----------------------------------
+
+
+[2026-09-09 02:14:52:009] ---------------------线程耗时监控
+[2026-09-09 02:14:52:036] Frame-----------------------------------
+
+[2026-09-09 02:14:52:063] MainRunThread(0)-----------------------------------
+
+[2026-09-09 02:14:52:093] EnvirThread 0/0(22453-0)flag:2000000200  lua:login 15192 CallLua:json2tbl 126254-----------------------------------
+
+[2026-09-09 02:14:52:118] DbThread(16-0)-----------------------------------
+
+[2026-09-09 02:14:52:147] BoxSellDbThread(0)-----------------------------------
+
+[2026-09-09 02:14:52:175] NewHttpPost(16-0-0)-----------------------------------
+
+[2026-09-09 02:14:55:009] ---------------------线程耗时监控
+[2026-09-09 02:14:55:041] Frame-----------------------------------
+
+[2026-09-09 02:14:55:077] MainRunThread(0)-----------------------------------
+
+[2026-09-09 02:14:55:110] EnvirThread 0/0(25468-0)flag:2000000200  lua:login 15192 CallLua:json2tbl 126254-----------------------------------
+
+[2026-09-09 02:14:55:147] DbThread(16-0)-----------------------------------
+
+[2026-09-09 02:14:55:174] BoxSellDbThread(16)-----------------------------------
+
+[2026-09-09 02:14:55:201] NewHttpPost(15-0-0)-----------------------------------
+
+
+[2026-09-09 02:14:58:015] ---------------------线程耗时监控
+[2026-09-09 02:14:58:048] Frame-----------------------------------
+
+[2026-09-09 02:14:58:077] MainRunThread(0)-----------------------------------
+
+[2026-09-09 02:14:58:111] EnvirThread 0/0(28468-0)flag:2000000200  lua:login 15192 CallLua:json2tbl 126254-----------------------------------
+
+[2026-09-09 02:14:58:139] DbThread(0-0)-----------------------------------
+
+[2026-09-09 02:14:58:166] BoxSellDbThread(16)-----------------------------------
+
+[2026-09-09 02:14:58:192] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-09-09 02:15:01:013] ---------------------线程耗时监控
+[2026-09-09 02:15:01:046] Frame-----------------------------------
+
+[2026-09-09 02:15:01:076] MainRunThread(16)-----------------------------------
+
+[2026-09-09 02:15:01:106] EnvirThread 0/0(31468-0)flag:2000000200 DelayCnt:0,TimeCnt:0, Err:0, Msg:4, MonMsg:0 lua:login 15192 CallLua:json2tbl 126254-----------------------------------
+
+[2026-09-09 02:15:01:132] DbThread(0-0)-----------------------------------
+
+[2026-09-09 02:15:01:163] BoxSellDbThread(0)-----------------------------------
+
+[2026-09-09 02:15:01:190] NewHttpPost(0-0-0)-----------------------------------
+
+[2026-09-09 02:15:04:014] ---------------------线程耗时监控
+[2026-09-09 02:15:04:045] Frame-----------------------------------
+
+[2026-09-09 02:15:04:076] MainRunThread(0)-----------------------------------
+
+[2026-09-09 02:15:04:110] EnvirThread 0/0(34468-0)flag:2000000200 DelayCnt:0,TimeCnt:0, Err:0, Msg:4, MonMsg:0 lua:login 15192 CallLua:json2tbl 126254-----------------------------------
+
+[2026-09-09 02:15:04:134] DbThread(0-0)-----------------------------------
+
+[2026-09-09 02:15:04:163] BoxSellDbThread(0)-----------------------------------
+
+[2026-09-09 02:15:04:191] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-09-09 02:15:07:008] ---------------------线程耗时监控
+[2026-09-09 02:15:07:033] Frame-----------------------------------
+
+[2026-09-09 02:15:07:060] MainRunThread(0)-----------------------------------
+
+[2026-09-09 02:15:07:088] EnvirThread 0/0(37453-0)flag:2000000200 DelayCnt:0,TimeCnt:0, Err:0, Msg:4, MonMsg:0 lua:login 15192 CallLua:json2tbl 126254-----------------------------------
+
+[2026-09-09 02:15:07:114] DbThread(0-0)-----------------------------------
+
+[2026-09-09 02:15:07:141] BoxSellDbThread(16)-----------------------------------
+
+[2026-09-09 02:15:07:167] NewHttpPost(16-0-0)-----------------------------------
+
+[2026-09-09 02:15:10:006] ---------------------线程耗时监控
+[2026-09-09 02:15:10:033] Frame-----------------------------------
+
+[2026-09-09 02:15:10:062] MainRunThread(15)-----------------------------------
+
+[2026-09-09 02:15:10:090] EnvirThread 0/0(40453-0)flag:2000000200 DelayCnt:0,TimeCnt:0, Err:0, Msg:4, MonMsg:0 lua:login 15192 CallLua:json2tbl 126254-----------------------------------
+
+[2026-09-09 02:15:10:119] DbThread(0-0)-----------------------------------
+
+[2026-09-09 02:15:10:153] BoxSellDbThread(0)-----------------------------------
+
+[2026-09-09 02:15:10:189] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-09-09 02:15:13:008] ---------------------线程耗时监控
+[2026-09-09 02:15:13:036] Frame-----------------------------------
+
+[2026-09-09 02:15:13:064] MainRunThread(0)-----------------------------------
+
+[2026-09-09 02:15:13:092] EnvirThread 0/0(43453-0)flag:2000000200 DelayCnt:0,TimeCnt:0, Err:0, Msg:4, MonMsg:0 lua:login 15192 CallLua:json2tbl 126254-----------------------------------
+
+[2026-09-09 02:15:13:118] DbThread(16-0)-----------------------------------
+
+[2026-09-09 02:15:13:144] BoxSellDbThread(0)-----------------------------------
+
+[2026-09-09 02:15:13:170] NewHttpPost(16-0-0)-----------------------------------
+
+
+[2026-09-09 02:15:16:010] ---------------------线程耗时监控
+[2026-09-09 02:15:16:038] Frame-----------------------------------
+
+[2026-09-09 02:15:16:070] MainRunThread(0)-----------------------------------
+
+[2026-09-09 02:15:16:100] EnvirThread 0/0(46453-0)flag:2000000200 DelayCnt:0,TimeCnt:0, Err:0, Msg:4, MonMsg:0 lua:login 15192 CallLua:json2tbl 126254-----------------------------------
+
+[2026-09-09 02:15:16:129] DbThread(16-0)-----------------------------------
+
+[2026-09-09 02:15:16:159] BoxSellDbThread(15)-----------------------------------
+
+[2026-09-09 02:15:16:185] NewHttpPost(16-0-0)-----------------------------------
+
+[2026-09-09 02:15:19:002] ---------------------线程耗时监控
+[2026-09-09 02:15:19:032] Frame-----------------------------------
+
+[2026-09-09 02:15:19:060] MainRunThread(0)-----------------------------------
+
+[2026-09-09 02:15:19:088] EnvirThread 0/0(49453-0)flag:2000000200 DelayCnt:0,TimeCnt:0, Err:0, Msg:4, MonMsg:0 lua:login 15192 CallLua:json2tbl 126254-----------------------------------
+
+[2026-09-09 02:15:19:116] DbThread(0-0)-----------------------------------
+
+[2026-09-09 02:15:19:144] BoxSellDbThread(0)-----------------------------------
+
+[2026-09-09 02:15:19:171] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-09-09 02:15:22:004] ---------------------线程耗时监控
+[2026-09-09 02:15:22:037] Frame-----------------------------------
+
+[2026-09-09 02:15:22:063] MainRunThread(0)-----------------------------------
+
+[2026-09-09 02:15:22:093] EnvirThread 0/0(52453-0)flag:2000000200 DelayCnt:0,TimeCnt:0, Err:0, Msg:4, MonMsg:0 lua:login 15192 CallLua:json2tbl 126254-----------------------------------
+
+[2026-09-09 02:15:22:121] DbThread(16-0)-----------------------------------
+
+[2026-09-09 02:15:22:147] BoxSellDbThread(0)-----------------------------------
+
+[2026-09-09 02:15:22:174] NewHttpPost(0-0-0)-----------------------------------
+
+[2026-09-09 02:14:39:982] lua.Json2Tbl Except：Expected "{" but found value (1, 2)[0000000001538281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001537AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000015379B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[000000000153AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001529702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[000000000152996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001529AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000005623B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000562418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[0000000000C481FA] JsonDataObjects._ZN15Jsondataobjects15TJsonBaseObject5ParseEPwiPNS_22TJsonReaderProgressRecE (Line 3214, "JsonDataObjects.pas" + 30)
+[00000000012157E2] uMyLua._ZN6Umylua6TMyLua8Json2TblEPv (Line 8698, "uMyLua.pas" + 6)
+[0000000000E51E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFE725C2C36]
+[00007FFE725C89EA] lua_pcall
+[000000000124B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000001249256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001303E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[0000000001303C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000016831CB] ObjPlay._ZN7Objplay11TPlayObject9UserLogonEv (Line 22293, "ObjPlay.pas" + 107)
+[00000000013F2049] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 140, "playManage.pas" + 30)
+[00000000013F1D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[000000000140D71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[000000000113B12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000009821D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000981D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000682963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000562F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFEB4E4CCB7] BaseThreadInitThunk
+[00007FFEB5C6AD6C] RtlUserThreadStart
+
+[2026-09-09 02:15:25:012] ---------------------线程耗时监控
+[2026-09-09 02:15:25:038] Frame-----------------------------------
+
+[2026-09-09 02:15:25:065] MainRunThread(0)-----------------------------------
+
+[2026-09-09 02:15:25:389] EnvirThread 0/0(55453-0)flag:2000000200 DelayCnt:0,TimeCnt:0, Err:0, Msg:4, MonMsg:0 lua:login 15192 CallLua:iniplayvar 126256-----------------------------------
+
+[2026-09-09 02:15:25:420] DbThread(0-0)-----------------------------------
+
+[2026-09-09 02:15:25:447] BoxSellDbThread(15)-----------------------------------
+
+[2026-09-09 02:15:25:473] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-09-09 02:15:28:006] ---------------------线程耗时监控
+[2026-09-09 02:15:28:032] Frame-----------------------------------
+
+[2026-09-09 02:15:28:059] MainRunThread(0)-----------------------------------
+
+[2026-09-09 02:15:28:537] EnvirThread 0/0(58437-0)flag:1000000728 DelayCnt:0,TimeCnt:4, Err:0, Msg:4, MonMsg:0 lua:login 15197 CallLua:delaygoto 128300-----------------------------------
+
+[2026-09-09 02:15:28:561] DbThread(172-0)-----------------------------------
+
+[2026-09-09 02:15:28:588] BoxSellDbThread(16)-----------------------------------
+
+[2026-09-09 02:15:28:617] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-09-09 02:15:49:293] lua.Json2Tbl Except：Expected "{" but found value (1, 2)[0000000001538281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001537AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000015379B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[000000000153AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001529702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[000000000152996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001529AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000005623B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000562418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[0000000000C481FA] JsonDataObjects._ZN15Jsondataobjects15TJsonBaseObject5ParseEPwiPNS_22TJsonReaderProgressRecE (Line 3214, "JsonDataObjects.pas" + 30)
+[00000000012157E2] uMyLua._ZN6Umylua6TMyLua8Json2TblEPv (Line 8698, "uMyLua.pas" + 6)
+[0000000000E51E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFE725C2C36]
+[00007FFE725C89EA] lua_pcall
+[000000000124B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000001249256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001303E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[0000000001303C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000016831CB] ObjPlay._ZN7Objplay11TPlayObject9UserLogonEv (Line 22293, "ObjPlay.pas" + 107)
+[00000000013F2049] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 140, "playManage.pas" + 30)
+[00000000013F1D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[000000000140D71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[000000000113B12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000009821D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000981D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000682963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000562F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFEB4E4CCB7] BaseThreadInitThunk
+[00007FFEB5C6AD6C] RtlUserThreadStart
+
+
+[2026-09-09 02:19:54:003] lua.Json2Tbl Except：Expected "{" but found value (1, 2)[0000000001538281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001537AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000015379B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[000000000153AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001529702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[000000000152996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001529AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000005623B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000562418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[0000000000C481FA] JsonDataObjects._ZN15Jsondataobjects15TJsonBaseObject5ParseEPwiPNS_22TJsonReaderProgressRecE (Line 3214, "JsonDataObjects.pas" + 30)
+[00000000012157E2] uMyLua._ZN6Umylua6TMyLua8Json2TblEPv (Line 8698, "uMyLua.pas" + 6)
+[0000000000E51E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFE725C2C36]
+[00007FFE725C89EA] lua_pcall
+[000000000124B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000001249256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001303E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[0000000001303C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000016831CB] ObjPlay._ZN7Objplay11TPlayObject9UserLogonEv (Line 22293, "ObjPlay.pas" + 107)
+[00000000013F2049] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 140, "playManage.pas" + 30)
+[00000000013F1D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[000000000140D71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[000000000113B12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000009821D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000981D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000682963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000562F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFEB4E4CCB7] BaseThreadInitThunk
+[00007FFEB5C6AD6C] RtlUserThreadStart
+
+
+[2026-09-09 02:20:51:585] lua.Json2Tbl Except：Expected "{" but found value (1, 2)[0000000001538281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001537AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000015379B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[000000000153AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001529702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[000000000152996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001529AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000005623B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000562418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[0000000000C481FA] JsonDataObjects._ZN15Jsondataobjects15TJsonBaseObject5ParseEPwiPNS_22TJsonReaderProgressRecE (Line 3214, "JsonDataObjects.pas" + 30)
+[00000000012157E2] uMyLua._ZN6Umylua6TMyLua8Json2TblEPv (Line 8698, "uMyLua.pas" + 6)
+[0000000000E51E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFE725C2C36]
+[00007FFE725C89EA] lua_pcall
+[000000000124B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000001249256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001303E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[0000000001303C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000016831CB] ObjPlay._ZN7Objplay11TPlayObject9UserLogonEv (Line 22293, "ObjPlay.pas" + 107)
+[00000000013F2049] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 140, "playManage.pas" + 30)
+[00000000013F1D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[000000000140D71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[000000000113B12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000009821D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000981D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000682963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000562F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFEB4E4CCB7] BaseThreadInitThunk
+[00007FFEB5C6AD6C] RtlUserThreadStart
+
+
+[2026-09-09 02:30:28:440] lua.Json2Tbl Except：Expected "{" but found value (1, 2)[0000000001538281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001537AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000015379B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[000000000153AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001529702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[000000000152996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001529AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000005623B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000562418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[0000000000C481FA] JsonDataObjects._ZN15Jsondataobjects15TJsonBaseObject5ParseEPwiPNS_22TJsonReaderProgressRecE (Line 3214, "JsonDataObjects.pas" + 30)
+[00000000012157E2] uMyLua._ZN6Umylua6TMyLua8Json2TblEPv (Line 8698, "uMyLua.pas" + 6)
+[0000000000E51E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFE725C2C36]
+[00007FFE725C89EA] lua_pcall
+[000000000124B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000001249256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001303E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[0000000001303C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000016831CB] ObjPlay._ZN7Objplay11TPlayObject9UserLogonEv (Line 22293, "ObjPlay.pas" + 107)
+[00000000013F2049] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 140, "playManage.pas" + 30)
+[00000000013F1D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[000000000140D71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[000000000113B12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000009821D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000981D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000682963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000562F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFEB4E4CCB7] BaseThreadInitThunk
+[00007FFEB5C6AD6C] RtlUserThreadStart
+
+
+[2026-09-09 02:40:00:967] ProgramException Except：Cannot create file "E:\新起航\服务端\Mir200\GlobalVal.ini". 另一个程序正在使用此文件，进程无法访问。[0000000001538281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001537AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000015379B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[000000000153AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001529702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[000000000152996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001529AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000005623B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000562418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[000000000066B9D4] System.Classes._ZN6System7Classes11TFileStreamC3ENS_13UnicodeStringEt (Line 9547, "System.Classes.pas" + 6)
+[0000000000666540] System.Classes._ZN6System7Classes8TStrings10SaveToFileENS_13UnicodeStringEPNS_8Sysutils9TEncodingE (Line 7183, "System.Classes.pas" + 1)
+[0000000000703497] System.IniFiles._ZN6System8Inifiles11TMemIniFile10UpdateFileEv (Line 1214, "System.IniFiles.pas" + 13)
+[000000000183F294] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 323, "svMain.pas" + 21)
+[000000000183F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[000000000082AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[000000000082AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000688A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFEB424C366] Unknown function at CallWindowProcW
+[00007FFEB424A7BD] Unknown function at IsWindowUnicode
+[00000000008C42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[00000000008C4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[00000000008C47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[00000000018513E2] M2Server._ZN8M2server14initializationEv
+[00007FFEB4E4CCB7] BaseThreadInitThunk
+[00007FFEB5C6AD6C] RtlUserThreadStart
+
+
+[2026-09-09 02:47:16:997] ProgramException Except：Cannot create file "E:\新起航\服务端\Mir200\GlobalVal.ini". 另一个程序正在使用此文件，进程无法访问。[0000000001538281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001537AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000015379B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[000000000153AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001529702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[000000000152996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001529AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000005623B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000562418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[000000000066B9D4] System.Classes._ZN6System7Classes11TFileStreamC3ENS_13UnicodeStringEt (Line 9547, "System.Classes.pas" + 6)
+[0000000000666540] System.Classes._ZN6System7Classes8TStrings10SaveToFileENS_13UnicodeStringEPNS_8Sysutils9TEncodingE (Line 7183, "System.Classes.pas" + 1)
+[0000000000703497] System.IniFiles._ZN6System8Inifiles11TMemIniFile10UpdateFileEv (Line 1214, "System.IniFiles.pas" + 13)
+[000000000183F294] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 323, "svMain.pas" + 21)
+[000000000183F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[000000000082AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[000000000082AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000688A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFEB424C366] Unknown function at CallWindowProcW
+[00007FFEB424A7BD] Unknown function at IsWindowUnicode
+[00000000008C42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[00000000008C4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[00000000008C47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[00000000018513E2] M2Server._ZN8M2server14initializationEv
+[00007FFEB4E4CCB7] BaseThreadInitThunk
+[00007FFEB5C6AD6C] RtlUserThreadStart
+
+
+[2026-09-09 02:53:46:986] ProgramException Except：Cannot create file "E:\新起航\服务端\Mir200\GlobalVal.ini". 另一个程序正在使用此文件，进程无法访问。[0000000001538281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001537AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000015379B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[000000000153AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001529702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[000000000152996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001529AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000005623B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000562418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[000000000066B9D4] System.Classes._ZN6System7Classes11TFileStreamC3ENS_13UnicodeStringEt (Line 9547, "System.Classes.pas" + 6)
+[0000000000666540] System.Classes._ZN6System7Classes8TStrings10SaveToFileENS_13UnicodeStringEPNS_8Sysutils9TEncodingE (Line 7183, "System.Classes.pas" + 1)
+[0000000000703497] System.IniFiles._ZN6System8Inifiles11TMemIniFile10UpdateFileEv (Line 1214, "System.IniFiles.pas" + 13)
+[000000000183F294] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 323, "svMain.pas" + 21)
+[000000000183F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[000000000082AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[000000000082AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000688A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFEB424C366] Unknown function at CallWindowProcW
+[00007FFEB424A7BD] Unknown function at IsWindowUnicode
+[00000000008C42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[00000000008C4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[00000000008C47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[00000000018513E2] M2Server._ZN8M2server14initializationEv
+[00007FFEB4E4CCB7] BaseThreadInitThunk
+[00007FFEB5C6AD6C] RtlUserThreadStart
+
+
+[2026-09-09 02:54:52:884] ---------------------线程耗时监控
+[2026-09-09 02:54:53:024] Frame-----------------------------------
+
+[2026-09-09 02:54:53:042] MainRunThread(0)-----------------------------------
+
+[2026-09-09 02:54:53:057] DbThread(6032-0)-----------------------------------
+
+[2026-09-09 02:54:53:073] BoxSellDbThread(0)-----------------------------------
+
+[2026-09-09 02:54:53:090] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-09-09 02:59:06:984] ProgramException Except：Cannot create file "E:\新起航\服务端\Mir200\GlobalVal.ini". 另一个程序正在使用此文件，进程无法访问。[0000000001538281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001537AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000015379B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[000000000153AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001529702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[000000000152996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001529AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000005623B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000562418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[000000000066B9D4] System.Classes._ZN6System7Classes11TFileStreamC3ENS_13UnicodeStringEt (Line 9547, "System.Classes.pas" + 6)
+[0000000000666540] System.Classes._ZN6System7Classes8TStrings10SaveToFileENS_13UnicodeStringEPNS_8Sysutils9TEncodingE (Line 7183, "System.Classes.pas" + 1)
+[0000000000703497] System.IniFiles._ZN6System8Inifiles11TMemIniFile10UpdateFileEv (Line 1214, "System.IniFiles.pas" + 13)
+[000000000183F294] svMain._ZN6Svmain8TFrmMain14SaveItemNumberEv (Line 323, "svMain.pas" + 21)
+[000000000183F481] svMain._ZN6Svmain8TFrmMain22SaveVariableTimerTimerEPN6System7TObjectE (Line 330, "svMain.pas" + 3)
+[000000000082AE22] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer5TimerEv (Line 3245, "Vcl.ExtCtrls.pas" + 2)
+[000000000082AC49] Vcl.ExtCtrls._ZN3Vcl8Extctrls6TTimer7WndProcERN6Winapi8Messages8TMessageE (Line 3202, "Vcl.ExtCtrls.pas" + 4)
+[0000000000688A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFEB424C366] Unknown function at CallWindowProcW
+[00007FFEB424A7BD] Unknown function at IsWindowUnicode
+[00000000008C42F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[00000000008C4368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[00000000008C47BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[00000000018513E2] M2Server._ZN8M2server14initializationEv
+[00007FFEB4E4CCB7] BaseThreadInitThunk
+[00007FFEB5C6AD6C] RtlUserThreadStart
+
+
+[2026-09-09 03:02:09:077] ---------------------线程耗时监控
+[2026-09-09 03:02:09:341] Frame-----------------------------------
+
+[2026-09-09 03:02:09:755] MainRunThread(1750)-----------------------------------
+
+[2026-09-09 03:02:09:755] EnvirThread 0/0(2687-1)flag:5000000  lua: 16224 CallLua:getbagblank 142198-----------------------------------
+
+[2026-09-09 03:02:10:491] DbThread(2687-1)-----------------------------------
+
+[2026-09-09 03:02:12:190] BoxSellDbThread(3422)-----------------------------------
+
+[2026-09-09 03:02:12:216] NewHttpPost(16-0-0)-----------------------------------
+
+
+[2026-09-09 03:02:12:231] ---------------------线程耗时监控
+[2026-09-09 03:02:12:458] Frame-----------------------------------
+
+[2026-09-09 03:02:13:880] MainRunThread(4891)-----------------------------------
+
+[2026-09-09 03:02:13:880] FrontEngine(2625)-----------------------------------
+
+[2026-09-09 03:02:13:880] EnvirThread 0/0(6812-2)flag:5000000  lua: 16224 CallLua:getbagblank 142198-----------------------------------
+
+[2026-09-09 03:02:13:904] DbThread(6812-1)-----------------------------------
+
+[2026-09-09 03:02:13:931] BoxSellDbThread(6844)-----------------------------------
+
+[2026-09-09 03:02:13:957] NewHttpPost(0-0-0)-----------------------------------
+
+[2026-09-09 03:02:15:010] ---------------------线程耗时监控
+[2026-09-09 03:02:17:916] Frame-----------------------------------
+
+[2026-09-09 03:02:17:916] MainRunThread(7672)-----------------------------------
+
+[2026-09-09 03:02:17:916] FrontEngine(6657)-----------------------------------
+
+[2026-09-09 03:02:17:916] EnvirThread 0/0(10844-2)flag:5000000  lua: 16224 CallLua:getbagblank 142198-----------------------------------
+
+[2026-09-09 03:02:17:916] DbThread(10844-1)-----------------------------------
+
+[2026-09-09 03:02:17:916] BoxSellDbThread(10844)-----------------------------------
+
+[2026-09-09 03:02:17:941] NewHttpPost(16-0-0)-----------------------------------
+
+
+[2026-09-09 03:02:18:010] ---------------------线程耗时监控
+[2026-09-09 03:02:19:461] Frame-----------------------------------
+
+[2026-09-09 03:02:19:461] MainRunThread(10672)-----------------------------------
+
+[2026-09-09 03:02:19:461] FrontEngine(8203)-----------------------------------
+
+[2026-09-09 03:02:19:461] EnvirThread 0/0(12390-2)flag:5000000  lua: 16224 CallLua:getbagblank 142198-----------------------------------
+
+[2026-09-09 03:02:19:461] DbThread(12390-1)-----------------------------------
+
+[2026-09-09 03:02:19:461] BoxSellDbThread(12390)-----------------------------------
+
+[2026-09-09 03:02:19:486] NewHttpPost(15-0-0)-----------------------------------
+
+[2026-09-09 03:02:21:004] ---------------------线程耗时监控
+[2026-09-09 03:02:21:357] Frame-----------------------------------
+
+[2026-09-09 03:02:21:357] MainRunThread(13672)-----------------------------------
+
+[2026-09-09 03:02:21:357] FrontEngine(10110)-----------------------------------
+
+[2026-09-09 03:02:21:357] EnvirThread 0/0(14297-2)flag:5000000  lua: 16224 CallLua:getbagblank 142198-----------------------------------
+
+[2026-09-09 03:02:21:357] DbThread(14297-1)-----------------------------------
+
+[2026-09-09 03:02:21:357] BoxSellDbThread(14297)-----------------------------------
+
+[2026-09-09 03:02:21:382] NewHttpPost(16-0-0)-----------------------------------
+
+
+[2026-09-09 03:02:24:006] ---------------------线程耗时监控
+[2026-09-09 03:02:24:271] Frame-----------------------------------
+
+[2026-09-09 03:02:24:271] MainRunThread(16672)-----------------------------------
+
+[2026-09-09 03:02:24:271] FrontEngine(13016)-----------------------------------
+
+[2026-09-09 03:02:24:271] EnvirThread 0/0(17203-2)flag:5000000  lua: 16224 CallLua:getbagblank 142198-----------------------------------
+
+[2026-09-09 03:02:24:271] DbThread(17203-1)-----------------------------------
+
+[2026-09-09 03:02:24:271] BoxSellDbThread(17203)-----------------------------------
+
+[2026-09-09 03:02:24:294] NewHttpPost(16-0-0)-----------------------------------
+
+

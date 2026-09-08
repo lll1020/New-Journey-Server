@@ -466,7 +466,6 @@ teshudata = {
                 weight = "1#60|2#24|3#10|4#5|5#1",
                 cost = {
                     [1] = {{"仙法卷轴",1}},
-                    [2] = {{"灵石",100}}
                 },
                 details = {
                     [1] = {
@@ -955,21 +954,21 @@ teshudata = {
             normal_pool = {"normal_1", "normal_2", "normal_3", "normal_4", "normal_5"},
             red_pool = {"red_1", "red_2", "red_3", "red_4", "red_5"},
             results = {
-                normal_1 = {id = "normal_1", name = "云水仙灵", quality = "normal", quality_name = "普通", asset_group = 1, attr = {{1,100}}, attr_desc = "固定生命+100"},
-                normal_2 = {id = "normal_2", name = "墨羽剑侍", quality = "normal", quality_name = "普通", asset_group = 2, attr = {{4,20}}, attr_desc = "固定攻击+20"},
-                normal_3 = {id = "normal_3", name = "月鹿灵", quality = "normal", quality_name = "普通", asset_group = 3, attr = {{10,5},{12,5}}, attr_desc = "固定双防+5"},
-                normal_4 = {id = "normal_4", name = "彩角灵鹿", quality = "normal", quality_name = "普通", asset_group = 4, attr = {{81,20}}, attr_desc = "对怪吸血+20"},
-                normal_5 = {id = "normal_5", name = "玄霜剑客", quality = "normal", quality_name = "普通", asset_group = 5, attr = {{244,100}}, attr_desc = "打怪切割+100"},
-                red_1 = {id = "red_1", name = "★九天瑶姬★", quality = "red", quality_name = "红", asset_group = 1, attr = {{1,1000}}, attr_desc = "固定生命+1000"},
-                red_2 = {id = "red_2", name = "★紫极剑仙★", quality = "red", quality_name = "红", asset_group = 2, attr = {{4,200}}, attr_desc = "固定攻击+200"},
-                red_3 = {id = "red_3", name = "★焚天赤麟★", quality = "red", quality_name = "红", asset_group = 3, attr = {{10,50},{12,50}}, attr_desc = "固定双防+50"},
-                red_4 = {id = "red_4", name = "★赤焰狻猊★", quality = "red", quality_name = "红", asset_group = 4, attr = {{81,200}}, attr_desc = "对怪吸血+200"},
-                red_5 = {id = "red_5", name = "★紫电仙子★", quality = "red", quality_name = "红", asset_group = 5, attr = {{244,1000}}, attr_desc = "打怪切割+1000"},
-                hidden_1 = {id = "hidden_1", name = "◇紫霄圣女◇", quality = "hidden", quality_name = "隐藏", asset_group = 1, attr = {{242,5000},{300,5},{280,5},{281,5},{282,5},{283,5},{284,5},{285,5},{286,5},{287,5},{288,5},{289,5},{290,5},{291,5}}, attr_desc = "全属性+5% / 打怪爆率+50%"},
-                hidden_2 = {id = "hidden_2", name = "◇碧落神女◇", quality = "hidden", quality_name = "隐藏", asset_group = 2, attr = {{242,5000},{300,5},{280,5},{281,5},{282,5},{283,5},{284,5},{285,5},{286,5},{287,5},{288,5},{289,5},{290,5},{291,5}}, attr_desc = "全属性+5% / 打怪爆率+50%"},
-                hidden_3 = {id = "hidden_3", name = "◇玄冰凶麟◇", quality = "hidden", quality_name = "隐藏", asset_group = 3, attr = {{242,5000},{300,5},{280,5},{281,5},{282,5},{283,5},{284,5},{285,5},{286,5},{287,5},{288,5},{289,5},{290,5},{291,5}}, attr_desc = "全属性+5% / 打怪爆率+50%"},
-                hidden_4 = {id = "hidden_4", name = "◇寒晶灵兽◇", quality = "hidden", quality_name = "隐藏", asset_group = 4, attr = {{242,5000},{300,5},{280,5},{281,5},{282,5},{283,5},{284,5},{285,5},{286,5},{287,5},{288,5},{289,5},{290,5},{291,5}}, attr_desc = "全属性+5% / 打怪爆率+50%"},
-                hidden_5 = {id = "hidden_5", name = "◇太虚战神◇", quality = "hidden", quality_name = "隐藏", asset_group = 5, attr = {{242,5000},{300,5},{280,5},{281,5},{282,5},{283,5},{284,5},{285,5},{286,5},{287,5},{288,5},{289,5},{290,5},{291,5}}, attr_desc = "全属性+5% / 打怪爆率+50%"},
+                normal_1 = {id = "normal_1", name = "云水仙灵", quality = "normal", quality_name = "普通", asset_group = 1, attr = {{1,10}}, attr_desc = "固定生命+10"},
+                normal_2 = {id = "normal_2", name = "墨羽剑侍", quality = "normal", quality_name = "普通", asset_group = 2, attr = {{4,1}}, attr_desc = "固定攻击+1"},
+                normal_3 = {id = "normal_3", name = "月鹿灵", quality = "normal", quality_name = "普通", asset_group = 3, attr = {{255,1}}, attr_desc = "怪物格挡+1"},
+                normal_4 = {id = "normal_4", name = "彩角灵鹿", quality = "normal", quality_name = "普通", asset_group = 4, attr = {{81,10}}, attr_desc = "对怪吸血+10"},
+                normal_5 = {id = "normal_5", name = "玄霜剑客", quality = "normal", quality_name = "普通", asset_group = 5, attr = {{244,10}}, attr_desc = "打怪切割+10"},
+                red_1 = {id = "red_1", name = "★九天瑶姬★", quality = "red", quality_name = "红", asset_group = 1, attr = {{1,500}}, attr_desc = "固定生命+500"},
+                red_2 = {id = "red_2", name = "★紫极剑仙★", quality = "red", quality_name = "红", asset_group = 2, attr = {{4,100}}, attr_desc = "固定攻击+100"},
+                red_3 = {id = "red_3", name = "★焚天赤麟★", quality = "red", quality_name = "红", asset_group = 3, attr = {{255,20}}, attr_desc = "怪物格挡+20"},
+                red_4 = {id = "red_4", name = "★赤焰狻猊★", quality = "red", quality_name = "红", asset_group = 4, attr = {{81,100}}, attr_desc = "对怪吸血+100"},
+                red_5 = {id = "red_5", name = "★紫电仙子★", quality = "red", quality_name = "红", asset_group = 5, attr = {{244,200}}, attr_desc = "打怪切割+200"},
+                hidden_1 = {id = "hidden_1", name = "◇紫霄圣女◇", quality = "hidden", quality_name = "隐藏", asset_group = 1, attr = {{242,1000},{300,1},{280,1},{281,1},{282,1},{283,1},{284,1},{285,1},{286,1},{287,1},{288,1},{289,1},{290,1},{291,1}}, attr_desc = "全属性+1% / 打怪爆率+10%"},
+                hidden_2 = {id = "hidden_2", name = "◇碧落神女◇", quality = "hidden", quality_name = "隐藏", asset_group = 2, attr = {{242,1000},{300,1},{280,1},{281,1},{282,1},{283,1},{284,1},{285,1},{286,1},{287,1},{288,1},{289,1},{290,1},{291,1}}, attr_desc = "全属性+1% / 打怪爆率+10%"},
+                hidden_3 = {id = "hidden_3", name = "◇玄冰凶麟◇", quality = "hidden", quality_name = "隐藏", asset_group = 3, attr = {{242,1000},{300,1},{280,1},{281,1},{282,1},{283,1},{284,1},{285,1},{286,1},{287,1},{288,1},{289,1},{290,1},{291,1}}, attr_desc = "全属性+1% / 打怪爆率+10%"},
+                hidden_4 = {id = "hidden_4", name = "◇寒晶灵兽◇", quality = "hidden", quality_name = "隐藏", asset_group = 4, attr = {{242,1000},{300,1},{280,1},{281,1},{282,1},{283,1},{284,1},{285,1},{286,1},{287,1},{288,1},{289,1},{290,1},{291,1}}, attr_desc = "全属性+1% / 打怪爆率+10%"},
+                hidden_5 = {id = "hidden_5", name = "◇太虚战神◇", quality = "hidden", quality_name = "隐藏", asset_group = 5, attr = {{242,1000},{300,1},{280,1},{281,1},{282,1},{283,1},{284,1},{285,1},{286,1},{287,1},{288,1},{289,1},{290,1},{291,1}}, attr_desc = "全属性+1% / 打怪爆率+10%"},
                },
             summary_labels = {
                 [1] = "固定生命",
@@ -1202,9 +1201,9 @@ teshudata = {
         final_rate = { [2]=5, [3]=10, [4]=30, [5]=50 },
         cost = {
             identify = { {"金币",1000000} },
-            conservative = { {"元宝",200000}, {"辉耀水晶",10} },
-            segment = { {"元宝",500000}, {"辉耀水晶",20} },
-            final = { {"元宝",1000000}, {"辉耀水晶",50}, {"鉴古符",1} },
+            conservative = { {"元宝",100000}, {"辉耀水晶",10} },
+            segment = { {"元宝",250000}, {"辉耀水晶",20} },
+            final = { {"元宝",500000}, {"辉耀水晶",50}, {"鉴古符",1} },
         },
         protect_item = {
             segment = "断代护符",
