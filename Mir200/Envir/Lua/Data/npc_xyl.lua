@@ -229,18 +229,14 @@ local function _xyl_has_jianghu_title(play)
     return (tonumber(getplaydef(play, VarCfg["U_江湖称号"]) or 0) or 0) > 0
 end
 -- 备注：气运占卜次数是否大于 0
-local function _xyl_has_divination(play)
-    return (getplaydef(play, VarCfg["U_占卜次数"]) or 0) > 0
-end
+-- local function _xyl_has_divination(play)
+--     return (getplaydef(play, VarCfg["U_占卜次数"]) or 0) > 0
+-- end
 -- 备注：是否已打开过二大陆限时福利
 local function _xyl_has_second_continent_welfare_open(play)
     return (tonumber(getplaydef(play, "N$XYL2_WELFARE_OPEN") or 0) or 0) > 0
 end
 
--- 备注：是否已完成过一次天书使者洗炼
-local function _xyl_has_second_continent_tianshu_refine(play)
-    return (tonumber(getplaydef(play, "N$XYL2_TIANSHU_REFINE") or 0) or 0) > 0
-end
 
 -- 备注：幸运增幅任务要求实际强化一次
 local function _xyl_has_second_continent_lucky_view(play)
@@ -252,18 +248,6 @@ local function _xyl_has_foundation_realm(play)
     return (tonumber(getplaydef(play, "U28") or 0) or 0) >= 10
 end
 
--- 备注：聚宝盆是否已修复/激活
-local function _xyl_has_treasure_basin_fixed(play)
-    local mod = rawget(_G, "__treasure_basin_module")
-    if mod and type(mod.isActivated) == "function" and mod.isActivated(play) then
-        return true
-    end
-    local data = Player.getJsonTableByVar(play, "T44")
-    if (tonumber(data and (data.activated or data.rebuilt) or 0) or 0) >= 1 then
-        return true
-    end
-    return getbagitemcount(play, "聚宝盆") >= 1 or Player.hasEquipInArtifactSlot(play, "聚宝盆")
-end
 -- 备注：转生等级是否达到指定等级
 local function _xyl_has_rebirth(play, level)
     return (getplaydef(play, VarCfg["U_转生等级"]) or 0) >= (level or 1)
@@ -621,9 +605,9 @@ local function _xyl_check_task(play, name)
         ["天书强化"] = _xyl_has_tianshu_level,
         ["初识仙法"] = _xyl_has_any_xianfa,
         ["天书仙法"] = _xyl_has_any_xianfa,
+        ["刷新天书仙法"] = _xyl_has_any_xianfa,
         ["装备强化"] = _xyl_has_equip_strength,
         ["装备强化1次"] = _xyl_has_equip_strength,
-        ["气运占卜"] = _xyl_has_divination,
         ["江湖称号"] = _xyl_has_jianghu_title,
         ["引导江湖称号"] = _xyl_has_jianghu_title,
         ["江湖称号强化一次"] = _xyl_has_jianghu_title,
@@ -672,9 +656,6 @@ local function _xyl_check_task(play, name)
         ["了解砍树"] = _xyl_has_tree,
         ["种植仙草"] = _xyl_has_xianfu_plant,
         ["寻宝大师"] = _xyl_has_treasure,
-        ["修复聚宝盆"] = _xyl_has_treasure_basin_fixed,
-        ["聚宝盆"] = _xyl_has_treasure_basin_fixed,
-        ["聚宝盆任务"] = _xyl_has_treasure_basin_fixed,
         ["激活全部圣遗物"] = _xyl_has_all_syw,
         ["激活全部天命装备"] = _xyl_has_all_tianming,
         ["羿射九日"] = _xyl_has_zhuri_bow_full,

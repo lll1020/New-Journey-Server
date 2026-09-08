@@ -279,39 +279,7 @@ function bl_zyjhl14(play,mingzi)
     return true
 end
 --------------------爆率监听触发-------------------聚宝盆专属宝石固定概率
-function bl_zyjhl15(play,mingzi)
-    if not mingzi or mingzi == "" then
-        return false
-    end
-    local cur_map = tostring(getbaseinfo(play, 3) or "")
-    local dl = 0
-    if cur_map ~= "" and daluditu then
-        dl = tonumber(daluditu[cur_map] or 0) or 0
-    end
-    local cfg = {
-        ["极光·专属宝石·绑定"] = {dl = 2, rate = 1230, bind = 1},
-        ["苍云·专属宝石·绑定"] = {dl = 3, rate = 2220, bind = 1},
-        ["若水·专属宝石·绑定"] = {dl = 4, rate = 3330, bind = 1},
-        ["红尘·专属宝石·绑定"] = {dl = 5, rate = 6660, bind = 1},
-        ["灵虚·专属宝石·绑定"] = {dl = 6, rate = 8880, bind = 1},
-        ["极光·专属宝石·非绑"] = {dl = 2, rate = 1000, bind = 0},
-        ["苍云·专属宝石·非绑"] = {dl = 3, rate = 1500, bind = 0},
-        ["若水·专属宝石·非绑"] = {dl = 4, rate = 2660, bind = 0},
-        ["红尘·专属宝石·非绑"] = {dl = 5, rate = 3000, bind = 0},
-        ["灵虚·专属宝石·非绑"] = {dl = 6, rate = 8880, bind = 0},
-    }
-    local one = cfg[mingzi]
-    if not one then
-        return false
-    end
-    if dl ~= tonumber(one.dl or 0) then
-        return false
-    end
-    if tonumber(one.bind or 0) == 0 and not checktitle(play, "超级特权") then
-        return false
-    end
-    return math.random(math.max(1, tonumber(one.rate) or 1)) == 1
-end
+-- 9.8-1 Exclusive-gem drop listener removed.
 --------------------爆率监听触发-------------------秘境额外产出单次掉落
 function bl_zyjhl16(play,mingzi)
     if not mingzi or mingzi == "" then

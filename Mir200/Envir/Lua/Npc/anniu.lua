@@ -558,6 +558,9 @@ local function _ywl_finish_single_task_state(play, T_ywl, sj, shuju)
     end
     return T_ywl
 end
+-- 9.8-1 if nextTask.i == 2 and nextTask.j == 2 and nextTask.z == 2 and rawget(_G, "__treasure_basin_module") and type(__treasure_basin_module.markTaskStarted) == "function" then
+-- 9.8-1     __treasure_basin_module.markTaskStarted(play)
+-- 9.8-1 end
 local function _ywl_try_auto_finish_ready_tasks_in_continent(play, T_ywl, i)
     local changed = false
     local completedTask = false
@@ -571,9 +574,7 @@ local function _ywl_try_auto_finish_ready_tasks_in_continent(play, T_ywl, i)
         local nextKey = _ywl_build_task_key(nextTask.i, nextTask.j, nextTask.z)
         if tostring(T_ywl.dq or "") ~= nextKey then
             _ywl_set_current_task_value(T_ywl, nextTask)
-            if nextTask.i == 2 and nextTask.j == 2 and nextTask.z == 2 and rawget(_G, "__treasure_basin_module") and type(__treasure_basin_module.markTaskStarted) == "function" then
-                __treasure_basin_module.markTaskStarted(play)
-            end
+
             changed = true
         end
         local shuju = npc_xyl[nextTask.i] and npc_xyl[nextTask.i][nextTask.j] and npc_xyl[nextTask.i][nextTask.j].jq and npc_xyl[nextTask.i][nextTask.j].jq[nextTask.z]
@@ -617,9 +618,7 @@ local function _ywl_sync_auto_current_task(play)
         local nextKey = _ywl_build_task_key(nextTask.i, nextTask.j, nextTask.z)
         if tostring(T_ywl.dq or "") ~= nextKey then
             _ywl_set_current_task_value(T_ywl, nextTask)
-            if nextTask.i == 2 and nextTask.j == 2 and nextTask.z == 2 and rawget(_G, "__treasure_basin_module") and type(__treasure_basin_module.markTaskStarted) == "function" then
-                __treasure_basin_module.markTaskStarted(play)
-            end
+
             changed = true
         end
     elseif _ywl_is_current_task_in_continent(T_ywl, autoContinent) then
@@ -1299,16 +1298,14 @@ local function _sc_sync_flags(play, data)
         end
     end
 end
-local function _sc_refresh_treasure_task_progress(play)
-    if (tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0) ~= 23 then
-        return
-    end
-    local have = tonumber(getbagitemcount(play, "聚宝盆碎片") or 0) or 0
-    if have > 20 then
-        have = 20
-    end
-    newchangetask(play, 23, have)
-end
+-- 9.8-1 首充聚宝盆碎片进度同步函数已停用。
+-- 9.8-1 local function _sc_refresh_treasure_task_progress(play)
+-- 9.8-1     if (tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0) ~= 23 then
+-- 9.8-1         return
+-- 9.8-1     end
+-- 9.8-1     local have = tonumber(getbagitemcount(play, "聚宝盆碎片") or 0) or 0
+-- 9.8-1     newchangetask(play, 23, math.min(have, 20))
+-- 9.8-1 end
 local function _sc_grant_slot_item_rewards(play)
     local skipReward = {
         ["天选资格"] = true,
@@ -1342,8 +1339,6 @@ local function _sc_apply_main_reward(play, data)
     if tonumber(halfMoon or 0) > 0 then
         addskill(play, halfMoon, 3)
     end
-
-    -- 首充只发放聚宝盆碎片；聚宝盆本体必须通过 106 修复任务获得。
     _sc_grant_slot_item_rewards(play)
 
     local sz_data = Player.getJsonTableByVar(play, VarCfg.T_szjl) or {}
@@ -2947,15 +2942,15 @@ npc[516] = function(play, p2, p3, msgData) --至尊赞助
         _zz516_send_panel(play, 1, idx)
     end
 end
--- 聚宝盆：界面与逻辑已抽离到独立 106 NPC，这里仅兼容旧的福利按钮入口。
-local TreasureBasin = rawget(_G, "__treasure_basin_module") or dofile("Envir/Lua/LuaLib/treasure_basin.lua")
-npc[517] = function(play, p2, p3, msgData)
-    if p2 == 0 then
-        TreasureBasin.mainFeature(play, 517)
-        return
-    end
-    TreasureBasin.linkFeature(play, 517, p2, p3, msgData)
-end
+-- 9.8-1 聚宝盆 517 服务端入口已停用，仅保留其他后台入口。
+-- 9.8-1 local TreasureBasin = rawget(_G, "__treasure_basin_module") or dofile("Envir/Lua/LuaLib/treasure_basin.lua")
+-- 9.8-1 npc[517] = function(play, p2, p3, msgData)
+-- 9.8-1     if p2 == 0 then
+-- 9.8-1         TreasureBasin.mainFeature(play, 517)
+-- 9.8-1         return
+-- 9.8-1     end
+-- 9.8-1     TreasureBasin.linkFeature(play, 517, p2, p3, msgData)
+-- 9.8-1 end
 local xlxl =
     { { 1, 2, 3, 4, 7, 8, 23, 22, 24, 25, 26 }, constant.cz_je, { 88, 6, 3, 18 } }
 npc[998] = function(play, p2, p3, msg) --后台
@@ -3017,6 +3012,7 @@ npc[998] = function(play, p2, p3, msg) --后台
                     local dx, sy = getplayerbyname(data.mz), data.hb
                     if dx then
                         recharge(dx, xlxl[3][data.hb], "gm", 21, false)
+                        changemoney(dx, 21, "+", xlxl[3][data.hb], "平台礼包累计充值", true)
                         Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#28ef01\'>[' .. data.mz .. ']发送礼包成功</font>","Type":9}')
                     else
                         Player.sendmsgEx(play, 1, '{"Msg":"<font color=\'#ff0000\'>[' .. data.mz .. ']玩家不在线</font>","Type":9}')

@@ -127,12 +127,6 @@ function resetday(play)
         pcall(Npclib["anniu"].mailWoodcutStorage, play)
     end
     -- 聚宝盆每日进度：跨天清空击杀积分与自动发放标记，并刷新背包神器进度条。
-    if TreasureBasin and TreasureBasin.resetDaily then
-        TreasureBasin.resetDaily(play)
-    else
-        setplaydef(play, VarCfg["J_聚宝盆积分"], 0)
-        setplaydef(play, VarCfg["J_聚宝盆领取次数"], 0)
-    end
     pcall(function()
         local xianfuNpc = dofile('Envir/Lua/Npc/44.lua')
         if xianfuNpc and xianfuNpc.refreshDollAttr then
@@ -2811,7 +2805,6 @@ local qf_teshunpc = {
     [21] = 21,-- 境界修为
     [17] = 17,-- 货币兑换
     [44] = 44,-- 仙府
-    [24] = 24,-- 天书
     [64] = 64,-- 灵兽
     [70] = 70, -- 狂魔乱舞
     [86] = 86, [87] = 86, [88] = 86, [89] = 86, [90] = 86, [91] = 86, -- 日卡秘境
@@ -2819,7 +2812,7 @@ local qf_teshunpc = {
     [105] = 105,
     [1002] = 1002,[1003] = 1003,[1004] = 1003,[1005] = 1003,[1006] = 1003,[1007] = 1003, -- 各大陆时装兑换
     [69] = 64, -- 神兽圣遗物 --这个是特殊的 前端不要的
-    [6] = 6,[7] = 7,[8] = 8,[9] = 9,[10] = 10,[11] = 11,[13] = 13,[14] = 14,[24] = 24,[22] = 22,[43] = 43,[26] = 26,[28] = 28,[25] = 25,[54] = 54,[27] = 27,[44] = 44,[64] = 64,[65] = 65,[70] = 70,--小提升
+    [6] = 6,[7] = 7,[8] = 8,[9] = 9,[10] = 10,[11] = 11,[13] = 13,[14] = 14,[24] = 24,[22] = 22,[43] = 43,[28] = 28,[25] = 25,[54] = 54,[27] = 27,[44] = 44,[64] = 64,[65] = 65,[70] = 70,--小提升
     [1] = 6,[2] = 7,
     [101] = 101,
     [102] = 102,
@@ -2831,9 +2824,20 @@ local qf_teshunpc = {
     [106] = 106, -- 神石
     [623] = 623, -- 可能会卡tp的 npc
 }
+local yishanchu_npcid = {
+    [106] = 100, -- 要删除的 npc
+    [104] = 100, -- 要删除的 npc
+    [26] = 100, -- 要删除的 npc
+    [517] = 101, -- 要删除的 npc
+
+}
 function clicknpc(play, npcid)
     --打印
     release_print("clicknpc", "玩家："..getbaseinfo(play,1), "npcid："..npcid)
+    if yishanchu_npcid[npcid] and yishanchu_npcid[npcid] == 100 then
+        release_print("clicknpc", "NPC已删除", "npcid："..npcid)
+        return true
+    end
 	if qf_teshunpc[npcid] then
         local mod = Npclib[qf_teshunpc[npcid]]
         if mod and mod.main then
@@ -2862,6 +2866,10 @@ end
 -- 消息号 100，NPC点击事件，p1:NPCid,p2:按钮id,p3:额外,
 --------------------消息监听触发--------------------
 function handlerequest(play, msgID, p1, p2, p3, msgData)
+    if yishanchu_npcid[p1] and yishanchu_npcid[p1] == msgID then
+        release_print("handlerequest", "NPC已删除", "npcid："..p1)
+        return
+    end
     if p1 ~= 19 then
         release_print("handlerequest", "玩家："..getbaseinfo(play,1), "消息id："..msgID, "npcid："..p1, "按钮2："..p2, "额外3："..p3, "消息数据："..msgData)
     end

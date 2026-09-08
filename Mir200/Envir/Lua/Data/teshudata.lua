@@ -639,13 +639,6 @@ teshudata = {
             {level = 12,gl = 20,fake_gl = 30,attr = {{39,12,"幸运"},{4,333,"人物攻击"},{244,6666,"人物切割"},{245,3000,"对怪增伤"},{200,3000,"攻击速度"},{201,3000}},cost = { {"灵石",500} },title = "攻击速度+30%",},
         },
     },
-    ["npc_26"] = {
-        id = 26,
-        name = "占卜",
-        max_level = 5,
-        details = { "凡尘微运","灵机初显","鸿运当头","先天洪福","帝王之姿",},
-        cost = { { "灵石", 100 } }
-    },
     ["npc_27"] = {
         id = 27,
         name = "技能升级",
@@ -1825,8 +1818,10 @@ teshudata = {
     ["npc_673"]  = {id = 673, name = "传说修复局",xz = {674,675,676,677,678,679,680,681,},difficulty = {2,3,3,4,5,5,5,5},ch = "传说之神"},
     ["npc_674"]  = {id = 674, name = "盘古开天",cost = {{"洪荒真气",3}},ch = '我是盘古？'},
     ["npc_675"]  = {id = 675, name = "羿射九日",bag_cost = {{"逐日弓",1}},cost = {{"箭矢",1}},ch = '太阳杀手',hb = {{"元宝",1000000}},attr = {{244,1888}},max_num = 9},
-    ["npc_676"]  = {id = 676, name = "共公怒触不周山",map = "不周山",shaguai_id = 676,num = 500,jl_num = 100,ch = "五拳轰碎不周山",jl_c = {{"五行石",2},{"神·五行石",1},{"聚宝魔石",1},{"若水·专属宝石·绑定",1},{"杀伐神石[大]",1}},},
-    ["npc_677"]  = {id = 677, name = "女娲补天",cost = {{"五彩石",1}},max_num = 9,ch = "补天神子",jl_c = {{"若水·专属宝石·绑定",1},{"绑定金币",1880000},{"修为丹（大）",1},{"1元真实充值",1}},},
+    -- 9.8-1 聚宝魔石任务奖励已停用，当前奖励配置中不再发放聚宝魔石。
+-- 9.8-1 聚宝魔石原奖励：{"五行石",2},{"神·五行石",1},{"聚宝魔石",1},{"杀伐神石[大]",1}
+    ["npc_676"]  = {id = 676, name = "共公怒触不周山",map = "不周山",shaguai_id = 676,num = 500,jl_num = 100,ch = "五拳轰碎不周山",jl_c = {{"五行石",2},{"神·五行石",1},{"杀伐神石[大]",1}},},
+    ["npc_677"]  = {id = 677, name = "女娲补天",cost = {{"五彩石",1}},max_num = 9,ch = "补天神子",jl_c = {{"1元真实充值",1}},},
     ["npc_678"]  = {id = 678, name = "后土娘娘",ch = "后土之力",
         details = {
             {idx = 1,name = "崔珏",cost = {{"判官笔",1}},attr = {{245,300}},attr_desc = "对怪增伤+3%"},
@@ -1919,23 +1914,6 @@ teshudata = {
             {idx = 2,name = "天书残卷二",cost = {{"天书残卷二",1}},attr = {{245,1000}},attr_desc = "对怪增伤+10%"},
             {idx = 3,name = "天书残卷三",cost = {{"天书残卷三",1}},attr = {{242,1000}},attr_desc = "打怪爆率+10%"},
             {idx = 4,name = "天书残卷四",cost = {{"天书残卷四",1}},attr = {{255,500}},attr_desc = "怪物格挡+500"},
-        },
-    },
-    ["npc_104"] = {
-        id = 104,
-        name = "天书使者",
-        where = 90,
-        max_refresh = 20,
-        cost = {{"辉耀水晶",5},{"金币",500000}},
-        reward_title = {name = "天书使者", attr = {{25,10},{255,2000}}},
-        custom_tag = "附魔属性",
-        custom_index = 1,
-        pool = {
-            {key = "shafa",name = "杀伐",attrs = {{id = 25,min = 5,max = 5,percent = 1,color = 254}}},
-            {key = "duojin",name = "夺金",attrs = {{id = 66,min = 300,max = 300,percent = 1,color = 254},{id = 204,min = 300,max = 300,percent = 1,color = 254}}},
-            {key = "xingyun",name = "幸运",attrs = {{id = 242,min = 500,max = 500,percent = 1,color = 254}}},
-            {key = "shenfa",name = "神罚",attrs = {{id = 21,min = 1,max = 1,percent = 1,color = 254}}},
-            {key = "jisu",name = "急速",attrs = {{id = 200,min = 100,max = 100,percent = 1,color = 254},{id = 201,min = 100,max = 100,percent = 1,color = 254}}},
         },
     },
     ["npc_1002"] = {
@@ -2693,7 +2671,9 @@ teshudata = {
         ---充值档位
         fj = {10,30,68,128,198,328,648,998},
         jl = {
-            {give = {{"灵石",100},{"元宝",50000},{"千年玄铁",388},{"聚宝盆碎片",15}}},
+            -- 9.8-1 首充原聚宝盆碎片奖励已停用，现改为仙法卷轴*5。
+-- 9.8-1 首充10元原奖励：{"灵石",100},{"元宝",50000},{"千年玄铁",388},{"聚宝盆碎片",15}}
+            {give = {{"灵石",100},{"元宝",50000},{"千年玄铁",388},{"仙法卷轴",5}}},
             {give = {{"灵石",300},{"金币",10000000},{"切割刀",1},{"筑基丹",1}}},
             {give = {{"灵石",680},{"元宝",300000},{"斗笠碎片",500}},ch = "恭喜发财"},
             {give = {{"灵石",1280},{"金币",35000000},{"千年玄铁",1388},{"至尊黑卡",1}}},
@@ -2791,7 +2771,6 @@ teshudata = {
                 {kind = "item", give = {{"天道命石",1}}, label = "天道命石*1"},
                 {kind = "item", give = {{"神·五行石",10}}, label = "神·五行石*10"},
                 {kind = "item", give = {{"神石宝箱钥匙",10}}, label = "神石宝箱钥匙*10"},
-                {kind = "item", give = {{"禁元神晶",10}}, label = "禁元神晶*1"},
             },
             super = {
                 {kind = "item", give = {{"圣星核",1}}, label = "圣星核*1"},
@@ -3227,29 +3206,20 @@ teshudata = {
             [5] = {level = 5, name = "极品聚宝盆", charge = 988, speed = 200, cap = 12, cap_text = "12小时"},
         },
         energy = {gold_per_sec = 200, gold_per_level = 100, iron_per_sec = 0.01, iron_per_level = 0.01, hat_per_sec = 0.01, hat_per_level = 0.01, offline_ratio = 50},
-        stones = {
-            [1] = {name = "聚宝魔石", kind = "normal", continent = 0, bind = 0, time = "30分钟", desc = "全大陆掉落，炼灵后随机获得灵石、金币或千年玄铁。"},
-            [2] = {name = "极光·专属宝石·绑定", kind = "exclusive", continent = 2, bind = 1, time = "2小时", rate = 1230, desc = "产出二大陆专属装备，装备绑定。"},
-            [3] = {name = "苍云·专属宝石·绑定", kind = "exclusive", continent = 3, bind = 1, time = "6小时", rate = 2220, desc = "产出三大陆专属装备，装备绑定。"},
-            [4] = {name = "若水·专属宝石·绑定", kind = "exclusive", continent = 4, bind = 1, time = "12小时", rate = 3330, desc = "产出四大陆专属装备，装备绑定。"},
-            [5] = {name = "红尘·专属宝石·绑定", kind = "exclusive", continent = 5, bind = 1, time = "24小时", rate = 6660, desc = "产出五大陆专属装备，装备绑定。"},
-            [6] = {name = "灵虚·专属宝石·绑定", kind = "exclusive", continent = 6, bind = 1, time = "48小时", rate = 8880, desc = "产出六大陆专属装备，装备绑定。"},
-            [7] = {name = "极光·专属宝石·非绑", kind = "exclusive", continent = 2, bind = 0, time = "2小时", red_rate = 1000, desc = "产出二大陆专属装备，可交易。"},
-            [8] = {name = "苍云·专属宝石·非绑", kind = "exclusive", continent = 3, bind = 0, time = "6小时", red_rate = 1500, desc = "产出三大陆专属装备，可交易。"},
-            [9] = {name = "若水·专属宝石·非绑", kind = "exclusive", continent = 4, bind = 0, time = "12小时", red_rate = 2660, desc = "产出四大陆专属装备，可交易。"},
-            [10] = {name = "红尘·专属宝石·非绑", kind = "exclusive", continent = 5, bind = 0, time = "24小时", red_rate = 3000, desc = "产出五大陆专属装备，可交易。"},
-            [11] = {name = "灵虚·专属宝石·非绑", kind = "exclusive", continent = 6, bind = 0, time = "48小时", red_rate = 8880, desc = "产出六大陆专属装备，可交易。"},
-        },
+        -- 9.8-1 原聚宝魔石炼灵材料配置已停用，不再作为聚宝盆材料产出。
+-- 9.8-1 聚宝魔石原炼灵配置：{name = "聚宝魔石", kind = "normal", continent = 0, bind = 0, time = "30分钟"}
+        -- 9.8-1 Exclusive refining gems removed.
+        stones = {},
         forbidden = {
             [1] = {name = "焚天禁器·炎狱龙尊", skill = "天地异象", plus = "最大攻击+1%"},
             [2] = {name = "幽狱禁器·冥河鬼主", skill = "黄泉降世", plus = "最大生命+1%"},
             [3] = {name = "万灵禁器·太古神凰", skill = "万灵朝凤", plus = "人物双防+1%"},
         },
         forbidden_cost = {
-            [2] = {yuanbao = 500000, crystal = 3, need_level = 2},
-            [3] = {yuanbao = 1000000, crystal = 5, need_level = 3},
-            [4] = {yuanbao = 2000000, crystal = 7, need_level = 4},
-            [5] = {yuanbao = 3000000, crystal = 9, need_level = 5},
+            [2] = {yuanbao = 500000, need_level = 2},
+            [3] = {yuanbao = 1000000, need_level = 3},
+            [4] = {yuanbao = 2000000, need_level = 4},
+            [5] = {yuanbao = 3000000, need_level = 5},
         },
     },
     ["sjdt"] = {

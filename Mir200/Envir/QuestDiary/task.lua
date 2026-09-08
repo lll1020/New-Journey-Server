@@ -79,15 +79,6 @@ local function _zxrw_get_json(play, varName)
     local data = Player.getJsonTableByVar(play, varName)
     return type(data) == "table" and data or {}
 end
-local function _zxrw_mark_treasure_basin_started(play)
-    local mod = rawget(_G, "__treasure_basin_module")
-    if not mod then
-        mod = dofile("Envir/Lua/LuaLib/treasure_basin.lua")
-    end
-    if mod and type(mod.markTaskStarted) == "function" then
-        mod.markTaskStarted(play)
-    end
-end
 local function _zxrw_has_tianshu_level(play)
     local data = _zxrw_get_json(play, VarCfg["T_天书"])
     return (tonumber(data.level or 0) or 0) >= 1
@@ -136,20 +127,9 @@ local function _zxrw_story_done(play, key)
     end
     return false
 end
-local function _zxrw_has_divination(play)
-    return (tonumber(getplaydef(play, VarCfg["U_占卜次数"]) or 0) or 0) > 0
-end
 local function _zxrw_has_main_linggen(play)
     local data = _zxrw_get_json(play, VarCfg["T_灵根"])
     return (tonumber(data.main or 0) or 0) > 0
-end
-local function _zxrw_has_treasure_basin_fixed(play)
-    local data = _zxrw_get_json(play, VarCfg["T_聚宝盆"])
-    if (tonumber(data.task_fixed or 0) or 0) >= 1 then
-        return true
-    end
-    data = _zxrw_get_json(play, "T44")
-    return (tonumber(data.task_fixed or 0) or 0) >= 1
 end
 local function _zxrw_has_equip_strength(play)
     local cfg = teshudata and teshudata["npc_28"]
@@ -211,12 +191,8 @@ local function _zxrw_main_task_done(play, taskCfg)
         return _zxrw_has_any_xianfa(play)
     elseif kind == "story" then
         return _zxrw_story_done(play, taskCfg.tk)
-    elseif kind == "divination" then
-        return _zxrw_has_divination(play)
     elseif kind == "main_linggen" then
         return _zxrw_has_main_linggen(play)
-    elseif kind == "treasure_basin" then
-        return _zxrw_has_treasure_basin_fixed(play)
     elseif kind == "equip_strength" then
         return _zxrw_has_equip_strength(play)
     elseif kind == "jianghu_title" then
@@ -237,9 +213,7 @@ end
 local _zxrw_close_window_by_kind = {
     tianshu_level = 24,
     tianshu_xianfa = 24,
-    divination = 26,
     main_linggen = 22,
-    treasure_basin = 106,
     equip_strength = 28,
     jianghu_title = 43,
     lingshou_hatched = 64,
@@ -250,11 +224,7 @@ local _zxrw_close_window_by_kind = {
 local function _zxrw_close_mainline_window(play, taskCfg)
     if type(taskCfg) ~= "table" then
         return
-    end
-    if tostring(taskCfg.kind or "") == "divination" then
-        return
-    end
-    local closeName = taskCfg.close
+    end    local closeName = taskCfg.close
     if not closeName then
         local yd = taskCfg.yd
         if type(yd) == "table" and yd[1] == 1 and yd[3] then
@@ -346,12 +316,6 @@ end
 local function _zxrw_has_submit_items(play, rwid)
     local cfg = constant.rw_syb[tonumber(rwid) or 0]
     local taskCfg = cfg and cfg.task
-    if taskCfg and taskCfg.kind == "treasure_basin" then
-        local basinCfg = Guard.getConfig("npc_106") or {}
-        local itemName = tostring(basinCfg.fragment_item or "聚宝盆碎片")
-        local needNum = tonumber(basinCfg.fragment_count or 20) or 20
-        return (tonumber(getbagitemcount(play, itemName) or 0) or 0) >= needNum
-    end
     if not (cfg and cfg.sjwp) then
         return false
     end
@@ -377,29 +341,6 @@ local function _zxrw_try_open_submit_npc(play, rwid, xylCfg)
     opennpcshowex(play, targetNpc, 10, 2)
     return true
 end
-local function _zxrw_guide_treasure_basin(play, rwid, xylCfg)
-    local yd = xylCfg and xylCfg.yd or {}
-    local targetX = tonumber(yd[3]) or 106
-    local targetY = tonumber(yd[4]) or 106
-    if _zxrw_try_open_submit_npc(play, rwid, xylCfg) then
-        return true
-    end
-    mapmove(play, "极光城郊", targetX, targetY, 3)
-    local mod = rawget(_G, "__treasure_basin_module")
-    if not mod then
-        mod = dofile("Envir/Lua/LuaLib/treasure_basin.lua")
-    end
-    if mod and type(mod.openTaskPanel) == "function" then
-        mod.openTaskPanel(play, 106, 0)
-    elseif Npclib and Npclib[106] and Npclib[106].main then
-        Npclib[106].main(play, 106)
-    else
-        sendluamsg(play, 105, 106, 106, 0, "")
-    end
-    _zxrw_mark_treasure_basin_started(play)
-    startautoattack(play)
-    return true
-end
 local function _zxrw_guide_main_task(play, rwid, xylCfg)
     local yd = xylCfg and xylCfg.yd
     if type(yd) ~= "table" then
@@ -408,9 +349,6 @@ local function _zxrw_guide_main_task(play, rwid, xylCfg)
     if yd[1] == 1 then
         local targetMap, targetX, targetY = yd[2], tonumber(yd[4]) or 0, tonumber(yd[5]) or 0
         mapmove(play, targetMap, targetX, targetY, xylCfg.auto and 5 or 3)
-        if xylCfg.kind == "treasure_basin" then
-            return _zxrw_guide_treasure_basin(play, rwid, xylCfg)
-        end
         if xylCfg.auto and _zxrw_story_need_fight(play, xylCfg) then
             _zxrw_ensure_story_started(play, xylCfg)
             startautoattack(play)
@@ -424,9 +362,6 @@ local function _zxrw_guide_main_task(play, rwid, xylCfg)
         sendluamsg(play, 101, 0, 1, 1, '{"lx":3,"rwid":' .. tostring(rwid) .. '}')
         return true
     elseif yd[1] == 4 then
-        if xylCfg.kind == "treasure_basin" then
-            return _zxrw_guide_treasure_basin(play, rwid, xylCfg)
-        end
         local btn = tonumber(yd[3]) or tonumber(yd[2]) or 0
         sendluamsg(play, 101, 0, 1, 1, '{"lx":1,"fx":1,"an":' .. tostring(btn) .. ',"rwid":' .. tostring(rwid) .. ',"ms":"点击顶部按钮"}')
         return true
@@ -446,14 +381,6 @@ local function _zxrw_auto_mainline_map_task(play)
         return
     end
     if tostring(getbaseinfo(play, 3)) ~= tostring(yd[2]) then
-        return
-    end
-    if xylCfg.kind == "treasure_basin" then
-        if _zxrw_try_open_submit_npc(play, rwid, xylCfg) then
-            return
-        end
-        _zxrw_mark_treasure_basin_started(play)
-        startautoattack(play)
         return
     end
     if _zxrw_story_need_fight(play, xylCfg) then
@@ -492,9 +419,6 @@ local function _zxrw_register_sjwp_progress(play, rwid)
     local cfg = constant.rw_syb[tonumber(rwid) or 0]
     if not (cfg and cfg.sjwp) then
         return
-    end
-    if cfg.task and cfg.task.kind == "treasure_basin" then
-        _zxrw_mark_treasure_basin_started(play)
     end
     local sl = {}
     local keys = {}

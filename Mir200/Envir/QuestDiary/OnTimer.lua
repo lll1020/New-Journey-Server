@@ -3090,10 +3090,6 @@ function ontimer4(play)
     local zxsj = getplaydef(play, VarCfg.U_fldt[1])
     setplaydef(play, VarCfg.U_fldt[1], zxsj + 1)
     setplaydef(play, VarCfg.J_zxsj,getplaydef(play, VarCfg.J_zxsj) + 1)
-    local treasureBasin = rawget(_G, "__treasure_basin_module")
-    if treasureBasin and type(treasureBasin.onTimer60) == "function" then
-        treasureBasin.onTimer60(play)
-    end
     local midExpire = tonumber(getplaydef(play, "N$xf_dan_mid_expire") or 0) or 0
     if midExpire > 0 and midExpire <= os.time() then
         setplaydef(play, "N$xf_dan_mid_expire", 0)
@@ -3241,25 +3237,6 @@ function ontimer6(play)
             break
         end
     end
-    local can_jbp = false
-    local jbp_state = Player.getJsonTableByVar(play, "T44") or {}
-    local basinMod = rawget(_G, "__treasure_basin_module")
-    if basinMod and type(basinMod.getRedState) == "function" then
-        local redState = basinMod.getRedState(play, jbp_state)
-        can_jbp = redState and redState.energy == true
-    else
-        local jbp_active = (tonumber(jbp_state.activated or jbp_state.rebuilt or 0) or 0) >= 1
-        if jbp_active then
-            local energy_sec = tonumber(jbp_state.energy_sec or 0) or 0
-            local level = math.max(1, tonumber(jbp_state.level or 1) or 1)
-            local basin_cfg = (teshudata and teshudata["npc_106"]) or {}
-            local level_cfg = (basin_cfg.levels or {})[level] or {}
-            local energy_cap = math.max(0, tonumber(level_cfg.cap or 0) or 0) * 3600
-            if energy_cap > 0 and energy_sec >= energy_cap then
-                can_jbp = true
-            end
-        end
-    end
     -- 仙途奇缘顶部红点：存在任一里程碑奖励可领取时点亮。
     local can_ff = false
     local ff_state = Player.getJsonTableByVar(play, "T40") or {}
@@ -3343,7 +3320,6 @@ function ontimer6(play)
     if can_zz then
         _send_top_red(16)
     end
-    _send_top_red(17, can_jbp)
     if can_msfc then
         _send_top_red(31)
     end

@@ -159,14 +159,14 @@ constant.rw_syb = {
     [18] = {20, "天书仙法", task = {kind = "tianshu_xianfa", yd = {3, 14}}, jx = true},
     --进入野火帮并接取任务，击杀20只怪完成扫荡野火帮
     [19] = {20, "扫荡野火帮", task = {kind = "story", tk = "npc_603", yd = {1, "野火帮", 603, 100, 223}, auto = true, need_receive = true}, jx = true},
-    --前往二大陆主城气运 NPC，完成气运占卜1次
-    [20] = {20, "气运占卜", task = {kind = "divination", yd = {1, "二大陆主城", 26, 110, 106}}, jl = {wp = {{"1元真实充值", 1}}}, jx = true},
+    --刷新一次天书仙法
+[20] = {20, "刷新天书仙法", task = {kind = "tianshu_xianfa", yd = {3, 14}}, jl = {wp = {{"1元真实充值", 1}}}, jx = true},
     --进入野火帮大营，收集并提交野火帮罪证*10
     [21] = {20, "深入野火", task = {kind = "story", tk = "npc_607", yd = {1, "野火帮大营", 607, 60, 279}, auto = true}, sjwp = {["野火帮罪证"] = 10}, jl = {wp = {}}},
     --打开人物界面，选择一个灵根作为本命灵根
     [22] = {20, "本命灵根", task = {kind = "main_linggen", yd = {3, 14}}, jl = {wp = {}}, jx = true},
-    --进入极光城郊，收集聚宝盆碎片*20并修复聚宝盆
-    [23] = {20, "聚宝盆任务", task = {kind = "treasure_basin", tk = "npc_106", yd = {4, 106, 106, 106}}, sjwp = {["聚宝盆碎片"] = 20}, jx = true},
+    --刷新1次天书仙法
+    [23] = {20, "刷新天书仙法", task = {kind = "tianshu_xianfa", yd = {3, 14}}, jx = true},
     --前往二大陆主城装备强化 NPC，完成装备强化1次
     [24] = {20, "装备强化", task = {kind = "equip_strength", yd = {1, "二大陆主城", 28, 115, 106}}, jx = true},
     --进入神秘森林并接取任务，击杀30只怪完成守护森林

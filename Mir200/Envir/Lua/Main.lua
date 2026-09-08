@@ -59,10 +59,6 @@ safeRequire("Envir/lua/Data/paokujl.lua")                                       
 safeRequire("Envir/lua/Data/jinzhigj.lua")                                                                      --禁止记录地图
 safeRequire("Envir/lua/Data/guaiwutype.lua")                                                                        --怪物类型
 safeRequire("Envir/lua/Data/teshudata.lua")
--- 聚宝盆需要在脚本启动时就注册登录/穿戴/杀怪监听，不能等打开 106 NPC 后再加载。
--- 同时清掉旧模块实例，确保热重载脚本时不会复用旧监听。
-_G.__treasure_basin_module = nil
-safeRequire("Envir/Lua/LuaLib/treasure_basin.lua")
 
 
 

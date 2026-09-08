@@ -1712,43 +1712,22 @@ shaguai = {
 			mod.link(play, 740, 4, mob)
 		end
 	end,
-    ["33"] = function(play,mob)      -- 聚宝盆碎片：接到聚宝盆任务后，极光城郊怪物按 1/100 + 100 杀保底掉落
-        if getbaseinfo(play,3) ~= "极光城郊" then
-            return
-        end
-        local cfg = teshudata["npc_106"] or {}
-        local itemName = tostring(cfg.fragment_item or "聚宝盆碎片")
-        local needNum = tonumber(cfg.fragment_count or 20) or 20
-        if getbagitemcount(play, itemName) >= needNum then
-            return
-        end
-        local key = "kill_pity_聚宝盆碎片"
-        local cur, dropData = _sg_drop_record_inc(play, key)
-        local have = tonumber(getbagitemcount(play, itemName) or 0) or 0
-        local dropped = false
-        local rate = 100
-        local pity = 100
-        if have < 1 then
-            rate = 10
-            pity = 10
-        end
-        if math.random(rate) == 1 then
-            dropped = shaguai.temp_drop(play, mob, itemName)
-        elseif cur >= pity then
-            dropped = shaguai.temp_drop(play, mob, itemName)
-        end
-        if dropped then
-            _sg_drop_record_set(play, key, 0, dropData)
-            local have = tonumber(getbagitemcount(play, itemName) or 0) or 0
-            if have > needNum then
-                have = needNum
-            end
-            if (tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0) == 23 then
-                newchangetask(play, 23, have)
-            end
-            Player.sendmsgEx(play, "打怪掉落【"..itemName.."】#57")
-        end
-    end,
+	-- 9.8-1 原聚宝盆碎片怪物掉落监听 shaguai["33"] 已停用。
+-- 9.8-1 ["33"] = function(play,mob)      -- 聚宝盆碎片掉落监听
+-- 9.8-1     local cfg = teshudata["npc_106"] or {}
+-- 9.8-1     local itemName = tostring(cfg.fragment_item or "聚宝盆碎片")
+-- 9.8-1     local needNum = tonumber(cfg.fragment_count or 20) or 20
+-- 9.8-1     if getbagitemcount(play, itemName) >= needNum then
+-- 9.8-1         return
+-- 9.8-1     end
+-- 9.8-1     local key = "kill_pity_聚宝盆碎片"
+-- 9.8-1     local cur, dropData = _sg_drop_record_inc(play, key)
+-- 9.8-1     if math.random(100) == 1 or cur >= 100 then
+-- 9.8-1         if shaguai.temp_drop(play, mob, itemName) then
+-- 9.8-1             _sg_drop_record_set(play, key, 0, dropData)
+-- 9.8-1         end
+-- 9.8-1     end
+-- 9.8-1 end,
 	["34"] = function(play,mob)      --筑基丹碎片：二、三大陆普通怪每累计 100 只保底掉落，总上限 30 个碎片
 		local record = Player.getJsonTableByVar(play, "T39") or {}
 		local jz_count = tonumber(record.jz_dan_count or 0) or 0
