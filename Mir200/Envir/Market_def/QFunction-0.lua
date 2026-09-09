@@ -1985,9 +1985,6 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
                             Npclib["anniu"][30](play, 3, 0, "")
                         end
                     end
-                    if Buff and Buff.refreshHuTiGuangHuan then
-                        Buff.refreshHuTiGuangHuan(play)
-                    end
                     -- 飞剑功能临时下线：不再改动飞剑冷却参数
                     -- local T_data_fj = Player.getJsonTableByVar(play, VarCfg["T_飞剑"])
                     -- T_data_fj.cd = teshudata["anniu_19"].cd/2
@@ -2000,11 +1997,8 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
                     T_data["ok"] = 1
                     T_data["首充"] = 1
                     Player.setJsonVarByTable(play, VarCfg["T_首冲礼包"], T_data)
-                    if Buff and Buff.refreshHuTiGuangHuan then
-                        Buff.refreshHuTiGuangHuan(play)
-                        if Buff[73] then
-                            Buff[73](play, 1)
-                        end
+                    if Buff[73] then
+                        Buff[73](play, 1)
                     end
                     sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>首充礼包已激活，当前角色已可领取相关奖励...</font>","Type":9}')
                     PackageBuy_msg(play, "首充礼包")

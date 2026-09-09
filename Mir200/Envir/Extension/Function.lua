@@ -209,11 +209,6 @@ function FSetMoveEff(actor, effectID)
     setmoveeff(actor, effectID, 1)
 end
 
---设置光环
-function FSetGuangHuan(actor, effectID)
-    setplaydef(actor, VarCfg["U_光环外观记录"], effectID)
-    seticon(actor, ConstCfg.iconWhere.guangHuan, 1, effectID, 0, 0, 0, 0, 1)
-end
 
 --计算爆率
 function FCalculateActualExplosionRate(P)

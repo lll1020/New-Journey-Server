@@ -90,9 +90,6 @@ function npc.link(play,npcid,ew,aid)
         Player.del_attlist(play, "×ªÉú")
         Login_zsattr(play)
         if TianshuWangshiTryRecordProgress then TianshuWangshiTryRecordProgress(play) end
-        if Buff and Buff.refreshHuTiGuangHuan then
-            Buff.refreshHuTiGuangHuan(play)
-        end
         sendluamsg(play,100,npcid,1,0,"")
         if step == 10 then
             renewlevel(play,1,0,0)

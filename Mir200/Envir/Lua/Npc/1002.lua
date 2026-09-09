@@ -51,28 +51,9 @@ local function refreshFashionAttr(play)
 end
 
 
-local function buildBodyAuraData(play)
-    local zs_level = tonumber(getplaydef(play, VarCfg["U_转生等级"]) or 0) or 0
-    local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
-    local active = tonumber(getplaydef(play, VarCfg["U_护体光环激活"]) or 0) or 0
-    local aura = {
-        [1] = {open = zs_level >= 10 and 1 or 0},
-        [2] = {open = tonumber(sc_data["首充"] or 0) == 1 and 1 or 0},
-        [3] = {open = getflagstatus(play, VarCfg.BS_mztq) == 1 and 1 or 0},
-    }
-    if active < 1 or active > 3 or aura[active].open ~= 1 then
-        active = 0
-    end
-    for idx = 1, 3 do
-        aura[idx].active = active == idx and 1 or 0
-    end
-    return {aura = aura, active = active}
-end
-
 function npc.main(play,npcid)
     local data = {}
     data["T_data"] = Player.getJsonTableByVar(play, VarCfg.T_szjl)
-    data["body_aura"] = buildBodyAuraData(play)
     sendluamsg(play,100,npcid,0,0,tbl2json(data))
 end
 
@@ -87,7 +68,7 @@ function npc.link(play,npcid,ew,aid,data)
     end
     ew = __guardAction
     -- npc_guard: 操作白名单（优化：限定合法操作编号）
-    local __guardAllowedActions = Guard.newActionSet({1,2,3})
+    local __guardAllowedActions = Guard.newActionSet({1,2})
     if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
         return
     end
@@ -120,7 +101,6 @@ function npc.link(play,npcid,ew,aid,data)
             Player.sendmsgEx(play, "更换装扮成功，已切换到|【当前装扮】#218|")
             local data = {}
             data["T_data"] = T_data
-            data["body_aura"] = buildBodyAuraData(play)
             sendluamsg(play,100,npcid,1,0,tbl2json(data))
         end
     elseif ew == 2 then ----更换足迹
@@ -149,37 +129,12 @@ function npc.link(play,npcid,ew,aid,data)
             Player.sendmsgEx(play, "更换足迹成功，已切换到|【当前足迹】#218|")
             local data = {}
             data["T_data"] = T_data
-            data["body_aura"] = buildBodyAuraData(play)
             sendluamsg(play,100,npcid,1,0,tbl2json(data))
         end
-    elseif ew == 3 then ----护体光环
-        local idx = tonumber(aid) or tonumber(data) or 0
-        if idx < -1 or idx > 3 then
-            Player.sendmsgEx(play, "参数错误#57")
-            return
-        end
-
-        if idx >= 0 then
-            local auraData = buildBodyAuraData(play)
-            local aura = auraData.aura or {}
-            if idx > 0 and (not aura[idx] or aura[idx].open ~= 1) then
-                Player.sendmsgEx(play, "该光环尚未解锁#57")
-                return
-            end
-            setplaydef(play, VarCfg["U_护体光环激活"], idx)
-            if Buff and Buff.refreshHuTiGuangHuan then
-                Buff.refreshHuTiGuangHuan(play)
-            end
-        end
-
-        local data = {}
-        data["T_data"] = T_data
-        data["body_aura"] = buildBodyAuraData(play)
-        sendluamsg(play,100,npcid,1,0,tbl2json(data))
-    end
 end
 
 
+end
 -- --登录触发
 local function _onLoginEnd(play, logindatas)
     local T_data = Player.getJsonTableByVar(play, VarCfg.T_szjl)

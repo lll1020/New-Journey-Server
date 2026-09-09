@@ -44,26 +44,6 @@ local function _godstone_roll(play, key, rate, cd)
     end
     return false
 end
-local function _huti_set_trigger(play, varName, buffId, enable)
-    local bl = getplaydef(play, varName)
-    local data = json2tbl(bl == "" and {} or bl)
-    if enable then
-        data[tostring(buffId)] = true
-    else
-        data[tostring(buffId)] = nil
-    end
-    setplaydef(play, varName, tbl2json(data))
-end
-local function _huti_monster_type(obj)
-    if not obj or getbaseinfo(obj, -1) then
-        return nil
-    end
-    local name = getbaseinfo(obj, 1)
-    if not name or name == "" then
-        return nil
-    end
-    return guaiwutype and guaiwutype[name] or nil
-end
 local function _toggle_buff_var(play, varName, buffId, enable)
     local bl = getplaydef(play, varName)
     local data = json2tbl(bl == "" and {} or bl)
@@ -994,59 +974,6 @@ Buff = {
                 data["79"] = nil
             end
             setplaydef(play,VarCfg.S_buffgjh,tbl2json(data))
-        end
-    end,
-    [107] = function(play,zt,Damage,Target,MagicId) --护体光环1：每3刀额外造成1000伤害
-        if zt == 3 then
-            local cnt = (tonumber(getplaydef(play, 'N$buff107_hit') or 0) or 0) + 1
-            setplaydef(play, 'N$buff107_hit', cnt)
-            if cnt % 3 == 0 then
-                return 1000
-            end
-            return 0
-        else
-            _huti_set_trigger(play, VarCfg.S_buffgwq, 107, zt == 1)
-        end
-    end,
-    [108] = function(play,zt,Damage,Target,MagicId) --护体光环2：对白怪切割+8888
-        if zt == 3 then
-            if _huti_monster_type(Target) == 1 then
-                return 8888
-            end
-            return 0
-        else
-            _huti_set_trigger(play, VarCfg.S_buffgwq, 108, zt == 1)
-        end
-    end,
-    [109] = function(play,zt,Damage,Target,MagicId) --护体光环2：格挡怪物伤害+888
-        if zt == 3 then
-            if _huti_monster_type(Target) ~= nil then
-                return 888
-            end
-            return 0
-        else
-            _huti_set_trigger(play, VarCfg.S_buffbgwq, 109, zt == 1)
-        end
-    end,
-    [110] = function(play,zt,Damage,Target,MagicId) --护体光环：所有怪物血量低于 5% 时直接斩杀
-        if zt == 3 then
-            if _huti_monster_type(Target) ~= nil then
-                local curhp = tonumber(getbaseinfo(Target, 9) or 0) or 0
-                local maxhp = tonumber(getbaseinfo(Target, 10) or 0) or 0
-                if curhp > 0 and maxhp > 0 and curhp * 100 <= maxhp * 5 then
-                    humanhp(Target, "-", curhp, 107, 0, play, 1)
-                end
-            end
-            return 0
-        else
-            _huti_set_trigger(play, VarCfg.S_buffgwq, 110, zt == 1)
-        end
-    end,
-    [111] = function(play,zt,Damage,Target,MagicId) --增加固定攻击伤害 + 13888
-        if zt == 3 then
-            return 13888
-        else
-            _huti_set_trigger(play, VarCfg.S_buffgwq, 111, zt == 1)
         end
     end,
     [301] = function(play,zt,Damage,Target,MagicId,Model) --天书仙法攻击触发
@@ -4699,50 +4626,8 @@ Buff = {
     end,
 }
 local weizhi = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,55,71,72,73,74,75,76,78,85,86,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120}
-function Buff.refreshHuTiGuangHuan(play)
-    Buff[107](play, 2)
-    -- Buff[108](play, 2)
-    -- Buff[109](play, 2)
-    Buff[110](play, 2)
-    clearplayeffect(play,11501)
-    clearplayeffect(play,11506)
-    clearplayeffect(play,11505)
-    local zs_level = tonumber(getplaydef(play, VarCfg["U_转生等级"]) or 0) or 0
-    local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
-    local unlocked = {
-        [1] = zs_level >= 10,
-        [2] = tonumber(sc_data["首充"] or 0) == 1,
-        [3] = getflagstatus(play, VarCfg.BS_mztq) == 1,
-    }
-    local active = tonumber(getplaydef(play, VarCfg["U_护体光环激活"]) or 0) or 0
-    if active < 1 or active > 3 or not unlocked[active] then
-        active = 0
-        setplaydef(play, VarCfg["U_护体光环激活"], 0)
-    end
-    if unlocked[1] then
-        Buff[107](play, 1)
-        -- playeffect(play,11502,0,0,0,1,0)
-    end
-    if unlocked[2] then
-        -- Buff[108](play, 1)
-        -- Buff[109](play, 1)
-        Player.add_attlist(play, "光环属性", "=", "3#255#888", 1)
-        -- playeffect(play,11503,0,0,0,1,0)
-    end
-    if unlocked[3] then
-        Buff[110](play, 1)
-        -- playeffect(play,11504,0,0,0,1,0)
-    end
-    if active == 1 then
-        playeffect(play,11501,0,0,0,1,0)
-    elseif active == 2 then
-        playeffect(play,11506,0,0,0,1,0)
-    elseif active == 3 then
-        playeffect(play,11505,0,0,0,1,0)
-    end
-end
 function Buff.login(play)
-    -------------------------------------------------------------------装备BUFF登录初始化
+    -------------------------------------------------------------------first charge effect initialization
     -- 登录时先清空属性下发缓存，避免跨上下线后同属性被误判为已挂载
     Player.clear_attlist_cache(play)
     for k, v in pairs(weizhi) do
@@ -4769,14 +4654,11 @@ function Buff.login(play)
             Buff[idx](play,1)
         end
     end
-    -------------------------------------------------------------------护体光环
+    -------------------------------------------------------------------first charge effect initialization
     local T_data = _sc_get_data(play)
     if (T_data["ok"] and T_data["ok"] == 1) then
         Buff[73](play,1)
     end
-    -------------------------------------------------------------------护体光环
-    -- 护体光环登录刷新
-    Buff.refreshHuTiGuangHuan(play)
     -------------------------------------------------------------------额外附加属性登录初始化
     --灵根鉴定
     local data = Player.getJsonTableByVar(play, VarCfg["T_灵根鉴定"])
