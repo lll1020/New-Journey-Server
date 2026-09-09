@@ -103,15 +103,13 @@ local function _is_lingshou_contract_open(play, T_data)
     end
     return false, "完成三阶转生·五重后，才可领取灵兽蛋"
 end
-local function _has_pet_linggen_synergy(play, T_data)
+local function _has_pet_synergy(play, T_data)
     T_data = T_data or {}
     local idx = tonumber(T_data.dqzh or 0) or 0
     local cfg = _config.config and _config.config.ls and _config.config.ls[idx]
     if not cfg then return false end
     if (tonumber((T_data.ls or {})[tostring(idx)] or 0) or 0) < 2 then return false end
-    local lg = Player.getJsonTableByVar(play, VarCfg["T_灵根"]) or {}
-    local main = tonumber(lg.main or 0) or 0
-    return main > 0 and (main == cfg.yq[1] or main == cfg.yq[2])
+    return true
 end
 local function _push_hatch_log(T_data, idx, itemName, source, beforeStar, afterStar)
     T_data.hatch_log = T_data.hatch_log or {}
@@ -522,7 +520,7 @@ function npc.lscf(play,zt,Damage,Target)
             local cw = recallmobex(play, _config.config.ls[T_data.dqzh].name,0,0,7,1,_config.config.wy.det[T_data.ls[""..T_data.dqzh]].time,0,0,0,0,0,0,"")
             sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[灵兽]</font><font color=\'#00ff00\'>成功召唤灵兽【'.._config.config.ls[T_data.dqzh].name..'】...</font>","Type":9}')
             setplaydef(play,"N$buff_ls",sj)
-            if _has_pet_linggen_synergy(play, T_data) then
+            if _has_pet_synergy(play, T_data) then
                 Player.updateSomeAddr_time(play,nil, _config.config.ls[T_data.dqzh].b_attr,_config.config.wy.det[T_data.ls[""..T_data.dqzh]].time)
             end
         end

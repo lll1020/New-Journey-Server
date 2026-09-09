@@ -1015,6 +1015,10 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
 		return Damage
 	else
         GameEvent.push(EventCfg.onAttackDamageMonster, play, Target, Damage, MagicId, Model)
+        local fireUntil = tonumber(getplaydef(Target, "N$lingshou_fire_until") or 0) or 0
+        if MagicId == 26 and fireUntil >= os.time() then
+            Damage = math.floor((tonumber(Damage) or 0) * 2)
+        end
         if BwczApi and BwczApi.get_cfg then
             local bwcz_cfg = BwczApi.get_cfg()
             if bwcz_cfg and getsysvar(VarCfg["G_±£ÎÀ´å×¯×´Ì¬"]) == 1 then
@@ -2581,35 +2585,117 @@ local function _lingshou_safe_effect(Target, effectId)
     end
 end
 
+local function _lingshou_monsters(mapId, x, y, range)
+    if not mapId then
+        return {}
+    end
+    local list = getobjectinmap(mapId, x, y, range, 2)
+    return type(list) == "table" and list or {}
+end
+
+local function _lingshou_each_monster(mapId, x, y, range, callback)
+    for _, mob in pairs(_lingshou_monsters(mapId, x, y, range)) do
+        if mob and not getbaseinfo(mob, ConstCfg.gbase.isplayer) then
+            local ok, err = pcall(callback, mob)
+            if not ok then
+                release_print("[ÁéÊÞ¼¼ÄÜ]¹ÖÎïÐ§¹ûÊ§°Ü", err)
+            end
+        end
+    end
+end
+
+local _lingshou_fire_until_var = "N$lingshou_fire_until"
+local _lingshou_xuanwu_map_var = "S$lingshou_xuanwu_map"
+local _lingshou_xuanwu_x_var = "N$lingshou_xuanwu_x"
+local _lingshou_xuanwu_y_var = "N$lingshou_xuanwu_y"
+local _lingshou_xuanwu_end_var = "N$lingshou_xuanwu_end"
+
+local function _lingshou_apply_fire(play, Target)
+    local mapId = getbaseinfo(Target, ConstCfg.gbase.mapid) or getbaseinfo(play, ConstCfg.gbase.mapid)
+    local now = os.time()
+    _lingshou_each_monster(mapId, 0, 0, 999, function(mob)
+        setplaydef(mob, _lingshou_fire_until_var, now + 5)
+    end)
+    _lingshou_safe_effect(Target, 60463)
+end
+
+local function _lingshou_apply_xuanwu(play, Target)
+    local mapId = getbaseinfo(Target, ConstCfg.gbase.mapid) or getbaseinfo(play, ConstCfg.gbase.mapid)
+    local x, y = _lingshou_target_xy(Target)
+    local now = os.time()
+    setplaydef(play, _lingshou_xuanwu_map_var, tostring(mapId or ""))
+    setplaydef(play, _lingshou_xuanwu_x_var, x)
+    setplaydef(play, _lingshou_xuanwu_y_var, y)
+    setplaydef(play, _lingshou_xuanwu_end_var, now + 5)
+    _lingshou_each_monster(mapId, x, y, 2, function(mob)
+        changespeedex(mob, 1, -30, 5)
+    end)
+    _lingshou_safe_effect(Target, 60454)
+    delaygoto(play, 1000, "@lingshou_xuanwu_tick")
+end
+
+function lingshou_xuanwu_tick(play)
+    local now = os.time()
+    local endTime = tonumber(getplaydef(play, _lingshou_xuanwu_end_var) or 0) or 0
+    if endTime < now then
+        setplaydef(play, _lingshou_xuanwu_map_var, "")
+        setplaydef(play, _lingshou_xuanwu_x_var, 0)
+        setplaydef(play, _lingshou_xuanwu_y_var, 0)
+        setplaydef(play, _lingshou_xuanwu_end_var, 0)
+        return
+    end
+    local mapId = tostring(getplaydef(play, _lingshou_xuanwu_map_var) or "")
+    local x = tonumber(getplaydef(play, _lingshou_xuanwu_x_var) or 0) or 0
+    local y = tonumber(getplaydef(play, _lingshou_xuanwu_y_var) or 0) or 0
+    _lingshou_each_monster(mapId, x, y, 2, function(mob)
+        humanhp(mob, "-", 10000, 110, 0, play, 1)
+    end)
+    delaygoto(play, 1000, "@lingshou_xuanwu_tick")
+end
+
 local _lingshou_skills = {
     ["÷è÷ë"] = function(play, Target)
+        local mapId = getbaseinfo(Target, ConstCfg.gbase.mapid)
         local x, y = _lingshou_target_xy(Target)
-        rangeharm(play, x, y, 2, 1, 0, 0, 0, 2, 20310, 12)
-        changemode(Target, ConstCfg.pmode.stick, 1)
-        _lingshou_safe_effect(Target, 60456)
+        _lingshou_each_monster(mapId, x, y, 2, function(mob)
+            changemode(mob, ConstCfg.pmode.stick, 1)
+        end)
+        _lingshou_safe_effect(Target, 60452)
     end,
     ["ÇàÁú"] = function(play, Target)
         local hurt = (_lingshou_root_level(play, 2) + _lingshou_root_level(play, 7)) * 10000
         if hurt <= 0 then hurt = 10000 end
+        local mapId = getbaseinfo(Target, ConstCfg.gbase.mapid)
         local x, y = _lingshou_target_xy(Target)
-        rangeharm(play, x, y, 4, hurt, 0, 0, 0, 2, 20310, 16)
-        _lingshou_safe_effect(Target, 60456)
+        local hitCells = {}
+        for _, mob in pairs(_lingshou_monsters(mapId, x, y, 4)) do
+            local mx = tonumber(getbaseinfo(mob, ConstCfg.gbase.x) or 0) or 0
+            local my = tonumber(getbaseinfo(mob, ConstCfg.gbase.y) or 0) or 0
+            local dx = math.abs(mx - x)
+            local dy = math.abs(my - y)
+            if (dx == 0 or dy == 0 or dx == dy) and dx <= 4 and dy <= 4 then
+                local cellKey = tostring(mx) .. ":" .. tostring(my)
+                if not hitCells[cellKey] then
+                    hitCells[cellKey] = true
+                    rangeharm(play, mx, my, 0, hurt, 0, 0, 0, 2, 11, 1)
+                end
+            end
+        end
+        _lingshou_safe_effect(Target, 60463)
     end,
     ["ÖìÈ¸"] = function(play, Target)
-        local x, y = _lingshou_target_xy(Target)
-        rangeharm(play, x, y, 12, 10000, 0, 0, 0, 2, 20310, 24)
-        _lingshou_safe_effect(Target, 60456)
+        _lingshou_apply_fire(play, Target)
     end,
     ["°×»¢"] = function(play, Target)
+        local mapId = getbaseinfo(Target, ConstCfg.gbase.mapid)
         local x, y = _lingshou_target_xy(Target)
-        rangeharm(play, x, y, 1, 50000, 0, 0, 0, 2, 20310, 12)
-        _lingshou_safe_effect(Target, 60456)
+        _lingshou_each_monster(mapId, x, y, 1, function(mob)
+            humanhp(mob, "-", 50000, 110, 0, play, 1)
+        end)
+        _lingshou_safe_effect(Target, 60451)
     end,
     ["ÐþÎä"] = function(play, Target)
-        local x, y = _lingshou_target_xy(Target)
-        rangeharm(play, x, y, 2, 50000, 0, 0, 0, 2, 20310, 12)
-        changemode(Target, ConstCfg.pmode.frost, 1)
-        _lingshou_safe_effect(Target, 60456)
+        _lingshou_apply_xuanwu(play, Target)
     end,
 }
 

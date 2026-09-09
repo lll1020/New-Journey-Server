@@ -131,11 +131,24 @@ function bl_zyjhl8(play,mingzi)
     if cur_map and daluditu then
         dl = tonumber(daluditu[cur_map] or 0) or 0
     end
-    -- 只允许二大陆及以上地图掉落；真实概率固定 1/500，不吃人物爆率加成
+    -- 只允许二大陆及以上地图掉落；累计击杀300只怪必定获得1个，不吃人物爆率加成
     if dl < 2 then
         return false
     end
-    return math.random(500) == 1
+    local data = Player.getJsonTableByVar(play, VarCfg["T_物品掉落记录"])
+    if type(data) ~= "table" then
+        data = {}
+    end
+    local key = "仙法卷轴残页_累计击杀"
+    local count = (tonumber(data[key] or 0) or 0) + 1
+    if count >= 300 then
+        data[key] = count - 300
+        Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
+        return true
+    end
+    data[key] = count
+    Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
+    return false
 end
 --------------------爆率监听触发-------------------二大陆材料保底
 function bl_zyjhl9(play,mingzi)

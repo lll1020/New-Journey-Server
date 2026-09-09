@@ -1,0 +1,19 @@
+[2026-09-09 15:17:01:233] .\Envir\QuestDiary/game/safeRequire.lua time：140
+
+[2026-09-09 15:17:05:799] .\Envir\QuestDiary/cfg_gm_box.lua time：1703
+[2026-09-09 15:17:07:646] .\Envir\lua/Data/fairy_fate_cfg.lua time：344
+
+[2026-09-09 15:17:16:269] .\Envir\lua/LuaLib/fairy_fate.lua time：704
+
+[2026-09-09 15:17:54:168] LuaNPC: ID:999999999 执行 startup player: 耗时：31; NpcThreadId: 33044, CurPlayThreadId: 33044
+
+[2026-09-09 15:18:54:428] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：250; NpcThreadId: 33044, CurPlayThreadId: 33044
+
+[2026-09-09 15:28:57:299] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：31; NpcThreadId: 4896, CurPlayThreadId: 4896
+
+[2026-09-09 15:29:17:005] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：1203; NpcThreadId: 4896, CurPlayThreadId: 4896
+
+[2026-09-09 15:30:48:700] LuaNPC:玩家名字 ID:999999999 执行 stdmodefunc10 player:玩家名字 耗时：62; NpcThreadId: 4896, CurPlayThreadId: 4896
+
+[2026-09-09 15:34:09:740] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 4896, CurPlayThreadId: 4896
+

@@ -174,14 +174,6 @@ local function _take_change_cost(play)
     return true
 end
 
-local function _check_linggen_unlock(play)
-    local data = Player.getJsonTableByVar(play, VarCfg["T_锁妖塔"] or "T51") or {}
-    if (tonumber(data.total_runs or 0) or 0) >= 6 then
-        return true
-    end
-    Player.sendmsgEx(play, "请先完成异闻录任务#57|【挑战六次通天塔】#218|后再开启灵根功能#57")
-    return false
-end
 local function _need_role_level(rootIdx, nextLevel)
     local low = {80,80,80,100,100,100,150,150,150,151}
     local high = {152,152,152,155,155,155,160,160,160,165}
@@ -189,7 +181,6 @@ local function _need_role_level(rootIdx, nextLevel)
 end
 
 function npc.main(play, npcid)
-    if not _check_linggen_unlock(play) then return end
     local T_data = _activate_basic_roots(Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
     Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
     sendluamsg(play, 100, npcid, 0, 0, tbl2json({T_data = T_data}))
@@ -198,7 +189,6 @@ end
 
 function npc.link(play, npcid, ew, aid)
     if not Guard.ensurePlayer(play, npcid) then return end
-    if not _check_linggen_unlock(play) then return end
     ew = Guard.normalizeAction(play, npcid, ew)
     if ew == nil then return end
     if not Guard.ensureActionAllowed(play, npcid, ew, Guard.newActionSet({1, 2, 3, 5, 6})) then return end
@@ -393,9 +383,6 @@ function npc.lgcf(play, zt, Damage, Target, triggerType)
 end
 
 function LingGenGrantBasicUnlockChance(play, count)
-    if not _check_linggen_unlock(play) then
-        return false
-    end
     local T_data = _activate_basic_roots(Player.getJsonTableByVar(play, VarCfg["T_灵根"]))
     Player.setJsonVarByTable(play, VarCfg["T_灵根"], T_data)
     return true
