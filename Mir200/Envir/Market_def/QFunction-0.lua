@@ -115,10 +115,14 @@ function resetday(play)
     for i = #zz_cfg, 1, -1 do
         local detail = zz_cfg[i]
         local titleName = tostring((detail or {}).ch or "")
-        if titleName ~= "" and checktitle(play, titleName) and type(detail.salary) == "table" and #detail.salary > 0 then
-            sendmail(getbaseinfo(play, 2), 0, "至尊赞助工资", "跨天登录成功，今日【" .. titleName .. "】工资已通过邮件发放，请注意查收。", Player.jl_mail(_qf_salary_with_title_bonus(play, detail.salary)))
+        if zz_data.salary_date ~= today
+            and titleName ~= ""
+            and checktitle(play, titleName)
+            and type(detail.salary) == "table"
+            and #detail.salary > 0 then
             zz_data.salary_date = today
             Player.setJsonVarByTable(play, VarCfg["T_免费赞助"], zz_data)
+            sendmail(getbaseinfo(play, 2), 0, "至尊赞助工资", "跨天登录成功，今日【" .. titleName .. "】工资已通过邮件发放，请注意查收。", Player.jl_mail(_qf_salary_with_title_bonus(play, detail.salary)))
             break
         end
     end
@@ -1854,14 +1858,30 @@ function _cz502_apply_reward(play, amount, idx, lb_json)
     end
     lb_json[key] = 1
     local reward = config.jl[idx]
+    local all_claimed = false
+    if config.fj then
+        all_claimed = true
+        for _, v in ipairs(config.fj) do
+            if not lb_json["cz502_" .. tostring(v)] then
+                all_claimed = false
+                break
+            end
+        end
+        if all_claimed and config.ch then
+            -- 先保存全档领取标记，再发放全档称号。
+            lb_json.cz502_all = 1
+        end
+    end
+    -- 先保存档位领取标记及附加次数，再发放充值奖励，避免中断后重复领取。
+    if reward and tonumber(reward.token_count) and tonumber(reward.token_count) > 0 then
+        local T_data = Player.getJsonTableByVar(play, VarCfg["T_马上发财"]) or {}
+        T_data.token_count = (tonumber(T_data.token_count) or 0) + tonumber(reward.token_count)
+        Player.setJsonVarByTable(play, VarCfg["T_马上发财"], T_data)
+    end
+    setplaydef(play, VarCfg.T_czlb, tbl2json(lb_json))
     if reward then
         if reward.give then
             Player.rwjl(play, reward.give, "充值档位奖励", 1)
-        end
-        if tonumber(reward.token_count) and tonumber(reward.token_count) > 0 then
-            local T_data = Player.getJsonTableByVar(play, VarCfg["T_马上发财"])
-            T_data.token_count = (tonumber(T_data.token_count) or 0) + tonumber(reward.token_count)
-            Player.setJsonVarByTable(play, VarCfg["T_马上发财"], T_data)
         end
         if reward.ch then
             if not checktitle(play, reward.ch) then
@@ -1875,20 +1895,10 @@ function _cz502_apply_reward(play, amount, idx, lb_json)
             end
         end
     end
-    if config.fj then
-        local all = true
-        for _, v in ipairs(config.fj) do
-            if not lb_json["cz502_" .. tostring(v)] then
-                all = false
-                break
-            end
-        end
-        if all and config.ch then
-            -- 在线充值全购买奖励：授予全购买称号。
-            lb_json.cz502_all = 1
-            if not checktitle(play, config.ch) then
-                Player.title_give(play, config.ch)
-            end
+    if all_claimed and config.ch then
+        -- 在线充值全购买奖励：状态已落库后再授予全购买称号。
+        if not checktitle(play, config.ch) then
+            Player.title_give(play, config.ch)
         end
     end
     return lb_json
@@ -1976,9 +1986,10 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
                 end
             elseif Gold == 88 then
                 if getflagstatus(play,VarCfg.BS_mztq) == 0 then
+                    -- 先保存特权领取标记，再发放称号和物品奖励。
+                    setflagstatus(play,VarCfg.BS_mztq,1)
                     Player.title_give(play, teshudata["anniu_504"].ch,1)
                     Player.rwjl(play, teshudata["anniu_504"].give, "快人一步",1,1000)
-                    setflagstatus(play,VarCfg.BS_mztq,1)
                     PackageBuy_msg(play, "88元礼包")
                     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
                     if jq_data["npc_55"] and jq_data["npc_55"] >= 2 then

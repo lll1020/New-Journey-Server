@@ -696,12 +696,13 @@ function npc.link(play, npcid, p2, p3, msgData)
         end
         _take_costs(play, node_cfg.cost or {}, ",星象圣图")
         stage_data.nodes[tostring(node_idx)] = 1
+        local needStageReward = false
 
         if _count_nodes(stage_data, stage_cfg) >= #(stage_cfg.nodes or {}) then
             stage_data.full = 1
             if _toint(stage_data.reward) ~= 1 then
-                _grant_stage_reward(play, stage_cfg)
                 stage_data.reward = 1
+                needStageReward = true
             end
             Player.sendmsgEx(play, "你完成了#57|【" .. (stage_cfg.name or "星象阶段") .. "】#218|的全部点亮#57")
         else
@@ -710,6 +711,10 @@ function npc.link(play, npcid, p2, p3, msgData)
 
         data.stage[tostring(stage_idx)] = stage_data
         _save_data(play, data)
+        if needStageReward then
+            -- 阶段完成状态先保存，再发放阶段奖励，避免重复领取。
+            _grant_stage_reward(play, stage_cfg)
+        end
         star_chart_refresh(play)
         if stage_idx == 3 and _toint(stage_data.full) == 1 then
             local story = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}

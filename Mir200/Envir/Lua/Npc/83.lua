@@ -119,13 +119,23 @@ function npc.link(play, npcid, p2, p3, msgData)
             Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", _point_name, cost))
             return
         end
+        local oldPoint = data.point
+        local oldBuy = _get_buy_num(data, idx)
+        data.point = data.point - cost
+        data.buy[tostring(idx)] = oldBuy + 1
+        if tostring(reward.kind or "") == "title" then
+            -- 称号领取状态必须先落库，再执行称号发放。
+            data.title_claim = 1
+        end
+        -- 先扣除积分、保存兑换次数，再发放奖励，避免发奖中断后重复兑换。
+        _save_data(play, data)
         if not _grant_reward(play, data, reward, "残魂商店") then
+            data.point = oldPoint
+            data.buy[tostring(idx)] = oldBuy
+            _save_data(play, data)
             Player.sendmsgEx(play, "奖励配置未完成#57")
             return
         end
-        data.point = data.point - cost
-        data.buy[tostring(idx)] = _get_buy_num(data, idx) + 1
-        _save_data(play, data)
         Player.sendmsgEx(play, string.format("兑换成功，获得#57|【%s】#218|", tostring(cfg.name or "奖励")))
         sendluamsg(play, 100, npcid, 1, idx, tbl2json(_build_payload(play)))
     elseif p2 == 2 then

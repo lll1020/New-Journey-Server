@@ -143,15 +143,16 @@ function npc.link(play, npcid, ew, aid)
         end
 
         local reward = welfare[idx] and welfare[idx].reward or {}
-        if type(reward) == "table" and #reward > 0 then
-            _grant_reward(play, reward)
-        end
         data.welfare_claimed = idx
         if not _has_first_charge(data) and idx < #welfare then
             -- 当前档领取后，下一档才重新开始计时。
             data.welfare_open_time = os.time()
         end
         _set_data(play, data)
+        -- 先保存领取进度，再发放奖励，避免发奖中断后重复领取。
+        if type(reward) == "table" and #reward > 0 then
+            _grant_reward(play, reward)
+        end
         sendluamsg(play, 100, npcid, 1, idx, tbl2json(_build_payload(play, data)))
         return
     end

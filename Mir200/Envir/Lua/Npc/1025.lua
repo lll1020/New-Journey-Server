@@ -84,9 +84,10 @@ local function _claim_point_reward(play, npcid, idx)
         Player.sendmsgEx(play, "跨服积分不足#57")
         return _refresh(play, npcid, 1)
     end
-    Player.rwjl(play, cfg.reward, "跨服积分领奖", 1, 0)
     data.point_claim[key] = 1
+    -- 先保存领取标记，再发放奖励，避免发奖中断后重复领取。
     _save_state(play, data)
+    Player.rwjl(play, cfg.reward, "跨服积分领奖", 1, 0)
     Player.sendmsgEx(play, "跨服积分奖励领取成功#218")
     _refresh(play, npcid, 1)
 end
@@ -111,9 +112,10 @@ local function _buy_medal_item(play, npcid, idx)
         return _refresh(play, npcid, 2)
     end
     Player.takeItemByTable(play, {{_medal_name, cost}}, "跨服勋章兑换", nil)
-    Player.rwjl(play, cfg.reward, "跨服勋章兑换", 1, 0)
     data.medal_buy[key] = bought + 1
+    -- 先保存扣除后的兑换状态，再发放兑换物品。
     _save_state(play, data)
+    Player.rwjl(play, cfg.reward, "跨服勋章兑换", 1, 0)
     Player.sendmsgEx(play, "兑换成功#218")
     _refresh(play, npcid, 2)
 end

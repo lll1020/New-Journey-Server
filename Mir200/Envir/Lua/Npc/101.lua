@@ -327,8 +327,10 @@ local function _claim_milestone_range(play, T_data, p2, milestoneIdx)
         if idx > milestoneIdx then break end
         if T_data.draw_count >= tonumber(cfg.draw or 0) and tonumber(bucket[tostring(idx)]) ~= 1 then
             local rewardPack = p2 == 5 and cfg.normal or cfg.crown
-            local labels = _grant_reward_pack(play, T_data, rewardPack, ",msfc_milestone")
             bucket[tostring(idx)] = 1
+            -- 先保存领取标记，再发放奖励，避免奖励发放中断后重复领取。
+            _save_data(play, T_data)
+            local labels = _grant_reward_pack(play, T_data, rewardPack, ",msfc_milestone")
             claimedCount = claimedCount + 1
             for _, label in ipairs(labels) do
                 table.insert(allLabels, label)
@@ -351,6 +353,12 @@ local function _claim_day_card(play, T_data)
     if _get_today_charge(play) < needCharge then
         return false, string.format("今日累计充值不足%d元#57", needCharge)
     end
+    if tokenCount > 0 then
+        T_data.token_count = (tonumber(T_data.token_count) or 0) + tokenCount
+    end
+    T_data.day_card_claim_date = _today()
+    -- 先保存日卡日期和奖励次数，再发放称号及物品。
+    _save_data(play, T_data)
     if titleName ~= "" then
         if checktitle(play, titleName) then
             changetitletime(play, titleName, "+", 24)
@@ -361,10 +369,6 @@ local function _claim_day_card(play, T_data)
     if type(cfg.rewards) == "table" and #cfg.rewards > 0 then
         Player.rwjl(play, cfg.rewards, ",msfc_day_card", 1, 0)
     end
-    if tokenCount > 0 then
-        T_data.token_count = (tonumber(T_data.token_count) or 0) + tokenCount
-    end
-    T_data.day_card_claim_date = _today()
     return true, titleName
 end
 -- 面板方法：组装客户端展示数据
@@ -421,8 +425,11 @@ local function _do_draw(play, T_data, drawTimes)
         return false, labels, "锄子次数不足#57"
     end
     T_data.token_count = T_data.token_count - drawTimes
+    -- 先保存消耗次数，再逐次保存抽奖进度后发放奖励。
+    _save_data(play, T_data)
     for _ = 1, drawTimes do
         T_data.draw_count = T_data.draw_count + 1
+        _save_data(play, T_data)
         local reward = _roll_pool(_config.pool)
         local label = _grant_reward(play, T_data, reward, ",msfc_draw")
         if label and label ~= "" then

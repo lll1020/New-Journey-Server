@@ -170,18 +170,25 @@ function npc.tryAutoSend(play)
                 local limit = _toint(cfg.limit)
                 local used = _toint(globalData[key])
                 if orderOk and (limit <= 0 or used < limit) then
+                    local title = tostring(cfg.title or "")
+                    playerData.claimed[key] = 1
+                    if title ~= "" then
+                        playerData.last_title = title
+                    end
+                    if limit > 0 then
+                        globalData[key] = used + 1
+                    end
+                    -- 先保存领取标记和全局名额，再发送邮件及称号奖励。
+                    _save_player_data(play, playerData)
+                    if limit > 0 then
+                        _save_global_data(globalData)
+                    end
+                    changedPlayer = true
+                    if limit > 0 then
+                        changedGlobal = true
+                    end
                     if _send_reward_mail(play, cfg) then
-                        local title = tostring(cfg.title or "")
-                        playerData.claimed[key] = 1
-                        if title ~= "" then
-                            playerData.last_title = title
-                        end
-                        changedPlayer = true
                         sent = true
-                        if limit > 0 then
-                            globalData[key] = used + 1
-                            changedGlobal = true
-                        end
                     end
                 end
             end

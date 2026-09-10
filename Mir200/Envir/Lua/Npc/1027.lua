@@ -76,9 +76,10 @@ local function _buy(play, npcid, idx)
     end
 
     Player.takeItemByTable(play, {{_medal_name, cost}}, "跨服勋章碎片商店兑换", nil)
-    Player.rwjl(play, cfg.reward, "跨服勋章碎片商店兑换", 1, 0)
     data.buy[key] = bought + 1
+    -- 先保存扣除后的兑换状态，再发放兑换物品。
     _save_state(play, data)
+    Player.rwjl(play, cfg.reward, "跨服勋章碎片商店兑换", 1, 0)
     Player.sendmsgEx(play, "兑换成功#218")
     _refresh(play, npcid, 1)
 end

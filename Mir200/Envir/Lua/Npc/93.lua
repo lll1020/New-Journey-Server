@@ -195,8 +195,9 @@ local function _do_exchange(play, npcid, id)
     end
     data.points = data.points - cfg.cost
     _add_exchange_count(data, id, cfg)
-    _give_exchange_reward(play, cfg)
+    -- 先保存扣除积分和兑换次数，再发放兑换奖励。
     _save_data(play, data)
+    _give_exchange_reward(play, cfg)
     sendluamsg(play, 100, npcid, 0, 0, tbl2json(_payload(play)))
 end
 

@@ -44,13 +44,14 @@ local function _woodcut_flush_storage(play, asMail)
         Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], data)
         return nil
     end
+    -- 先清空并保存存储值，再发放奖励，避免发奖中断后重复领取。
+    data.wood_storage = {}
+    Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], data)
     if asMail then
         sendmail(getbaseinfo(play, 2), 0, "砍树奖励", "跨天自动砍树奖励，请及时领取。", Player.jl_mail(rewards))
     else
         Player.rwjl(play, rewards, "自动砍树存储奖励", 1, 0)
     end
-    data.wood_storage = {}
-    Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], data)
     return rewards
 end
 
@@ -549,6 +550,8 @@ local function _ywl_finish_single_task_state(play, T_ywl, sj, shuju)
     T_ywl["jl_" .. sj.i .. "_" .. sj.j .. "_" .. sj.z] = 1
     T_ywl = select(1, _ywl_try_clear_current_task(play, T_ywl, sj))
     local taskReward = _ywl_filter_rewards(play, shuju.jl, sj.i)
+    -- 先落盘剧情领取状态，再发放奖励。
+    setplaydef(play, VarCfg.T_ywl, tbl2json(T_ywl))
     if taskReward and #taskReward > 0 then
         if tonumber(sj.i) == 2 then
             Player.rwjl(play, taskReward, "xyl", 1, 0)
@@ -1045,7 +1048,8 @@ npc[18] = function(play, p2, p3, data) --新手礼包
         --领取礼包
         local rwid = getplaydef(play, VarCfg.U_zxrw[1])
         if rwid == 1 then
-            
+            -- 先完成并保存任务状态，再发放新手礼包，避免中断后重复领取。
+            Player.zxrw_wancheng(play, rwid, "新手礼包")
             Player.rwjl(
                 play,
                 {{"复活戒指",1},{"麻痹戒指",1},{"斗笠",1},{"攻速之镰[lv1]",1}, {"切割之斧[lv1]",1},{ "盟重回城石", 1 }, { "随机传送石", 1 }, { "龙骨刀", 1 }, { "龙骨甲", 1 },{"酒葫芦",1},},
@@ -1063,7 +1067,6 @@ npc[18] = function(play, p2, p3, data) --新手礼包
             for _, v in pairs(constant.pz_xrjn) do
                 addskill(play,v[1],v[2])
             end
-            Player.zxrw_wancheng(play, getplaydef(play, VarCfg.U_zxrw[1]), "新手礼包") --完成任务
             sendluamsg(play, 101, 1005, 0, 0, "lqcg")
             sendluamsg(play, 101, 9999, 0, 0, "npc_xslb")
             sendluamsg(play, 101, 18, 1, 0, "")
@@ -1289,7 +1292,6 @@ local function _sc_grant_slot_item_rewards(play)
     end
     if #rewards > 0 then
         Player.rwjl(play, rewards, "首充礼包", 1, 0)
-        _sc_refresh_treasure_task_progress(play)
     end
 end
 local function _sc_apply_main_reward(play, data)
@@ -1350,8 +1352,8 @@ npc[501] = function(play, p2, p3, data) --首充礼包
             return
         end
         T_data.main_claimed = 1
-        _sc_apply_main_reward(play, T_data)
         _sc_set_data(play, T_data)
+        _sc_apply_main_reward(play, T_data)
         sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>天选资格、自动巡航等首充联动功能已解锁...</font>","Type":9}')
         sendluamsg(play, 101, 501, 1, 1, tbl2json(_sc_build_open_payload(play)))
         -- 限时福利为二大陆功能，首充礼包领取后不在一大陆弹出限时福利领取提示。
@@ -2381,6 +2383,7 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
             local privilege = fldt_is_privilege(play)
             local flipDigits = fldt_prepare_flip_table(T_qrbq)
             local finalAwardToGive = 0
+            local mysteryReward = nil
             if targetDay <= fldt_number_days then
                 local digit = fldt_pick_seven_login_digit(targetDay)
                 flipDigits[targetDay] = digit
@@ -2413,9 +2416,7 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
                     end
                 end
                 matData[targetDay] = matRecord
-                if type(matRecord.give) == "table" and #matRecord.give > 0 then
-                    Player.rwjl(play, matRecord.give, "七日翻牌神秘奖励", 1, 0)
-                end
+                mysteryReward = matRecord.give
             end
             T_qrbq["7rqd"] = targetDay
             if targetDay == fldt_number_days then
@@ -2438,6 +2439,10 @@ npc[511] = function(play, p2, p3, msgData) --福利大厅
                 end
             end
             Player.setJsonVarByTable(play, VarCfg.T_qrbq, T_qrbq)
+            -- 七日进度、翻牌结果和最终奖励标记先保存，再发放本次奖励。
+            if type(mysteryReward) == "table" and #mysteryReward > 0 then
+                Player.rwjl(play, mysteryReward, "七日翻牌神秘奖励", 1, 0)
+            end
             sendmail(getbaseinfo(play,2),0,"七日登录奖励","七日登录奖励,奖励已下发!",Player.jl_mail(dayReward.jl))
             if finalAwardToGive > 0 then
                 Player.rwjl(play, { { "绑定元宝", finalAwardToGive } }, "七日翻牌幸运奖励", 1, 0)
