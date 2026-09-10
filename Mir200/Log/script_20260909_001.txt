@@ -48,3 +48,26 @@
 
 [2026-09-09 22:08:52:227] LuaNPC:玩家名字l ID:999999999 执行 login player:玩家名字l 耗时：31; NpcThreadId: 4896, CurPlayThreadId: 4896
 
+[2026-09-10 04:40:51:163] .\Envir\lua/Data/fairy_fate_cfg.lua time：250
+
+[2026-09-10 04:44:44:167] LuaNPC:玩家名字l ID:999999999 执行 login player:玩家名字l 耗时：31; NpcThreadId: 4896, CurPlayThreadId: 4896
+
+[2026-09-10 04:45:24:535] LuaNPC:玩家名字l ID:999999999 执行 login player:玩家名字l 耗时：31; NpcThreadId: 4896, CurPlayThreadId: 4896
+
+[2026-09-10 04:45:53:871] LuaNPC:玩家名字l ID:999999999 执行 handlerequest player:玩家名字l 耗时：62; NpcThreadId: 4896, CurPlayThreadId: 4896
+[2026-09-10 04:45:53:871] [玩家名字l]Lua执行耗时过高:62ms msgid:101 23 0 0 
+
+[2026-09-10 05:04:19:529] LuaNPC:玩家名字l ID:999999999 执行 login player:玩家名字l 耗时：31; NpcThreadId: 4896, CurPlayThreadId: 4896
+
+[2026-09-10 07:03:19:132] LuaNPC:玩家名字l ID:999999999 执行 login player:玩家名字l 耗时：32; NpcThreadId: 4896, CurPlayThreadId: 4896
+
+[2026-09-10 07:35:08:161] LuaNPC:玩家名字l ID:999999999 执行 login player:玩家名字l 耗时：31; NpcThreadId: 4896, CurPlayThreadId: 4896
+
+[2026-09-10 08:02:42:767] LuaNPC:玩家名字l ID:999999999 执行 login player:玩家名字l 耗时：31; NpcThreadId: 4896, CurPlayThreadId: 4896
+
+[2026-09-10 08:11:40:245] LuaNPC:玩家名字l ID:999999999 执行 login player:玩家名字l 耗时：31; NpcThreadId: 4896, CurPlayThreadId: 4896
+
+[2026-09-10 09:01:10:719] LuaNPC:玩家名字l ID:999999999 执行 login player:玩家名字l 耗时：62; NpcThreadId: 4896, CurPlayThreadId: 4896
+
+[2026-09-10 09:55:40:529] LuaNPC:玩家名字l ID:999999999 执行 login player:玩家名字l 耗时：47; NpcThreadId: 4896, CurPlayThreadId: 4896
+

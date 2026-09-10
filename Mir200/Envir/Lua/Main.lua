@@ -32,6 +32,7 @@ safeRequire("Envir/Lua/LuaLib/Buff.lua")
 safeRequire("Envir/Lua/LuaLib/shaguai.lua")
 -------------------物品使用模块--------------------
 safeRequire("Envir/Lua/LuaLib/useitme.lua")
+safeRequire("Envir/Lua/LuaLib/atlas.lua")
 --------------------套装属性模块--------------------
 safeRequire("Envir/Lua/LuaLib/itemattr.lua")
 
@@ -100,6 +101,7 @@ local preloadModules = {
     101,
     103,
     104,
+    518,
     602,
     625,
     626,

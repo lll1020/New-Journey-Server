@@ -2686,6 +2686,12 @@ end
 npc[515] = function(play, p2, p3, msgData)
     FairyFate.handle(play, p2, p3, msgData)
 end
+local Atlas = rawget(_G, "Atlas") or dofile("Envir/Lua/LuaLib/atlas.lua")
+npc[518] = function(play, p2, p3, msgData)
+    if Atlas and Atlas.main then
+        Atlas.main(play, p2, p3, msgData)
+    end
+end
 local function _zz516_get_cfg()
     return (teshudata["anniu_516"] and teshudata["anniu_516"].details) or {}
 end

@@ -354,6 +354,7 @@ function pickupitemfrontex(play, item)
 end
 --------------------进背包触发-------------------
 function addbag(play, item)
+    GameEvent.push(EventCfg.onAddBag, play, item)
 end
 --------------------捡物品触发-------------------
 function pickupitemex(play, item)
@@ -2903,6 +2904,7 @@ local qf_teshunpc = {
     [53] = 53, -- 神石
     [106] = 106, -- 神石
     [623] = 623, -- 可能会卡tp的 npc
+    [518] = 518, -- atlas
 }
 local yishanchu_npcid = {
     [106] = 100, -- 要删除的 npc
