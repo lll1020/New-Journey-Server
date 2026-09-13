@@ -122,14 +122,27 @@ end
 local function _is_day_card_unlocked(play)
     return _has_first_charge(play)
 end
+local function _has_day_card_title(play)
+    local dayCardCfg = _config.day_card or {}
+    local titleName = tostring(dayCardCfg.title or "")
+    return titleName ~= "" and checktitle(play, titleName)
+end
 local function _get_daily_kills(play)
     return (tonumber(getplaydef(play, VarCfg.J_jsgw[1]) or 0) or 0) + (tonumber(getplaydef(play, VarCfg.J_jsgw[2]) or 0) or 0)
+end
+local function _get_exchange_daily_limit(play)
+    local baseLimit = tonumber(_config.exchange_daily_limit) or 10
+    local dayCardCfg = _config.day_card or {}
+    if _has_day_card_title(play) then
+        return tonumber(dayCardCfg.exchange_daily_limit) or 50
+    end
+    return baseLimit
 end
 -- 状态方法：计算兑换次数与进度
 local function _get_exchange_info(play, T_data)
     local totalKills = _get_daily_kills(play)
     local killPer = tonumber(_config.kill_per_exchange) or 188
-    local dailyLimit = tonumber(_config.exchange_daily_limit) or 50
+    local dailyLimit = _get_exchange_daily_limit(play)
     local maxCanExchange = math.floor(totalKills / killPer)
     local exchangeUsed = tonumber(T_data.exchange_used) or 0
     if exchangeUsed < 0 then exchangeUsed = 0 end
@@ -249,6 +262,7 @@ local function _get_box_item_name(boxType)
         low = "低级材料自选箱",
         high = "高级材料自选箱",
         super = "特级材料自选箱",
+        gem = "灵根宝石随机宝箱",
     }
     return boxMap[tostring(boxType or "low")] or "低级材料自选箱"
 end
@@ -344,7 +358,7 @@ local function _claim_day_card(play, T_data)
     local needCharge = tonumber(cfg.need_charge) or 28
     local titleName = tostring(cfg.title or "日卡")
     local tokenCount = tonumber(cfg.token_count) or 0
-    if not _is_day_card_unlocked(play) then
+    if not _has_first_charge(play) then
         return false, "请先领取首充礼包后再开启日卡#57"
     end
     if _is_day_card_claimed(T_data) then
@@ -384,7 +398,7 @@ local function _build_panel_data(play)
     data.exchange_available = exchangeAvailable
     data.exchange_progress = exchangeProgress
     data.exchange_need = _config.kill_per_exchange
-    data.exchange_limit = _config.exchange_daily_limit
+    data.exchange_limit = _get_exchange_daily_limit(play)
     data.exchange_used = T_data.exchange_used
     data.total_kills = totalKills
     data.today_kills = totalKills
@@ -399,6 +413,7 @@ local function _build_panel_data(play)
         low = getbagitemcount(play, "低级材料自选箱") or 0,
         high = getbagitemcount(play, "高级材料自选箱") or 0,
         super = getbagitemcount(play, "特级材料自选箱") or 0,
+        gem = getbagitemcount(play, "灵根宝石随机宝箱") or 0,
     }
     data.logs = {}
     data.placeholder = T_data.placeholder
@@ -409,7 +424,7 @@ local function _build_panel_data(play)
     data.day_card_need_charge = tonumber((_config.day_card or {}).need_charge) or 28
     data.day_card_unlocked = _is_day_card_unlocked(play) and 1 or 0
     data.day_card_claimed = _is_day_card_claimed(T_data) and 1 or 0
-    data.day_card_has_title = checktitle(play, ((_config.day_card or {}).title or "日卡")) and 1 or 0
+    data.day_card_has_title = _has_day_card_title(play) and 1 or 0
     return data, T_data
 end
 -- 面板方法：刷新101号NPC数据
@@ -459,8 +474,16 @@ end
 local function _open_box(play, T_data, boxType, choiceIdx)
     local boxName = _get_box_item_name(boxType)
     local pool = ((_config.box_pool or {})[tostring(boxType or "")]) or {}
+    if boxType == "gem" and #pool <= 0 then
+        pool = _config.gem_pool or {}
+    end
     local idx = tonumber(choiceIdx) or 0
-    local reward = idx > 0 and pool[idx] or nil
+    local reward = nil
+    if boxType == "gem" then
+        reward = _roll_pool(pool)
+    else
+        reward = idx > 0 and pool[idx] or nil
+    end
     if not reward then
         return false, "选择的奖励无效#57"
     end
@@ -511,16 +534,25 @@ function npc.link(play, npcid, p2, p3, msgData)
         _refresh_panel(play, npcid, p2)
     elseif p2 == 3 then -- exchange by kills
         local canExchange, progress = _get_exchange_info(play, T_data)
+        local dailyLimit = _get_exchange_daily_limit(play)
         if canExchange <= 0 then
-            Player.sendmsgEx(play, string.format("当前杀怪进度不足：#57|【%d/%d】#218|，今日兑换：#251|【%d/%d】#218|", progress, tonumber(_config.kill_per_exchange) or 188, tonumber(T_data.exchange_used) or 0, tonumber(_config.exchange_daily_limit) or 50))
+            Player.sendmsgEx(play, string.format("当前杀怪进度不足：#57|【%d/%d】#218|，今日兑换：#251|【%d/%d】#218|", progress, tonumber(_config.kill_per_exchange) or 188, tonumber(T_data.exchange_used) or 0, dailyLimit))
             return
         end
-        local count = canExchange
+        local count = tonumber(json_data.count or p3) or 0
+        if count ~= 1 and count ~= 10 and count ~= 100 then
+            Player.sendmsgEx(play, "兑换数量只能选择1、10或100个#57")
+            return
+        end
+        if count > canExchange then
+            Player.sendmsgEx(play, string.format("当前最多可兑换%d个鹤嘴锄#57", canExchange))
+            return
+        end
         T_data.exchange_used = T_data.exchange_used + count
         T_data.token_count = T_data.token_count + count
         _append_log(T_data, "杀怪兑换：获得" .. _token_name .. "*" .. count)
         _save_data(play, T_data)
-        Player.sendmsgEx(play, string.format("兑换成功：获得#251|【%s*%d】#218|，本次已自动兑换全部可兑换次数，今日兑换进度#57|【%d/%d】#218|", _token_name, count, tonumber(T_data.exchange_used) or 0, tonumber(_config.exchange_daily_limit) or 50))
+        Player.sendmsgEx(play, string.format("兑换成功：获得#251|【%s*%d】#218|，今日兑换进度#57|【%d/%d】#218|", _token_name, count, tonumber(T_data.exchange_used) or 0, dailyLimit))
         _refresh_panel(play, npcid, p2)
     elseif p2 == 4 then -- buy by cost
         local count = tonumber(json_data.count or p3) or 1
@@ -570,10 +602,12 @@ function npc.link(play, npcid, p2, p3, msgData)
         if boxType == "1" then boxType = "low" end
         if boxType == "2" then boxType = "high" end
         if boxType == "3" then boxType = "super" end
+        if boxType == "4" then boxType = "gem" end
         if boxType == "" then
             if tonumber(p3) == 1 then boxType = "low"
             elseif tonumber(p3) == 2 then boxType = "high"
-            elseif tonumber(p3) == 3 then boxType = "super" end
+            elseif tonumber(p3) == 3 then boxType = "super"
+            elseif tonumber(p3) == 4 then boxType = "gem" end
         end
         local choiceIdx = tonumber(json_data.idx or json_data.choice or 0)
         local ok, msg = _open_box(play, T_data, boxType, choiceIdx)
@@ -592,9 +626,6 @@ GameEvent.add(EventCfg.onLoginEnd, _on_login, _token_name)
 GameEvent.add(EventCfg.onKFLogin, _on_login, _token_name)
 GameEvent.add(EventCfg.onUPSkin, _on_skin_update, _token_name)
 return npc
-
-
-
 
 
 

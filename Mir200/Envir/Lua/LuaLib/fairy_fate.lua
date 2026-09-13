@@ -424,6 +424,13 @@ local function _build_snapshot(play, state)
         story_complete = function(storyName) return _story_complete(play, storyName) end,
     }
 end
+local function _is_retired_legacy_rule(detail)
+    local kind = type(detail) == "table" and type(detail.rule) == "table" and detail.rule.kind or ""
+    return kind == "tianshu_level"
+        or kind == "linggen_count"
+        or kind == "linggen_group"
+        or kind == "linggen_level"
+end
 -- °´ rule.kind Ö´ĞĞ×îÖÕ±È½Ï¡£
 -- rule ¸ºÔğÃèÊö¡°ÅĞ¶¨Ê²Ã´¡±£¬snapshot/counter ¸ºÔğÌá¹©¡°µ±Ç°ÖµÊÇ¶àÉÙ¡±¡£
 -- Á½Õß·ÖÀëºó£¬ºóĞøĞÂÔö³É¾ÍÊ±Ö»ĞèÒª²¹ÅäÖÃºÍÉÙÁ¿ kind ·ÖÖ§£¬²»ĞèÒªÔÙÅö cond ÎÄ°¸¡£
@@ -433,7 +440,7 @@ local function _reached(play, state, snap, detail)
     if kind == "level" then return snap.level >= r.target end
     if kind == "rebirth_stage" then return snap.rebirth_stage >= r.target end
     if kind == "power" then return snap.power >= r.target end
-    if kind == "tianshu_level" then return snap.tianshu_level >= r.target end
+    if _is_retired_legacy_rule(detail) then return false end
     if kind == "fashion_count" then return snap.fashion_count >= r.target end
     if kind == "linggen_count" then return snap.linggen_count >= r.target end
     if kind == "linggen_group" then for _, idx in ipairs(r.list or {}) do if _toint(snap.linggen_levels[tostring(idx)]) < 1 then return false end end return true end
@@ -488,6 +495,9 @@ local function _sync_legacy_panel_flags(state)
     local nameDone = {}
     local mapped = {}
     for _, detail in ipairs(_cfg.details or {}) do
+        if _is_retired_legacy_rule(detail) then
+            mapped[tostring(detail.legacy_idx or "")] = 1
+        else
         local done = _toint((state.done or {})[tostring(detail.id)]) >= 1 and 1 or 0
         local legacyIdx = _toint(detail.legacy_idx)
         if done > 0 then
@@ -497,6 +507,7 @@ local function _sync_legacy_panel_flags(state)
             local key = tostring(legacyIdx)
             mapped[key] = 1
             state[key] = done > 0 and 1 or nil
+        end
         end
     end
     for idx, info in pairs(legacy) do
@@ -521,7 +532,8 @@ end
 local function _refresh_attr(play, state)
     local attrs, special = {}, {}
     for _, detail in ipairs(_cfg.details or {}) do
-        if _toint(state.done[tostring(detail.id)]) >= 1 then
+        if not _is_retired_legacy_rule(detail)
+            and _toint(state.done[tostring(detail.id)]) >= 1 then
             for attrId, value in pairs((detail.reward_cfg or {}).attrs or {}) do attrs[attrId] = (attrs[attrId] or 0) + _toint(value) end
             for _, info in ipairs((detail.reward_cfg or {}).special or {}) do special[info.key] = (special[info.key] or 0) + _toint(info.value) end
         end
@@ -538,7 +550,9 @@ local function _evaluate(play, state) -- É¨ÃèÈ«²¿³É¾ÍÌõ¼ş£¬´ï³Éºó¼´Ê±·¢½±ÀøÓëÌáÊ
     local changed = false
     for _, detail in ipairs(_cfg.details or {}) do
         local key = tostring(detail.id)
-        if _toint(state.done[key]) < 1 and _reached(play, state, snap, detail) then
+        if not _is_retired_legacy_rule(detail)
+            and _toint(state.done[key]) < 1
+            and _reached(play, state, snap, detail) then
             state.done[key] = 1
             if detail.reward_cfg and detail.reward_cfg.items and #detail.reward_cfg.items > 0 then Player.rwjl(play, detail.reward_cfg.items, "ÏÉÍ¾ÆæÔµ³É¾Í", 1, 0) end
             if detail.reward_cfg and detail.reward_cfg.title and detail.reward_cfg.title ~= "" then Player.title_give(play, detail.reward_cfg.title) end
@@ -556,7 +570,16 @@ local function _evaluate(play, state) -- É¨ÃèÈ«²¿³É¾ÍÌõ¼ş£¬´ï³Éºó¼´Ê±·¢½±ÀøÓëÌáÊ
 end
 -- ÒÑÍê³É³É¾ÍÊıÁ¿¡£
 -- Õâ¸öÖµÖ÷Òª¸øÀï³Ì±®½±ÀøºÍ¿Í»§¶ËÊıÁ¿Õ¹Ê¾Ê¹ÓÃ¡£
-local function _done_count(state) return _count_true(state.done) end
+local function _done_count(state)
+    local count = 0
+    for _, detail in ipairs(_cfg.details or {}) do
+        if not _is_retired_legacy_rule(detail)
+            and _toint((state.done or {})[tostring(detail.id)]) >= 1 then
+            count = count + 1
+        end
+    end
+    return count
+end
 -- ×é×°¡°¼ÙÊôĞÔ¡±Õ¹Ê¾ÁĞ±í¡£
 -- ÕâÀàÖµ²»Ò»¶¨Ö±½Ó²ÎÓëÕ½¶·ÊôĞÔ»»Ëã£¬µ«¿Í»§¶ËÃæ°åÈÔÈ»ĞèÒªÕ¹Ê¾¸øÍæ¼Ò¿´¡£
 -- ÀıÈç¿ç·ş¶îÍâÔöÉË¡¢ÈËÔµ¡¢÷ÈÁ¦£¬¶¼×ßÕâÀï×ª³ÉÍ³Ò»ÏÔÊ¾½á¹¹¡£
@@ -730,5 +753,3 @@ GameEvent.add(EventCfg.onTakeOffEx, function(play) _touch(play, nil, false) end,
 GameEvent.add(EventCfg.onCheckDropUseItems, function(play) _touch(play, function(state) state.counter.death_drop_total = _toint(state.counter.death_drop_total) + 1 return true end, false) end, "ÏÉÍ¾ÆæÔµ")
 GameEvent.add(EventCfg.gocastlewarstart, function() setsysvarex(_sys_castle_first_blood_key, "", true) end, "ÏÉÍ¾ÆæÔµ")
 return FairyFate
-
-

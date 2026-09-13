@@ -3,6 +3,7 @@ npc = {}
 -- 世界符文
 -- 世界符文：激活七枚符文后解锁第七大陆通行资格。
 local _config = Guard.getConfig("npc_84")
+local TalentTree = rawget(_G, "TalentTree") or include("lua/LuaLib/talent_tree.lua")
 local _var_name = VarCfg["T_世界符文"]
 local _npc_key = "npc_84"
 local _title_name = (_config and _config.title_reward) or "世界符文·[真我]"
@@ -41,30 +42,7 @@ end
 
 -- 检查灵根条件是否达成。
 local function _has_all_linggen(play)
-    local lg = Player.getJsonTableByVar(play, VarCfg["T_灵根"]) or {}
-    local level = lg.level or {}
-    for i = 1, 5 do
-        local value = level[tostring(i)]
-        if value == nil then
-            value = level[i]
-        end
-        if _toint(value) < 10 then
-            return false
-        end
-    end
-
-    local jq = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
-    local trial = jq["npc_68"] or {}
-    for i = 1, 5 do
-        local value = trial[tostring(i)]
-        if value == nil then
-            value = trial[i]
-        end
-        if _toint(value) ~= 1 then
-            return false
-        end
-    end
-    return true
+    return TalentTree and TalentTree.hasBaseUnlock and TalentTree.hasBaseUnlock(play) == true
 end
 local function _has_all_lingshou(play)
     local cfg = ((teshudata or {})["npc_64"] or {}).config or {}
@@ -195,7 +173,7 @@ end
 local function _check_rune(play, idx)
     if idx == 1 then
         if not _has_all_linggen(play) then
-            return false, "需五项基础灵根达到Lv.10并完成全部高阶试炼#57"
+            return false, "需要先开启|【灵根天赋树】#218|后才可激活#57"
         end
         if not _has_all_lingshou(play) then
             return false, "需激活全部灵兽#57"

@@ -1,5 +1,17 @@
 release_print("UtilServer Player.lua")
 Player = {}
+local _dl_unlock_sync_cache = setmetatable({}, {__mode = "k"})
+function Player.syncDlUnlockOnce(actor, value)
+    if not actor then
+        return
+    end
+    value = tonumber(value or 0) or 0
+    if _dl_unlock_sync_cache[actor] == value then
+        return
+    end
+    _dl_unlock_sync_cache[actor] = value
+    sendluamsg(actor, 103, 1, 0, 0, tbl2json({dl_all_unlock = value}))
+end
 local bind_money = {
     {3,1},--金币 金币
     {4,2},--元宝 元宝
@@ -1075,14 +1087,8 @@ local function _dl_has_story_point_count(actor, continent, need_count, debug, op
 end
 -- 五大陆门槛：10 种灵根均已激活。
 local function _dl_has_all_linggen(actor)
-    local data = Player.getJsonTableByVar(actor, VarCfg["T_灵根"]) or {}
-    local levels = type(data.level) == "table" and data.level or {}
-    for i = 1, 5 do
-        if (tonumber(levels[tostring(i)] or levels[i] or 0) or 0) == 0 then
-            return false
-        end
-    end
-    return true
+    local talent = rawget(_G, "TalentTree")
+    return talent and talent.hasBaseUnlock and talent.hasBaseUnlock(actor) == true
 end
 -- 五大陆门槛：本命灵根对应的基础灵根满级，且觉醒灵根达到 Lv.2。
 local function _dl_has_linggen_gate(actor)
@@ -1128,7 +1134,7 @@ local function _dl_mark_unlocked(actor, dl)
     end
     setplaydef(actor, "U_全大陆解锁", dl)
     if sendluamsg then
-        sendluamsg(actor, 103, 1, 0, 0, tbl2json({dl_all_unlock = dl}))
+        Player.syncDlUnlockOnce(actor, dl)
     end
 end
 local function _dl_check(actor, dl)
@@ -1166,20 +1172,18 @@ local function _dl_check(actor, dl)
         return false, "需三大陆剧情点达到25点、完成三大陆转生且人物等级达到150级后才可进入四大陆"
     elseif dl == 5 then
         local story_ok, story_done, story_need = _dl_has_story_point_count(actor, 4, 57, true)
-        local linggen_ok = _dl_has_all_linggen(actor)
-        if story_ok and zslv >= 40 and linggen_ok then
+        if story_ok and zslv >= 40 then
             _dl_mark_unlocked(actor, 5)
             return true
         end
-        return false, "需四大陆剧情点达到57点、完成四大陆转生且全部基础灵根达到Lv.1后才可进入五大陆"
+        return false, "需四大陆剧情点达到57点并完成四大陆转生后才可进入五大陆"
     elseif dl == 6 then
         local story_ok, story_done, story_need = _dl_has_story_point_count(actor, 5, 50, true)
-        local destiny_ok = _dl_has_all_destiny(actor)
-        if story_ok and zslv >= 50 and destiny_ok then
+        if story_ok and zslv >= 50 then
             _dl_mark_unlocked(actor, 6)
             return true
         end
-        return false, "需五大陆剧情点达到50点、完成五大陆转生且完成天道命盘后才可进入六大陆"
+        return false, "需五大陆剧情点达到50点并完成五大陆转生后才可进入六大陆"
     elseif dl == 7 then
         local story_ok, story_done, story_need = _dl_has_story_point_count(actor, 6, 81, true)
         local pass_ok = Player.hasSeventhContinentPass(actor)

@@ -1,5 +1,10 @@
 --------------------buff´¥·¢Âß¼­-------------------
 function buffchufa(play, buffid, zid)
+    if TalentTreeSkills and TalentTreeSkills.onBuffTrigger
+        and TalentTreeSkills.onBuffTrigger(play, buffid, zid)
+    then
+        return
+    end
     if buffid == 19999 then
         if getbaseinfo(play, 6) < 30 then
             changelevel(play, '+', 1)
@@ -73,6 +78,11 @@ function buffchufa(play, buffid, zid)
 end
 --------------------buff½áÊøÂß¼­-------------------
 function buffchange(play, buffid, zid, lx)
+    if TalentTreeSkills and TalentTreeSkills.onBuffChange
+        and TalentTreeSkills.onBuffChange(play, buffid, zid, lx)
+    then
+        return
+    end
     if buffid == 20060 then
         if lx == 4 then
             moneychange16(play)

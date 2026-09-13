@@ -777,14 +777,14 @@ npc[11] = function(play, p2, p3, data) --异闻录
         _ywl_sync_auto_current_task(play)
         _ywl_refresh_clicknewtask_block(play)
         local admin_unlock = tonumber(getplaydef(play, "U_全大陆解锁") or 0) or 0
-        sendluamsg(play, 103, 1, 0, 0, tbl2json({dl_all_unlock = admin_unlock}))
+        Player.syncDlUnlockOnce(play, admin_unlock)
         sendluamsg(play, 101, 11, 0, 0, '{"dljq":' .. getplaydef(play, VarCfg.T_dljq) .. ',"zxrw":' .. getplaydef(play, VarCfg.T_zxrw) .. ',"ywl":' .. getplaydef(play, VarCfg.T_ywl) .. ',"dl_all_unlock":' .. admin_unlock .. "}")
         _ywl_send_current_task(play)
     elseif p2 == 1 then
         --传送
         stopautoattack(play)
         local admin_unlock = tonumber(getplaydef(play, "U_全大陆解锁") or 0) or 0
-        sendluamsg(play, 103, 1, 0, 0, tbl2json({dl_all_unlock = admin_unlock}))
+        Player.syncDlUnlockOnce(play, admin_unlock)
         local sj = json2tbl(data)
         if
             sj.i

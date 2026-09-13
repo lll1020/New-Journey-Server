@@ -1,5 +1,6 @@
 npc = {}
 
+local TalentTree = rawget(_G, "TalentTree") or include("lua/LuaLib/talent_tree.lua")
 
 -- 天道命盘
 local _config = Guard.getConfig("npc_74")
@@ -34,22 +35,10 @@ local function _count_full_lingshou(play)
 end
 
 local function _has_awakened_main_linggen_level(play, needLevel)
-    local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵根"]) or {}
-    local mainIdx = tonumber(T_data.main or 0) or 0
-    if mainIdx <= 0 then
-        return false, 0, 0
+    if TalentTree and TalentTree.hasBaseUnlock and TalentTree.hasBaseUnlock(play) then
+        return true, 0, 1
     end
-    local cfg = (teshudata or {})["npc_22"] or {}
-    local pair = tonumber((cfg.awaken_pairs or {})[mainIdx] or 0) or 0
-    if pair <= 0 then
-        return false, pair or 0, 0
-    end
-    local awakenIdx = mainIdx > 5 and mainIdx or pair
-    if awakenIdx <= 5 then
-        return false, awakenIdx, 0
-    end
-    local lv = tonumber((T_data.level or {})[tostring(awakenIdx)] or 0) or 0
-    return lv >= (needLevel or 3), awakenIdx, lv
+    return false, 0, 0
 end
 local function _get_realm_level(play)
     return tonumber(getplaydef(play, VarCfg["U_境界修炼"][1])) or 0
@@ -106,7 +95,7 @@ local function _check_task_condition(play, idx)
     elseif idx == 2 then
         local ok, pair, lv = _has_awakened_main_linggen_level(play, 3)
         if not ok then
-            return false, string.format("需要本命灵根对应的觉醒灵根达到|【Lv.3】#218|后才可激活，当前觉醒灵根等级为|【%d】#218|#57", lv or 0)
+            return false, "需要先开启|【灵根天赋树】#218|后才可激活#57"
         end
         return true
     elseif idx == 3 then

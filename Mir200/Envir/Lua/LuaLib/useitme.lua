@@ -559,8 +559,16 @@ function stdmodefunc32(play, item) --神石召唤
     return false
 end
 function stdmodefunc33(play, item) --灵兽圣遗物自选礼盒
+    if LinggenGemBox and LinggenGemBox.use_select_box then
+        return LinggenGemBox.use_select_box(play, item)
+    end
+    return false
 end
 function stdmodefunc34(play, item) --随机盲盒
+    if LinggenGemBox and LinggenGemBox.use_random_box then
+        return LinggenGemBox.use_random_box(play, item)
+    end
+    return false
 end
 function stdmodefunc35(play, item) --藏宝图
     -- release_print("藏宝图物品使用逻辑待实现")
@@ -1578,7 +1586,6 @@ local function _get_zhuji_dan_record(play)
     end
     return rec
 end
-
 
 
 

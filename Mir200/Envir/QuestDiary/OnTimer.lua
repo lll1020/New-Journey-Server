@@ -3102,6 +3102,9 @@ function ontimer4(play)
 end
 -----------------个人5号定时器----------------1秒定时器AI挂机开启
 function ontimer5(play)
+    if TalentTreeSkills and TalentTreeSkills.tick then
+        TalentTreeSkills.tick(play)
+    end
 end
 -----------------个人6号定时器---------------红点系统--60s
 function ontimer6(play)
@@ -3239,10 +3242,27 @@ function ontimer6(play)
     end
     -- 仙途奇缘顶部红点：存在任一里程碑奖励可领取时点亮。
     local can_ff = false
+    local function _fairy_fate_rule_retired(detail)
+        local rule = type(detail) == "table" and type(detail.rule) == "table" and detail.rule or {}
+        local kind = tostring(rule.kind or "")
+        return kind == "tianshu_level"
+            or kind == "linggen_count"
+            or kind == "linggen_group"
+            or kind == "linggen_level"
+    end
+    local function _fairy_fate_done_count(state)
+        local count = 0
+        for _, detail in ipairs((_fairy_fate_red_cfg and _fairy_fate_red_cfg.details) or {}) do
+            if not _fairy_fate_rule_retired(detail) and _is_marked((state.done or {})[tostring(detail.id)]) then
+                count = count + 1
+            end
+        end
+        return count
+    end
     local ff_state = Player.getJsonTableByVar(play, "T40") or {}
     ff_state.done = type(ff_state.done) == "table" and ff_state.done or {}
     ff_state.milestone_claim = type(ff_state.milestone_claim) == "table" and ff_state.milestone_claim or {}
-    local ff_done_count = _count_marked(ff_state.done)
+    local ff_done_count = _fairy_fate_done_count(ff_state)
     for _, milestone in ipairs((_fairy_fate_red_cfg and _fairy_fate_red_cfg.milestones) or {}) do
         local need_count = tonumber(milestone.count or 0) or 0
         if need_count > 0 and ff_done_count >= need_count then
@@ -3264,7 +3284,12 @@ function ontimer6(play)
     msfc_data.claim_crown = type(msfc_data.claim_crown) == "table" and msfc_data.claim_crown or {}
     local total_kills = (tonumber(getplaydef(play, VarCfg.J_jsgw[1]) or 0) or 0) + (tonumber(getplaydef(play, VarCfg.J_jsgw[2]) or 0) or 0)
     local kill_per_exchange = tonumber(msfc_cfg.kill_per_exchange or 188) or 188
-    local exchange_daily_limit = tonumber(msfc_cfg.exchange_daily_limit or 50) or 50
+    local exchange_daily_limit = tonumber(msfc_cfg.exchange_daily_limit or 10) or 10
+    local first_charge_data = Player.getJsonTableByVar(play, "T39") or {}
+    local first_charge_claimed = (tonumber(first_charge_data.main_claimed or first_charge_data.other_lb or first_charge_data._lb or 0) or 0) >= 1
+    if first_charge_claimed then
+        exchange_daily_limit = tonumber((msfc_cfg.day_card or {}).exchange_daily_limit) or 50
+    end
     local exchange_used = tonumber(msfc_data.exchange_used or 0) or 0
     if tostring(msfc_data.exchange_date or "") ~= os.date("%Y%m%d") then
         exchange_used = 0
@@ -3316,7 +3341,9 @@ function ontimer6(play)
     if can_sc then
         _send_top_red(5)
     end
-    _send_top_red(515, can_ff)
+    if can_ff then
+        _send_top_red(515)
+    end
     if can_zz then
         _send_top_red(16)
     end

@@ -133,7 +133,7 @@ return {
                         "ÂÒÔá¸Ú",
                     },
                     monster = {
-                        {id = "m_2_3_1", name = "¿Ý¹Ç¿Í", model = 12023, reward = {{"½ð±Ò",10000}}, attr_reward = {name = "¹¥»÷", min = 0, max = 2}},
+                        {id = "m_2_3_1", name = "¡¸ÒÅ±øÖ®Íõ¡¤¶Ï¸ê¡¹", model = 150, reward = {{"½ð±Ò",10000}}, attr_reward = {name = "¹¥»÷", min = 0, max = 2}},
                         {id = "m_2_3_2", name = "¡¸ÍòÚ£Ú¤Àô¡¤°×É·¡¹", model = 12027, reward = {{"½ð±Ò",10000}}, attr_reward = {name = "¹¥»÷", min = 0, max = 2}},
                         {id = "m_2_3_3", name = "¡ïÒõÄ¹¹í»Ê¡¤¸¯ÍÁ×ð¡ï", model = 12028, reward = {{"½ð±Ò",10000}}, attr_reward = {name = "¹¥»÷", min = 0, max = 2}},
                     },

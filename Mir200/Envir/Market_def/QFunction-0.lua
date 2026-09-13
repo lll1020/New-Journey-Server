@@ -1017,6 +1017,9 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
             Damage = TianMingDaoPanAdjustPlayerDamage(play, Target, Damage)
         end
         Damage = _magtag_on_attack_target(play, Target, Damage, MagicId)
+        if TalentTreeSkills and TalentTreeSkills.adjustDamage then
+            Damage = TalentTreeSkills.adjustDamage(play, Target, Hiter, MagicId, Damage, Model)
+        end
 		return Damage
 	else
         GameEvent.push(EventCfg.onAttackDamageMonster, play, Target, Damage, MagicId, Model)
@@ -1153,6 +1156,9 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
             Damage = math.floor(Damage * huijie_damage_rate)
         end
         Damage = _magtag_on_attack_target(play, Target, Damage, MagicId)
+        if TalentTreeSkills and TalentTreeSkills.adjustDamage then
+            Damage = TalentTreeSkills.adjustDamage(play, Target, Hiter, MagicId, Damage, Model)
+        end
 		return Damage
 	end
 end
@@ -1263,6 +1269,14 @@ function struckdamage(play, Hiter, Target, MagicId, Damage)
 	if hasbuff(play, 20033) and MagicId > 0 then
 		return 0
 	end
+    if TalentTreeSkills and TalentTreeSkills.adjustTakenDamage then
+        local adjusted, handled = TalentTreeSkills.adjustTakenDamage(play, Hiter, Target, Damage)
+        if handled then
+            return adjusted
+        elseif type(adjusted) == "number" then
+            Damage = adjusted
+        end
+    end
 	local bl = getplaydef(play, VarCfg.S_buffbgjq)
 	local data = json2tbl(bl == '' and {} or bl)
 	local ew = 0
@@ -2553,7 +2567,7 @@ local function _lingshou_get_level(play, petName)
         return 0
     end
     local ls = data.ls or {}
-    return tonumber(ls[tostring(idx)] or 0) or 0
+    return tonumber(ls[tostring(idx)] or ls[idx] or 0) or 0
 end
 
 local function _lingshou_has_active_skill(play, petName)
@@ -2561,7 +2575,11 @@ local function _lingshou_has_active_skill(play, petName)
     local cfg = (teshudata and teshudata["npc_64"] and teshudata["npc_64"].config) or {}
     local maxLevel = tonumber(cfg.wy and cfg.wy.max_level or 10) or 10
     local det = cfg.wy and cfg.wy.det and cfg.wy.det[level] or nil
-    return level >= maxLevel and det and det.s_skill == true
+    local idx = _lingshou_pet_index[petName]
+    local data = Player.getJsonTableByVar(play, VarCfg["T_ÁéÊÞ"]) or {}
+    local syw = data.syw or {}
+    local relicEquipped = idx and tonumber(syw[tostring(idx)] or syw[idx] or 0) == 1
+    return relicEquipped and level >= maxLevel and det and det.s_skill == true
 end
 
 local function _lingshou_skill_ready(play, petName, cd)
@@ -2582,7 +2600,7 @@ end
 local function _lingshou_root_level(play, idx)
     local data = Player.getJsonTableByVar(play, VarCfg["T_Áé¸ù"]) or {}
     local level = data.level or {}
-    return tonumber(level[tostring(idx)] or 0) or 0
+    return tonumber(level[tostring(idx)] or level[idx] or 0) or 0
 end
 
 local function _lingshou_safe_effect(Target, effectId)
@@ -3086,7 +3104,4 @@ end
 function carDie(play, car)
     return cardie(play)
 end
-
-
-
 

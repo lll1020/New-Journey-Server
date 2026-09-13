@@ -35,17 +35,22 @@ local function _star_upgrade_need()
 end
 
 local function _get_star_progress(T_data, key, star)
-            T_data.ls_star_progress = T_data.ls_star_progress or {}
-    local progress = tonumber(T_data.ls_star_progress[key])
+    T_data.ls_star_progress = T_data.ls_star_progress or {}
+    local progress = tonumber(T_data.ls_star_progress[key] or T_data.ls_star_progress[tonumber(key)])
     if progress == nil then
         local to2, to3 = _star_upgrade_need()
         if _toint(star) >= 3 then
             progress = to3
         elseif _toint(star) >= 2 then
             progress = to2
+        elseif _toint(star) >= 1 then
+            progress = 1
         else
             progress = 0
         end
+    elseif progress <= 0 and _toint(star) >= 1 then
+        -- 旧版本首次获得时记录为 0，这里迁移为首抽计入 1 次进度。
+        progress = 1
     end
     local _, to3 = _star_upgrade_need()
     return math.max(0, math.min(to3, progress))
@@ -83,13 +88,60 @@ local function _ensure_pet_data(T_data)
     T_data = T_data or {}
     T_data.ls = T_data.ls or {}
     T_data.ls_sp = T_data.ls_sp or {}
-            T_data.ls_star_progress = T_data.ls_star_progress or {}
+    T_data.ls_star_progress = T_data.ls_star_progress or {}
     T_data.hatch = T_data.hatch or {}
     T_data.hatch_log = T_data.hatch_log or {}
+    for i = 1, 5 do
+        local key = tostring(i)
+        if T_data.ls[key] == nil and T_data.ls[i] ~= nil then
+            T_data.ls[key] = T_data.ls[i]
+        end
+        if T_data.ls_sp[key] == nil and T_data.ls_sp[i] ~= nil then
+            T_data.ls_sp[key] = T_data.ls_sp[i]
+        end
+        if T_data.ls_star_progress[key] == nil and T_data.ls_star_progress[i] ~= nil then
+            T_data.ls_star_progress[key] = T_data.ls_star_progress[i]
+        end
+    end
     return T_data
 end
 
+local function _init_lingshou_pool(T_data)
+    T_data.ls_pool = T_data.ls_pool or {}
+    local total = 0
+    local perPet = _toint(_config.pool_per_pet, 9)
+    for i = 1, 5 do
+        local key = tostring(i)
+        local left = tonumber(T_data.ls_pool[key])
+        if left == nil then left = tonumber(T_data.ls_pool[i]) end
+        if left == nil then left = perPet end
+        if left < 0 then left = 0 end
+        T_data.ls_pool[key] = left
+        total = total + left
+    end
+    T_data.ls_pool_total = total
+    return T_data
+end
 
+local function _draw_lingshou_pool(T_data)
+    _init_lingshou_pool(T_data)
+    local total = tonumber(T_data.ls_pool_total or 0) or 0
+    if total <= 0 then
+        return nil
+    end
+    local pick = math.random(total)
+    local cursor = 0
+    for i = 1, 5 do
+        local key = tostring(i)
+        cursor = cursor + (tonumber(T_data.ls_pool[key] or 0) or 0)
+        if pick <= cursor then
+            T_data.ls_pool[key] = math.max(0, (tonumber(T_data.ls_pool[key] or 0) or 0) - 1)
+            T_data.ls_pool_total = total - 1
+            return i
+        end
+    end
+    return nil
+end
 local function _is_lingshou_contract_open(play, T_data)
     T_data = _ensure_pet_data(T_data)
     if _toint(T_data.dqzh) > 0 then
@@ -108,7 +160,9 @@ local function _has_pet_synergy(play, T_data)
     local idx = tonumber(T_data.dqzh or 0) or 0
     local cfg = _config.config and _config.config.ls and _config.config.ls[idx]
     if not cfg then return false end
-    if (tonumber((T_data.ls or {})[tostring(idx)] or 0) or 0) < 2 then return false end
+    if (tonumber((T_data.ls or {})[tostring(idx)] or 0) or 0) <= 0 then return false end
+    local syw = T_data.syw or {}
+    if (tonumber(syw[tostring(idx)] or syw[idx] or 0) or 0) ~= 1 then return false end
     return true
 end
 local function _push_hatch_log(T_data, idx, itemName, source, beforeStar, afterStar)
@@ -130,6 +184,56 @@ local function _refresh_pet_panel(play, npcid, p2, T_data)
     sendluamsg(play, 100, npcid or 64, p2 or 1, 0, tbl2json({T_data = T_data, server_time = os.time()}))
 end
 
+local PET_INTIMACY_ATTR_LIST = "灵兽亲密度"
+
+local PET_BASE_ATTR_LIST = "灵兽本体属性"
+
+local function _refresh_pet_base_bonus(play, T_data)
+    T_data = _ensure_pet_data(T_data)
+    local attrs = {}
+    local petCfgList = _config.config and _config.config.ls or {}
+    for i = 1, 5 do
+        local key = tostring(i)
+        if _toint(T_data.ls[key] or T_data.ls[i]) > 0 then
+            local petCfg = petCfgList[i] or {}
+            for _, one in ipairs(petCfg.attr_give or {}) do
+                local attrId = tonumber(one[1])
+                local value = tonumber(one[2]) or 0
+                if attrId and value ~= 0 then
+                    attrs[attrId] = (attrs[attrId] or 0) + value
+                end
+            end
+        end
+    end
+    Player.del_attlist(play, PET_BASE_ATTR_LIST)
+    local attrsStr = Player.getAttrTableToStr(attrs)
+    if attrsStr and attrsStr ~= "" then
+        Player.add_attlist(play, PET_BASE_ATTR_LIST, "=", attrsStr, 1)
+    end
+end
+
+local function _refresh_pet_intimacy_bonus(play, T_data)
+    T_data = _ensure_pet_data(T_data)
+    local attrs = {}
+    local det = _config.config and _config.config.wy and _config.config.wy.det or {}
+    for i = 1, 5 do
+        local level = _toint(T_data.ls[tostring(i)] or T_data.ls[i])
+        local levelCfg = det[level]
+        for _, one in ipairs((levelCfg and levelCfg.attr) or {}) do
+            local attrId = tonumber(one[1])
+            local value = tonumber(one[2]) or 0
+            if attrId and value ~= 0 then
+                attrs[attrId] = (attrs[attrId] or 0) + value
+            end
+        end
+    end
+    Player.del_attlist(play, PET_INTIMACY_ATTR_LIST)
+    local attrsStr = Player.getAttrTableToStr(attrs)
+    if attrsStr and attrsStr ~= "" then
+        Player.add_attlist(play, PET_INTIMACY_ATTR_LIST, "=", attrsStr, 1)
+    end
+end
+
 local function _add_lingshou_star(play, idx, source, itemName)
     idx = tonumber(idx)
     local cfg = idx and LINGSHOU_BABY_CFG[idx]
@@ -146,10 +250,9 @@ local function _add_lingshou_star(play, idx, source, itemName)
     end
     if _toint(T_data.ls[key]) <= 0 then
         T_data.ls[key] = 1
-        Player.updateSomeAddr(play, nil, _config.config.wy.det[1] and _config.config.wy.det[1].attr or nil)
     end
     local _, to3 = _star_upgrade_need()
-    local progress = beforeStar > 0 and math.min(to3, beforeProgress + 1) or 0
+    local progress = beforeStar > 0 and math.min(to3, beforeProgress + 1) or 1
     T_data.ls_star_progress[key] = progress
     T_data.ls_sp[key] = math.min(maxStar, beforeStar > 0 and _star_from_progress(progress) or 1)
     if T_data.hatch and T_data.hatch[key] then
@@ -160,6 +263,8 @@ local function _add_lingshou_star(play, idx, source, itemName)
     _push_hatch_log(T_data, idx, itemName or cfg.item, source or "unknown", beforeStar, T_data.ls_sp[key])
     Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
     if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
+    _refresh_pet_base_bonus(play, T_data)
+    _refresh_pet_intimacy_bonus(play, T_data)
     TMLP_refresh_pet_bonus(play)
     return true, string.format("灵兽|【%s】#218|孵化成功，当前星级|【%d】#218|%s", cfg.pet, T_data.ls_sp[key], _star_progress_text(progress)), T_data
 end
@@ -204,40 +309,41 @@ function npc.checkBabyHatch(play, aheadSeconds, silent)
     return _settle_due_hatch(play, aheadSeconds, silent)
 end
 function TMLP_refresh_pet_bonus(play)
-    local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"]) or {}
-    local ls = T_data.ls or {}
-    local max_level = ((((teshudata or {})["npc_64"] or {}).config or {}).wy or {}).max_level or 0
-    local attrs = {}
-    Player.del_attlist(play, "天命道盘_灵兽加成")
-    if max_level <= 0 then
-        return
+    local T_data = _ensure_pet_data(Player.getJsonTableByVar(play, VarCfg["T_灵兽"]))
+    local stars = T_data.ls_sp or {}
+    local minStar = 3
+    for i = 1, 5 do
+        local star = tonumber(stars[tostring(i)] or stars[i] or 0) or 0
+        if star < minStar then minStar = star end
     end
-    for idx, level in pairs(ls) do
-        if (tonumber(level) or 0) >= max_level then
-            local cfg = (_config.config and _config.config.ls and _config.config.ls[tonumber(idx)]) or nil
-            local add = cfg and cfg.attr_give or nil
-            for _, one in ipairs(add or {}) do
-                local attr_id = tonumber(one[1])
-                local value = tonumber(one[2]) or 0
-                if attr_id and value ~= 0 then
-                    attrs[attr_id] = (attrs[attr_id] or 0) + math.floor(value * 5 / 100)
-                end
-            end
+    local attrs = {}
+    Player.del_attlist(play, "lingshou_bond")
+    Player.del_attlist(play, "灵兽_星级加成")
+    local bond = _config.bond_attr and _config.bond_attr[minStar] or nil
+    for _, one in ipairs(bond or {}) do
+        local attrId = tonumber(one[1])
+        local value = tonumber(one[2]) or 0
+        if attrId and value ~= 0 then
+            attrs[attrId] = (attrs[attrId] or 0) + value
         end
     end
     local attrsstr = Player.getAttrTableToStr(attrs)
     if attrsstr and attrsstr ~= "" then
-        Player.add_attlist(play, "天命道盘_灵兽加成", "=", attrsstr, 1)
+        Player.add_attlist(play, "lingshou_bond", "=", attrsstr, 1)
     end
 end
 function npc.syncContractState(play)
     _settle_due_hatch(play, 0, true)
-    local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
+    local T_data = _ensure_pet_data(Player.getJsonTableByVar(play, VarCfg["T_灵兽"]))
+    _init_lingshou_pool(T_data)
+    Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
     sendluamsg(play,100,64,0,0,tbl2json({T_data = T_data, server_time = os.time(), sync_only = 1, main_unlocked = Player.dl_sz_notip(play, 4) and 1 or 0}))
 end
 function npc.main(play,npcid)
     local contractOnly = tonumber(npcid) == 1064
-    local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
+    local T_data = _ensure_pet_data(Player.getJsonTableByVar(play, VarCfg["T_灵兽"]))
+    _init_lingshou_pool(T_data)
+    Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
     if contractOnly then
         _settle_due_hatch(play, 0, true)
         T_data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
@@ -290,7 +396,7 @@ function npc.link(play,npcid,ew,aid,data)
         return
     end
     local json_data = json2tbl(data) or {}
-    local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
+    local T_data = _ensure_pet_data(Player.getJsonTableByVar(play, VarCfg["T_灵兽"]))
 
     if ew ~= 1 then
         local idx = tonumber(json_data.idx)
@@ -307,9 +413,12 @@ function npc.link(play,npcid,ew,aid,data)
             Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
             return
         end
-        Player.takeItemByTable(play, _config.cost, ",灵兽抽取",nil)
-        local randomNum = ransjstr(_config.weight, 1, 3)
-        randomNum = tonumber(randomNum)
+        local randomNum = _draw_lingshou_pool(T_data)
+        if not randomNum then
+            Player.sendmsgEx(play, "Pet draw pool exhausted#57")
+            return
+        end
+        Player.takeItemByTable(play, _config.cost, "灵兽抽取", nil)
         local to2, to3 = _star_upgrade_need()
         T_data.ls = T_data.ls or {}
         T_data.ls_sp = T_data.ls_sp or {}
@@ -317,14 +426,15 @@ function npc.link(play,npcid,ew,aid,data)
         if _toint(T_data.ls[""..randomNum]) <= 0 then
             T_data.ls[""..randomNum] = 1
             T_data.ls_sp[""..randomNum] = 1
-            T_data.ls_star_progress[""..randomNum] = 0
-            Player.sendmsgEx(play, string.format("你成功抽取到灵兽|【%s】#218|%s", _config.config.ls[randomNum].name, _star_progress_text(0)))
-            Player.sendmsgEx(play, "你已获得该灵兽的|【初始星级】#218|，快去召唤它吧")
+            T_data.ls_star_progress[""..randomNum] = 1
             Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
+            _refresh_pet_base_bonus(play, T_data)
+            _refresh_pet_intimacy_bonus(play, T_data)
+            TMLP_refresh_pet_bonus(play)
+            Player.sendmsgEx(play, string.format("你成功抽取到灵兽|【%s】#218|%s", _config.config.ls[randomNum].name, _star_progress_text(1)))
+            Player.sendmsgEx(play, "你已获得该灵兽的|【初始星级】#218|，快去召唤它吧")
             if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
             sendluamsg(play,100,npcid,1,0,tbl2json({T_data = T_data, server_time = os.time()}))
-            Player.updateSomeAddr(play,nil, _config.config.wy.det[T_data.ls[""..randomNum]].attr)
-            TMLP_refresh_pet_bonus(play)
         else
         -- 最大星级以配置 max_star 为准
             local starKey = ""..randomNum
@@ -332,6 +442,7 @@ function npc.link(play,npcid,ew,aid,data)
             local currentProgress = _get_star_progress(T_data, starKey, curStar)
             local maxStar = _toint(_config.max_star, 3)
             if curStar >= maxStar then
+                Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
                 Player.sendmsgEx(play, string.format("你抽取到的灵兽|【%s】#218", _config.config.ls[randomNum].name))
                 Player.rwjl(play, {{"灵石",500},{"妖怪精魄",10}}, "灵兽抽取",1,1000)
                 return
@@ -340,8 +451,11 @@ function npc.link(play,npcid,ew,aid,data)
             local progress = math.min(to3, currentProgress + 1)
             T_data.ls_star_progress[starKey] = progress
             T_data.ls_sp[starKey] = math.min(maxStar, _star_from_progress(progress))
-            Player.sendmsgEx(play, string.format("你成功抽取到灵兽|【%s】#218|%s", _config.config.ls[randomNum].name, _star_progress_text(progress)))
             Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
+            _refresh_pet_base_bonus(play, T_data)
+            _refresh_pet_intimacy_bonus(play, T_data)
+            TMLP_refresh_pet_bonus(play)
+            Player.sendmsgEx(play, string.format("你成功抽取到灵兽|【%s】#218|%s", _config.config.ls[randomNum].name, _star_progress_text(progress)))
             if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
             sendluamsg(play,100,npcid,1,0,tbl2json({T_data = T_data, server_time = os.time()}))
         end
@@ -356,13 +470,9 @@ function npc.link(play,npcid,ew,aid,data)
             Player.sendmsgEx(play, "你没有该灵兽，请先抽取灵兽#57")
             return
         end
-        local oldIdx = tonumber(T_data.dqzh)
-        local oldAttr = oldIdx and _config.config.ls[oldIdx] and _config.config.ls[oldIdx].attr_give or nil
-        local newAttr = _config.config.ls[json_data.idx].attr_give
         T_data.dqzh = json_data.idx
         Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
         if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
-        Player.updateSomeAddr(play, oldAttr, newAttr)
         Player.sendmsgEx(play, string.format("你成功出战了灵兽|【%s】#218|，快去战斗吧！", _config.config.ls[json_data.idx].name))
         _refresh_pet_panel(play, npcid, 2, T_data)
     elseif ew == 3 then -- 灵兽升级 --喂养
@@ -388,7 +498,7 @@ function npc.link(play,npcid,ew,aid,data)
         T_data.ls[""..json_data.idx] = T_data.ls[""..json_data.idx] + 1
         Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
         if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
-        Player.updateSomeAddr(play,_config.config.wy.det[T_data.ls[""..json_data.idx] - 1] and _config.config.wy.det[T_data.ls[""..json_data.idx] - 1].attr or nil, _config.config.wy.det[T_data.ls[""..json_data.idx]].attr)
+        _refresh_pet_intimacy_bonus(play, T_data)
         TMLP_refresh_pet_bonus(play)
         sendluamsg(play,100,npcid,3,0,tbl2json({T_data = T_data, server_time = os.time()}))
         Player.sendmsgEx(play, string.format("你成功喂养灵兽|【%s】#218|，当前亲密度|【%d】#218", _config.config.ls[json_data.idx].name, T_data.ls[""..json_data.idx]))
@@ -466,7 +576,7 @@ function npc.link(play,npcid,ew,aid,data)
             return
         end
         -- 圣遗物装备额外增加辉耀水晶消耗，和配置表要求保持一致。
-        Player.takeItemByTable(play, {{_config.config.ls[json_data.idx].syw,1},{"元宝",1880000},{"辉耀水晶",88}}, ",灵兽圣遗物",nil)
+        Player.takeItemByTable(play, {{_config.config.ls[json_data.idx].syw,1}}, ",灵兽圣遗物",nil)
         T_data.syw[""..json_data.idx] = 1
         Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
         if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
@@ -488,18 +598,15 @@ function npc.link(play,npcid,ew,aid,data)
 end
 
 function Login_lszh(play)
-    local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
+    local T_data = _ensure_pet_data(Player.getJsonTableByVar(play, VarCfg["T_灵兽"]))
     T_data.ls = T_data.ls or {}
     for i = 1,5 do
         T_data.ls[""..i] = T_data.ls[""..i] or 0
-        if T_data.ls[""..i] > 0 then
-            Player.updateSomeAddr(play,nil, _config.config.wy.det[T_data.ls[""..i]].attr)
-        end
     end
-    if T_data.dqzh and _config.config.ls[T_data.dqzh] then
-        Player.updateSomeAddr(play,nil, _config.config.ls[T_data.dqzh].attr_give)
-    end
-    
+    _init_lingshou_pool(T_data)
+    Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
+    _refresh_pet_base_bonus(play, T_data)
+    _refresh_pet_intimacy_bonus(play, T_data)
     TMLP_refresh_pet_bonus(play)
     Buff[105](play,1)
     _settle_due_hatch(play, 60, true)
@@ -509,19 +616,22 @@ GameEvent.add(EventCfg.onLogin, Login_lszh, "灵兽召唤")
 function npc.lscf(play,zt,Damage,Target)
 
     local sj = os.time()
-    local T_data = Player.getJsonTableByVar(play, VarCfg["T_灵兽"])
+    local T_data = _ensure_pet_data(Player.getJsonTableByVar(play, VarCfg["T_灵兽"]))
     T_data.ls = T_data.ls or {}
-    
-    if not T_data.dqzh or not _config.config.ls[T_data.dqzh] then
+    local petIdx = tonumber(T_data.dqzh or 0) or 0
+    local petCfg = _config.config and _config.config.ls and _config.config.ls[petIdx]
+    local petLevel = _toint(T_data.ls[tostring(petIdx)])
+    local levelCfg = _config.config and _config.config.wy and _config.config.wy.det and _config.config.wy.det[petLevel]
+    if petIdx <= 0 or not petCfg or petLevel <= 0 or not levelCfg then
         return 0
     end
     do
         if sj - getplaydef(play,"N$buff_ls") >= 30 then
-            local cw = recallmobex(play, _config.config.ls[T_data.dqzh].name,0,0,7,1,_config.config.wy.det[T_data.ls[""..T_data.dqzh]].time,0,0,0,0,0,0,"")
-            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[灵兽]</font><font color=\'#00ff00\'>成功召唤灵兽【'.._config.config.ls[T_data.dqzh].name..'】...</font>","Type":9}')
+            local cw = recallmobex(play, petCfg.name,0,0,7,1,levelCfg.time,0,0,0,0,0,0,"")
+            sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[灵兽]</font><font color=\'#00ff00\'>成功召唤灵兽【'..petCfg.name..'】...</font>","Type":9}')
             setplaydef(play,"N$buff_ls",sj)
             if _has_pet_synergy(play, T_data) then
-                Player.updateSomeAddr_time(play,nil, _config.config.ls[T_data.dqzh].b_attr,_config.config.wy.det[T_data.ls[""..T_data.dqzh]].time)
+                Player.updateSomeAddr_time(play,nil, petCfg.b_attr,levelCfg.time)
             end
         end
     end

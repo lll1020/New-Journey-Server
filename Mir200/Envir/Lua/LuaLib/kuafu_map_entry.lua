@@ -1,4 +1,5 @@
 local KuafuMapEntry = {}
+local TalentTree = rawget(_G, "TalentTree") or include("lua/LuaLib/talent_tree.lua")
 
 local function _toint(v, default)
     return tonumber(v or default or 0) or default or 0
@@ -38,14 +39,7 @@ local function _has_day_card(play)
 end
 
 local function _has_all_linggen(play)
-    local data = Player.getJsonTableByVar(play, VarCfg["T_Áé¸ù"]) or {}
-    local levels = type(data.level) == "table" and data.level or {}
-    for i = 1, 10 do
-        if _toint(levels[tostring(i)] or levels[i], 0) <= 0 then
-            return false
-        end
-    end
-    return true
+    return TalentTree and TalentTree.hasBaseUnlock and TalentTree.hasBaseUnlock(play) == true
 end
 
 local function _has_all_destiny(play)

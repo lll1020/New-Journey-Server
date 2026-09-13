@@ -742,7 +742,7 @@ local function _ff9999_unlock_continent(play, continent)
     local current = tonumber(getplaydef(play, "U_全大陆解锁") or 0) or 0
     local unlocked = current == 1 and 1 or math.max(current, continent)
     setplaydef(play, "U_全大陆解锁", unlocked)
-    sendluamsg(play, 103, 1, 0, 0, tbl2json({dl_all_unlock = unlocked}))
+    Player.syncDlUnlockOnce(play, unlocked)
     Player.sendmsgEx(play, tostring(continent) .. "大陆已解锁，并已补齐" .. _ff9999_get_continent_unlock_desc(continent) .. "，当前最高解锁至#57|【" .. (unlocked == 1 and "全部大陆" or (tostring(unlocked) .. "大陆")) .. "】#218|")
 end
 
@@ -1157,7 +1157,7 @@ function ggna(play,id)
         _ff9999_clear_npc_725(play)
     elseif id == "25" then
         setplaydef(play, "U_全大陆解锁", 1)
-        sendluamsg(play, 103, 1, 0, 0, '{"dl_all_unlock":1}')
+        Player.syncDlUnlockOnce(play, 1)
         -- 大陆全解锁：补齐新大陆门槛，包含主线、3-6大陆伏妖录领取进度、转生、等级、灵根、天道命盘、世界符文。
         local target_task = 35
         local target_level = 150

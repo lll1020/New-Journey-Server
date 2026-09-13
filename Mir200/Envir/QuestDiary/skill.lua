@@ -19,3 +19,49 @@ function magselffunc66(play) ---¿ªÌì
 end
 function magselffunc56(play) ---ÖðÈÕ
 end
+
+local function _talent_tree_skill_cast(play, skill_id)
+    if TalentTreeSkills and TalentTreeSkills.onSkillCast then
+        TalentTreeSkills.onSkillCast(play, skill_id)
+    end
+end
+
+function magselffunc1017(play)
+    _talent_tree_skill_cast(play, 1017)
+end
+
+function magselffunc1018(play)
+    _talent_tree_skill_cast(play, 1018)
+end
+
+function magselffunc1019(play)
+    _talent_tree_skill_cast(play, 1019)
+end
+
+function magselffunc1020(play)
+    _talent_tree_skill_cast(play, 1020)
+end
+
+function magselffunc1023(play)
+    _talent_tree_skill_cast(play, 1023)
+end
+
+function magselffunc1024(play)
+    _talent_tree_skill_cast(play, 1024)
+end
+
+function magselffunc1025(play)
+    _talent_tree_skill_cast(play, 1025)
+end
+
+function magselffunc1026(play)
+    _talent_tree_skill_cast(play, 1026)
+end
+
+function magselffunc1027(play)
+    _talent_tree_skill_cast(play, 1027)
+end
+
+function magselffunc1028(play)
+    _talent_tree_skill_cast(play, 1028)
+end
