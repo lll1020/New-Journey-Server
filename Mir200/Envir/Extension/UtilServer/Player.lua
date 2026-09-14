@@ -1090,6 +1090,33 @@ local function _dl_has_all_linggen(actor)
     local talent = rawget(_G, "TalentTree")
     return talent and talent.hasBaseUnlock and talent.hasBaseUnlock(actor) == true
 end
+local function _dl_has_linggen_socket_level(actor, need_level)
+    need_level = tonumber(need_level) or 1
+    local talent = rawget(_G, "TalentTree")
+    if talent and talent.hasSocketGemLevel then
+        return talent.hasSocketGemLevel(actor, need_level) == true
+    end
+    local data = Player.getJsonTableByVar(actor, (VarCfg and VarCfg.T_talent_tree) or "T74") or {}
+    local sockets = type(data.sockets) == "table" and data.sockets or {}
+    local gem_level_by_idx = {
+        [14249] = 1,
+        [14250] = 2,
+        [14251] = 3,
+        [14252] = 3,
+        [14253] = 3,
+        [14254] = 3,
+        [14255] = 3,
+        [14256] = 4,
+    }
+    for _, gem_name in pairs(sockets) do
+        local idx = tonumber(gem_name) or tonumber(getstditeminfo(gem_name, 0) or 0) or 0
+        if (gem_level_by_idx[idx] or 0) >= need_level then
+            return true
+        end
+    end
+    return false
+end
+
 -- 五大陆门槛：本命灵根对应的基础灵根满级，且觉醒灵根达到 Lv.2。
 local function _dl_has_linggen_gate(actor)
     local data = Player.getJsonTableByVar(actor, VarCfg["T_灵根"]) or {}
@@ -1169,10 +1196,10 @@ local function _dl_check(actor, dl)
             _dl_mark_unlocked(actor, 4)
             return true
         end
-        return false, "需三大陆剧情点达到25点、完成三大陆转生且人物等级达到150级后才可进入四大陆"
+        return false, "需三大陆剧情点达到25点、完成三大陆转生、人物等级达到150级，并在灵根天赋树镶嵌一颗三级宝石后才可进入四大陆"
     elseif dl == 5 then
         local story_ok, story_done, story_need = _dl_has_story_point_count(actor, 4, 57, true)
-        if story_ok and zslv >= 40 then
+        if story_ok and zslv >= 40 and _dl_has_linggen_socket_level(actor, 3) then
             _dl_mark_unlocked(actor, 5)
             return true
         end
@@ -1265,19 +1292,19 @@ local function _huijie_target_color(target)
     local monster_idx = getdbmonfieldvalue(monster_name, "idx")
     return tonumber(getmonbaseinfo(monster_idx, 2) or 0) or 0
 end
--- 灰界怪物伤害倍率：无称号时为50%；有称号时按绿、蓝、红怪分别为180%、150%、130%。
+-- 灰界怪物伤害倍率：无称号时造成伤害减少30%；有称号时按绿、蓝、红怪分别为180%、150%、130%。
 function Player.getHuiJieMonsterDamageRate(actor, target)
     if Player.isHuiJieSuppressed(actor) then
-        return 0.5
+        return 0.7
     end
     if not actor or not Player.hasHuiJieImmunity(actor) then
         return 1
     end
     return _huijie_title_damage_rate[_huijie_target_color(target)] or 1
 end
--- 灰界压制下：受到怪物最终伤害增加10%。
+-- 灰界压制下：受到灰界怪物最终伤害增加30%。
 function Player.getHuiJieMonsterHurtRate(actor)
-    return Player.isHuiJieSuppressed(actor) and 1.1 or 1
+    return Player.isHuiJieSuppressed(actor) and 1.3 or 1
 end
 function Player.hasThirdContinentOpen(actor)
     local jq_data = Player.getJsonTableByVar(actor, VarCfg.T_dljq) or {}
@@ -2002,7 +2029,5 @@ GameEvent.add(EventCfg.onKFLogin, _player_level_cap_on_login, "角色等级上限")
 GameEvent.add(EventCfg.onPlayLevelUp, _player_level_cap_on_level, "角色等级上限")
 
 return Player
-
-
 
 

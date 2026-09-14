@@ -8,9 +8,29 @@ local _npc_key = "npc_74"
 local _attr_list_name = "天道命盘"
 local _realm_need_level = 18
 
+local function _migrate_path_order(play, T_data, state)
+    if state.path_order_version == 2 then
+        return
+    end
+
+    -- Legacy order: 1=linggen, 2=xianfa, 3=lingshou, 4=xiuxing.
+    -- Current order: 1=lingshou, 2=linggen, 3=xiuxing, 4=xianfa.
+    local old = {}
+    for i = 1, 4 do
+        old[tostring(i)] = state[tostring(i)]
+    end
+    state["1"] = old["3"] or 0
+    state["2"] = old["1"] or 0
+    state["3"] = old["4"] or 0
+    state["4"] = old["2"] or 0
+    state.path_order_version = 2
+    Player.setJsonVarByTable(play, VarCfg.T_dljq, T_data)
+end
+
 local function _get_dljq_data(play)
     local T_data = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
     T_data[_npc_key] = T_data[_npc_key] or {}
+    _migrate_path_order(play, T_data, T_data[_npc_key])
     return T_data, T_data[_npc_key]
 end
 
@@ -34,11 +54,12 @@ local function _count_full_lingshou(play)
     return count, max_level
 end
 
-local function _has_awakened_main_linggen_level(play, needLevel)
-    if TalentTree and TalentTree.hasBaseUnlock and TalentTree.hasBaseUnlock(play) then
-        return true, 0, 1
+local function _has_linggen_core_level(play, needLevel)
+    needLevel = tonumber(needLevel) or 0
+    if TalentTree and TalentTree.hasCoreLevel then
+        return TalentTree.hasCoreLevel(play, needLevel), needLevel
     end
-    return false, 0, 0
+    return false, needLevel
 end
 local function _get_realm_level(play)
     return tonumber(getplaydef(play, VarCfg["U_境界修炼"][1])) or 0
@@ -56,8 +77,7 @@ local function _count_red_xianfa(play)
 end
 
 function TianMingDaoPanHasPath(play, idx)
-    local T_data = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
-    local state = T_data[_npc_key] or {}
+    local _, state = _get_dljq_data(play)
     return tonumber(state[tostring(idx)] or 0) == 1
 end
 
@@ -88,14 +108,24 @@ end
 local function _check_task_condition(play, idx)
     if idx == 1 then
         local count = _count_full_lingshou(play)
-        if count < 2 then
-            return false, string.format("需要任意2只灵兽亲密度满级后才可激活，当前仅完成%d/2#57", count)
+        if count < 1 then
+            return false, "需要至少1只灵兽亲密度满级后才可激活，当前完成0/1#57"
         end
         return true
     elseif idx == 2 then
-        local ok, pair, lv = _has_awakened_main_linggen_level(play, 3)
+        local ok, needLevel = _has_linggen_core_level(play, 33)
         if not ok then
-            return false, "需要先开启|【灵根天赋树】#218|后才可激活#57"
+            local current = TalentTree and TalentTree.getCoreLevel and TalentTree.getCoreLevel(play) or 0
+            return false, string.format("需要灵根核心达到%d级后才可激活，当前等级%d/%d#57", needLevel, current, needLevel)
+        end
+        return true
+    elseif idx == 4 then
+        local red_count, book_level = _count_red_xianfa(play)
+        if book_level < 30 then
+            return false, string.format("需要天书等级达到30级，当前等级%d/30#57", book_level)
+        end
+        if red_count < 2 then
+            return false, string.format("需要至少拥有2条红色仙法，当前拥有%d/2#57", red_count)
         end
         return true
     elseif idx == 3 then
@@ -104,17 +134,20 @@ local function _check_task_condition(play, idx)
             return false, "需要境界达到|【元婴境】#218|后才可激活#57"
         end
         return true
-    elseif idx == 4 then
-        local red_count, book_level = _count_red_xianfa(play)
-        if book_level < 30 then
-            return false, string.format("需要天书达到|【LV30】#218|后才可激活，当前等级为|【%d】#218|#57", book_level)
-        end
-        if red_count < 3 then
-            return false, string.format("需要拥有|【3条红色仙法】#218|后才可激活，当前仅有|【%d条】#218|#57", red_count)
-        end
-        return true
     end
     return false, "参数错误#57"
+end
+
+local function _grant_path_reward(play, detail)
+    if type(detail) ~= "table" then
+        return
+    end
+    if type(detail.reward) == "table" and #detail.reward > 0 then
+        Player.rwjl(play, detail.reward, "天道命盘路径奖励", 1, 0)
+    end
+    if detail.title and detail.title ~= "" then
+        Player.title_give(play, detail.title, 1)
+    end
 end
 
 local function _refresh_all_count(state)
@@ -173,8 +206,7 @@ local function _try_grant_all_level_bonus(play, T_data, state)
 end
 
 function npc.main(play, npcid)
-    local T_data = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
-    T_data[_npc_key] = T_data[_npc_key] or {}
+    local T_data = _get_dljq_data(play)
     sendluamsg(play, 100, npcid, 0, 0, tbl2json({T_data = T_data}))
 end
 
@@ -226,6 +258,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         _refresh_all_count(state)
         _save_dljq_data(play, T_data)
         _rebuild_tmlp_attr(play)
+        _grant_path_reward(play, detail)
 
         Player.sendmsgEx(play, string.format("你完成了|【%s】#218|命盘激活", detail.name))
         if (state.all or 0) >= (_config.all or 0) then

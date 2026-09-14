@@ -9,6 +9,9 @@ local SELECT_BOX_NAME = string.char(
 local RANDOM_BOX_NAME = string.char(
     193, 233, 184, 249, 177, 166, 202, 175, 203, 230, 187, 250, 177, 166, 207, 228
 )
+local CHARGE_BOX_NAME = string.char(
+    193, 233, 184, 249, 177, 166, 202, 175, 207, 228
+)
 local SELECT_HINT = string.char(
     199, 235, 209, 161, 212, 241, 210, 187, 191, 197, 200, 253, 188, 182,
     193, 233, 184, 249, 177, 166, 202, 175
@@ -41,6 +44,14 @@ local function _current_item_name(play, item)
         return ""
     end
     return tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "")
+end
+
+local function _real_charge(play)
+    local key = VarCfg and VarCfg["U_’Ê µ≥‰÷µ"]
+    if not key then
+        return 0
+    end
+    return tonumber(getplaydef(play, key) or 0) or 0
 end
 
 local function _take_one(play, item, item_name)
@@ -178,10 +189,56 @@ local function use_select_box(play, item)
     return _open_select_window(play, box_name)
 end
 
+local function use_charge_box(play, item, box_name)
+    box_name = tostring(box_name or _current_item_name(play, item))
+    if box_name == "" then
+        box_name = CHARGE_BOX_NAME
+    end
+    if getbagitemcount(play, box_name) < 1 then
+        Player.sendmsgEx(play, MISSING_PREFIX .. box_name .. "#57")
+        return false
+    end
+
+    local weights = BoxCfg.charge_weights or {}
+    local level1_weight = tonumber(weights.level1) or 70
+    local level2_weight = tonumber(weights.level2) or 30
+    local total_weight = level1_weight + level2_weight
+    if total_weight <= 0 then
+        Player.sendmsgEx(play, CONFIG_ERROR .. "#57")
+        return false
+    end
+
+    local roll = math.random(total_weight)
+    local reward_name
+    local reward_desc
+    if roll <= level1_weight then
+        reward_name = _item_name((BoxCfg.common_gems or {})[1])
+        reward_desc = "charge_level1"
+    else
+        reward_name = _item_name((BoxCfg.common_gems or {})[2])
+        reward_desc = "charge_level2"
+    end
+    if reward_name == "" then
+        Player.sendmsgEx(play, CONFIG_ERROR .. "#57")
+        return false
+    end
+
+    if not _take_one(play, item, box_name) then
+        Player.sendmsgEx(play, CONFIG_ERROR .. "#57")
+        return false
+    end
+    _give_one(play, reward_name, box_name .. ":" .. reward_desc)
+    Player.sendmsgEx(play, RECEIVE_PREFIX .. reward_name .. "#218")
+    return false
+end
+
 local function use_random_box(play, item)
     local box_name = _current_item_name(play, item)
     if box_name == "" then
         box_name = _configured_item_name(BoxCfg.random_box_idx, RANDOM_BOX_NAME)
+    end
+    if box_name == CHARGE_BOX_NAME then
+        return use_charge_box(play, item, box_name)
     end
     if getbagitemcount(play, box_name) < 1 then
         Player.sendmsgEx(play, MISSING_PREFIX .. box_name .. "#57")
@@ -192,6 +249,10 @@ local function use_random_box(play, item)
     local level1_weight = tonumber(weights.level1) or 70
     local level2_weight = tonumber(weights.level2) or 25
     local select_weight = tonumber(weights.select_level3) or 5
+    local min_real_charge = tonumber(weights.select_level3_min_real_charge) or 300
+    if _real_charge(play) < min_real_charge then
+        select_weight = 0
+    end
     local total_weight = level1_weight + level2_weight + select_weight
     if total_weight <= 0 then
         Player.sendmsgEx(play, CONFIG_ERROR .. "#57")
@@ -237,8 +298,10 @@ end
 local BoxLogic = {
     select_box_name = SELECT_BOX_NAME,
     random_box_name = RANDOM_BOX_NAME,
+    charge_box_name = CHARGE_BOX_NAME,
     use_select_box = use_select_box,
     use_random_box = use_random_box,
+    use_charge_box = use_charge_box,
 }
 
 rawset(_G, "LinggenGemBox", BoxLogic)

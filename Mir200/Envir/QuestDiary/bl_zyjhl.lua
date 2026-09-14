@@ -396,5 +396,27 @@ function bl_zyjhl18(play, mingzi)
     return math.random(rate) == 1
 end
 
-
+--------------------爆率监听触发-------------------灰界夜明珠分R
+-- 爆率文件负责基础命中（充值玩家 1/3000）；这里仅处理灰界范围、分R和唯一拥有条件。
+function bl_zyjhl19(play, mingzi)
+    if mingzi ~= "夜明珠" then
+        return false
+    end
+    local map_name = tostring(getbaseinfo(play, 3) or "")
+    if not Player.isHuiJieMap or not Player.isHuiJieMap(map_name) then
+        return false
+    end
+    if checktitle(play, "诸邪退散") then
+        return false
+    end
+    if (tonumber(getbagitemcount(play, "夜明珠") or 0) or 0) > 0 then
+        return false
+    end
+    -- 爆率文件基础命中为 1/3000；免费玩家按比例过滤后，最终为 1/8888。
+    local real_charge = tonumber(getplaydef(play, VarCfg["U_真实充值"]) or 0) or 0
+    if real_charge <= 0 and math.random(8888) > 3000 then
+        return false
+    end
+    return true
+end
 

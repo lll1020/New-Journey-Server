@@ -141,7 +141,17 @@ local function _add_attr(list, attrId, value)
     if attrId > 0 and value ~= 0 then list[attrId] = (list[attrId] or 0) + value end
 end
 local function _push_special(list, key, value) list[#list + 1] = {key = key, value = _toint(value)} end
-local function _reward_percent_value(v) return _toint(v) * 100 end
+local _direct_percent_attr = {
+    [280] = true, [281] = true, [282] = true, [283] = true, [284] = true, [285] = true,
+    [286] = true, [287] = true, [288] = true, [289] = true, [290] = true, [291] = true,
+    [300] = true,
+}
+local function _reward_percent_value(v, attrId)
+    if _direct_percent_attr[_toint(attrId)] then
+        return _toint(v)
+    end
+    return _toint(v) * 100
+end
 -- °Ñ reward ÎÄ°¸Ô¤½âÎö³É¿ÉÖ´ĞĞ½±Àø½á¹¹¡£
 -- Êä³ö·Ö³ÉÈıÀà£º
 -- 1. attrs: ÕæÕı¹Òµ½ÊôĞÔÁĞ±íÀïµÄÊıÖµ£»
@@ -223,7 +233,10 @@ local function _parse_reward(text)
                 n = string.match(part, "^÷ÈÁ¦%+(%d+)$")
                 if n then _push_special(cfg.special, "charm", n) end
                 local attrName, attrValue = string.match(part, "^(.-)%+(%d+)%%$")
-                if attrName and attrValue and _reward_percent_attr[attrName] then _add_attr(cfg.attrs, _reward_percent_attr[attrName], _reward_percent_value(attrValue)) end
+                if attrName and attrValue and _reward_percent_attr[attrName] then
+                    local attrId = _reward_percent_attr[attrName]
+                    _add_attr(cfg.attrs, attrId, _reward_percent_value(attrValue, attrId))
+                end
                 local hurtValue = string.match(part, "^ÊÜµ½ÉËº¦%+(%d+)%%$")
                 if hurtValue then _push_special(cfg.special, "hurt_taken_up", _reward_percent_value(hurtValue)) end
                 local crossValue = string.match(part, "^¶Ô¿ç·ş¹ÖÎï¶îÍâÔöÉË%+(%d+)%%$")
@@ -275,6 +288,15 @@ local function _get_milestone_title_chain()
     return ret
 end
 -- Àï³Ì±®³ÆºÅ·¢·ÅÓĞË³ĞòÔ¼Êø¡£
+
+local function _can_grant_milestone_title(state, target)
+    for _, node in ipairs(_get_milestone_title_chain()) do
+        if node.count < target and _toint(state.milestone_claim[tostring(node.count)]) < 1 then
+            return false
+        end
+    end
+    return true
+end
 -- ±ÈÈç³É¾Í¾íÖá Lv.2 ²»ÄÜÌø¹ı Lv.1 Ö±½ÓÁìÈ¡£¬ÇÒÍ¬Á´Â·ÉÏÖ»±£Áôµ±Ç°½×³ÆºÅ¡£
 -- ÕâÀï×¨ÃÅ´¦Àí£º
 -- 1. Ç°ÖÃÀï³Ì±®ÊÇ·ñÒÑÁìÈ¡£»
@@ -311,8 +333,10 @@ local function _prepare()
     if _prepared then return end
     for _, detail in ipairs(_cfg.details or {}) do
         detail.rule = _parse_condition(detail)
-        detail.reward_cfg = _parse_reward(detail.reward)
-        _apply_detail_attr(detail.reward_cfg, detail.attr)
+        if type(detail.reward_cfg) ~= "table" then
+            detail.reward_cfg = _parse_reward(detail.reward)
+            _apply_detail_attr(detail.reward_cfg, detail.attr)
+        end
     end
     for _, milestone in ipairs(_cfg.milestones or {}) do milestone.reward_cfg = _parse_milestone_reward(milestone.reward) end
     _cfg_44 = Guard.getConfig("npc_44") or {}
@@ -404,6 +428,9 @@ local function _build_snapshot(play, state)
     xianfu.refine = xianfu.refine or {collection = {}}
     local recipes = ((_cfg_44.RefineCfg or {}).recipes or {})
     local killDl = _get_dl_kill_total(play, state.counter.kill_dl)
+    local talent_tree = rawget(_G, "TalentTree")
+    local talent = talent_tree and type(talent_tree.getAchievementSnapshot) == "function"
+        and talent_tree.getAchievementSnapshot(play) or {}
     return {
         level = _toint(getbaseinfo(play, ConstCfg.gbase.level)), rebirth_stage = math.floor(_toint(getplaydef(play, VarCfg["U_×ªÉúµÈ¼¶"])) / 10),
         power = math.max(_toint(querymoney(play, 29)), _toint(getplaydef(play, VarCfg["B_¼ÇÂ¼Õ½¶·Á¦"]))), tianshu_level = _toint((Player.getJsonTableByVar(play, VarCfg["T_ÌìÊé"]) or {}).level),
@@ -422,6 +449,9 @@ local function _build_snapshot(play, state)
         loot_player_equip_total = _toint(state.counter.loot_player_equip_total), castle_first_blood = _toint(state.counter.castle_first_blood), castle_kill_total = _toint(state.counter.castle_kill_total), palace_streak = _toint(state.counter.palace_best),
         bwdh_kill_total = _toint(state.counter.bwdh_kill_total), collateral_death = _toint(state.counter.collateral_death), one_hit_killed = _toint(state.counter.one_hit_killed), one_hit_kill = _toint(state.counter.one_hit_kill),
         story_complete = function(storyName) return _story_complete(play, storyName) end,
+        talent_core_level = _toint(talent.core_level),
+        talent_branch_points = talent.branch_points or {},
+        talent_gem_counts = talent.gem_counts or {},
     }
 end
 local function _is_retired_legacy_rule(detail)
@@ -441,6 +471,13 @@ local function _reached(play, state, snap, detail)
     if kind == "rebirth_stage" then return snap.rebirth_stage >= r.target end
     if kind == "power" then return snap.power >= r.target end
     if _is_retired_legacy_rule(detail) then return false end
+    if kind == "talent_core_level" then return snap.talent_core_level >= _toint(r.target) end
+    if kind == "talent_branch_points" then
+        return _toint((snap.talent_branch_points or {})[tostring(r.branch)]) >= _toint(r.target)
+    end
+    if kind == "talent_gem_count" then
+        return _toint((snap.talent_gem_counts or {})[r.level]) >= _toint(r.target)
+    end
     if kind == "fashion_count" then return snap.fashion_count >= r.target end
     if kind == "linggen_count" then return snap.linggen_count >= r.target end
     if kind == "linggen_group" then for _, idx in ipairs(r.list or {}) do if _toint(snap.linggen_levels[tostring(idx)]) < 1 then return false end end return true end
@@ -554,6 +591,11 @@ local function _evaluate(play, state) -- É¨ÃèÈ«²¿³É¾ÍÌõ¼ş£¬´ï³Éºó¼´Ê±·¢½±ÀøÓëÌáÊ
             and _toint(state.done[key]) < 1
             and _reached(play, state, snap, detail) then
             state.done[key] = 1
+
+            _sync_legacy_panel_flags(state)
+            _save_state(play, state)
+            _refresh_attr(play, state)
+            _save_state(play, state)
             if detail.reward_cfg and detail.reward_cfg.items and #detail.reward_cfg.items > 0 then Player.rwjl(play, detail.reward_cfg.items, "ÏÉÍ¾ÆæÔµ³É¾Í", 1, 0) end
             if detail.reward_cfg and detail.reward_cfg.title and detail.reward_cfg.title ~= "" then Player.title_give(play, detail.reward_cfg.title) end
             if detail.reward_cfg and _toint(detail.reward_cfg.realm_exp) > 0 then
@@ -638,9 +680,15 @@ function FairyFate.handle(play, p2, p3, msgData) -- 515Ö÷Èë¿Ú£º´ò¿ªÃæ°å/ÁìÈ¡ÊıÁ¿
             if _toint(milestone.count) == target then
                 if _toint(state.milestone_claim[tostring(target)]) >= 1 then Player.sendmsgEx(play, "¸Ã³É¾ÍÊıÁ¿½±ÀøÒÑÁìÈ¡#57") return end
                 if _done_count(state) < target then Player.sendmsgEx(play, "µ±Ç°³É¾ÍÊıÁ¿²»×ã£¬ÎŞ·¨ÁìÈ¡#57") return end
+
+                if milestone.reward_cfg and milestone.reward_cfg.title and milestone.reward_cfg.title ~= "" then
+                    if not _can_grant_milestone_title(state, target) then Player.sendmsgEx(play, "Çë°´Ë³ĞòÁìÈ¡Ç°ÖÃ³É¾Í¾íÖá³ÆºÅ#57") return end
+                end
+                state.milestone_claim[tostring(target)] = 1
+                _sync_legacy_panel_flags(state)
+                _save_state(play, state)
                 if milestone.reward_cfg and milestone.reward_cfg.title and milestone.reward_cfg.title ~= "" then local ok, err = _grant_milestone_title(play, state, target, milestone.reward_cfg.title) if not ok then Player.sendmsgEx(play, err or "³ÆºÅÁìÈ¡Ê§°Ü#57") return end end
                 if milestone.reward_cfg and milestone.reward_cfg.items and #milestone.reward_cfg.items > 0 then Player.rwjl(play, milestone.reward_cfg.items, "ÏÉÍ¾ÆæÔµÀï³Ì±®", 1, 0) end
-                state.milestone_claim[tostring(target)] = 1
                 _sync_legacy_panel_flags(state)
                 _save_state(play, state)
                 sendluamsg(play, 101, 515, 1, target, tbl2json(_payload(play, state)))

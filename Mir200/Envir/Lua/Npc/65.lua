@@ -250,6 +250,10 @@ function npc.link(play,npcid,ew,aid,data)
         if state.stage ~= 1 then
             return
         end
+        if state.era <= 1 then
+            Player.sendmsgEx(play, "当前已是唐代，无法继续断代鉴定#57")
+            return
+        end
         local cost = _get_cfg({"cost","segment"}, {})
         if not _check_cost(play, cost) then
             return
@@ -282,6 +286,11 @@ function npc.link(play,npcid,ew,aid,data)
         return
     elseif ew == 4 then -- 终极鉴定（2次升级）
         if state.stage ~= 2 or state.can_final ~= 1 then
+            return
+        end
+        local max_era = #_get_cfg({"eras"}, {"唐代","宋代","元代","明代","清代","近代"})
+        if state.era <= 1 or state.era >= max_era then
+            Player.sendmsgEx(play, "当前年代无法进行终鉴#57")
             return
         end
         local cost = _get_cfg({"cost","final"}, {})

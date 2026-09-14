@@ -415,7 +415,7 @@ function npc.link(play,npcid,ew,aid,data)
         end
         local randomNum = _draw_lingshou_pool(T_data)
         if not randomNum then
-            Player.sendmsgEx(play, "Pet draw pool exhausted#57")
+            Player.sendmsgEx(play, "已经集齐所有灵兽了#57")
             return
         end
         Player.takeItemByTable(play, _config.cost, "灵兽抽取", nil)

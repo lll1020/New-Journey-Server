@@ -432,6 +432,34 @@ local function _refresh_panel(play, npcid, p2)
     local data = _build_panel_data(play)
     sendluamsg(play, 100, npcid, p2 or 0, 0, tbl2json(data))
 end
+
+local function _real_charge(play)
+    local key = VarCfg and VarCfg["U_真实充值"]
+    if not key then
+        return 0
+    end
+    return tonumber(getplaydef(play, key) or 0) or 0
+end
+
+local function _gem_pool_for_player(play, pool)
+    local min_real_charge = tonumber(_config.gem_level3_min_real_charge) or 300
+    local allow_level3 = _real_charge(play) >= min_real_charge
+    local result = {}
+    for _, reward in ipairs(pool or {}) do
+        local is_level3 = false
+        for _, item in ipairs(reward.give or {}) do
+            if type(item) == "table" and tostring(item[1] or item.name or "") == "三级宝石自选包" then
+                is_level3 = true
+                break
+            end
+        end
+        if not is_level3 or allow_level3 then
+            result[#result + 1] = reward
+        end
+    end
+    return result
+end
+
 -- 抽奖方法：处理单抽十连与保底
 local function _do_draw(play, T_data, drawTimes)
     local labels = {}
@@ -476,6 +504,9 @@ local function _open_box(play, T_data, boxType, choiceIdx)
     local pool = ((_config.box_pool or {})[tostring(boxType or "")]) or {}
     if boxType == "gem" and #pool <= 0 then
         pool = _config.gem_pool or {}
+    end
+    if boxType == "gem" then
+        pool = _gem_pool_for_player(play, pool)
     end
     local idx = tonumber(choiceIdx) or 0
     local reward = nil

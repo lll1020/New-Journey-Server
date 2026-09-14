@@ -92,7 +92,12 @@ local _godstone_effect_cfg = {
         },
         mark = "mountain",
     },
-    ["海洋神石"] = {attrs = {}, mark = "ocean"},
+    ["海洋神石"] = {
+        attrs = {
+            [3] = {[71] = 1000},
+        },
+        mark = "ocean",
+    },
     ["天空神石"] = {
         attrs = {
             [1] = {[242] = 3000},
@@ -125,7 +130,7 @@ local _godstone_effect_cfg = {
             [1] = {[300] = 10},
             [2] = {[300] = 20},
             [3] = {[300] = 30},
-            [4] = {[300] = 50, [23] = 35},
+            [4] = {[300] = 50},
         },
         mark = "moon",
     },
@@ -188,6 +193,8 @@ local function _toggle_godstone_buff_var(play, varName, buffId, enable)
 end
 
 local function _sync_godstone_effect_marks(play)
+    -- Remove the legacy absolute-shield state; that effect is no longer supported.
+    delbuff(play, 20033)
     local marks = {}
     for _, key in ipairs(_godstone_mark_keys) do
         marks[key] = 0
@@ -660,7 +667,7 @@ local function _open_box_by_name(play, npcid, box_name)
     end
     local reward_name, quality_title = _pick_box_reward(play, box_name)
     if not reward_name or reward_name == "" then
-        Player.sendmsgEx(play, "神石宝箱开启失败：奖池为空#57")
+        -- Player.sendmsgEx(play, "神石宝箱开启失败：奖池为空#57")
         return false
     end
     Player.takeItemByTable(play, {{box_name, 1}, {"神石宝箱钥匙", 1}}, ",神石宝箱开启", nil)
@@ -685,17 +692,17 @@ end
 local function _claim_pending_box_reward(play, npcid, token)
     local pending = _get_pending_box_reward(play)
     if not pending then
-        Player.sendmsgEx(play, "神石宝箱奖励领取失败：没有待领取奖励#57")
+        -- Player.sendmsgEx(play, "神石宝箱奖励领取失败：没有待领取奖励#57")
         return false
     end
     if tostring(pending.token or "") ~= tostring(token or "") then
-        Player.sendmsgEx(play, "神石宝箱奖励领取失败：请求已过期#57")
+        -- Player.sendmsgEx(play, "神石宝箱奖励领取失败：请求已过期#57")
         return false
     end
     local reward_name = tostring(pending.reward_name or "")
     if reward_name == "" then
         _clear_pending_box_reward(play)
-        Player.sendmsgEx(play, "神石宝箱奖励领取失败：奖励异常#57")
+        -- Player.sendmsgEx(play, "神石宝箱奖励领取失败：奖励异常#57")
         return false
     end
     giveitem(play, reward_name, 1)
@@ -703,7 +710,7 @@ local function _claim_pending_box_reward(play, npcid, token)
     _try_grant_collection_reward(play)
     _clear_pending_box_reward(play)
     _send_panel(play, npcid, 1, 0)
-    Player.sendmsgEx(play, string.format("开启|%s#218|成功，获得#57|【%s】#218|%s#57", tostring(pending.box_name or "神石宝箱"), reward_name, pending.quality_title and ("（" .. tostring(pending.quality_title) .. "）") or ""))
+    Player.sendmsgEx(play, string.format("开启%s，获得#57|【%s】#218|%s#57", tostring(pending.box_name or "神石宝箱"), reward_name, pending.quality_title and ("（" .. tostring(pending.quality_title) .. "）") or ""))
     return true
 end
 -- 一键卸下当前已装配的全部神石，便于玩家直接切回合成页操作。
@@ -914,7 +921,7 @@ function npc.link(play, npcid, ew, aid, data)
     if action == 2 then
         local ok, jsondata = pcall(json2tbl, data or "{}")
         if not ok or type(jsondata) ~= "table" then
-            Player.sendmsgEx(play, "神石宝箱开启失败：请求数据错误#57")
+            -- Player.sendmsgEx(play, "神石宝箱开启失败：请求数据错误#57")
             return
         end
         _open_box_by_name(play, npcid, jsondata.box_name)
@@ -928,7 +935,7 @@ function npc.link(play, npcid, ew, aid, data)
     if action == 4 then
         local ok, jsondata = pcall(json2tbl, data or "{}")
         if not ok or type(jsondata) ~= "table" then
-            Player.sendmsgEx(play, "神石宝箱奖励领取失败：请求数据错误#57")
+            -- Player.sendmsgEx(play, "神石宝箱奖励领取失败：请求数据错误#57")
             return
         end
         _claim_pending_box_reward(play, npcid, jsondata.token)

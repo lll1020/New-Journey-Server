@@ -1,6 +1,6 @@
 npc = {}
 
-local NPC_KEY = "npc_1029"
+local NPC_KEY = "npc_1030"
 local TITLE_NAME = "\214\238\208\176\205\203\201\162"
 local TITLE_SHOW = "\214\238\208\176\205\203\201\162\163\168\185\226\187\183\163\169"
 local DEFAULT_COST = {
@@ -26,13 +26,14 @@ end
 local function _done(play, data)
     data = data or Player.getJsonTableByVar(play, VarCfg.T_dljq)
     return tonumber(data[NPC_KEY] or 0) >= 2
+        or tonumber(data["npc_1029"] or 0) >= 2
         or checktitle(play, _title())
         or checktitle(play, TITLE_SHOW)
 end
 
 local function _sync(play, npcid, mode, done)
     local data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
-    sendluamsg(play, 100, npcid or 1029, mode or 0, done and 2 or 0, tbl2json({
+    sendluamsg(play, 100, npcid or 1030, mode or 0, done and 2 or 0, tbl2json({
         T_dljq = data,
         done = done and 1 or 0,
     }))

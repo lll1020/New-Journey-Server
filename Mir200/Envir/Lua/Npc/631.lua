@@ -5,6 +5,24 @@ npc = {}
 
 local _config = Guard.getConfig("npc_631")
 
+local _NPC631_ATTR_LIST = "npc631_search_reward"
+local _NPC631_CUT_ATTR = 244
+local _NPC631_CUT_PER_SEARCH = 666
+
+local function _refresh_npc631_reward(play, search_count)
+    search_count = math.max(0, math.min(4, tonumber(search_count or 0) or 0))
+    Player.del_attlist(play, _NPC631_ATTR_LIST)
+    if search_count > 0 then
+        Player.add_attlist(
+            play,
+            _NPC631_ATTR_LIST,
+            "=",
+            "3#" .. _NPC631_CUT_ATTR .. "#" .. (search_count * _NPC631_CUT_PER_SEARCH),
+            1
+        )
+    end
+end
+
 
 
 
@@ -82,6 +100,11 @@ function npc.link(play,npcid,ew,aid)
         end
 
         table.insert(jq_data[markKey], idx)
+        local reward_key = "npc631_cut_count"
+        local old_reward_count = tonumber(jq_data[reward_key] or 0) or 0
+        local search_count = math.min(#jq_data[markKey], 4)
+        local new_reward_count = math.max(old_reward_count, search_count)
+        jq_data[reward_key] = new_reward_count
 
         if #jq_data[markKey] >= 4 then
             jq_data[key] = 2
@@ -90,6 +113,7 @@ function npc.link(play,npcid,ew,aid)
                 jq_data[key] = 2
             end
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+            _refresh_npc631_reward(play, new_reward_count)
             Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成，内鬼已经找到了#57")
             if npcid then Guard.closeNpc(play, npcid) end
             if _config.ch then
@@ -104,6 +128,7 @@ function npc.link(play,npcid,ew,aid)
         else
             jq_data[key] = 1
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+            _refresh_npc631_reward(play, new_reward_count)
             Player.sendmsgEx(play, string.format("确认身份成功：|【%d/4】#218|", #jq_data[markKey]))
             local data = {}
             data["T_dljq"] = Player.getJsonTableByVar(play, VarCfg.T_dljq)
@@ -112,6 +137,22 @@ function npc.link(play,npcid,ew,aid)
         end
     end
 end
+
+local function Login_npc631(play)
+    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
+    local reward_key = "npc631_cut_count"
+    local search_count = math.min(tonumber(jq_data[reward_key] or 0) or 0, 4)
+    if search_count <= 0 and tonumber(jq_data["npc_631"] or 0) >= 2 then
+        -- 老号完成任务后旧逻辑会清理搜查明细，按已完成任务迁移为4次奖励。
+        search_count = 4
+        jq_data[reward_key] = search_count
+        Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+    end
+    _refresh_npc631_reward(play, search_count)
+end
+
+GameEvent.add(EventCfg.onLogin, Login_npc631, "Login_npc631")
+GameEvent.add(EventCfg.onKFLogin, Login_npc631, "Login_npc631_kf")
 
 return npc
 

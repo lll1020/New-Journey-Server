@@ -95,7 +95,7 @@ local function _xianfa_is_slot_unlocked(actor, cfg, slot, T_data)
     return false, cond.desc or "未满足解锁条件", false
 end
 local function TMLP_get_xianfa_rate_bonus(actor)
-    if TianMingDaoPanHasPath and TianMingDaoPanHasPath(actor, 4) then
+    if TianMingDaoPanHasPath and TianMingDaoPanHasPath(actor, 2) then
         return 5
     end
     return 0
@@ -409,6 +409,7 @@ function npc.link(play,npcid,ew,aid,data)
             if _xianfa_has_red_bonus_5(play) then
                 redBonus = redBonus + 5 -- 第8档在线充值：红色仙法概率+5%
             end
+            redBonus = redBonus + (TMLP_get_xianfa_rate_bonus(play) or 0)
             if redBonus > 0 then
                 local wmap = _xianfa_parse_weight_map(weight)
                 if next(wmap) ~= nil then

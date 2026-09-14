@@ -7,6 +7,13 @@ local STATE_VAR = (VarCfg and VarCfg.T_talent_tree) or "T74"
 local ATTR_LIST = "talent_tree_attrs"
 local REDPOINT_ICON = 22
 
+local function touch_fairy_fate(play)
+    local fairy_fate = rawget(_G, "FairyFate")
+    if fairy_fate and type(fairy_fate.touch) == "function" then
+        fairy_fate.touch(play, "talent_tree")
+    end
+end
+
 if Player and type(Player.getAttrTableToStr) == "function"
     and not rawget(_G, "__talent_tree_attr_serializer_guard")
 then
@@ -581,6 +588,7 @@ local function activate_node(play, npcid, request)
     end
     save_state(play, state)
     refresh_effects(play, state)
+    touch_fairy_fate(play)
     Player.sendmsgEx(play, "天赋节点已点亮#7")
     send_partial(play, npcid, 1, node_id, state)
 end
@@ -618,6 +626,7 @@ local function deactivate_node(play, npcid, request)
     end
     refresh_effects(play, state)
     refund_cost(play, refund, "天赋树节点返还")
+    touch_fairy_fate(play)
     Player.sendmsgEx(play, "天赋节点已退回，点数已返还#7")
     send_partial(play, npcid, 2, node_id, state)
 end
@@ -650,6 +659,7 @@ local function reset_tree(play, npcid)
     end
     refresh_effects(play, state)
     refund_cost(play, refund, "天赋树洗点返还")
+    touch_fairy_fate(play)
     Player.sendmsgEx(play, "天赋树已重置，点数已返还#7")
     send_partial(play, npcid, 3, "", state)
 end
@@ -674,6 +684,7 @@ local function upgrade_core(play, npcid)
     end
     save_state(play, state)
     refresh_effects(play, state)
+    touch_fairy_fate(play)
     Player.sendmsgEx(play, "灵根核心升级成功#7")
     send_partial(play, npcid, 6, "root", state)
 end
@@ -724,6 +735,7 @@ local function socket_gem(play, npcid, request)
     if type(old_gem) == "string" and old_gem ~= "" then
         refund_cost(play, {{old_gem, 1}}, "天赋树替换宝石返还")
     end
+    touch_fairy_fate(play)
     Player.sendmsgEx(play, "宝石镶嵌成功，属性已刷新#7")
     send_partial(play, npcid, 4, node_id, state, get_owned_gems(play, node), 1)
 end
@@ -744,6 +756,46 @@ end
 
 function TalentTree.hasCoreLevel(play, level)
     return TalentTree.getCoreLevel(play) >= toint(level, 0)
+end
+
+function TalentTree.hasSocketGemLevel(play, level)
+    level = toint(level, 0)
+    if level <= 0 then
+        return false
+    end
+    local state = get_state(play)
+    for _, gem_name in pairs(state.sockets or {}) do
+        local gem_def = get_gem_def(gem_name)
+        if gem_def and get_gem_level(gem_name, gem_def) >= level then
+            return true
+        end
+    end
+    return false
+end
+
+function TalentTree.getAchievementSnapshot(play)
+    local state = get_state(play)
+    local branch_points = {}
+    for branch = 1, 5 do
+        branch_points[tostring(branch)] = count_branch(state, branch)
+    end
+    local gem_counts = {[3] = 0, [4] = 0}
+    for _, gem_name in pairs(state.sockets or {}) do
+        local gem_def = get_gem_def(gem_name)
+        local gem_level = get_gem_level(gem_name, gem_def)
+        if gem_level == 3 then
+            gem_counts[3] = gem_counts[3] + 1
+        elseif gem_level == 4 then
+            gem_counts[4] = gem_counts[4] + 1
+        end
+    end
+    return {
+        core_level = toint(state.core_level, 0),
+        branch_points = branch_points,
+        gem_counts = gem_counts,
+        gem3_count = gem_counts[3],
+        gem4_count = gem_counts[4],
+    }
 end
 
 function TalentTree.addNormalPoints(play, count, reason)
@@ -822,7 +874,3 @@ end
 
 rawset(_G, "TalentTree", TalentTree)
 return TalentTree
-
-
-
-

@@ -1,10 +1,10 @@
 npc = {}
 
 --[[
-ÏÉ¸®×ÜÀÀ£º
-1. ËùÓÐÍæ·¨²ÎÊý¶¼À´×Ô teshudata["npc_44"]£¬ÕâÀïÖ»¶ÁÈ¡ÅäÖÃ²¢Ö´ÐÐÂß¼­¡£
-2. Íæ¼Ò¸öÈËÊý¾Ýµ¥¶À´æ·ÅÔÚ VarCfg.T_XianFuData£¬±ÜÃâÎ¬»¤ÀúÊ·È«·þ´ó±í¡£
-3. µ±Ç°½ö±£ÁôÐÂ°æÏÉ¸®»ù´¡Íæ·¨£¬²»ÔÙÎ¬»¤¾É°æÅÅÐÐ°ñÂß¼­¡£
+ï¿½É¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+1. ï¿½ï¿½ï¿½ï¿½ï¿½æ·¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ teshudata["npc_44"]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ã²ï¿½Ö´ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½
+2. ï¿½ï¿½Ò¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ VarCfg.T_XianFuDataï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¬ï¿½ï¿½ï¿½ï¿½Ê·È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+3. ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â°ï¿½ï¿½É¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ·¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¬ï¿½ï¿½ï¿½É°ï¿½ï¿½ï¿½ï¿½Ð°ï¿½ï¿½ß¼ï¿½ï¿½ï¿½
 ]]
 
 local _config = Guard.getConfig("npc_44")
@@ -21,7 +21,7 @@ local DollCfg = _config.DollCfg or {}
 local maxShopBuy = _config.shopMaxBuy or 9999
 local visitorLimit = _config.visitorLogLimit or 20
 local gridSize = _config.gridSize or 9
-local DollAttrListName = tostring(DollCfg.attr_list_name or "ÏÉ¸®ÍÞÍÞÊôÐÔ")
+local DollAttrListName = tostring(DollCfg.attr_list_name or "ï¿½É¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")
 local levelMax = tonumber(_config.level_max or 4) or 4
 local growthDailyLimit = tonumber(_config.growth_daily_limit or 300) or 300
 local XIANFU_DAN_LOW_EXPIRE = "N$xf_dan_low_expire"
@@ -29,7 +29,7 @@ local XIANFU_DAN_MID_EXPIRE = "N$xf_dan_mid_expire"
 local XIANFU_DAN_HIGH_EXPIRE = "N$xf_dan_high_expire"
 
 ---------------------------------------------------------------------
--- Common: »ù´¡¹¤¾ß
+-- Common: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 ---------------------------------------------------------------------
 local Common = {}
 
@@ -70,7 +70,7 @@ function Common.payCost(play, cost, reason)
     Player.takeItemByTable(play, cost, reason or ",npc_44", nil)
 end
 
--- ÏÉ¸®µÈ¼¶¹Ì¶¨½âËø 1/3/6/9 ¿éµØ£¬ÓëÉñÊ¯²ÛÎ»½âËø·Ö¿ªÎ¬»¤¡£
+-- ï¿½É¸ï¿½ï¿½È¼ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½ï¿½ï¿½ 1/3/6/9 ï¿½ï¿½Ø£ï¿½ï¿½ï¿½ï¿½ï¿½Ê¯ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½Ö¿ï¿½Î¬ï¿½ï¿½ï¿½ï¿½
 local function getPlotUnlockCount(level)
     return gridSize
 end
@@ -267,7 +267,7 @@ local function cloneSimpleTable(src)
 end
 
 ---------------------------------------------------------------------
--- Storage: Íæ¼ÒÊý¾Ý¶ÁÐ´
+-- Storage: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¶ï¿½Ð´
 ---------------------------------------------------------------------
 local Storage = {}
 
@@ -443,7 +443,7 @@ local Planting = {}
 
 buildPlantReward = function(play, plantCfg)
     local reward = {}
-    -- ÎÈ¹Ìµ¤ÉúÐ§Ê±£¬ÖÖÖ²²ú³öµÄÏÉ¸®±Ò/ÉñÊ¯ËéÆ¬¶îÍâÔö¼Ó 20%¡£
+    -- ï¿½È¹Ìµï¿½ï¿½ï¿½Ð§Ê±ï¿½ï¿½ï¿½ï¿½Ö²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¸ï¿½ï¿½ï¿½/ï¿½ï¿½Ê¯ï¿½ï¿½Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 20%ï¿½ï¿½
     local lowDanActive = isDanActive(play, XIANFU_DAN_LOW_EXPIRE)
     for _, entry in ipairs(plantCfg.product or {}) do
         local rate = tonumber(entry.rate or 0) or 0
@@ -451,7 +451,7 @@ buildPlantReward = function(play, plantCfg)
             for _, info in ipairs(entry.give or {}) do
                 local itemName = tostring(info[1] or "")
                 local itemNum = tonumber(info[2] or 0) or 0
-                if lowDanActive and (itemName == "ÏÉ¸®±Ò" or itemName == "ÉñÊ¯ËéÆ¬") and itemNum > 0 then
+                if lowDanActive and (itemName == "ï¿½É¸ï¿½ï¿½ï¿½" or itemName == "ï¿½ï¿½Ê¯ï¿½ï¿½Æ¬") and itemNum > 0 then
                     itemNum = math.max(itemNum + math.floor(itemNum * 0.2), itemNum + 1)
                 end
                 if itemName ~= "" and itemNum > 0 then
@@ -463,24 +463,24 @@ buildPlantReward = function(play, plantCfg)
     return reward
 end
 
--- ²¥ÖÖ¹²ÓÃÂß¼­£ºµ¥¿é²¥ÖÖÓëÒ»¼üÖÖÖ²¶¼¸´ÓÃÕâÀï£¬È·±£³ÉÊìÊ±¼äÓë¿ÉÍµ×´Ì¬Ò»ÖÂ¡£
+-- ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é²¥ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ö²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï£¬È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Íµ×´Ì¬Ò»ï¿½Â¡ï¿½
 local function applyPlantToPlot(play, record, plot, seedId, now)
     local cfg = PlantCfg[seedId]
     if not cfg then
-        return false, "Áé²ÝÅäÖÃ²»´æÔÚ"
+        return false, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½ï¿½ï¿½"
     end
     if not plot then
-        return false, "µØ¿é²»´æÔÚ"
+        return false, "ï¿½Ø¿é²»ï¿½ï¿½ï¿½ï¿½"
     end
     if plot.state == "locked" then
-        return false, "¸ÃµØ¿éÉÐÎ´½âËø"
+        return false, "ï¿½ÃµØ¿ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½"
     end
     if plot.state ~= "empty" then
-        return false, "µ±Ç°µØ¿éÒÑÕ¼ÓÃ"
+        return false, "ï¿½ï¿½Ç°ï¿½Ø¿ï¿½ï¿½ï¿½Õ¼ï¿½ï¿½"
     end
     local needLevel = tonumber(cfg.need_level or 1) or 1
     if (tonumber(record.level or 1) or 1) < needLevel then
-        return false, string.format("ÏÉ¸®µÈ¼¶´ïµ½#57|¡¾%d¼¶¡¿#218|ºó½âËø¸ÃÁé²Ý", needLevel)
+        return false, string.format("ï¿½É¸ï¿½ï¿½È¼ï¿½ï¿½ïµ½#57|ï¿½ï¿½%dï¿½ï¿½ï¿½ï¿½#218|ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", needLevel)
     end
     local startAt = now or Common.now()
     plot.seedId = seedId
@@ -488,7 +488,7 @@ local function applyPlantToPlot(play, record, plot, seedId, now)
     plot.plantedAt = startAt
     local mature = tonumber(cfg.matureTime or 0) or 0
     if mature > 0 and getplaydef(play,"N$buff306") == 1 then
-        -- ºÚ»¯·Ê»á»Ó·¢£ºÏÉ²Ý³ÉÊìÊ±¼ä¼Ó¿ì 30%¡£
+        -- ï¿½Ú»ï¿½ï¿½Ê»ï¿½Ó·ï¿½ï¿½ï¿½ï¿½É²Ý³ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ó¿ï¿½ 30%ï¿½ï¿½
         mature = math.ceil(mature * 0.7)
         if mature < 1 then
             mature = 1
@@ -503,26 +503,26 @@ end
 function Planting.plant(play, record, params, now)
     local gridId = tonumber(params.gridId)
     if not gridId or gridId < 1 or gridId > gridSize then
-        return false, "²ÎÊý´íÎó"
+        return false, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
     end
     local plot = record.fields[gridId]
     if not plot then
-        return false, "µØ¿é²»´æÔÚ"
+        return false, "ï¿½Ø¿é²»ï¿½ï¿½ï¿½ï¿½"
     end
     Storage.syncGrowth(record, now)
     return applyPlantToPlot(play, record, plot, params.seedId, now)
 end
 
--- Ò»¼üÖÖÖ²£ºÍæ¼ÒÑ¡¶¨Áé²Ýºó£¬½«µ±Ç°ËùÓÐÒÑ½âËø¿ÕµØÒ»´ÎÐÔ²¥Âú¡£
+-- Ò»ï¿½ï¿½ï¿½ï¿½Ö²ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½Ýºó£¬½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½Ñ½ï¿½ï¿½ï¿½ï¿½Õµï¿½Ò»ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½ï¿½ï¿½
 function Planting.plantAll(play, record, params, now)
     local seedId = tostring(params.seedId or "")
     local cfg = PlantCfg[seedId]
     if not cfg then
-        return false, "Áé²ÝÅäÖÃ²»´æÔÚ"
+        return false, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½ï¿½ï¿½"
     end
     local needLevel = tonumber(cfg.need_level or 1) or 1
     if (tonumber(record.level or 1) or 1) < needLevel then
-        return false, string.format("ÏÉ¸®µÈ¼¶´ïµ½#57|¡¾%d¼¶¡¿#218|ºó½âËø¸ÃÁé²Ý", needLevel)
+        return false, string.format("ï¿½É¸ï¿½ï¿½È¼ï¿½ï¿½ïµ½#57|ï¿½ï¿½%dï¿½ï¿½ï¿½ï¿½#218|ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", needLevel)
     end
     Storage.syncGrowth(record, now)
     local count = 0
@@ -538,7 +538,7 @@ function Planting.plantAll(play, record, params, now)
         end
     end
     if count <= 0 then
-        return false, "µ±Ç°Ã»ÓÐ¿ÉÖÖÖ²¿ÕµØ"
+        return false, "ï¿½ï¿½Ç°Ã»ï¿½Ð¿ï¿½ï¿½ï¿½Ö²ï¿½Õµï¿½"
     end
     return true, {
         count = count,
@@ -551,16 +551,16 @@ function Planting.harvest(play, record, params, now)
     local gridId = tonumber(params.gridId)
     local plot = record.fields[gridId]
     if not plot then
-        return false, "µØ¿é²»´æÔÚ"
+        return false, "ï¿½Ø¿é²»ï¿½ï¿½ï¿½ï¿½"
     end
     Storage.syncGrowth(record, now)
     if plot.state ~= "mature" then
-        return false, "ÉÐÎ´³ÉÊì"
+        return false, "ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½"
     end
     local plantCfg = PlantCfg[plot.seedId]
     if not plantCfg then
         resetPlot(plot, gridId)
-        return false, "Áé²ÝÅäÖÃ²»´æÔÚ"
+        return false, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½ï¿½ï¿½"
     end
     local reward = cloneRewardList(plot.product or {})
     if #reward <= 0 then
@@ -569,9 +569,9 @@ function Planting.harvest(play, record, params, now)
     end
     if #reward <= 0 then
         resetPlot(plot, gridId)
-        return false, "±¾´ÎÎ´ÊÕ»ñµ½ÎïÆ·"
+        return false, "ï¿½ï¿½ï¿½ï¿½Î´ï¿½Õ»ï¿½ï¿½ï¿½Æ·"
     end
-    Player.rwjl(play, reward, "ÏÉ¸®ÊÕ»ñ", 1, 0)
+    Player.rwjl(play, reward, "ï¿½É¸ï¿½ï¿½Õ»ï¿½", 1, 0)
     addProductStat(record, reward)
     local stats = ensureLevelStats(record)
     if plot.seedId == "Low" then
@@ -611,21 +611,21 @@ end
 
 local function purchase(play, entry, amount, reason)
     if not entry then
-        return false, "ÉÌÆ·²»´æÔÚ"
+        return false, "ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
     end
     amount = math.max(1, tonumber(amount) or 1)
     local cost = multiplyCost(entry.cost, amount)
     local ok, lack = Common.checkCost(play, cost)
     if not ok then
-        return false, string.format("%s²»×ã", lack or "cost")
+        return false, string.format("%sï¿½ï¿½ï¿½ï¿½", lack or "cost")
     end
     Common.payCost(play, cost, reason or "xianfu_shop")
     return true, amount
 end
 
 function Shop.buySeed(play, record, params)
-    -- ÐÂ°æÏÉ¸®ÒÑÈ¡ÏûÖÖ×Ó¹ºÂò£¬¿ÕµØ¿ÉÖ±½Ó²¥ÖÖ¶ÔÓ¦µÈ¼¶Áé²Ý¡£
-    return false, "ÏÉ²ÝÖÖ×Ó¹¦ÄÜÒÑÍ£ÓÃ"
+    -- ï¿½Â°ï¿½ï¿½É¸ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ó¹ï¿½ï¿½ò£¬¿ÕµØ¿ï¿½Ö±ï¿½Ó²ï¿½ï¿½Ö¶ï¿½Ó¦ï¿½È¼ï¿½ï¿½ï¿½Ý¡ï¿½
+    return false, "ï¿½É²ï¿½ï¿½ï¿½ï¿½Ó¹ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½"
 end
 
 function Shop.buyEgg(play, record, params)
@@ -685,7 +685,7 @@ local function pickStealPlot(record, gridId)
         end
     end
 
-    return nil, nil, "µ±Ç°Ã»ÓÐ¿ÉÍµÈ¡µÄ³ÉÊìÁé²Ý"
+    return nil, nil, "ï¿½ï¿½Ç°Ã»ï¿½Ð¿ï¿½ÍµÈ¡ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
 end
 
 local function ensureStealCooldown(stat)
@@ -720,21 +720,21 @@ end
 
 function Steal.try(play, thiefRecord, targetRecord, now, gridId, targetActor)
     if thiefRecord.meta.key == targetRecord.meta.key then
-        return false, "²»ÄÜÍµÈ¡×Ô¼º"
+        return false, "ï¿½ï¿½ï¿½ï¿½ÍµÈ¡ï¿½Ô¼ï¿½"
     end
     Storage.syncGrowth(targetRecord, now)
     local plot, cfg, err = pickStealPlot(targetRecord, gridId)
     if not plot then
-        return false, err or "Ã»ÓÐ¿ÉÍµµÄÁé²Ý"
+        return false, err or "Ã»ï¿½Ð¿ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½"
     end
     local today = Common.today(now)
     thiefRecord.steal.daily = Common.ensureDailyCounter(thiefRecord.steal.daily, today)
     if thiefRecord.steal.daily.count >= (StealCfg.dailyStealLimit or 0) then
-        return false, "½ñÈÕÍµ²Ë´ÎÊýÒÑÂú"
+        return false, "ï¿½ï¿½ï¿½ï¿½Íµï¿½Ë´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
     end
     targetRecord.guard.daily = Common.ensureDailyCounter(targetRecord.guard.daily, today)
     if targetRecord.guard.daily.count >= (StealCfg.perTargetDailyLimit or 0) then
-        return false, "¶Ô·½½ñÈÕ±»Íµ´ÎÊýÒÑÂú"
+        return false, "ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Õ±ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
     end
     if not plot.product or #plot.product == 0 then
         local generated = buildPlantReward(targetActor or play, cfg)
@@ -742,9 +742,9 @@ function Steal.try(play, thiefRecord, targetRecord, now, gridId, targetActor)
     end
     local reward, left = splitStealReward(plot)
     if not reward then
-        return false, "Ã»ÓÐÊ£ÓàÁé²Ý"
+        return false, "Ã»ï¿½ï¿½Ê£ï¿½ï¿½ï¿½ï¿½ï¿½"
     end
-    Player.rwjl(play, reward, "ÏÉ¸®Íµ²Ë", 1, 0)
+    Player.rwjl(play, reward, "ï¿½É¸ï¿½Íµï¿½ï¿½", 1, 0)
     addProductStat(thiefRecord, reward)
     thiefRecord.steal.daily.count = thiefRecord.steal.daily.count + 1
     targetRecord.guard.daily.count = targetRecord.guard.daily.count + 1
@@ -775,7 +775,7 @@ local Like = {}
 
 function Like.perform(play, actorRecord, targetRecord, now)
     if actorRecord.meta.key == targetRecord.meta.key then
-        return false, "²»ÄÜ¸ø×Ô¼ºµãÔÞ"
+        return false, "ï¿½ï¿½ï¿½Ü¸ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½"
     end
     local today = Common.today(now)
     actorRecord.likes.given[targetRecord.meta.key] = actorRecord.likes.given[targetRecord.meta.key] or {date = "", count = 0}
@@ -785,7 +785,7 @@ function Like.perform(play, actorRecord, targetRecord, now)
         node.count = 0
     end
     if node.count >= (LikeCfg.dailyLikePerTarget or 0) then
-        return false, "½ñÈÕÒÑµãÔÞ¹ýTA"
+        return false, "ï¿½ï¿½ï¿½ï¿½ï¿½Ñµï¿½ï¿½Þ¹ï¿½TA"
     end
     node.count = node.count + 1
     targetRecord.likes.received.total = (targetRecord.likes.received.total or 0) + 1
@@ -810,14 +810,14 @@ function Decoration.buy(play, record, decoId)
     local key = decoKey(decoId)
     local entry = decoEntry(key)
     if not entry then
-        return false, "×°°ç²»´æÔÚ"
+        return false, "×°ï¿½ç²»ï¿½ï¿½ï¿½ï¿½"
     end
     if record.decoration.owned[key] then
-        return false, "ÒÑÓµÓÐ¸Ã×°°ç"
+        return false, "ï¿½ï¿½Óµï¿½Ð¸ï¿½×°ï¿½ï¿½"
     end
     local ok, lack = Common.checkCost(play, entry.cost)
     if not ok then
-        return false, string.format("%s²»×ã", lack or "cost")
+        return false, string.format("%sï¿½ï¿½ï¿½ï¿½", lack or "cost")
     end
     Common.payCost(play, entry.cost, "xianfu_deco")
     record.decoration.owned[key] = true
@@ -828,14 +828,14 @@ function Decoration.equip(record, decoId)
     local key = decoKey(decoId)
     local entry = decoEntry(key)
     if not entry then
-        return false, "×°°ç²»´æÔÚ"
+        return false, "×°ï¿½ç²»ï¿½ï¿½ï¿½ï¿½"
     end
     if not record.decoration.owned[key] then
-        return false, "ÇëÏÈ¹ºÂò"
+        return false, "ï¿½ï¿½ï¿½È¹ï¿½ï¿½ï¿½"
     end
     local place = DecoPlaceIndex[key] or DecoPlaceIndex[tonumber(key)]
     if not place then
-        return false, "×°°çÎ»ÖÃÎ´ÅäÖÃ"
+        return false, "×°ï¿½ï¿½Î»ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½"
     end
     local prev = record.decoration.xiangHua or 0
     record.decoration.equipped[place] = key
@@ -851,7 +851,7 @@ local function refineCostWithBuff(play, cost)
     if getplaydef(play,"N$buff306") ~= 1 then
         return cost
     end
-    -- ºÚ»¯·Ê»á»Ó·¢£ºÁ¶µ¤ÏûºÄ¼õÉÙ 50%¡£
+    -- ï¿½Ú»ï¿½ï¿½Ê»ï¿½Ó·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ 50%ï¿½ï¿½
     local out = {}
     for _, info in ipairs(cost or {}) do
         local name, num = info[1], info[2] or 0
@@ -892,25 +892,25 @@ end
 function Refine.start(play, record, params, now)
     local recipe = RefineCfg.recipes and RefineCfg.recipes[params.recipeId]
     if not recipe then
-        return false, "µ¤·½²»´æÔÚ"
+        return false, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
     end
     if not hasRefinePermit(play) then
-        return false, string.format("ÇëÏÈ×°±¸#218|%s#255|ºóÔÙÁ¶µ¤", RefineCfg.needEquip or "Á¶µ¤Ðí¿ÉÖ¤")
+        return false, string.format("ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½#218|%s#255|ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", RefineCfg.needEquip or "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤")
     end
     local cd = RefineCfg.furnaceCd or 0
     if (record.refine.lastTime or 0) + cd > now then
-        return false, "Á¶µ¤Â¯ÀäÈ´ÖÐ"
+        return false, "ï¿½ï¿½ï¿½ï¿½Â¯ï¿½ï¿½È´ï¿½ï¿½"
     end
     local cost = refineCostWithBuff(play, recipe.cost or recipe.costCurrency)
     local ok, lack = Common.checkCost(play, cost)
     if not ok then
-        return false, string.format("%s²»×ã", lack or "cost")
+        return false, string.format("%sï¿½ï¿½ï¿½ï¿½", lack or "cost")
     end
     Common.payCost(play, cost, "xianfu_refine")
     record.refine.lastTime = now
     record.refine.collection[params.recipeId] = true
     local reward = cloneRewardList(recipe.product or {{params.recipeId, 1}})
-    Player.rwjl(play, reward, "ÏÉ¸®Á¶µ¤", 1, 0)
+    Player.rwjl(play, reward, "ï¿½É¸ï¿½ï¿½ï¿½ï¿½ï¿½", 1, 0)
     local stats = ensureLevelStats(record)
     local statKey = tostring(recipe.stat_key or "")
     if statKey == "refine_low" then
@@ -921,7 +921,7 @@ function Refine.start(play, record, params, now)
         stats.refine_high = (tonumber(stats.refine_high or 0) or 0) + 1
     end
     applyGrowth(record, "refine", 1, now)
-    --ÔÝÊ±²»ÓÃ³ÆºÅ
+    --ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ã³Æºï¿½
     -- if hasAllRecipes(record) and TitleCfg.DanMaster then
     --     Player.title_give(play, TitleCfg.DanMaster.name)
     -- end
@@ -936,30 +936,30 @@ end
 local function checkLevelUp(play, record)
     local currentLevel = tonumber(record.level or 1) or 1
     if currentLevel >= levelMax then
-        return false, "ÒÑ´ï×î¸ßµÈ¼¶"
+        return false, "ï¿½Ñ´ï¿½ï¿½ï¿½ßµÈ¼ï¿½"
     end
     local nextCfg = getLevelCfg(currentLevel + 1)
     local growth = ensureGrowth(record)
     local stats = ensureLevelStats(record)
     if (tonumber(growth.total or 0) or 0) < (tonumber(nextCfg.need_growth or 0) or 0) then
-        return false, "³É³¤Öµ²»×ã"
+        return false, "ï¿½É³ï¿½Öµï¿½ï¿½ï¿½ï¿½"
     end
     if (tonumber(stats.harvest_low or 0) or 0) < (tonumber(nextCfg.need_harvest or 0) or 0) then
-        return false, "µÍ½×ÏÉ²ÝÊÕ»ñ´ÎÊý²»×ã"
+        return false, "ï¿½Í½ï¿½ï¿½É²ï¿½ï¿½Õ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
     end
     local needRefineLow = tonumber(nextCfg.need_refine_low or 0) or 0
     local needRefineMid = tonumber(nextCfg.need_refine_mid or 0) or 0
     if (tonumber(stats.refine_low or 0) or 0) < needRefineLow then
-        return false, "ÏÂÆ·µ¤Ò©Á¶ÖÆ´ÎÊý²»×ã"
+        return false, "ï¿½ï¿½Æ·ï¿½ï¿½Ò©ï¿½ï¿½ï¿½Æ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
     end
     if (tonumber(stats.refine_mid or 0) or 0) < needRefineMid then
-        return false, "ÖÐÆ·µ¤Ò©Á¶ÖÆ´ÎÊý²»×ã"
+        return false, "ï¿½ï¿½Æ·ï¿½ï¿½Ò©ï¿½ï¿½ï¿½Æ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
     end
     local needCost = nextCfg.cost or {}
     if #needCost > 0 then
         local name, _ = Player.checkItemNumByTable(play, needCost)
         if name then
-            return false, tostring(name) .. "²»×ã"
+            return false, tostring(name) .. "ï¿½ï¿½ï¿½ï¿½"
         end
     end
     return true
@@ -974,7 +974,7 @@ local function levelUp(play, record)
     local nextCfg = getLevelCfg(nextLevel)
     local needCost = nextCfg.cost or {}
     if #needCost > 0 then
-        Player.takeItemByTable(play, needCost, ",ÏÉ¸®Éý¼¶", nil)
+        Player.takeItemByTable(play, needCost, ",ï¿½É¸ï¿½ï¿½ï¿½ï¿½ï¿½", nil)
     end
     record.level = nextLevel
     record.plot_unlock = getPlotUnlockCount(record.level)
@@ -1007,11 +1007,11 @@ end
 -- function Pet.hatch(play, record, params, now)
 --     local cfg = getEggCfg(params.eggId)
 --     if not cfg then
---         return false, "Áéµ°²»´æ??
+--         return false, "ï¿½éµ°ï¿½ï¿½ï¿½ï¿½??
 --     end
 --     record.pet.eggs[params.eggId] = record.pet.eggs[params.eggId] or 0
 --     if record.pet.eggs[params.eggId] <= 0 then
---         return false, "Áéµ°ÊýÁ¿²»×ã"
+--         return false, "ï¿½éµ°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
 --     end
 --     record.pet.eggs[params.eggId] = record.pet.eggs[params.eggId] - 1
 --     local petId = newPetId(params.eggId, now)
@@ -1037,13 +1037,13 @@ end
 -- function Pet.feed(play, record, params)
 --     local pet = record.pet.beasts[params.petId]
 --     if not pet then
---         return false, "ÁéÊÞ²»´æ??
+--         return false, "ï¿½ï¿½ï¿½Þ²ï¿½ï¿½ï¿½??
 --     end
 --     local feedCfg = PetCfg.feed or {}
 --     local need = (params.amount or 1) * (feedCfg.perFeed or 1)
 --     record.pet.materials[feedCfg.resource or "essence"] = record.pet.materials[feedCfg.resource or "essence"] or 0
 --     if record.pet.materials[feedCfg.resource or "essence"] < need then
---         return false, "²ÄÁÏ²»×ã"
+--         return false, "ï¿½ï¿½ï¿½Ï²ï¿½ï¿½ï¿½"
 --     end
 --     record.pet.materials[feedCfg.resource or "essence"] = record.pet.materials[feedCfg.resource or "essence"] - need
 --     pet.exp = pet.exp + (params.amount or 1) * (feedCfg.exp or 0)
@@ -1059,15 +1059,15 @@ end
 -- function Pet.identify(play, record, params)
 --     local pet = record.pet.beasts[params.petId]
 --     if not pet then
---         return false, "ÁéÊÞ²»´æ??
+--         return false, "ï¿½ï¿½ï¿½Þ²ï¿½ï¿½ï¿½??
 --     end
 --     local cost = PetCfg.identify and PetCfg.identify.cost
 --     local ok, lack = Common.checkCost(play, cost)
 --     if not ok then
---         return false, string.format("%s²»×ã", lack or "cost")
+--         return false, string.format("%sï¿½ï¿½ï¿½ï¿½", lack or "cost")
 --     end
 --     Common.payCost(play, cost, "xianfu_pet_identify")
---     local pool = PetCfg.identify and PetCfg.identify.bloodlinePool or {"Áé¶¯"}
+--     local pool = PetCfg.identify and PetCfg.identify.bloodlinePool or {"ï¿½é¶¯"}
 --     local affix = pool[math.random(1, #pool)]
 --     pet.bloodline = {name = affix, rollAt = Common.now()}
 --     if TitleCfg.BeastMaster and pet.bloodline and pet.bloodline.name then
@@ -1077,11 +1077,11 @@ end
 -- end
 
 ---------------------------------------------------------------------
--- ×´Ì¬¼Ó??/ ³Ö¾Ã??
+-- ×´Ì¬ï¿½ï¿½??/ ï¿½Ö¾ï¿½??
 ---------------------------------------------------------------------
 
 ---------------------------------------------------------------------
--- Doll: ÏÉ¸®ÍÞÍÞ??/ ÊÕ²Ø??
+-- Doll: ï¿½É¸ï¿½ï¿½ï¿½ï¿½ï¿½??/ ï¿½Õ²ï¿½??
 ---------------------------------------------------------------------
 local Doll = {}
 
@@ -1091,6 +1091,14 @@ end
 
 local function dollPercentAttrMap()
     return DollCfg.percent_attrs or {}
+end
+
+local function dollDirectPercentAttrMap()
+    return {
+        [280] = true, [281] = true, [282] = true, [283] = true, [284] = true, [285] = true,
+        [286] = true, [287] = true, [288] = true, [289] = true, [290] = true, [291] = true,
+        [300] = true,
+    }
 end
 
 local function dollSummaryLabel(attrId)
@@ -1154,14 +1162,17 @@ end
 local function dollBuildSummaryList(record)
     local attrs = dollBuildSummary(record)
     local result = {}
+    local directPercent = dollDirectPercentAttrMap()
     for attrId, value in pairs(attrs) do
         local label = dollSummaryLabel(attrId)
         if label then
+            local id = tonumber(attrId)
             result[#result + 1] = {
-                attr = tonumber(attrId),
+                attr = id,
                 name = label,
                 value = tonumber(value) or 0,
-                percent = dollPercentAttrMap()[tonumber(attrId)] and true or false,
+                percent = dollPercentAttrMap()[id] and true or false,
+                direct_percent = directPercent[id] and true or false,
             }
         end
     end
@@ -1236,8 +1247,8 @@ local function dollTryExtraBox(play)
     local rate = tonumber(DollCfg.extra_box_rate or 0) or 0
     local base = tonumber(DollCfg.extra_box_rate_base or 10000) or 10000
     if rate > 0 and math.random(base) <= rate then
-        giveitem(play, "ÉñÊ¯±¦Ïä", 1)
-        return {{"ÉñÊ¯±¦Ïä", 1}}
+        giveitem(play, "ï¿½ï¿½Ê¯ï¿½ï¿½ï¿½ï¿½", 1)
+        return {{"ï¿½ï¿½Ê¯ï¿½ï¿½ï¿½ï¿½", 1}}
     end
     return nil
 end
@@ -1267,22 +1278,22 @@ end
 
 function Doll.draw(play, record, now)
     if type(DollCfg) ~= "table" or type(DollCfg.results) ~= "table" then
-        return false, "ÍÞÍÞ»úÅäÖÃÈ±Ê§"
+        return false, "ï¿½ï¿½ï¿½Þ»ï¿½ï¿½ï¿½ï¿½ï¿½È±Ê§"
     end
     local cost = dollResolveCost(record)
     local ok, lack = Common.checkCost(play, cost)
     if not ok then
-        return false, string.format("%s²»×ã", lack or "cost")
+        return false, string.format("%sï¿½ï¿½ï¿½ï¿½", lack or "cost")
     end
     Common.payCost(play, cost, "xianfu_doll_draw")
     local resultId, drawType = dollRollResult(record)
     local resultCfg = dollResultCfg(resultId)
     if not resultId or not resultCfg then
-        return false, "ÍÞÍÞ»úÅäÖÃÒì³£"
+        return false, "ï¿½ï¿½ï¿½Þ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì³£"
     end
     local fixedReward = cloneRewardList(DollCfg.every_draw_reward or {})
     if #fixedReward > 0 then
-        Player.rwjl(play, fixedReward, "ÏÉ¸®ÍÞÍÞ»ú", 1, 0)
+        Player.rwjl(play, fixedReward, "ï¿½É¸ï¿½ï¿½ï¿½ï¿½Þ»ï¿½", 1, 0)
     end
     local doll = record.doll or {}
     doll.draw_total = (tonumber(doll.draw_total) or 0) + 1
@@ -1314,7 +1325,7 @@ function Doll.draw(play, record, now)
 end
 
 
--- count: ±¾´ÎÐèÒªÀÛ¼ÆµÄ³éÈ¡´ÎÊý£¬ÓÃÓÚÊ®Á¬Ç°Ò»´ÎÐÔ»ã×ÜÏûºÄ¡£
+-- count: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Û¼ÆµÄ³ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê®ï¿½ï¿½Ç°Ò»ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½
 local function dollMergeCost(totalCost, cost)
     totalCost = totalCost or {}
     if type(cost) ~= "table" then
@@ -1342,7 +1353,7 @@ local function dollMergeCost(totalCost, cost)
     return totalCost
 end
 
--- count: Á¬³é´ÎÊý¡£ÕâÀï°´ÕæÊµ³éÈ¡Ë³Ðò»ã×Ü³É±¾£¬È·±£ÐÂÊÖ¼ÛÓë³£¹æ¼ÛÇÐ»»Ò»ÖÂ¡£
+-- count: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï°´ï¿½ï¿½Êµï¿½ï¿½È¡Ë³ï¿½ï¿½ï¿½ï¿½Ü³É±ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ë³£ï¿½ï¿½ï¿½ï¿½Ð»ï¿½Ò»ï¿½Â¡ï¿½
 local function dollBuildBatchCost(record, count)
     local totalCost = {}
     local drawTotal = tonumber((((record or {}).doll or {}).draw_total) or 0) or 0
@@ -1362,16 +1373,16 @@ local function dollBuildBatchCost(record, count)
     return totalCost
 end
 
--- play: Íæ¼Ò¶ÔÏó£»record: ÏÉ¸®¼ÇÂ¼£»now: µ±Ç°Ê±¼ä£»count: Á¬³é´ÎÊý¡£
+-- play: ï¿½ï¿½Ò¶ï¿½ï¿½ï¿½record: ï¿½É¸ï¿½ï¿½ï¿½Â¼ï¿½ï¿½now: ï¿½ï¿½Ç°Ê±ï¿½ä£»count: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 function Doll.drawBatch(play, record, now, count)
     if type(DollCfg) ~= "table" or type(DollCfg.results) ~= "table" then
-        return false, "ÍÞÍÞ»úÅäÖÃÈ±Ê§"
+        return false, "ï¿½ï¿½ï¿½Þ»ï¿½ï¿½ï¿½ï¿½ï¿½È±Ê§"
     end
     local drawCount = math.max(1, tonumber(count) or 1)
     local totalCost = dollBuildBatchCost(record, drawCount)
     local ok, lack = Common.checkCost(play, totalCost)
     if not ok then
-        return false, string.format("%s²»×ã", lack or "cost")
+        return false, string.format("%sï¿½ï¿½ï¿½ï¿½", lack or "cost")
     end
     Common.payCost(play, totalCost, drawCount > 1 and "xianfu_doll_draw_batch" or "xianfu_doll_draw")
     local results = {}
@@ -1383,11 +1394,11 @@ function Doll.drawBatch(play, record, now, count)
         local resultId, drawType = dollRollResult(record)
         local resultCfg = dollResultCfg(resultId)
         if not resultId or not resultCfg then
-            return false, "ÍÞÍÞ»úÅäÖÃÒì³£"
+            return false, "ï¿½ï¿½ï¿½Þ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì³£"
         end
         local fixedReward = cloneRewardList(DollCfg.every_draw_reward or {})
         if #fixedReward > 0 then
-            Player.rwjl(play, fixedReward, "ÏÉ¸®ÍÞÍÞ»ú", 1, 0)
+            Player.rwjl(play, fixedReward, "ï¿½É¸ï¿½ï¿½ï¿½ï¿½Þ»ï¿½", 1, 0)
         end
         doll.draw_total = (tonumber(doll.draw_total) or 0) + 1
         doll.owned[resultId] = (tonumber(doll.owned[resultId]) or 0) + 1
@@ -1526,11 +1537,11 @@ local function pushAction(play, npcid, action, ok, msg, state, extra)
 end
 local function findOnlineTargetByName(targetName)
     if not targetName or targetName == "" then
-        return nil, nil, "ÇëÊäÈëÍæ¼ÒÃû×Ö"
+        return nil, nil, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
     end
     local actor = getplayerbyname and getplayerbyname(targetName)
     if actor == nil or actor == 0 then
-        return nil, nil, "¶Ô·½²»ÔÚÏß»ò²»´æÔÚ"
+        return nil, nil, "ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß»ò²»´ï¿½ï¿½ï¿½"
     end
     local record = Storage.ensureRecord(actor, {name = Player.GetName(actor), now = Common.now()})
     Storage.syncGrowth(record, Common.now())
@@ -1552,22 +1563,22 @@ function ActionHandler.plant(play, npcid, state, params)
     local ok, res = Planting.plant(play, state.record, params or {}, state.now)
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "²¥ÖÖÊ§°Ü#57")
+        Player.sendmsgEx(play, res or "ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½#57")
         return
     end
-    Player.sendmsgEx(play, "²¥ÖÖ³É¹¦")
-    pushAction(play, npcid, "plant", true, "²¥ÖÖ³É¹¦", state, res)
+    Player.sendmsgEx(play, "ï¿½ï¿½ï¿½Ö³É¹ï¿½")
+    pushAction(play, npcid, "plant", true, "ï¿½ï¿½ï¿½Ö³É¹ï¿½", state, res)
 end
 
 function ActionHandler.plantAll(play, npcid, state, params)
     local ok, res = Planting.plantAll(play, state.record, params or {}, state.now)
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "Ò»¼üÖÖÖ²Ê§°Ü#57")
+        Player.sendmsgEx(play, res or "Ò»ï¿½ï¿½ï¿½ï¿½Ö²Ê§ï¿½ï¿½#57")
         return
     end
-    local seedName = tostring((PlantCfg[tostring((params or {}).seedId or "")] or {}).name or "Áé²Ý")
-    local msg = string.format("Ò»¼üÖÖÖ²Íê³É£¬ÒÑ²¥ÖÖ%s¿é%s", tostring(res.count or 0), seedName)
+    local seedName = tostring((PlantCfg[tostring((params or {}).seedId or "")] or {}).name or "ï¿½ï¿½ï¿½")
+    local msg = string.format("Ò»ï¿½ï¿½ï¿½ï¿½Ö²ï¿½ï¿½É£ï¿½ï¿½Ñ²ï¿½ï¿½ï¿½%sï¿½ï¿½%s", tostring(res.count or 0), seedName)
     Player.sendmsgEx(play, msg)
     pushAction(play, npcid, "plantAll", true, msg, state, res)
 end
@@ -1576,143 +1587,143 @@ function ActionHandler.harvest(play, npcid, state, params)
     local ok, res = Planting.harvest(play, state.record, params or {}, state.now)
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "ÉÐÎ´³ÉÊì#57")
+        Player.sendmsgEx(play, res or "ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½#57")
         return
     end
-    Player.sendmsgEx(play, "ÊÕ»ñÍê³É#57")
-    pushAction(play, npcid, "harvest", true, "ÊÕ»ñÍê³É", state, res)
+    Player.sendmsgEx(play, "ï¿½Õ»ï¿½ï¿½ï¿½ï¿½#57")
+    pushAction(play, npcid, "harvest", true, "ï¿½Õ»ï¿½ï¿½ï¿½ï¿½", state, res)
 end
 
 function ActionHandler.buySeed(play, npcid, state, params)
     local ok, res = Shop.buySeed(play, state.record, params or {})
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "¹ºÂòÊ§°Ü#57")
+        Player.sendmsgEx(play, res or "ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½#57")
         return
     end
-    Player.sendmsgEx(play, "¹ºÂò³É¹¦")
-    pushAction(play, npcid, "buySeed", true, "¹ºÂò³É¹¦", state, res)
+    Player.sendmsgEx(play, "ï¿½ï¿½ï¿½ï¿½É¹ï¿½")
+    pushAction(play, npcid, "buySeed", true, "ï¿½ï¿½ï¿½ï¿½É¹ï¿½", state, res)
 end
 
 function ActionHandler.buyEgg(play, npcid, state, params)
     local ok, res = Shop.buyEgg(play, state.record, params or {})
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "¹ºÂòÊ§°Ü#57")
+        Player.sendmsgEx(play, res or "ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½#57")
         return
     end
-    Player.sendmsgEx(play, "¹ºÂò³É¹¦")
-    pushAction(play, npcid, "buyEgg", true, "¹ºÂò³É¹¦", state, res)
+    Player.sendmsgEx(play, "ï¿½ï¿½ï¿½ï¿½É¹ï¿½")
+    pushAction(play, npcid, "buyEgg", true, "ï¿½ï¿½ï¿½ï¿½É¹ï¿½", state, res)
 end
 
 function ActionHandler.buyMaterial(play, npcid, state, params)
     local ok, res = Shop.buyMaterial(play, state.record, params or {})
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "¹ºÂòÊ§°Ü#57")
+        Player.sendmsgEx(play, res or "ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½#57")
         return
     end
-    Player.sendmsgEx(play, "¹ºÂò³É¹¦")
-    pushAction(play, npcid, "buyMaterial", true, "¹ºÂò³É¹¦", state, res)
+    Player.sendmsgEx(play, "ï¿½ï¿½ï¿½ï¿½É¹ï¿½")
+    pushAction(play, npcid, "buyMaterial", true, "ï¿½ï¿½ï¿½ï¿½É¹ï¿½", state, res)
 end
 
 function ActionHandler.refine(play, npcid, state, params)
     local ok, res = Refine.start(play, state.record, params or {}, state.now)
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "Á¶µ¤Ê§°Ü#57")
+        Player.sendmsgEx(play, res or "ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½#57")
         return
     end
-    Player.sendmsgEx(play, "Á¶µ¤Íê³É#57")
-    pushAction(play, npcid, "refine", true, "Á¶µ¤Íê³É", state, res)
+    Player.sendmsgEx(play, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½#57")
+    pushAction(play, npcid, "refine", true, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", state, res)
 end
 
 function ActionHandler.levelUp(play, npcid, state, params)
     local ok, res = levelUp(play, state.record)
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, tostring(res or "ÏÉ¸®Éý¼¶Ê§°Ü") .. "#57")
-        pushAction(play, npcid, "levelUp", false, tostring(res or "ÏÉ¸®Éý¼¶Ê§°Ü"), state)
+        Player.sendmsgEx(play, tostring(res or "ï¿½É¸ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½") .. "#57")
+        pushAction(play, npcid, "levelUp", false, tostring(res or "ï¿½É¸ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½"), state)
         return
     end
-    Player.sendmsgEx(play, string.format("ÏÉ¸®Éý¼¶³É¹¦£¬µ±Ç°#57|¡¾%d¼¶¡¿#218|", tonumber(state.record.level or 1) or 1))
-    pushAction(play, npcid, "levelUp", true, "ÏÉ¸®Éý¼¶³É¹¦", state, res)
+    Player.sendmsgEx(play, string.format("ï¿½É¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½Ç°#57|ï¿½ï¿½%dï¿½ï¿½ï¿½ï¿½#218|", tonumber(state.record.level or 1) or 1))
+    pushAction(play, npcid, "levelUp", true, "ï¿½É¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½", state, res)
 end
 
 function ActionHandler.buyDecoration(play, npcid, state, params)
     local ok, res = Decoration.buy(play, state.record, params and params.decoId)
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "¹ºÂòÊ§°Ü#57")
+        Player.sendmsgEx(play, res or "ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½#57")
         return
     end
-    Player.sendmsgEx(play, "¹ºÂò³É¹¦")
-    pushAction(play, npcid, "buyDecoration", true, "¹ºÂò³É¹¦", state, res)
+    Player.sendmsgEx(play, "ï¿½ï¿½ï¿½ï¿½É¹ï¿½")
+    pushAction(play, npcid, "buyDecoration", true, "ï¿½ï¿½ï¿½ï¿½É¹ï¿½", state, res)
 end
 
 function ActionHandler.equipDecoration(play, npcid, state, params)
     local ok, res = Decoration.equip(state.record, params and params.decoId)
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "×°°çÎÞ·¨ÉúÐ§#57")
+        Player.sendmsgEx(play, res or "×°ï¿½ï¿½ï¿½Þ·ï¿½ï¿½ï¿½Ð§#57")
         return
     end
-    Player.sendmsgEx(play, "×°°çÒÑÉúÐ§#57")
-    pushAction(play, npcid, "equipDecoration", true, "×°°çÒÑÉúÐ§", state, res)
+    Player.sendmsgEx(play, "×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§#57")
+    pushAction(play, npcid, "equipDecoration", true, "×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§", state, res)
 end
 
 function ActionHandler.hatch(play, npcid, state, params)
     local ok, res = Pet.hatch(play, state.record, params or {}, state.now)
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "·õ»¯Ê§°Ü#57")
+        Player.sendmsgEx(play, res or "ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½#57")
         return
     end
-    Player.sendmsgEx(play, "·õ»¯³É¹¦")
-    pushAction(play, npcid, "hatch", true, "·õ»¯³É¹¦", state, res)
+    Player.sendmsgEx(play, "ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½")
+    pushAction(play, npcid, "hatch", true, "ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½", state, res)
 end
 
 -- function ActionHandler.feed(play, npcid, state, params)
 --     local ok, res = Pet.feed(play, state.record, params or {})
 --     persistState(state)
 --     if not ok then
---         Player.sendmsgEx(play, res or "Î¹ÑøÊ§°Ü#57")
+--         Player.sendmsgEx(play, res or "Î¹ï¿½ï¿½Ê§ï¿½ï¿½#57")
 --         return
 --     end
---     Player.sendmsgEx(play, "Î¹ÑøÍê³É#57")
---     pushAction(play, npcid, "feed", true, "Î¹ÑøÍê³É", state, res)
+--     Player.sendmsgEx(play, "Î¹ï¿½ï¿½ï¿½ï¿½ï¿½#57")
+--     pushAction(play, npcid, "feed", true, "Î¹ï¿½ï¿½ï¿½ï¿½ï¿½", state, res)
 -- end
 
 -- function ActionHandler.identify(play, npcid, state, params)
 --     local ok, res = Pet.identify(play, state.record, params or {})
 --     if not ok then
---         Player.sendmsgEx(play, res or "¼ø¶¨Ê§°Ü#57")
+--         Player.sendmsgEx(play, res or "ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½#57")
 --         return
 --     end
---     Player.sendmsgEx(play, "¼ø¶¨Íê³É#57")
---     pushAction(play, npcid, "identify", true, "¼ø¶¨Íê³É", state, res)
+--     Player.sendmsgEx(play, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½#57")
+--     pushAction(play, npcid, "identify", true, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", state, res)
 -- end
 
 function ActionHandler.dollDraw(play, npcid, state)
     local ok, res = Doll.draw(play, state.record, state.now)
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "×¥ÍÞÍÞÊ§°Ü#57")
+        Player.sendmsgEx(play, res or "×¥ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½#57")
         return
     end
-    Player.sendmsgEx(play, string.format("×¥È¡³É¹¦£º%s", tostring(res.name or "ÍÞÍÞ")))
-    pushAction(play, npcid, "dollDraw", true, "×¥È¡³É¹¦", state, res)
+    Player.sendmsgEx(play, string.format("×¥È¡ï¿½É¹ï¿½ï¿½ï¿½%s", tostring(res.name or "ï¿½ï¿½ï¿½ï¿½")))
+    pushAction(play, npcid, "dollDraw", true, "×¥È¡ï¿½É¹ï¿½", state, res)
 end
 
 local function handleVisit(play, npcid, state, params, fn)
     local targetName = params and params.targetName
     if not targetName or targetName == "" then
-        Player.sendmsgEx(play, "ÇëÊäÈëÒª°Ý·ÃµÄÍæ¼ÒÃû×Ö#57")
+        Player.sendmsgEx(play, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Ý·Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½#57")
         return
     end
     local actor, record, err = findOnlineTargetByName(targetName)
     if not actor then
-        Player.sendmsgEx(play, (err or "¶Ô·½²»ÔÚÏß") .. "#57")
+        Player.sendmsgEx(play, (err or "ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½") .. "#57")
         return
     end
     fn(actor, record, params or {})
@@ -1727,11 +1738,11 @@ function ActionHandler.like(play, npcid, state, params)
         end
         persistState(state)
         if not ok then
-            Player.sendmsgEx(play, res or "µãÔÞÊ§°Ü#57")
+            Player.sendmsgEx(play, res or "ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½#57")
             return
         end
-        Player.sendmsgEx(play, "µãÔÞ³É¹¦")
-        pushAction(play, npcid, "like", true, "µãÔÞ³É¹¦", state, res)
+        Player.sendmsgEx(play, "ï¿½ï¿½ï¿½Þ³É¹ï¿½")
+        pushAction(play, npcid, "like", true, "ï¿½ï¿½ï¿½Þ³É¹ï¿½", state, res)
     end)
 end
 
@@ -1744,11 +1755,11 @@ function ActionHandler.steal(play, npcid, state, params)
         end
         persistState(state)
         if not ok then
-            Player.sendmsgEx(play, res or "ÍµÈ¡Ê§°Ü#57")
+            Player.sendmsgEx(play, res or "ÍµÈ¡Ê§ï¿½ï¿½#57")
             return
         end
-        Player.sendmsgEx(play, "ÍµÈ¡³É¹¦")
-        pushAction(play, npcid, "steal", true, "ÍµÈ¡³É¹¦", state, res)
+        Player.sendmsgEx(play, "ÍµÈ¡ï¿½É¹ï¿½")
+        pushAction(play, npcid, "steal", true, "ÍµÈ¡ï¿½É¹ï¿½", state, res)
     end)
 end
 
@@ -1764,7 +1775,7 @@ function ActionHandler.visit(play, npcid, state, params)
 end
 
 ---------------------------------------------------------------------
--- NPC Èë¿Ú
+-- NPC ï¿½ï¿½ï¿½
 ---------------------------------------------------------------------
 function npc.refreshDollAttr(play)
     local state = loadState(play)
@@ -1772,14 +1783,14 @@ function npc.refreshDollAttr(play)
     persistState(state)
 end
 
--- ¹©Íâ²¿¹¦ÄÜÔÚÍæ¼ÒÕæÕý¿ª¸®Ê±ÏÔÊ½±ê¼Ç£¬±ÜÃâ½öÒò¿³Ê÷»ò×¥ÍÞÍÞÐ´ÈëÊý¾Ý¾Í±»ÅÐ¶¨ÎªÒÑ¿ª±ÙÏÉ¸®¡£
+-- ï¿½ï¿½ï¿½â²¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ê½ï¿½ï¿½Ç£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¥ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½Ý¾Í±ï¿½ï¿½Ð¶ï¿½Îªï¿½Ñ¿ï¿½ï¿½ï¿½ï¿½É¸ï¿½ï¿½ï¿½
 function npc.markOpened(play)
     local state = loadState(play)
     state.record.opened = 1
     persistState(state)
 end
 
--- ¹©Íâ²¿£¨¿³Ê÷¡¢°Ý·ÃµÈ£©¸´ÓÃ³É³¤ÖµÀÛ¼Æ¡£
+-- ï¿½ï¿½ï¿½â²¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý·ÃµÈ£ï¿½ï¿½ï¿½ï¿½Ã³É³ï¿½Öµï¿½Û¼Æ¡ï¿½
 function npc.touchGrowth(play, reason, times)
     local state = loadState(play)
     applyGrowth(state.record, tostring(reason or ""), tonumber(times or 1) or 1, state.now)
@@ -1813,7 +1824,7 @@ function npc.drawDollFromWoodcut(play)
     }
 end
 
--- count: ¿³Ê÷ÍÞÍÞ»úÇëÇóµÄ³éÈ¡´ÎÊý£¬µ±Ç°Ö»»á´« 1 »ò 10¡£
+-- count: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ»ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°Ö»ï¿½á´« 1 ï¿½ï¿½ 10ï¿½ï¿½
 function npc.drawDollBatchFromWoodcut(play, count)
     local state = loadState(play)
     local ok, res = Doll.drawBatch(play, state.record, state.now, count)
@@ -1846,7 +1857,7 @@ end
 function npc.main(play, npcid)
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     if not (jq_data["npc_55"] and jq_data["npc_55"] >= 2) then
-        Player.sendmsgEx(play, "Äú»¹Î´¿ª±ÙÏÉ¸®£¬ÔÝ²»¿É½øÈë#57")
+        Player.sendmsgEx(play, "ï¿½ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½É¸ï¿½ï¿½ï¿½ï¿½Ý²ï¿½ï¿½É½ï¿½ï¿½ï¿½#57")
         return
     end
     local state = loadState(play)
@@ -1872,7 +1883,7 @@ function npc.link(play, npcid, p2, p3, msgData)
     end
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     if not (jq_data["npc_55"] and jq_data["npc_55"] >= 2) then
-        Player.sendmsgEx(play, "Äú»¹Î´¿ª±ÙÏÉ¸®£¬ÔÝ²»¿É½øÈë#57")
+        Player.sendmsgEx(play, "ï¿½ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½É¸ï¿½ï¿½ï¿½ï¿½Ý²ï¿½ï¿½É½ï¿½ï¿½ï¿½#57")
         return
     end
     local payload = Guard.safeJsonDecode(play, msgData, nil, {})
@@ -1880,7 +1891,7 @@ function npc.link(play, npcid, p2, p3, msgData)
     local state = loadState(play)
     local handler = ActionHandler[payload.action]
     if not handler then
-        pushAction(play, npcid, payload.action, false, "Î´Öª²Ù×÷", state)
+        pushAction(play, npcid, payload.action, false, "Î´Öªï¿½ï¿½ï¿½ï¿½", state)
         return
     end
     handler(play, npcid, state, payload.param or payload)

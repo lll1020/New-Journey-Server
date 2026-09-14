@@ -1037,7 +1037,7 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
                 end
             end
         end
-        -- 灰界压制：无【诸邪退散】时，对灰界怪物的所有输出统一按50%结算。
+        -- 灰界压制：无【诸邪退散】时，对灰界怪物造成的伤害减少30%。
         if MskhApi and MskhApi.get_cfg then
             local mskh_cfg = MskhApi.get_cfg()
             if mskh_cfg and getsysvar(VarCfg["G_美食狂欢状态"]) == 1 then
@@ -1266,9 +1266,6 @@ local function _red_mon_knock_try(play, Hiter)
 end
 --------------------被攻击前触发-------------------
 function struckdamage(play, Hiter, Target, MagicId, Damage)
-	if hasbuff(play, 20033) and MagicId > 0 then
-		return 0
-	end
     if TalentTreeSkills and TalentTreeSkills.adjustTakenDamage then
         local adjusted, handled = TalentTreeSkills.adjustTakenDamage(play, Hiter, Target, Damage)
         if handled then
@@ -1342,7 +1339,7 @@ function struckdamage(play, Hiter, Target, MagicId, Damage)
             final = adj
         end
     end
-    -- 灰界压制：无【诸邪退散】时，受到灰界怪物伤害按110%结算。
+    -- 灰界压制：无【诸邪退散】时，受到灰界怪物的伤害增加30%。
     if Hiter and (not getbaseinfo(Hiter, -1)) and Player and Player.getHuiJieMonsterHurtRate and final > 0 then
         local huijie_hurt_rate = tonumber(Player.getHuiJieMonsterHurtRate(play) or 1) or 1
         if huijie_hurt_rate ~= 1 then
@@ -1998,13 +1995,13 @@ function recharge(play, Gold, ProductId, MoneyId, isReal)
                     sendmsg(play, 1, '{"Msg":"<font color=\'#00ff00\'>18元礼包支付成功，当前角色已满足高级玩家领取条件...</font>","Type":9}')
                     PackageBuy_msg(play, "18元礼包")
                 end
-            elseif Gold == 88 then
+            elseif Gold == tonumber((teshudata["anniu_504"] or {}).price or 58) then
                 if getflagstatus(play,VarCfg.BS_mztq) == 0 then
                     -- 先保存特权领取标记，再发放称号和物品奖励。
                     setflagstatus(play,VarCfg.BS_mztq,1)
                     Player.title_give(play, teshudata["anniu_504"].ch,1)
                     Player.rwjl(play, teshudata["anniu_504"].give, "快人一步",1,1000)
-                    PackageBuy_msg(play, "88元礼包")
+                    PackageBuy_msg(play, tostring((teshudata["anniu_504"] or {}).price or 58) .. "元礼包")
                     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
                     if jq_data["npc_55"] and jq_data["npc_55"] >= 2 then
                         if Npclib and Npclib["anniu"] and Npclib["anniu"][30] then
@@ -3104,4 +3101,3 @@ end
 function carDie(play, car)
     return cardie(play)
 end
-

@@ -743,7 +743,7 @@ Buff = {
         return extra
     end,
     [566] = function(play, zt, Damage, Hiter, MagicId)
-        -- 神石受击触发：山川减伤、海洋低血保命、大地反伤。
+        -- 神石受击触发：山川减伤、大地反伤。
         if zt ~= 3 then
             return 0
         end
@@ -752,17 +752,6 @@ Buff = {
             local mountain = _godstone_level(play, "mountain")
             if mountain >= 3 and Damage and Damage > 0 and _godstone_mon_type(Hiter) >= 1 then
                 extra = extra - math.floor(Damage * 300 / 10000)
-            end
-            local ocean = _godstone_level(play, "ocean")
-            if ocean >= 3 then
-                local maxhp = tonumber(getbaseinfo(play, ConstCfg.gbase.maxhp) or 0) or 0
-                local curhp = tonumber(getbaseinfo(play, ConstCfg.gbase.curhp) or 0) or 0
-                if maxhp > 0 and curhp * 100 <= maxhp * 50 then
-                    humanhp(play, "+", 1000)
-                end
-                if ocean >= 4 and maxhp > 0 and curhp * 100 <= maxhp * 2 and _godstone_roll(play, "ocean_shield", 10000, 180) then
-                    addbuff(play, 20033, 1, 0, play)
-                end
             end
         elseif _godstone_is_player(Hiter) then
             local earth = _godstone_level(play, "earth")
@@ -1710,19 +1699,15 @@ Buff = {
             setplaydef(play,VarCfg.S_buffgjh,tbl2json(data))
         end
     end,
-    [106] = function(play,zt,Damage,Target) --攻击嘲灾  如果没有buff_106 则对玩家造成100%的伤害
+    [106] = function(play,zt,Damage,Target) --攻击嘲灾，未完成npc_625_rw前置时对玩家造成100%的反弹伤害
         if zt == 3 then
             if Target == nil then
                 return 0
             end
-            -- release_print("嘲灾触发")
-            -- release_print(getbaseinfo(Target,1))
-            -- release_print(hasbuff(play,20110))
             if getbaseinfo(Target,1) == "嘲灾" then
-                local hasWeapon = Player.hasEquipOnPos(play, 1, "嘲天笑地")
-                if not hasWeapon then
+                local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+                if tonumber(jq_data["npc_625_rw"] or 0) < 2 then
                     humanhp(play, "-", Damage, 0, 0)
-                    -- release_print("嘲灾触发，造成"..Damage.."点伤害")
                 end
             end
         else

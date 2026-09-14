@@ -14,28 +14,13 @@ local function _prep_progress(sg_data)
     return tonumber(sg_data[_prep_key] or 0) or 0
 end
 
-local function _prep_item_name()
-    return (_config and _config.prep_task and _config.prep_task.name) or "嘲天笑地"
+local function _prep_task_name()
+    return (_config and _config.prep_task and (_config.prep_task.task_name or _config.prep_task.progress_name)) or "压制反弹"
 end
 
-local function _remove_finish_item(play, item_name)
-    if not item_name or item_name == "" then
-        return false
-    end
-    for pos = 0, 120 do
-        local itemobj = linkbodyitem(play, pos)
-        if itemobj and itemobj ~= "0" then
-            local name = getiteminfo(play, itemobj, ConstCfg.iteminfo.name)
-            if name == item_name then
-                return delitembymakeindex(play, getiteminfo(play, itemobj, 1), 1)
-            end
-        end
-    end
-    if getbagitemcount(play, item_name) > 0 then
-        takeitem(play, item_name, 1)
-        return true
-    end
-    return false
+local function _prep_done(play)
+    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+    return tonumber(jq_data[_prep_key] or 0) >= 2
 end
 
 local function _try_send_gray_entry_guide(play)
@@ -96,16 +81,16 @@ function npc.link(play,npcid,ew,aid)
 
     if ew == 2 then
         local state = tonumber(jq_data[_prep_key] or 0) or 0
-        local prep_item = _prep_item_name()
+        local prep_name = _prep_task_name()
         if state >= 2 then
-            Player.sendmsgEx(play, "你已经完成了#57|"..prep_item.."#249|#57")
+            Player.sendmsgEx(play, "你已完成#57|"..prep_name.."#249|，挑战嘲灾时不会受到反弹伤害#57")
             return
         end
         if state == 0 then
             jq_data[_prep_key] = 1
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
             shaguai.jia(play, 625)
-            Player.sendmsgEx(play, "领取任务：#57|"..prep_item.."#249|在#57|"..((_config.prep_task and (_config.prep_task.show_map or _config.prep_task.map)) or "旷野之原").."#249|击杀50只怪物")
+            Player.sendmsgEx(play, "领取任务：#57|"..prep_name.."#249|，在#57|"..((_config.prep_task and (_config.prep_task.show_map or _config.prep_task.map)) or "旷野之原").."#249|击杀50只怪物")
             if npcid then Guard.closeNpcAndAuto(play, npcid) end
             sendluamsg(play,100,npcid,1,1,"")
             return
@@ -118,8 +103,8 @@ function npc.link(play,npcid,ew,aid)
         jq_data[_prep_key] = 2
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         shaguai.jian(play, 625)
-        giveitem(play, prep_item, 1)
-        Player.sendmsgEx(play, "任务完成，获得物品#57|"..prep_item.."#249|#57")
+        Buff[106](play, 2)
+        Player.sendmsgEx(play, "任务完成，已压制嘲灾反弹伤害#57")
         sendluamsg(play,100,npcid,1,2,"")
     end
 end
@@ -169,7 +154,11 @@ function npc_625_enter(play)
 
     local mob_name = _config.mob or "怪物"
     genmonex(dtm, 32, 36, mob_name, 1, 1, 0, 54, "", 0)
-    Buff[106](play,1)
+    if _prep_done(play) then
+        Buff[106](play, 2)
+    else
+        Buff[106](play, 1)
+    end
 
     startautoattack(play)
     setenvirontimer(dtm, 1, 1, "@npc_625_dsq,"..play..","..dtm)
