@@ -40,6 +40,19 @@ local function _sync(play, npcid, mode, done)
 end
 
 function npc.main(play, npcid)
+    local data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+    local current = tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0
+    if current == 36 and (tonumber(data[NPC_KEY] or 0) or 0) < 1 then
+        data[NPC_KEY] = 1
+        local ok = pcall(Player.setJsonVarByTable, play, VarCfg.T_dljq, data)
+        if not ok then
+            Player.sendmsgEx(play, "save data failed#57")
+            return
+        end
+    end
+    if current == 36 and zxrw_try_finish_current_mainline then
+        zxrw_try_finish_current_mainline(play, "gray_pearl_visit")
+    end
     _sync(play, npcid, 0, _done(play))
 end
 

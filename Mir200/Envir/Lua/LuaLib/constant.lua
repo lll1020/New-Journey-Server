@@ -154,19 +154,19 @@ constant.rw_syb = {
     [16] = {2,"xtc",502,125,146,jx = true},
     --二大陆主线任务：走 task.lua 主线逻辑，不再依赖 xyl 当前任务
     --天书强化1次，完成后奖励仙法卷轴
-    [17] = {20, "天书强化", task = {kind = "tianshu_level", yd = {3, 14}}, jl = {wp = {{"仙法卷轴", 1}}}, jx = true},
+    [17] = {20, "天书强化", task = {kind = "tianshu_level", yd = {3, 14}}, jl = {}, jx = true},
     --天书仙法抽取1次
     [18] = {20, "天书仙法", task = {kind = "tianshu_xianfa", yd = {3, 14}}, jx = true},
     --进入野火帮并接取任务，击杀20只怪完成扫荡野火帮
     [19] = {20, "扫荡野火帮", task = {kind = "story", tk = "npc_603", yd = {1, "野火帮", 603, 100, 223}, auto = true, need_receive = true}, jx = true},
     --刷新一次天书仙法
-[20] = {20, "刷新天书仙法", task = {kind = "tianshu_xianfa", yd = {3, 14}}, jl = {wp = {{"1元真实充值", 1}}}, jx = true},
+    [20] = {20, "刷新天书仙法", task = {kind = "tianshu_xianfa", yd = {3, 14}}, jl = {wp = {{"1元真实充值", 1}}}, jx = true},
     --进入野火帮大营，收集并提交野火帮罪证*10
-    [21] = {20, "深入野火", task = {kind = "story", tk = "npc_607", yd = {1, "野火帮大营", 607, 60, 279}, auto = true}, sjwp = {["野火帮罪证"] = 10}, jl = {wp = {}}},
-    --打开人物界面，选择一个灵根作为本命灵根
-    [22] = {20, "本命灵根", task = {kind = "main_linggen", yd = {3, 14}}, jl = {wp = {}}, jx = true},
-    --刷新1次天书仙法
-    [23] = {20, "刷新天书仙法", task = {kind = "tianshu_xianfa", yd = {3, 14}}, jx = true},
+    [21] = {20, "深入野火", task = {kind = "story", tk = "npc_607", yd = {1, "野火帮大营", 607, 60, 279}, auto = true}, sjwp = {["野火帮罪证"] = 10}, jl = {["hb"] = {{4,10000,"绑定元宝"}},wp = {{"千年玄铁",50}}}},
+    --升级一次灵根核心
+    [22] = {20, "升级一次灵根核心", task = {kind = "linggen_core_upgrade", yd = {3, 14}, close = false}, jl = {wp = {}}},
+    --点亮一个灵根天赋
+    [23] = {20, "点亮一个灵根天赋", task = {kind = "linggen_talent_light", yd = {3, 14}}, jx = true},
     --前往二大陆主城装备强化 NPC，完成装备强化1次
     [24] = {20, "装备强化", task = {kind = "equip_strength", yd = {1, "二大陆主城", 28, 115, 106}}, jx = true},
     --进入神秘森林并接取任务，击杀30只怪完成守护森林
@@ -188,10 +188,11 @@ constant.rw_syb = {
     --进入洞穴秘境，收集并提交杀意碎片*5、煞气*5
     [33] = {20, "古刹之谜", task = {kind = "story", tk = "npc_609", yd = {1, "洞穴秘境", 609, 143, 153}, auto = true}, sjwp = {["杀意碎片"] = 5, ["煞气"] = 5}, jx = true},
     --前往二大陆主城转生 NPC，完成2大陆转生
-    [34] = {20, "完成2大陆转生", task = {kind = "rebirth", level = 20, yd = {1, "二大陆主城", 33, 90, 127}}, jl = {wp = {{"1元真实充值", 1}, {"仙法卷轴", 1}}}, jx = true},
+    [34] = {20, "完成2大陆转生", task = {kind = "rebirth", level = 20, yd = {1, "二大陆主城", 33, 90, 127}}, jl = {wp = {{"1元真实充值", 1}}}, jx = true},
     [35] = {2,"二大陆主城",503,94,131,jx = true},
-
-    [36] = {6,11},
+    [36] = {20, "合成夜明珠", task = {kind = "gray_pearl_visit", yd = {1, "灰界", 1030, 198, 196}}, jx = true},
+    [37] = {20, "灾厄入侵", task = {kind = "gray_invasion_accept", yd = {1, "灰界", 46, 205, 196}}},
+    [38] = {6,11},
 
 }
 return constant

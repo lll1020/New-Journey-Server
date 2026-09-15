@@ -4470,6 +4470,8 @@ cfg.nodes = {
     },
     {
         id = "metal_M1",
+        exclusive_group = "core_m1",
+        exclusive_side = 1,
         name = "金·本命技能",
         element = "metal",
         lane = "main",
@@ -6465,6 +6467,8 @@ cfg.nodes = {
     },
     {
         id = "wood_M1",
+        exclusive_group = "core_m1",
+        exclusive_side = 2,
         name = "木·本命技能",
         element = "wood",
         lane = "main",
@@ -8400,6 +8404,8 @@ cfg.nodes = {
     },
     {
         id = "water_M1",
+        exclusive_group = "core_m1",
+        exclusive_side = 3,
         name = "水·本命技能",
         element = "water",
         lane = "main",
@@ -10335,6 +10341,8 @@ cfg.nodes = {
     },
     {
         id = "fire_M1",
+        exclusive_group = "core_m1",
+        exclusive_side = 4,
         name = "火·本命技能",
         element = "fire",
         lane = "main",
@@ -12270,6 +12278,8 @@ cfg.nodes = {
     },
     {
         id = "earth_M1",
+        exclusive_group = "core_m1",
+        exclusive_side = 5,
         name = "土·本命技能",
         element = "earth",
         lane = "main",

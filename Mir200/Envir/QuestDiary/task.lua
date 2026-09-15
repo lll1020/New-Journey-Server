@@ -1,4 +1,39 @@
 --------------------领取任务触发-------------------
+local ZXRW_MAINLINE_END_ID = 38
+local ZXRW_DEPRECATED_MAINLINE_NEXT = {
+    [17] = 19,
+}
+
+local function _zxrw_should_advance_mainline(rwid)
+    rwid = tonumber(rwid) or 0
+    return rwid > 0 and rwid < ZXRW_MAINLINE_END_ID
+end
+
+local function _zxrw_get_next_mainline_id(rwid)
+    rwid = tonumber(rwid) or 0
+    return ZXRW_DEPRECATED_MAINLINE_NEXT[rwid] or (rwid + 1)
+end
+
+local function _zxrw_skip_deprecated_mainline(play, requestedRwid)
+    local currentRwid = tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0
+    local rwid = tonumber(requestedRwid)
+    if rwid and rwid ~= currentRwid then
+        return false
+    end
+    rwid = rwid or currentRwid
+    local nextRwid = ZXRW_DEPRECATED_MAINLINE_NEXT[rwid]
+    if not nextRwid then
+        return false
+    end
+
+    setplaydef(play, VarCfg.U_zxrw[1], nextRwid)
+    setplaydef(play, VarCfg.U_zxrw[2], 0)
+    if constant.rw_syb[nextRwid] then
+        newpicktask(play, nextRwid, 0)
+    end
+    sendluamsg(play, 103, 1, 0, 0, '{"rwid":' .. nextRwid .. '}')
+    return true
+end
 local function _zxrw_get_equip_level(play, pos)
     local lv = Player.getEquipFieldByPos(play, pos, 1) or 0
     return tonumber(lv) or 0
@@ -73,7 +108,7 @@ local function _zxrw_get_main_task_cfg(rwid)
 end
 local function _zxrw_direct_skip_on_arrive(rwid)
     rwid = tonumber(rwid) or 0
-    return rwid == 22 or rwid == 28
+    return rwid == 28
 end
 local function _zxrw_get_json(play, varName)
     local data = Player.getJsonTableByVar(play, varName)
@@ -130,6 +165,44 @@ end
 local function _zxrw_has_main_linggen(play)
     local data = _zxrw_get_json(play, VarCfg["T_灵根"])
     return (tonumber(data.main or 0) or 0) > 0
+end
+local function _zxrw_get_talent_tree_state(play)
+    local talent = rawget(_G, "TalentTree")
+    if talent and type(talent.getState) == "function" then
+        return talent.getState(play)
+    end
+    return _zxrw_get_json(play, (VarCfg and VarCfg.T_talent_tree) or "T74")
+end
+local function _zxrw_has_linggen_core_upgrade(play)
+    local state = _zxrw_get_talent_tree_state(play)
+    return (tonumber(state.core_level or 0) or 0) >= 1
+end
+local function _zxrw_has_linggen_talent_light(play)
+    local state = _zxrw_get_talent_tree_state(play)
+    local nodes = type(state.nodes) == "table" and state.nodes or {}
+    for nodeId, value in pairs(nodes) do
+        if tostring(nodeId) ~= "root" and (tonumber(value or 0) or 0) > 0 then
+            return true
+        end
+    end
+    return false
+end
+local function _zxrw_has_gray_pearl_visit(play)
+    local data = _zxrw_get_json(play, VarCfg.T_dljq)
+    return (tonumber(data["npc_1030"] or 0) or 0) >= 1
+end
+local function _zxrw_has_gray_invasion_accept(play)
+    local data = _zxrw_get_json(play, VarCfg.T_dljq)
+    local node = data["npc_46"]
+    if type(node) == "table" then
+        return (tonumber(node.start or 0) or 0) >= 1
+            or (tonumber(node.wc or 0) or 0) >= 1
+    end
+    return (tonumber(node or 0) or 0) >= 1
+end
+local function _zxrw_has_gray_continent_enter(play)
+    local data = _zxrw_get_json(play, VarCfg.T_dljq)
+    return (tonumber(data["npc_1031"] or 0) or 0) >= 1
 end
 local function _zxrw_has_equip_strength(play)
     local cfg = teshudata and teshudata["npc_28"]
@@ -193,6 +266,16 @@ local function _zxrw_main_task_done(play, taskCfg)
         return _zxrw_story_done(play, taskCfg.tk)
     elseif kind == "main_linggen" then
         return _zxrw_has_main_linggen(play)
+    elseif kind == "linggen_core_upgrade" then
+        return _zxrw_has_linggen_core_upgrade(play)
+    elseif kind == "linggen_talent_light" then
+        return _zxrw_has_linggen_talent_light(play)
+    elseif kind == "gray_pearl_visit" then
+        return _zxrw_has_gray_pearl_visit(play)
+    elseif kind == "gray_invasion_accept" then
+        return _zxrw_has_gray_invasion_accept(play)
+    elseif kind == "gray_continent_enter" then
+        return _zxrw_has_gray_continent_enter(play)
     elseif kind == "equip_strength" then
         return _zxrw_has_equip_strength(play)
     elseif kind == "jianghu_title" then
@@ -214,6 +297,11 @@ local _zxrw_close_window_by_kind = {
     tianshu_level = 24,
     tianshu_xianfa = 24,
     main_linggen = 22,
+    linggen_core_upgrade = 22,
+    linggen_talent_light = 22,
+    gray_pearl_visit = 1030,
+    gray_invasion_accept = 46,
+    gray_continent_enter = 1031,
     equip_strength = 28,
     jianghu_title = 43,
     lingshou_hatched = 64,
@@ -224,7 +312,11 @@ local _zxrw_close_window_by_kind = {
 local function _zxrw_close_mainline_window(play, taskCfg)
     if type(taskCfg) ~= "table" then
         return
-    end    local closeName = taskCfg.close
+    end
+    if taskCfg.close == false then
+        return
+    end
+    local closeName = taskCfg.close
     if not closeName then
         local yd = taskCfg.yd
         if type(yd) == "table" and yd[1] == 1 and yd[3] then
@@ -243,6 +335,9 @@ end
 function zxrw_try_finish_current_mainline(play, desc)
     local rwid = tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0
     if rwid <= 0 then
+        return false
+    end
+    if _zxrw_skip_deprecated_mainline(play, rwid) then
         return false
     end
     local cfg = constant.rw_syb[rwid]
@@ -444,6 +539,7 @@ local function _zxrw_register_sjwp_progress(play, rwid)
 end
 function task_login(play)
     ---------------------------------------------------任务初始化
+    _zxrw_skip_deprecated_mainline(play)
     local rwid = getplaydef(play,VarCfg.U_zxrw[1])
     local sl = getplaydef(play,VarCfg.U_zxrw[2])
     local chuli = json2tbl(getplaydef(play, VarCfg.T_zxrw))
@@ -589,6 +685,9 @@ function moni_dj_rw(actor, rwid) --模拟点击任务
 end
 function clicknewtask(play,rwid)
     if _zxrw_block_click_during_xyl_guide(play) then
+        return
+    end
+    if _zxrw_skip_deprecated_mainline(play, rwid) then
         return
     end
     if rwid < 500 and getplaydef(play,VarCfg.U_zxrw[1]) ~= rwid then
@@ -796,52 +895,58 @@ end
 --------------------删除任务触发-------------------
 function deletetask(play,rwid)
     setplaydef(play,VarCfg.N_rwlg,0)
-    if constant.rw_syb[rwid+1] and constant.rw_syb[rwid+1].istg then
-        rwid = rwid + 1
+    if _zxrw_skip_deprecated_mainline(play, rwid) then
+        return
     end
-    if rwid < 40 then
-        setplaydef(play,VarCfg.U_zxrw[1],rwid+1)
+    local candidateNextRwid = _zxrw_get_next_mainline_id(rwid)
+    if constant.rw_syb[candidateNextRwid] and constant.rw_syb[candidateNextRwid].istg then
+        rwid = candidateNextRwid
+    end
+    local nextMainlineId = _zxrw_get_next_mainline_id(rwid)
+    local advanceMainline = _zxrw_should_advance_mainline(rwid)
+    if advanceMainline then
+        setplaydef(play,VarCfg.U_zxrw[1],nextMainlineId)
+        setplaydef(play,VarCfg.U_zxrw[2],0)
+    elseif rwid == ZXRW_MAINLINE_END_ID then
+        setplaydef(play,VarCfg.U_zxrw[1],0)
         setplaydef(play,VarCfg.U_zxrw[2],0)
     end
-    -- if rwid == 19 then
-    --     setplaydef(play, VarCfg["U_境界修炼"][2], 900)
-    -- end
-    if constant.rw_syb[rwid+1] and rwid < 1000 then
-        local lx = constant.rw_syb[rwid+1][1]
+    if advanceMainline and constant.rw_syb[nextMainlineId] and rwid < 1000 then
+        local lx = constant.rw_syb[nextMainlineId][1]
         if rwid < 1000 then
-            newpicktask(play,rwid+1,getplaydef(play,VarCfg.U_zxrw[2]))
+            newpicktask(play,nextMainlineId,getplaydef(play,VarCfg.U_zxrw[2]))
         end
-        if constant.rw_syb[rwid+1].sg then
+        if constant.rw_syb[nextMainlineId].sg then
             shaguai.jia(play,24)
         end
-        if constant.rw_syb[rwid+1].sgrw then
-            shaguai.jia(play,constant.rw_syb[rwid+1].sgrw)
+        if constant.rw_syb[nextMainlineId].sgrw then
+            shaguai.jia(play,constant.rw_syb[nextMainlineId].sgrw)
         end
-        if constant.rw_syb[rwid+1].zx then
-            newpicktask(play,constant.rw_syb[rwid+1].zx,0)
-            rwcf.jia(play,constant.rw_syb[rwid+1].zx)
+        if constant.rw_syb[nextMainlineId].zx then
+            newpicktask(play,constant.rw_syb[nextMainlineId].zx,0)
+            rwcf.jia(play,constant.rw_syb[nextMainlineId].zx)
         end
-        if constant.rw_syb[rwid+1].cl then
+        if constant.rw_syb[nextMainlineId].cl then
             local sl = {}
-            for k, v in pairs(constant.rw_syb[rwid+1].cl) do
+            for k, v in pairs(constant.rw_syb[nextMainlineId].cl) do
                 if getbagitemcount(play,k) < v then
-                    rwcf.wpjia(play,k,rwid+1,v)
+                    rwcf.wpjia(play,k,nextMainlineId,v)
                 end
                 table.insert(sl,getbagitemcount(play,k) >= v and v or getbagitemcount(play,k))
             end
             if #sl > 0 then
-                newchangetask(play,rwid+1,unpack(sl))
+                newchangetask(play,nextMainlineId,unpack(sl))
             end
         end
-        _zxrw_register_sjwp_progress(play, rwid + 1)
-        _zxrw_sync_story_kill_task_progress(play, rwid + 1)
-        if _zxrw_direct_skip_on_arrive(rwid + 1) then
-            newdeletetask(play, rwid + 1)
+        _zxrw_register_sjwp_progress(play, nextMainlineId)
+        _zxrw_sync_story_kill_task_progress(play, nextMainlineId)
+        if _zxrw_direct_skip_on_arrive(nextMainlineId) then
+            newdeletetask(play, nextMainlineId)
             return
         end
-        if rwid+1 < 900 then
-            if constant.rw_syb[rwid+1].jx then
-                navigation(play, 110, rwid+1, "点击继续任务")
+        if nextMainlineId < 900 then
+            if constant.rw_syb[nextMainlineId].jx then
+                navigation(play, 110, nextMainlineId, "主线任务")
             end
         end
         end
@@ -900,9 +1005,11 @@ function deletetask(play,rwid)
         sj[""..rwid] = true
         setplaydef(play, VarCfg.T_rwjl, tbl2json(sj))
     end
-    if rwid < 40 then
-        sendluamsg(play,103,1,0,0,'{"rwid":'..(rwid+1)..'}')
-        _zxrw_refresh_xyl_auto_entry(play, rwid + 1)
+    if advanceMainline then
+        sendluamsg(play,103,1,0,0,'{"rwid":'..nextMainlineId..'}')
+        _zxrw_refresh_xyl_auto_entry(play, nextMainlineId)
+    elseif rwid == ZXRW_MAINLINE_END_ID then
+        sendluamsg(play,103,1,0,0,'{"rwid":0}')
     end
     if rwid > 2000 then
         rwcf.jian(play,rwid)
@@ -929,10 +1036,10 @@ function deletetask(play,rwid)
     end
 end
 rwcf = {
+    [503] = {35},
     [32] = {15},
     [516] = {4},
     [502] = {16},
-    [46] = {35},
 }
 rwcf.jia = function(play, id)
     local chuli = json2tbl(getplaydef(play, VarCfg.T_zxrw))

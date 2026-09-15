@@ -461,6 +461,15 @@ end
 local function _ywl_is_auto_current_continent(i)
     return tonumber(i) == 2
 end
+local function _ywl_can_finish_current_mainline(play)
+    local currentMainline = tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0
+    local cfg = constant and constant.rw_syb and constant.rw_syb[currentMainline] or nil
+    local taskCfg = type(cfg) == "table" and cfg.task or nil
+    if taskCfg and taskCfg.kind == "story" then
+        return currentMainline
+    end
+    return 0
+end
 local function _ywl_build_task_key(i, j, z)
     return tostring(i) .. "_" .. tostring(j) .. "_" .. tostring(z)
 end
@@ -632,7 +641,7 @@ local function _ywl_sync_auto_current_task(play)
         setplaydef(play, VarCfg.T_ywl, tbl2json(T_ywl))
     end
     if completedTask and _ywl_is_all_tasks_finished_in_continent(play, T_ywl, autoContinent) then
-        local currentMainline = tonumber(getplaydef(play, VarCfg.U_zxrw[1])) or 0
+        local currentMainline = _ywl_can_finish_current_mainline(play)
         if currentMainline > 0 then
             Player.zxrw_wancheng(play, currentMainline, "xyl")
         end
@@ -903,13 +912,9 @@ npc[11] = function(play, p2, p3, data) --异闻录
                     Player.rwjl(play, _jl, "剧情jl", 1)
                 end
             end
-            if sj.i == 2 and sj.j == 4 then 
-                Player.zxrw_wancheng(play, 23, "任务") --完成任务
-                sendluamsg(play, 101, 9999, 0, 0, "npc_ywl")
-            else
-                sendluamsg(play, 101, 11, 2, 2, tbl2json(sj) )
-                _ywl_send_current_task(play)
-            end
+            sendluamsg(play, 101, 11, 2, 2, tbl2json(sj) )
+            _ywl_send_current_task(play)
+
             
         end
     elseif p2 == 3 then --单个任务奖励
@@ -953,7 +958,10 @@ npc[11] = function(play, p2, p3, data) --异闻录
                         local afterSyncMainline = tonumber(getplaydef(play, VarCfg.U_zxrw[1])) or 0
                         local latestT_ywl = json2tbl(getplaydef(play, VarCfg.T_ywl))
                         if afterSyncMainline == currentMainline and currentMainline > 0 and _ywl_is_all_tasks_finished_in_continent(play, latestT_ywl, sj.i) then
-                            Player.zxrw_wancheng(play, currentMainline, "xyl")
+                            currentMainline = _ywl_can_finish_current_mainline(play)
+                            if currentMainline > 0 then
+                                Player.zxrw_wancheng(play, currentMainline, "xyl")
+                            end
                         end
                         sendluamsg(play, 101, 11, 0, 0, '{"dljq":' .. getplaydef(play, VarCfg.T_dljq) .. ',"zxrw":' .. getplaydef(play, VarCfg.T_zxrw) .. ',"ywl":' .. getplaydef(play, VarCfg.T_ywl) .. "}")
                         _ywl_send_current_task(play)
@@ -3215,15 +3223,3 @@ for npcId, handler in pairs(npc) do
     end
 end
 return npc
-
-
-
-
-
-
-
-
-
-
-
-

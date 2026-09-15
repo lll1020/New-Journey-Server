@@ -80,10 +80,29 @@ local function node_active(state, node_id)
         and toint(state.nodes[tostring(node_id)], 0) == 1
 end
 
+local function node_has_special(state, key)
+    if type(state) ~= "table" or type(state.nodes) ~= "table" then
+        return false
+    end
+    for node_id, value in pairs(state.nodes) do
+        if toint(value, 0) == 1 then
+            local node = Cfg.node_map and Cfg.node_map[tostring(node_id)] or nil
+            if node and node.special and node.special.key == key then
+                return true
+            end
+        end
+    end
+    return false
+end
+
 local function key_active(state, key)
-    return type(state) == "table"
+    if type(state) == "table"
         and type(state.special) == "table"
         and toint(state.special[key], 0) > 0
+    then
+        return true
+    end
+    return node_has_special(state, key)
 end
 
 local function is_player(obj)

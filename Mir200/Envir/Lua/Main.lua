@@ -33,6 +33,7 @@ safeRequire("Envir/Lua/LuaLib/shaguai.lua")
 -------------------物品使用模块--------------------
 safeRequire("Envir/Lua/LuaLib/useitme.lua")
 safeRequire("Envir/Lua/LuaLib/atlas.lua")
+safeRequire("Envir/Lua/LuaLib/talent_tree_skills.lua")
 safeRequire("Envir/Lua/LuaLib/talent_tree.lua")
 --------------------套装属性模块--------------------
 safeRequire("Envir/Lua/LuaLib/itemattr.lua")

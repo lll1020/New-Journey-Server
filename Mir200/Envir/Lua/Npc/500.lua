@@ -39,6 +39,9 @@ function npc.link(play,npcid,ew,aid)
                         shaguai.jia(play,3)
                     end
                     Player.moveToThirdContinentFrontier(play, "未完成#57|【灾厄入侵】#218|，传送至#57|【灰界】#218|")
+                    if rwcf and rwcf[npcid] then
+                        Player.zxrw_wancheng(play, rwcf[npcid][1], "")
+                    end
                     sendluamsg(play,101,9999,0,0,"npc_sjdt")
                     return
                 end

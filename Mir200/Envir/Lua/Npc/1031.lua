@@ -6,6 +6,12 @@ local TARGET_MAP = "\200\253\180\243\194\189\214\247\179\199"
 function npc.main(play, npcid)
     if checktitle(play, NEED_TITLE) then
         mapmove(play, TARGET_MAP, 159, 231, 5)
+        local data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+        data["npc_1031"] = 1
+        local ok = pcall(Player.setJsonVarByTable, play, VarCfg.T_dljq, data)
+        if ok and zxrw_try_finish_current_mainline then
+            zxrw_try_finish_current_mainline(play, "gray_continent_enter")
+        end
         addhpper(play, "=", 100)
         addmpper(play, "=", 100)
         return

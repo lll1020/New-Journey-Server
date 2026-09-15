@@ -108,7 +108,7 @@ function npc.link(play,npcid,ew,aid,data)
         return
     end
     ew = __guardAction
-    local __guardAllowedActions = Guard.newActionSet({1,2,8,9})
+    local __guardAllowedActions = Guard.newActionSet({1,2,3,8,9})
     if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
         return
     end
@@ -138,6 +138,19 @@ function npc.link(play,npcid,ew,aid,data)
         end
     elseif ew == 2 then
         _jump_to_route(play, tonumber(aid or 0) or 0)
+    elseif ew == 3 then
+        local T_data = Player.getJsonTableByVar(play, VarCfg["T_dljq"])
+        T_data["npc_46"] = type(T_data["npc_46"]) == "table" and T_data["npc_46"] or {}
+        T_data["npc_46"]["start"] = 1
+        local ok = pcall(Player.setJsonVarByTable, play, VarCfg["T_dljq"], T_data)
+        if not ok then
+            Player.sendmsgEx(play, "save data failed#57")
+            return
+        end
+        if zxrw_try_finish_current_mainline then
+            zxrw_try_finish_current_mainline(play, "gray_invasion_accept")
+        end
+        sendluamsg(play, 100, npcid, 3, 0, "")
     elseif ew == 8 then
         local state = {three_city_intro_seen = tonumber(getplaydef(play, _INTRO_SEEN_VAR) or 0) or 0}
         sendluamsg(play, 100, npcid, 8, 0, tbl2json(state))

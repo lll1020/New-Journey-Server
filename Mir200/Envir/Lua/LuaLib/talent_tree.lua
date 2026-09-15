@@ -1,7 +1,7 @@
 local TalentTree = {}
 local Cfg = include("lua/Data/talent_tree_cfg.lua") or {}
 local GemCfg = include("lua/Data/talent_tree_gems.lua") or {}
-local SkillLogic = include("lua/LuaLib/talent_tree_skills.lua") or {}
+local SkillLogic = rawget(_G, "TalentTreeSkills")
 
 local STATE_VAR = (VarCfg and VarCfg.T_talent_tree) or "T74"
 local ATTR_LIST = "talent_tree_attrs"
@@ -22,6 +22,35 @@ then
         return _get_attr_table_to_str(type(attrs) == "table" and attrs or {})
     end
     rawset(_G, "__talent_tree_attr_serializer_guard", true)
+end
+
+local function get_skill_logic()
+    if type(SkillLogic) == "table" and type(SkillLogic.sync) == "function" then
+        return SkillLogic
+    end
+    local globalLogic = rawget(_G, "TalentTreeSkills")
+    if type(globalLogic) == "table" and type(globalLogic.sync) == "function" then
+        SkillLogic = globalLogic
+        return SkillLogic
+    end
+    if type(include) == "function" then
+        local ok, mod = pcall(include, "lua/LuaLib/talent_tree_skills.lua")
+        if ok and type(mod) == "table" then
+            SkillLogic = mod
+            return SkillLogic
+        end
+    end
+    if type(require) == "function" then
+        local ok, mod = pcall(require, "Envir/Lua/LuaLib/talent_tree_skills.lua")
+        if ok and type(mod) == "table" then
+            SkillLogic = mod
+            return SkillLogic
+        end
+    end
+    if release_print then
+        release_print("TalentTree skill logic load failed")
+    end
+    return nil
 end
 
 local function toint(value, default)
@@ -220,6 +249,29 @@ local function contains_id(list, target_id)
     return false
 end
 
+local function is_socket_node(node)
+    return node and (node.kind == "socket"
+        or tostring(node.slot_type or "") == "X"
+        or tostring(node.slot_type or "") == "socket")
+end
+
+local function has_missing_socket_prerequisite(state, node)
+    local function check_list(list)
+        for _, requirement in ipairs(list or {}) do
+            local requirement_id = tostring(requirement)
+            local requirement_node = node_cfg(requirement_id)
+            if is_socket_node(requirement_node)
+                and active(state, requirement_id)
+                and tostring((state.sockets or {})[requirement_id] or "") == ""
+            then
+                return requirement_node.name or requirement_id
+            end
+        end
+        return nil
+    end
+    return check_list(node and node.requires) or check_list(node and node.requires_any)
+end
+
 local function resolve_gem_idx(item_name, item_idx)
     local idx = tonumber(item_idx) or 0
     if idx > 0 then
@@ -358,6 +410,10 @@ local function check_requirements(state, node)
     if not has_active_neighbor(state, node) then
         return false, "需要先点亮任意相连节点#57"
     end
+    local socket_name = has_missing_socket_prerequisite(state, node)
+    if socket_name then
+        return false, "需要先镶嵌宝石：" .. tostring(socket_name) .. "#57"
+    end
     return true
 end
 
@@ -468,8 +524,9 @@ local function refresh_effects(play, state)
         setplaydef(play, "N$talent_" .. tostring(key), value)
     end
     state.special = special
-    if SkillLogic and SkillLogic.sync then
-        SkillLogic.sync(play, state)
+    local logic = get_skill_logic()
+    if logic and logic.sync then
+        logic.sync(play, state)
     end
     recalcabilitys(play)
 end
@@ -591,6 +648,9 @@ local function activate_node(play, npcid, request)
     touch_fairy_fate(play)
     Player.sendmsgEx(play, "天赋节点已点亮#7")
     send_partial(play, npcid, 1, node_id, state)
+    if type(zxrw_try_finish_current_mainline) == "function" then
+        zxrw_try_finish_current_mainline(play, "talent_tree")
+    end
 end
 
 local function deactivate_node(play, npcid, request)
@@ -621,8 +681,9 @@ local function deactivate_node(play, npcid, request)
         toint(state.normal_total, 0)
     )
     save_state(play, state)
-    if SkillLogic and SkillLogic.clear then
-        SkillLogic.clear(play)
+    local logic = get_skill_logic()
+    if logic and logic.clear then
+        logic.clear(play)
     end
     refresh_effects(play, state)
     refund_cost(play, refund, "天赋树节点返还")
@@ -654,8 +715,9 @@ local function reset_tree(play, npcid)
     state.spent_costs = {}
     state.reset_count = state.reset_count + 1
     save_state(play, state)
-    if SkillLogic and SkillLogic.clear then
-        SkillLogic.clear(play)
+    local logic = get_skill_logic()
+    if logic and logic.clear then
+        logic.clear(play)
     end
     refresh_effects(play, state)
     refund_cost(play, refund, "天赋树洗点返还")
@@ -687,6 +749,9 @@ local function upgrade_core(play, npcid)
     touch_fairy_fate(play)
     Player.sendmsgEx(play, "灵根核心升级成功#7")
     send_partial(play, npcid, 6, "root", state)
+    if type(zxrw_try_finish_current_mainline) == "function" then
+        zxrw_try_finish_current_mainline(play, "talent_tree")
+    end
 end
 
 local function socket_gem(play, npcid, request)
@@ -820,7 +885,10 @@ function TalentTree.addNormalPoints(play, count, reason)
 end
 
 function TalentTree.getState(play)
-    return get_state(play)
+    local state = get_state(play)
+    local _, special = aggregate_attributes(state)
+    state.special = type(special) == "table" and special or {}
+    return state
 end
 
 function TalentTree.main(play, npcid)
