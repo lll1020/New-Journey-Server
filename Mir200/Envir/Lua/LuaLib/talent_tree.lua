@@ -418,6 +418,16 @@ local function check_requirements(state, node)
 end
 
 local function check_exclusive(state, node)
+    if node.id and tostring(node.id):match("^[^_]+_M1$") then
+        for node_id, value in pairs(state.nodes or {}) do
+            if toint(value, 0) == 1
+                and tostring(node_id):match("^[^_]+_M1$")
+                and tostring(node_id) ~= tostring(node.id)
+            then
+                return false, "五行灵根只能选择一个核心#57"
+            end
+        end
+    end
     if node.exclusive_group then
         for node_id, value in pairs(state.nodes or {}) do
             if toint(value, 0) == 1 then

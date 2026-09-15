@@ -1,7 +1,10 @@
 --------------------领取任务触发-------------------
 local ZXRW_MAINLINE_END_ID = 38
-local ZXRW_DEPRECATED_MAINLINE_NEXT = {
+local ZXRW_MAINLINE_NEXT = {
     [17] = 19,
+}
+local ZXRW_DEPRECATED_MAINLINE_NEXT = {
+    [18] = 19,
 }
 
 local function _zxrw_should_advance_mainline(rwid)
@@ -11,7 +14,7 @@ end
 
 local function _zxrw_get_next_mainline_id(rwid)
     rwid = tonumber(rwid) or 0
-    return ZXRW_DEPRECATED_MAINLINE_NEXT[rwid] or (rwid + 1)
+    return ZXRW_MAINLINE_NEXT[rwid] or (rwid + 1)
 end
 
 local function _zxrw_skip_deprecated_mainline(play, requestedRwid)
@@ -21,6 +24,9 @@ local function _zxrw_skip_deprecated_mainline(play, requestedRwid)
         return false
     end
     rwid = rwid or currentRwid
+    if rwid ~= 18 then
+        return false
+    end
     local nextRwid = ZXRW_DEPRECATED_MAINLINE_NEXT[rwid]
     if not nextRwid then
         return false
@@ -33,6 +39,21 @@ local function _zxrw_skip_deprecated_mainline(play, requestedRwid)
     end
     sendluamsg(play, 103, 1, 0, 0, '{"rwid":' .. nextRwid .. '}')
     return true
+end
+
+local function _zxrw_migrate_mainline_17_history(play)
+    local currentRwid = tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0
+    local history = json2tbl(getplaydef(play, VarCfg.T_rwjl))
+    if type(history) ~= "table" then
+        history = {}
+    end
+    if currentRwid < 19 and not history["19"] then
+        return
+    end
+    if not history["17"] then
+        history["17"] = true
+        setplaydef(play, VarCfg.T_rwjl, tbl2json(history))
+    end
 end
 local function _zxrw_get_equip_level(play, pos)
     local lv = Player.getEquipFieldByPos(play, pos, 1) or 0
@@ -540,6 +561,7 @@ end
 function task_login(play)
     ---------------------------------------------------任务初始化
     _zxrw_skip_deprecated_mainline(play)
+    _zxrw_migrate_mainline_17_history(play)
     local rwid = getplaydef(play,VarCfg.U_zxrw[1])
     local sl = getplaydef(play,VarCfg.U_zxrw[2])
     local chuli = json2tbl(getplaydef(play, VarCfg.T_zxrw))
@@ -687,9 +709,12 @@ function clicknewtask(play,rwid)
     if _zxrw_block_click_during_xyl_guide(play) then
         return
     end
-    if _zxrw_skip_deprecated_mainline(play, rwid) then
+    if tonumber(rwid) == 18 and _zxrw_skip_deprecated_mainline(play, rwid) then
         return
     end
+    -- if _zxrw_skip_deprecated_mainline(play, rwid) then
+    --     return
+    -- end
     if rwid < 500 and getplaydef(play,VarCfg.U_zxrw[1]) ~= rwid then
         return
     end
@@ -895,9 +920,12 @@ end
 --------------------删除任务触发-------------------
 function deletetask(play,rwid)
     setplaydef(play,VarCfg.N_rwlg,0)
-    if _zxrw_skip_deprecated_mainline(play, rwid) then
+    if tonumber(rwid) == 18 and _zxrw_skip_deprecated_mainline(play, rwid) then
         return
     end
+    -- if _zxrw_skip_deprecated_mainline(play, rwid) then
+    --     return
+    -- end
     local candidateNextRwid = _zxrw_get_next_mainline_id(rwid)
     if constant.rw_syb[candidateNextRwid] and constant.rw_syb[candidateNextRwid].istg then
         rwid = candidateNextRwid
@@ -949,7 +977,7 @@ function deletetask(play,rwid)
                 navigation(play, 110, nextMainlineId, "主线任务")
             end
         end
-        end
+    end
     if constant.rw_syb[rwid] then
         local lx = constant.rw_syb[rwid][1]
         if lx == 2 then

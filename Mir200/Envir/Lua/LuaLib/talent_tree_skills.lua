@@ -839,7 +839,7 @@ local function base_skill_damage(play, target, skill_id, damage, state)
         effect(target, 60456)
     elseif skill_id == 1018 and key_active(state, "metal_ultimate") then
         local segment_count = node_active(state, "metal_F1_6") and 7 or 6
-        result = math.floor(atk * 800 / segment_count)
+        result = math.floor(atk * 800 / 100 / segment_count)
         if flow_active(state, "metal", 1) then
             if max_hp(target) > 0 and current_hp(target) / max_hp(target) <= 0.30 then
                 result = math.floor(result * 130 / 100)
