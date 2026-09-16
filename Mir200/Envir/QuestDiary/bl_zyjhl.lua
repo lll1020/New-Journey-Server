@@ -156,9 +156,9 @@ function bl_zyjhl9(play,mingzi)
         return false
     end
     local targets = {
-        ["首山之铜"] = 100,
-        ["天女纯阳之力"] = 150,
-        ["五色神石"] = 200,
+        ["首山之铜"] = 100 * 5,
+        ["天女纯阳之力"] = 150 * 5,
+        ["五色神石"] = 200 * 5,
     }
     local need = targets[mingzi]
     if not need then

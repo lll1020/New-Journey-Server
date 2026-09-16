@@ -1048,7 +1048,6 @@ function xianfa_refresh(actor, new_group, new_idx)
     if Buff and Buff[XIANFA_REVIVE_BUFF] then
         Buff[XIANFA_REVIVE_BUFF](actor, need_revive_buff and 1 or 2)
     end
-    Buff[339](actor, 1)
     tianshu_refresh_item(actor, T_data)
 end
 

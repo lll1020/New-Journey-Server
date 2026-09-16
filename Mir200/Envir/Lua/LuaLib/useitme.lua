@@ -727,13 +727,14 @@ local function _apply_dan40_attr(play, rec)
 end
 local function _get_jz_dan_attr_str(count)
     count = tonumber(count or 0) or 0
-    local cut = count * 1000
+    local cut = count * 5000
+    local attack = count * 100
     local base = count * 50
     local block = count * 2000
     return table.concat({
         "3#244#" .. tostring(cut),
-        "3#3#" .. tostring(base),
-        "3#4#" .. tostring(base),
+        "3#3#" .. tostring(attack),
+        "3#4#" .. tostring(attack),
         "3#5#" .. tostring(base),
         "3#6#" .. tostring(base),
         "3#7#" .. tostring(base),

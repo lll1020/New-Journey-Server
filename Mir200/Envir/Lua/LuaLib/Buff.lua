@@ -316,45 +316,6 @@ local function _try_compose_gumo_blade(play)
     end
     setplaydef(play, "N$gumo_cut_compose", 0)
 end
-local function _tianshu_buff_splash(play, Target)
-    -- release_print("触发天书溅射buff")
-    if not play or not Target or getbaseinfo(Target, ConstCfg.gbase.isplayer) then
-        return
-    end
-    local cfg = teshudata and teshudata["npc_24"] or nil
-    if not cfg then
-        return
-    end
-    local T_data = Player.getJsonTableByVar(play, VarCfg["T_天书"]) or {}
-    local level = tonumber(T_data.level) or 0
-    if level <= 0 then
-        return
-    end
-    local triggerRate = math.max(0, math.min(100, tonumber(cfg.splash_trigger_rate) or 30))
-    if triggerRate <= 0 or math.random(100) > triggerRate then
-        return
-    end
-    local damageRate = tonumber(cfg.splash_damage_rate)
-    if damageRate == nil then
-        damageRate = (tonumber(cfg.splash_base_rate) or 100) + math.max(0, level - 1) * (tonumber(cfg.splash_add_rate) or 0)
-        local maxRate = tonumber(cfg.splash_max_rate) or 100
-        if damageRate > maxRate then
-            damageRate = maxRate
-        end
-    end
-    local damage = math.floor((tonumber(getbaseinfo(play, ConstCfg.gbase.dc2) or 0) or 0) * damageRate / 100)
-    if damage <= 0 then
-        return
-    end
-    rangeharm(play, getbaseinfo(Target, ConstCfg.gbase.x), getbaseinfo(Target, ConstCfg.gbase.y), tonumber(cfg.splash_range) or 2, damage, 0, 0, 0, 2, tonumber(cfg.splash_effect) or 20310, tonumber(cfg.splash_max_targets) or 12)
-    local splash_effect_cd = tonumber(getplaydef(play, "N$天书溅射特效CD") or 0) or 0
-    local now = os.time()
-    if now - splash_effect_cd >= 5 then
-        setplaydef(play, "N$天书溅射特效CD", now)
-        playeffect(Target, tonumber(cfg.splash_hit_effect) or 60463, 0, 0, 1, 1, 0)
-    end
-    -- Player.sendmsgEx(play,"【帝疆】#253|触发，范围造成"..damage.."点真实伤害")
-end
 local function _equip_is_normal_attack(MagicId)
     -- 仅普攻(MagicId为0或空)
     return not MagicId or MagicId == 0
@@ -968,7 +929,6 @@ Buff = {
     [301] = function(play,zt,Damage,Target,MagicId,Model) --天书仙法攻击触发
         -- zt=1/2：注册或移除攻击触发；zt=3：攻击回调并返回额外伤害
         if zt == 3 then
-            _tianshu_buff_splash(play, Target)
             if xianfa_attack_trigger then
                 return xianfa_attack_trigger(play, Damage, Target, MagicId, Model) or 0
             end
@@ -1629,17 +1589,23 @@ Buff = {
             Player.del_attlist(play, "仙食坊全满")
         end
     end,
-    [102] = function(play,zt,Damage,Target) --轩辕剑传人  BUFF:每三刀附带额外最大攻击1%的真实伤害
+    [102] = function(play,zt,Damage,Target) --轩辕剑传人：对目标周围3x3范围造成攻击上限100%的伤害
         if zt == 3 then
-            local cs = getplaydef(play,"N$buff102")
-            if cs < 3 then
-                cs = cs + 1
-                setplaydef(play,"N$buff102",cs)
-            else
-                setplaydef(play,"N$buff102",0)
-                humanhp(Target,"-",math.floor(getbaseinfo(play, 20)*0.01))
-                --Player.sendmsgEx(play,"轩辕剑传人触发真实伤害，造成"..math.floor(getbaseinfo(play, 20)*0.01).."点真实伤害！")
+            if not Target or getbaseinfo(Target, ConstCfg.gbase.isplayer) then
+                return 0
             end
+            local damage = math.floor(tonumber(getbaseinfo(play, ConstCfg.gbase.dc2) or 0) or 0)
+            if damage > 0 then
+                rangeharm(
+                    play,
+                    getbaseinfo(Target, ConstCfg.gbase.x),
+                    getbaseinfo(Target, ConstCfg.gbase.y),
+                    1,
+                    damage,
+                    0, 0, 0, 2, 0, 9
+                )
+            end
+            return 0
         else
             local bl = getplaydef(play,VarCfg.S_buffgjh)
             local data = json2tbl(bl == "" and {} or bl)
@@ -1719,22 +1685,6 @@ Buff = {
                 data["106"] = nil
             end
             setplaydef(play,VarCfg.S_buffgwq,tbl2json(data))
-        end
-    end,
-    [339] = function(play,zt,Damage,Target,MagicId,Model) --天书仙法攻击触发
-        -- zt=1/2：注册或移除攻击触发；zt=3：攻击回调并返回额外伤害
-        if zt == 3 then
-            _tianshu_buff_splash(play, Target)
-            return 0
-        else
-            local bl = getplaydef(play,VarCfg.S_buffgjq)
-            local data = json2tbl(bl == "" and {} or bl)
-            if zt == 1 then
-                data["339"] = true
-            elseif zt == 2 then
-                data["339"] = nil
-            end
-            setplaydef(play,VarCfg.S_buffgjq,tbl2json(data))
         end
     end,
     -- 装备特殊效果(Price列作为BuffId)

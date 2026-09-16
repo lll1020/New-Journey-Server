@@ -65,6 +65,7 @@ local flow_active
 local target_defense_break
 local apply_wood
 local clear_domains
+local base_skill_damage
 
 local function toint(value, default)
     value = tonumber(value)
@@ -384,6 +385,44 @@ local function state_of(play)
     return {}
 end
 
+local function get_skill_target(play)
+    if not play then
+        return nil
+    end
+
+    local target
+    if ConstCfg and ConstCfg.gbase and ConstCfg.gbase.attack_target then
+        target = getbaseinfo(play, ConstCfg.gbase.attack_target)
+    end
+    target = target or getbaseinfo(play, 67)
+    if target and target ~= "0" and is_monster(target) then
+        return target
+    end
+
+    -- Self-triggered talent skills do not always carry a target object.
+    -- Use the nearest monster only as a release fallback; an explicit target
+    -- always wins.
+    local map_id = getbaseinfo(play, ConstCfg.gbase.mapid)
+    local x = getbaseinfo(play, ConstCfg.gbase.x)
+    local y = getbaseinfo(play, ConstCfg.gbase.y)
+    local nearest
+    local nearest_distance
+    for _, item in ipairs(getobjectinmap(map_id, x, y, 8, 2) or {}) do
+        if is_monster(item) then
+            local dx = (tonumber(getbaseinfo(item, ConstCfg.gbase.x) or 0) or 0)
+                - (tonumber(x or 0) or 0)
+            local dy = (tonumber(getbaseinfo(item, ConstCfg.gbase.y) or 0) or 0)
+                - (tonumber(y or 0) or 0)
+            local distance = dx * dx + dy * dy
+            if not nearest_distance or distance < nearest_distance then
+                nearest = item
+                nearest_distance = distance
+            end
+        end
+    end
+    return nearest
+end
+
 function TalentTreeSkills.onSkillCast(play, skill_id)
     if not play then
         return false
@@ -394,13 +433,43 @@ function TalentTreeSkills.onSkillCast(play, skill_id)
         return false
     end
     local state = state_of(play)
-    if not key_active(state, skill_key) then
+    local active = key_active(state, skill_key)
+    if not active then
         return false
     end
 
-    -- Keep the cast hook lightweight. Damage, stacks, domains and target
-    -- effects are resolved by the existing damage/timer hooks below.
-    effect(play, SKILL_CAST_EFFECTS[skill_id])
+    local target = get_skill_target(play)
+    if not target then
+        return false
+    end
+
+    -- Talent skills are self-triggered and do not reliably enter
+    -- attackdamage. Resolve the same formula and buff logic here, then apply
+    -- the main hit directly. Area hits are handled by base_skill_damage.
+    local hit_count = 1
+    if skill_id == 1018 then
+        hit_count = node_active(state, "metal_F1_6") and 7 or 6
+    end
+    local total_damage = 0
+    for _ = 1, hit_count do
+        if current_hp(target) <= 0 then
+            break
+        end
+        local result = base_skill_damage(play, target, skill_id, 0, state)
+        if result > 0 then
+            humanhp(
+                target,
+                "-",
+                result,
+                SKILL_CAST_EFFECTS[skill_id] or 106,
+                0,
+                play,
+                1
+            )
+            total_damage = total_damage + result
+        end
+    end
+    effect(target, SKILL_CAST_EFFECTS[skill_id])
     setplaydef(play, "N$talent_tree_last_skill", skill_id)
     setplaydef(play, "N$talent_tree_last_skill_time", now())
     return true
@@ -811,7 +880,7 @@ function TalentTreeSkills.breakShield(play, shield_kind, state, break_value)
     end
 end
 
-local function base_skill_damage(play, target, skill_id, damage, state)
+base_skill_damage = function(play, target, skill_id, damage, state)
     local atk = attack_value(play)
     local result = math.max(0, toint(damage, 0))
 
@@ -1125,10 +1194,12 @@ local function on_player_hurt(play, damage, hiter, target, magic_id)
 end
 
 function TalentTreeSkills.adjustDamage(play, target, hiter, skill_id, damage, model)
+    skill_id = tonumber(skill_id) or 0
     if not play or not target then
         return damage
     end
-    return base_skill_damage(play, target, tonumber(skill_id) or 0, damage, state_of(play))
+    local result = base_skill_damage(play, target, skill_id, damage, state_of(play))
+    return result
 end
 
 function TalentTreeSkills.onBuffTrigger(target, buff_id)

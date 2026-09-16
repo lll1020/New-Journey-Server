@@ -973,7 +973,21 @@ local function _magtag_apply_defense(play, Hiter, final)
     end
     return final
 end
+
+local function _is_talent_skill(MagicId)
+    MagicId = tonumber(MagicId) or 0
+    return MagicId == 1017 or MagicId == 1018
+        or MagicId == 1019 or MagicId == 1020
+        or MagicId == 1023 or MagicId == 1024
+        or MagicId == 1025 or MagicId == 1026
+        or MagicId == 1027 or MagicId == 1028
+end
 function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
+    -- Talent-tree skills resolve their damage in magselffunc directly.
+    -- Never apply the engine damage callback as a second damage source.
+    if _is_talent_skill(MagicId) then
+        return 0
+    end
     GameEvent.push(EventCfg.onAttackDamage, play, Target, Hiter, MagicId, Damage, Model)
 	if getbaseinfo(Target, -1) then
         GameEvent.push(EventCfg.onAttackDamagePlayer, play, Target, Damage, MagicId, Model)

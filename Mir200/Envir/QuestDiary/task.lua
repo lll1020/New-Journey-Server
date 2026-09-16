@@ -2,9 +2,14 @@
 local ZXRW_MAINLINE_END_ID = 38
 local ZXRW_MAINLINE_NEXT = {
     [17] = 19,
+    [29] = 31,
+    [31] = 33,
+    [33] = 32,
+    [32] = 34,
 }
 local ZXRW_DEPRECATED_MAINLINE_NEXT = {
     [18] = 19,
+    [30] = 31,
 }
 
 local function _zxrw_should_advance_mainline(rwid)
@@ -24,9 +29,6 @@ local function _zxrw_skip_deprecated_mainline(play, requestedRwid)
         return false
     end
     rwid = rwid or currentRwid
-    if rwid ~= 18 then
-        return false
-    end
     local nextRwid = ZXRW_DEPRECATED_MAINLINE_NEXT[rwid]
     if not nextRwid then
         return false
@@ -709,7 +711,7 @@ function clicknewtask(play,rwid)
     if _zxrw_block_click_during_xyl_guide(play) then
         return
     end
-    if tonumber(rwid) == 18 and _zxrw_skip_deprecated_mainline(play, rwid) then
+    if _zxrw_skip_deprecated_mainline(play, rwid) then
         return
     end
     -- if _zxrw_skip_deprecated_mainline(play, rwid) then
@@ -920,7 +922,7 @@ end
 --------------------É¾³ýÈÎÎñ´¥·¢-------------------
 function deletetask(play,rwid)
     setplaydef(play,VarCfg.N_rwlg,0)
-    if tonumber(rwid) == 18 and _zxrw_skip_deprecated_mainline(play, rwid) then
+    if _zxrw_skip_deprecated_mainline(play, rwid) then
         return
     end
     -- if _zxrw_skip_deprecated_mainline(play, rwid) then
