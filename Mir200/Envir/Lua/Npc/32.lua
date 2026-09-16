@@ -66,7 +66,7 @@ function npc.link(play,npcid,ew,aid)
         end
         local can_upgrade, _, required_continent = _can_upgrade_here(play, level)
         if not can_upgrade then
-            Player.sendmsgEx(play, string.format("\199\235\199\176\205\249\181\218\37\100\180\243\194\189\181\196\215\170\201\250\78\80\67\201\253\188\182", required_continent))
+            Player.sendmsgEx(play, string.format("请前往第%d大陆的转生NPC升级", required_continent))
             return
         end
         level = level + 1

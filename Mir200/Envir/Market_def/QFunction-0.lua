@@ -391,7 +391,7 @@ function pickupitemex(play, item)
                     end
                     table.insert(sl, getbagitemcount(play,v) >= constant.rw_syb[rwid].cl[v] and constant.rw_syb[rwid].cl[v] or getbagitemcount(play,v))
                 end
-                if clwc then
+                if clwc and rwid ~= 33 then
                     messagebox(play,"所需材料已找到,立即前往NPC提交","@moni_dj_rw,"..rwid,"@exit")
                 end
                 -- 调用newpicktask函数，并将sj表中的元素作为参数传入
@@ -412,7 +412,7 @@ function pickupitemex(play, item)
                 end
                 -- 调用newpicktask函数，并将sj表中的元素作为参数传入
                 newchangetask(play, rwid,unpack(sl))
-                if clwc then
+                if clwc and rwid ~= 33 then
                     if constant.rw_syb[rwid].jwpjc then
                         messagebox(play,"所需物品已找到任务完成")
                         Player.zxrw_wancheng(play, rwid, "")
@@ -1119,7 +1119,7 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
 			local isy = tonumber(k)
 			if isy then
 				local ew = Buff[isy](play, 3, Damage, Target, MagicId)
-                if ew and ew > 0 then
+                if isy ~= 563 and ew and ew > 0 then
                     ew = math.floor(ew * huijie_damage_rate)
                     if ew <= 0 then
                         ew = nil
@@ -1144,7 +1144,7 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
 			local isy = tonumber(k)
 			if isy then
 				local ew = Buff[isy](play, 3, Damage, Target, MagicId)
-                if ew and ew > 0 then
+                if isy ~= 563 and ew and ew > 0 then
                     ew = math.floor(ew * huijie_damage_rate)
                     if ew <= 0 then
                         ew = nil

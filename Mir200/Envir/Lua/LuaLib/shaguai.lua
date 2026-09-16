@@ -2030,6 +2030,37 @@ if GameEvent and EventCfg and EventCfg.onKillMon and not rawget(_G, "__star_char
         end
     end, "star_chart_material_drop")
 end
+if GameEvent and EventCfg and EventCfg.onKillMon and not rawget(_G, "__npc610_item_pity_drop_event") then
+	_G.__npc610_item_pity_drop_event = true
+	GameEvent.add(EventCfg.onKillMon, function(play, mob)
+		if not _sg_can_count_common_mon(play, mob) then
+			return
+		end
+		local config = teshudata and teshudata["npc_610"] or nil
+		local cost = config and config.cost and config.cost[1] or nil
+		local itemName = cost and cost[1] or nil
+		local needCount = tonumber(cost and cost[2] or 0) or 0
+		if not config or not itemName or needCount <= 0 then
+			return
+		end
+		local mapName = tostring(getbaseinfo(mob, 3) or getbaseinfo(play, 3) or "")
+		if mapName ~= tostring(config.map or "") then
+			return
+		end
+		local taskData = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
+		if tonumber(taskData["npc_610"] or 0) >= 2 then
+			return
+		end
+		if (tonumber(getbagitemcount(play, itemName) or 0) or 0) >= needCount then
+			return
+		end
+		local key = "kill_pity_npc_610"
+		local cur, dropData = _sg_drop_record_inc(play, key)
+		if cur >= 10 and shaguai.temp_drop(play, mob, itemName) then
+			_sg_drop_record_set(play, key, 0, dropData)
+		end
+	end, "npc610_item_pity_drop")
+end
 return shaguai
 
 

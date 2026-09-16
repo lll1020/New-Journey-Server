@@ -31,6 +31,16 @@ local function _is_red_name_monster(obj)
     local monidx = getbaseinfo(obj, 1)
     return tonumber(getmonbaseinfo(getdbmonfieldvalue(monidx, "idx"), 2) or 0) == 249
 end
+local function _is_huijie_monster(obj)
+    if not _godstone_is_mon(obj) then
+        return false
+    end
+    local map_name = tostring(getbaseinfo(obj, ConstCfg.gbase.mapid) or getbaseinfo(obj, 3) or "")
+    if Player and Player.isHuiJieMap then
+        return Player.isHuiJieMap(map_name)
+    end
+    return string.find(map_name, "灰界", 1, true) ~= nil
+end
 local function _godstone_roll(play, key, rate, cd)
     local now = os.time()
     local cdKey = "N$godstone_" .. key .. "_cd"
@@ -1547,21 +1557,25 @@ Buff = {
         end
         _toggle_buff_var(play, VarCfg.S_buffgwq, 571, zt == 1)
     end,
-    [563] = function(play,zt,Damage,Target) -- 诸邪退散：对红名怪每9刀额外造成288888真实伤害，并作为灰界免疫标记
+    [563] = function(play,zt,Damage,Target) -- 诸邪退散：解除灰界压制，并提供灰界与红名怪专属攻击效果
         if zt == 3 then
-            if not _is_red_name_monster(Target) then
-                return 0
+            local extra = 0
+            if _is_huijie_monster(Target) then
+                extra = extra + 88888
             end
-            local cur = tonumber(getplaydef(play, "N$buff563_count") or 0) or 0
-            cur = cur + 1
-            if cur >= 9 then
-                cur = 0
-                setplaydef(play, "N$buff563_count", cur)
-                playeffect(Target, 60456, 0, 0, 1, 0, 0)
-                return 288888
+            if _is_red_name_monster(Target) then
+                local cur = tonumber(getplaydef(play, "N$buff563_count") or 0) or 0
+                cur = cur + 1
+                if cur >= 9 then
+                    cur = 0
+                    setplaydef(play, "N$buff563_count", cur)
+                    playeffect(Target, 60456, 0, 0, 1, 0, 0)
+                    extra = extra + 288888
+                else
+                    setplaydef(play, "N$buff563_count", cur)
+                end
             end
-            setplaydef(play, "N$buff563_count", cur)
-            return 0
+            return extra
         end
         _set_title_buff_flag(play, 563, zt == 1)
         _toggle_buff_var(play, VarCfg.S_buffgwq, 563, zt == 1)
@@ -1589,11 +1603,17 @@ Buff = {
             Player.del_attlist(play, "仙食坊全满")
         end
     end,
-    [102] = function(play,zt,Damage,Target) --轩辕剑传人：对目标周围3x3范围造成攻击上限100%的伤害
+    [102] = function(play,zt,Damage,Target) --轩辕剑传人：30%概率对目标周围3x3范围造成攻击上限100%的伤害，内置CD 1秒
         if zt == 3 then
             if not Target or getbaseinfo(Target, ConstCfg.gbase.isplayer) then
                 return 0
             end
+            local now = os.time()
+            local last = tonumber(getplaydef(play, "N$buff102_cd") or 0) or 0
+            if now - last < 1 or math.random(100) > 30 then
+                return 0
+            end
+            setplaydef(play, "N$buff102_cd", now)
             local damage = math.floor(tonumber(getbaseinfo(play, ConstCfg.gbase.dc2) or 0) or 0)
             if damage > 0 then
                 rangeharm(
@@ -1611,9 +1631,10 @@ Buff = {
             local data = json2tbl(bl == "" and {} or bl)
             if zt == 1 then
                 data["102"] = true
-                setplaydef(play,"N$buff102",0)
+                setplaydef(play,"N$buff102_cd",0)
             elseif zt == 2 then
                 data["102"] = nil
+                setplaydef(play,"N$buff102_cd",0)
             end
             setplaydef(play,VarCfg.S_buffgjh,tbl2json(data))
         end
@@ -4585,8 +4606,15 @@ function Buff.login(play)
     local ch = gettitlelist(play)
     for _, v in pairs(ch) do
         local idx = getstditeminfo(getiteminfo(play,v,1),8)
-        if idx and idx > 0 then
+        if idx and idx > 0 and Buff[idx] then
             Buff[idx](play,1)
+        end
+    end
+    if Player.hasHuiJieImmunity and Buff[563] then
+        if Player.hasHuiJieImmunity(play) then
+            Buff[563](play,1)
+        else
+            Buff[563](play,2)
         end
     end
     -------------------------------------------------------------------first charge effect initialization

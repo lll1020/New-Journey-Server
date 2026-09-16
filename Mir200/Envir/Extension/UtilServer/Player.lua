@@ -880,9 +880,14 @@ function Player.title_give(actor, title_name) --∏¯≥∆∫≈
         GameEvent.push(EventCfg.onGetTaskTitle, actor, title_name)
         local raw_idx = getstditeminfo(title_name,8)
         local idx = tonumber(raw_idx or 0) or 0
-        if idx > 0 then
+        local buff_applied = false
+        if idx > 0 and Buff[idx] then
             Buff[idx](actor,1)
+            buff_applied = idx == 563
             -- Buff[idx](actor,5)
+        end
+        if not buff_applied and title_name == "÷Ó–∞ÕÀ…¢" and Buff[563] then
+            Buff[563](actor,1)
         end
         Player.trySyncSecondContinentXyl(actor)
         if title_name == "÷Ó–∞ÕÀ…¢" and Login and Login.refreshGrayWorldVision then
@@ -893,13 +898,21 @@ end
 function Player.title_del(actor, title_name) --…æ≥∆∫≈
     if checktitle(actor, title_name) then
         release_print("…æ≥∆∫≈",title_name,getbaseinfo(actor,1))
+        local had_huijie_title = Player.hasHuiJieImmunity and Player.hasHuiJieImmunity(actor)
         deprivetitle(actor, title_name)
         _change_title_level(actor, title_name, "-")
         local raw_idx = getstditeminfo(title_name,8)
         local idx = tonumber(raw_idx or 0) or 0
-        if idx > 0 then
+        local buff_applied = false
+        if idx > 0 and Buff[idx] then
             Buff[idx](actor,2)
+            buff_applied = idx == 563
             -- Buff[idx](actor,6)
+        end
+        if had_huijie_title and title_name == "÷Ó–∞ÕÀ…¢"
+            and not (Player.hasHuiJieImmunity and Player.hasHuiJieImmunity(actor))
+            and not buff_applied and Buff[563] then
+            Buff[563](actor,2)
         end
         if title_name == "÷Ó–∞ÕÀ…¢" and Login and Login.refreshGrayWorldVision then
             Login.refreshGrayWorldVision(actor)

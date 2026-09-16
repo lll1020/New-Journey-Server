@@ -161,6 +161,53 @@ local function active(state, node_id)
     return toint((state.nodes or {})[tostring(node_id)] or 0, 0) == 1
 end
 
+local function is_m1_node(node)
+    return node and (
+        node.exclusive_group == "core_m1"
+        or tostring(node.id or ""):match("^[^_]+_M1$")
+    )
+end
+
+local function active_m1_node(state, exclude_id)
+    for node_id, value in pairs(state.nodes or {}) do
+        if toint(value, 0) == 1 and tostring(node_id) ~= tostring(exclude_id or "") then
+            local node = node_cfg(node_id)
+            if is_m1_node(node) then
+                return node
+            end
+        end
+    end
+    return nil
+end
+
+local function count_active_talent_points(state)
+    local count = 0
+    for node_id, value in pairs(state.nodes or {}) do
+        if tostring(node_id) ~= "root" and toint(value, 0) == 1 then
+            local node = node_cfg(node_id)
+            local point_cost = node and math.max(0, toint(node.point_cost, 1)) or 0
+            count = count + point_cost
+        end
+    end
+    return count
+end
+
+local function get_single_reset_cost(node)
+    if is_m1_node(node) then
+        return clone_cost(Cfg.m1_reset_cost or {{"灵石", 100}})
+    end
+    return clone_cost(Cfg.single_reset_cost or {{"灵石", 20}})
+end
+
+local function get_full_reset_cost(state)
+    local point_cost = math.max(0, toint(Cfg.talent_reset_point_cost, 20))
+    local amount = count_active_talent_points(state) * point_cost
+    if amount <= 0 then
+        return {}
+    end
+    return {{"灵石", amount}}
+end
+
 local function core_max_level()
     local maxLevel = 0
     for _, levelCfg in ipairs(Cfg.core_levels or {}) do
@@ -418,10 +465,10 @@ local function check_requirements(state, node)
 end
 
 local function check_exclusive(state, node)
-    if node.id and tostring(node.id):match("^[^_]+_M1$") then
+    if is_m1_node(node) then
         for node_id, value in pairs(state.nodes or {}) do
             if toint(value, 0) == 1
-                and tostring(node_id):match("^[^_]+_M1$")
+                and is_m1_node(node_cfg(node_id))
                 and tostring(node_id) ~= tostring(node.id)
             then
                 return false, "五行灵根只能选择一个核心#57"
@@ -478,6 +525,80 @@ local function refund_cost(play, cost, reason)
         return
     end
     Player.rwjl(play, cost, reason or "天赋树返还", 1, 0)
+end
+
+local function can_switch_m1(play, state, node, old_node)
+    if not is_m1_node(node) or not old_node or active(state, node.id) then
+        return false, "本命灵根切换失败#57"
+    end
+    local ok, msg = check_requirements(state, node)
+    if not ok then
+        return false, msg
+    end
+    if has_children(state, old_node.id) then
+        return false, "请先退回旧本命灵根下的外层连接节点#57"
+    end
+
+    local old_point_cost = math.max(0, toint(old_node.point_cost, 1))
+    local new_point_cost = math.max(0, toint(node.point_cost, 1))
+    if toint(state.normal_points, 0) + old_point_cost < new_point_cost then
+        return false, "天赋点不足#57"
+    end
+
+    if toint(node.branch, 0) > 0 and new_point_cost > 0 then
+        local branch_points = count_branch(state, node.branch) - old_point_cost + new_point_cost
+        if branch_points > toint(Cfg.single_branch_limit, 40) then
+            return false, "该灵根分支已达到上限#57"
+        end
+    end
+    if not has_cost(play, node.cost) then
+        return false, "材料不足#57"
+    end
+    return true
+end
+
+local function switch_m1(play, npcid, state, node, old_node)
+    local ok, msg = can_switch_m1(play, state, node, old_node)
+    if not ok then
+        Player.sendmsgEx(play, msg or "本命灵根切换失败#57")
+        return
+    end
+    if not take_cost(play, get_single_reset_cost(node), "本命灵根切换") then
+        return
+    end
+
+    local refund = clone_cost(state.spent_costs[old_node.id] or old_node.cost or {})
+    local old_gem = state.sockets[old_node.id]
+    if type(old_gem) == "string" and old_gem ~= "" and get_gem_def(old_gem) then
+        refund[#refund + 1] = {old_gem, 1}
+    end
+
+    state.nodes[old_node.id] = nil
+    state.sockets[old_node.id] = nil
+    state.spent_costs[old_node.id] = nil
+    state.nodes[node.id] = 1
+    if type(node.cost) == "table" and #node.cost > 0 then
+        state.spent_costs[node.id] = clone_cost(node.cost)
+    else
+        state.spent_costs[node.id] = nil
+    end
+    state.normal_points = math.min(
+        toint(state.normal_points, 0)
+            + math.max(0, toint(old_node.point_cost, 1))
+            - math.max(0, toint(node.point_cost, 1)),
+        toint(state.normal_total, 0)
+    )
+
+    save_state(play, state)
+    local logic = get_skill_logic()
+    if logic and logic.clear then
+        logic.clear(play)
+    end
+    refresh_effects(play, state)
+    refund_cost(play, refund, "本命灵根切换返还")
+    touch_fairy_fate(play)
+    Player.sendmsgEx(play, "本命灵根已切换，消耗100灵石#7")
+    send_partial(play, npcid, 7, node.id, state)
 end
 
 local function aggregate_attributes(state)
@@ -637,6 +758,17 @@ local function activate_node(play, npcid, request)
     local state = get_state(play)
     local node_id = tostring(request.id or "")
     local node = node_cfg(node_id)
+    if is_m1_node(node) then
+        local old_m1 = active_m1_node(state, node_id)
+        if old_m1 then
+            if request.switch == true then
+                switch_m1(play, npcid, state, node, old_m1)
+            else
+                Player.sendmsgEx(play, "五行灵根只能选择一个核心，请先确认切换#57")
+            end
+            return
+        end
+    end
     local ok, msg = can_activate(play, state, node, false)
     if not ok then
         Player.sendmsgEx(play, msg or "该节点当前不可点亮#57")
@@ -675,7 +807,7 @@ local function deactivate_node(play, npcid, request)
         Player.sendmsgEx(play, "请先退回外层连接节点#57")
         return
     end
-    if not take_cost(play, Cfg.single_reset_cost or {}, "天赋树单独退点") then
+    if not take_cost(play, get_single_reset_cost(node), "天赋树单独退点") then
         return
     end
     local refund = clone_cost(state.spent_costs[node_id] or node.cost or {})
@@ -704,7 +836,7 @@ end
 
 local function reset_tree(play, npcid)
     local state = get_state(play)
-    if not take_cost(play, Cfg.reset_cost or {}, "天赋树洗点") then
+    if not take_cost(play, get_full_reset_cost(state), "天赋树洗点") then
         return
     end
     local refundMap = {}

@@ -8,16 +8,23 @@ local cfg = {
     initial_core_level = 0,
     single_branch_limit = 40,
     side_branch_limit = 6,
+    talent_reset_point_cost = 20,
     reset_cost = {
         {
             "¡È Ø",
-            400,
+            20,
         },
     },
     single_reset_cost = {
         {
             "¡È Ø",
-            10,
+            20,
+        },
+    },
+    m1_reset_cost = {
+        {
+            "¡È Ø",
+            100,
         },
     },
     elements = {

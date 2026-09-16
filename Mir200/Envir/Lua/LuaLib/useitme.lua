@@ -2,6 +2,8 @@ release_print("useitme.lua")
 local RANDOM_TRANSFER_WINDOW_SEC = 3
 local RANDOM_TRANSFER_WINDOW_LIMIT = 3
 local RANDOM_TRANSFER_CD = 3
+local RETURN_STONE_WINDOW_SEC = 5
+local RETURN_STONE_WINDOW_LIMIT = 3
 local RETURN_STONE_CD = 3
 local _equip_slots = {0,1,3,4,5,6,7,8,9,10,11,13,14,16,30,31,32,33,34,35,36,37,38,39,40,41}
 local function _has_equip_name(play, itemname)
@@ -27,7 +29,20 @@ local function _return_stone_cd_left(play, now)
 end
 local function _record_return_stone_use(play, now)
     now = now or os.time()
-    setplaydef(play, "N$回城石CD", now + RETURN_STONE_CD)
+    local windowStart = tonumber(getplaydef(play, "N$回城石窗口开始时间") or 0) or 0
+    local useCount = tonumber(getplaydef(play, "N$回城石窗口次数") or 0) or 0
+    if windowStart <= 0 or now - windowStart >= RETURN_STONE_WINDOW_SEC then
+        windowStart = now
+        useCount = 0
+    end
+    useCount = useCount + 1
+    setplaydef(play, "N$回城石窗口开始时间", windowStart)
+    setplaydef(play, "N$回城石窗口次数", useCount)
+    if useCount >= RETURN_STONE_WINDOW_LIMIT then
+        setplaydef(play, "N$回城石CD", now + RETURN_STONE_CD)
+        setplaydef(play, "N$回城石窗口开始时间", 0)
+        setplaydef(play, "N$回城石窗口次数", 0)
+    end
 end
 local function _pk_combat_left(play, now)
     now = now or os.time()
@@ -1587,7 +1602,6 @@ local function _get_zhuji_dan_record(play)
     end
     return rec
 end
-
 
 
 

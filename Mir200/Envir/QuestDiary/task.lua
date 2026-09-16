@@ -560,6 +560,42 @@ local function _zxrw_register_sjwp_progress(play, rwid)
         newchangetask(play, rwid, unpack(sl))
     end
 end
+
+local function _zxrw_has_ancient_temple_materials(play)
+    local cfg = constant.rw_syb[33]
+    if not (cfg and type(cfg.sjwp) == "table") then
+        return false
+    end
+    for itemName, needCount in pairs(cfg.sjwp) do
+        local haveCount = tonumber(getbagitemcount(play, itemName) or 0) or 0
+        if haveCount < (tonumber(needCount) or 0) then
+            return false
+        end
+    end
+    return true
+end
+
+local function _zxrw_on_add_bag(play, item)
+    if not play or tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) ~= 33 then
+        return
+    end
+
+    local jqData = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+    jqData = type(jqData) == "table" and jqData or {}
+    if tonumber(jqData["npc_609_ready"] or 0) == 1 then
+        return
+    end
+    if not _zxrw_has_ancient_temple_materials(play) then
+        return
+    end
+
+    jqData["npc_609_ready"] = 1
+    Player.setJsonVarByTable(play, VarCfg.T_dljq, jqData)
+    messagebox(play, "古刹魔瓶任务完成，请前往NPC提交")
+end
+
+GameEvent.add(EventCfg.onAddBag, _zxrw_on_add_bag, "zxrw_npc_609_material_complete")
+
 function task_login(play)
     ---------------------------------------------------任务初始化
     _zxrw_skip_deprecated_mainline(play)

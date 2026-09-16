@@ -3217,25 +3217,42 @@ function ontimer6(play)
     local zz_data = Player.getJsonTableByVar(play, VarCfg["T_免费赞助"]) or {}
     local zz_cfg = (teshudata["anniu_516"] and teshudata["anniu_516"].details) or {}
     local zz_charge = tonumber(getplaydef(play, VarCfg["U_真实充值"]) or 0) or 0
-    for i = 1, #zz_cfg do
-        local cur_key = "zzlb_" .. i
-        local pre_key = "zzlb_" .. (i - 1)
-        local cur_claimed = tonumber(zz_data[cur_key] or 0) == 1
-        local pre_ok = (i == 1) or (tonumber(zz_data[pre_key] or 0) == 1)
-        local need_cz502 = tonumber(zz_cfg[i].need_cz502 or 0) or 0
-        local can_charge = false
+    local function _zz516_condition_met(config)
+        config = config or {}
+        local need_item = tostring(config.need_item or "")
+        if need_item ~= "" then
+            return (tonumber(getbagitemcount(play, need_item) or 0) or 0) >= 1
+        end
+        local need_cz502 = tonumber(config.need_cz502 or 0) or 0
         if need_cz502 > 0 then
             local czlb = json2tbl(getplaydef(play, VarCfg.T_czlb))
             if type(czlb) ~= "table" then
                 czlb = {}
             end
-            can_charge = tonumber(czlb["cz502_" .. need_cz502] or 0) == 1
-        else
-            local need_charge = tonumber(zz_cfg[i].need_charge or zz_cfg[i].sgsl or 0) or 0
-            local need_money23 = tonumber(zz_cfg[i].need_money23 or 0) or 0
-            can_charge = (need_money23 > 0 and (tonumber(querymoney(play, 23) or 0) or 0) >= need_money23) or (need_money23 <= 0 and zz_charge >= need_charge)
+            return tonumber(czlb["cz502_" .. need_cz502] or 0) == 1
         end
-        if (not cur_claimed) and pre_ok and can_charge then
+        local need_pay21 = tonumber(config.need_pay21 or 0) or 0
+        if need_pay21 > 0 then
+            return tonumber(zz_data["pay21_" .. need_pay21] or 0) == 1
+        end
+        local need_real_charge = tonumber(config.need_real_charge or 0) or 0
+        if need_real_charge > 0 then
+            return zz_charge >= need_real_charge
+        end
+        local charge23 = tonumber(querymoney(play, 23) or 0) or 0
+        local need_money23 = tonumber(config.need_money23 or 0) or 0
+        if need_money23 > 0 then
+            return charge23 >= need_money23
+        end
+        local need_charge = tonumber(config.need_charge or config.sgsl or 0) or 0
+        return zz_charge >= need_charge
+    end
+    for i = 1, #zz_cfg do
+        local cur_key = "zzlb_" .. i
+        local pre_key = "zzlb_" .. (i - 1)
+        local cur_claimed = tonumber(zz_data[cur_key] or 0) == 1
+        local pre_ok = (i == 1) or (tonumber(zz_data[pre_key] or 0) == 1)
+        if (not cur_claimed) and pre_ok and _zz516_condition_met(zz_cfg[i]) then
             can_zz = true
             break
         end
@@ -3344,9 +3361,7 @@ function ontimer6(play)
     if can_ff then
         _send_top_red(515)
     end
-    if can_zz then
-        _send_top_red(16)
-    end
+    _send_top_red(16, can_zz)
     if can_msfc then
         _send_top_red(31)
     end

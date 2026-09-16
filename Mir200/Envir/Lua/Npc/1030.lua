@@ -1,12 +1,12 @@
 npc = {}
 
 local NPC_KEY = "npc_1030"
-local TITLE_NAME = "\214\238\208\176\205\203\201\162"
-local TITLE_SHOW = "\214\238\208\176\205\203\201\162\163\168\185\226\187\183\163\169"
+local TITLE_NAME = "诸邪退散"
+local TITLE_SHOW = "诸邪退散[称号]"
 local DEFAULT_COST = {
-    {"\210\185\195\247\214\233", 1},
-    {"\189\240\177\210", 880000},
-    {"\199\167\196\234\208\254\204\250", 38},
+    {"夜明珠", 1},
+    {"金币", 880000},
+    {"千年玄铁", 38},
 }
 
 local function _cfg()
@@ -72,7 +72,7 @@ function npc.link(play, npcid, ew, aid, data)
     if _done(play, jq_data) then
         jq_data[NPC_KEY] = 2
         pcall(Player.setJsonVarByTable, play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, "\210\209\205\234\179\201\163\172\206\222\183\168\214\216\184\180\186\207\179\201#57")
+        Player.sendmsgEx(play, "已完成，无法重复合成#57")
         _sync(play, npcid, 1, true)
         return
     end
@@ -81,7 +81,7 @@ function npc.link(play, npcid, ew, aid, data)
         return
     end
 
-    Guard.consumeCost(play, _cost(), "," .. ((_cfg().name) or "\186\207\179\201\210\185\195\247\214\233"))
+    Guard.consumeCost(play, _cost(), "," .. ((_cfg().name) or "合成夜明珠"))
     jq_data[NPC_KEY] = 2
     local ok = pcall(Player.setJsonVarByTable, play, VarCfg.T_dljq, jq_data)
     if not ok then
@@ -93,7 +93,7 @@ function npc.link(play, npcid, ew, aid, data)
     if not checktitle(play, titleName) then
         Player.title_give(play, titleName, 1)
     end
-    Player.sendmsgEx(play, "\186\207\179\201\179\201\185\166\163\172\187\241\181\195\179\198\186\197\163\186\214\238\208\176\205\203\201\162#57")
+    Player.sendmsgEx(play, "合成成功，获得称号：诸邪退散#57")
     _sync(play, npcid, 1, true)
 end
 

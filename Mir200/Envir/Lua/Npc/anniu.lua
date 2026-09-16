@@ -2801,6 +2801,21 @@ local function _zz516_check_cfg(play, config)
     local needMoney23 = tonumber((config or {}).need_money23 or 0) or 0
     return (needMoney23 > 0 and charge23 >= needMoney23) or (needMoney23 <= 0 and totalCharge >= needCharge)
 end
+local function _zz516_has_claimable_reward(play)
+    local cfg = _zz516_get_cfg()
+    local T_data = _zz516_get_data(play)
+    for idx = 1, #cfg do
+        local key = "zzlb_" .. idx
+        local prevClaimed = idx == 1 or tonumber(T_data["zzlb_" .. (idx - 1)] or 0) == 1
+        if tonumber(T_data[key] or 0) ~= 1 and prevClaimed and _zz516_check_cfg(play, cfg[idx]) then
+            return true
+        end
+    end
+    return false
+end
+local function _zz516_refresh_top_redpoint(play)
+    sendluamsg(play, 101, 1, 10, 16, _zz516_has_claimable_reward(play) and "1" or "0")
+end
 local function _zz516_get_claim_tier(T_data)
     local cfg = _zz516_get_cfg()
     for i = #cfg, 1, -1 do
@@ -2862,6 +2877,7 @@ local function _zz516_send_panel(play, p2, p3)
 end
 local function _zz516_login(play)
     _zz516_apply_title(play, _zz516_get_data(play))
+    _zz516_refresh_top_redpoint(play)
 end
 GameEvent.add(EventCfg.onLogin, _zz516_login, "至尊赞助")
 --至尊赞助
@@ -2872,6 +2888,7 @@ npc[516] = function(play, p2, p3, msgData) --至尊赞助
             sendluamsg(play, 101, 9999, 0, 0, "npc_anniu_516")
         end
         _zz516_send_panel(play, 0, 0)
+        _zz516_refresh_top_redpoint(play)
     elseif p2 == 1 then
         local idx = tonumber(p3 or 0) or 0
         local cfg = _zz516_get_cfg()
@@ -2918,6 +2935,7 @@ npc[516] = function(play, p2, p3, msgData) --至尊赞助
         end
         sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[至尊赞助]</font><font color=\'#28ef01\'>领取成功...</font>","Type":9}')
         _zz516_send_panel(play, 1, idx)
+        _zz516_refresh_top_redpoint(play)
     end
 end
 -- 9.8-1 聚宝盆 517 服务端入口已停用，仅保留其他后台入口。

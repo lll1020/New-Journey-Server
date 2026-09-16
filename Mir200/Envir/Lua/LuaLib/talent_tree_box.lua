@@ -3,22 +3,13 @@
 local BoxCfg = include("lua/Data/talent_tree_box.lua") or {}
 local GemCfg = include("lua/Data/talent_tree_gems.lua") or {}
 
-local SELECT_BOX_NAME = string.char(
-    200, 253, 188, 182, 177, 166, 202, 175, 215, 212, 209, 161, 176, 252
-)
-local RANDOM_BOX_NAME = string.char(
-    193, 233, 184, 249, 177, 166, 202, 175, 203, 230, 187, 250, 177, 166, 207, 228
-)
-local CHARGE_BOX_NAME = string.char(
-    193, 233, 184, 249, 177, 166, 202, 175, 207, 228
-)
-local SELECT_HINT = string.char(
-    199, 235, 209, 161, 212, 241, 210, 187, 191, 197, 200, 253, 188, 182,
-    193, 233, 184, 249, 177, 166, 202, 175
-)
-local RECEIVE_PREFIX = string.char(187, 241, 181, 195, 163, 186)
-local MISSING_PREFIX = string.char(200, 177, 201, 217)
-local CONFIG_ERROR = string.char(197, 228, 214, 195, 210, 236, 179, 163)
+local SELECT_BOX_NAME = "三级宝石自选包"
+local RANDOM_BOX_NAME = "灵根宝石随机宝箱"
+local CHARGE_BOX_NAME = "灵根宝石箱"
+local SELECT_HINT = "请选择一颗三级灵根宝石"
+local RECEIVE_PREFIX = "获得："
+local MISSING_PREFIX = "缺少"
+local CONFIG_ERROR = "配置异常"
 
 local function _item_name(item_idx)
     return tostring(getstditeminfo(tonumber(item_idx) or 0, 1) or "")

@@ -5,12 +5,16 @@ local STATE_VAR = VarCfg.T_tujian or "T3"
 local MSG_ID = 518
 local REDPOINT_ICON = 23
 local ATLAS_ATTR_LIST = "atlas_collection_attrs"
-local MSG_ENTRY_INACTIVE = string.char(184,195,205,188,188,248,201,208,206,180,188,164,187,238,35,53,55)
-local MSG_ENTRY_CLAIMED = string.char(184,195,205,188,188,248,189,177,192,248,210,209,190,173,193,236,200,161,35,53,55)
-local MSG_CHAPTER_CLAIMED = string.char(213,194,189,218,189,177,192,248,210,209,190,173,193,236,200,161,35,53,55)
-local MSG_CHAPTER_INCOMPLETE = string.char(213,194,189,218,205,188,188,248,201,208,206,180,200,171,178,191,188,164,187,238,35,53,55)
-local REASON_ENTRY = string.char(205,188,188,248,188,164,187,238,189,177,192,248)
-local REASON_CHAPTER = string.char(205,188,188,248,213,194,189,218,189,177,192,248)
+local MSG_ENTRY_INACTIVE = "该图鉴尚未激活#57"
+local MSG_ENTRY_CLAIMED = "该图鉴奖励已经领取#57"
+local MSG_CHAPTER_CLAIMED = "章节奖励已经领取#57"
+local MSG_CHAPTER_INCOMPLETE = "章节图鉴尚未全部激活#57"
+local REASON_ENTRY = "图鉴激活奖励"
+local REASON_CHAPTER = "图鉴章节奖励"
+local EntryIdIndex = {monster = {}, equip = {}}
+local EntryNameIndex = {monster = {}, equip = {}}
+local MapIndex = {}
+local BossNameSet
 
 local function normalize_state(state)
     state = type(state) == "table" and state or {}
@@ -62,13 +66,8 @@ local function refresh_attributes(play, state)
 end
 
 local function find_entry(kind, id)
-    local found
-    each_entry(kind, function(entry, map, continent)
-        if not found and tostring(entry.id or "") == tostring(id or "") then
-            found = {entry = entry, map = map, continent = continent}
-        end
-    end)
-    return found
+    local index = EntryIdIndex[kind]
+    return index and index[tostring(id or "")]
 end
 
 local function normalize_name(name)
@@ -81,28 +80,50 @@ local function normalize_name(name)
     return name
 end
 
-local function find_by_name(kind, name)
-    local wanted = normalize_name(name)
-    local found
-    each_entry(kind, function(entry, map, continent)
-        if not found and normalize_name(entry.name) == wanted then
-            found = {entry = entry, map = map, continent = continent}
+local function build_indexes()
+    for _, continent in ipairs(AtlasCfg.continents or {}) do
+        for _, map in ipairs(continent.maps or {}) do
+            local map_id = tostring(map.id or "")
+            if map_id ~= "" and not MapIndex[map_id] then
+                MapIndex[map_id] = {map = map, continent = continent}
+            end
+            for _, kind in ipairs({"monster", "equip"}) do
+                for _, entry in ipairs(map[kind] or {}) do
+                    local id = tostring(entry.id or "")
+                    local found = {entry = entry, map = map, continent = continent}
+                    if id ~= "" and not EntryIdIndex[kind][id] then
+                        EntryIdIndex[kind][id] = found
+                    end
+                    local name_key = normalize_name(entry.name)
+                    if name_key ~= "" and not EntryNameIndex[kind][name_key] then
+                        EntryNameIndex[kind][name_key] = found
+                    end
+                end
+            end
         end
-    end)
-    return found
+    end
+end
+
+build_indexes()
+
+local function find_by_name(kind, name)
+    local index = EntryNameIndex[kind]
+    return index and index[normalize_name(name)]
 end
 
 local function is_boss(mob_name)
     if not guaiwutype then
         return false
     end
-    local wanted = normalize_name(mob_name)
-    for name, kind in pairs(guaiwutype) do
-        if normalize_name(name) == wanted then
-            return tonumber(kind or 0) == 2
+    if not BossNameSet then
+        BossNameSet = {}
+        for name, kind in pairs(guaiwutype) do
+            if tonumber(kind or 0) == 2 then
+                BossNameSet[normalize_name(name)] = true
+            end
         end
     end
-    return false
+    return BossNameSet[normalize_name(mob_name)] == true
 end
 
 local function is_continent_unlocked(play, continent)
@@ -134,34 +155,25 @@ local function chapter_ready(state, kind, map)
 end
 
 local function has_pending(play, state)
-    local pending = false
-    each_entry("monster", function(entry, map, continent)
-        if not is_continent_unlocked(play, continent) then
-            return
+    for _, continent in ipairs(AtlasCfg.continents or {}) do
+        if is_continent_unlocked(play, continent) then
+            for _, map in ipairs(continent.maps or {}) do
+                for _, kind in ipairs({"monster", "equip"}) do
+                    for _, entry in ipairs(map[kind] or {}) do
+                        if entry_activated(state, kind, entry)
+                            and tonumber(state[kind .. "_claimed"][tostring(entry.id)] or 0) ~= 1 then
+                            return true
+                        end
+                    end
+                    if chapter_ready(state, kind, map)
+                        and tonumber(state.chapter_claimed[kind .. ":" .. tostring(map.id)] or 0) ~= 1 then
+                        return true
+                    end
+                end
+            end
         end
-        if entry_activated(state, "monster", entry)
-            and tonumber(state.monster_claimed[tostring(entry.id)] or 0) ~= 1 then
-            pending = true
-        end
-        if chapter_ready(state, "monster", map)
-            and tonumber(state.chapter_claimed["monster:" .. tostring(map.id)] or 0) ~= 1 then
-            pending = true
-        end
-    end)
-    each_entry("equip", function(entry, map, continent)
-        if not is_continent_unlocked(play, continent) then
-            return
-        end
-        if entry_activated(state, "equip", entry)
-            and tonumber(state.equip_claimed[tostring(entry.id)] or 0) ~= 1 then
-            pending = true
-        end
-        if chapter_ready(state, "equip", map)
-            and tonumber(state.chapter_claimed["equip:" .. tostring(map.id)] or 0) ~= 1 then
-            pending = true
-        end
-    end)
-    return pending
+    end
+    return false
 end
 
 local function send_redpoint(play)
@@ -205,8 +217,8 @@ local function activate(play, kind, entry)
             activated = 1,
             claimed = tonumber(state[kind .. "_claimed"][key] or 0) == 1 and 1 or 0,
         })
+        send_redpoint(play)
     end
-    send_redpoint(play)
 end
 
 function Atlas.onKillMon(play, mob)
@@ -299,21 +311,11 @@ local function claim_entry(play, kind, id)
 end
 
 local function find_map(map_id)
-    local found
-    local found_continent
-    for _, continent in ipairs(AtlasCfg.continents or {}) do
-        for _, map in ipairs(continent.maps or {}) do
-            if tostring(map.id or "") == tostring(map_id or "") then
-                found = map
-                found_continent = continent
-                break
-            end
-        end
-        if found then
-            break
-        end
+    local found = MapIndex[tostring(map_id or "")]
+    if found then
+        return found.map, found.continent
     end
-    return found, found_continent
+    return nil, nil
 end
 
 local function claim_chapter(play, kind, map_id)

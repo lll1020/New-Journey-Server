@@ -1,24 +1,19 @@
 local Rewards = {}
 
--- Keep server-side item names encoding-safe for the GBK Lua runtime.
-local function chars(...)
-    return string.char(...)
-end
-
 local item = {
-    gold = chars(189, 240, 177, 210),
-    water = chars(187, 212, 210, 171, 203, 174, 190, 167),
-    iron = chars(199, 167, 196, 234, 208, 254, 204, 250),
-    hat = chars(182, 183, 243, 210, 203, 233, 198, 172),
-    recharge = chars(49, 212, 170, 213, 230, 179, 228),
-    abyss_ticket = chars(201, 238, 212, 168, 195, 197, 198, 177),
-    soul = chars(209, 253, 185, 214, 190, 171, 198, 199),
-    mid_dust = chars(214, 208, 189, 215, 208, 199, 179, 190),
-    low_dust = chars(179, 245, 189, 215, 208, 199, 179, 190),
-    nether_talisman = chars(190, 187, 210, 181, 183, 251),
-    spirit_egg = chars(193, 233, 202, 222, 181, 176),
-    page = chars(202, 233, 210, 179),
-    key = chars(201, 241, 202, 175, 177, 166, 207, 228, 212, 191, 179, 215),
+    gold = "½ğ±Ò",
+    water = "»ÔÒ«Ë®¾§",
+    iron = "Ç§ÄêĞşÌú",
+    hat = "¶·óÒËéÆ¬",
+    recharge = "1ÔªÕæ³ä",
+    abyss_ticket = "ÉîÔ¨ÃÅÆ±",
+    soul = "Ñı¹Ö¾«ÆÇ",
+    mid_dust = "ÖĞ½×ĞÇ³¾",
+    low_dust = "³õ½×ĞÇ³¾",
+    nether_talisman = "¾»Òµ·û",
+    spirit_egg = "ÁéÊŞµ°",
+    page = "ÊéÒ³",
+    key = "ÉñÊ¯±¦ÏäÔ¿³×",
 }
 
 local function map_parts(map)
