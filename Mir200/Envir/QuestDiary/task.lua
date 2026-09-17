@@ -992,9 +992,6 @@ function deletetask(play,rwid)
     if advanceMainline then
         setplaydef(play,VarCfg.U_zxrw[1],nextMainlineId)
         setplaydef(play,VarCfg.U_zxrw[2],0)
-    elseif rwid == ZXRW_MAINLINE_END_ID then
-        setplaydef(play,VarCfg.U_zxrw[1],0)
-        setplaydef(play,VarCfg.U_zxrw[2],0)
     end
     if advanceMainline and constant.rw_syb[nextMainlineId] and rwid < 1000 then
         local lx = constant.rw_syb[nextMainlineId][1]

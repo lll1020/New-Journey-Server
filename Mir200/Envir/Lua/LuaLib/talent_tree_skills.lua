@@ -118,6 +118,35 @@ local function is_monster(obj)
     return obj and not is_player(obj)
 end
 
+local function same_actor(a, b)
+    if not a or not b then
+        return false
+    end
+    return tostring(a) == tostring(b)
+end
+
+local function same_map(a, b)
+    if not a or not b then
+        return false
+    end
+    local am = getbaseinfo(a, ConstCfg.gbase.mapid) or getbaseinfo(a, 3)
+    local bm = getbaseinfo(b, ConstCfg.gbase.mapid) or getbaseinfo(b, 3)
+    if am == nil or bm == nil then
+        return false
+    end
+    return tostring(am) == tostring(bm)
+end
+
+local function is_valid_skill_target(play, target)
+    if not play or not target or target == "0" or same_actor(play, target) then
+        return false
+    end
+    if not same_map(play, target) then
+        return false
+    end
+    return is_monster(target) or is_player(target)
+end
+
 local function max_hp(obj)
     return tonumber(getbaseinfo(obj, ConstCfg.gbase.maxhp) or 0) or 0
 end
@@ -142,12 +171,19 @@ local function get_obj_var(obj, index)
     if not obj then
         return 0
     end
+    if is_player(obj) then
+        return tonumber(getplaydef(obj, "N$talent_stack_" .. tostring(index)) or 0) or 0
+    end
     local ok, value = pcall(getobjintvar, obj, index)
     return ok and toint(value, 0) or 0
 end
 
 local function set_obj_var(obj, index, value)
     if obj then
+        if is_player(obj) then
+            setplaydef(obj, "N$talent_stack_" .. tostring(index), toint(value, 0))
+            return
+        end
         pcall(setobjintvar, obj, index, toint(value, 0))
     end
 end
@@ -222,9 +258,20 @@ local function set_stack(obj, buff_id, stack, duration, owner)
         return 0
     end
     duration = math.max(1, toint(duration, cfg.duration))
-    addbuff(obj, buff_id, duration, stack, owner or obj)
+    local expires_at = now() + duration
+
+    -- Save the script-side stack before adding the engine buff. Player buffs
+    -- may invoke their callback synchronously from addbuff; saving afterward
+    -- lets that callback see zero stacks and remove the new buff immediately.
     set_obj_var(obj, cfg.var, stack)
-    set_obj_var(obj, cfg.end_var, now() + duration)
+    set_obj_var(obj, cfg.end_var, expires_at)
+
+    local ok, added = pcall(addbuff, obj, buff_id, duration, stack, owner or obj)
+    if not ok or added == false then
+        set_obj_var(obj, cfg.var, 0)
+        set_obj_var(obj, cfg.end_var, 0)
+        return 0
+    end
     return stack
 end
 
@@ -237,7 +284,10 @@ local function add_stack(caster, target, buff_id, amount, limit, duration)
     if stack <= 0 then
         return 0
     end
-    set_stack(target, buff_id, stack, duration, caster)
+    stack = set_stack(target, buff_id, stack, duration, caster)
+    if stack <= 0 then
+        return 0
+    end
     if caster and caster ~= target then
         local bucket = owner_targets[caster]
         if not bucket then
@@ -385,9 +435,13 @@ local function state_of(play)
     return {}
 end
 
-local function get_skill_target(play)
+local function get_skill_target(play, explicit_target)
     if not play then
         return nil
+    end
+
+    if is_valid_skill_target(play, explicit_target) then
+        return explicit_target
     end
 
     local target
@@ -395,13 +449,11 @@ local function get_skill_target(play)
         target = getbaseinfo(play, ConstCfg.gbase.attack_target)
     end
     target = target or getbaseinfo(play, 67)
-    if target and target ~= "0" and is_monster(target) then
+    if is_valid_skill_target(play, target) then
         return target
     end
 
-    -- Self-triggered talent skills do not always carry a target object.
-    -- Use the nearest monster only as a release fallback; an explicit target
-    -- always wins.
+    -- Use the nearest monster as a safe fallback when beginmagic has no target.
     local map_id = getbaseinfo(play, ConstCfg.gbase.mapid)
     local x = getbaseinfo(play, ConstCfg.gbase.x)
     local y = getbaseinfo(play, ConstCfg.gbase.y)
@@ -423,7 +475,7 @@ local function get_skill_target(play)
     return nearest
 end
 
-function TalentTreeSkills.onSkillCast(play, skill_id)
+function TalentTreeSkills.onSkillCast(play, skill_id, explicit_target)
     if not play then
         return false
     end
@@ -432,20 +484,26 @@ function TalentTreeSkills.onSkillCast(play, skill_id)
     if not skill_key then
         return false
     end
-    local state = state_of(play)
+    local state_ok, state = pcall(state_of, play)
+    if not state_ok then
+        return false
+    end
+    state = state or {}
     local active = key_active(state, skill_key)
     if not active then
         return false
     end
 
-    local target = get_skill_target(play)
+    local target_ok, target = pcall(get_skill_target, play, explicit_target)
+    if not target_ok then
+        return false
+    end
     if not target then
         return false
     end
 
-    -- Talent skills are self-triggered and do not reliably enter
-    -- attackdamage. Resolve the same formula and buff logic here, then apply
-    -- the main hit directly. Area hits are handled by base_skill_damage.
+    -- Resolve the skill formula and buff logic here, then apply the main hit
+    -- directly. Area hits are handled by base_skill_damage.
     local hit_count = 1
     if skill_id == 1018 then
         hit_count = node_active(state, "metal_F1_6") and 7 or 6
@@ -455,9 +513,13 @@ function TalentTreeSkills.onSkillCast(play, skill_id)
         if current_hp(target) <= 0 then
             break
         end
-        local result = base_skill_damage(play, target, skill_id, 0, state)
+        local formula_ok, result = pcall(base_skill_damage, play, target, skill_id, 0, state)
+        if not formula_ok then
+            return false
+        end
+        result = toint(result, 0)
         if result > 0 then
-            humanhp(
+            local hit_ok = pcall(humanhp,
                 target,
                 "-",
                 result,
@@ -466,6 +528,9 @@ function TalentTreeSkills.onSkillCast(play, skill_id)
                 play,
                 1
             )
+            if not hit_ok then
+                return false
+            end
             total_damage = total_damage + result
         end
     end

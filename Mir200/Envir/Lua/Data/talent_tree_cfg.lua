@@ -24,7 +24,7 @@ local cfg = {
     m1_reset_cost = {
         {
             "¡È Ø",
-            100,
+            1000,
         },
     },
     elements = {

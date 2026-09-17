@@ -2,7 +2,7 @@
 itemstype = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 55, 71, 72, 73, 74, 75, 76}
 --------------------Òì³£´¦Àí--------------------
 for k, _ in pairs(package.loaded) do
-	if string.find(k, '^Envir/Lua/') then
+	if string.find(k, '^Envir/Lua/') or string.find(k, '^Envir/QuestDiary/') then
 		release_print(k)
 		package.loaded[k] = nil
 	end
@@ -983,7 +983,7 @@ local function _is_talent_skill(MagicId)
         or MagicId == 1027 or MagicId == 1028
 end
 function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
-    -- Talent-tree skills resolve their damage in magselffunc directly.
+    -- Talent-tree skills resolve their damage in beginmagic directly.
     -- Never apply the engine damage callback as a second damage source.
     if _is_talent_skill(MagicId) then
         return 0
@@ -1037,7 +1037,7 @@ function attackdamage(play, Target, Hiter, MagicId, Damage,Model)
 		return Damage
 	else
         GameEvent.push(EventCfg.onAttackDamageMonster, play, Target, Damage, MagicId, Model)
-        local fireUntil = tonumber(getplaydef(Target, "N$lingshou_fire_until") or 0) or 0
+        local fireUntil = tonumber(getplaydef(play, "N$lingshou_fire_until") or 0) or 0
         if MagicId == 26 and fireUntil >= os.time() then
             Damage = math.floor((tonumber(Damage) or 0) * 2)
         end

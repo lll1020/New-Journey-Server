@@ -186,12 +186,12 @@ constant.rw_syb = {
     --打开人物界面境界页，提升修为至筑基境
     [32] = {20, "提升修为至筑基境", task = {kind = "foundation_realm", yd = {3, 14}}, jx = true},
     --进入洞穴秘境，收集并提交杀意碎片*5、煞气*5
-    [33] = {20, "古刹之谜", task = {kind = "story", tk = "npc_609", yd = {1, "洞穴秘境", 609, 143, 153}, auto = true}, sjwp = {["杀意碎片"] = 5, ["煞气"] = 5}, jx = true},
+    [33] = {20, "古刹之谜", task = {kind = "story", tk = "npc_609", yd = {1, "洞穴秘境", 609, 143, 153}, auto = true}, sjwp = {["杀意碎片"] = 5, ["煞气"] = 5},jl = {["hb"] = {{3,200000,"金币"}}}, jx = true},
     --前往二大陆主城转生 NPC，完成2大陆转生
     [34] = {20, "完成2大陆转生", task = {kind = "rebirth", level = 20, yd = {1, "二大陆主城", 33, 90, 127}}, jl = {wp = {{"1元真实充值", 1}}}, jx = true},
     [35] = {2,"二大陆主城",503,94,131,jx = true},
     [36] = {20, "接受灾厄入侵", task = {kind = "gray_invasion_accept", yd = {1, "灰界", 46, 205, 196}}, jx = true},
-    [37] = {20, "潮灾线", task = {kind = "gray_first_route", yd = {1, "旷野之原", 625, 174, 460}},},
+    [37] = {20, "潮灾线", task = {kind = "gray_first_route", yd = {1, "灰界", 46, 205, 196}},},
     [38] = {20, "查看合成夜明珠", task = {kind = "gray_pearl_visit", yd = {1, "灰界", 1030, 198, 196}}, jx = true},
     [39] = {20, "完成剩下3个灰界任务", task = {kind = "gray_remaining_routes", yd = {1, "灰界", 46, 205, 196}},},
     [40] = {6, 11, task = {kind = "gray_continent_enter", yd = {1, "灰界", 1031, 205, 196}},},
