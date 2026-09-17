@@ -70,6 +70,10 @@ end
 local function _has_title_buff_flag(play, buffId)
     return (tonumber(getplaydef(play, "N$buff" .. tostring(buffId)) or 0) or 0) == 1
 end
+local function _has_first_charge_reward(play)
+    local data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
+    return (tonumber(data.main_claimed or data.other_lb or 0) or 0) >= 1
+end
 local function _title_all_percent_attr(percent)
     local ids = {280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 300}
     local arr = {}
@@ -125,7 +129,7 @@ local function _gcmp_refresh_item(play)
     if not _has_title_buff_flag(play, 340) then
         return
     end
-    local where = Player.hasEquipInArtifactSlot(play, "古魔切割刀")
+    local where = Player.hasEquipInArtifactSlot(play, "古魔轩辕剑")
         or Player.hasEquipInArtifactSlot(play, "古刹魔瓶")
     if not where then
         return
@@ -186,9 +190,9 @@ local function _find_bag_item_obj_by_name(play, itemName)
     end
     return nil
 end
-local _gumo_blade_name = "古魔切割刀"
+local _gumo_blade_name = "古魔轩辕剑"
 local _gusha_bottle_name = "古刹魔瓶"
-local _cut_blade_name = "切割刀"
+local _cut_blade_name = "轩辕剑"
 local function _find_recharge_blade_item_obj(play)
     local names = {_gumo_blade_name, _cut_blade_name}
     for _, name in ipairs(names) do
@@ -256,17 +260,17 @@ local function _sync_item_named_cut_attr(play, itemobj, tagName, stack)
     -- }))
     refreshitem(play, itemobj)
 end
--- 30 元档切割刀：击杀怪物累积切割，最终同步到切割刀物品自定义属性。
+-- 30 元档轩辕剑：击杀怪物累积切割，最终同步到轩辕剑物品自定义属性。
 local function Buff_refreshRechargeBlade(play)
-    local active = tonumber(getplaydef(play, "N$切割刀已激活") or 0) or 0
+    local active = tonumber(getplaydef(play, "N$轩辕剑已激活") or 0) or 0
     local bladeItem = _find_recharge_blade_item_obj(play)
--- 兼容老号：角色若已拥有切割刀物品，但历史数据未写激活位，则自动补齐激活标记。
+-- 角色若已拥有轩辕剑物品，但历史数据未写激活位，则自动补齐激活标记。
     if active ~= 1 and bladeItem and bladeItem ~= "0" then
         active = 1
-        setplaydef(play, "N$切割刀已激活", 1)
+        setplaydef(play, "N$轩辕剑已激活", 1)
     end
 -- 只保留物品上的切割属性，避免角色身上残留旧版同名属性。
-    Player.del_attlist(play, "累计切割刀")
+    Player.del_attlist(play, "累计轩辕剑")
     if active == 1 then
         _set_title_buff_flag(play, 564, true)
         if shaguai and shaguai.jia then
@@ -279,13 +283,13 @@ local function Buff_refreshRechargeBlade(play)
         end
         return
     end
-    local stack = tonumber(getplaydef(play, "N$切割刀累计切割") or 0) or 0
+    local stack = tonumber(getplaydef(play, "N$轩辕剑累计切割") or 0) or 0
     if stack < 0 then
         stack = 0
     elseif stack > 88888 then
         stack = 88888
     end
-    setplaydef(play, "N$切割刀累计切割", stack)
+    setplaydef(play, "N$轩辕剑累计切割", stack)
     if bladeItem and bladeItem ~= "0" then
         _sync_item_named_cut_attr(play, bladeItem, "[累计切割]", stack)
     end
@@ -303,7 +307,8 @@ local function _try_compose_gumo_blade(play)
     if not cutItem or cutItem == "0" then
         return
     end
-    local targetIdx = tonumber(getstditeminfo(_gumo_blade_name, ConstCfg.stditeminfo.idx) or 0) or 0
+    local targetName = _gumo_blade_name
+    local targetIdx = tonumber(getstditeminfo(targetName, ConstCfg.stditeminfo.idx) or 0) or 0
     if targetIdx <= 0 then
         return
     end
@@ -313,9 +318,10 @@ local function _try_compose_gumo_blade(play)
     end
     setplaydef(play, "N$gumo_cut_compose", 1)
     changeitemidx(play, makeIdx, targetIdx)
-    local gumoWhere = Player.hasEquipInArtifactSlot(play, _gumo_blade_name)
+    local gumoWhere = Player.hasEquipInArtifactSlot(play, targetName)
+        or Player.hasEquipInArtifactSlot(play, _gumo_blade_name)
     if gumoWhere then
-        delbodyitem(play, bottleWhere, "古魔切割刀合成")
+        delbodyitem(play, bottleWhere, "古魔轩辕剑合成")
         if Buff[340] then
             Buff[340](play, 1)
         end
@@ -787,7 +793,7 @@ Buff = {
             local sj = os.time()
             local json = json2tbl(getplaydef(play,VarCfg.T_aigj))
             json = type(json) == "table" and json or {}
-            local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首充礼包"]) or {}
+            local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
             local has_patrol = getflagstatus(play, VarCfg.BS_sckg) == 1 or (tonumber(sc_data.main_claimed or sc_data.other_lb or 0) or 0) >= 1
             if not has_patrol then
                 return 0
@@ -1583,7 +1589,7 @@ Buff = {
             setplaydef(play, "N$buff563_count", 0)
         end
     end,
-    [564] = function(play,zt) -- 切割刀：登录与激活时同步累计切割到切割刀物品上
+    [564] = function(play,zt) -- 轩辕剑：登录与激活时同步累计切割到轩辕剑物品上
         _set_title_buff_flag(play, 564, zt == 1)
         if zt == 1 then
             if shaguai and shaguai.jia then
@@ -1603,18 +1609,22 @@ Buff = {
             Player.del_attlist(play, "仙食坊全满")
         end
     end,
-    [102] = function(play,zt,Damage,Target) --轩辕剑传人：30%概率对目标周围3x3范围造成攻击上限100%的伤害，内置CD 1秒
+    [102] = function(play,zt,Damage,Target) --首充礼包：50%概率对目标周围3x3范围造成攻击上限110%的伤害，内置CD 1秒
         if zt == 3 then
+            if not _has_first_charge_reward(play) then
+                return 0
+            end
             if not Target or getbaseinfo(Target, ConstCfg.gbase.isplayer) then
                 return 0
             end
             local now = os.time()
             local last = tonumber(getplaydef(play, "N$buff102_cd") or 0) or 0
-            if now - last < 1 or math.random(100) > 30 then
+            if now - last < 1 or math.random(100) > 50 then
                 return 0
             end
             setplaydef(play, "N$buff102_cd", now)
-            local damage = math.floor(tonumber(getbaseinfo(play, ConstCfg.gbase.dc2) or 0) or 0)
+            local attack = tonumber(getbaseinfo(play, ConstCfg.gbase.dc2) or 0) or 0
+            local damage = math.floor(attack * 1.1)
             if damage > 0 then
                 rangeharm(
                     play,
@@ -1629,10 +1639,10 @@ Buff = {
         else
             local bl = getplaydef(play,VarCfg.S_buffgjh)
             local data = json2tbl(bl == "" and {} or bl)
-            if zt == 1 then
+            if zt == 1 and _has_first_charge_reward(play) then
                 data["102"] = true
                 setplaydef(play,"N$buff102_cd",0)
-            elseif zt == 2 then
+            else
                 data["102"] = nil
                 setplaydef(play,"N$buff102_cd",0)
             end
@@ -4622,6 +4632,11 @@ function Buff.login(play)
     if (T_data["ok"] and T_data["ok"] == 1) then
         Buff[73](play,1)
     end
+    if _has_first_charge_reward(play) then
+        Buff[102](play, 1)
+    else
+        Buff[102](play, 2)
+    end
     -------------------------------------------------------------------额外附加属性登录初始化
     --灵根鉴定
     local data = Player.getJsonTableByVar(play, VarCfg["T_灵根鉴定"])
@@ -4659,13 +4674,13 @@ function Buff.login(play)
     end
     -- 古刹魔瓶：背包神器位不走常规装备位登录初始化，这里补一次。
     if Player.hasEquipInArtifactSlot(play, "古刹魔瓶")
-        or Player.hasEquipInArtifactSlot(play, "古魔切割刀") then
+        or Player.hasEquipInArtifactSlot(play, "古魔轩辕剑") then
         Buff[340](play, 1)
     else
         Buff[340](play, 2)
     end
-    -- 切割刀：登录时补一次累计切割同步，确保物品上展示实时正确。
-    if tonumber(getplaydef(play, "N$切割刀已激活") or 0) == 1 then
+    -- 轩辕剑：登录时补一次累计切割同步，确保物品上展示实时正确。
+    if tonumber(getplaydef(play, "N$轩辕剑已激活") or 0) == 1 then
         Buff[564](play, 1)
     else
         Buff[564](play, 2)

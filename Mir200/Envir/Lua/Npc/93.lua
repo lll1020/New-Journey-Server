@@ -36,7 +36,7 @@ local _config = {
         [10] = "毁灭骑士·贝利亚斯(Boss)",        -- 四大陆中怪属性*20
     },
     exchange = {
-        [1] = {name = "神·五行石", count = 1, cost = 10, limit_type = "daily", limit = 1},
+        [1] = {name = "五行石", count = 1, cost = 10, limit_type = "daily", limit = 1},
         [2] = {name = "灵兽蛋", count = 1, cost = 50, limit_type = "daily", limit = 1},
         [3] = {title = "通天能手", cost = 200, limit_type = "life", limit = 1, desc = "全属性+1%，PK增伤+1%，打怪暴率+38%，攻击速度+10%"},
         [4] = {title = "通天老祖", cost = 500, limit_type = "life", limit = 1, desc = "全属性+2%，PK增伤+3%，打怪暴率+68%，攻击速度+20%"},

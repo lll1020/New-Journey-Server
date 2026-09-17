@@ -20,27 +20,16 @@ for key, skill in pairs(SKILLS) do
     SKILL_KEYS[skill.idx] = key
 end
 
-local SKILL_CAST_EFFECTS = {
-    [1017] = 60456,
-    [1018] = 60456,
-    [1019] = 60463,
-    [1020] = 60463,
-    [1023] = 60454,
-    [1024] = 60454,
-    [1025] = 60463,
-    [1026] = 60463,
-    [1027] = 60458,
-    [1028] = 60458,
-}
-
 local STACKS = {
     [20179] = {var = 23079, end_var = 23089, max = 3, duration = 5},
     [20180] = {var = 23080, end_var = 23090, max = 8, duration = 3},
     [20181] = {var = 23081, end_var = 23091, max = 12, duration = 5},
     [20182] = {var = 23082, end_var = 23092, max = 5, duration = 3},
 }
+local PERIODIC_STACKS = {20179, 20182}
 
 local DOMAIN_VAR = "S$talent_tree_domains"
+local CURRENT_VAR_SLOT = "9"
 local SHIELD_VARS = {
     earth = {
         value = "N$talent_earth_shield",
@@ -61,6 +50,11 @@ local SHIELD_VARS = {
 local WOOD_DOMAIN_MARKER = 23095
 
 local owner_targets = {}
+local stack_owners = {}
+local periodic_tick_at = {}
+local object_vars = {}
+local unlink_stack_owner
+local link_stack_owner
 local flow_active
 local target_defense_break
 local apply_wood
@@ -118,6 +112,94 @@ local function is_monster(obj)
     return obj and not is_player(obj)
 end
 
+local ELEMENT_NAME = {
+    metal = "Èá?",
+    water = "Ê∞?",
+    wood = "Êú?",
+    fire = "ÁÅ?",
+    earth = "Âú?",
+}
+local M1_ELEMENT = {
+    metal_M1 = "metal",
+    water_M1 = "water",
+    wood_M1 = "wood",
+    fire_M1 = "fire",
+    earth_M1 = "earth",
+}
+local RESTRAIN_TARGET = {
+    wood = "earth",
+    earth = "water",
+    water = "fire",
+    fire = "metal",
+    metal = "wood",
+}
+
+local function active_m1_element(state)
+    for node_id, element in pairs(M1_ELEMENT) do
+        if node_active(state, node_id) then
+            return element
+        end
+    end
+    return nil
+end
+
+local function relation_matches(relation, source, target)
+    if type(relation) ~= "table" or not source or not target then
+        return false
+    end
+    if relation.relation_type == "restrain"
+        and tostring(relation.source or "") == source
+        and tostring(relation.target or "") == target
+    then
+        return true
+    end
+    local expected = tostring(ELEMENT_NAME[source] or "") .. "ÂÖ?" .. tostring(ELEMENT_NAME[target] or "")
+    return expected ~= "ÂÖ?" and tostring(relation.name or "") == expected
+end
+
+local function resonance_relation(state)
+    local source = active_m1_element(state)
+    local target = RESTRAIN_TARGET[source]
+    if not source or not target then
+        return nil
+    end
+    for _, relation in ipairs(Cfg.relations or {}) do
+        if relation_matches(relation, source, target) then
+            return relation
+        end
+    end
+    return nil
+end
+
+local function resonance_ignore_percent(state, target)
+    local relation = resonance_relation(state)
+    if not relation then
+        return 0
+    end
+    return toint(is_player(target) and relation.player_defense_ignore or relation.monster_defense_ignore, 0)
+end
+
+local function resonance_taken_multiplier(state)
+    local relation = resonance_relation(state)
+    if not relation then
+        return 1
+    end
+    local taken = tonumber(relation.taken)
+    if not taken or taken <= 0 then
+        return 1
+    end
+    return taken
+end
+
+local function apply_resonance_damage(state, target, damage)
+    damage = math.max(0, toint(damage, 0))
+    local percent = resonance_ignore_percent(state, target)
+    if percent <= 0 or damage <= 0 then
+        return damage
+    end
+    return math.floor(damage * (100 + percent) / 100)
+end
+
 local function same_actor(a, b)
     if not a or not b then
         return false
@@ -167,6 +249,50 @@ local function now()
     return os.time()
 end
 
+local function parse_current_vars(raw)
+    local vars = {}
+    raw = tostring(raw or "")
+    for key, value in string.gmatch(raw, "([^=|]+)=([^|]*)") do
+        vars[toint(key, 0)] = toint(value, 0)
+    end
+    return vars
+end
+
+local function pack_current_vars(vars)
+    if type(vars) ~= "table" then
+        return ""
+    end
+    local parts = {}
+    for key, value in pairs(vars) do
+        value = toint(value, 0)
+        if value ~= 0 then
+            parts[#parts + 1] = tostring(key) .. "=" .. tostring(value)
+        end
+    end
+    return table.concat(parts, "|")
+end
+
+local function get_current_vars(obj)
+    if type(getcurrent) == "function" then
+        local ok, raw = pcall(getcurrent, obj, CURRENT_VAR_SLOT)
+        if ok then
+            return parse_current_vars(raw)
+        end
+    end
+    return object_vars[obj] or {}
+end
+
+local function set_current_vars(obj, vars)
+    local packed = pack_current_vars(vars)
+    if type(setcurrent) == "function" then
+        local ok = pcall(setcurrent, obj, CURRENT_VAR_SLOT, packed)
+        if ok then
+            return
+        end
+    end
+    object_vars[obj] = vars
+end
+
 local function get_obj_var(obj, index)
     if not obj then
         return 0
@@ -174,8 +300,8 @@ local function get_obj_var(obj, index)
     if is_player(obj) then
         return tonumber(getplaydef(obj, "N$talent_stack_" .. tostring(index)) or 0) or 0
     end
-    local ok, value = pcall(getobjintvar, obj, index)
-    return ok and toint(value, 0) or 0
+    local vars = get_current_vars(obj)
+    return vars and toint(vars[index], 0) or 0
 end
 
 local function set_obj_var(obj, index, value)
@@ -184,28 +310,28 @@ local function set_obj_var(obj, index, value)
             setplaydef(obj, "N$talent_stack_" .. tostring(index), toint(value, 0))
             return
         end
-        pcall(setobjintvar, obj, index, toint(value, 0))
+        local vars = get_current_vars(obj)
+        value = toint(value, 0)
+        if value == 0 then
+            vars[index] = nil
+        else
+            vars[index] = value
+        end
+        set_current_vars(obj, vars)
+    end
+end
+
+local function clear_obj_vars(obj)
+    if obj and not is_player(obj) then
+        if type(setcurrent) == "function" then
+            pcall(setcurrent, obj, CURRENT_VAR_SLOT, "")
+        end
+        object_vars[obj] = nil
     end
 end
 
 local function get_play_number(play, key)
     return tonumber(getplaydef(play, key) or 0) or 0
-end
-
-local function get_engine_stack(obj, buff_id)
-    if not obj or not getbuffinfo then
-        return 0
-    end
-    local ok, value = pcall(getbuffinfo, obj, buff_id, 1)
-    return ok and math.max(0, toint(value, 0)) or 0
-end
-
-local function get_engine_remaining(obj, buff_id)
-    if not obj or not getbuffinfo then
-        return 0
-    end
-    local ok, value = pcall(getbuffinfo, obj, buff_id, 2)
-    return ok and math.max(0, toint(value, 0)) or 0
 end
 
 local function get_stack(obj, buff_id)
@@ -214,35 +340,79 @@ local function get_stack(obj, buff_id)
         return 0
     end
     local stored = get_obj_var(obj, cfg.var)
-    local engine = get_engine_stack(obj, buff_id)
-    local remaining = get_engine_remaining(obj, buff_id)
     local stored_end = get_obj_var(obj, cfg.end_var)
 
-    -- The custom value is written together with every talent stack update.
-    -- Treat an explicit zero as authoritative so a delayed engine removal
-    -- cannot make a detonated stack appear again in the same frame.
     if stored <= 0 then
-        if engine > 0 and stored_end <= 0 then
-            delbuff(obj, buff_id)
-        end
         return 0
     end
 
-    -- The engine is authoritative when the buff still exists. The custom
-    -- variables are only a fallback for stack/owner data that the engine
-    -- does not expose after a reload.
-    if engine > 0 then
-        if remaining > 0 and stored_end <= now() then
-            set_obj_var(obj, cfg.end_var, now() + remaining)
-        end
-        return math.min(cfg.max, math.max(stored, engine))
-    end
-    if stored > 0 and stored_end > now() then
+    -- These buffs are display carriers. Their scripted stack and expiry are
+    -- authoritative because getbuffinfo values differ between object types.
+    if stored_end > now() then
         return math.min(cfg.max, stored)
     end
+    delbuff(obj, buff_id)
+    unlink_stack_owner(obj, buff_id)
     set_obj_var(obj, cfg.var, 0)
     set_obj_var(obj, cfg.end_var, 0)
     return 0
+end
+
+unlink_stack_owner = function(target, buff_id)
+    local by_buff = stack_owners[target]
+    local owner = by_buff and by_buff[buff_id]
+    if owner and owner_targets[owner] then
+        owner_targets[owner][target] = nil
+        if next(owner_targets[owner]) == nil then
+            owner_targets[owner] = nil
+        end
+    end
+    if by_buff then
+        by_buff[buff_id] = nil
+        if next(by_buff) == nil then
+            stack_owners[target] = nil
+        end
+    end
+    if periodic_tick_at[target] then
+        periodic_tick_at[target][buff_id] = nil
+        if next(periodic_tick_at[target]) == nil then
+            periodic_tick_at[target] = nil
+        end
+    end
+end
+
+link_stack_owner = function(owner, target, buff_id)
+    if not owner or not target then
+        return
+    end
+    local by_buff = stack_owners[target]
+    if not by_buff then
+        by_buff = {}
+        stack_owners[target] = by_buff
+    end
+    if by_buff[buff_id] and by_buff[buff_id] ~= owner then
+        unlink_stack_owner(target, buff_id)
+        by_buff = stack_owners[target]
+        if not by_buff then
+            by_buff = {}
+            stack_owners[target] = by_buff
+        end
+    end
+    by_buff[buff_id] = owner
+    local targets = owner_targets[owner]
+    if not targets then
+        targets = {}
+        owner_targets[owner] = targets
+    end
+    targets[target] = true
+    local ticks = periodic_tick_at[target]
+    if not ticks then
+        ticks = {}
+        periodic_tick_at[target] = ticks
+    end
+    if not ticks[buff_id] then
+        ticks[buff_id] = now() + 1
+    end
 end
 
 local function set_stack(obj, buff_id, stack, duration, owner)
@@ -252,6 +422,7 @@ local function set_stack(obj, buff_id, stack, duration, owner)
     end
     stack = math.max(0, math.min(cfg.max, toint(stack, 0)))
     if stack <= 0 then
+        unlink_stack_owner(obj, buff_id)
         delbuff(obj, buff_id)
         set_obj_var(obj, cfg.var, 0)
         set_obj_var(obj, cfg.end_var, 0)
@@ -266,12 +437,10 @@ local function set_stack(obj, buff_id, stack, duration, owner)
     set_obj_var(obj, cfg.var, stack)
     set_obj_var(obj, cfg.end_var, expires_at)
 
-    local ok, added = pcall(addbuff, obj, buff_id, duration, stack, owner or obj)
-    if not ok or added == false then
-        set_obj_var(obj, cfg.var, 0)
-        set_obj_var(obj, cfg.end_var, 0)
-        return 0
-    end
+    -- The engine Buff is only a display carrier. Monsters may reject it or
+    -- never dispatch buff callbacks, but their scripted stacks must still
+    -- remain available to the periodic damage and spread logic.
+    pcall(addbuff, obj, buff_id, duration, stack, owner or obj)
     return stack
 end
 
@@ -288,28 +457,16 @@ local function add_stack(caster, target, buff_id, amount, limit, duration)
     if stack <= 0 then
         return 0
     end
-    if caster and caster ~= target then
-        local bucket = owner_targets[caster]
-        if not bucket then
-            bucket = {}
-            owner_targets[caster] = bucket
-        end
-        bucket[target] = true
-    end
+    link_stack_owner(caster or target, target, buff_id)
     return stack
 end
 
 local function clear_stack(target, buff_id)
     if target and STACKS[buff_id] then
+        unlink_stack_owner(target, buff_id)
         delbuff(target, buff_id)
         set_obj_var(target, STACKS[buff_id].var, 0)
         set_obj_var(target, STACKS[buff_id].end_var, 0)
-        for owner, targets in pairs(owner_targets) do
-            targets[target] = nil
-            if next(targets) == nil then
-                owner_targets[owner] = nil
-            end
-        end
     end
 end
 
@@ -319,7 +476,7 @@ local function effect(target, effect_id)
     end
 end
 
-local function area_damage(play, center, radius, damage, effect_id, exclude)
+local function area_damage(play, center, radius, damage, effect_id, exclude, state)
     if not play or not center or damage <= 0 then
         return
     end
@@ -327,13 +484,13 @@ local function area_damage(play, center, radius, damage, effect_id, exclude)
     local x, y = getbaseinfo(center, 4), getbaseinfo(center, 5)
     for _, target in ipairs(getobjectinmap(map_id, x, y, radius, 2) or {}) do
         if target ~= exclude and is_monster(target) then
-            humanhp(target, "-", damage, 112, 0, play, 1)
+            humanhp(target, "-", apply_resonance_damage(state, target, damage), 112, 0, play, 1)
             effect(target, effect_id)
         end
     end
 end
 
-local function area_damage_limited(play, center, radius, damage, effect_id, exclude, max_targets, on_target)
+local function area_damage_limited(play, center, radius, damage, effect_id, exclude, max_targets, on_target, state)
     if not play or not center or damage <= 0 then
         return 0
     end
@@ -343,7 +500,7 @@ local function area_damage_limited(play, center, radius, damage, effect_id, excl
     local limit = math.max(1, toint(max_targets, 20))
     for _, target in ipairs(getobjectinmap(map_id, x, y, radius, 2) or {}) do
         if target ~= exclude and is_monster(target) and count < limit then
-            humanhp(target, "-", damage, 112, 0, play, 1)
+            humanhp(target, "-", apply_resonance_damage(state, target, damage), 112, 0, play, 1)
             effect(target, effect_id)
             if on_target then
                 on_target(target)
@@ -523,7 +680,7 @@ function TalentTreeSkills.onSkillCast(play, skill_id, explicit_target)
                 target,
                 "-",
                 result,
-                SKILL_CAST_EFFECTS[skill_id] or 106,
+                110,
                 0,
                 play,
                 1
@@ -534,7 +691,6 @@ function TalentTreeSkills.onSkillCast(play, skill_id, explicit_target)
             total_damage = total_damage + result
         end
     end
-    effect(target, SKILL_CAST_EFFECTS[skill_id])
     setplaydef(play, "N$talent_tree_last_skill", skill_id)
     setplaydef(play, "N$talent_tree_last_skill_time", now())
     return true
@@ -548,7 +704,7 @@ function TalentTreeSkills.sync(play, state)
     for key, skill in pairs(SKILLS) do
         local flag = "N$talent_skill_" .. tostring(skill.idx)
         if key_active(state, key) then
-            addskill(play, skill.idx, 3)
+            addskill(play, skill.idx, 1)
             setplaydef(play, flag, 1)
         else
             delskill(play, skill.idx)
@@ -583,7 +739,11 @@ function TalentTreeSkills.clear(play)
     end
     local targets = owner_targets[play]
     if targets then
+        local target_list = {}
         for target in pairs(targets) do
+            target_list[#target_list + 1] = target
+        end
+        for _, target in ipairs(target_list) do
             for buff_id in pairs(STACKS) do
                 clear_stack(target, buff_id)
             end
@@ -614,6 +774,10 @@ function TalentTreeSkills.adjustTakenDamage(play, hiter, target, damage, magic_i
         return nil, false
     end
     local remaining = damage
+    local resonanceTaken = resonance_taken_multiplier(state_of(play))
+    if resonanceTaken ~= 1 then
+        remaining = math.floor(remaining * resonanceTaken)
+    end
     local still_reduce = get_play_number(play, "N$talent_earth_still_count")
     if still_reduce > 0 then
         remaining = math.floor(remaining * math.max(0, 100 - still_reduce) / 100)
@@ -659,7 +823,7 @@ end
 
 local function apply_fire(play, target, state)
     local limit = flow_active(state, "fire", 1) and 5 or 3
-    add_stack(play, target, 20182, 1, limit, 3)
+    return add_stack(play, target, 20182, 1, limit, 3)
 end
 
 local function apply_water(play, target, state, corrosion_amount, tide_amount)
@@ -683,7 +847,7 @@ local function apply_water_shield(play, state, value_percent)
     local value = tonumber(value_percent) or 10
     setplaydef(play, "N$talent_water_shield", math.floor(max_value * value / 100))
     setplaydef(play, "N$talent_water_shield_end", now() + duration)
-    effect(play, 60454)
+    effect(play, 60458)
 end
 
 local function apply_earth_shield(play, state)
@@ -776,10 +940,6 @@ local function remaining_stack_seconds(target, buff_id)
     if not cfg then
         return 0
     end
-    local engine_remaining = get_engine_remaining(target, buff_id)
-    if engine_remaining > 0 then
-        return engine_remaining
-    end
     return math.max(1, get_obj_var(target, cfg.end_var) - now())
 end
 
@@ -818,7 +978,7 @@ local function trigger_domain(play, domain, state)
         if is_monster(target) then
             if kind == "metal" then
                 if damage > 0 then
-                    humanhp(target, "-", damage, 106, 0, play, 1)
+                    humanhp(target, "-", apply_resonance_damage(state, target, damage), 106, 0, play, 1)
                 end
                 add_target_defense_break(target, 8, 2, node_active(state, "metal_F2_9") and 40 or 8)
             elseif kind == "wood" then
@@ -830,24 +990,86 @@ local function trigger_domain(play, domain, state)
                     changespeedex(target, 1, -20, 2)
                 end
                 if damage > 0 then
-                    humanhp(target, "-", damage, 106, 0, play, 1)
+                    humanhp(target, "-", apply_resonance_damage(state, target, damage), 106, 0, play, 1)
                 end
             elseif kind == "water" then
                 if damage > 0 then
-                    humanhp(target, "-", damage, 112, 0, play, 1)
+                    humanhp(target, "-", apply_resonance_damage(state, target, damage), 112, 0, play, 1)
                 end
             elseif kind == "fire" then
                 add_stack(play, target, 20182, 1, flow_active(state, "fire", 1) and 5 or 3, 3)
                 if damage > 0 then
-                    humanhp(target, "-", damage, 112, 0, play, 1)
+                    humanhp(target, "-", apply_resonance_damage(state, target, damage), 112, 0, play, 1)
                 end
             elseif kind == "earth" then
                 add_target_defense_break(target, 8, 3, 24)
                 if damage > 0 then
-                    humanhp(target, "-", damage, 106, 0, play, 1)
+                    humanhp(target, "-", apply_resonance_damage(state, target, damage), 106, 0, play, 1)
                 end
             end
             effect(target, domain.effect)
+        end
+    end
+end
+
+local function trigger_periodic_stack(play, target, buff_id, stack, state)
+    local percent = 10
+    if buff_id == 20179 then
+        if flow_active(state, "wood", 1) then
+            percent = percent + 5
+        end
+        if flow_active(state, "wood", 2)
+            and get_obj_var(target, WOOD_DOMAIN_MARKER) > now()
+        then
+            percent = percent + 10
+        end
+    elseif buff_id == 20182
+        and flow_active(state, "fire", 2)
+        and stack >= 3
+    then
+        percent = percent + 10
+    end
+
+    local damage = math.floor(attack_value(play) * stack * percent / 100)
+    if damage <= 0 then
+        return
+    end
+    humanhp(target, "-", apply_resonance_damage(state, target, damage), buff_id == 20179 and 106 or 112, 0, play, 1)
+    if buff_id == 20179 and changespeedex then
+        changespeedex(target, 1, -10, 2)
+    end
+    effect(target, buff_id == 20179 and 14 or 36)
+end
+
+local function trigger_periodic_stacks(play, current, state)
+    local targets = owner_targets[play]
+    if not targets then
+        return
+    end
+
+    local target_list = {}
+    for target in pairs(targets) do
+        target_list[#target_list + 1] = target
+    end
+    for _, target in ipairs(target_list) do
+        local by_buff = stack_owners[target]
+        if by_buff then
+            for _, buff_id in ipairs(PERIODIC_STACKS) do
+                if by_buff[buff_id] == play then
+                    local stack = get_stack(target, buff_id)
+                    if stack > 0 then
+                        local next_tick = periodic_tick_at[target]
+                            and periodic_tick_at[target][buff_id]
+                            or 0
+                        if current >= next_tick then
+                            trigger_periodic_stack(play, target, buff_id, stack, state)
+                            if periodic_tick_at[target] then
+                                periodic_tick_at[target][buff_id] = current + 1
+                            end
+                        end
+                    end
+                end
+            end
         end
     end
 end
@@ -858,6 +1080,7 @@ function TalentTreeSkills.tick(play)
     end
     local current = now()
     local state = state_of(play)
+    trigger_periodic_stacks(play, current, state)
     local x = tonumber(getbaseinfo(play, ConstCfg.gbase.x) or 0) or 0
     local y = tonumber(getbaseinfo(play, ConstCfg.gbase.y) or 0) or 0
     local last_x = get_play_number(play, "N$talent_earth_last_x")
@@ -968,9 +1191,8 @@ base_skill_damage = function(play, target, skill_id, damage, state)
             local radius = node_active(state, "metal_F2_9") and 4 or 3
             local duration = node_active(state, "metal_F2_9") and 6 or 5
             local domain_damage = node_active(state, "metal_F2_6") and 30 or 15
-            start_domain_once(play, skill_id, "metal", play, radius, duration, domain_damage, 60456)
+            start_domain_once(play, skill_id, "metal", play, radius, duration, domain_damage, 13400)
         end
-        effect(target, 60456)
     elseif skill_id == 1018 and key_active(state, "metal_ultimate") then
         local segment_count = node_active(state, "metal_F1_6") and 7 or 6
         result = math.floor(atk * 800 / 100 / segment_count)
@@ -983,12 +1205,11 @@ base_skill_damage = function(play, target, skill_id, damage, state)
         set_target_defense_break(target, 15, 5)
         area_damage_limited(play, target, 5, result, 60456, target, 20, function(item)
             set_target_defense_break(item, 15, 5)
-        end)
-        effect(target, 60458)
+        end, state)
     elseif skill_id == 1019 and key_active(state, "wood_skill") then
         apply_wood(play, target, state)
         if flow_active(state, "wood", 2) then
-            add_domain(play, "wood", target, 3, 3, 0, 60463)
+            add_domain(play, "wood", target, 3, 3, 0, 13387)
             for _, item in ipairs(getobjectinmap(
                 getbaseinfo(target, ConstCfg.gbase.mapid),
                 getbaseinfo(target, ConstCfg.gbase.x),
@@ -1013,12 +1234,10 @@ base_skill_damage = function(play, target, skill_id, damage, state)
                 humanhp(play, "+", math.floor(max_hp(play) * 2 / 100), 5, 0, play)
             end
         end
-        effect(target, 60463)
     elseif skill_id == 1020 and key_active(state, "wood_ultimate") then
         result = 0
         apply_wood(play, target, state)
-        start_domain_once(play, skill_id, "wood", target, 5, 6, 100, 60463)
-        effect(target, 60463)
+        start_domain_once(play, skill_id, "wood", target, 5, 6, 100, 13387)
     elseif skill_id == 1023 and key_active(state, "water_skill") then
         local corrosion_limit = flow_active(state, "water", 1) and 8 or 5
         local tide_limit = flow_active(state, "water", 2) and 12 or 8
@@ -1061,7 +1280,6 @@ base_skill_damage = function(play, target, skill_id, damage, state)
             apply_water_shield(play, state)
         end
         result = math.floor(result * (100 + corrosion * (flow_active(state, "water", 1) and 5 or 4)) / 100)
-        effect(target, 60454)
     elseif skill_id == 1024 and key_active(state, "water_ultimate") then
         result = math.floor(atk * 160 / 100)
         local corrosion_limit = flow_active(state, "water", 1) and 8 or 5
@@ -1094,7 +1312,7 @@ base_skill_damage = function(play, target, skill_id, damage, state)
                 local multiplier = 100 + corrosion * (flow_active(state, "water", 1) and 5 or 4)
                 local hit_damage = math.floor(result * multiplier / 100) + burst
                 if item ~= target then
-                    humanhp(item, "-", hit_damage, 112, 0, play, 1)
+                    humanhp(item, "-", apply_resonance_damage(state, item, hit_damage), 112, 0, play, 1)
                     effect(item, 60454)
                 else
                     result = hit_damage
@@ -1105,8 +1323,7 @@ base_skill_damage = function(play, target, skill_id, damage, state)
         if flow_active(state, "water", 2) then
             apply_water_shield(play, state, 20)
         end
-        start_domain_once(play, skill_id, "water", target, 5, 3, 30, 60454)
-        effect(target, 60454)
+        start_domain_once(play, skill_id, "water", target, 5, 3, 30, 60459)
     elseif skill_id == 1025 and key_active(state, "fire_skill") then
         local limit = flow_active(state, "fire", 1) and 5 or 3
         local percent = 35
@@ -1126,7 +1343,6 @@ base_skill_damage = function(play, target, skill_id, damage, state)
         if flow_active(state, "fire", 2) and burn >= 3 then
             result = math.floor(result * 110 / 100)
         end
-        effect(target, 60463)
     elseif skill_id == 1026 and key_active(state, "fire_ultimate") then
         result = math.floor(atk * 180 / 100)
         local target_burn = get_stack(target, 20182)
@@ -1152,14 +1368,13 @@ base_skill_damage = function(play, target, skill_id, damage, state)
         ) or {}) do
             if is_monster(item) then
                 if item ~= target then
-                    humanhp(item, "-", result, 112, 0, play, 1)
+                    humanhp(item, "-", apply_resonance_damage(state, item, result), 112, 0, play, 1)
                 end
                 apply_fire(play, item, state)
                 effect(item, 60463)
             end
         end
         start_domain_once(play, skill_id, "fire", target, 5, 5, 25, 60463)
-        effect(target, 60463)
     elseif skill_id == 1027 and key_active(state, "earth_skill") then
         local rockfall = flow_active(state, "earth", 2)
         result = math.floor(atk * (rockfall and 100 or 40) / 100)
@@ -1175,15 +1390,14 @@ base_skill_damage = function(play, target, skill_id, damage, state)
                 changespeedex(target, 1, -25, 2)
             end
         else
-            area_damage_limited(play, target, 3, result, 60458, target, 20, function(item)
+            area_damage_limited(play, target, 3, result, 60452, target, 20, function(item)
                 add_target_defense_break(item, 5, 2, 5)
                 if changespeedex then
                     changespeedex(item, 1, -5, 2)
                 end
-            end)
+            end, state)
         end
         apply_earth_shield(play, state)
-        effect(target, 60458)
     elseif skill_id == 1028 and key_active(state, "earth_ultimate") then
         result = math.floor(atk * 170 / 100)
         if flow_active(state, "earth", 1) then
@@ -1204,13 +1418,12 @@ base_skill_damage = function(play, target, skill_id, damage, state)
             if is_monster(item) then
                 add_target_defense_break(item, 8, 3, 24)
                 if item ~= target then
-                    humanhp(item, "-", result, 106, 0, play, 1)
-                    effect(item, 60458)
+                    humanhp(item, "-", apply_resonance_damage(state, item, result), 106, 0, play, 1)
+                    effect(item, 60452)
                 end
             end
         end
-        start_domain_once(play, skill_id, "earth", target, 5, 3, 35, 60458)
-        effect(target, 60458)
+        start_domain_once(play, skill_id, "earth", target, 5, 3, 35, 60452)
     end
 
     if get_stack(target, 20179) > 0 and flow_active(state, "wood", 1) and result > 0 then
@@ -1229,6 +1442,10 @@ base_skill_damage = function(play, target, skill_id, damage, state)
         end
     end
     local defense_break = target_defense_break(target)
+    local resonance_break = resonance_ignore_percent(state, target)
+    if resonance_break > 0 then
+        defense_break = defense_break + resonance_break
+    end
     if defense_break > 0 then
         result = math.floor(result * (100 + defense_break) / 100)
     end
@@ -1272,42 +1489,8 @@ function TalentTreeSkills.onBuffTrigger(target, buff_id)
     if not STACKS[buff_id] or not target then
         return false
     end
-    local stack = get_stack(target, buff_id)
-    if stack <= 0 then
-        return true
-    end
-    local owner
-    if getbuffinfo then
-        local ok, value = pcall(getbuffinfo, target, buff_id, 3)
-        if ok and value and value ~= 0 then
-            owner = value
-        end
-    end
-    owner = owner or target
-    if buff_id == 20179 or buff_id == 20182 then
-        local state = is_player(owner) and state_of(owner) or {}
-        local percent = 10
-        if buff_id == 20179 and flow_active(state, "wood", 1) then
-            percent = percent + 5
-        end
-        if buff_id == 20179
-            and flow_active(state, "wood", 2)
-            and get_obj_var(target, WOOD_DOMAIN_MARKER) > now()
-        then
-            percent = percent + 10
-        end
-        if buff_id == 20182 and flow_active(state, "fire", 2) and stack >= 3 then
-            percent = percent + 10
-        end
-        local damage = math.floor(attack_value(owner) * stack * percent / 100)
-        if damage > 0 then
-            humanhp(target, "-", damage, buff_id == 20179 and 106 or 112, 0, owner, 1)
-        end
-        if buff_id == 20179 and changespeedex then
-            changespeedex(target, 1, -10, 2)
-        end
-        effect(target, 60463)
-    end
+    -- These Buffs are display carriers. Periodic damage is processed by
+    -- TalentTreeSkills.tick so monster and player targets use the same path.
     return true
 end
 
@@ -1316,11 +1499,8 @@ function TalentTreeSkills.onBuffChange(target, buff_id, zid, operation)
     if not STACKS[buff_id] then
         return false
     end
-    if toint(operation, 0) == 4 then
-        local cfg = STACKS[buff_id]
-        set_obj_var(target, cfg.var, 0)
-        set_obj_var(target, cfg.end_var, 0)
-    end
+    -- The timer owns stack expiry. The engine callback must not clear the
+    -- scripted state because its timing/operation differs by object type.
     return true
 end
 
@@ -1346,7 +1526,9 @@ function TalentTreeSkills.onKillMon(play, mob)
                 math.floor(burn_damage * 50 / 100),
                 60463,
                 mob,
-                node_active(state, "fire_F2_9") and 5 or 2
+                node_active(state, "fire_F2_9") and 5 or 2,
+                nil,
+                state
             )
         end
     end
@@ -1366,6 +1548,7 @@ function TalentTreeSkills.onKillMon(play, mob)
     clear_stack(mob, 20179)
     clear_stack(mob, 20180)
     clear_stack(mob, 20182)
+    clear_obj_vars(mob)
 end
 
 GameEvent.add(EventCfg.onKillMon, TalentTreeSkills.onKillMon, "talent_tree_skills.kill")

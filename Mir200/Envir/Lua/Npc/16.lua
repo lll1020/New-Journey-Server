@@ -26,7 +26,7 @@ end
 --读取本服/跨服奖励配置
 local function _get_reward_cfg(is_kf)
     return {
-        minimum = _toint(_config.minimum ~= nil and _config.minimum or 600),
+        minimum = _toint(_config.minimum ~= nil and _config.minimum or 300),
         killPoint = _toint(_config.killPoint ~= nil and _config.killPoint or 50),
         killedPoint = _toint(_config.killedPoint ~= nil and _config.killedPoint or 10),
         guaJiPoint = _toint(_config.guaJiPoint ~= nil and _config.guaJiPoint or 3),
@@ -119,6 +119,12 @@ local function _has_first_charge(play)
     local data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
     return (tonumber(data.main_claimed or data.other_lb or data["首充"] or 0) or 0) >= 1
 end
+local function _need_first_charge()
+    return _toint(_config.need_first_charge ~= nil and _config.need_first_charge or 1) == 1
+end
+local function _send_claim_requirement_msg(play, minimum)
+    Player.sendmsgEx(play, "领取条件：|分数#218|达到" .. tostring(minimum or 300) .. "分，并领取|首充礼包#218|后才可领取奖励#57")
+end
 -- 固定奖励模式下，奖励表直接发邮件，避免继续按个人积分比例拆分。
 local function _get_fixed_reward(camp, isChairman)
     local fixed = _config.fixed_rewards or {}
@@ -165,7 +171,7 @@ local function _refresh_panel(play, npcid, is_kf)
         loserPoints = loserPoints,
         castleidentity = _toint(castleidentity(play)),
         reward_mode = _tostr(_config.reward_mode or "legacy"),
-        need_first_charge = _toint(_config.need_first_charge or 0),
+        need_first_charge = _need_first_charge() and 1 or 0,
         has_first_charge = _has_first_charge(play) and 1 or 0,
         fixed_rewards = _config.fixed_rewards or {},
         chairman_title = _config.chairman_title or {},
@@ -195,14 +201,10 @@ local function _claim_reward(play, is_kf)
         Player.sendmsgEx(play, is_kf and "你已经领取过跨服沙巴克奖励了#57" or "你已经领取过沙巴克奖励了#57")
         return
     end
-    if _toint(_config.need_first_charge or 0) == 1 and not _has_first_charge(play) then
-        Player.sendmsgEx(play, "领取攻沙奖励需要先领取首充礼包#57")
-        return
-    end
     local cfg = _get_reward_cfg(is_kf)
     local myPoints = _get_points(play, is_kf)
-    if myPoints < cfg.minimum then
-        Player.sendmsgEx(play, "你的攻沙活跃度小于" .. tostring(cfg.minimum) .. "，无法领取奖励#57")
+    if myPoints < cfg.minimum or (_need_first_charge() and not _has_first_charge(play)) then
+        _send_claim_requirement_msg(play, cfg.minimum)
         return
     end
     local winnerGuildName, winnerPoints, loserPoints = _calculate_guild_points(is_kf)

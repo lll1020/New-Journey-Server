@@ -1,5 +1,5 @@
 --------------------领取任务触发-------------------
-local ZXRW_MAINLINE_END_ID = 40
+local ZXRW_MAINLINE_END_ID = 41
 local ZXRW_MAINLINE_NEXT = {
     [17] = 19,
     [29] = 31,

@@ -354,7 +354,7 @@ shaguai = {
 	end,
 	["340"] = function(play,mob)      --π≈…≤ƒß∆ø£∫◊∞±∏±≥∞¸…Ò∆˜∫Û£¨ª˜…±π÷ŒÔ”–5%∏≈¬ ¿€º∆1µ„¥Úπ÷«–∏Ó
         if not Player.hasEquipInArtifactSlot(play, "π≈…≤ƒß∆ø")
-            and not Player.hasEquipInArtifactSlot(play, "π≈ƒß«–∏Óµ∂") then
+            and not Player.hasEquipInArtifactSlot(play, "π≈ƒß–˘‘ØΩ£") then
 			shaguai.jian(play,340)
 			if Buff and Buff[340] then
 				Buff[340](play, 2)
@@ -370,15 +370,15 @@ shaguai = {
 			Buff[340](play, 1)
 		end
 	end,
-	["564"] = function(play,mob)      --«–∏Óµ∂£∫30 ‘™µµŒªº§ªÓ∫Û£¨√ø…± 1 ÷ªπ÷¿€º∆ +1 «–∏Ó£¨…œœﬁ 88888
-		if tonumber(getplaydef(play, "N$«–∏Óµ∂“—º§ªÓ") or 0) ~= 1 then
+	["564"] = function(play,mob)      --–˘‘ØΩ££∫30 ‘™µµŒªº§ªÓ∫Û£¨√ø…± 1 ÷ªπ÷¿€º∆ +1 «–∏Ó£¨…œœﬁ 88888
+		if tonumber(getplaydef(play, "N$–˘‘ØΩ£“—º§ªÓ") or 0) ~= 1 then
 			shaguai.jian(play,564)
 			if Buff and Buff[564] then
 				Buff[564](play, 2)
 			end
 			return
 		end
-		local stack = tonumber(getplaydef(play, "N$«–∏Óµ∂¿€º∆«–∏Ó") or 0) or 0
+		local stack = tonumber(getplaydef(play, "N$–˘‘ØΩ£¿€º∆«–∏Ó") or 0) or 0
 		if stack >= 88888 then
 			return
 		end
@@ -386,7 +386,7 @@ shaguai = {
 		if stack > 88888 then
 			stack = 88888
 		end
-		setplaydef(play, "N$«–∏Óµ∂¿€º∆«–∏Ó", stack)
+		setplaydef(play, "N$–˘‘ØΩ£¿€º∆«–∏Ó", stack)
 		if Buff and Buff.refreshRechargeBlade then
 			Buff.refreshRechargeBlade(play)
 		end

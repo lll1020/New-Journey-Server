@@ -557,6 +557,9 @@ local function can_switch_m1(play, state, node, old_node)
     return true
 end
 
+local refresh_effects
+local send_partial
+
 local function switch_m1(play, npcid, state, node, old_node)
     local ok, msg = can_switch_m1(play, state, node, old_node)
     if not ok then
@@ -637,7 +640,7 @@ local function aggregate_attributes(state)
     return attrs, special
 end
 
-local function refresh_effects(play, state)
+refresh_effects = function(play, state)
     local attrs, special = aggregate_attributes(state)
     attrs = type(attrs) == "table" and attrs or {}
     special = type(special) == "table" and special or {}
@@ -733,7 +736,7 @@ local function send_full(play, npcid, state)
     send_redpoint(play, state)
 end
 
-local function send_partial(play, npcid, mode, node_id, state, gem_list, socket_result)
+send_partial = function(play, npcid, mode, node_id, state, gem_list, socket_result)
     local payload = build_payload(play, state)
     payload.gem_list = gem_list
     payload.socket_result = socket_result

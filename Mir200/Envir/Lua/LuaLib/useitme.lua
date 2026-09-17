@@ -770,7 +770,7 @@ local function Login_dan40(play)
     if Buff and Buff.refreshRechargeBlade then
         Buff.refreshRechargeBlade(play)
     else
-        Player.del_attlist(play, "充值切割刀")
+        Player.del_attlist(play, "充值轩辕剑")
     end
     if _xianfu_dan_is_active(play, "N$xf_dan_mid_expire") then
         Player.add_attlist(play, "仙府幸运丹", "=", Player.getAttrTableToStr({[246] = 1000, [245] = 500}), 1)
@@ -993,7 +993,7 @@ local function _msfc_submit_box_choice(play, boxName, poolKey, choiceIdx)
         return false
     end
     takeitem(play, boxName, 1)
-    Player.rwjl(play, reward.give, tostring(boxName), 1)
+    Player.rwjl(play, reward.give, tostring(boxName), 1000)
     Player.sendmsgEx(play, "开启成功，获得|" .. _msfc_reward_label(reward) .. "#218")
 end
 function msfcbox(play, code)

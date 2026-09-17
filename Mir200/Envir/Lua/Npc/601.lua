@@ -44,7 +44,9 @@ function npc.link(play,npcid,ew,aid)
             Player.takeItemByTable(play, _config.cost, ",ÐÞ¸´ÐùÔ¯½£",nil)
 
 
-            Player.title_give(play, _config.details.ch)
+            -- Player.title_give(play, _config.details.ch)
+            Player.rwjl(play,{{ _config.details.ch,1}}, "ÐùÔ¯½£ÐÞ¸´", 1)
+
             if Player.trySyncSecondContinentXyl then Player.trySyncSecondContinentXyl(play) end
             if zxrw_try_finish_current_mainline then zxrw_try_finish_current_mainline(play, "ÈÎÎñ") end
             Player.sendmsgEx(play, "ÐùÔ¯½£ÐÞ¸´³É¹¦£¬»ñµÃ³ÆºÅ|¡¾".._config.details.ch.."¡¿#218|")

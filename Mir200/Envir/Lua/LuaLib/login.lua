@@ -88,7 +88,7 @@ function Login.main(play)
     -- 统一迁移自动回收勾选，保证新区默认项和旧号兼容规则一致。
     Player.ensureRecycleSelectConfig(play)
     -- 首充礼包状态：领取任意 1 格后同步天选资格。
-    local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首充礼包"]) or {}
+    local sc_data = Player.getJsonTableByVar(play, VarCfg["T_首冲礼包"]) or {}
     local sc_claimed = tonumber(sc_data.main_claimed or sc_data.other_lb or 0) or 0
     setflagstatus(play,VarCfg.BS_sckg,(sc_claimed >= 1) and 1 or 0)
     iniplayvar(play, "integer","HUMAN","比武大会")

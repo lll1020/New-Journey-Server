@@ -1321,6 +1321,9 @@ local function _sc_apply_main_reward(play, data)
     GameEvent.push(EventCfg.onUPSkin, play, 1)
     _refreshFashionAttr(play, sz_data)
     _sc_sync_flags(play, data)
+    if Buff and Buff[102] then
+        Buff[102](play, 1)
+    end
 end
 local function _sc_build_open_payload(play)
     local data = _sc_get_data(play)
