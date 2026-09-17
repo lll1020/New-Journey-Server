@@ -63,6 +63,53 @@ local function _get_missing_task_name(jq_data)
     end
 end
 
+local _route_order = {[1] = 625, [2] = 627, [3] = 626, [4] = 628}
+local _route_step_order = {[1] = 623, [2] = 622, [3] = 624, [4] = 621}
+
+local function _mainline_id(play)
+    return tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0
+end
+
+local function _task_done(jq_data, id)
+    return tonumber(jq_data["npc_" .. tostring(id)] or 0) >= 2
+end
+
+local function _expected_route(jq_data)
+    for idx = 1, 4 do
+        if not _task_done(jq_data, _route_order[idx]) then
+            return idx
+        end
+    end
+    return 5
+end
+
+local function _can_jump_to_route(play, jq_data, route_idx)
+    if route_idx == 5 then
+        if _mainline_id(play) ~= 39 then
+            return false
+        end
+        return _expected_route(jq_data) == 5
+    end
+    if route_idx < 1 or route_idx > 4 then
+        return false
+    end
+    local invasion = type(jq_data["npc_46"]) == "table" and jq_data["npc_46"] or {}
+    if tonumber(invasion.start or 0) < 1 then
+        return false
+    end
+    if route_idx == 1 then
+        if _mainline_id(play) ~= 37 then
+            return false
+        end
+    elseif _mainline_id(play) ~= 39 then
+        return false
+    end
+    if route_idx ~= _expected_route(jq_data) then
+        return false
+    end
+    return true
+end
+
 local function _guide_to_npc(play, map_name, target_id, xx, yy)
     mapmove(play, map_name, xx, yy, 2)
     sendluamsg(play, 101, 0, 1, 1, '{"lx":2,"npcdt":"' .. map_name .. '","npcid":' .. target_id .. ',"xx":' .. xx .. ',"yy":' .. yy .. '}')
@@ -117,6 +164,10 @@ function npc.link(play,npcid,ew,aid,data)
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_dljq"])
         T_data["npc_46"] = type(T_data["npc_46"]) == "table" and T_data["npc_46"] or {}
 
+        if _mainline_id(play) ~= 39 or tonumber(T_data["npc_46"].wc or 0) >= 1 then
+            return
+        end
+
         local missing_name = _get_missing_task_name(T_data)
         if missing_name then
             Player.sendmsgEx(play, "请先完成#57|【"..missing_name.."】#218|后再来提交灾厄入侵#57")
@@ -129,18 +180,32 @@ function npc.link(play,npcid,ew,aid,data)
         Guard.consumeCost(play, _config.cost, ","..(_config.name or "剧情任务"))
 
         T_data["npc_46"]["wc"] = 1
-        Player.setJsonVarByTable(play, VarCfg["T_dljq"], T_data)
+        local ok = pcall(Player.setJsonVarByTable, play, VarCfg["T_dljq"], T_data)
+        if not ok then
+            return
+        end
+        if zxrw_try_finish_current_mainline then
+            zxrw_try_finish_current_mainline(play, "gray_remaining_routes")
+        end
         Player.title_give(play, _config.ch)
         Player.sendmsgEx(play,  "恭喜你，获得称号：|【".._config.ch.."】#218|")
         sendluamsg(play,100,npcid,1,0,"")
-        if rwcf and rwcf[npcid] then
-            Player.zxrw_wancheng(play, rwcf[npcid][1], "任务") --完成任务
-        end
     elseif ew == 2 then
-        _jump_to_route(play, tonumber(aid or 0) or 0)
+        local T_data = Player.getJsonTableByVar(play, VarCfg["T_dljq"])
+        local route_idx = tonumber(aid or 0) or 0
+        if not _can_jump_to_route(play, T_data, route_idx) then
+            return
+        end
+        _jump_to_route(play, route_idx)
     elseif ew == 3 then
+        if _mainline_id(play) ~= 36 then
+            return
+        end
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_dljq"])
         T_data["npc_46"] = type(T_data["npc_46"]) == "table" and T_data["npc_46"] or {}
+        if tonumber(T_data["npc_46"].start or 0) >= 1 then
+            return
+        end
         T_data["npc_46"]["start"] = 1
         local ok = pcall(Player.setJsonVarByTable, play, VarCfg["T_dljq"], T_data)
         if not ok then
@@ -160,4 +225,3 @@ function npc.link(play,npcid,ew,aid,data)
 end
 
 return npc
-

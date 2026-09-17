@@ -1,5 +1,5 @@
 --------------------领取任务触发-------------------
-local ZXRW_MAINLINE_END_ID = 38
+local ZXRW_MAINLINE_END_ID = 40
 local ZXRW_MAINLINE_NEXT = {
     [17] = 19,
     [29] = 31,
@@ -276,6 +276,19 @@ local function _zxrw_has_items(play, items)
     local miss = Player.checkItemNumByTable(play, items)
     return not miss
 end
+local function _zxrw_has_gray_first_route(play)
+    local data = _zxrw_get_json(play, VarCfg.T_dljq)
+    return (tonumber(data["npc_625"] or 0) or 0) >= 2
+end
+local function _zxrw_has_gray_remaining_routes(play)
+    local data = _zxrw_get_json(play, VarCfg.T_dljq)
+    for _, id in ipairs({627, 626, 628}) do
+        if (tonumber(data["npc_" .. tostring(id)] or 0) or 0) < 2 then
+            return false
+        end
+    end
+    return true
+end
 local function _zxrw_main_task_done(play, taskCfg)
     if type(taskCfg) ~= "table" then
         return false
@@ -293,6 +306,10 @@ local function _zxrw_main_task_done(play, taskCfg)
         return _zxrw_has_linggen_core_upgrade(play)
     elseif kind == "linggen_talent_light" then
         return _zxrw_has_linggen_talent_light(play)
+    elseif kind == "gray_first_route" then
+        return _zxrw_has_gray_first_route(play)
+    elseif kind == "gray_remaining_routes" then
+        return _zxrw_has_gray_remaining_routes(play)
     elseif kind == "gray_pearl_visit" then
         return _zxrw_has_gray_pearl_visit(play)
     elseif kind == "gray_invasion_accept" then
@@ -322,7 +339,9 @@ local _zxrw_close_window_by_kind = {
     main_linggen = 22,
     linggen_core_upgrade = 22,
     linggen_talent_light = 22,
+    gray_first_route = 625,
     gray_pearl_visit = 1030,
+    gray_remaining_routes = 46,
     gray_invasion_accept = 46,
     gray_continent_enter = 1031,
     equip_strength = 28,

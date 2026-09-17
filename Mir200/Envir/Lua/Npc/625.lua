@@ -10,6 +10,23 @@ local function _get_task_data(play)
     return jq_data, sg_data
 end
 
+local function _can_enter_main(play, jq_data)
+    if tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) ~= 37 then
+        Player.sendmsgEx(play, "当前主线还不能进入嘲灾讨伐线#57")
+        return false
+    end
+    local invasion = jq_data["npc_46"]
+    if type(invasion) ~= "table" or tonumber(invasion.start or 0) < 1 then
+        Player.sendmsgEx(play, "请先在灾厄入侵处接受任务#57")
+        return false
+    end
+    if tonumber(jq_data["npc_623"] or 0) < 2 then
+        Player.sendmsgEx(play, "请先完成潮灾线前置任务#57")
+        return false
+    end
+    return true
+end
+
 local function _prep_progress(sg_data)
     return tonumber(sg_data[_prep_key] or 0) or 0
 end
@@ -68,7 +85,9 @@ function npc.link(play,npcid,ew,aid)
             Player.sendmsgEx(play, "任务已完成，无法再次进入#57")
             return
         end
-        -- 允许玩家跳过前置任务直接进入该讨伐副本，前置任务改为独立可选线路。
+        if not _can_enter_main(play, jq_data) then
+            return
+        end
         if not Guard.ensureCost(play, _config.cost) then
             return
         end
@@ -211,6 +230,9 @@ function npc_625_finish(play)
     end
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
     Player.sendmsgEx(play, "|"..(_config.name or "任务").."#249|完成#57")
+    if zxrw_try_finish_current_mainline then
+        zxrw_try_finish_current_mainline(play, "gray_first_route")
+    end
     if npcid then Guard.closeNpc(play, npcid) end
     sendluamsg(play,101,1005,0,0,"rwwc")
     _try_send_gray_entry_guide(play)

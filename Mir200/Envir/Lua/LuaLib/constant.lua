@@ -190,9 +190,12 @@ constant.rw_syb = {
     --前往二大陆主城转生 NPC，完成2大陆转生
     [34] = {20, "完成2大陆转生", task = {kind = "rebirth", level = 20, yd = {1, "二大陆主城", 33, 90, 127}}, jl = {wp = {{"1元真实充值", 1}}}, jx = true},
     [35] = {2,"二大陆主城",503,94,131,jx = true},
-    [36] = {20, "合成夜明珠", task = {kind = "gray_pearl_visit", yd = {1, "灰界", 1030, 198, 196}}, jx = true},
-    [37] = {20, "灾厄入侵", task = {kind = "gray_invasion_accept", yd = {1, "灰界", 46, 205, 196}}},
-    [38] = {6,11},
+    [36] = {20, "接受灾厄入侵", task = {kind = "gray_invasion_accept", yd = {1, "灰界", 46, 205, 196}}, jx = true},
+    [37] = {20, "潮灾线", task = {kind = "gray_first_route", yd = {1, "旷野之原", 625, 174, 460}},},
+    [38] = {20, "查看合成夜明珠", task = {kind = "gray_pearl_visit", yd = {1, "灰界", 1030, 198, 196}}, jx = true},
+    [39] = {20, "完成剩下3个灰界任务", task = {kind = "gray_remaining_routes", yd = {1, "灰界", 46, 205, 196}},},
+    [40] = {6, 11, task = {kind = "gray_continent_enter", yd = {1, "灰界", 1031, 205, 196}},},
+    [41] = {6,11},
 
 }
 return constant
