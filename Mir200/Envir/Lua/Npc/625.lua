@@ -35,6 +35,10 @@ local function _prep_task_name()
     return (_config and _config.prep_task and (_config.prep_task.task_name or _config.prep_task.progress_name)) or "压制反弹"
 end
 
+local function _prep_need()
+    return tonumber(_config and _config.prep_task and _config.prep_task.need or 20) or 20
+end
+
 local function _prep_done(play)
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     return tonumber(jq_data[_prep_key] or 0) >= 2
@@ -109,13 +113,14 @@ function npc.link(play,npcid,ew,aid)
             jq_data[_prep_key] = 1
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
             shaguai.jia(play, 625)
-            Player.sendmsgEx(play, "领取任务：#57|"..prep_name.."#249|，在#57|"..((_config.prep_task and (_config.prep_task.show_map or _config.prep_task.map)) or "旷野之原").."#249|击杀50只怪物")
+            Player.sendmsgEx(play, "领取任务：#57|"..prep_name.."#249|，在#57|"..((_config.prep_task and (_config.prep_task.show_map or _config.prep_task.map)) or "旷野之原").."#249|击杀".._prep_need().."只怪物")
             if npcid then Guard.closeNpcAndAuto(play, npcid) end
             sendluamsg(play,100,npcid,1,1,"")
             return
         end
-        if _prep_progress(sg_data) < 50 then
-            Player.sendmsgEx(play, "当前进度：#57|".._prep_progress(sg_data).."/50#249|尚未完成#57")
+        local need = _prep_need()
+        if _prep_progress(sg_data) < need then
+            Player.sendmsgEx(play, "当前进度：#57|".._prep_progress(sg_data).."/"..need.."#249|尚未完成#57")
             if npcid then Guard.closeNpcAndAuto(play, npcid) end
             return
         end

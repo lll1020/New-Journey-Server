@@ -1493,8 +1493,8 @@ function ggna(play,id)
             giveitem(play,v,1)
         end
     elseif id == "24" then
-        local bool = takew(play,"¹ÅÉ²Ä§Æ¿",1)
-            release_print("ÊÇ·ñ¿Û³ý³É¹¦,takew",bool)
+    addskill(play, 1, 1)
+
 
         -- local jq_data = {}
         -- Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)

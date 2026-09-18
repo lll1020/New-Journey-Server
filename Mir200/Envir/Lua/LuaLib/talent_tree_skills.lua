@@ -715,6 +715,8 @@ function TalentTreeSkills.sync(play, state)
         local flag = "N$talent_skill_" .. tostring(skill.idx)
         if key_active(state, key) then
             addskill(play, skill.idx, 1)
+            setmagicskillefft(play, getskillname(play, skill.idx), skill.idx)
+            
             setplaydef(play, flag, 1)
         else
             delskill(play, skill.idx)

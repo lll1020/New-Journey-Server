@@ -15,3 +15,7 @@
 
 [2026-09-18 14:04:07:253] LuaNPC:玩家名字y ID:999999999 执行 login player:玩家名字y 耗时：31; NpcThreadId: 7084, CurPlayThreadId: 7084
 
+[2026-09-18 14:36:17:674] LuaNPC:玩家名字yz ID:999999999 执行 login player:玩家名字yz 耗时：31; NpcThreadId: 24476, CurPlayThreadId: 24476
+
+[2026-09-18 14:44:59:696] LuaNPC:玩家名字yz ID:999999999 执行 login player:玩家名字yz 耗时：31; NpcThreadId: 4792, CurPlayThreadId: 4792
+
