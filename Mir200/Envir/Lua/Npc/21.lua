@@ -6,7 +6,7 @@ local _config = Guard.getConfig("npc_21")
 local FairyFate = include("lua/LuaLib/fairy_fate.lua")
 
 local function _has_realm_task_access(play)
-    return (tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0) >= 32
+    return (tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0) >= 32 and (tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0) ~= 33
 end
 
 local function _get_jz_dan_count(play)

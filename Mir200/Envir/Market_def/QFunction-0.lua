@@ -371,7 +371,7 @@ function pickupitemex(play, item)
             --rwcf.wpjian(play,name)
             chuli[name] = nil
             if not constant.rw_syb[rwid] then
-                messagebox(play,"所需材料已找到,立即前往NPC提交","@moni_dj_rw,"..rwid,"@exit")
+                messagebox(play,"已满足材料前往 NPC 处提交","@moni_dj_rw,"..rwid,"@exit")
             end
         end
         if constant.rw_syb[rwid] then
@@ -392,7 +392,7 @@ function pickupitemex(play, item)
                     table.insert(sl, getbagitemcount(play,v) >= constant.rw_syb[rwid].cl[v] and constant.rw_syb[rwid].cl[v] or getbagitemcount(play,v))
                 end
                 if clwc and rwid ~= 33 then
-                    messagebox(play,"所需材料已找到,立即前往NPC提交","@moni_dj_rw,"..rwid,"@exit")
+                    messagebox(play,"已满足材料前往 NPC 处提交","@moni_dj_rw,"..rwid,"@exit")
                 end
                 -- 调用newpicktask函数，并将sj表中的元素作为参数传入
                 newchangetask(play, rwid,unpack(sl))
@@ -414,10 +414,10 @@ function pickupitemex(play, item)
                 newchangetask(play, rwid,unpack(sl))
                 if clwc and rwid ~= 33 then
                     if constant.rw_syb[rwid].jwpjc then
-                        messagebox(play,"所需物品已找到任务完成")
+                        messagebox(play,"任务已经完成")
                         Player.zxrw_wancheng(play, rwid, "")
                     else
-                        messagebox(play,"所需材料已找到,立即前往NPC提交","@moni_dj_rw,"..rwid,"@exit")
+                        messagebox(play,"已满足材料前往 NPC 处提交","@moni_dj_rw,"..rwid,"@exit")
                     end
                 end
             end
@@ -2478,7 +2478,7 @@ function func_cjcg(play)
         local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
         sg_data["npc3"] = (sg_data["npc3"] or 0) + 1
         if sg_data["npc3"] >= 5 then
-            messagebox(play,"任务完成,立即前往提交")
+            messagebox(play,"已满足材料前往 NPC 处提交")
         end
         Player.sendmsgEx(play,  "采集+"..1 .." ( "..sg_data["npc3"].."/5 )#57")
         Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)

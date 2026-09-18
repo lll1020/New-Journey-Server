@@ -490,7 +490,7 @@ local function _onKillMon(play, mob)
             end
             return
         end
-        messagebox(play, "任务目标完成,请前往提交")
+        messagebox(play, "已满足材料前往 NPC 处提交")
     end
 end
 

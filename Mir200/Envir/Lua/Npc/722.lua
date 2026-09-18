@@ -272,7 +272,7 @@ local function _onKillMon(play, mob)
     Player.sendmsgEx(play, (_config.name or _cfg_key) .. "进度+1 ( " .. cur .. "/" .. need .. " )#57")
     if cur >= need then
         _sg_remove(play, NPC_ID)
-        messagebox(play, "任务目标完成,请前往提交")
+        messagebox(play, "已满足材料前往 NPC 处提交")
     end
 end
 

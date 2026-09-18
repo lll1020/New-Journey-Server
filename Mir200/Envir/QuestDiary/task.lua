@@ -610,7 +610,7 @@ local function _zxrw_on_add_bag(play, item)
 
     jqData["npc_609_ready"] = 1
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jqData)
-    messagebox(play, "古刹魔瓶任务完成，请前往NPC提交")
+    messagebox(play, "已满足材料前往 NPC 处提交")
 end
 
 GameEvent.add(EventCfg.onAddBag, _zxrw_on_add_bag, "zxrw_npc_609_material_complete")

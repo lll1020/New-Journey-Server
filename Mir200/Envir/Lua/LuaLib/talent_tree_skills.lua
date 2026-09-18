@@ -437,9 +437,10 @@ local function set_stack(obj, buff_id, stack, duration, owner)
     set_obj_var(obj, cfg.var, stack)
     set_obj_var(obj, cfg.end_var, expires_at)
 
-    -- The engine Buff is only a display carrier. Monsters may reject it or
-    -- never dispatch buff callbacks, but their scripted stacks must still
-    -- remain available to the periodic damage and spread logic.
+    -- The engine Buff is only a display carrier. Its stack argument is
+    -- additive, so replace the carrier before writing the authoritative
+    -- script-side total; otherwise 1, 2, 3, 4 becomes 1, 3, 6, 10.
+    pcall(delbuff, obj, buff_id)
     pcall(addbuff, obj, buff_id, duration, stack, owner or obj)
     return stack
 end
@@ -449,7 +450,16 @@ local function add_stack(caster, target, buff_id, amount, limit, duration)
         return 0
     end
     local current = get_stack(target, buff_id)
-    local stack = math.min(toint(limit, STACKS[buff_id].max), current + math.max(0, toint(amount, 0)))
+    local cap = math.min(
+        STACKS[buff_id].max,
+        math.max(0, toint(limit, STACKS[buff_id].max))
+    )
+    -- Each application event adds one layer only; do not copy source stacks.
+    local delta = toint(amount, 0) > 0 and 1 or 0
+    if delta > 0 and current >= cap then
+        return current
+    end
+    local stack = math.min(cap, current + delta)
     if stack <= 0 then
         return 0
     end
@@ -1307,7 +1317,7 @@ base_skill_damage = function(play, target, skill_id, damage, state)
                     end
                     detonated = true
                 end
-                add_stack(play, item, 20180, detonated and 0 or 3, corrosion_limit, 3)
+                add_stack(play, item, 20180, detonated and 0 or 1, corrosion_limit, 3)
                 local corrosion = get_stack(item, 20180)
                 local multiplier = 100 + corrosion * (flow_active(state, "water", 1) and 5 or 4)
                 local hit_damage = math.floor(result * multiplier / 100) + burst
@@ -1540,7 +1550,7 @@ function TalentTreeSkills.onKillMon(play, mob)
         local count = 0
         for _, target in ipairs(getobjectinmap(map_id, x, y, radius, 2) or {}) do
             if target ~= mob and is_monster(target) and count < limit then
-                add_stack(play, target, 20182, burn, node_active(state, "fire_F2_9") and 5 or 3, 3)
+                add_stack(play, target, 20182, 1, node_active(state, "fire_F2_9") and 5 or 3, 3)
                 count = count + 1
             end
         end

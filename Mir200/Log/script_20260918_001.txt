@@ -1,0 +1,17 @@
+[2026-09-18 10:13:36:167] LuaNPC: ID:999999999 执行 startup player: 耗时：31; NpcThreadId: 32380, CurPlayThreadId: 32380
+
+[2026-09-18 10:14:44:596] LuaNPC:玩家名字kk ID:999999999 执行 login player:玩家名字kk 耗时：110; NpcThreadId: 32380, CurPlayThreadId: 32380
+
+[2026-09-18 11:25:29:983] LuaNPC:玩家名字kk ID:999999999 执行 attackdamage player:玩家名字kk 耗时：141; NpcThreadId: 32380, CurPlayThreadId: 32380
+
+[2026-09-18 11:32:57:459] LuaNPC:玩家名字kk ID:999999999 执行 pickupitemex player:玩家名字kk 耗时：31; NpcThreadId: 32380, CurPlayThreadId: 32380
+
+[2026-09-18 11:42:56:657] LuaNPC:玩家名字kk ID:999999999 执行 pickupitemfrontex player:玩家名字kk 耗时：31; NpcThreadId: 32380, CurPlayThreadId: 32380
+
+[2026-09-18 12:07:55:819] LuaNPC:玩家名字kk ID:999999999 执行 moneychange16 player:玩家名字kk 耗时：31; NpcThreadId: 32380, CurPlayThreadId: 32380
+[2026-09-18 12:07:55:828] LuaNPC:玩家名字kk ID:999999999 执行 login player:玩家名字kk 耗时：62; NpcThreadId: 32380, CurPlayThreadId: 32380
+
+[2026-09-18 13:58:22:871] LuaNPC: ID:999999999 执行 startup player: 耗时：31; NpcThreadId: 24204, CurPlayThreadId: 24204
+
+[2026-09-18 14:04:07:253] LuaNPC:玩家名字y ID:999999999 执行 login player:玩家名字y 耗时：31; NpcThreadId: 7084, CurPlayThreadId: 7084
+

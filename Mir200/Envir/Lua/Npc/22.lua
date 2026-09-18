@@ -4,6 +4,9 @@ npc = {}
 
 function npc.main(play, npcid)
     if TalentTree and TalentTree.main then
+        if tonumber(npcid) == 0 and TalentTree.syncCache then
+            return TalentTree.syncCache(play, 22)
+        end
         return TalentTree.main(play, npcid or 22)
     end
 end

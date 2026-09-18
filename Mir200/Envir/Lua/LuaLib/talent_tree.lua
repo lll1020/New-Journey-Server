@@ -1042,13 +1042,22 @@ function TalentTree.main(play, npcid)
     send_full(play, npcid or 22, state)
 end
 
+function TalentTree.syncCache(play, npcid)
+    local state = TalentTree.ensure(play)
+    refresh_effects(play, state)
+    sendluamsg(play, 100, npcid or 22, 8, 0, tbl2json(build_payload(play, state)))
+end
+
 function TalentTree.link(play, npcid, action, p3, msg_data)
     if not Guard.ensurePlayer(play, npcid or 22) then
         return
     end
     action = Guard.normalizeAction(play, npcid or 22, action)
-    if action == nil or not Guard.ensureActionAllowed(play, npcid or 22, action, Guard.newActionSet({1, 2, 3, 4, 5, 6})) then
+    if action == nil or not Guard.ensureActionAllowed(play, npcid or 22, action, Guard.newActionSet({1, 2, 3, 4, 5, 6, 8})) then
         return
+    end
+    if action == 8 then
+        return TalentTree.syncCache(play, npcid or 22)
     end
     if action == 5 then
         return TalentTree.main(play, npcid or 22)
