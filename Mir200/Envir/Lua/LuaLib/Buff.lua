@@ -35,6 +35,15 @@ local function _is_huijie_monster(obj)
     if not _godstone_is_mon(obj) then
         return false
     end
+    local monster_name = tostring(getbaseinfo(obj, 1) or "")
+    if monster_name == "³°ÔÖ"
+        or monster_name == "¼ÉÔÖ"
+        or monster_name == "Ï¢ÔÖ"
+        or monster_name == "ÍıÔÖ"
+        or monster_name == "ÍıÔÖ[Î´ÏÔ]"
+    then
+        return true
+    end
     local map_name = tostring(getbaseinfo(obj, ConstCfg.gbase.mapid) or getbaseinfo(obj, 3) or "")
     if Player and Player.isHuiJieMap then
         return Player.isHuiJieMap(map_name)
@@ -980,12 +989,12 @@ Buff = {
     [303] = function(play,zt,Damage,Target) --×çÖä¿şÀÜ£º¹¥»÷¹ÖÎï´¥·¢(zt=3)£¬10%¸ÅÂÊÉÏÂÌ¶¾£¬10ÃëÄÚÖÃCD
         if zt == 3 then
             local now = os.time()
-            if now - (getplaydef(play,"N$buff303cd") or 0) < 10 then
+            if now - (getplaydef(play,"N$buff303cd") or 0) < 30 then
                 return 0
             end
-            if Target and math.random(100) <= 10 then
+            if Target and math.random(100) <= 5 then
                 setplaydef(play,"N$buff303cd",now)
-                makeposion(Target,0,2,10)
+                makeposion(Target,0,5,getbaseinfo(Target,10)*0.01)
             end
         else
             local bl = getplaydef(play,VarCfg.S_buffgwh)

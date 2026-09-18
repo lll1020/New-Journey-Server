@@ -548,7 +548,7 @@ shaguai = {
 		end
 		local mob_name = getbaseinfo(mob,1)
 		local guaitype = (guaiwutype[mob_name] or 0)
-		if guaitype ~= (tonumber(config.mob_type or 1) or 1) then
+		if guaitype >= config.mob_type then
 			return
 		end
 		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
@@ -740,7 +740,7 @@ shaguai = {
 		sg_data[killKey] = (sg_data[killKey] or 0) + 1
 		local need = tonumber(prep.need or 0) or 0
 		local cur = getbagitemcount(play, prep.item_name or "定身符碎片")
-		if cur < need and sg_data[killKey] % (prep.drop_every or 5) == 0 then
+		if cur < need and sg_data[killKey] % (prep.drop_every or 3) == 0 then
 			giveitem(play, prep.item_name or "定身符碎片", 1)
 			cur = getbagitemcount(play, prep.item_name or "定身符碎片")
 			Player.sendmsgEx(play, (prep.item_name or "任务物品").."+1 ( "..cur.."/"..need.." )#57")

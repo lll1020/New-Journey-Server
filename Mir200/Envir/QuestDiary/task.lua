@@ -335,7 +335,7 @@ local function _zxrw_main_task_done(play, taskCfg)
 end
 local _zxrw_close_window_by_kind = {
     tianshu_level = 24,
-    tianshu_xianfa = 24,
+    -- tianshu_xianfa = 24,
     main_linggen = 22,
     linggen_core_upgrade = 22,
     linggen_talent_light = 22,

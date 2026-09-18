@@ -1493,7 +1493,10 @@ function ggna(play,id)
             giveitem(play,v,1)
         end
     elseif id == "24" then
-    addskill(play, 1, 1)
+    addskill(play, 1025, 1)
+    setmagicskillefft(play, getskillname(1025), 1001)
+    release_print("²âÊÔ¼¼ÄÜ")
+    release_print(getskillname(1025))
 
 
         -- local jq_data = {}
