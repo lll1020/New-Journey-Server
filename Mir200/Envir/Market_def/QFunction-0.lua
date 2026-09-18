@@ -2945,6 +2945,7 @@ local qf_teshunpc = {
     [106] = 106, -- 神石
     [623] = 623, -- 可能会卡tp的 npc
     [518] = 518, -- atlas
+    [1030] = 1030, -- 合成夜明珠
 }
 local yishanchu_npcid = {
     [106] = 100, -- 要删除的 npc

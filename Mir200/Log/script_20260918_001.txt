@@ -45,3 +45,10 @@
 
 [2026-09-18 17:04:19:266] LuaNPC:玩家名字yz ID:999999999 执行 mondropitemex player:玩家名字yz 耗时：32; NpcThreadId: 39648, CurPlayThreadId: 39648
 
+[2026-09-18 18:36:06:554] LuaNPC:玩家名字yz ID:999999999 执行 login player:玩家名字yz 耗时：31; NpcThreadId: 44456, CurPlayThreadId: 44456
+
+[2026-09-18 18:36:24:657] LuaNPC:玩家名字yz ID:999999999 执行 handlerequest player:玩家名字yz 耗时：31; NpcThreadId: 44456, CurPlayThreadId: 44456
+[2026-09-18 18:36:24:657] [玩家名字yz]Lua执行耗时过高:31ms msgid:100 6 1 0 
+
+[2026-09-18 18:44:43:753] LuaNPC:玩家名字yz ID:999999999 执行 clicknpc player:玩家名字yz 耗时：47; NpcThreadId: 44456, CurPlayThreadId: 44456
+
