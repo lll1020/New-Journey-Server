@@ -52,3 +52,19 @@
 
 [2026-09-18 18:44:43:753] LuaNPC:玩家名字yz ID:999999999 执行 clicknpc player:玩家名字yz 耗时：47; NpcThreadId: 44456, CurPlayThreadId: 44456
 
+[2026-09-18 20:10:36:475] LuaNPC:玩家名字yz ID:999999999 执行 login player:玩家名字yz 耗时：94; NpcThreadId: 44456, CurPlayThreadId: 44456
+
+[2026-09-18 20:12:15:885] LuaNPC:玩家名字yz ID:999999999 执行 attack player:玩家名字yz 耗时：47; NpcThreadId: 44456, CurPlayThreadId: 44456
+
+[2026-09-18 20:19:05:569] >>>Lua跨线程调用[QFunction]-playlevelup:44456-31032
+
+[2026-09-18 20:19:09:096] >>>Lua跨线程调用[QFunction]-playlevelup:44456-31032
+
+[2026-09-18 20:36:03:628] LuaNPC:玩家名字yz ID:999999999 执行 login player:玩家名字yz 耗时：31; NpcThreadId: 44456, CurPlayThreadId: 44456
+
+[2026-09-18 20:47:46:969] LuaNPC:玩家名字yz ID:999999999 执行 login player:玩家名字yz 耗时：47; NpcThreadId: 5712, CurPlayThreadId: 5712
+
+[2026-09-18 21:53:22:180] LuaNPC:玩家名字yz ID:999999999 执行 ontimer5 player:玩家名字yz 耗时：47; NpcThreadId: 35304, CurPlayThreadId: 35304
+
+[2026-09-18 21:55:01:719] LuaNPC:玩家名字yz ID:999999999 执行 attackdamage player:玩家名字yz 耗时：32; NpcThreadId: 35304, CurPlayThreadId: 35304
+

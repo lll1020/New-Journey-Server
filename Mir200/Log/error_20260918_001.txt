@@ -5378,3 +5378,1116 @@
 [00007FFB86E4CAEC] RtlUserThreadStart
 
 
+[2026-09-18 20:19:05:537] >>>>>TPlayObject.RecalcAbilitys[,95632] 跨线程调用
+[2026-09-18 20:19:05:537] >>>>>TPlayObject.RecalcAbilitys[,95632] 跨线程调用
+[2026-09-18 20:19:05:569] >>非正常玩家对象,Class:TPlayObject,Name:,Map:0[00007FFB86F02D14] ZwGetContextThread
+[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7B63] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_S0_ (Line 5358, "JclDebug.pas" + 1)
+[00000000013D7CA5] JclDebug._ZN8Jcldebug25JclCreateThreadStackTraceEby (Line 5402, "JclDebug.pas" + 17)
+[00000000013D7D54] JclDebug._ZN8Jcldebug31JclCreateThreadStackTraceFromIDEbj (Line 5431, "JclDebug.pas" + 12)
+[00000000013FA5BE] M2Share._ZN7M2share18GetThreadStackInfoEj (Line 2835, "M2Share.pas" + 2)
+[000000000144EE14] ObjBase._ZN7Objbase11TBaseObject11CheckPlayerEv (Line 3136, "ObjBase.pas" + 4)
+[0000000001530CAF] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25121, "ObjPlay.pas" + 18)
+[0000000001531555] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEi (Line 25223, "ObjPlay.pas" + 2)
+[00000000014CDB3C] ObjPlay._ZN7Objplay11TPlayObject10HasLevelUpEi (Line 6368, "ObjPlay.pas" + 48)
+[00000000016137DA] ViewLevel._ZN9Viewlevel13TfrmViewLevel11RecalcHumanEv (Line 88, "ViewLevel.pas" + 4)
+[0000000001613805] ViewLevel._ZN9Viewlevel13TfrmViewLevel7RefViewEv (Line 104, "ViewLevel.pas" + 13)
+[0000000001613471] ViewLevel._ZN9Viewlevel13TfrmViewLevel4OpenEv (Line 57, "ViewLevel.pas" + 11)
+[00000000016E8622] svMain._ZN6Svmain8TFrmMain20MENU_VIEW_LEVELClickEPN6System7TObjectE (Line 1879, "svMain.pas" + 5)
+[00000000007371B5] Vcl.Menus._ZN3Vcl5Menus9TMenuItem5ClickEv (Line 2621, "Vcl.Menus.pas" + 21)
+[0000000000739A24] Vcl.Menus._ZN3Vcl5Menus5TMenu15DispatchCommandEt (Line 3577, "Vcl.Menus.pas" + 6)
+[000000000075A469] Vcl.Forms._ZN3Vcl5Forms11TCustomForm9WMCommandERN6Winapi8Messages10TWMCommandE (Line 6971, "Vcl.Forms.pas" + 5)
+[00000000004006A4] System._ZN6System7TObject8DispatchEPv (Line 19206, "System.pas" + 10)
+[0000000000609B60] Vcl.Controls._ZN3Vcl8Controls8TControl7WndProcERN6Winapi8Messages8TMessageE (Line 7592, "Vcl.Controls.pas" + 92)
+[0000000000611017] Vcl.Controls._ZN3Vcl8Controls11TWinControl7WndProcERN6Winapi8Messages8TMessageE (Line 10646, "Vcl.Controls.pas" + 172)
+[00000000007552FC] Vcl.Forms._ZN3Vcl5Forms11TCustomForm7WndProcERN6Winapi8Messages8TMessageE (Line 5017, "Vcl.Forms.pas" + 222)
+[000000000061014C] Vcl.Controls._ZN3Vcl8Controls11TWinControl11MainWndProcERN6Winapi8Messages8TMessageE (Line 10323, "Vcl.Controls.pas" + 5)
+[0000000000528A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFB851452C6] Unknown function at CallWindowProcW
+[00007FFB85145D9D] Unknown function at IsWindowUnicode
+[00000000007642F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000764368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[00000000007647BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[00000000016F13E2] M2Server._ZN8M2server14initializationEv
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+
+[2026-09-18 20:19:09:091] >>>>>TPlayObject.RecalcAbilitys[,95633] 跨线程调用
+[2026-09-18 20:19:09:091] >>>>>TPlayObject.RecalcAbilitys[,95633] 跨线程调用
+[2026-09-18 20:19:09:096] >>非正常玩家对象,Class:TPlayObject,Name:,Map:0[00007FFB86F02D14] ZwGetContextThread
+[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7B63] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_S0_ (Line 5358, "JclDebug.pas" + 1)
+[00000000013D7CA5] JclDebug._ZN8Jcldebug25JclCreateThreadStackTraceEby (Line 5402, "JclDebug.pas" + 17)
+[00000000013D7D54] JclDebug._ZN8Jcldebug31JclCreateThreadStackTraceFromIDEbj (Line 5431, "JclDebug.pas" + 12)
+[00000000013FA5BE] M2Share._ZN7M2share18GetThreadStackInfoEj (Line 2835, "M2Share.pas" + 2)
+[000000000144EE14] ObjBase._ZN7Objbase11TBaseObject11CheckPlayerEv (Line 3136, "ObjBase.pas" + 4)
+[0000000001530CAF] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25121, "ObjPlay.pas" + 18)
+[0000000001531555] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEi (Line 25223, "ObjPlay.pas" + 2)
+[00000000014CDB3C] ObjPlay._ZN7Objplay11TPlayObject10HasLevelUpEi (Line 6368, "ObjPlay.pas" + 48)
+[00000000016137DA] ViewLevel._ZN9Viewlevel13TfrmViewLevel11RecalcHumanEv (Line 88, "ViewLevel.pas" + 4)
+[0000000001613805] ViewLevel._ZN9Viewlevel13TfrmViewLevel7RefViewEv (Line 104, "ViewLevel.pas" + 13)
+[0000000001613471] ViewLevel._ZN9Viewlevel13TfrmViewLevel4OpenEv (Line 57, "ViewLevel.pas" + 11)
+[00000000016E8622] svMain._ZN6Svmain8TFrmMain20MENU_VIEW_LEVELClickEPN6System7TObjectE (Line 1879, "svMain.pas" + 5)
+[00000000007371B5] Vcl.Menus._ZN3Vcl5Menus9TMenuItem5ClickEv (Line 2621, "Vcl.Menus.pas" + 21)
+[0000000000739A24] Vcl.Menus._ZN3Vcl5Menus5TMenu15DispatchCommandEt (Line 3577, "Vcl.Menus.pas" + 6)
+[000000000075A469] Vcl.Forms._ZN3Vcl5Forms11TCustomForm9WMCommandERN6Winapi8Messages10TWMCommandE (Line 6971, "Vcl.Forms.pas" + 5)
+[00000000004006A4] System._ZN6System7TObject8DispatchEPv (Line 19206, "System.pas" + 10)
+[0000000000609B60] Vcl.Controls._ZN3Vcl8Controls8TControl7WndProcERN6Winapi8Messages8TMessageE (Line 7592, "Vcl.Controls.pas" + 92)
+[0000000000611017] Vcl.Controls._ZN3Vcl8Controls11TWinControl7WndProcERN6Winapi8Messages8TMessageE (Line 10646, "Vcl.Controls.pas" + 172)
+[00000000007552FC] Vcl.Forms._ZN3Vcl5Forms11TCustomForm7WndProcERN6Winapi8Messages8TMessageE (Line 5017, "Vcl.Forms.pas" + 222)
+[000000000061014C] Vcl.Controls._ZN3Vcl8Controls11TWinControl11MainWndProcERN6Winapi8Messages8TMessageE (Line 10323, "Vcl.Controls.pas" + 5)
+[0000000000528A76] System.Classes._ZN6System7Classes10StdWndProcEP6HWND__jyy (Line 18535, "System.Classes.pas" + 9)
+[00007FFB851452C6] Unknown function at CallWindowProcW
+[00007FFB85145D9D] Unknown function at IsWindowUnicode
+[00000000007642F3] Vcl.Forms._ZN3Vcl5Forms12TApplication14ProcessMessageER6tagMSG (Line 11488, "Vcl.Forms.pas" + 23)
+[0000000000764368] Vcl.Forms._ZN3Vcl5Forms12TApplication13HandleMessageEv (Line 11518, "Vcl.Forms.pas" + 1)
+[00000000007647BF] Vcl.Forms._ZN3Vcl5Forms12TApplication3RunEv (Line 11657, "Vcl.Forms.pas" + 27)
+[00000000016F13E2] M2Server._ZN8M2server14initializationEv
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+
+[2026-09-18 20:47:35:841] D701 - secret map not found !!
+[2026-09-18 20:47:35:841] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-5712] 当前Thread:16364
+[2026-09-18 20:47:35:841] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2026-09-18 20:47:35:841] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-5712] 当前Thread:16364
+[2026-09-18 20:47:35:841] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2026-09-18 20:47:35:841] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-5712] 当前Thread:16364
+[2026-09-18 20:47:35:841] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2026-09-18 20:47:35:841] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-5712] 当前Thread:16364
+[2026-09-18 20:47:35:841] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2026-09-18 20:47:35:986] ---------------------线程耗时监控
+[2026-09-18 20:47:36:544] Frame-----------------------------------
+
+[2026-09-18 20:47:36:561] MainRunThread(0)-----------------------------------
+
+[2026-09-18 20:47:36:611] EnvirThread 0/0(12328-1)flag:50000004  lua: 1 CallLua:setontimerex 483-----------------------------------
+
+[2026-09-18 20:47:36:629] DbThread(15-0)-----------------------------------
+
+[2026-09-18 20:47:36:646] BoxSellDbThread(16)-----------------------------------
+
+[2026-09-18 20:47:36:663] NewHttpPost(16-0-0)-----------------------------------
+
+
+[2026-09-18 21:02:28:926] D701 - secret map not found !!
+[2026-09-18 21:02:28:926] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-35564] 当前Thread:3872
+[2026-09-18 21:02:28:926] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2026-09-18 21:02:28:926] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-35564] 当前Thread:3872
+[2026-09-18 21:02:28:926] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2026-09-18 21:02:28:926] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-35564] 当前Thread:3872
+[2026-09-18 21:02:28:926] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2026-09-18 21:02:28:926] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-35564] 当前Thread:3872
+[2026-09-18 21:02:28:926] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2026-09-18 21:02:29:066] ---------------------线程耗时监控
+[2026-09-18 21:02:29:237] Frame-----------------------------------
+
+[2026-09-18 21:02:29:247] MainRunThread(15)-----------------------------------
+
+[2026-09-18 21:02:29:275] EnvirThread 0/0(5609-0)flag:50000004  lua: 1 CallLua:setontimerex 483-----------------------------------
+
+[2026-09-18 21:02:29:286] DbThread(0-0)-----------------------------------
+
+[2026-09-18 21:02:29:296] BoxSellDbThread(0)-----------------------------------
+
+[2026-09-18 21:02:29:306] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-09-18 21:39:01:464] D701 - secret map not found !!
+[2026-09-18 21:39:01:464] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-47592] 当前Thread:38064
+[2026-09-18 21:39:01:464] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2026-09-18 21:39:01:464] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-47592] 当前Thread:38064
+[2026-09-18 21:39:01:464] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2026-09-18 21:39:01:464] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-47592] 当前Thread:38064
+[2026-09-18 21:39:01:464] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2026-09-18 21:39:01:464] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-47592] 当前Thread:38064
+[2026-09-18 21:39:01:464] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2026-09-18 21:39:01:535] ---------------------线程耗时监控
+[2026-09-18 21:39:01:684] Frame-----------------------------------
+
+[2026-09-18 21:39:01:706] MainRunThread(15)-----------------------------------
+
+[2026-09-18 21:39:01:745] EnvirThread 0/0(5625-0)flag:50000004  lua: 1 CallLua:setontimerex 483-----------------------------------
+
+[2026-09-18 21:39:01:784] DbThread(0-0)-----------------------------------
+
+[2026-09-18 21:39:01:794] BoxSellDbThread(0)-----------------------------------
+
+[2026-09-18 21:39:01:830] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-09-18 21:44:35:807] D701 - secret map not found !!
+[2026-09-18 21:44:35:807] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-40340] 当前Thread:25260
+[2026-09-18 21:44:35:807] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2026-09-18 21:44:35:807] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-40340] 当前Thread:25260
+[2026-09-18 21:44:35:807] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2026-09-18 21:44:35:807] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-40340] 当前Thread:25260
+[2026-09-18 21:44:35:807] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2026-09-18 21:44:35:807] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-40340] 当前Thread:25260
+[2026-09-18 21:44:35:807] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2026-09-18 21:44:35:890] ---------------------线程耗时监控
+[2026-09-18 21:44:36:048] Frame-----------------------------------
+
+[2026-09-18 21:44:36:059] MainRunThread(0)-----------------------------------
+
+[2026-09-18 21:44:36:140] EnvirThread 0/0(5578-0)flag:50000004  lua: 1 CallLua:setontimerex 483-----------------------------------
+
+[2026-09-18 21:44:36:154] DbThread(0-0)-----------------------------------
+
+[2026-09-18 21:44:36:208] BoxSellDbThread(16)-----------------------------------
+
+[2026-09-18 21:44:36:223] NewHttpPost(16-0-0)-----------------------------------
+
+
+[2026-09-18 21:52:28:598] D701 - secret map not found !!
+[2026-09-18 21:52:28:598] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-35304] 当前Thread:44356
+[2026-09-18 21:52:28:598] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2026-09-18 21:52:28:598] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-35304] 当前Thread:44356
+[2026-09-18 21:52:28:598] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2026-09-18 21:52:28:598] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-35304] 当前Thread:44356
+[2026-09-18 21:52:28:598] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2026-09-18 21:52:28:598] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-35304] 当前Thread:44356
+[2026-09-18 21:52:28:598] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2026-09-18 21:52:28:764] ---------------------线程耗时监控
+[2026-09-18 21:52:28:914] Frame-----------------------------------
+
+[2026-09-18 21:52:28:954] MainRunThread(16)-----------------------------------
+
+[2026-09-18 21:52:28:964] EnvirThread 0/0(5703-0)flag:50000004  lua: 1 CallLua:setontimerex 483-----------------------------------
+
+[2026-09-18 21:52:28:976] DbThread(0-0)-----------------------------------
+
+[2026-09-18 21:52:28:988] BoxSellDbThread(16)-----------------------------------
+
+[2026-09-18 21:52:29:001] NewHttpPost(15-0-0)-----------------------------------
+
+
+[2026-09-18 21:53:22:129] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+[2026-09-18 21:53:23:358] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+[2026-09-18 21:53:25:076] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+
+[2026-09-18 21:53:29:403] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+[2026-09-18 21:53:30:010] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+[2026-09-18 21:53:31:118] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+
+[2026-09-18 21:53:32:226] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+[2026-09-18 21:53:35:137] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+[2026-09-18 21:53:36:359] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+
+[2026-09-18 21:53:37:956] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+[2026-09-18 21:53:41:162] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+
+[2026-09-18 21:53:42:384] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+[2026-09-18 21:53:43:992] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+[2026-09-18 21:53:46:097] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+
+[2026-09-18 21:53:47:196] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+[2026-09-18 21:53:48:421] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+[2026-09-18 21:53:49:028] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+
+[2026-09-18 21:53:53:352] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+[2026-09-18 21:53:55:072] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+[2026-09-18 21:53:56:179] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+
+[2026-09-18 21:54:00:399] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+[2026-09-18 21:54:01:002] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+
+[2026-09-18 21:54:02:104] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+[2026-09-18 21:54:03:208] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+[2026-09-18 21:54:05:925] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+
+[2026-09-18 21:54:07:027] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+[2026-09-18 21:54:08:133] lua.ChangeSpeedEx Except：Invalid class typecast[00000000013D8281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[00000000013D7AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[00000000013D79B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[00000000013DAAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[00000000013C9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[00000000013C996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[00000000013C9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[00000000004023B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[000000000043D7D2] System.SysUtils._ZN6System8Sysutils12ErrorHandlerEhPv (Line 24275, "System.SysUtils.pas" + 12)
+[00000000003F9733] System._ZN6System7ErrorAtEhPv (Line 5897, "System.pas" + 4)
+[0000000000400485] System._ZN6System8_AsClassEPNS_7TObjectEPNS_10TMetaClassE (Line 18886, "System.pas" + 4)
+[000000000111AEBC] uMyLua._ZN6Umylua6TMyLua13ChangeSpeedExEPv (Line 23753, "uMyLua.pas" + 4)
+[0000000000CF1E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FFA748D2C36]
+[00007FFA748D89EA] lua_pcall
+[00000000010EB2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[00000000010E9256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[00000000011A3E5A] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20543, "ObjNpc.pas" + 58)
+[00000000011A3C79] ObjNpc._ZN6Objnpc8TNormNpc9GotoLableEPN7Objplay11TPlayObjectEN6System13UnicodeStringEbPN7Objbase11TBaseObjectEPNS4_7Classes5TListEb (Line 20521, "ObjNpc.pas" + 36)
+[00000000014B55ED] ObjPlay._ZN7Objplay11TPlayObject11SlowRun_500Ey (Line 2135, "ObjPlay.pas" + 110)
+[0000000001440515] ObjBase._ZN7Objbase11TBaseObject3RunEv (Line 1174, "ObjBase.pas" + 62)
+[0000000001483B75] ObjBase._ZN7Objbase13TAnimalObject3RunEv (Line 11571, "ObjBase.pas" + 2)
+[00000000014BB8C2] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 3356, "ObjPlay.pas" + 1060)
+[00000000012922E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001291D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[00000000012AD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000000FDB12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000008221D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000000821D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000522963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000402F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FFB85CECD87] BaseThreadInitThunk
+[00007FFB86E4CAEC] RtlUserThreadStart
+
+

@@ -1493,12 +1493,8 @@ function ggna(play,id)
             giveitem(play,v,1)
         end
     elseif id == "24" then
-    addskill(play, 1025, 1)
-    setmagicskillefft(play, getskillname(1025), 1001)
-    release_print("测试技能")
-    release_print(getskillname(1025))
-
-
+    delskill(play, 1, 2)
+    addskill(play, 1, 2)
         -- local jq_data = {}
         -- Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
 --         -- 测试脚本：调整地图怪物密度（逐图刷小怪，9x9检测饱和）
