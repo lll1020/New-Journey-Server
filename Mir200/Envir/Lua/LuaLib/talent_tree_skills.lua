@@ -26,6 +26,10 @@ local STACKS = {
     [20181] = {var = 23081, end_var = 23091, max = 12, duration = 5},
     [20182] = {var = 23082, end_var = 23092, max = 5, duration = 3},
 }
+local STACK_REFRESH_BUFFS = {
+    [20181] = true,
+    [20182] = true,
+}
 local PERIODIC_STACKS = {20179, 20182}
 
 local DOMAIN_VAR = "S$talent_tree_domains"
@@ -113,11 +117,11 @@ local function is_monster(obj)
 end
 
 local ELEMENT_NAME = {
-    metal = "Èá?",
-    water = "Ê∞?",
-    wood = "Êú?",
-    fire = "ÁÅ?",
-    earth = "Âú?",
+    metal = "Èáë",
+    water = "Ê∞¥",
+    wood = "Êú®",
+    fire = "ÁÅ´",
+    earth = "Âúü",
 }
 local M1_ELEMENT = {
     metal_M1 = "metal",
@@ -153,8 +157,8 @@ local function relation_matches(relation, source, target)
     then
         return true
     end
-    local expected = tostring(ELEMENT_NAME[source] or "") .. "ÂÖ?" .. tostring(ELEMENT_NAME[target] or "")
-    return expected ~= "ÂÖ?" and tostring(relation.name or "") == expected
+    local expected = tostring(ELEMENT_NAME[source] or "") .. "ÂÖã" .. tostring(ELEMENT_NAME[target] or "")
+    return expected ~= "ÂÖã" and tostring(relation.name or "") == expected
 end
 
 local function resonance_relation(state)
@@ -445,6 +449,27 @@ local function set_stack(obj, buff_id, stack, duration, owner)
     return stack
 end
 
+local function refresh_capped_stack(obj, buff_id, stack, duration, owner)
+    local cfg = STACKS[buff_id]
+    if not cfg or not obj then
+        return 0
+    end
+    stack = math.max(0, math.min(cfg.max, toint(stack, 0)))
+    if stack <= 0 then
+        return 0
+    end
+    duration = math.max(1, toint(duration, cfg.duration))
+    set_obj_var(obj, cfg.var, stack)
+    set_obj_var(obj, cfg.end_var, now() + duration)
+
+    -- At the cap, reset the visible stack and timer without addbuff.
+    if type(buffstack) == "function" then
+        pcall(buffstack, obj, buff_id, "=", stack, 1)
+    end
+    link_stack_owner(owner or obj, obj, buff_id)
+    return stack
+end
+
 local function add_stack(caster, target, buff_id, amount, limit, duration)
     if not target or not STACKS[buff_id] then
         return 0
@@ -457,6 +482,9 @@ local function add_stack(caster, target, buff_id, amount, limit, duration)
     -- Each application event adds one layer only; do not copy source stacks.
     local delta = toint(amount, 0) > 0 and 1 or 0
     if delta > 0 and current >= cap then
+        if STACK_REFRESH_BUFFS[buff_id] then
+            return refresh_capped_stack(target, buff_id, math.min(current, cap), duration, caster)
+        end
         return current
     end
     local stack = math.min(cap, current + delta)

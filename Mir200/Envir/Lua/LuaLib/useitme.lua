@@ -993,7 +993,7 @@ local function _msfc_submit_box_choice(play, boxName, poolKey, choiceIdx)
         return false
     end
     takeitem(play, boxName, 1)
-    Player.rwjl(play, reward.give, tostring(boxName), 1000)
+    Player.rwjl(play, reward.give, tostring(boxName),1,1000)
     Player.sendmsgEx(play, "开启成功，获得|" .. _msfc_reward_label(reward) .. "#218")
 end
 function msfcbox(play, code)

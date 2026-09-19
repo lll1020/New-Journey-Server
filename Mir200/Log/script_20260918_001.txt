@@ -68,3 +68,5 @@
 
 [2026-09-18 21:55:01:719] LuaNPC:玩家名字yz ID:999999999 执行 attackdamage player:玩家名字yz 耗时：32; NpcThreadId: 35304, CurPlayThreadId: 35304
 
+[2026-09-18 22:00:00:269] LuaNPC:系统控制 ID:999999999 执行 jqr_wudaohui_end player:系统控制 耗时：32; NpcThreadId: 35304, CurPlayThreadId: 35304
+

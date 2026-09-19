@@ -2951,7 +2951,7 @@ end
 -- 9.8-1     TreasureBasin.linkFeature(play, 517, p2, p3, msgData)
 -- 9.8-1 end
 local xlxl =
-    { { 1, 2, 3, 4, 7, 8, 23, 22, 24, 25, 26 }, constant.cz_je, { 88, 6, 3, 18 } }
+    { { 1, 2, 3, 4, 7, 8, 23, 22, 24, 25, 26 }, constant.cz_je, { 58, 6, 3, 18 } }
 npc[998] = function(play, p2, p3, msg) --ºóÌ¨
     local qfmz = getconst(play, "<$SERVERNAME>")
     if getplaydef(play, VarCfg.S_houtaibf) ~= "" or (qfmz == "" or qfmz == "²âÊÔÇø") then
