@@ -50,6 +50,10 @@ local SHIELD_VARS = {
         expires = "N$talent_wood_shield_end",
     },
 }
+local SHIELD_EFFECTS = {
+    water = 30040,
+    earth = 30039,
+}
 
 local WOOD_DOMAIN_MARKER = 23095
 
@@ -57,6 +61,7 @@ local owner_targets = {}
 local stack_owners = {}
 local periodic_tick_at = {}
 local object_vars = {}
+local map_effect_serial = 0
 local unlink_stack_owner
 local link_stack_owner
 local flow_active
@@ -251,6 +256,72 @@ end
 
 local function now()
     return os.time()
+end
+
+local function clear_map_effect(effect_key)
+    if effect_key and type(delmapeffect) == "function" then
+        pcall(delmapeffect, effect_key)
+    end
+end
+
+local function next_map_effect_key(skill_id, kind)
+    map_effect_serial = map_effect_serial + 1
+    return "talent_tree_" .. tostring(skill_id) .. "_" .. tostring(kind) .. "_"
+        .. tostring(now()) .. "_" .. tostring(map_effect_serial)
+end
+
+local function play_map_effect(actor, center, effect_id, duration, cast_x, cast_y, skill_id, kind)
+    if not actor or not center or not effect_id or effect_id <= 0
+        or type(mapeffect) ~= "function"
+    then
+        return nil
+    end
+    local map_id = getbaseinfo(center, ConstCfg.gbase.mapid)
+    if not map_id then
+        return nil
+    end
+    local x = tonumber(cast_x)
+    local y = tonumber(cast_y)
+    if x == nil then
+        x = tonumber(getbaseinfo(center, ConstCfg.gbase.x) or 0) or 0
+    end
+    if y == nil then
+        y = tonumber(getbaseinfo(center, ConstCfg.gbase.y) or 0) or 0
+    end
+    local effect_key = next_map_effect_key(skill_id or 0, kind or "area")
+    local ok = pcall(
+        mapeffect,
+        effect_key,
+        map_id,
+        x,
+        y,
+        effect_id,
+        math.max(1, toint(duration, 1)),
+        0,
+        actor,
+        0
+    )
+    return ok and effect_key or nil
+end
+
+local function start_shield_effect(play, shield_kind)
+    local effect_id = SHIELD_EFFECTS[shield_kind]
+    if not play or not effect_id then
+        return
+    end
+    if type(clearplayeffect) == "function" then
+        pcall(clearplayeffect, play, effect_id)
+    end
+    if type(playeffect) == "function" then
+        pcall(playeffect, play, effect_id, 0, 0, 0, 0, 0)
+    end
+end
+
+local function stop_shield_effect(play, shield_kind)
+    local effect_id = SHIELD_EFFECTS[shield_kind]
+    if play and effect_id and type(clearplayeffect) == "function" then
+        pcall(clearplayeffect, play, effect_id)
+    end
 end
 
 local function parse_current_vars(raw)
@@ -670,7 +741,7 @@ local function get_skill_target(play, explicit_target)
     return nearest
 end
 
-function TalentTreeSkills.onSkillCast(play, skill_id, explicit_target)
+function TalentTreeSkills.onSkillCast(play, skill_id, explicit_target, cast_x, cast_y)
     if not play then
         return false
     end
@@ -708,7 +779,16 @@ function TalentTreeSkills.onSkillCast(play, skill_id, explicit_target)
         if current_hp(target) <= 0 then
             break
         end
-        local formula_ok, result = pcall(base_skill_damage, play, target, skill_id, 0, state)
+        local formula_ok, result = pcall(
+            base_skill_damage,
+            play,
+            target,
+            skill_id,
+            0,
+            state,
+            cast_x,
+            cast_y
+        )
         if not formula_ok then
             return false
         end
@@ -800,6 +880,8 @@ function TalentTreeSkills.clear(play)
     setplaydef(play, "N$talent_water_shield_cd", 0)
     setplaydef(play, "N$talent_wood_shield", 0)
     setplaydef(play, "N$talent_wood_shield_end", 0)
+    stop_shield_effect(play, "earth")
+    stop_shield_effect(play, "water")
     setplaydef(play, WOOD_DOMAIN_MARKER, 0)
     clear_domains(play)
 end
@@ -886,7 +968,7 @@ local function apply_water_shield(play, state, value_percent)
     local value = tonumber(value_percent) or 10
     setplaydef(play, "N$talent_water_shield", math.floor(max_value * value / 100))
     setplaydef(play, "N$talent_water_shield_end", now() + duration)
-    effect(play, 60458)
+    start_shield_effect(play, "water")
 end
 
 local function apply_earth_shield(play, state)
@@ -903,7 +985,7 @@ local function apply_earth_shield(play, state)
     setplaydef(play, "N$talent_earth_shield", shield)
     setplaydef(play, "N$talent_earth_shield_end", now() + (node_active(state, "earth_F1_9") and 4 or 3))
     setplaydef(play, SHIELD_VARS.earth.cooldown, now() + 20)
-    effect(play, 60458)
+    start_shield_effect(play, "earth")
 end
 
 local function get_domains(play)
@@ -916,13 +998,30 @@ local function save_domains(play, domains)
     setplaydef(play, DOMAIN_VAR, tbl2json(type(domains) == "table" and domains or {}))
 end
 
-local function add_domain(play, kind, center, radius, duration, damage_percent, effect_id)
+local function add_domain(
+    play,
+    kind,
+    center,
+    radius,
+    duration,
+    damage_percent,
+    effect_id,
+    map_effect_key,
+    cast_x,
+    cast_y
+)
     if not play or not center then
         return
     end
     local map_id = getbaseinfo(center, ConstCfg.gbase.mapid)
-    local x = tonumber(getbaseinfo(center, ConstCfg.gbase.x) or 0) or 0
-    local y = tonumber(getbaseinfo(center, ConstCfg.gbase.y) or 0) or 0
+    local x = tonumber(cast_x)
+    local y = tonumber(cast_y)
+    if x == nil then
+        x = tonumber(getbaseinfo(center, ConstCfg.gbase.x) or 0) or 0
+    end
+    if y == nil then
+        y = tonumber(getbaseinfo(center, ConstCfg.gbase.y) or 0) or 0
+    end
     if not map_id then
         return
     end
@@ -931,6 +1030,8 @@ local function add_domain(play, kind, center, radius, duration, damage_percent, 
     for _, domain in ipairs(domains) do
         if type(domain) == "table" and tostring(domain.kind or "") ~= tostring(kind) then
             next_domains[#next_domains + 1] = domain
+        elseif type(domain) == "table" then
+            clear_map_effect(domain.map_effect_key)
         end
     end
     next_domains[#next_domains + 1] = {
@@ -943,17 +1044,35 @@ local function add_domain(play, kind, center, radius, duration, damage_percent, 
         next = now() + 1,
         damage = tonumber(damage_percent) or 0,
         effect = toint(effect_id, 0),
+        map_effect_key = map_effect_key,
     }
     save_domains(play, next_domains)
 end
 
 clear_domains = function(play)
     if play then
+        for _, domain in ipairs(get_domains(play)) do
+            if type(domain) == "table" then
+                clear_map_effect(domain.map_effect_key)
+            end
+        end
         save_domains(play, {})
     end
 end
 
-local function start_domain_once(play, skill_id, kind, center, radius, duration, damage, effect_id)
+local function start_domain_once(
+    play,
+    skill_id,
+    kind,
+    center,
+    radius,
+    duration,
+    damage,
+    effect_id,
+    map_effect_id,
+    cast_x,
+    cast_y
+)
     if not play or not skill_id then
         return false
     end
@@ -963,7 +1082,28 @@ local function start_domain_once(play, skill_id, kind, center, radius, duration,
         return false
     end
     setplaydef(play, marker, stamp)
-    add_domain(play, kind, center, radius, duration, damage, effect_id)
+    local map_effect_key = play_map_effect(
+        play,
+        center,
+        map_effect_id,
+        duration,
+        cast_x,
+        cast_y,
+        skill_id,
+        kind
+    )
+    add_domain(
+        play,
+        kind,
+        center,
+        radius,
+        duration,
+        damage,
+        effect_id,
+        map_effect_key,
+        cast_x,
+        cast_y
+    )
     return true
 end
 
@@ -1017,7 +1157,7 @@ local function trigger_domain(play, domain, state)
         if is_monster(target) then
             if kind == "metal" then
                 if damage > 0 then
-                    humanhp(target, "-", apply_resonance_damage(state, target, damage), 106, 0, play, 1)
+                    humanhp(target, "-", apply_resonance_damage(state, target, damage), 10, 0, play, 1)
                 end
                 add_target_defense_break(target, 8, 2, node_active(state, "metal_F2_9") and 40 or 8)
             elseif kind == "wood" then
@@ -1029,11 +1169,11 @@ local function trigger_domain(play, domain, state)
                     changespeedex(target, 1, -20, 2)
                 end
                 if damage > 0 then
-                    humanhp(target, "-", apply_resonance_damage(state, target, damage), 106, 0, play, 1)
+                    humanhp(target, "-", apply_resonance_damage(state, target, damage), 10, 0, play, 1)
                 end
             elseif kind == "water" then
                 if damage > 0 then
-                    humanhp(target, "-", apply_resonance_damage(state, target, damage), 112, 0, play, 1)
+                    humanhp(target, "-", apply_resonance_damage(state, target, damage), 11, 0, play, 1)
                 end
             elseif kind == "fire" then
                 add_stack(play, target, 20182, 1, flow_active(state, "fire", 1) and 5 or 3, 3)
@@ -1043,7 +1183,7 @@ local function trigger_domain(play, domain, state)
             elseif kind == "earth" then
                 add_target_defense_break(target, 8, 3, 24)
                 if damage > 0 then
-                    humanhp(target, "-", apply_resonance_damage(state, target, damage), 106, 0, play, 1)
+                    humanhp(target, "-", apply_resonance_damage(state, target, damage), 15, 0, play, 1)
                 end
             end
             effect(target, domain.effect)
@@ -1142,6 +1282,8 @@ function TalentTreeSkills.tick(play)
                 domain.next = current + 1
             end
             kept[#kept + 1] = domain
+        elseif type(domain) == "table" then
+            clear_map_effect(domain.map_effect_key)
         end
     end
     save_domains(play, kept)
@@ -1150,6 +1292,7 @@ function TalentTreeSkills.tick(play)
     if water_end > 0 and water_end <= current then
         setplaydef(play, SHIELD_VARS.water.value, 0)
         setplaydef(play, SHIELD_VARS.water.expires, 0)
+        stop_shield_effect(play, "water")
     end
     local water_shield = get_play_number(play, SHIELD_VARS.water.value)
     if water_shield > 0 and flow_active(state, "water", 2)
@@ -1183,10 +1326,12 @@ function TalentTreeSkills.breakShield(play, shield_kind, state, break_value)
     if shield <= 0 then
         setplaydef(play, shield_cfg.value, 0)
         setplaydef(play, shield_cfg.expires, 0)
+        stop_shield_effect(play, shield_kind)
         return
     end
     setplaydef(play, shield_cfg.value, 0)
     setplaydef(play, shield_cfg.expires, 0)
+    stop_shield_effect(play, shield_kind)
     state = state or state_of(play)
     if shield_kind == "earth" and flow_active(state, "earth", 1) then
         local reflect = math.floor(max_hp(play) * (node_active(state, "earth_F1_9") and 13 or 8) / 100)
@@ -1200,14 +1345,13 @@ function TalentTreeSkills.breakShield(play, shield_kind, state, break_value)
             ) or {}) do
                 if is_monster(target) then
                     humanhp(target, "-", reflect, 106, 0, play, 1)
-                    effect(target, 60458)
                 end
             end
         end
     end
 end
 
-base_skill_damage = function(play, target, skill_id, damage, state)
+base_skill_damage = function(play, target, skill_id, damage, state, cast_x, cast_y)
     local atk = attack_value(play)
     local result = math.max(0, toint(damage, 0))
 
@@ -1230,7 +1374,22 @@ base_skill_damage = function(play, target, skill_id, damage, state)
             local radius = node_active(state, "metal_F2_9") and 4 or 3
             local duration = node_active(state, "metal_F2_9") and 6 or 5
             local domain_damage = node_active(state, "metal_F2_6") and 30 or 15
-            start_domain_once(play, skill_id, "metal", play, radius, duration, domain_damage, 13400)
+            start_domain_once(
+                play,
+                skill_id,
+                "metal",
+                play,
+                radius,
+                duration,
+                domain_damage,
+                0,
+                30025,
+                cast_x,
+                cast_y
+            )
+        end
+        if flow_active(state, "metal", 1) then
+            effect(target, 30026)
         end
     elseif skill_id == 1018 and key_active(state, "metal_ultimate") then
         local segment_count = node_active(state, "metal_F1_6") and 7 or 6
@@ -1242,13 +1401,25 @@ base_skill_damage = function(play, target, skill_id, damage, state)
             result = math.floor(result * 150 / 100)
         end
         set_target_defense_break(target, 15, 5)
-        area_damage_limited(play, target, 5, result, 60456, target, 20, function(item)
+        area_damage_limited(play, target, 5, result, 0, target, 20, function(item)
             set_target_defense_break(item, 15, 5)
         end, state)
     elseif skill_id == 1019 and key_active(state, "wood_skill") then
         apply_wood(play, target, state)
         if flow_active(state, "wood", 2) then
-            add_domain(play, "wood", target, 3, 3, 0, 13387)
+            start_domain_once(
+                play,
+                skill_id,
+                "wood",
+                target,
+                3,
+                3,
+                0,
+                0,
+                30028,
+                cast_x,
+                cast_y
+            )
             for _, item in ipairs(getobjectinmap(
                 getbaseinfo(target, ConstCfg.gbase.mapid),
                 getbaseinfo(target, ConstCfg.gbase.x),
@@ -1276,7 +1447,7 @@ base_skill_damage = function(play, target, skill_id, damage, state)
     elseif skill_id == 1020 and key_active(state, "wood_ultimate") then
         result = 0
         apply_wood(play, target, state)
-        start_domain_once(play, skill_id, "wood", target, 5, 6, 100, 13387)
+        start_domain_once(play, skill_id, "wood", target, 5, 6, 100, 0, 30028, cast_x, cast_y)
     elseif skill_id == 1023 and key_active(state, "water_skill") then
         local corrosion_limit = flow_active(state, "water", 1) and 8 or 5
         local tide_limit = flow_active(state, "water", 2) and 12 or 8
@@ -1313,7 +1484,13 @@ base_skill_damage = function(play, target, skill_id, damage, state)
         result = math.floor(atk * (30 + tide * 2) / 100)
         if detonated then
             result = result + burst
-            effect(target, 60454)
+            effect(target, 30031)
+        end
+        if flow_active(state, "water", 2)
+            and before_tide < tide_limit
+            and tide >= tide_limit
+        then
+            effect(play, 30030)
         end
         if flow_active(state, "water", 2) and before_tide < 8 and tide >= 8 then
             apply_water_shield(play, state)
@@ -1350,19 +1527,26 @@ base_skill_damage = function(play, target, skill_id, damage, state)
                 local corrosion = get_stack(item, 20180)
                 local multiplier = 100 + corrosion * (flow_active(state, "water", 1) and 5 or 4)
                 local hit_damage = math.floor(result * multiplier / 100) + burst
+                if detonated then
+                    effect(item, 30031)
+                end
                 if item ~= target then
                     humanhp(item, "-", apply_resonance_damage(state, item, hit_damage), 112, 0, play, 1)
-                    effect(item, 60454)
                 else
                     result = hit_damage
                 end
             end
         end
-        apply_water(play, target, state, 0, 4)
+        local before_tide = get_stack(play, 20181)
+        local _, tide = apply_water(play, target, state, 0, 4)
         if flow_active(state, "water", 2) then
+            local tide_limit = flow_active(state, "water", 2) and 12 or 8
+            if before_tide < tide_limit and tide >= tide_limit then
+                effect(play, 30030)
+            end
             apply_water_shield(play, state, 20)
         end
-        start_domain_once(play, skill_id, "water", target, 5, 3, 30, 60459)
+        start_domain_once(play, skill_id, "water", target, 5, 3, 30, 0, 60459, cast_x, cast_y)
     elseif skill_id == 1025 and key_active(state, "fire_skill") then
         local limit = flow_active(state, "fire", 1) and 5 or 3
         local percent = 35
@@ -1410,10 +1594,9 @@ base_skill_damage = function(play, target, skill_id, damage, state)
                     humanhp(item, "-", apply_resonance_damage(state, item, result), 112, 0, play, 1)
                 end
                 apply_fire(play, item, state)
-                effect(item, 60463)
             end
         end
-        start_domain_once(play, skill_id, "fire", target, 5, 5, 25, 60463)
+        start_domain_once(play, skill_id, "fire", target, 5, 5, 25, 0, 30023, cast_x, cast_y)
     elseif skill_id == 1027 and key_active(state, "earth_skill") then
         local rockfall = flow_active(state, "earth", 2)
         result = math.floor(atk * (rockfall and 100 or 40) / 100)
@@ -1425,11 +1608,12 @@ base_skill_damage = function(play, target, skill_id, damage, state)
         set_target_defense_break(target, rockfall and 15 or 5, 2)
         if rockfall then
             add_target_defense_break(target, 10, 2, 25)
+            effect(target, 30035)
             if changespeedex then
                 changespeedex(target, 1, -25, 2)
             end
         else
-            area_damage_limited(play, target, 3, result, 60452, target, 20, function(item)
+            area_damage_limited(play, target, 3, result, 0, target, 20, function(item)
                 add_target_defense_break(item, 5, 2, 5)
                 if changespeedex then
                     changespeedex(item, 1, -5, 2)
@@ -1445,7 +1629,7 @@ base_skill_damage = function(play, target, skill_id, damage, state)
             setplaydef(play, SHIELD_VARS.earth.expires, now() + (node_active(state, "earth_F1_9") and 9 or 8))
             setplaydef(play, "N$talent_earth_shield_reduce", 20)
             setplaydef(play, SHIELD_VARS.earth.cooldown, now() + 20)
-            effect(play, 60458)
+            start_shield_effect(play, "earth")
         end
         for _, item in ipairs(getobjectinmap(
             getbaseinfo(target, ConstCfg.gbase.mapid),
@@ -1458,11 +1642,11 @@ base_skill_damage = function(play, target, skill_id, damage, state)
                 add_target_defense_break(item, 8, 3, 24)
                 if item ~= target then
                     humanhp(item, "-", apply_resonance_damage(state, item, result), 106, 0, play, 1)
-                    effect(item, 60452)
+                    -- effect(item, 60452)
                 end
             end
         end
-        start_domain_once(play, skill_id, "earth", target, 5, 3, 35, 60452)
+        start_domain_once(play, skill_id, "earth", target, 5, 3, 35, 0, 0, cast_x, cast_y)
     end
 
     if get_stack(target, 20179) > 0 and flow_active(state, "wood", 1) and result > 0 then
@@ -1510,7 +1694,6 @@ local function on_player_hurt(play, damage, hiter, target, magic_id)
     )
     if reflect > 0 then
         humanhp(hiter, "-", reflect, 106, 0, play, 1)
-        effect(hiter, 60458)
     end
 end
 
@@ -1563,7 +1746,7 @@ function TalentTreeSkills.onKillMon(play, mob)
                 mob,
                 node_active(state, "fire_F2_9") and 4 or 3,
                 math.floor(burn_damage * 50 / 100),
-                60463,
+                11741,
                 mob,
                 node_active(state, "fire_F2_9") and 5 or 2,
                 nil,
@@ -1580,6 +1763,9 @@ function TalentTreeSkills.onKillMon(play, mob)
         for _, target in ipairs(getobjectinmap(map_id, x, y, radius, 2) or {}) do
             if target ~= mob and is_monster(target) and count < limit then
                 add_stack(play, target, 20182, 1, node_active(state, "fire_F2_9") and 5 or 3, 3)
+                if count == 0 then
+                    effect(target, 11741)
+                end
                 count = count + 1
             end
         end

@@ -33,11 +33,11 @@ local linggen_mag = {
     [1028] = true,
 }
 
-local function _talent_tree_skill_cast(play, skill_id, target_object)
+local function _talent_tree_skill_cast(play, skill_id, target_object, x, y)
     if not TalentTreeSkills or not TalentTreeSkills.onSkillCast then
         return false
     end
-    local ok, result = pcall(TalentTreeSkills.onSkillCast, play, skill_id, target_object)
+    local ok, result = pcall(TalentTreeSkills.onSkillCast, play, skill_id, target_object, x, y)
     if not ok then
         return false
     end
@@ -47,6 +47,6 @@ end
 function beginmagic(play, maigicID, maigicName, targetObject, x, y)
     local skill_id = tonumber(maigicID) or 0
     if linggen_mag[skill_id] then
-        return _talent_tree_skill_cast(play, skill_id, targetObject)
+        return _talent_tree_skill_cast(play, skill_id, targetObject, x, y)
     end
 end
