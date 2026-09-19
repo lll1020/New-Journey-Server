@@ -2986,6 +2986,7 @@ teshudata = {
             enter_pos = {108, 105},
             center_pos = {108, 105},
             spawn_pos = {73, 81},
+            spawn_points = {{146, 75}, {138, 13}, {269, 132}, {69, 79}},
             spawn_radius = 24,
             spawn_try_count = 60,
             fixed_damage = 1,
@@ -3030,7 +3031,7 @@ teshudata = {
                     spawn = {
                         {name = "·Ù´å»ð×ä", count = 50, hp = 100, merit = 1, type = "small"},
                         {name = "ÈÛ¼×ÏÈ·æ", count = 10, hp = 200, merit = 5, type = "elite"},
-                        {name = "¡¾·Ù´åÄ§¿ý¡¤³à½ý¡¿", count = 3, hp = 500, merit = 20, type = "boss"},
+                        {name = "¡¸·Ù´åÄ§¿ý¡¤³à½ý¡¹", count = 3, hp = 500, merit = 20, type = "boss"},
                     },
                 },
                 {
@@ -3038,7 +3039,7 @@ teshudata = {
                     spawn = {
                         {name = "ËªÑÀÑýºü", count = 50, hp = 100, merit = 1, type = "small"},
                         {name = "º®ÓðÑýÈ¸", count = 10, hp = 200, merit = 5, type = "elite"},
-                        {name = "¡¾º®ÓüÍ³Áì¡¤±ùÆÇ¡¿", count = 3, hp = 500, merit = 20, type = "boss"},
+                        {name = "¡¸º®ÓüÍ³Áì¡¤±ùÆÇ¡¹", count = 3, hp = 500, merit = 20, type = "boss"},
                     },
                 },
                 {
@@ -3046,7 +3047,7 @@ teshudata = {
                     spawn = {
                         {name = "¿ÝÌÙÑýÂ¹", count = 50, hp = 100, merit = 1, type = "small"},
                         {name = "¶¾Ò¶÷ÈÓ°", count = 10, hp = 200, merit = 5, type = "elite"},
-                        {name = "¡¾¹ÅÄ¾ÔÖÖ÷¡¤É­÷Ê¡¿", count = 3, hp = 500, merit = 20, type = "boss"},
+                        {name = "¡¸¹ÅÄ¾ÔÖÖ÷¡¤É­÷Ê¡¹", count = 3, hp = 500, merit = 20, type = "boss"},
                     },
                 },
             },

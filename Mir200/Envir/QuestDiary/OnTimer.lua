@@ -50,20 +50,21 @@ local function _txzr_get_notice_cfg()
     return {}
 end
 -- 为指定玩家抽取未重复的背包神器
-local _TCPPK_ROUND_VAR = "TCPPK_ROUND"
-local _TCPPK_EQUIP_ROUND_VAR = "TCPPK_EQUIP_ROUND"
-local _TCPPK_EQUIP_COUNT_VAR = "TCPPK_EQUIP_TOTAL"
-local _TCPPK_REWARD_CACHE = nil
+local _TCPPK = {
+    ROUND_VAR = "TCPPK_ROUND",
+    EQUIP_ROUND_VAR = "TCPPK_EQUIP_ROUND",
+    EQUIP_COUNT_VAR = "TCPPK_EQUIP_TOTAL",
+}
 
 local function _tcppk_begin_round()
-    local round = tonumber(Player.GetGlobalTempInt(_TCPPK_ROUND_VAR) or 0) or 0
+    local round = tonumber(Player.GetGlobalTempInt(_TCPPK.ROUND_VAR) or 0) or 0
     round = round + 1
-    Player.SetGlobalTempInt(_TCPPK_ROUND_VAR, round)
+    Player.SetGlobalTempInt(_TCPPK.ROUND_VAR, round)
     return round
 end
 
 local function _tcppk_get_round()
-    return tonumber(Player.GetGlobalTempInt(_TCPPK_ROUND_VAR) or 0) or 0
+    return tonumber(Player.GetGlobalTempInt(_TCPPK.ROUND_VAR) or 0) or 0
 end
 
 local function _tcppk_get_cfg()
@@ -784,11 +785,13 @@ QmdtApi.send_panel = _qmdt_send_panel
 QmdtApi.is_timer_map = _qmdt_is_timer_map
 
 QmdkApi = QmdkApi or {}
-local _QMDK_PREP_NOTICE_VAR = "N$qmdk_prep_notice"
-local _QMDK_PANEL_FLAG_VAR = "N$qmdk_panel"
-local _QMDK_CARRY_VAR = "N$qmdk_carry"
-local _QMDK_COLLECT_CANCEL_VAR = "N$qmdk_collect_cancel"
-local _QMDK_SCORE_VAR = "全民夺矿"
+local _QMDK = {
+    PREP_NOTICE_VAR = "N$qmdk_prep_notice",
+    PANEL_FLAG_VAR = "N$qmdk_panel",
+    CARRY_VAR = "N$qmdk_carry",
+    COLLECT_CANCEL_VAR = "N$qmdk_collect_cancel",
+    SCORE_VAR = "全民夺矿",
+}
 local function _qmdk_get_cfg()
     local cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].qmdk or nil
     if type(cfg) ~= "table" then
@@ -831,11 +834,11 @@ local function _qmdk_save_state(state)
     setsysvar(VarCfg["A_全民夺矿json"], tbl2json(state or {}))
 end
 local function _qmdk_get_score_var(cfg, state)
-    return _QMDK_SCORE_VAR
+    return _QMDK.SCORE_VAR
 end
 local function _qmdk_reset_online_scores()
     for _, player in ipairs(getplayerlst() or {}) do
-        setplayvar(player, "HUMAN", _QMDK_SCORE_VAR, 0, 1)
+        setplayvar(player, "HUMAN", _QMDK.SCORE_VAR, 0, 1)
     end
 end
 local function _safe_getplayvar_num(play, objType, key)
@@ -858,12 +861,12 @@ local function _qmdk_send_rank(play, cfg, state)
         return
     end
     sendluamsg(play, 101, 498, 0, 0, _qmdk_rank_payload(play, cfg, state))
-    setplaydef(play, _QMDK_PANEL_FLAG_VAR, 1)
+    setplaydef(play, _QMDK.PANEL_FLAG_VAR, 1)
 end
 local function _qmdk_close_rank(play)
-    if getplaydef(play, _QMDK_PANEL_FLAG_VAR) == 1 then
+    if getplaydef(play, _QMDK.PANEL_FLAG_VAR) == 1 then
         sendluamsg(play, 101, 498, 2, 0, "")
-        setplaydef(play, _QMDK_PANEL_FLAG_VAR, 0)
+        setplaydef(play, _QMDK.PANEL_FLAG_VAR, 0)
     end
 end
 local function _qmdk_send_rank_to_map(cfg, state)
@@ -962,7 +965,7 @@ end
 local function _qmdk_clear_collect(play, reason)
     local cfg = _qmdk_get_cfg()
     local isCollectingOre = _qmdk_is_collecting_ore(play, cfg)
-    setplaydef(play, _QMDK_COLLECT_CANCEL_VAR, 0)
+    setplaydef(play, _QMDK.COLLECT_CANCEL_VAR, 0)
     if cfg and (isCollectingOre or getplaydef(play, "S$采集目标名字") == cfg.ore_mob) then
         setplaydef(play, "N$iscaiji", 0)
         setplaydef(play, "S$采集目标", "")
@@ -984,13 +987,13 @@ local function _qmdk_drop_ore(play, cfg)
     end
 end
 local function _qmdk_clear_carry(play, cfg, dropOre, reason)
-    if tonumber(getplaydef(play, _QMDK_CARRY_VAR) or 0) ~= 1 then
+    if tonumber(getplaydef(play, _QMDK.CARRY_VAR) or 0) ~= 1 then
         return
     end
     if cfg and tonumber(cfg.carry_buff or 0) > 0 and hasbuff(play, cfg.carry_buff) then
         delbuff(play, cfg.carry_buff)
     end
-    setplaydef(play, _QMDK_CARRY_VAR, 0)
+    setplaydef(play, _QMDK.CARRY_VAR, 0)
     if dropOre then
         _qmdk_drop_ore(play, cfg)
     end
@@ -1001,10 +1004,10 @@ end
 local function _qmdk_clear_actor_state(play, cfg, dropOre)
     _qmdk_clear_collect(play)
     _qmdk_clear_carry(play, cfg, dropOre)
-    setplaydef(play, _QMDK_PREP_NOTICE_VAR, 0)
+    setplaydef(play, _QMDK.PREP_NOTICE_VAR, 0)
 end
 local function _qmdk_try_deliver(play, cfg, state)
-    if tonumber(getplaydef(play, _QMDK_CARRY_VAR) or 0) ~= 1 then
+    if tonumber(getplaydef(play, _QMDK.CARRY_VAR) or 0) ~= 1 then
         return false
     end
     local dx = tonumber(cfg.deliver_pos[1] or 21) or 21
@@ -1032,9 +1035,9 @@ local function _qmdk_tick_player(play, cfg, state)
     local nowTs = os.time()
     local prepLeft = math.max(0, (tonumber(state.prepare_end_ts) or 0) - nowTs)
     if prepLeft > 0 then
-        local lastNotice = tonumber(getplaydef(play, _QMDK_PREP_NOTICE_VAR) or 0) or 0
+        local lastNotice = tonumber(getplaydef(play, _QMDK.PREP_NOTICE_VAR) or 0) or 0
         if lastNotice ~= prepLeft then
-            setplaydef(play, _QMDK_PREP_NOTICE_VAR, prepLeft)
+            setplaydef(play, _QMDK.PREP_NOTICE_VAR, prepLeft)
             if prepLeft == tonumber(cfg.prepare_sec) or prepLeft <= 5 then
                 Player.sendmsgEx(play, "全民夺矿准备阶段，" .. prepLeft .. "秒后开始采矿#57")
             end
@@ -1042,9 +1045,30 @@ local function _qmdk_tick_player(play, cfg, state)
         _qmdk_clear_collect(play)
         return
     end
-    setplaydef(play, _QMDK_PREP_NOTICE_VAR, 0)
+    setplaydef(play, _QMDK.PREP_NOTICE_VAR, 0)
     _qmdk_try_deliver(play, cfg, state)
 end
+
+local function _activity_schedule_day()
+    return os.date("%Y-%m-%d")
+end
+
+local function _activity_schedule_due(cfg, state)
+    if type(cfg) ~= "table" or type(state) ~= "table" then
+        return false
+    end
+    local today = _activity_schedule_day()
+    if tostring(state.schedule_day or "") == today then
+        return false
+    end
+    local now = os.time()
+    local schedule = os.date("*t", now)
+    schedule.hour = tonumber(cfg.start_hour) or 0
+    schedule.min = tonumber(cfg.start_minute_clock) or 0
+    schedule.sec = 0
+    return now >= os.time(schedule)
+end
+
 local function _qmdk_refresh_actor(play)
     local cfg = _qmdk_get_cfg()
     if not cfg then
@@ -1052,7 +1076,7 @@ local function _qmdk_refresh_actor(play)
     end
     local state = _qmdk_get_state()
     if getsysvar(VarCfg["G_全民夺矿状态"]) == 1 and tonumber(state.open) == 1 and _qmdk_is_active_map(play, cfg, state) then
-        if tonumber(getplaydef(play, _QMDK_CARRY_VAR) or 0) == 1 and tonumber(cfg.carry_buff or 0) > 0 and not hasbuff(play, cfg.carry_buff) then
+        if tonumber(getplaydef(play, _QMDK.CARRY_VAR) or 0) == 1 and tonumber(cfg.carry_buff or 0) > 0 and not hasbuff(play, cfg.carry_buff) then
             addbuff(play, cfg.carry_buff)
         end
         _qmdk_send_rank(play, cfg, state)
@@ -1064,7 +1088,7 @@ end
 local function _qmdk_interrupt_collect(play, reason)
     local cfg = _qmdk_get_cfg()
     if _qmdk_is_collecting_ore(play, cfg) then
-        setplaydef(play, _QMDK_COLLECT_CANCEL_VAR, 1)
+        setplaydef(play, _QMDK.COLLECT_CANCEL_VAR, 1)
         setplaydef(play, "N$iscaiji", 0)
         setplaydef(play, "S$采集目标", "")
         setplaydef(play, "S$采集目标名字", "")
@@ -1119,11 +1143,11 @@ QmdkApi.before_collect = function(play, monName)
         Player.sendmsgEx(play, "准备阶段中，暂时不能采集矿石#57")
         return "blocked"
     end
-    if tonumber(getplaydef(play, _QMDK_CARRY_VAR) or 0) == 1 then
+    if tonumber(getplaydef(play, _QMDK.CARRY_VAR) or 0) == 1 then
         Player.sendmsgEx(play, "每次只能携带一块矿石#57")
         return "blocked"
     end
-    setplaydef(play, _QMDK_COLLECT_CANCEL_VAR, 0)
+    setplaydef(play, _QMDK.COLLECT_CANCEL_VAR, 0)
     return "start", cfg.collect_sec or 3
 end
 QmdkApi.on_collect_success = function(play, monName, monMakeIndex)
@@ -1132,8 +1156,8 @@ QmdkApi.on_collect_success = function(play, monName, monMakeIndex)
         return false
     end
     local state = _qmdk_get_state()
-    local cancelled = tonumber(getplaydef(play, _QMDK_COLLECT_CANCEL_VAR) or 0) == 1
-    setplaydef(play, _QMDK_COLLECT_CANCEL_VAR, 0)
+    local cancelled = tonumber(getplaydef(play, _QMDK.COLLECT_CANCEL_VAR) or 0) == 1
+    setplaydef(play, _QMDK.COLLECT_CANCEL_VAR, 0)
     if cancelled then
         return true
     end
@@ -1145,7 +1169,7 @@ QmdkApi.on_collect_success = function(play, monName, monMakeIndex)
         Player.sendmsgEx(play, "准备阶段中，暂时不能采集矿石#57")
         return true
     end
-    if tonumber(getplaydef(play, _QMDK_CARRY_VAR) or 0) == 1 then
+    if tonumber(getplaydef(play, _QMDK.CARRY_VAR) or 0) == 1 then
         Player.sendmsgEx(play, "每次只能携带一块矿石#57")
         return true
     end
@@ -1156,7 +1180,7 @@ QmdkApi.on_collect_success = function(play, monName, monMakeIndex)
         return true
     end
     killmonbyobj(play, monobj, false, false, false)
-    setplaydef(play, _QMDK_CARRY_VAR, 1)
+    setplaydef(play, _QMDK.CARRY_VAR, 1)
     if tonumber(cfg.carry_buff or 0) > 0 and not hasbuff(play, cfg.carry_buff) then
         addbuff(play, cfg.carry_buff)
     end
@@ -1169,7 +1193,7 @@ QmdkApi.on_collect_fail = function(play, monName)
     if not cfg or monName ~= cfg.ore_mob then
         return false
     end
-    setplaydef(play, _QMDK_COLLECT_CANCEL_VAR, 0)
+    setplaydef(play, _QMDK.COLLECT_CANCEL_VAR, 0)
     return true
 end
 local function _qmdk_start(dqfz, cfg, fromBot)
@@ -1181,8 +1205,9 @@ local function _qmdk_start(dqfz, cfg, fromBot)
         open = 1,
         start_minute = dqfz,
         map = cfg.map,
-        score_var = _QMDK_SCORE_VAR,
+        score_var = _QMDK.SCORE_VAR,
         from_bot = fromBot and 1 or 0,
+        schedule_day = _activity_schedule_day(),
         prepare_end_ts = os.time() + cfg.prepare_sec,
     }
     setsysvar(VarCfg["G_全民夺矿状态"], 1)
@@ -1253,6 +1278,7 @@ local function _qmdk_finish(cfg, fromBot)
     _qmdk_send_rank_to_map(cfg, state)
     return true
 end
+
 local function _qmdk_tick(dqfz, cfg)
     local state = _qmdk_get_state()
     if tonumber(state.force_end) == 1 then
@@ -1279,17 +1305,17 @@ local function _qmdk_tick(dqfz, cfg)
         return
     end
     if dqfz >= ((cfg.min_open_day - 1) * 24 * 60) then
-        local hour = tonumber(os.date("%H")) or 0
-        local minute = tonumber(os.date("%M")) or 0
-        if hour == cfg.start_hour and minute == cfg.start_minute_clock then
+        if _activity_schedule_due(cfg, state) then
             _qmdk_start(dqfz, cfg, false)
         end
     end
 end
 -- 黑暗禁地：复用采集类活动框架，负责刷宝箱、采集发奖与压低视野。
 HdjdApi = HdjdApi or {}
-local _HDJD_EVENT_NAME = "黑暗禁地"
-local _HDJD_COLLECT_CANCEL_VAR = "N$hdjd_collect_cancel"
+local _HDJD = {
+    EVENT_NAME = "黑暗禁地",
+    COLLECT_CANCEL_VAR = "N$hdjd_collect_cancel",
+}
 local function _hdjd_get_cfg()
     local cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].hdjd or nil
     if type(cfg) ~= "table" then
@@ -1311,7 +1337,7 @@ local function _hdjd_get_cfg()
     cfg.spawn_try_count = tonumber(cfg.spawn_try_count) or 40
     cfg.spawn_radius = tonumber(cfg.spawn_radius) or 32
     cfg.center_pos = cfg.center_pos or {36, 36}
-    cfg.mail_title = tostring(cfg.mail_title or _HDJD_EVENT_NAME)
+    cfg.mail_title = tostring(cfg.mail_title or _HDJD.EVENT_NAME)
     cfg.min_open_day = math.max(2, tonumber(cfg.min_open_day) or 2)
     cfg.start_hour = tonumber(cfg.start_hour) or 19
     cfg.start_minute_clock = tonumber(cfg.start_minute_clock) or 30
@@ -1429,9 +1455,9 @@ end
 local function _hdjd_interrupt_collect(play, reason)
     local cfg = _hdjd_get_cfg()
     local isCollectingChest = _hdjd_is_collecting_chest(play, cfg)
-    setplaydef(play, _HDJD_COLLECT_CANCEL_VAR, 0)
+    setplaydef(play, _HDJD.COLLECT_CANCEL_VAR, 0)
     if cfg and (isCollectingChest or getplaydef(play, "S$采集目标名字") == cfg.chest_mob) then
-        setplaydef(play, _HDJD_COLLECT_CANCEL_VAR, 1)
+        setplaydef(play, _HDJD.COLLECT_CANCEL_VAR, 1)
         setplaydef(play, "N$iscaiji", 0)
         setplaydef(play, "S$采集目标", "")
         setplaydef(play, "S$采集目标名字", "")
@@ -1556,7 +1582,7 @@ HdjdApi.before_collect = function(play, monName)
         Player.sendmsgEx(play, "黑暗禁地当前未开启#57")
         return "blocked"
     end
-    setplaydef(play, _HDJD_COLLECT_CANCEL_VAR, 0)
+    setplaydef(play, _HDJD.COLLECT_CANCEL_VAR, 0)
     return "start", cfg.collect_sec or 3
 end
 HdjdApi.on_collect_success = function(play, monName, monMakeIndex)
@@ -1565,8 +1591,8 @@ HdjdApi.on_collect_success = function(play, monName, monMakeIndex)
         return false
     end
     local state = _hdjd_get_state()
-    local cancelled = tonumber(getplaydef(play, _HDJD_COLLECT_CANCEL_VAR) or 0) == 1
-    setplaydef(play, _HDJD_COLLECT_CANCEL_VAR, 0)
+    local cancelled = tonumber(getplaydef(play, _HDJD.COLLECT_CANCEL_VAR) or 0) == 1
+    setplaydef(play, _HDJD.COLLECT_CANCEL_VAR, 0)
     if cancelled then
         return true
     end
@@ -1584,7 +1610,7 @@ HdjdApi.on_collect_success = function(play, monName, monMakeIndex)
     killmonbyobj(play, monobj, false, false, false)
     local rewardList, rewardDesc = _hdjd_roll_reward(cfg)
     if type(rewardList) == "table" and #rewardList > 0 then
-        Player.rwjl(play, rewardList, _HDJD_EVENT_NAME, 1, 0)
+        Player.rwjl(play, rewardList, _HDJD.EVENT_NAME, 1, 0)
         Player.sendmsgEx(play, "采集黑暗宝箱成功，获得#218|" .. rewardDesc .. "#57")
     else
         Player.sendmsgEx(play, "采集黑暗宝箱成功，但奖励配置为空#57")
@@ -1596,7 +1622,7 @@ HdjdApi.on_collect_fail = function(play, monName)
     if not cfg or monName ~= cfg.chest_mob then
         return false
     end
-    setplaydef(play, _HDJD_COLLECT_CANCEL_VAR, 0)
+    setplaydef(play, _HDJD.COLLECT_CANCEL_VAR, 0)
     return true
 end
 local function _hdjd_start(dqfz, cfg, fromBot)
@@ -1608,6 +1634,7 @@ local function _hdjd_start(dqfz, cfg, fromBot)
         start_minute = dqfz,
         map = cfg.map,
         from_bot = fromBot and 1 or 0,
+        schedule_day = _activity_schedule_day(),
     }
     setsysvar(VarCfg["G_黑暗禁地状态"], 1)
     _hdjd_save_state(state)
@@ -1667,9 +1694,7 @@ local function _hdjd_tick(dqfz, cfg)
         return
     end
     if dqfz >= ((cfg.min_open_day - 1) * 24 * 60) then
-        local hour = tonumber(os.date("%H")) or 0
-        local minute = tonumber(os.date("%M")) or 0
-        if hour == cfg.start_hour and minute == cfg.start_minute_clock then
+        if _activity_schedule_due(cfg, state) then
             _hdjd_start(dqfz, cfg, false)
         end
     end
@@ -1678,12 +1703,14 @@ HdjdApi.start = _hdjd_start
 HdjdApi.finish = _hdjd_finish
 -- 保卫村庄：活动开启时为 1，关闭时为 0。
 BwczApi = BwczApi or {}
-local _BWCZ_EVENT_NAME = "保卫村庄"
-local _BWCZ_SCORE_VAR = "保卫村庄"
-local _BWCZ_MON_LOOKUP = nil
-local _BWCZ_HP_LOOKUP = nil
-local _BWCZ_TYPE_LOOKUP = nil
-local _BWCZ_MERIT_LOOKUP = nil
+local _BWCZ = {
+    EVENT_NAME = "保卫村庄",
+    SCORE_VAR = "保卫村庄",
+    MON_LOOKUP = nil,
+    HP_LOOKUP = nil,
+    TYPE_LOOKUP = nil,
+    MERIT_LOOKUP = nil,
+}
 
 local function _bwcz_get_cfg()
     local cfg = teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].bwcz or nil
@@ -1698,7 +1725,7 @@ local function _bwcz_get_cfg()
     cfg.min_open_day = math.max(2, tonumber(cfg.min_open_day) or 2)
     cfg.start_hour = tonumber(cfg.start_hour) or 18
     cfg.start_minute_clock = tonumber(cfg.start_minute_clock) or 0
-    cfg.score_var = tostring(cfg.score_var or _BWCZ_SCORE_VAR)
+    cfg.score_var = tostring(cfg.score_var or _BWCZ.SCORE_VAR)
     cfg.score_per_join = tonumber(cfg.score_per_join) or 10
     cfg.prepare_notice_min = tonumber(cfg.prepare_notice_min) or 5
     cfg.spawn_radius = tonumber(cfg.spawn_radius) or 24
@@ -1708,11 +1735,28 @@ local function _bwcz_get_cfg()
     cfg.enter_pos = type(cfg.enter_pos) == "table" and cfg.enter_pos or {108, 105}
     cfg.center_pos = type(cfg.center_pos) == "table" and cfg.center_pos or cfg.enter_pos
     cfg.spawn_pos = type(cfg.spawn_pos) == "table" and cfg.spawn_pos or {73, 81}
+    local spawnPoints = {}
+    if type(cfg.spawn_points) == "table" then
+        for _, point in ipairs(cfg.spawn_points) do
+            local x = tonumber((point and (point.x or point[1])) or nil)
+            local y = tonumber((point and (point.y or point[2])) or nil)
+            if x and y then
+                spawnPoints[#spawnPoints + 1] = {x, y}
+            end
+        end
+    end
+    if #spawnPoints <= 0 then
+        spawnPoints[#spawnPoints + 1] = {
+            tonumber((cfg.spawn_pos and cfg.spawn_pos[1]) or 73) or 73,
+            tonumber((cfg.spawn_pos and cfg.spawn_pos[2]) or 81) or 81,
+        }
+    end
+    cfg.spawn_points = spawnPoints
     cfg.kill_reward = type(cfg.kill_reward) == "table" and cfg.kill_reward or {}
     cfg.rank_rewards = type(cfg.rank_rewards) == "table" and cfg.rank_rewards or {}
     cfg.title_levels = type(cfg.title_levels) == "table" and cfg.title_levels or {}
     cfg.waves = type(cfg.waves) == "table" and cfg.waves or {}
-    cfg.mail_title = tostring(cfg.mail_title or _BWCZ_EVENT_NAME)
+    cfg.mail_title = tostring(cfg.mail_title or _BWCZ.EVENT_NAME)
     cfg.rank_reward_need_title = tostring(cfg.rank_reward_need_title or "镇境武侯")
     return cfg
 end
@@ -1731,25 +1775,25 @@ local function _bwcz_save_state(state)
 end
 
 local function _bwcz_build_mon_cache(cfg)
-    _BWCZ_MON_LOOKUP = {}
-    _BWCZ_HP_LOOKUP = {}
-    _BWCZ_TYPE_LOOKUP = {}
-    _BWCZ_MERIT_LOOKUP = {}
+    _BWCZ.MON_LOOKUP = {}
+    _BWCZ.HP_LOOKUP = {}
+    _BWCZ.TYPE_LOOKUP = {}
+    _BWCZ.MERIT_LOOKUP = {}
     for _, wave in ipairs(cfg.waves or {}) do
         for _, spawn in ipairs((wave and wave.spawn) or {}) do
             local monName = tostring(spawn.name or "")
             if monName ~= "" then
-                _BWCZ_MON_LOOKUP[monName] = true
-                _BWCZ_HP_LOOKUP[monName] = tonumber(spawn.hp) or 100
-                _BWCZ_TYPE_LOOKUP[monName] = tostring(spawn.type or "small")
-                _BWCZ_MERIT_LOOKUP[monName] = tonumber(spawn.merit) or 0
+                _BWCZ.MON_LOOKUP[monName] = true
+                _BWCZ.HP_LOOKUP[monName] = tonumber(spawn.hp) or 100
+                _BWCZ.TYPE_LOOKUP[monName] = tostring(spawn.type or "small")
+                _BWCZ.MERIT_LOOKUP[monName] = tonumber(spawn.merit) or 0
             end
         end
     end
 end
 
 local function _bwcz_ensure_mon_cache(cfg)
-    if not _BWCZ_MON_LOOKUP then
+    if not _BWCZ.MON_LOOKUP then
         _bwcz_build_mon_cache(cfg)
     end
 end
@@ -1759,22 +1803,22 @@ local function _bwcz_is_event_mon(monName, cfg)
         return false
     end
     _bwcz_ensure_mon_cache(cfg)
-    return _BWCZ_MON_LOOKUP and _BWCZ_MON_LOOKUP[tostring(monName or "")] == true
+    return _BWCZ.MON_LOOKUP and _BWCZ.MON_LOOKUP[tostring(monName or "")] == true
 end
 
 local function _bwcz_get_mon_type(monName, cfg)
     _bwcz_ensure_mon_cache(cfg)
-    return (_BWCZ_TYPE_LOOKUP and _BWCZ_TYPE_LOOKUP[tostring(monName or "")]) or "small"
+    return (_BWCZ.TYPE_LOOKUP and _BWCZ.TYPE_LOOKUP[tostring(monName or "")]) or "small"
 end
 
 local function _bwcz_get_mon_hp(monName, cfg)
     _bwcz_ensure_mon_cache(cfg)
-    return tonumber((_BWCZ_HP_LOOKUP and _BWCZ_HP_LOOKUP[tostring(monName or "")]) or 100) or 100
+    return tonumber((_BWCZ.HP_LOOKUP and _BWCZ.HP_LOOKUP[tostring(monName or "")]) or 100) or 100
 end
 
 local function _bwcz_get_mon_merit(monName, cfg)
     _bwcz_ensure_mon_cache(cfg)
-    return tonumber((_BWCZ_MERIT_LOOKUP and _BWCZ_MERIT_LOOKUP[tostring(monName or "")]) or 0) or 0
+    return tonumber((_BWCZ.MERIT_LOOKUP and _BWCZ.MERIT_LOOKUP[tostring(monName or "")]) or 0) or 0
 end
 
 local function _bwcz_get_player_data(play)
@@ -1850,6 +1894,7 @@ end
 
 local function _bwcz_refresh_title_by_total_merit(play, cfg, data)
     local totalMerit = tonumber(data.total_merit) or 0
+    local oldIdx = tonumber(data.title_idx) or 0
     local targetIdx = 0
     for _, one in ipairs(cfg.title_levels or {}) do
         local need = tonumber(one.need) or 0
@@ -1857,11 +1902,18 @@ local function _bwcz_refresh_title_by_total_merit(play, cfg, data)
             targetIdx = tonumber(one.idx or 0) or targetIdx
         end
     end
-    if targetIdx ~= (tonumber(data.title_idx) or 0) then
+    if targetIdx ~= oldIdx then
         data.title_idx = targetIdx
     end
     data.merit = totalMerit
     _bwcz_refresh_title(play, cfg, data)
+    if play and targetIdx > oldIdx then
+        local titleCfg = _bwcz_get_title_cfg_by_idx(cfg, targetIdx)
+        local titleName = tostring((titleCfg and titleCfg.name) or data.title or "")
+        if titleName ~= "" then
+            Player.sendmsgEx(play, "功勋已自动晋升为#57|【" .. titleName .. "】#218|")
+        end
+    end
 end
 
 local function _bwcz_add_activity_score(play, cfg)
@@ -1874,13 +1926,13 @@ local function _bwcz_add_activity_score(play, cfg)
     end
     data.joined = 1
     data.join_score = (tonumber(data.join_score) or 0) + (tonumber(cfg.score_per_join) or 0)
-    local scoreVar = tostring(cfg.score_var or _BWCZ_SCORE_VAR)
+    local scoreVar = tostring(cfg.score_var or _BWCZ.SCORE_VAR)
     setplayvar(play, "HUMAN", scoreVar, _safe_getplayvar_num(play, "HUMAN", scoreVar) + (tonumber(cfg.score_per_join) or 0), 1)
     _bwcz_save_player_data(play, data)
 end
 
 local function _bwcz_reset_online_scores(cfg)
-    local scoreVar = tostring((cfg and cfg.score_var) or _BWCZ_SCORE_VAR)
+    local scoreVar = tostring((cfg and cfg.score_var) or _BWCZ.SCORE_VAR)
     for _, player in ipairs(getplayerlst() or {}) do
         setplayvar(player, "HUMAN", scoreVar, 0, 1)
         local data = _bwcz_get_player_data(player)
@@ -1894,7 +1946,7 @@ local function _bwcz_clear_map_monsters(cfg)
         return
     end
     _bwcz_ensure_mon_cache(cfg)
-    for monName in pairs(_BWCZ_MON_LOOKUP or {}) do
+    for monName in pairs(_BWCZ.MON_LOOKUP or {}) do
         killmonsters(cfg.map, monName, 0, false)
     end
 end
@@ -1902,7 +1954,7 @@ end
 local function _bwcz_count_alive_monsters(cfg)
     local total = 0
     _bwcz_ensure_mon_cache(cfg)
-    for monName in pairs(_BWCZ_MON_LOOKUP or {}) do
+    for monName in pairs(_BWCZ.MON_LOOKUP or {}) do
         local mons = getmapmon(cfg.map, monName, 0, 0, 999)
         total = total + #(mons or {})
     end
@@ -1926,6 +1978,7 @@ local function _bwcz_count_alive_monsters_by_wave(cfg, state)
     return result
 end
 
+
 local function _bwcz_spawn_mon(cfg, monName, hp)
     local mapName = tostring(cfg.map or "")
     if mapName == "" or monName == "" then
@@ -1936,13 +1989,15 @@ local function _bwcz_spawn_mon(cfg, monName, hp)
     if mapW <= 0 or mapH <= 0 then
         return false
     end
-    local cx = tonumber((cfg.spawn_pos and cfg.spawn_pos[1]) or 73) or 73
-    local cy = tonumber((cfg.spawn_pos and cfg.spawn_pos[2]) or 81) or 81
     local radius = math.max(1, tonumber(cfg.spawn_radius) or 24)
     local tryCount = math.max(1, tonumber(cfg.spawn_try_count) or 60)
     local missionX = tonumber((cfg.center_pos and cfg.center_pos[1]) or 108) or 108
     local missionY = tonumber((cfg.center_pos and cfg.center_pos[2]) or 105) or 105
+    local points = type(cfg.spawn_points) == "table" and cfg.spawn_points or nil
     for _ = 1, tryCount do
+        local point = (points and #points > 0) and points[math.random(1, #points)] or nil
+        local cx = tonumber((point and point[1]) or (cfg.spawn_pos and cfg.spawn_pos[1]) or 73) or 73
+        local cy = tonumber((point and point[2]) or (cfg.spawn_pos and cfg.spawn_pos[2]) or 81) or 81
         local dx = math.random(-radius, radius)
         local dy = math.random(-radius, radius)
         if dx * dx + dy * dy <= radius * radius then
@@ -1989,6 +2044,9 @@ local function _bwcz_spawn_wave(cfg, state, waveIdx)
     state.spawn_done = spawned > 0 and 1 or 0
     state.wave_random = tonumber(state.wave_random) or 0
     _bwcz_save_state(state)
+    if BwczApi.send_498_panel_to_map then
+        BwczApi.send_498_panel_to_map(cfg, state)
+    end
     sendmovemsg("0", 1, 254, 0, 300, 1, "活动：保卫村庄当前刷新【" .. tostring(wave.name or waveIdx) .. "】怪物，请尽快清理...")
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：保卫村庄当前刷新【" .. tostring(wave.name or waveIdx) .. "】怪物，请尽快清理...")
     return spawned > 0
@@ -2031,7 +2089,7 @@ local function _bwcz_is_active_map(play, cfg)
 end
 
 local function _bwcz_build_rank_data(cfg)
-    local rankRaw = sorthumvar(tostring(cfg.score_var or _BWCZ_SCORE_VAR), 1, 1, 10)
+    local rankRaw = sorthumvar(tostring(cfg.score_var or _BWCZ.SCORE_VAR), 1, 1, 10)
     local rankData = {}
     for i = 1, #rankRaw, 2 do
         local name = rankRaw[i]
@@ -2051,6 +2109,7 @@ local function _bwcz_start(dqfz, cfg, fromBot)
         open = 1,
         start_minute = dqfz,
         from_bot = fromBot and 1 or 0,
+        schedule_day = _activity_schedule_day(),
         map = cfg.map,
         current_wave = 0,
         current_wave_name = "",
@@ -2086,7 +2145,7 @@ local function _bwcz_finish(cfg, fromBot)
         local data = playerObj and _bwcz_get_player_data(playerObj) or nil
         local titleName = data and tostring(data.title or "") or ""
         if reward and type(reward.items) == "table" and #reward.items > 0 and titleName == rewardTitle then
-            sendmail("#" .. one.name, 0, cfg.mail_title or _BWCZ_EVENT_NAME, "恭喜你获得保卫村庄第[" .. tostring(i) .. "]名,奖励已下发!", Player.jl_mail(reward.items))
+            sendmail("#" .. one.name, 0, cfg.mail_title or _BWCZ.EVENT_NAME, "恭喜你获得保卫村庄第[" .. tostring(i) .. "]名,奖励已下发!", Player.jl_mail(reward.items))
             rewardNames[one.name] = 1
         end
         if playerObj and data then
@@ -2129,6 +2188,8 @@ local function _bwcz_tick(dqfz, cfg)
             state.spawn_done = 0
             local waveIdx = _bwcz_pick_wave_idx(cfg, state)
             _bwcz_spawn_wave(cfg, state, waveIdx)
+        elseif BwczApi.send_498_panel_to_map then
+            BwczApi.send_498_panel_to_map(cfg, state)
         end
         return
     end
@@ -2139,13 +2200,17 @@ local function _bwcz_tick(dqfz, cfg)
         return
     end
     if dqfz >= ((tonumber(cfg.min_open_day) - 1) * 24 * 60) then
-        local hour = tonumber(os.date("%H")) or 0
-        local minute = tonumber(os.date("%M")) or 0
-        if hour == tonumber(cfg.start_hour) and minute == tonumber(cfg.start_minute_clock) then
+        if _activity_schedule_due(cfg, state) then
             _bwcz_start(dqfz, cfg, false)
-        elseif hour == tonumber(cfg.start_hour) and minute == math.max(0, tonumber(cfg.start_minute_clock) - tonumber(cfg.prepare_notice_min or 5)) then
+        elseif tostring(state.schedule_notice_day or "") ~= _activity_schedule_day()
+            and _activity_schedule_due({
+                start_hour = cfg.start_hour,
+                start_minute_clock = math.max(0, tonumber(cfg.start_minute_clock) - tonumber(cfg.prepare_notice_min or 5)),
+            }, state) then
             sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《保卫村庄》将在" .. tostring(cfg.prepare_notice_min or 5) .. "分钟后开启，请提前做好准备...")
             sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《保卫村庄》将在" .. tostring(cfg.prepare_notice_min or 5) .. "分钟后开启，请提前做好准备...")
+            state.schedule_notice_day = _activity_schedule_day()
+            _bwcz_save_state(state)
         end
     end
 end
@@ -2167,7 +2232,7 @@ local function _bwcz_give_kill_reward(play, monName, cfg)
     local monType = _bwcz_get_mon_type(monName, cfg)
     local reward = cfg.kill_reward and cfg.kill_reward[monType] or nil
     if type(reward) == "table" and #reward > 0 then
-        Player.rwjl(play, reward, _BWCZ_EVENT_NAME, 1, 0)
+        Player.rwjl(play, reward, _BWCZ.EVENT_NAME, 1, 0)
     end
 end
 
@@ -2194,28 +2259,42 @@ BwczApi.add_activity_score = _bwcz_add_activity_score
 BwczApi.give_kill_reward = _bwcz_give_kill_reward
 BwczApi.build_rank_data = _bwcz_build_rank_data
 
-local function _bwcz_send_498_panel(play, cfg)
-    if not play or not cfg then
-        return
-    end
-    local state = _bwcz_get_state()
-    local scoreVar = tostring(cfg.score_var or _BWCZ_SCORE_VAR)
-    local payload = {
+BwczApi.build_498_payload = function(play, cfg, state)
+    state = type(state) == "table" and state or _bwcz_get_state()
+    local data = _bwcz_get_player_data(play)
+    return {
         mode = "bwcz",
-        grjf = tonumber(getplayvar(play, "HUMAN", scoreVar) or 0) or 0,
+        grjf = tonumber(data.total_merit or data.merit or 0) or 0,
         wave_name = tostring(state.current_wave_name or ""),
         left_mon = _bwcz_count_alive_monsters(cfg),
         mon_left = _bwcz_count_alive_monsters_by_wave(cfg, state),
     }
-    sendluamsg(play, 101, 498, 1, 0, tbl2json(payload))
 end
-BwczApi.send_498_panel = _bwcz_send_498_panel
 
-local function _bwcz_on_login_event(play)
+BwczApi.send_498_panel = function(play, cfg)
+    if not play or not cfg then
+        return
+    end
+    sendluamsg(play, 101, 498, 1, 0, tbl2json(BwczApi.build_498_payload(play, cfg)))
+end
+
+BwczApi.send_498_panel_to_map = function(cfg, state)
+    if not cfg or tostring(cfg.map or "") == "" then
+        return
+    end
+    state = type(state) == "table" and state or _bwcz_get_state()
+    local players = getobjectinmap(tostring(cfg.map or ""), 0, 0, 999, 1) or {}
+    for _, player in pairs(players) do
+        sendluamsg(player, 101, 498, 1, 0, tbl2json(BwczApi.build_498_payload(player, cfg, state)))
+    end
+end
+
+
+BwczApi.on_login_event = function(play)
     _bwcz_on_login(play)
 end
 
-local function _bwcz_on_kill_mon(play, mob)
+BwczApi.on_kill_mon = function(play, mob)
     local cfg = _bwcz_get_cfg()
     if not cfg or getsysvar(VarCfg["G_保卫村庄状态"]) ~= 1 then
         return
@@ -2225,20 +2304,22 @@ local function _bwcz_on_kill_mon(play, mob)
     if mapName ~= tostring(cfg.map or "") or not _bwcz_is_event_mon(monName, cfg) then
         return
     end
-    setplayvar(play, "HUMAN", tostring(cfg.score_var or _BWCZ_SCORE_VAR), (_safe_getplayvar_num(play, "HUMAN", tostring(cfg.score_var or _BWCZ_SCORE_VAR)) + _bwcz_get_mon_merit(monName, cfg)), 1)
+    setplayvar(play, "HUMAN", tostring(cfg.score_var or _BWCZ.SCORE_VAR), (_safe_getplayvar_num(play, "HUMAN", tostring(cfg.score_var or _BWCZ.SCORE_VAR)) + _bwcz_get_mon_merit(monName, cfg)), 1)
     _bwcz_add_merit(play, monName, cfg)
     _bwcz_give_kill_reward(play, monName, cfg)
-    _bwcz_send_498_panel(play, cfg)
+    BwczApi.send_498_panel_to_map(cfg)
 end
-BwczApi.onKillMon = _bwcz_on_kill_mon
+BwczApi.onKillMon = BwczApi.on_kill_mon
 
-GameEvent.add(EventCfg.onLogin, _bwcz_on_login_event, "保卫村庄登录修正")
-GameEvent.add(EventCfg.onKFLogin, _bwcz_on_login_event, "保卫村庄跨服登录修正")
-local _MSKH_EVENT_NAME = "美食狂欢"
-local _MSKH_SCORE_VAR = "美食狂欢"
-local _MSKH_WEAPON_LEVEL_VAR = VarCfg["T_时光之杖等级"] or "T57"
-local _MSKH_TITLE_ATTR_LIST = "title_mskh_gourmet"
-local _MSKH_TITLE_ATTR = "3#242#1000|3#34#1000"
+GameEvent.add(EventCfg.onLogin, BwczApi.on_login_event, "保卫村庄登录修正")
+GameEvent.add(EventCfg.onKFLogin, BwczApi.on_login_event, "保卫村庄跨服登录修正")
+local _MSKH = {
+    EVENT_NAME = "美食狂欢",
+    SCORE_VAR = "美食狂欢",
+    WEAPON_LEVEL_VAR = VarCfg["T_时光之杖等级"] or "T57",
+    TITLE_ATTR_LIST = "title_mskh_gourmet",
+    TITLE_ATTR = "3#242#1000|3#34#1000",
+}
 MskhApi = MskhApi or {}
 
 local function _mskh_get_cfg()
@@ -2336,21 +2417,21 @@ local function _mskh_release_collect_lock(state, targetKey, playerName, markClai
 end
 
 local function _mskh_get_weapon_level(play)
-    local recordLevel = tonumber(getplaydef(play, _MSKH_WEAPON_LEVEL_VAR) or 0) or 0
+    local recordLevel = tonumber(getplaydef(play, _MSKH.WEAPON_LEVEL_VAR) or 0) or 0
     local oldLevel = tonumber(getplaydef(play, VarCfg["T_时光之杖"]) or 0) or 0
     local equipLevel = tonumber(Player.getEquipFieldByPos(play, 71, 1) or 0) or 0
     local equipName = tostring(Player.getEquipNameByPos(play, 71) or "")
     local nameLevel = tonumber(string.match(equipName, "Lv%.(%d+)") or string.match(equipName, "Lv(%d+)") or string.match(equipName, "%[lv(%d+)%]")) or 0
     local finalLevel = math.max(recordLevel, oldLevel, equipLevel, nameLevel)
     if finalLevel > 0 and recordLevel ~= finalLevel then
-        setplaydef(play, _MSKH_WEAPON_LEVEL_VAR, finalLevel)
+        setplaydef(play, _MSKH.WEAPON_LEVEL_VAR, finalLevel)
     end
     return finalLevel
 end
 
 local function _mskh_set_weapon_level(play, level)
     level = math.max(0, math.min(10, tonumber(level) or 0))
-    setplaydef(play, _MSKH_WEAPON_LEVEL_VAR, level)
+    setplaydef(play, _MSKH.WEAPON_LEVEL_VAR, level)
 end
 
 local function _mskh_has_title(play, cfg)
@@ -2360,7 +2441,7 @@ end
 
 local function _mskh_refresh_title_attr(play, cfg)
     -- 美食家基础属性已统一写入真实称号表，这里只清理旧版脚本附加属性，避免重复叠加。
-    Player.del_attlist(play, _MSKH_TITLE_ATTR_LIST)
+    Player.del_attlist(play, _MSKH.TITLE_ATTR_LIST)
 end
 
 local function _mskh_get_event_attack_damage(play, target, cfg)
@@ -2404,10 +2485,10 @@ local function _mskh_add_activity_score(play, cfg)
     end
     data.joined = 1
     _mskh_save_player_data(play, data)
-    setplayvar(play, "HUMAN", tostring(cfg.score_var or _MSKH_SCORE_VAR), _safe_getplayvar_num(play, "HUMAN", tostring(cfg.score_var or _MSKH_SCORE_VAR)) + (tonumber(cfg.score_per_join) or 0), 1)
+    setplayvar(play, "HUMAN", tostring(cfg.score_var or _MSKH.SCORE_VAR), _safe_getplayvar_num(play, "HUMAN", tostring(cfg.score_var or _MSKH.SCORE_VAR)) + (tonumber(cfg.score_per_join) or 0), 1)
 end
 local function _mskh_reset_online_scores(cfg)
-    local scoreVar = tostring((cfg and cfg.score_var) or _MSKH_SCORE_VAR)
+    local scoreVar = tostring((cfg and cfg.score_var) or _MSKH.SCORE_VAR)
     for _, player in ipairs(getplayerlst() or {}) do
         setplayvar(player, "HUMAN", scoreVar, 0, 1)
         local data = _mskh_get_player_data(player)
@@ -2540,7 +2621,7 @@ local function _mskh_on_actor_die(play)
 end
 
 local function _mskh_build_rank_data(cfg)
-    local scoreVar = tostring((cfg and cfg.score_var) or _MSKH_SCORE_VAR)
+    local scoreVar = tostring((cfg and cfg.score_var) or _MSKH.SCORE_VAR)
     local rankRaw = sorthumvar(scoreVar, 1, 1, 10)
     local rankData = {}
     for i = 1, #rankRaw, 2 do
@@ -2561,6 +2642,7 @@ local function _mskh_start(dqfz, cfg, fromBot)
         open = 1,
         start_minute = dqfz,
         from_bot = fromBot and 1 or 0,
+        schedule_day = _activity_schedule_day(),
         map = cfg.map,
         spawn_done = 0,
         last_spawn_ts = 0,
@@ -2637,9 +2719,7 @@ local function _mskh_tick(dqfz, cfg)
         return
     end
     if dqfz >= ((tonumber(cfg.min_open_day) - 1) * 24 * 60) then
-        local hour = tonumber(os.date("%H")) or 0
-        local minute = tonumber(os.date("%M")) or 0
-        if hour == tonumber(cfg.start_hour) and minute == tonumber(cfg.start_minute_clock) then
+        if _activity_schedule_due(cfg, state) then
             _mskh_start(dqfz, cfg, false)
         end
     end
@@ -2747,7 +2827,7 @@ local function _mskh_buy_shop(play, idx, cfg)
             end
             _mskh_set_weapon_level(play, lv + 1)
         else
-            Player.rwjl(play, give, _MSKH_EVENT_NAME, 1, 0)
+            Player.rwjl(play, give, _MSKH.EVENT_NAME, 1, 0)
         end
     end
     data.point = point - cost
@@ -2851,10 +2931,34 @@ end
 
 GameEvent.add(EventCfg.onLogin, _mskh_on_login_event, "美食狂欢登录修正")
 GameEvent.add(EventCfg.onKFLogin, _mskh_on_login_event, "美食狂欢跨服登录修正")
-local _QMDK_EVENT_NAME = "全民夺矿"
-local _WLMZ_EVENT_NAME = "武林盟主"
-local _WLMZ_MAP_NAME = "比武大会"
-local _WLMZ_SCORE_VAR = "比武大会"
+local _WLMZ = {
+    EVENT_NAME = "武林盟主",
+    MAP_NAME = "比武大会",
+    SCORE_VAR = "比武大会",
+}
+TxzrApi = TxzrApi or {}
+TxzrApi.send_top_countdown = function(play)
+    if not play then
+        return
+    end
+    local txzrVars = VarCfg["G_天选之人"] or {}
+    local minute = tonumber(getsysvar(txzrVars[1]) or 0) or 0
+    local round = tonumber(getsysvar(txzrVars[2]) or 0) or 0
+    minute = math.max(0, math.min(30, minute))
+    local seconds = round >= 4 and 0 or math.max(0, (30 - minute) * 60)
+    sendluamsg(play, 101, 12, 11, 7, tbl2json({
+        seconds = seconds,
+        round = round,
+        finished = round >= 4 and 1 or 0,
+    }))
+end
+TxzrApi.broadcast_top_countdown = function()
+    for _, player in ipairs(getplayerlst() or {}) do
+        TxzrApi.send_top_countdown(player)
+    end
+end
+GameEvent.add(EventCfg.onLogin, TxzrApi.send_top_countdown, "天选之人顶部倒计时登录同步")
+GameEvent.add(EventCfg.onKFLogin, TxzrApi.send_top_countdown, "天选之人顶部倒计时跨服同步")
 function ontimerex1()
     local xqyz = tonumber(getsysvar(VarCfg["G_新区验证"])) or 0
     if xqyz > 0 and not checkkuafuserver() then
@@ -2958,8 +3062,8 @@ function ontimerex1()
             end
             if dqfz == 5 then
                 _tcppk_begin_round()
-                Player.SetGlobalTempInt(_TCPPK_EQUIP_COUNT_VAR, 0)
-                Player.SetGlobalTempInt(_TCPPK_EQUIP_ROUND_VAR, _tcppk_get_round())
+                Player.SetGlobalTempInt(_TCPPK.EQUIP_COUNT_VAR, 0)
+                Player.SetGlobalTempInt(_TCPPK.EQUIP_ROUND_VAR, _tcppk_get_round())
                 setenvirontimer("xtc",1,3,"@hd_tcppk,xtc")
                 local t = getplayerlst()
                 for _, v in pairs(t) do
@@ -3011,31 +3115,31 @@ function ontimerex1()
                 end
             end
             if dqfz == 25 then
-                setenvirontimer(_WLMZ_MAP_NAME,2,10,"@hd_tcppk,".._WLMZ_MAP_NAME)
-                sendmovemsg("0", 1, 254, 0, 300, 1,"活动：活动《".._WLMZ_EVENT_NAME.."》已开启奖励丰厚,请尽快参加活动...")
-                sendmovemsg("0", 1, 254, 0, 270, 1,"活动：活动《".._WLMZ_EVENT_NAME.."》已开启奖励丰厚,请尽快参加活动...")
+                setenvirontimer(_WLMZ.MAP_NAME,2,10,"@hd_tcppk,".._WLMZ.MAP_NAME)
+                sendmovemsg("0", 1, 254, 0, 300, 1,"活动：活动《".._WLMZ.EVENT_NAME.."》已开启奖励丰厚,请尽快参加活动...")
+                sendmovemsg("0", 1, 254, 0, 270, 1,"活动：活动《".._WLMZ.EVENT_NAME.."》已开启奖励丰厚,请尽快参加活动...")
                 local player_list = getplayerlst()
                 for i, player  in ipairs(player_list or {}) do
                     sendluamsg(player,101,12,1,9,'{"sk":'..5 ..',"kf":'..2 ..',"idx":'..9 ..'}')
                 end
             elseif dqfz == 30 then
-                setenvirofftimer(_WLMZ_MAP_NAME,2)
-                local wanjia = getobjectinmap(_WLMZ_MAP_NAME,25,29,65,1)
+                setenvirofftimer(_WLMZ.MAP_NAME,2)
+                local wanjia = getobjectinmap(_WLMZ.MAP_NAME,25,29,65,1)
                 for k, v in pairs(wanjia) do
-                    local hsmy_px = sorthumvar(_WLMZ_SCORE_VAR,1,1,5)
-                    local grjf = _safe_getplayvar_num(v, "HUMAN", _WLMZ_SCORE_VAR)
+                    local hsmy_px = sorthumvar(_WLMZ.SCORE_VAR,1,1,5)
+                    local grjf = _safe_getplayvar_num(v, "HUMAN", _WLMZ.SCORE_VAR)
                     sendluamsg(v,101,498,1,0,'{"pmsj":'..tbl2json(hsmy_px)..',"grjf":'..grjf..'}')
                 end
-                local hsmy_px = sorthumvar(_WLMZ_SCORE_VAR,1,1,3)
+                local hsmy_px = sorthumvar(_WLMZ.SCORE_VAR,1,1,3)
                 local index = 0
                 for i = 1, #hsmy_px, 2 do
                     index = index + 1
                     if hsmy_px[i+1] and hsmy_px[i+1] > 0 then
                         setflagstatus(getplayerbyname(hsmy_px[i]),VarCfg.BS_tyrc,1)
-                        sendmail("#"..hsmy_px[i],0,_WLMZ_EVENT_NAME,"恭喜你获得".._WLMZ_EVENT_NAME.."第["..constant.pz_hanzi[index].."]名,奖励已下发!",Player.jl_mail(constant.pz_wlmz[index]))
+                        sendmail("#"..hsmy_px[i],0,_WLMZ.EVENT_NAME,"恭喜你获得".._WLMZ.EVENT_NAME.."第["..constant.pz_hanzi[index].."]名,奖励已下发!",Player.jl_mail(constant.pz_wlmz[index]))
                         if i == 1 then
-                            sendmovemsg("0", 1, 254, 0, 300, 1,"活动：活动《".._WLMZ_EVENT_NAME.."》已关闭,本次活动第一名为【"..hsmy_px[i].."】...")
-                            sendmovemsg("0", 1, 254, 0, 270, 1,"活动：活动《".._WLMZ_EVENT_NAME.."》已关闭,本次活动第一名为【"..hsmy_px[i].."】...")
+                            sendmovemsg("0", 1, 254, 0, 300, 1,"活动：活动《".._WLMZ.EVENT_NAME.."》已关闭,本次活动第一名为【"..hsmy_px[i].."】...")
+                            sendmovemsg("0", 1, 254, 0, 270, 1,"活动：活动《".._WLMZ.EVENT_NAME.."》已关闭,本次活动第一名为【"..hsmy_px[i].."】...")
                             Player.title_give(getplayerbyname(hsmy_px[i]), "武林盟主")
                         end
                     end
@@ -3043,9 +3147,9 @@ function ontimerex1()
                 local player_list = getplayerlst()
                 for i, player  in ipairs(player_list or {}) do
                     if getflagstatus(player,VarCfg.BS_tyrc) == 0 then
-                        if _safe_getplayvar_num(player, "HUMAN", _WLMZ_SCORE_VAR) > 0 then
+                        if _safe_getplayvar_num(player, "HUMAN", _WLMZ.SCORE_VAR) > 0 then
                             setflagstatus(player,VarCfg.BS_tyrc,1)
-                            sendmail(getbaseinfo(player,2),0,_WLMZ_EVENT_NAME,"恭喜你获得".._WLMZ_EVENT_NAME.."安慰奖,奖励已下发!","恭喜你获得,奖励已下发!",Player.jl_mail(constant.pz_wlmz[4]))
+                            sendmail(getbaseinfo(player,2),0,_WLMZ.EVENT_NAME,"恭喜你获得".._WLMZ.EVENT_NAME.."安慰奖,奖励已下发!","恭喜你获得,奖励已下发!",Player.jl_mail(constant.pz_wlmz[4]))
                         end
                     end
                 end
@@ -3067,6 +3171,7 @@ function ontimerex1()
         if bwczCfg then
             _bwcz_tick(dqfz, bwczCfg)
         end
+        TxzrApi.broadcast_top_countdown()
     end
 end
 --跨服攻沙同步数据
@@ -3470,12 +3575,17 @@ function hd_tcppk(xx,ditu)
         end
     elseif ditu == "正邪大战" then
         if zxdz_map_tick then zxdz_map_tick() end
-    elseif ditu == _WLMZ_MAP_NAME then
-        local wanjia = getobjectinmap(_WLMZ_MAP_NAME,25,29,65,1)
+    elseif getsysvar(VarCfg["G_保卫村庄状态"]) == 1 and _bwcz_get_cfg() and tostring((_bwcz_get_cfg()).map or "") == tostring(ditu or "") then
+        local bwczCfg = _bwcz_get_cfg()
+        if BwczApi.send_498_panel_to_map then
+            BwczApi.send_498_panel_to_map(bwczCfg)
+        end
+    elseif ditu == _WLMZ.MAP_NAME then
+        local wanjia = getobjectinmap(_WLMZ.MAP_NAME,25,29,65,1)
         for k, v in pairs(wanjia) do
-            local jf = _safe_getplayvar_num(v, "HUMAN", _WLMZ_SCORE_VAR) + 1
-            setplayvar(v, "HUMAN", _WLMZ_SCORE_VAR, jf, 1)
-            local hsmy_px = sorthumvar(_WLMZ_SCORE_VAR,1,1,5)
+            local jf = _safe_getplayvar_num(v, "HUMAN", _WLMZ.SCORE_VAR) + 1
+            setplayvar(v, "HUMAN", _WLMZ.SCORE_VAR, jf, 1)
+            local hsmy_px = sorthumvar(_WLMZ.SCORE_VAR,1,1,5)
             sendluamsg(v,101,498,1,0,'{"pmsj":'..tbl2json(hsmy_px)..',"grjf":'..jf..'}')
         end
     end

@@ -1898,6 +1898,7 @@ npc[507] = function(play, p2, p3, msgData) --活动面板
                 bwcz_tb.pmsj = sorthumvar(scoreVar, 1, 1, 5)
                 local bwcz_data = BwczApi.get_player_data and BwczApi.get_player_data(play) or {}
                 bwcz_tb.gx = tonumber(bwcz_data.total_merit or 0) or 0
+                bwcz_tb.grjf = bwcz_tb.gx
                 bwcz_tb.title = tostring(bwcz_data.title or "")
             end
         end
@@ -1928,6 +1929,9 @@ npc[507] = function(play, p2, p3, msgData) --活动面板
             mapmove(play, tostring(bwcz_cfg.map or "村庄"), tonumber(enter_pos[1]) or 126, tonumber(enter_pos[2]) or 107, 2)
             if BwczApi and BwczApi.add_activity_score then
                 BwczApi.add_activity_score(play, bwcz_cfg)
+            end
+            if BwczApi and BwczApi.send_498_panel then
+                BwczApi.send_498_panel(play, bwcz_cfg)
             end
             _activity507_enter_notice(play, 1, "保卫村庄")
         elseif p3 == 2 then
