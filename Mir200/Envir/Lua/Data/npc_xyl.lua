@@ -610,8 +610,6 @@ local function _xyl_check_task(play, name)
         ["引导幸运增幅"] = _xyl_has_second_continent_lucky_view,
         ["幸运增幅强化一次"] = _xyl_has_second_continent_lucky_view,
         ["限时福利"] = _xyl_has_second_continent_welfare_open,
-        ["洗炼天书"] = _xyl_has_second_continent_tianshu_refine,
-        ["引导天书使者洗炼一次"] = _xyl_has_second_continent_tianshu_refine,
         ["本命灵根"] = _xyl_has_main_linggen,
         ["灵兽孵化"] = _xyl_has_lingshou_hatched,
         ["筑基"] = _xyl_has_foundation_realm,
@@ -1168,7 +1166,7 @@ local npc_xyl = {
                     desc = "历经转生·三，收获机缘",
                 },
             },
-            name = "三大陆毕业章",
+            name = "苍云秘闻",
             jqd = 0,
 
             jl = {

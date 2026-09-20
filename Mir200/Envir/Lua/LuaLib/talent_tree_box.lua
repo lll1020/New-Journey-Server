@@ -119,8 +119,8 @@ local function _open_select_window(play, box_name)
         '<Img|id=ui_linggen_gem_box|x=0|y=0|width=390|height='
             .. tostring(height)
             .. '|img=public/bg_npc_01.png|bg=1|esc=1|move=0|reset=1|show=0|scale9l=15|scale9r=15|scale9t=15|scale9b=15>',
-        '<Layout|id=ui_linggen_gem_close_area|x=347|y=3|width=36|height=40|link=@linggenGemCancel>',
-        '<Button|id=ui_linggen_gem_close|x=352|y=3|width=26|height=40|nimg=public/1900000510.png|pimg=public/1900000511.png|color=255|size=18|link=@linggenGemCancel>',
+        '<Layout|id=ui_linggen_gem_close_area|x=347|y=3|width=36|height=40|link=@exit>',
+        '<Button|id=ui_linggen_gem_close|x=352|y=3|width=26|height=40|nimg=public/1900000510.png|pimg=public/1900000511.png|color=255|size=18|link=@exit>',
         '<Text|id=ui_linggen_gem_title|x=28|y=23|color=251|size=18|text='
             .. SELECT_HINT .. '>',
     }
@@ -146,6 +146,9 @@ function linggenGemSelect(play, code)
     local pool = _level3_pool()
     local choice = pool[choice_index]
     local box_name = _get_pending_box(play)
+    if box_name == "" then
+        box_name = _configured_item_name(BoxCfg.select_box_idx, SELECT_BOX_NAME)
+    end
     if not choice or box_name == "" then
         Player.sendmsgEx(play, CONFIG_ERROR .. "#57")
         return false
@@ -156,14 +159,18 @@ function linggenGemSelect(play, code)
         return false
     end
 
-    -- Consume first and clear the pending selection before granting anything.
+    -- Consume first, then keep the same window usable while more boxes remain.
     if not _take_one(play, nil, box_name) then
         _set_pending_box(play, "")
         Player.sendmsgEx(play, CONFIG_ERROR .. "#57")
         return false
     end
-    _set_pending_box(play, "")
     _give_one(play, choice.name, box_name)
+    if getbagitemcount(play, box_name) >= 1 then
+        _set_pending_box(play, box_name)
+    else
+        _set_pending_box(play, "")
+    end
     Player.sendmsgEx(play, RECEIVE_PREFIX .. choice.name .. "#218")
     return false
 end

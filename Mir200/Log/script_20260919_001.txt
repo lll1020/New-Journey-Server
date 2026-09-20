@@ -655,3 +655,11 @@
 
 [2026-09-19 23:18:50:052] LuaNPC:玩家名字 ID:999999999 执行 stdmodefunc10 player:玩家名字 耗时：94; NpcThreadId: 4612, CurPlayThreadId: 4612
 
+[2026-09-20 00:00:02:902] LuaNPC:玩家名字 ID:999999999 执行 resetday player:玩家名字 耗时：375; NpcThreadId: 4612, CurPlayThreadId: 4612
+
+[2026-09-20 15:31:33:061] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：94; NpcThreadId: 4612, CurPlayThreadId: 4612
+[2026-09-20 15:31:33:061] [玩家名字]Lua执行耗时过高:94ms msgid:100 22 6 0 
+
+[2026-09-20 15:31:49:093] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：125; NpcThreadId: 4612, CurPlayThreadId: 4612
+[2026-09-20 15:31:49:093] [玩家名字]Lua执行耗时过高:125ms msgid:100 22 6 0 
+
