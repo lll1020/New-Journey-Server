@@ -3200,7 +3200,7 @@ local function _buildLookTianshuPayload(actor)
     T_data.caowei = T_data.caowei or {}
     return {
         T_data = T_data,
-        xianfa_all_unlock = checktitle(actor, "九五至尊") and 1 or 0,
+        xianfa_all_unlock = checktitle(actor, "八荒六合我为尊") and 1 or 0,
     }
 end
 

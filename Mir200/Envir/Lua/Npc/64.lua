@@ -6,6 +6,7 @@ npc = {}
 local _config = Guard.getConfig("npc_64")
 local FairyFate = include("lua/LuaLib/fairy_fate.lua")
 local LINGSHOU_BABY_SECONDS = 36 * 3600
+local PET_ALL_THREE_STAR_TITLE = "Ò»ÂÆ²Ð»ê¿ÉÃðÊÀ"
 local LINGSHOU_BABY_CFG = {
     [1] = {pet = "÷è÷ë", item = "÷è÷ëÓ×áÌ"},
     [2] = {pet = "ÇàÁú", item = "ÇàÁúÓ×áÌ"},
@@ -106,6 +107,21 @@ local function _ensure_pet_data(T_data)
     return T_data
 end
 
+local function _try_give_all_three_star_title(play, T_data)
+    if checktitle(play, PET_ALL_THREE_STAR_TITLE) then
+        return true
+    end
+    T_data = _ensure_pet_data(T_data or Player.getJsonTableByVar(play, VarCfg["T_ÁéÊÞ"]))
+    for i = 1, 5 do
+        local star = _toint(T_data.ls_sp[tostring(i)] or T_data.ls_sp[i])
+        if star < 3 then
+            return false
+        end
+    end
+    Player.title_give(play, PET_ALL_THREE_STAR_TITLE, 1)
+    Player.sendmsgEx(play, "¹§Ï²»ñµÃ³ÆºÅ£º|¡¾" .. PET_ALL_THREE_STAR_TITLE .. "¡¿#218|")
+    return true
+end
 local function _init_lingshou_pool(T_data)
     T_data.ls_pool = T_data.ls_pool or {}
     local total = 0
@@ -348,6 +364,7 @@ function npc.checkBabyHatch(play, aheadSeconds, silent)
 end
 function TMLP_refresh_pet_bonus(play)
     local T_data = _ensure_pet_data(Player.getJsonTableByVar(play, VarCfg["T_ÁéÊÞ"]))
+    _try_give_all_three_star_title(play, T_data)
     local stars = T_data.ls_sp or {}
     local minStar = 3
     for i = 1, 5 do

@@ -1519,10 +1519,10 @@ Buff = {
         end
     end,
     [567] = function(play,zt,Damage,Target,MagicId) -- 极光石
-        -- 特殊效果: 对秘境怪物造成额外15000切割伤害。
+        -- 特殊效果: 对秘境怪物造成额外500000切割伤害。
         if zt == 3 then
             if _equip_is_mijing_mon(play, Target) then
-                return 15000
+                return 500000
             end
             return 0
         end

@@ -2815,8 +2815,18 @@ end
 function titlechanged_1(play)
     seticon(play,1,-1)
 end
-function titlechanged_30405(play) seticon(play,1,1,30405,0,0,0,0,0) end
-function untitled_30405(play) seticon(play,1,-1) end
+function titlechanged_30141(play) seticon(play,1,1,30141,0,0,0,0,0) end
+function titlechanged_30145(play) seticon(play,1,1,30145,0,0,0,0,0) end
+function titlechanged_30148(play) seticon(play,1,1,30148,0,0,0,0,0) end
+function titlechanged_30152(play) seticon(play,1,1,30152,0,0,0,0,0) end
+function titlechanged_30158(play) seticon(play,1,1,30158,0,0,0,0,0) end
+function titlechanged_30182(play) seticon(play,1,1,30182,0,0,0,0,0) end
+function untitled_30141(play) seticon(play,1,-1) end
+function untitled_30145(play) seticon(play,1,-1) end
+function untitled_30148(play) seticon(play,1,-1) end
+function untitled_30152(play) seticon(play,1,-1) end
+function untitled_30158(play) seticon(play,1,-1) end
+function untitled_30182(play) seticon(play,1,-1) end
 --------------------聊天触发前置接口--------------------
 function triggerchat(play,sMsg,chat,msgType)
     local firstChargeData = json2tbl(getplaydef(play, "T39")) or {}

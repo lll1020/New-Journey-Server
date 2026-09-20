@@ -32,3 +32,5 @@
 
 [2026-09-20 19:33:51:455] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：406; NpcThreadId: 32336, CurPlayThreadId: 32336
 
+[2026-09-21 00:00:00:398] LuaNPC:系统控制 ID:999999999 执行 jqr_qingli player:系统控制 耗时：297; NpcThreadId: 35912, CurPlayThreadId: 35912
+

@@ -5,9 +5,71 @@ npc = {}
 --
 
 local _config = Guard.getConfig("npc_1002")
+local TalentTree = rawget(_G, "TalentTree") or include("lua/LuaLib/talent_tree.lua")
 
 local FASHION_ATTR_LIST_NAME = "时装属性"
 
+local function initHaloData(T_data)
+    T_data.gh = T_data.gh or {}
+    T_data.dqgh = tonumber(T_data.dqgh or 0) or 0
+end
+
+local function getHaloConfig(index)
+    return ((_config.details or {}).gh or {})[tonumber(index) or 0]
+end
+
+local function hasHalo(play, index)
+    local cfg = getHaloConfig(index)
+    if not cfg then
+        return false
+    end
+    if cfg.need_core_level then
+        return TalentTree and TalentTree.hasCoreLevel and TalentTree.hasCoreLevel(play, cfg.need_core_level)
+    end
+    if cfg.title and cfg.title ~= "" then
+        return checktitle(play, cfg.title)
+    end
+    return false
+end
+
+local function clearHaloEffect(play, index)
+    local cfg = getHaloConfig(index)
+    if cfg and cfg.sEffect then
+        clearplayeffect(play, cfg.sEffect)
+    end
+end
+
+local function clearAllHaloEffects(play)
+    for idx in ipairs((_config.details or {}).gh or {}) do
+        clearHaloEffect(play, idx)
+    end
+end
+
+local function playHaloEffect(play, index)
+    local cfg = getHaloConfig(index)
+    if cfg and cfg.sEffect then
+        playeffect(play, cfg.sEffect, 0, 0, 0, 1, 0)
+    end
+end
+
+local function refreshHaloState(play, T_data)
+    initHaloData(T_data)
+    for idx in ipairs((_config.details or {}).gh or {}) do
+        T_data.gh[tostring(idx)] = hasHalo(play, idx) and 1 or 0
+    end
+    if T_data.dqgh > 0 and T_data.gh[tostring(T_data.dqgh)] ~= 1 then
+        clearHaloEffect(play, T_data.dqgh)
+        T_data.dqgh = 0
+    end
+end
+
+local function syncHaloEffect(play, T_data)
+    initHaloData(T_data)
+    clearAllHaloEffects(play)
+    if T_data.dqgh > 0 and T_data.gh[tostring(T_data.dqgh)] == 1 then
+        playHaloEffect(play, T_data.dqgh)
+    end
+end
 local function refreshFashionAttr(play)
     local T_data = Player.getJsonTableByVar(play, VarCfg.T_szjl)
     T_data.yjs = T_data.yjs or {}
@@ -53,7 +115,10 @@ end
 
 function npc.main(play,npcid)
     local data = {}
-    data["T_data"] = Player.getJsonTableByVar(play, VarCfg.T_szjl)
+    local T_data = Player.getJsonTableByVar(play, VarCfg.T_szjl)
+    refreshHaloState(play, T_data)
+    Player.setJsonVarByTable(play, VarCfg.T_szjl, T_data)
+    data["T_data"] = T_data
     sendluamsg(play,100,npcid,0,0,tbl2json(data))
 end
 
@@ -68,11 +133,12 @@ function npc.link(play,npcid,ew,aid,data)
     end
     ew = __guardAction
     -- npc_guard: 操作白名单（优化：限定合法操作编号）
-    local __guardAllowedActions = Guard.newActionSet({1,2})
+    local __guardAllowedActions = Guard.newActionSet({1,2,3})
     if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
         return
     end
     local T_data = Player.getJsonTableByVar(play, VarCfg.T_szjl)
+    refreshHaloState(play, T_data)
 
     if ew == 1 then ----更换装扮
         T_data.dqzb = T_data.dqzb or 0
@@ -131,9 +197,32 @@ function npc.link(play,npcid,ew,aid,data)
             data["T_data"] = T_data
             sendluamsg(play,100,npcid,1,0,tbl2json(data))
         end
-end
-
-
+    elseif ew == 3 then ----更换光环
+        initHaloData(T_data)
+        aid = tonumber(aid) or 0
+        if T_data.dqgh == aid then
+            Player.sendmsgEx(play, "当前光环已是该光环，无需更换#57")
+            return
+        end
+        if not getHaloConfig(aid) then
+            Player.sendmsgEx(play, "光环不存在，无法更换#57")
+            return
+        end
+        if T_data.gh[tostring(aid)] ~= 1 then
+            Player.sendmsgEx(play, "你还未满足该光环条件，无法更换#57")
+            return
+        end
+        if T_data.dqgh > 0 then
+            clearHaloEffect(play, T_data.dqgh)
+        end
+        T_data.dqgh = aid
+        playHaloEffect(play, T_data.dqgh)
+        Player.setJsonVarByTable(play, VarCfg.T_szjl, T_data)
+        Player.sendmsgEx(play, "更换光环成功，已切换到|【当前光环】#218|")
+        local data = {}
+        data["T_data"] = T_data
+        sendluamsg(play,100,npcid,1,0,tbl2json(data))
+    end
 end
 -- --登录触发
 local function _onLoginEnd(play, logindatas)
@@ -141,6 +230,9 @@ local function _onLoginEnd(play, logindatas)
     T_data.dqzb = T_data.dqzb or 0
     T_data.dqzj = T_data.dqzj or 0
 
+    refreshHaloState(play, T_data)
+    syncHaloEffect(play, T_data)
+    Player.setJsonVarByTable(play, VarCfg.T_szjl, T_data)
     refreshFashionAttr(play)
 
 end

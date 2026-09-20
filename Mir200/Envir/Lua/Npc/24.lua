@@ -598,6 +598,7 @@ local XIANFA_DROP_USED = "N$天书守财奴已用"
 local XIANFA_DROP_ACTIVE = "N$天书守财奴保护"
 local XIANFA_YUANSHEN_NAME = "元神"
 local XIANFA_YUANSHEN_CD = "N$天书元神CD"
+local XIANFA_ALL_RED_TITLE = "仙途漫漫莫回首"
 
 -- 收集玩家已激活的仙法列表（group/idx/cfg），并返回天书数据
 local function _xianfa_iter(actor)
@@ -616,6 +617,21 @@ local function _xianfa_iter(actor)
     return list, T_data
 end
 
+local function _try_give_all_red_xianfa_title(actor, T_data)
+    if checktitle(actor, XIANFA_ALL_RED_TITLE) then
+        return true
+    end
+    T_data = _tianshu_fix_data(T_data or Player.getJsonTableByVar(actor, VarCfg["T_天书"]))
+    for i = 1, 10 do
+        local slot = T_data.caowei[tostring(i)] or T_data.caowei[i]
+        if type(slot) ~= "table" or tonumber(slot[1]) ~= 5 then
+            return false
+        end
+    end
+    Player.title_give(actor, XIANFA_ALL_RED_TITLE, 1)
+    Player.sendmsgEx(actor, "恭喜获得称号：|【" .. XIANFA_ALL_RED_TITLE .. "】#218|")
+    return true
+end
 -- 按名称判断是否拥有某仙法，返回配置（存在）或 nil（不存在）
 local function _xianfa_has(actor, name)
     local list = _xianfa_iter(actor)
@@ -838,6 +854,7 @@ end
 function xianfa_refresh(actor, new_group, new_idx)
     local list, T_data = _xianfa_iter(actor)
     T_data = _tianshu_fix_data(T_data)
+    _try_give_all_red_xianfa_title(actor, T_data)
     Player.del_attlist(actor, XIANFA_ATTR_NAME)
 
     local attrs = {}
