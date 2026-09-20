@@ -559,6 +559,30 @@ end
 
 local refresh_effects
 local send_partial
+local function reset_npc68_trial_after_m1_switch(play)
+    local reset68 = rawget(_G, "Npc68ResetMainTrial")
+    if type(reset68) == "function" then
+        local ok = pcall(reset68, play)
+        if ok then
+            return
+        end
+    end
+
+    local effects = {60501, 60502, 60503, 60500, 60504}
+    if type(clearplayeffect) == "function" then
+        for _, effect_id in ipairs(effects) do
+            pcall(clearplayeffect, play, effect_id)
+        end
+    end
+
+    if Player and VarCfg and VarCfg.T_dljq then
+        local story = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
+        if type(story.npc_68) == "table" then
+            story.npc_68 = {}
+            Player.setJsonVarByTable(play, VarCfg.T_dljq, story)
+        end
+    end
+end
 
 local function switch_m1(play, npcid, state, node, old_node)
     local ok, msg = can_switch_m1(play, state, node, old_node)
@@ -593,6 +617,7 @@ local function switch_m1(play, npcid, state, node, old_node)
     )
 
     save_state(play, state)
+    reset_npc68_trial_after_m1_switch(play)
     local logic = get_skill_logic()
     if logic and logic.clear then
         logic.clear(play)
@@ -1038,6 +1063,14 @@ function TalentTree.getState(play)
     return state
 end
 
+function TalentTree.getMainBranch(play)
+    local state = get_state(play)
+    local node = active_m1_node(state)
+    if node then
+        return toint(node.branch, 0), tostring(node.id or "")
+    end
+    return 0, ""
+end
 function TalentTree.main(play, npcid)
     local state = TalentTree.ensure(play)
     refresh_effects(play, state)

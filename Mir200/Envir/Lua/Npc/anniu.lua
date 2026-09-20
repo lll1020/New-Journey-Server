@@ -2930,6 +2930,10 @@ npc[516] = function(play, p2, p3, msgData) --至尊赞助
             Player.sendmsgEx(play, _zz516_condition_tip(play, config))
             return
         end
+        local needBlackCardFirstReward = idx == 3 and tonumber(T_data.zzhk_first_reward or 0) ~= 1
+        if needBlackCardFirstReward then
+            T_data.zzhk_first_reward = 1
+        end
         T_data[key] = 1
         Player.setJsonVarByTable(play, VarCfg["T_免费赞助"], T_data)
 
@@ -2939,6 +2943,9 @@ npc[516] = function(play, p2, p3, msgData) --至尊赞助
         end
         if type(config.jl) == "table" and #config.jl > 0 then
             Player.rwjl(play, config.jl, "至尊赞助奖励", 1)
+        end
+        if needBlackCardFirstReward and type(stdmodefunc59) == "function" then
+            pcall(stdmodefunc59, play, nil, true)
         end
         sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[至尊赞助]</font><font color=\'#28ef01\'>领取成功...</font>","Type":9}')
         _zz516_send_panel(play, 1, idx)

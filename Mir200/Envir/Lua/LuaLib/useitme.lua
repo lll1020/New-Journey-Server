@@ -1199,10 +1199,10 @@ local function _use_1002_unlock(play, item, keyName, listName, label)
     return false
 end
 function stdmodefunc53(play, item)  --使用时装  getstditeminfo(getiteminfo(play, item, 2), 8)  通过这个来获取对应的序号
-    _use_1002_unlock(play, item, "yjs", "sz", "??")
+    return _use_1002_unlock(play, item, "yjs", "sz", "时装")
 end
 function stdmodefunc54(play, item)  --使用足迹  getstditeminfo(getiteminfo(play, item, 2), 8)  通过这个来获取对应的序号
-    _use_1002_unlock(play, item, "yjszj", "zj", "足迹")
+    return _use_1002_unlock(play, item, "yjszj", "zj", "足迹")
 end
 function stdmodefunc55(play, item) --净化宝石
     addbuff(play, 20112)
@@ -1298,13 +1298,13 @@ function stdmodefunc58(play, item) --净业符
     Player.sendmsgEx(play, string.format("使用成功，业火值从#57|【%d】#218|降至#57|【%d】#218|", before, tonumber(after) or 0))
     return false
 end
-function stdmodefunc59(play, item) --至尊黑卡
+function stdmodefunc59(play, item, forceReward) --至尊黑卡
     local rec = json2tbl(getplaydef(play, VarCfg["T_物品使用记录"]))
     if type(rec) ~= "table" then
         rec = {}
     end
     local today = os.date("%Y%m%d")
-    if tostring(rec.zzhk_date or "") == today then
+    if tostring(rec.zzhk_date or "") == today and not forceReward then
         Player.sendmsgEx(play, "至尊黑卡今日已使用过#57")
         return false
     end
@@ -1337,7 +1337,7 @@ function stdmodefunc59(play, item) --至尊黑卡
         end
     end
     setplaydef(play, VarCfg["T_物品使用记录"], tbl2json(rec))
-    Player.rwjl(play, {{"绑定金币",300000},{"绑定元宝",3000},{"绑定灵石",60}}, "至尊黑卡", 1)
+    Player.rwjl(play, {{"绑定金币",300000},{"绑定元宝",3000},{"绑定灵石",60}}, "至尊黑卡", 1,1000)
     Player.sendmsgEx(play, "至尊黑卡使用成功，今日奖励已发放#57")
     return false
 end

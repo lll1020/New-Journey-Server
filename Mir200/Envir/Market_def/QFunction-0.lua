@@ -1906,7 +1906,7 @@ function _cz502_apply_reward(play, amount, idx, lb_json)
     setplaydef(play, VarCfg.T_czlb, tbl2json(lb_json))
     if reward then
         if reward.give then
-            Player.rwjl(play, reward.give, "充值档位奖励", 1)
+            Player.rwjl(play, reward.give, "充值档位奖励", 1,1000)
         end
         if reward.ch then
             if not checktitle(play, reward.ch) then
@@ -2735,22 +2735,7 @@ local _lingshou_skills = {
 }
 
 function attackdamagebb(self,Target,Hiter,MagicId,Damage)
-    if self and Target and not getbaseinfo(Target, ConstCfg.gbase.isplayer) then
-        local petName = tostring(getbaseinfo(self, 1) or "")
-        if _lingshou_pet_index[petName] then
-            local play = _lingshou_get_owner(Hiter)
-            if play and _lingshou_has_active_skill(play, petName) and _lingshou_skill_ready(play, petName, 10) then
-                local skill = _lingshou_skills[petName]
-                if skill then
-                    local ok, err = pcall(skill, play, Target)
-                    if not ok then
-                        release_print("[灵兽技能]触发失败", petName, err)
-                    end
-                end
-            end
-            return (tonumber(Damage) or 0) + _lingshou_cut_damage
-        end
-    end
+    -- 灵兽圣遗物已改为召唤期间生效的灵根技能被动，不再触发旧主动技能。
     return Damage
 end
 function canpaimaiitem(actor,itemIdx,itemMakeIndex,moneyType,price)

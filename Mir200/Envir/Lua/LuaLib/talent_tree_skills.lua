@@ -20,6 +20,65 @@ for key, skill in pairs(SKILLS) do
     SKILL_KEYS[skill.idx] = key
 end
 
+local SKILL_ELEMENTS = {
+    [1017] = "metal",
+    [1018] = "metal",
+    [1019] = "wood",
+    [1020] = "wood",
+    [1023] = "water",
+    [1024] = "water",
+    [1025] = "fire",
+    [1026] = "fire",
+    [1027] = "earth",
+    [1028] = "earth",
+}
+
+local PET_ELEMENT_BY_INDEX = {
+    [1] = "earth",
+    [2] = "wood", 
+    [3] = "fire", 
+    [4] = "metal",
+    [5] = "water",
+}
+
+local PET_DATA_VAR = "T50"
+local PET_SUMMON_INDEX_VAR = "N$lingshou_summoned_idx"
+local PET_SUMMON_UNTIL_VAR = "N$lingshou_summoned_until"
+
+local function pet_skill_multiplier(play, element)
+    if not play or not element or not Player
+        or type(Player.getJsonTableByVar) ~= "function"
+        or type(getplaydef) ~= "function"
+    then
+        return 1
+    end
+
+    local active_index = tonumber(getplaydef(play, PET_SUMMON_INDEX_VAR) or 0) or 0
+    local active_until = tonumber(getplaydef(play, PET_SUMMON_UNTIL_VAR) or 0) or 0
+    if active_index <= 0 or active_until <= os.time() then
+        return 1
+    end
+
+    local data = Player.getJsonTableByVar(play, PET_DATA_VAR) or {}
+    local pet_index = tonumber(data.dqzh or 0) or 0
+    if pet_index <= 0 or active_index ~= pet_index or PET_ELEMENT_BY_INDEX[pet_index] ~= element then
+        return 1
+    end
+
+    local level_data = data.ls or {}
+    local level = tonumber(level_data[tostring(pet_index)] or level_data[pet_index] or 0) or 0
+    if level <= 0 then
+        return 1
+    end
+
+    local relic_data = data.syw or {}
+    local equipped = tonumber(relic_data[tostring(pet_index)] or relic_data[pet_index] or 0) or 0
+    if equipped ~= 1 then
+        return 1
+    end
+    return 1.05
+end
+
 local STACKS = {
     [20179] = {var = 23079, end_var = 23089, max = 3, duration = 5},
     [20180] = {var = 23080, end_var = 23090, max = 8, duration = 3},
@@ -122,11 +181,11 @@ local function is_monster(obj)
 end
 
 local ELEMENT_NAME = {
-    metal = "é‡‘",
-    water = "æ°´",
-    wood = "æœ¨",
-    fire = "ç«",
-    earth = "åœŸ",
+    metal = "é‡?",
+    water = "æ°?",
+    wood = "æœ?",
+    fire = "ç?",
+    earth = "åœ?",
 }
 local M1_ELEMENT = {
     metal_M1 = "metal",
@@ -162,8 +221,8 @@ local function relation_matches(relation, source, target)
     then
         return true
     end
-    local expected = tostring(ELEMENT_NAME[source] or "") .. "å…‹" .. tostring(ELEMENT_NAME[target] or "")
-    return expected ~= "å…‹" and tostring(relation.name or "") == expected
+    local expected = tostring(ELEMENT_NAME[source] or "") .. "å…?" .. tostring(ELEMENT_NAME[target] or "")
+    return expected ~= "å…?" and tostring(relation.name or "") == expected
 end
 
 local function resonance_relation(state)
@@ -1122,14 +1181,15 @@ local function remaining_stack_seconds(target, buff_id)
     return math.max(1, get_obj_var(target, cfg.end_var) - now())
 end
 
-local function detonate_stack(caster, target, buff_id, percent_per_second, keep_stack)
+local function detonate_stack(caster, target, buff_id, percent_per_second, keep_stack, element)
     local stack = get_stack(target, buff_id)
     if stack <= 0 then
         return 0
     end
     local duration = remaining_stack_seconds(target, buff_id)
     local damage = math.floor(
-        attack_value(caster) * stack * math.max(0, tonumber(percent_per_second) or 0)
+        attack_value(caster) * pet_skill_multiplier(caster, element)
+            * stack * math.max(0, tonumber(percent_per_second) or 0)
             * duration / 100
     )
     if keep_stack and keep_stack > 0 then
@@ -1141,8 +1201,11 @@ local function detonate_stack(caster, target, buff_id, percent_per_second, keep_
 end
 
 local function trigger_domain(play, domain, state)
-    local damage = math.floor(attack_value(play) * (tonumber(domain.damage) or 0) / 100)
     local kind = tostring(domain.kind or "")
+    local damage = math.floor(
+        attack_value(play) * pet_skill_multiplier(play, kind)
+            * (tonumber(domain.damage) or 0) / 100
+    )
     if kind == "wood" and flow_active(state, "wood", 2) then
         local heal = math.floor(max_hp(play) * 2 / 100)
         if heal > 0 then
@@ -1209,7 +1272,10 @@ local function trigger_periodic_stack(play, target, buff_id, stack, state)
         percent = percent + 10
     end
 
-    local damage = math.floor(attack_value(play) * stack * percent / 100)
+    local element = buff_id == 20179 and "wood" or (buff_id == 20182 and "fire" or nil)
+    local damage = math.floor(
+        attack_value(play) * pet_skill_multiplier(play, element) * stack * percent / 100
+    )
     if damage <= 0 then
         return
     end
@@ -1352,7 +1418,8 @@ function TalentTreeSkills.breakShield(play, shield_kind, state, break_value)
 end
 
 base_skill_damage = function(play, target, skill_id, damage, state, cast_x, cast_y)
-    local atk = attack_value(play)
+    local element = SKILL_ELEMENTS[tonumber(skill_id) or 0]
+    local atk = attack_value(play) * pet_skill_multiplier(play, element)
     local result = math.max(0, toint(damage, 0))
 
     if is_monster(target)
@@ -1461,7 +1528,8 @@ base_skill_damage = function(play, target, skill_id, damage, state, cast_x, cast
                 target,
                 20180,
                 flow_active(state, "water", 1) and 5 or 4,
-                node_active(state, "water_F1_9") and 3 or nil
+                node_active(state, "water_F1_9") and 3 or nil,
+                "water"
             )
             if node_active(state, "water_F1_9") then
                 burst = math.floor(burst * 115 / 100)
@@ -1516,7 +1584,8 @@ base_skill_damage = function(play, target, skill_id, damage, state, cast_x, cast
                         item,
                         20180,
                         12,
-                        node_active(state, "water_F1_9") and 3 or nil
+                        node_active(state, "water_F1_9") and 3 or nil,
+                        "water"
                     )
                     if node_active(state, "water_F1_9") then
                         burst = math.floor(burst * 115 / 100)
@@ -1554,7 +1623,14 @@ base_skill_damage = function(play, target, skill_id, damage, state, cast_x, cast
         local before_burn = get_stack(target, 20182)
         local detonated = false
         if flow_active(state, "fire", 1) and before_burn >= limit then
-            burst = detonate_stack(play, target, 20182, 10, node_active(state, "fire_F1_9") and 3 or nil)
+            burst = detonate_stack(
+                play,
+                target,
+                20182,
+                10,
+                node_active(state, "fire_F1_9") and 3 or nil,
+                "fire"
+            )
             if node_active(state, "fire_F1_9") then
                 burst = math.floor(burst * 120 / 100)
             end
@@ -1577,7 +1653,8 @@ base_skill_damage = function(play, target, skill_id, damage, state, cast_x, cast
                 target,
                 20182,
                 15,
-                node_active(state, "fire_F1_9") and 3 or nil
+                node_active(state, "fire_F1_9") and 3 or nil,
+                "fire"
             )
         else
             apply_fire(play, target, state)
@@ -1738,7 +1815,8 @@ function TalentTreeSkills.onKillMon(play, mob)
     end
     if burn > 0 then
         local burn_damage = math.floor(
-            attack_value(play) * burn * 10 / 100 * remaining_stack_seconds(mob, 20182)
+            attack_value(play) * pet_skill_multiplier(play, "fire")
+                * burn * 10 / 100 * remaining_stack_seconds(mob, 20182)
         )
         if burn_damage > 0 then
             area_damage_limited(

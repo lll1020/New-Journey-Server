@@ -184,6 +184,43 @@ local function _refresh_pet_panel(play, npcid, p2, T_data)
     sendluamsg(play, 100, npcid or 64, p2 or 1, 0, tbl2json({T_data = T_data, server_time = os.time()}))
 end
 
+local LINGSHOU_SUMMON_IDX_VAR = 'N$lingshou_summoned_idx'
+local LINGSHOU_SUMMON_UNTIL_VAR = 'N$lingshou_summoned_until'
+
+local function _clear_lingshou_summon(play)
+    setplaydef(play, LINGSHOU_SUMMON_IDX_VAR, 0)
+    setplaydef(play, LINGSHOU_SUMMON_UNTIL_VAR, 0)
+end
+
+local function _check_lingshou_summon_expired(play)
+    local summonUntil = tonumber(getplaydef(play, LINGSHOU_SUMMON_UNTIL_VAR) or 0) or 0
+    if summonUntil > 0 and summonUntil <= os.time() then
+        _clear_lingshou_summon(play)
+        return true
+    end
+    return false
+end
+
+local function _start_lingshou_summon(play, petIdx, duration)
+    local summonTime = math.max(0, _toint(duration))
+    if summonTime <= 0 then
+        _clear_lingshou_summon(play)
+        return
+    end
+    setplaydef(play, LINGSHOU_SUMMON_IDX_VAR, petIdx)
+    setplaydef(play, LINGSHOU_SUMMON_UNTIL_VAR, os.time() + summonTime)
+    delaygoto(play, summonTime * 1000 + 100, "@lingshou_summon_timeout")
+end
+
+function lingshou_summon_timeout(play)
+    local summonUntil = tonumber(getplaydef(play, LINGSHOU_SUMMON_UNTIL_VAR) or 0) or 0
+    local leftTime = summonUntil - os.time()
+    if leftTime <= 0 then
+        _clear_lingshou_summon(play)
+    else
+        delaygoto(play, leftTime * 1000 + 100, "@lingshou_summon_timeout")
+    end
+end
 local PET_INTIMACY_ATTR_LIST = "灵兽亲密度"
 
 local PET_BASE_ATTR_LIST = "灵兽本体属性"
@@ -266,6 +303,7 @@ local function _add_lingshou_star(play, idx, source, itemName)
     _refresh_pet_base_bonus(play, T_data)
     _refresh_pet_intimacy_bonus(play, T_data)
     TMLP_refresh_pet_bonus(play)
+    _clear_lingshou_summon(play)
     return true, string.format("灵兽|【%s】#218|孵化成功，当前星级|【%d】#218|%s", cfg.pet, T_data.ls_sp[key], _star_progress_text(progress)), T_data
 end
 
@@ -471,6 +509,7 @@ function npc.link(play,npcid,ew,aid,data)
             return
         end
         T_data.dqzh = json_data.idx
+        _clear_lingshou_summon(play)
         Player.setJsonTableByVar(play, VarCfg["T_灵兽"], T_data)
         if FairyFate and FairyFate.touch then FairyFate.touch(play, "pet") end
         Player.sendmsgEx(play, string.format("你成功出战了灵兽|【%s】#218|，快去战斗吧！", _config.config.ls[json_data.idx].name))
@@ -608,6 +647,7 @@ function Login_lszh(play)
     _refresh_pet_base_bonus(play, T_data)
     _refresh_pet_intimacy_bonus(play, T_data)
     TMLP_refresh_pet_bonus(play)
+    _clear_lingshou_summon(play)
     Buff[105](play,1)
     _settle_due_hatch(play, 60, true)
 end
@@ -616,6 +656,7 @@ GameEvent.add(EventCfg.onLogin, Login_lszh, "灵兽召唤")
 function npc.lscf(play,zt,Damage,Target)
 
     local sj = os.time()
+    _check_lingshou_summon_expired(play)
     local T_data = _ensure_pet_data(Player.getJsonTableByVar(play, VarCfg["T_灵兽"]))
     T_data.ls = T_data.ls or {}
     local petIdx = tonumber(T_data.dqzh or 0) or 0
@@ -628,11 +669,9 @@ function npc.lscf(play,zt,Damage,Target)
     do
         if sj - getplaydef(play,"N$buff_ls") >= 30 then
             local cw = recallmobex(play, petCfg.name,0,0,7,1,levelCfg.time,0,0,0,0,0,0,"")
+            _start_lingshou_summon(play, petIdx, levelCfg.time)
             sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[灵兽]</font><font color=\'#00ff00\'>成功召唤灵兽【'..petCfg.name..'】...</font>","Type":9}')
             setplaydef(play,"N$buff_ls",sj)
-            if _has_pet_synergy(play, T_data) then
-                Player.updateSomeAddr_time(play,nil, petCfg.b_attr,levelCfg.time)
-            end
         end
     end
     return 0

@@ -1,0 +1,34 @@
+[2026-09-20 15:49:50:382] LuaNPC: ID:999999999 执行 startup player: 耗时：31; NpcThreadId: 32336, CurPlayThreadId: 32336
+
+[2026-09-20 15:50:59:531] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：188; NpcThreadId: 32336, CurPlayThreadId: 32336
+
+[2026-09-20 15:53:17:204] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：47; NpcThreadId: 32336, CurPlayThreadId: 32336
+[2026-09-20 15:53:17:204] [玩家名字]Lua执行耗时过高:47ms msgid:100 506 1 0 
+
+[2026-09-20 18:58:59:591] .\Envir\lua/Data/fairy_fate_cfg.lua time：203
+[2026-09-20 18:59:00:295] .\Envir\lua/Data/talent_tree_gems.lua time：219
+
+[2026-09-20 18:59:13:467] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：297; NpcThreadId: 32336, CurPlayThreadId: 32336
+
+[2026-09-20 18:59:14:212] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：188; NpcThreadId: 32336, CurPlayThreadId: 32336
+[2026-09-20 18:59:16:805] LuaNPC:玩家名字 ID:999999999 执行 attack player:玩家名字 耗时：891; NpcThreadId: 32336, CurPlayThreadId: 32336
+[2026-09-20 18:59:17:578] LuaNPC:玩家名字 ID:999999999 执行 pickupitemfrontex player:玩家名字 耗时：234; NpcThreadId: 32336, CurPlayThreadId: 32336
+[2026-09-20 18:59:18:291] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：250; NpcThreadId: 32336, CurPlayThreadId: 32336
+
+[2026-09-20 19:00:00:027] LuaNPC:玩家名字 ID:999999999 执行 attack player:玩家名字 耗时：562; NpcThreadId: 32336, CurPlayThreadId: 32336
+
+[2026-09-20 19:00:33:972] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：172; NpcThreadId: 32336, CurPlayThreadId: 32336
+
+[2026-09-20 19:00:52:845] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：31; NpcThreadId: 32336, CurPlayThreadId: 32336
+
+[2026-09-20 19:01:01:898] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：32; NpcThreadId: 32336, CurPlayThreadId: 32336
+
+[2026-09-20 19:04:19:175] LuaNPC:玩家名字 ID:999999999 执行 moneychange23 player:玩家名字 耗时：203; NpcThreadId: 32336, CurPlayThreadId: 32336
+[2026-09-20 19:04:19:693] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：718; NpcThreadId: 32336, CurPlayThreadId: 32336
+[2026-09-20 19:04:19:693] [玩家名字]Lua执行耗时过高:718ms msgid:101 998 1 4 {"mz":"玩家名字","hb":8}
+
+[2026-09-20 19:17:42:452] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：375; NpcThreadId: 32336, CurPlayThreadId: 32336
+[2026-09-20 19:17:42:452] [玩家名字]Lua执行耗时过高:375ms msgid:101 507 0 0 
+
+[2026-09-20 19:33:51:455] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：406; NpcThreadId: 32336, CurPlayThreadId: 32336
+

@@ -49,8 +49,8 @@ local function _draw_xianfa_safe_effect(dtm, cfg, st)
         return
     end
     local effect_id = tonumber(cfg and cfg.safe_effect or 92) or 92
-    release_print("[npc76][_draw_xianfa_safe_effect] dtm=" .. tostring(dtm) .. " x=" .. tostring(x) .. " y=" .. tostring(y) .. " effect_id=" .. tostring(effect_id))
-    release_print(_safe_effect_id(dtm)..os.time())
+    -- release_print("[npc76][_draw_xianfa_safe_effect] dtm=" .. tostring(dtm) .. " x=" .. tostring(x) .. " y=" .. tostring(y) .. " effect_id=" .. tostring(effect_id))
+    -- release_print(_safe_effect_id(dtm)..os.time())
     mapeffect(_safe_effect_id(dtm)..os.time(), dtm, x, y, effect_id, 2, 0)
     for i = 1, 50 do
         mapeffect(_safe_effect_id(dtm).."lei"..os.time(), dtm, 33 + math.random(-30, 30), 37 + math.random(-30, 30), 56, 1, 0)
@@ -526,7 +526,7 @@ local function _tick_realm_trial(play, dtm, cfg, st)
     if protect_end <= 0 then
         protect_end = tonumber(getplaydef(play, _dujie_end_var) or 0) or 0
     end
-    playeffect(play, tonumber(cfg.lightning_effect or 60463) or 60463, 0, 0, 1, 0, 0)
+    playeffect(play, tonumber(cfg.lightning_effect or 60451) or 60451, 0, 0, 1, 0, 0)
     if protect_end >= now then
         st.dujie_end = 0
         setplaydef(play, _dujie_end_var, 0)
