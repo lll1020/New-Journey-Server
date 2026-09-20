@@ -850,6 +850,25 @@ local function _magtag_pick_drop_item_by_map(mapName)
     return candidates[math.random(limit)].name or ""
 end
 
+local function _magtag_is_exclusive_drop_item(itemName)
+    itemName = _magtag_trim(itemName)
+    if itemName == "" then
+        return false
+    end
+    local cache = _magtag_load_drop_pool()
+    if not cache.itemSet then
+        cache.itemSet = {}
+        for _, list in pairs(cache.byHeader or {}) do
+            for _, item in ipairs(list or {}) do
+                if item.name and item.name ~= "" then
+                    cache.itemSet[item.name] = true
+                end
+            end
+        end
+    end
+    return cache.itemSet[itemName] == true
+end
+
 local function _magtag_try_extra_drop(play, mob)
     if not play or not mob or not _magtag_is_active(play, "drop") then
         return
@@ -2786,6 +2805,10 @@ function mondropitemex(play,DropItem,mon,x,y)
              return false
          end
      end
+    local dropName = tostring(getiteminfo(play, DropItem, 7) or "")
+    if _magtag_is_exclusive_drop_item and _magtag_is_exclusive_drop_item(dropName) then
+        scenevibration(play, 0, 1, 1)
+    end
     return true
 end
 --------------------ÇÐ»»³ÆºÅ´¥·¢--------------------

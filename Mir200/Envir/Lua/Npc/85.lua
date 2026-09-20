@@ -240,6 +240,13 @@ local function _get_skill_cfg(data)
     return ((_config.stage_skill or {})[_full_stage_count(data)] or {})
 end
 
+local function _star_chart_buff_tip(play, name)
+    if not play or not Player or not Player.sendmsgEx then
+        return
+    end
+    Player.sendmsgEx(play, "天书特殊效果触发：#57|【" .. tostring(name or "天书效果") .. "】#218|")
+end
+
 -- 将单条属性累加到合并属性表中。
 local function _add_attr(attrs, attr_id, value)
     attr_id = _toint(attr_id)
@@ -378,6 +385,7 @@ local function _mark_combat(play, skill_cfg)
     setplaydef(play, _combat_until_var, os.time() + 3)
     if skill_cfg and skill_cfg.heal and _toint(getplaydef(play, _heal_timer_flag)) ~= 1 then
         setplaydef(play, _heal_timer_flag, 1)
+        _star_chart_buff_tip(play, "回血")
         delaygoto(play, 1000, "@star_chart_heal_tick")
     end
 end
@@ -414,6 +422,7 @@ local function _apply_domain_to_target(target, percent, reduce, duration)
     setplaydef(target, _domain_pct_var, percent)
     setplaydef(target, _domain_reduce_var, reduce)
     _refresh_domain_target(target)
+    _star_chart_buff_tip(target, "领域")
     delaygoto(target, math.max(1000, duration * 1000), "@star_chart_domain_tick")
 end
 
@@ -453,6 +462,7 @@ function star_chart_attack_trigger(play, Damage, Target, MagicId, Model)
         _refresh_emperor_attr(play)
         _refresh_burst_attr(play)
         delaygoto(play, math.max(1000, _toint(skill_cfg.emperor.duration) * 1000), "@star_chart_emperor_tick")
+        _star_chart_buff_tip(play, "帝疆")
     end
 
     local emperor_active = _is_emperor_active(play)
@@ -463,6 +473,7 @@ function star_chart_attack_trigger(play, Damage, Target, MagicId, Model)
         setplaydef(play, _burst_speed_var, _toint(skill_cfg.burst.speed))
         _refresh_burst_attr(play)
         delaygoto(play, math.max(1000, _toint(skill_cfg.burst.duration) * 1000), "@star_chart_burst_tick")
+        _star_chart_buff_tip(play, "爆发")
     end
 
     if skill_cfg.domain and now - _toint(getplaydef(play, _domain_cd_var)) >= _toint(skill_cfg.domain.cd) then
@@ -473,8 +484,12 @@ function star_chart_attack_trigger(play, Damage, Target, MagicId, Model)
             percent = percent * 2
             reduce = reduce * 2
         end
-        for _, member in ipairs(_get_group_targets(play, _toint(skill_cfg.domain.range))) do
+        local domain_targets = _get_group_targets(play, _toint(skill_cfg.domain.range))
+        for _, member in ipairs(domain_targets) do
             _apply_domain_to_target(member, percent, reduce, _toint(skill_cfg.domain.duration))
+        end
+        if #domain_targets > 0 then
+            _star_chart_buff_tip(play, "领域")
         end
     end
 
@@ -485,6 +500,7 @@ function star_chart_attack_trigger(play, Damage, Target, MagicId, Model)
             if emperor_active then
                 extra = extra * 2
             end
+            _star_chart_buff_tip(play, "芒刺")
             return extra
         end
     end
@@ -515,6 +531,7 @@ function star_chart_struck_trigger(play, Damage, Hiter, MagicId)
         if end_time <= now and math.random(100) <= rate then
             end_time = now + _toint(skill_cfg.huti.duration)
             setplaydef(play, _huti_end_var, end_time)
+            _star_chart_buff_tip(play, "护体")
         end
         if end_time > now and reduce > 0 then
             reduce_value = reduce_value + math.floor(_toint(Damage) * reduce / 100)
@@ -530,6 +547,7 @@ function star_chart_struck_trigger(play, Damage, Hiter, MagicId)
         end
         if math.random(100) <= rate then
             humanhp(Hiter, "-", math.floor(_toint(Damage) * reflect / 100), 110, 0, play, 1)
+            _star_chart_buff_tip(play, "反伤")
         end
     end
     return reduce_value
