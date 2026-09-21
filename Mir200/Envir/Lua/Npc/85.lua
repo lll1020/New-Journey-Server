@@ -587,7 +587,7 @@ local function _ensure_story_unlocked(play, data)
     if (tonumber(story["npc_721"]) or 0) >= 2 then
         return true
     end
-    Player.sendmsgEx(play, "请先完成#57|【天机道长对话3】#218|后再继续提升星象圣图")
+    Player.sendmsgEx(play, "请先完成#57|【天机道长】#218|后再继续提升星象圣图")
     return false
 end
 -- 组装星象圣图面板下发给客户端的数据。
@@ -719,7 +719,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         if stage_idx == 3 and _toint(stage_data.full) == 1 then
             local story = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
             if (tonumber(story["npc_721"]) or 0) < 2 then
-                Player.sendmsgEx(play, "三星已完成，请完成#57|【天机道长对话3】#218|以解锁后续星象圣图")
+                Player.sendmsgEx(play, "三星已完成，请完成#57|【天机道长】#218|以解锁后续星象圣图")
                 Guard.closeNpc(play, npcid)
                 return
             end

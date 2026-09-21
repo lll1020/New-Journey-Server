@@ -1494,26 +1494,9 @@ function ggna(play,id)
         end
     elseif id == "24" then
 
-    addskill(play, 1017, 1)
-    addskill(play, 1018, 1)
-    addskill(play, 1019, 1)
-    addskill(play, 1020, 1)
-    addskill(play, 1023, 1)
-    addskill(play, 1024, 1)
-    addskill(play, 1025, 1)
-    addskill(play, 1026, 1)
-    addskill(play, 1027, 1)
-    addskill(play, 1028, 1)
-    setmagicskillefft(play, getskillname(1017), 1017)
-    setmagicskillefft(play, getskillname(1018), 1018)
-    setmagicskillefft(play, getskillname(1019), 1019)
-    setmagicskillefft(play, getskillname(1020), 1020)
-    setmagicskillefft(play, getskillname(1023), 1023)
-    setmagicskillefft(play, getskillname(1024), 1024)
-    setmagicskillefft(play, getskillname(1025), 1025)
-    setmagicskillefft(play, getskillname(1026), 1026)
-    setmagicskillefft(play, getskillname(1027), 1027)
-    setmagicskillefft(play, getskillname(1028), 1028)
+            local story = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
+            story["npc_721"] = 2
+            Player.setJsonTableByVar(play, VarCfg.T_dljq,story)
 
         -- local jq_data = {}
         -- Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)

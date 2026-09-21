@@ -101,7 +101,7 @@ function Rewards.chapter(kind, map, monster_count, equip_count)
         elseif continent == 6 then
             return list(
                 {item.gold, 5000000},
-                {item.water, 5 * count},
+                {item.water, 5 * count}
             )
         end
         return {}
