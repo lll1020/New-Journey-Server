@@ -9,3 +9,6 @@
 
 [2026-09-22 00:38:43:932] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：297; NpcThreadId: 7676, CurPlayThreadId: 7676
 
+[2026-09-22 01:14:57:472] LuaNPC:玩家名字 ID:999999999 执行 moneychange16 player:玩家名字 耗时：31; NpcThreadId: 7676, CurPlayThreadId: 7676
+[2026-09-22 01:14:57:481] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 7676, CurPlayThreadId: 7676
+

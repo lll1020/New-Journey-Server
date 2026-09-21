@@ -1421,15 +1421,22 @@ Buff = {
         _set_title_buff_flag(play, 341, zt == 1)
         _toggle_buff_var(play, VarCfg.S_buffgwq, 341, zt == 1)
     end,
-    [342] = function(play,zt,Damage,Target) -- 对玩家每次命中额外附加6666点真伤
+    [342] = function(play, zt, Damage, Target)
         if zt == 3 then
-            if Target and getbaseinfo(Target, ConstCfg.gbase.isplayer) then
-                return 6666
+            if not Target or not _equip_is_mon(Target) or math.random(100000) ~= 1 then
+                return 0
+            end
+            local maxhp = _equip_get_maxhp(Target)
+            local curhp = _equip_get_curhp(Target)
+            local hurt = math.floor(maxhp * 0.80)
+            if hurt > curhp then hurt = curhp end
+            if hurt > 0 then
+                humanhp(Target, '-', hurt, 110, 0, play, 1)
             end
             return 0
         end
         _set_title_buff_flag(play, 342, zt == 1)
-        _toggle_buff_var(play, VarCfg.S_buffrwq, 342, zt == 1)
+        _toggle_buff_var(play, VarCfg.S_buffgwq, 342, zt == 1)
     end,
     [330] = function(play,zt) -- 海洋之王祝福：标记型BUFF，冰冻相关数值由称号表或其他逻辑处理
         if zt == 1 then
@@ -1597,6 +1604,25 @@ Buff = {
         if zt ~= 1 then
             setplaydef(play, "N$buff563_count", 0)
         end
+    end,
+    [576] = function(play, zt, Damage, Target)
+        if zt == 3 then
+            if not Target or not _equip_is_player(Target) or math.random(100000) ~= 1 then
+                return 0
+            end
+            local maxhp = _equip_get_maxhp(Target)
+            local curhp = _equip_get_curhp(Target)
+            local hurt = math.floor(maxhp * 0.50)
+            if hurt > curhp then
+                hurt = curhp
+            end
+            if hurt > 0 then
+                setbaseinfo(Target, ConstCfg.gbase.curmp, 0)
+                humanhp(Target, "-", hurt, 110, 0, play, 1)
+            end
+            return 0
+        end
+        _toggle_buff_var(play, VarCfg.S_buffgjq, 576, zt == 1)
     end,
     [564] = function(play,zt) -- 轩辕剑：登录与激活时同步累计切割到轩辕剑物品上
         _set_title_buff_flag(play, 564, zt == 1)
@@ -4578,7 +4604,7 @@ Buff = {
         end
     end,
         -- Buff 561 将攻击触发转发到星象圣图系统。
-        [561] = function(play,zt,Damage,Target,MagicId,Model) -- 星象圣图攻击触发
+    [561] = function(play,zt,Damage,Target,MagicId,Model) -- 星象圣图攻击触发
         if zt == 3 then
             if star_chart_attack_trigger then
                 return star_chart_attack_trigger(play, Damage, Target, MagicId, Model) or 0
@@ -4589,7 +4615,7 @@ Buff = {
         end
     end,
         -- Buff 562 将受击触发转发到星象圣图系统。
-        [562] = function(play,zt,Damage,Target,MagicId) -- 星象圣图被击触发
+    [562] = function(play,zt,Damage,Target,MagicId) -- 星象圣图被击触发
         if zt == 3 then
             if star_chart_struck_trigger then
                 return star_chart_struck_trigger(play, Damage, Target, MagicId) or 0
