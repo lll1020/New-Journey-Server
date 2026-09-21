@@ -456,15 +456,6 @@ function star_chart_attack_trigger(play, Damage, Target, MagicId, Model)
     _mark_combat(play, skill_cfg)
 
     local now = os.time()
-    if skill_cfg.emperor and now - _toint(getplaydef(play, _emperor_cd_var)) >= _toint(skill_cfg.emperor.cd) then
-        setplaydef(play, _emperor_cd_var, now)
-        setplaydef(play, _emperor_end_var, now + _toint(skill_cfg.emperor.duration))
-        _refresh_emperor_attr(play)
-        _refresh_burst_attr(play)
-        delaygoto(play, math.max(1000, _toint(skill_cfg.emperor.duration) * 1000), "@star_chart_emperor_tick")
-        _star_chart_buff_tip(play, "帝疆")
-    end
-
     local emperor_active = _is_emperor_active(play)
 
     if skill_cfg.burst and now - _toint(getplaydef(play, _burst_cd_var)) >= _toint(skill_cfg.burst.cd) then
@@ -474,23 +465,6 @@ function star_chart_attack_trigger(play, Damage, Target, MagicId, Model)
         _refresh_burst_attr(play)
         delaygoto(play, math.max(1000, _toint(skill_cfg.burst.duration) * 1000), "@star_chart_burst_tick")
         _star_chart_buff_tip(play, "爆发")
-    end
-
-    if skill_cfg.domain and now - _toint(getplaydef(play, _domain_cd_var)) >= _toint(skill_cfg.domain.cd) then
-        setplaydef(play, _domain_cd_var, now)
-        local percent = _toint(skill_cfg.domain.all_pct)
-        local reduce = _toint(skill_cfg.domain.reduce)
-        if emperor_active then
-            percent = percent * 2
-            reduce = reduce * 2
-        end
-        local domain_targets = _get_group_targets(play, _toint(skill_cfg.domain.range))
-        for _, member in ipairs(domain_targets) do
-            _apply_domain_to_target(member, percent, reduce, _toint(skill_cfg.domain.duration))
-        end
-        if #domain_targets > 0 then
-            _star_chart_buff_tip(play, "领域")
-        end
     end
 
     if skill_cfg.mang and Target then
@@ -600,6 +574,11 @@ function star_chart_refresh(play)
 end
 
 -- 前三星用于开启星图之谜；三星完成后，完成天机道长对话3即可解锁后续星图。
+local function _sync_star_chart_skills(play)
+    if star_chart_skills_sync then
+        star_chart_skills_sync(play)
+    end
+end
 local function _ensure_story_unlocked(play, data)
     if _full_stage_count(data) < 3 then
         return true
@@ -628,6 +607,7 @@ function npc.main(play, npcid)
         return
     end
     star_chart_refresh(play)
+    _sync_star_chart_skills(play)
     sendluamsg(play, 100, npcid, 0, 0, tbl2json(_build_payload(play, data)))
     openhyperlink(play, 1, 2)
 end
@@ -678,6 +658,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         data.stage[tostring(stage_idx)] = stage_data
         _save_data(play, data)
         star_chart_refresh(play)
+        _sync_star_chart_skills(play)
         Player.sendmsgEx(play, "你成功解锁了#57|【" .. (stage_cfg.name or "星象阶段") .. "】#218|")
         sendluamsg(play, 100, npcid, 1, 0, tbl2json(_build_payload(play, data)))
     elseif p2 == 2 then
@@ -734,6 +715,7 @@ function npc.link(play, npcid, p2, p3, msgData)
             _grant_stage_reward(play, stage_cfg)
         end
         star_chart_refresh(play)
+        _sync_star_chart_skills(play)
         if stage_idx == 3 and _toint(stage_data.full) == 1 then
             local story = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
             if (tonumber(story["npc_721"]) or 0) < 2 then
@@ -749,6 +731,7 @@ end
 -- 登录时刷新星象圣图运行态状态。
 local function _star_chart_on_login(play)
     star_chart_refresh(play)
+    _sync_star_chart_skills(play)
 end
 
 GameEvent.add(EventCfg.onLoginEnd, _star_chart_on_login, "星象圣图")

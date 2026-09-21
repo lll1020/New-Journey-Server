@@ -35,6 +35,7 @@ safeRequire("Envir/Lua/LuaLib/useitme.lua")
 safeRequire("Envir/Lua/LuaLib/atlas.lua")
 safeRequire("Envir/Lua/LuaLib/talent_tree_skills.lua")
 safeRequire("Envir/Lua/LuaLib/talent_tree.lua")
+safeRequire("Envir/Lua/LuaLib/star_chart_skills.lua")
 --------------------Ì××°ÊôÐÔÄ£¿é--------------------
 safeRequire("Envir/Lua/LuaLib/itemattr.lua")
 

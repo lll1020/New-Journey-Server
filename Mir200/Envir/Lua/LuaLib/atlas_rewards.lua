@@ -8,7 +8,6 @@ local item = {
     recharge = "1ÔªÕæ³ä",
     abyss_ticket = "ÉîÔ¨ÃÅÆ±",
     soul = "Ñı¹Ö¾«ÆÇ",
-    mid_dust = "ÖĞ½×ĞÇ³¾",
     low_dust = "³õ½×ĞÇ³¾",
     nether_talisman = "¾»Òµ·û",
     spirit_egg = "ÁéÊŞµ°",
@@ -103,7 +102,6 @@ function Rewards.chapter(kind, map, monster_count, equip_count)
             return list(
                 {item.gold, 5000000},
                 {item.water, 5 * count},
-                {item.mid_dust, count}
             )
         end
         return {}
