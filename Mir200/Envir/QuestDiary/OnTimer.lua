@@ -3453,7 +3453,11 @@ function ontimer6(play)
         local need_charge = tonumber(day_card_cfg.need_charge or 28) or 28
         local claimed_today = tostring(msfc_data.day_card_claim_date or "") == os.date("%Y%m%d")
         local today_charge = tonumber(getplaydef(play, VarCfg.J_zscz) or 0) or 0
-        if (not claimed_today) and today_charge >= need_charge then
+        local open_day = tonumber(getconst(play, "<$KFDAY>") or 0) or 0
+        if open_day <= 0 and ConstCfg and ConstCfg.global and grobalinfo then
+            open_day = tonumber(grobalinfo(ConstCfg.global.openday) or 0) or 0
+        end
+        if first_charge_claimed and open_day >= 2 and (not claimed_today) and today_charge >= need_charge then
             can_msfc = true
         end
     end

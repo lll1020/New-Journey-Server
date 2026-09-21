@@ -259,13 +259,41 @@ local function resonance_taken_multiplier(state)
     return taken
 end
 
-local function apply_resonance_damage(state, target, damage)
+local function skill_damage_bonus(state)
+    return type(state) == "table"
+        and type(state.special) == "table"
+        and math.max(0, toint(state.special.linggen_skill_damage_bonus, 0))
+        or 0
+end
+
+local function skill_damage_reduce(state)
+    return type(state) == "table"
+        and type(state.special) == "table"
+        and math.max(0, toint(state.special.linggen_skill_damage_reduce, 0))
+        or 0
+end
+
+local function apply_skill_damage_bonus(state, damage)
     damage = math.max(0, toint(damage, 0))
+    local percent = skill_damage_bonus(state)
+    if percent <= 0 or damage <= 0 then
+        return damage
+    end
+    return math.floor(damage * (100 + percent) / 100)
+end
+
+local function apply_resonance_damage(state, target, damage)
+    damage = apply_skill_damage_bonus(state, damage)
     local percent = resonance_ignore_percent(state, target)
     if percent <= 0 or damage <= 0 then
         return damage
     end
     return math.floor(damage * (100 + percent) / 100)
+end
+
+local function is_talent_skill_id(skill_id)
+    skill_id = tonumber(skill_id) or 0
+    return SKILL_ELEMENTS[skill_id] ~= nil
 end
 
 local function same_actor(a, b)
@@ -954,9 +982,16 @@ function TalentTreeSkills.adjustTakenDamage(play, hiter, target, damage, magic_i
         return nil, false
     end
     local remaining = damage
-    local resonanceTaken = resonance_taken_multiplier(state_of(play))
+    local state = state_of(play)
+    local resonanceTaken = resonance_taken_multiplier(state)
     if resonanceTaken ~= 1 then
         remaining = math.floor(remaining * resonanceTaken)
+    end
+    if is_talent_skill_id(magic_id) then
+        local reduce = skill_damage_reduce(state)
+        if reduce > 0 then
+            remaining = math.floor(remaining * math.max(0, 100 - reduce) / 100)
+        end
     end
     local still_reduce = get_play_number(play, "N$talent_earth_still_count")
     if still_reduce > 0 then
@@ -1746,6 +1781,7 @@ base_skill_damage = function(play, target, skill_id, damage, state, cast_x, cast
     if resonance_break > 0 then
         defense_break = defense_break + resonance_break
     end
+    result = apply_skill_damage_bonus(state, result)
     if defense_break > 0 then
         result = math.floor(result * (100 + defense_break) / 100)
     end

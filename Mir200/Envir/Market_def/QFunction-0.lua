@@ -1300,7 +1300,7 @@ end
 --------------------±»¹¥»÷Ç°´¥·¢-------------------
 function struckdamage(play, Hiter, Target, MagicId, Damage)
     if TalentTreeSkills and TalentTreeSkills.adjustTakenDamage then
-        local adjusted, handled = TalentTreeSkills.adjustTakenDamage(play, Hiter, Target, Damage)
+        local adjusted, handled = TalentTreeSkills.adjustTakenDamage(play, Hiter, Target, Damage, MagicId)
         if handled then
             return adjusted
         elseif type(adjusted) == "number" then

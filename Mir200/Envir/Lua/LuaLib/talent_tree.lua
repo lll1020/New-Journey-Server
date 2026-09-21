@@ -6,6 +6,7 @@ local SkillLogic = rawget(_G, "TalentTreeSkills")
 local STATE_VAR = (VarCfg and VarCfg.T_talent_tree) or "T74"
 local ATTR_LIST = "talent_tree_attrs"
 local REDPOINT_ICON = 22
+local CORE_TITLE = "我有一剑破万法"
 
 local function touch_fairy_fate(play)
     local fairy_fate = rawget(_G, "FairyFate")
@@ -185,8 +186,9 @@ local function count_active_talent_points(state)
     for node_id, value in pairs(state.nodes or {}) do
         if tostring(node_id) ~= "root" and toint(value, 0) == 1 then
             local node = node_cfg(node_id)
-            local point_cost = node and math.max(0, toint(node.point_cost, 1)) or 0
-            count = count + point_cost
+            if node and not is_m1_node(node) then
+                count = count + math.max(0, toint(node.point_cost, 1))
+            end
         end
     end
     return count
@@ -194,7 +196,7 @@ end
 
 local function get_single_reset_cost(node)
     if is_m1_node(node) then
-        return clone_cost(Cfg.m1_reset_cost or {{"灵石", 100}})
+        return clone_cost(Cfg.m1_reset_cost or {{"灵石", 1000}})
     end
     return clone_cost(Cfg.single_reset_cost or {{"灵石", 20}})
 end
@@ -417,12 +419,32 @@ end
 
 local function collect_socket_refund(state)
     local refund = {}
-    for _, gem_name in pairs(state.sockets or {}) do
-        if type(gem_name) == "string" and gem_name ~= "" and get_gem_def(gem_name) then
+    for node_id, gem_name in pairs(state.sockets or {}) do
+        local node = node_cfg(node_id)
+        if node and not is_m1_node(node)
+            and type(gem_name) == "string" and gem_name ~= "" and get_gem_def(gem_name)
+        then
             refund[gem_name] = (refund[gem_name] or 0) + 1
         end
     end
     return refund
+end
+
+local function get_resettable_nodes(state)
+    local result = {}
+    for node_id, value in pairs(state.nodes or {}) do
+        local node = node_cfg(node_id)
+        if node and tostring(node_id) ~= "root"
+            and toint(value, 0) == 1
+            and not is_m1_node(node)
+        then
+            result[#result + 1] = {
+                id = tostring(node_id),
+                node = node,
+            }
+        end
+    end
+    return result
 end
 
 -- Links are traversable from either endpoint, including cross-element links.
@@ -625,7 +647,7 @@ local function switch_m1(play, npcid, state, node, old_node)
     refresh_effects(play, state)
     refund_cost(play, refund, "本命灵根切换返还")
     touch_fairy_fate(play)
-    Player.sendmsgEx(play, "本命灵根已切换，消耗100灵石#7")
+    Player.sendmsgEx(play, "本命灵根已切换，消耗1000灵石#7")
     send_partial(play, npcid, 7, node.id, state)
 end
 
@@ -683,6 +705,13 @@ refresh_effects = function(play, state)
         setplaydef(play, "N$talent_" .. tostring(key), value)
     end
     state.special = special
+    if toint(state.core_level, 0) >= 40
+        and type(checktitle) == "function"
+        and not checktitle(play, CORE_TITLE)
+        and Player and type(Player.title_give) == "function"
+    then
+        Player.title_give(play, CORE_TITLE, 1)
+    end
     local logic = get_skill_logic()
     if logic and logic.sync then
         logic.sync(play, state)
@@ -868,21 +897,40 @@ local function reset_tree(play, npcid)
         return
     end
     local refundMap = {}
+    local refundPoints = 0
+    local keepNodes = {root = 1}
+    local keepSockets = {}
+    local keepSpentCosts = {}
+    for _, item in ipairs(get_resettable_nodes(state)) do
+        local node_id = item.id
+        local node = item.node
+        refundPoints = refundPoints + math.max(0, toint(node.point_cost, 1))
+        add_cost(refundMap, state.spent_costs[node_id] or node.cost or {})
+    end
     for node_id, value in pairs(state.nodes or {}) do
-        if node_id ~= "root" and toint(value, 0) == 1 then
-            local node = node_cfg(node_id)
-            add_cost(refundMap, state.spent_costs[node_id] or (node and node.cost) or {})
+        local node = node_cfg(node_id)
+        if node and toint(value, 0) == 1 and is_m1_node(node) then
+            keepNodes[tostring(node_id)] = 1
+            if state.sockets[node_id] then
+                keepSockets[tostring(node_id)] = state.sockets[node_id]
+            end
+            if state.spent_costs[node_id] then
+                keepSpentCosts[tostring(node_id)] = state.spent_costs[node_id]
+            end
         end
     end
     for gem_name, amount in pairs(collect_socket_refund(state)) do
         refundMap[gem_name] = (refundMap[gem_name] or 0) + amount
     end
     local refund = cost_map_to_list(refundMap)
-    state.normal_points = state.normal_total
-    state.nodes = {root = 1}
-    state.sockets = {}
+    state.normal_points = math.min(
+        toint(state.normal_points, 0) + refundPoints,
+        toint(state.normal_total, 0)
+    )
+    state.nodes = keepNodes
+    state.sockets = keepSockets
     state.special = {}
-    state.spent_costs = {}
+    state.spent_costs = keepSpentCosts
     state.reset_count = state.reset_count + 1
     save_state(play, state)
     local logic = get_skill_logic()
@@ -892,7 +940,7 @@ local function reset_tree(play, npcid)
     refresh_effects(play, state)
     refund_cost(play, refund, "天赋树洗点返还")
     touch_fairy_fate(play)
-    Player.sendmsgEx(play, "天赋树已重置，点数已返还#7")
+    Player.sendmsgEx(play, "灵根已重置，已保留本命灵根，其余节点已退回#7")
     send_partial(play, npcid, 3, "", state)
 end
 

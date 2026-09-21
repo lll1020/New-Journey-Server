@@ -34,3 +34,13 @@
 
 [2026-09-21 00:00:00:398] LuaNPC:系统控制 ID:999999999 执行 jqr_qingli player:系统控制 耗时：297; NpcThreadId: 35912, CurPlayThreadId: 35912
 
+[2026-09-21 06:12:32:176] >>>>>>HumTime id:0  onTimer5-15 
+
+[2026-09-21 15:09:00:257] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：47; NpcThreadId: 35912, CurPlayThreadId: 35912
+[2026-09-21 15:09:00:257] [玩家名字]Lua执行耗时过高:47ms msgid:100 1002 3 1 
+
+[2026-09-21 15:10:39:494] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 35912, CurPlayThreadId: 35912
+
+[2026-09-21 15:10:51:139] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：32; NpcThreadId: 35912, CurPlayThreadId: 35912
+[2026-09-21 15:10:51:139] [玩家名字]Lua执行耗时过高:32ms msgid:100 22 3 0 
+

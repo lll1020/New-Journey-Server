@@ -8,6 +8,13 @@ local _skill_name = _config.skill_name or "十步一杀"
 local function _today()
     return os.date("%Y%m%d")
 end
+local function _get_open_day(play)
+    local open_day = tonumber(getconst(play, "<$KFDAY>") or 0) or 0
+    if open_day <= 0 and ConstCfg and ConstCfg.global and grobalinfo then
+        open_day = tonumber(grobalinfo(ConstCfg.global.openday) or 0) or 0
+    end
+    return math.max(0, open_day)
+end
 -- 工具方法：按次数展开消耗表
 local function _ensure_cost_table(cost, count)
     local ret = {}
@@ -120,7 +127,7 @@ local function _has_first_charge(play)
     return (tonumber(firstChargeData.main_claimed or firstChargeData.other_lb or firstChargeData._lb or 0) or 0) >= 1
 end
 local function _is_day_card_unlocked(play)
-    return _has_first_charge(play)
+    return _get_open_day(play) >= 2 and _has_first_charge(play)
 end
 local function _has_day_card_title(play)
     local dayCardCfg = _config.day_card or {}
@@ -358,7 +365,11 @@ local function _claim_day_card(play, T_data)
     local needCharge = tonumber(cfg.need_charge) or 28
     local titleName = tostring(cfg.title or "日卡")
     local tokenCount = tonumber(cfg.token_count) or 0
+    if _get_open_day(play) < 2 then
+        return false, "日卡将在开服第二天开放#57"
+    end
     if not _has_first_charge(play) then
+
         return false, "请先领取首充礼包后再开启日卡#57"
     end
     if _is_day_card_claimed(T_data) then
@@ -422,6 +433,7 @@ local function _build_panel_data(play)
     data.title_owned = tonumber(T_data.flags.title_msfc) or 0
     data.today_charge = _get_today_charge(play)
     data.day_card_need_charge = tonumber((_config.day_card or {}).need_charge) or 28
+    data.day_card_open_day = _get_open_day(play)
     data.day_card_unlocked = _is_day_card_unlocked(play) and 1 or 0
     data.day_card_claimed = _is_day_card_claimed(T_data) and 1 or 0
     data.day_card_has_title = _has_day_card_title(play) and 1 or 0
