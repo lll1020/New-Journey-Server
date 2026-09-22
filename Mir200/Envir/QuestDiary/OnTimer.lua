@@ -1053,16 +1053,13 @@ local function _activity_schedule_day()
     return os.date("%Y-%m-%d")
 end
 
-local function _activity_schedule_due(cfg, state, retryNoSpawn)
+local function _activity_schedule_due(cfg, state)
     if type(cfg) ~= "table" or type(state) ~= "table" then
         return false
     end
     local today = _activity_schedule_day()
     if tostring(state.schedule_day or "") == today then
-        if not retryNoSpawn or tonumber(state.open or 0) == 1 or tonumber(state.spawn_done or 0) == 1 then
-            return false
-        end
-        release_print("[ACTIVITY_SCHEDULE_RETRY]", "day=" .. tostring(today), "spawn_done=" .. tostring(state.spawn_done or 0))
+        return false
     end
     local now = os.time()
     local schedule = os.date("*t", now)
@@ -2133,9 +2130,6 @@ local function _bwcz_start(dqfz, cfg, fromBot)
         state.open = 0
         state.finished = 0
         state.spawn_done = 0
-        if not fromBot then
-            state.schedule_day = nil
-        end
         _bwcz_save_state(state)
         setsysvar(VarCfg["G_±£ÎÀ´å×¯×´Ì¬"], 0)
         release_print("[BWCZ_START_FAIL]", "reason=no_spawned_mon", "retry=" .. tostring(fromBot and 0 or 1))
@@ -2220,7 +2214,7 @@ local function _bwcz_tick(dqfz, cfg)
         return
     end
     if dqfz >= ((tonumber(cfg.min_open_day) - 1) * 24 * 60) then
-        local scheduleDue = _activity_schedule_due(cfg, state, true)
+        local scheduleDue = _activity_schedule_due(cfg, state)
         release_print("[BWCZ_SCHEDULE]", "minute=" .. tostring(dqfz), "due=" .. tostring(scheduleDue), "start=" .. tostring(cfg.start_hour or 0) .. ":" .. tostring(cfg.start_minute_clock or 0), "state_day=" .. tostring(state.schedule_day or ""))
         if scheduleDue then
             _bwcz_start(dqfz, cfg, false)
@@ -2690,9 +2684,6 @@ local function _mskh_start(dqfz, cfg, fromBot)
         state.open = 0
         state.finished = 0
         state.spawn_done = 0
-        if not fromBot then
-            state.schedule_day = nil
-        end
         _mskh_save_state(state)
         setsysvar(VarCfg["G_ÃÀÊ³¿ñ»¶×´Ì¬"], 0)
         release_print("[MSKH_START_FAIL]", "reason=no_spawned_mon", "retry=" .. tostring(fromBot and 0 or 1))
@@ -2765,7 +2756,7 @@ local function _mskh_tick(dqfz, cfg)
         return
     end
     if dqfz >= ((tonumber(cfg.min_open_day) - 1) * 24 * 60) then
-        local scheduleDue = _activity_schedule_due(cfg, state, true)
+        local scheduleDue = _activity_schedule_due(cfg, state)
         release_print("[MSKH_SCHEDULE]", "minute=" .. tostring(dqfz), "due=" .. tostring(scheduleDue), "start=" .. tostring(cfg.start_hour or 0) .. ":" .. tostring(cfg.start_minute_clock or 0), "state_day=" .. tostring(state.schedule_day or ""))
         if scheduleDue then
             _mskh_start(dqfz, cfg, false)

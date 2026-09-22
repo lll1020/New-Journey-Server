@@ -75,7 +75,10 @@ function npc.link(play,npcid,ew,aid)
                 Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
                 Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成")
                 sendluamsg(play,101,1005,0,0,"rwwc")
-                -- Player.rwjl(play, _config.rwjl or {{"绑定元宝",1},{"绑定金币",1}}, (_config.name or "剧情任务").."奖励", 1)
+                local rewards = type(_config.rwjl) == "table" and #_config.rwjl > 0 and _config.rwjl or nil
+                if rewards then
+                    Player.rwjl(play, rewards, tostring(_config.name or "npc_622") .. "_reward", 1)
+                end
                 sendluamsg(play,100,npcid,1,2,"")
             else
                 Player.sendmsgEx(play, "你还没有完成#57|【"..(_config.name or "该任务").."】#218|")

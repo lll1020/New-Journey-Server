@@ -31,6 +31,7 @@ local TEXT_SIX_CITY = "六大陆主城"
 local TEXT_TIANFA_INSTANCE = "天罚猎杀者秘境"
 local TEXT_WORLD = "世界"
 local TEXT_DALU = "大陆"
+local FIRE_BUFF_ID = 20183
 
 local function getData(play)
     local data = Player.getJsonTableByVar(play, DATA_VAR) or {}
@@ -48,6 +49,26 @@ local function saveData(play, data)
     Player.setJsonVarByTable(play, DATA_VAR, data)
 end
 
+local function refreshFireBuff(play, fire)
+    if not play then
+        return
+    end
+    fire = math.max(0, math.min(MAX_FIRE, toNumber(fire, 0)))
+    if fire <= 0 then
+        if type(delbuff) == "function" then
+            pcall(delbuff, play, FIRE_BUFF_ID)
+        end
+        return
+    end
+    local stack = math.floor(fire)
+    if type(addbuff) == "function" then
+        pcall(addbuff, play, FIRE_BUFF_ID)
+    end
+    if type(buffstack) == "function" then
+        pcall(buffstack, play, FIRE_BUFF_ID, "=", stack, 1)
+    end
+end
+
 local function mapOf(object, index)
     if not object then
         return ""
@@ -61,6 +82,10 @@ end
 
 local function isSixContext(play)
     return isSixMap(mapOf(play, 3)) or isSixMap(mapOf(play, 45))
+end
+
+local function isSixCityMap(play)
+    return mapOf(play, 3) == TEXT_SIX_CITY or mapOf(play, 45) == TEXT_SIX_CITY
 end
 
 local function findSixCity()
@@ -85,8 +110,7 @@ local function sendEntrance(play)
     end
     data.tianfa_notice_at = now
     saveData(play, data)
-    Player.sendmsgEx(play, "业火值已达到100，请进入天罚猎杀者秘境完成挑战。#57")
-    sendluamsg(play, 101, 9999, 0, 0, "npc_83")
+    messagebox(play, "业火值已达到100，请进入天罚猎杀者秘境完成挑战。", "@yehuo_tianfa_confirm,1", "@exit")
 end
 
 local function moveToCity(play)
@@ -96,6 +120,27 @@ local function moveToCity(play)
     else
         mapmove(play, "xtc", 137, 138, 7)
     end
+end
+
+local function enforceTianfaLimit(play, data)
+    if not play then
+        return data
+    end
+    data = data or getData(play)
+    if data.fire < MAX_FIRE or data.tianfa_active == 1 then
+        return data
+    end
+
+    data.fire = MAX_FIRE
+    data.tianfa_pending = 1
+    saveData(play, data)
+    refreshFireBuff(play, data.fire)
+
+    if isSixContext(play) and not isSixCityMap(play) then
+        moveToCity(play)
+    end
+    sendEntrance(play)
+    return data
 end
 
 local function removeInstance(mapName)
@@ -120,6 +165,7 @@ local function resetChallenge(play, addPoint)
         data.point = data.point + 10
     end
     saveData(play, data)
+    refreshFireBuff(play, data.fire)
     removeInstance(oldMap)
 end
 
@@ -131,11 +177,9 @@ local function markPending(play)
     data.fire = MAX_FIRE
     data.tianfa_pending = 1
     saveData(play, data)
+    refreshFireBuff(play, data.fire)
     if data.tianfa_active ~= 1 then
-        if isMirrorMap(mapOf(play, 3)) and isSixContext(play) then
-            moveToCity(play)
-        end
-        sendEntrance(play)
+        enforceTianfaLimit(play, data)
     end
     return data
 end
@@ -173,6 +217,7 @@ function YeHuo.addFire(play, amount)
     local data = getData(play)
     data.fire = math.max(0, math.min(MAX_FIRE, data.fire + amount))
     saveData(play, data)
+    refreshFireBuff(play, data.fire)
     if data.fire >= MAX_FIRE then
         markPending(play)
     end
@@ -239,6 +284,12 @@ function YeHuo.enter(play)
     return true
 end
 
+function yehuo_tianfa_confirm(play, code)
+    if YeHuo and YeHuo.enter then
+        YeHuo.enter(play)
+    end
+end
+
 local function findHunter(instanceMap)
     local list = getobjectinmap(instanceMap, 0, 0, 999, 2)
     if type(list) ~= "table" then
@@ -261,13 +312,14 @@ local function finishSuccess(play)
     data.tianfa_map = ""
     data.tianfa_back = ""
     saveData(play, data)
+    refreshFireBuff(play, data.fire)
     removeInstance(instanceMap)
     Player.rwjl(play, {
         {TEXT_FIRE_CRYSTAL, 5},
         {TEXT_SHINE_CRYSTAL, 10},
         {TEXT_YUANBAO, 100000},
         {TEXT_BEGIN_DUST, 10},
-    }, "天罚猎杀者挑战奖励", 1, 0)
+    }, "天罚猎杀者挑战奖励", 1, 1000)
     if not checktitle(play, TEXT_HUNTER_TITLE) then
         Player.title_give(play, TEXT_HUNTER_TITLE, 1)
     end
@@ -298,6 +350,7 @@ function yehuo_tianfa_timeout(play)
     data.tianfa_pending = 1
     data.fire = MAX_FIRE
     saveData(play, data)
+    refreshFireBuff(play, data.fire)
     removeInstance(instanceMap)
     moveToCity(play)
     sendEntrance(play)
@@ -316,6 +369,8 @@ local function onLoginEnd(play)
     end
     if data.fire >= MAX_FIRE then
         markPending(play)
+    else
+        refreshFireBuff(play, data.fire)
     end
 end
 
@@ -326,11 +381,8 @@ local function onSwitchMap(play)
         mapmove(play, data.tianfa_map, 29, 27, 2)
         return
     end
-    if data.tianfa_pending == 1 and isMirrorMap(mapName) and isSixContext(play) then
-        moveToCity(play)
-        sendEntrance(play)
-    elseif data.tianfa_pending == 1 and isSixContext(play) then
-        sendEntrance(play)
+    if (data.tianfa_pending == 1 or data.fire >= MAX_FIRE) and isSixContext(play) then
+        enforceTianfaLimit(play, data)
     end
 end
 
@@ -355,15 +407,49 @@ local function onKillMon(play, mob)
 end
 
 local function onKillMonFire(play, mob)
+    local playerName = play and mapOf(play, 1) or ""
+    local playerMap = play and mapOf(play, 3) or ""
+    local playerMapAlias = play and mapOf(play, 45) or ""
+    local mobName = mob and mapOf(mob, 1) or ""
+    local mobMap = mob and mapOf(mob, 3) or ""
+    local mobMapAlias = mob and mapOf(mob, 45) or ""
+    local playerIsSix = play and isSixContext(play) or false
+    local mobIsSix = mob and (isSixMap(mobMap) or isSixMap(mobMapAlias)) or false
+    -- if release_print then
+    --     release_print(
+    --         "[YEHUO_DEBUG]",
+    --         "stage=onKillMonFire",
+    --         "player=" .. tostring(playerName),
+    --         "player_map=" .. tostring(playerMap),
+    --         "player_map_alias=" .. tostring(playerMapAlias),
+    --         "player_six=" .. tostring(playerIsSix),
+    --         "mob=" .. tostring(mobName),
+    --         "mob_map=" .. tostring(mobMap),
+    --         "mob_map_alias=" .. tostring(mobMapAlias),
+    --         "mob_six=" .. tostring(mobIsSix)
+    --     )
+    -- end
     if not play or not mob or not isSixContext(play) then
+        -- if release_print then
+        --     release_print("[YEHUO_DEBUG]", "stage=blocked", "reason=player_or_mob_missing_or_player_not_six")
+        -- end
         return
     end
-    local mobMap = mapOf(mob, 3)
-    if not isSixMap(mobMap) and not isSixMap(mapOf(mob, 45)) then
+    local currentData = getData(play)
+    if currentData.fire >= MAX_FIRE or currentData.tianfa_pending == 1 then
+        enforceTianfaLimit(play, currentData)
         return
     end
-    local mobName = mapOf(mob, 1)
+    if not mobIsSix then
+        -- if release_print then
+        --     release_print("[YEHUO_DEBUG]", "stage=blocked", "reason=mob_not_six")
+        -- end
+        return
+    end
     if mobName == TEXT_HUNTER then
+        -- if release_print then
+        --     release_print("[YEHUO_DEBUG]", "stage=blocked", "reason=tianfa_hunter")
+        -- end
         return
     end
     local mobType = toInt((guaiwutype and guaiwutype[mobName]) or 0)
@@ -371,7 +457,21 @@ local function onKillMonFire(play, mob)
         and (string.find(mobName, TEXT_WORLD, 1, true) ~= nil
             or string.find(mobName, TEXT_DALU, 1, true) ~= nil)
     local amount = isWorldBoss and 10 or (mobType >= 2 and 5 or (mobType == 1 and 2 or 0.5))
-    YeHuo.addFire(play, amount)
+    local before = getData(play).fire
+    local after = YeHuo.addFire(play, amount)
+    -- if release_print then
+    --     release_print(
+    --         "[YEHUO_DEBUG]",
+    --         "stage=add_fire",
+    --         "player=" .. tostring(playerName),
+    --         "mob=" .. tostring(mobName),
+    --         "mob_type=" .. tostring(mobType),
+    --         "world_boss=" .. tostring(isWorldBoss),
+    --         "amount=" .. tostring(amount),
+    --         "before=" .. tostring(before),
+    --         "after=" .. tostring(after)
+    --     )
+    -- end
 end
 
 GameEvent.add(EventCfg.onLoginEnd, onLoginEnd, "yehuo.login")

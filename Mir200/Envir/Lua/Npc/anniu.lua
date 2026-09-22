@@ -3231,7 +3231,7 @@ npc[1004] = function(play, p2, p3, msg) --排行榜查询
             }
             sendluamsg(play, 101, 1004, 0, 0, tbl2json(payload))
         else
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>玩家不存在</font>","Type":9}')
+            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>玩家暂时不在线</font>","Type":9}')
         end
     end
 end

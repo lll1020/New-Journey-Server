@@ -965,7 +965,7 @@ local function upgrade_core(play, npcid)
     save_state(play, state)
     refresh_effects(play, state)
     touch_fairy_fate(play)
-    Player.sendmsgEx(play, "灵根核心升级成功#7")
+    Player.sendmsgEx(play, "灵根核心升级成功#250")
     send_partial(play, npcid, 6, "root", state)
     -- 补发一份最新缓存，确保升级窗口只做局部刷新也能拿到最新等级。
     TalentTree.syncCache(play, 22)

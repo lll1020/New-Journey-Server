@@ -1309,36 +1309,28 @@ function stdmodefunc59(play, item, forceReward) --至尊黑卡
         return false
     end
     rec.zzhk_date = today
-    local _stdmodefunc59_rwjl = Player.rwjl
-    if type(_stdmodefunc59_rwjl) == "function"
-        and type(checktitle) == "function"
-        and checktitle(play, "极光使者") then
-        Player.rwjl = function(target, rewards, ...)
-            Player.rwjl = _stdmodefunc59_rwjl
-            if type(rewards) ~= "table" then
-                return _stdmodefunc59_rwjl(target, rewards, ...)
+    local rewardList = {{"绑定金币",300000},{"绑定元宝",3000},{"绑定灵石",60}}
+    if type(checktitle) == "function" and checktitle(play, "极光使者") then
+        local doubled = {}
+        for _, reward in ipairs(rewardList) do
+            local copy = {}
+            for key, value in pairs(reward) do
+                copy[key] = value
             end
-            local doubled = {}
-            for _, reward in ipairs(rewards) do
-                if type(reward) == "table" then
-                    local copy = {}
-                    for key, value in pairs(reward) do
-                        copy[key] = value
-                    end
-                    if tonumber(copy[2]) then
-                        copy[2] = tonumber(copy[2]) * 2
-                    end
-                    doubled[#doubled + 1] = copy
-                else
-                    doubled[#doubled + 1] = reward
-                end
-            end
-            return _stdmodefunc59_rwjl(target, doubled, ...)
+            copy[2] = (tonumber(copy[2]) or 0) * 2
+            doubled[#doubled + 1] = copy
         end
+        rewardList = doubled
     end
     setplaydef(play, VarCfg["T_物品使用记录"], tbl2json(rec))
-    Player.rwjl(play, {{"绑定金币",300000},{"绑定元宝",3000},{"绑定灵石",60}}, "至尊黑卡", 1,1000)
-    Player.sendmsgEx(play, "至尊黑卡使用成功，今日奖励已发放#57")
+    sendmail(
+        getbaseinfo(play, 2),
+        0,
+        "至尊黑卡奖励",
+        "至尊黑卡今日奖励已通过邮件发放，请注意查收。",
+        Player.jl_mail(rewardList)
+    )
+    Player.sendmsgEx(play, "至尊黑卡使用成功，奖励已通过邮件发放#57")
     return false
 end
 function stdmodefunc60(play, item) --筑基丹碎片
@@ -1602,7 +1594,6 @@ local function _get_zhuji_dan_record(play)
     end
     return rec
 end
-
 
 
 

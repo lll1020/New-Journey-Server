@@ -160,7 +160,7 @@ constant.rw_syb = {
     --进入野火帮并接取任务，击杀20只怪完成扫荡野火帮
     [19] = {20, "扫荡野火帮", task = {kind = "story", tk = "npc_603", yd = {1, "野火帮", 603, 100, 223}, auto = true, need_receive = true}, jx = true},
     --刷新一次天书仙法
-    [20] = {20, "刷新天书仙法", task = {kind = "tianshu_xianfa", yd = {3, 14}}, jl = {wp = {{"1元真实充值", 1}}}, jx = true},
+    [20] = {20, "刷新天书仙法", task = {kind = "tianshu_xianfa", yd = {3, 14}}, jx = true},
     --进入野火帮大营，收集并提交野火帮罪证*10
     [21] = {20, "深入野火", task = {kind = "story", tk = "npc_607", yd = {1, "野火帮大营", 607, 60, 279}, auto = true}, sjwp = {["野火帮罪证"] = 10}, jl = {["hb"] = {{3,100000,"绑定金币"}},wp = {{"千年玄铁",10}}}},
     --升级一次灵根核心
@@ -170,7 +170,7 @@ constant.rw_syb = {
     --前往二大陆主城装备强化 NPC，完成装备强化1次
     [24] = {20, "装备强化", task = {kind = "equip_strength", yd = {1, "二大陆主城", 28, 115, 106}}, jx = true},
     --进入神秘森林并接取任务，击杀30只怪完成守护森林
-    [25] = {20, "守护森林", task = {kind = "story", tk = "npc_608", yd = {1, "神秘森林", 608, 52, 53}, auto = true, need_receive = true}, jl = {wp = {{"1元真实充值", 1}}}, jx = true},
+    [25] = {20, "守护森林", task = {kind = "story", tk = "npc_608", yd = {1, "神秘森林", 608, 52, 53}, auto = true, need_receive = true}, jx = true},
     --打开提升界面，完成江湖称号升级1次
     [26] = {20, "江湖称号升级", task = {kind = "jianghu_title", yd = {1, "二大陆主城", 43, 116, 122}}, jx = true},
     --进入杀伐道场并接取任务，击杀30只怪完成杀伐之路
@@ -180,7 +180,7 @@ constant.rw_syb = {
     --进入乱葬岗，收集并提交唐三彩*5
     [29] = {20, "掘墓人", task = {kind = "story", tk = "npc_610", yd = {1, "乱葬岗", 610, 170, 212}, auto = true}, sjwp = {["唐三彩"] = 5}, jx = true},
     --前往二大陆主城轩辕剑 NPC，提交材料修复轩辕剑
-    [30] = {20, "修复轩辕剑", task = {kind = "xuanyuan_fixed", yd = {1, "二大陆主城", 601, 91, 116}}, sjwp = {["首山之铜"] = 1, ["天女纯阳之力"] = 1, ["五色神石"] = 1}, jl = {wp = {{"1元真实充值", 1}}}, jx = true},
+    [30] = {20, "修复轩辕剑", task = {kind = "xuanyuan_fixed", yd = {1, "二大陆主城", 601, 91, 116}}, sjwp = {["首山之铜"] = 1, ["天女纯阳之力"] = 1, ["五色神石"] = 1}, jx = true},
     --进入夜魔洞并接取任务，击杀10只红名怪完成讨伐夜魔
     [31] = {20, "讨伐夜魔", task = {kind = "story", tk = "npc_606", yd = {1, "夜魔洞", 606, 98, 95}, auto = true, need_receive = true}, jx = true},
     --打开人物界面境界页，提升修为至筑基境
@@ -188,7 +188,7 @@ constant.rw_syb = {
     --进入洞穴秘境，收集并提交杀意碎片*5、煞气*5
     [33] = {20, "古刹之谜", task = {kind = "story", tk = "npc_609", yd = {1, "洞穴秘境", 609, 143, 153}, auto = true}, sjwp = {["杀意碎片"] = 5, ["煞气"] = 5},jl = {["hb"] = {{3,1000000,"金币"}}}, jx = true},
     --前往二大陆主城转生 NPC，完成2大陆转生
-    [34] = {20, "完成2大陆转生", task = {kind = "rebirth", level = 20, yd = {1, "二大陆主城", 33, 90, 127}}, jl = {wp = {{"1元真实充值", 1}}}, jx = true},
+    [34] = {20, "完成2大陆转生", task = {kind = "rebirth", level = 20, yd = {1, "二大陆主城", 33, 90, 127}}, jx = true},
     [35] = {2,"二大陆主城",503,94,131,jx = true},
     [36] = {20, "接受灾厄入侵", task = {kind = "gray_invasion_accept", yd = {1, "灰界", 46, 205, 196}}, jx = true},
     [37] = {20, "潮灾线", task = {kind = "gray_first_route", yd = {1, "灰界", 46, 205, 196}},},

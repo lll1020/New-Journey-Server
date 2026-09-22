@@ -385,7 +385,7 @@ local function _mark_combat(play, skill_cfg)
     setplaydef(play, _combat_until_var, os.time() + 3)
     if skill_cfg and skill_cfg.heal and _toint(getplaydef(play, _heal_timer_flag)) ~= 1 then
         setplaydef(play, _heal_timer_flag, 1)
-        _star_chart_buff_tip(play, "回血")
+        -- _star_chart_buff_tip(play, "回血")
         delaygoto(play, 1000, "@star_chart_heal_tick")
     end
 end
@@ -422,7 +422,7 @@ local function _apply_domain_to_target(target, percent, reduce, duration)
     setplaydef(target, _domain_pct_var, percent)
     setplaydef(target, _domain_reduce_var, reduce)
     _refresh_domain_target(target)
-    _star_chart_buff_tip(target, "领域")
+    -- _star_chart_buff_tip(target, "领域")
     delaygoto(target, math.max(1000, duration * 1000), "@star_chart_domain_tick")
 end
 
@@ -464,7 +464,7 @@ function star_chart_attack_trigger(play, Damage, Target, MagicId, Model)
         setplaydef(play, _burst_speed_var, _toint(skill_cfg.burst.speed))
         _refresh_burst_attr(play)
         delaygoto(play, math.max(1000, _toint(skill_cfg.burst.duration) * 1000), "@star_chart_burst_tick")
-        _star_chart_buff_tip(play, "爆发")
+        -- _star_chart_buff_tip(play, "爆发")
     end
 
     if skill_cfg.mang and Target then
@@ -474,7 +474,7 @@ function star_chart_attack_trigger(play, Damage, Target, MagicId, Model)
             if emperor_active then
                 extra = extra * 2
             end
-            _star_chart_buff_tip(play, "芒刺")
+            -- _star_chart_buff_tip(play, "芒刺")
             return extra
         end
     end
@@ -505,7 +505,7 @@ function star_chart_struck_trigger(play, Damage, Hiter, MagicId)
         if end_time <= now and math.random(100) <= rate then
             end_time = now + _toint(skill_cfg.huti.duration)
             setplaydef(play, _huti_end_var, end_time)
-            _star_chart_buff_tip(play, "护体")
+            -- _star_chart_buff_tip(play, "护体")
         end
         if end_time > now and reduce > 0 then
             reduce_value = reduce_value + math.floor(_toint(Damage) * reduce / 100)
@@ -521,7 +521,7 @@ function star_chart_struck_trigger(play, Damage, Hiter, MagicId)
         end
         if math.random(100) <= rate then
             humanhp(Hiter, "-", math.floor(_toint(Damage) * reflect / 100), 110, 0, play, 1)
-            _star_chart_buff_tip(play, "反伤")
+            -- _star_chart_buff_tip(play, "反伤")
         end
     end
     return reduce_value
