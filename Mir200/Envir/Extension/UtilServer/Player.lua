@@ -1205,18 +1205,18 @@ local function _dl_check(actor, dl)
         return false, "需跟随主线引导后才可进入三大陆"
     elseif dl == 4 then
         local story_ok, story_done, story_need = _dl_has_story_point_count(actor, 3, 25, true)
-        if story_ok and zslv >= 30 and level >= 150 then
+        if story_ok and zslv >= 30 and level >= 150 and _dl_has_linggen_socket_level(actor, 1) then
             _dl_mark_unlocked(actor, 4)
             return true
         end
-        return false, "需三大陆剧情点达到25点、完成三大陆转生、人物等级达到150级，并在灵根天赋树镶嵌一颗三级宝石后才可进入四大陆"
+        return false, "需三大陆剧情点达到25点、完成三大陆转生、人物等级达到150级，并在灵根天赋树镶嵌一颗宝石后才可进入四大陆"
     elseif dl == 5 then
         local story_ok, story_done, story_need = _dl_has_story_point_count(actor, 4, 57, true)
         if story_ok and zslv >= 40 and _dl_has_linggen_socket_level(actor, 3) then
             _dl_mark_unlocked(actor, 5)
             return true
         end
-        return false, "需四大陆剧情点达到57点并完成四大陆转生后才可进入五大陆"
+        return false, "需四大陆剧情点达到57点、完成四大陆转生，并在灵根天赋树镶嵌一颗三级宝石后才可进入五大陆"
     elseif dl == 6 then
         local story_ok, story_done, story_need = _dl_has_story_point_count(actor, 5, 50, true)
         if story_ok and zslv >= 50 then

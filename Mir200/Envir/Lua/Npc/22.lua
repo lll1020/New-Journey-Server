@@ -3,7 +3,7 @@ local TalentTree = include("lua/LuaLib/talent_tree.lua")
 npc = {}
 
 local TALENT_TREE_MAINLINE_ID = 22
-local TALENT_TREE_GATE_TIP = "请先跟随主线任务到达【升级一次灵根核心】后再开启灵根功能"
+local TALENT_TREE_GATE_TIP = "请先完成#57|【升级一次灵根核心】#218|后再开启灵根功能#57"
 
 local function _has_talent_tree_task_access(play)
     local current = tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0

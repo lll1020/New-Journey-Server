@@ -317,7 +317,7 @@ end
 function npc.main(play,npcid)
     local itemobj = linkbodyitem(play, _config.where)
     if not itemobj or itemobj == "0" then
-        Player.sendmsgEx(play, "请先装备#57|【天书】#218|后再打开#57")
+        Player.sendmsgEx(play, "请先装备#57|【天书】#218|后再开启天书功能#57")
         return
     end
     local T_data = _tianshu_fix_data(Player.getJsonTableByVar(play, VarCfg["T_天书"]))
@@ -343,7 +343,7 @@ function npc.link(play,npcid,ew,aid,data)
 
     local itemobj = linkbodyitem(play, _config.where)
     if not itemobj or itemobj == "0" then
-        Player.sendmsgEx(play, "请先装备#57|【天书】#218|后再操作#57")
+        Player.sendmsgEx(play, "请先装备#57|【天书】#218|后再开启天书功能#57")
         return
     end
     local T_data = _tianshu_fix_data(Player.getJsonTableByVar(play, VarCfg["T_天书"]))

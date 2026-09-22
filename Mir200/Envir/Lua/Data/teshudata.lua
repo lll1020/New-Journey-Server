@@ -1302,11 +1302,11 @@ teshudata = {
         need_core_level = 30,
         cost = {{"辉耀水晶",5}},
         details = {
-            {mob_name= "金灵根守护兽",mob_shape = 12034,scale = 0.7,time = 300,nandu = "ss",yq = "灵根核心等级达到Lv.30",jl = "激活雷灵根", itme = "切割之斧[lv10]",},
-            {mob_name= "木灵根守护兽",mob_shape = 12035,time = 300,nandu = "ss",yq = "灵根核心等级达到Lv.30",jl = "激活风灵根", itme = "定风珠",},
-            {mob_name= "水灵根守护兽",mob_shape = 12036,time = 300,nandu = "ss",yq = "灵根核心等级达到Lv.30",jl = "激活冰灵根", itme = "深情的家伙",},
-            {mob_name= "火灵根守护兽",mob_shape = 12037,time = 300,nandu = "ss",yq = "灵根核心等级达到Lv.30",jl = "激活焚灵根", itme = "芭蕉扇",},
-            {mob_name= "土灵根守护兽",mob_shape = 12038,time = 300,nandu = "ss",yq = "灵根核心等级达到Lv.30",jl = "激活岩灵根", itme = "后土之力",},
+            {mob_name= "金灵根守护兽",mob_shape = 16428,time = 300,nandu = "ss",yq = "灵根核心等级达到Lv.30",jl = "激活雷灵根", itme = "切割之斧[lv10]",},
+            {mob_name= "木灵根守护兽",mob_shape = 16353,time = 300,nandu = "ss",yq = "灵根核心等级达到Lv.30",jl = "激活风灵根", itme = "定风珠",},
+            {mob_name= "水灵根守护兽",mob_shape = 16379,time = 300,nandu = "ss",yq = "灵根核心等级达到Lv.30",jl = "激活冰灵根", itme = "深情的家伙",},
+            {mob_name= "火灵根守护兽",mob_shape = 16375,time = 300,nandu = "ss",yq = "灵根核心等级达到Lv.30",jl = "激活焚灵根", itme = "芭蕉扇",},
+            {mob_name= "土灵根守护兽",mob_shape = 16509,scale = 0.7,time = 300,nandu = "ss",yq = "灵根核心等级达到Lv.30",jl = "激活岩灵根", itme = "后土之力",},
         },
     },
     ["npc_70"] = {
@@ -1451,10 +1451,10 @@ teshudata = {
         all_level_add = 5,
         all_desc = "全命盘激活后：150级后等级+5",
         details = {
-            {name = "灵兽", reward_desc = "路径奖励：元宝*10W、灵兽蛋*3", desc = "至少1只灵兽亲密度满级", cost = {{"天道命石",10},{"元宝",1000000}}, reward = {{"元宝",100000},{"灵兽蛋",3}}, title = "天道命盘-灵兽[增加攻击伤害10%、灵兽赋予人物属性+5%]", attr = {{25,10}}},
-            {name = "灵根", reward_desc = "路径奖励：元宝*10W、神·五行石*1", desc = "灵根核心达到33级", cost = {{"天道命石",10},{"元宝",1000000}}, reward = {{"元宝",100000},{"神·五行石",1}}, title = "天道命盘-灵根[增加攻击伤害10%]", attr = {{25,10}}},
-            {name = "修为", reward_desc = "路径奖励：大修为丹*5、元宝*10W", desc = "境界达到元婴境", cost = {{"天道命石",10},{"元宝",1000000}}, reward = {{"修为丹（大）",5},{"元宝",100000}}, title = "天道命盘-修为[增加攻击伤害10%、对境界比你弱小的蝼蚁，伤害加深10%]", attr = {{25,10}}},
-            {name = "仙法", reward_desc = "路径奖励：元宝*10W、仙法卷轴*20", desc = "天书等级达到30级且拥有至少2条红色仙法", cost = {{"天道命石",10},{"元宝",1000000}}, reward = {{"元宝",100000},{"仙法卷轴",20}}, title = "天道命盘-仙法[增加攻击伤害10%、红色仙法概率+5%]", attr = {{25,10}}},
+            {name = "灵兽", reward_desc = "元宝*10W、灵兽蛋*3", desc = "至少1只灵兽亲密度满级", cost = {{"天道命石",10},{"元宝",1000000}}, reward = {{"元宝",100000},{"灵兽蛋",3}}, title = "增加攻击伤害10%\n灵兽赋予人物属性+5%", attr = {{25,10}}},
+            {name = "灵根", reward_desc = "元宝*10W、神·五行石*1", desc = "灵根核心达到33级", cost = {{"天道命石",10},{"元宝",1000000}}, reward = {{"元宝",100000},{"神·五行石",1}}, title = "增加攻击伤害10%", attr = {{25,10}}},
+            {name = "修为", reward_desc = "修为丹*5、元宝*10W", desc = "境界达到元婴境", cost = {{"天道命石",10},{"元宝",1000000}}, reward = {{"修为丹（大）",5},{"元宝",100000}}, title = "增加攻击伤害10%\n对境界比你低的敌人伤害加深10%", attr = {{25,10}}},
+            {name = "仙法", reward_desc = "元宝*10W、仙法卷轴*20", desc = "拥有至少2条红色仙法", cost = {{"天道命石",10},{"元宝",1000000}}, reward = {{"元宝",100000},{"仙法卷轴",20}}, title = "增加攻击伤害10%\n红色仙法概率+5%", attr = {{25,10}}},
         },
     },
     ["npc_75"] = {
@@ -1474,8 +1474,8 @@ teshudata = {
         details = {
             {name = "灵兽", reward = {{"天道卷轴[天命·复活]",1}}, cost = {{"辉耀水晶",100}}, trial = {fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "≮火烧连营·天命策尊≯", boss_pos = {32,36}, boss_effect = 92, pet_tick_sec = 1, pet_hurt_pct = 4, pet_hint_sec = 5}},
             {name = "灵根", reward = {{"天道卷轴[天命·麻痹]",1}}, cost = {{"辉耀水晶",100}}, trial = {fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "王婆", boss_pos = {32,36}, elite = "暗影打手·精英", elite_count = 3, mob = "暗影打手", mob_count = 10, mob_center = {32,36}}},
-            {name = "境界", reward = {{"天道卷轴[天命·神镰]",1}}, cost = {{"辉耀水晶",100}}, trial = {fb_map = "mwsl", fb_time = 120, enter_pos = {29,27}, need_success = 3, lightning_sec = 5, lightning_effect = 60451, dan_item = "天道·渡劫丹", dan_keep_sec = 3}},
-            {name = "天书仙法", reward = {{"天道卷轴[天命·神斧]",1}}, cost = {{"辉耀水晶",100}}, trial = {fb_map = "mwsl", fb_time = 90, enter_pos = {29,27}, total_round = 3, round_sec = 20, score_target = 10, score_tick_sec = 1, safe_radius = 0, safe_effect = 178, safe_points = {{29,27},{35,27},{29,35},{35,35},{32,31}}}},
+            {name = "境界", reward = {{"天道卷轴[天命·神镰]",1}}, cost = {{"辉耀水晶",100}}, trial = {fb_map = "mwsl", fb_time = 120, enter_pos = {29,27}, need_success = 3, lightning_sec = 5, lightning_effect = 60463, dan_item = "天道·渡劫丹", dan_keep_sec = 3}},
+            {name = "天书仙法", reward = {{"天道卷轴[天命·神斧]",1}}, cost = {{"辉耀水晶",100}}, trial = {fb_map = "mwsl", fb_time = 90, enter_pos = {29,27}, total_round = 3, round_sec = 20, score_target = 10, score_tick_sec = 1, safe_radius = 3, safe_effect = 92, safe_points = {{29,27},{35,27},{29,35},{35,35},{32,31}}}},
         },
     },
     -- 六大陆功能：残魂商店与火毒值系统。
@@ -1953,7 +1953,7 @@ teshudata = {
             sz = {
                 {name = "时装：小小裁决战士", sEffect = 60048, shape = 1312,attr = {{244,13888},{25,15},{1,1000},{2,1000},{3,50},{4,50}}},
                 {name = "时装：拉大车", sEffect = 60049, shape = 1313,attr = {{1,2500},{2,2500},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{200,1000},{201,1000},{25,30}}},
-                {name = "时装：圣诞老人", sEffect = 60020, shape = 1314,attr = {{1,2500},{2,2500},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{200,1000},{201,1000},{25,30}}},
+                {name = "时装：圣诞老人", sEffect = 60050, shape = 1314,attr = {{1,2500},{2,2500},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{200,1000},{201,1000},{25,30}}},
                 {name = "时装：暗黑天使", sEffect = 60052, shape = 1316,attr = {{1,2500},{2,2500},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{200,1000},{201,1000},{25,30}}},
                 {name = "时装：熊猫人", sEffect = 60053, shape = 1317,attr = {{1,2500},{2,2500},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{200,1000},{201,1000},{25,30}}},
                 {name = "时装：开挖掘机", sEffect = 60054, shape = 1318,attr = {{1,2500},{2,2500},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{200,1000},{201,1000},{25,30}}},

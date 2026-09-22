@@ -1053,13 +1053,16 @@ local function _activity_schedule_day()
     return os.date("%Y-%m-%d")
 end
 
-local function _activity_schedule_due(cfg, state)
+local function _activity_schedule_due(cfg, state, retryNoSpawn)
     if type(cfg) ~= "table" or type(state) ~= "table" then
         return false
     end
     local today = _activity_schedule_day()
     if tostring(state.schedule_day or "") == today then
-        return false
+        if not retryNoSpawn or tonumber(state.open or 0) == 1 or tonumber(state.spawn_done or 0) == 1 then
+            return false
+        end
+        release_print("[ACTIVITY_SCHEDULE_RETRY]", "day=" .. tostring(today), "spawn_done=" .. tostring(state.spawn_done or 0))
     end
     local now = os.time()
     local schedule = os.date("*t", now)
@@ -2019,6 +2022,7 @@ local function _bwcz_spawn_mon(cfg, monName, hp)
             end
         end
     end
+    release_print("[BWCZ_SPAWN_MON_FAIL]", "map=" .. tostring(mapName), "mon=" .. tostring(monName), "reason=no_spawned_mon")
     return false
 end
 
@@ -2029,6 +2033,7 @@ local function _bwcz_spawn_wave(cfg, state, waveIdx)
     end
     _bwcz_clear_map_monsters(cfg)
     local spawned = 0
+    release_print("[BWCZ_SPAWN_BEGIN]", "map=" .. tostring(cfg.map or ""), "wave=" .. tostring(waveIdx))
     for _, spawn in ipairs(wave.spawn or {}) do
         local count = tonumber(spawn.count) or 0
         local monName = tostring(spawn.name or "")
@@ -2042,6 +2047,7 @@ local function _bwcz_spawn_wave(cfg, state, waveIdx)
     state.current_wave = waveIdx
     state.current_wave_name = tostring(wave.name or waveIdx)
     state.spawn_done = spawned > 0 and 1 or 0
+    release_print("[BWCZ_SPAWN_RESULT]", "wave=" .. tostring(waveIdx), "spawned=" .. tostring(spawned), "spawn_done=" .. tostring(state.spawn_done))
     state.wave_random = tonumber(state.wave_random) or 0
     _bwcz_save_state(state)
     if BwczApi.send_498_panel_to_map then
@@ -2102,6 +2108,7 @@ local function _bwcz_build_rank_data(cfg)
 end
 
 local function _bwcz_start(dqfz, cfg, fromBot)
+    release_print("[BWCZ_START_ENTER]", "minute=" .. tostring(dqfz), "fromBot=" .. tostring(fromBot and 1 or 0), "map=" .. tostring(cfg and cfg.map or ""))
     if getsysvar(VarCfg["G_保卫村庄状态"]) == 1 then
         return false
     end
@@ -2121,7 +2128,19 @@ local function _bwcz_start(dqfz, cfg, fromBot)
     setsysvar(VarCfg["G_保卫村庄状态"], 1)
     _bwcz_save_state(state)
     local waveIdx = _bwcz_pick_wave_idx(cfg, state)
-    _bwcz_spawn_wave(cfg, state, waveIdx)
+    local spawned = _bwcz_spawn_wave(cfg, state, waveIdx)
+    if not spawned then
+        state.open = 0
+        state.finished = 0
+        state.spawn_done = 0
+        if not fromBot then
+            state.schedule_day = nil
+        end
+        _bwcz_save_state(state)
+        setsysvar(VarCfg["G_保卫村庄状态"], 0)
+        release_print("[BWCZ_START_FAIL]", "reason=no_spawned_mon", "retry=" .. tostring(fromBot and 0 or 1))
+        return false
+    end
     sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《保卫村庄》已开启，请尽快前往【" .. tostring(cfg.display_map or cfg.map or "村庄") .. "】参与...")
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《保卫村庄》已开启，请尽快前往【" .. tostring(cfg.display_map or cfg.map or "村庄") .. "】参与...")
     for _, player in ipairs(getplayerlst() or {}) do
@@ -2174,6 +2193,7 @@ end
 
 local function _bwcz_tick(dqfz, cfg)
     local state = _bwcz_get_state()
+    release_print("[BWCZ_TICK]", "minute=" .. tostring(dqfz), "open=" .. tostring(state.open or 0), "schedule_day=" .. tostring(state.schedule_day or ""), "force_start=" .. tostring(state.force_start or 0), "force_end=" .. tostring(state.force_end or 0))
     if tonumber(state.force_end) == 1 then
         state.force_end = nil
         _bwcz_save_state(state)
@@ -2200,7 +2220,9 @@ local function _bwcz_tick(dqfz, cfg)
         return
     end
     if dqfz >= ((tonumber(cfg.min_open_day) - 1) * 24 * 60) then
-        if _activity_schedule_due(cfg, state) then
+        local scheduleDue = _activity_schedule_due(cfg, state, true)
+        release_print("[BWCZ_SCHEDULE]", "minute=" .. tostring(dqfz), "due=" .. tostring(scheduleDue), "start=" .. tostring(cfg.start_hour or 0) .. ":" .. tostring(cfg.start_minute_clock or 0), "state_day=" .. tostring(state.schedule_day or ""))
+        if scheduleDue then
             _bwcz_start(dqfz, cfg, false)
         elseif tostring(state.schedule_notice_day or "") ~= _activity_schedule_day()
             and _activity_schedule_due({
@@ -2522,10 +2544,12 @@ end
 local function _mskh_spawn_one_mon(cfg, state, monName, hpHits)
     local mapName = _mskh_get_map_name(cfg, state)
     if mapName == "" or monName == "" then
+        release_print("[MSKH_SPAWN_SKIP]", "reason=empty_map_or_mon", "map=" .. tostring(mapName), "mon=" .. tostring(monName))
         return false
     end
     local mapW = tonumber(getmapinfo(mapName, 0) or 0) or 0
     local mapH = tonumber(getmapinfo(mapName, 1) or 0) or 0
+    release_print("[MSKH_SPAWN_CHECK]", "map=" .. tostring(mapName), "mon=" .. tostring(monName), "mapW=" .. tostring(mapW), "mapH=" .. tostring(mapH))
     if mapW <= 0 or mapH <= 0 then
         return false
     end
@@ -2544,15 +2568,18 @@ local function _mskh_spawn_one_mon(cfg, state, monName, hpHits)
                 if type(monList) == "table" then
                     for _, mon in pairs(monList) do
                         humanhp(mon, "=", tonumber(hpHits) or 10)
+                        release_print("[MSKH_SPAWN_OK]", "map=" .. tostring(mapName), "mon=" .. tostring(monName), "x=" .. tostring(x), "y=" .. tostring(y), "return=table")
                         return true
                     end
                 elseif monList then
                     humanhp(monList, "=", tonumber(hpHits) or 10)
+                    release_print("[MSKH_SPAWN_OK]", "map=" .. tostring(mapName), "mon=" .. tostring(monName), "x=" .. tostring(x), "y=" .. tostring(y), "return=object")
                     return true
                 end
             end
         end
     end
+    release_print("[MSKH_SPAWN_MON_FAIL]", "map=" .. tostring(mapName), "mon=" .. tostring(monName), "reason=no_spawned_mon")
     return false
 end
 
@@ -2561,11 +2588,14 @@ local function _mskh_spawn_all(cfg, state)
     state.collect_claimed = {}
     state.collect_locks = {}
     local spawned = 0
+    release_print("[MSKH_SPAWN_BEGIN]", "map=" .. tostring(_mskh_get_map_name(cfg, state)), "mon_cfg_count=" .. tostring(#(cfg.initial_spawn or {})))
+    release_print("[MSKH_SPAWN_CONFIG]", "map=" .. tostring(cfg.map or ""), "initial_count=" .. tostring(#(cfg.initial_spawn or {})))
     for _, one in ipairs(cfg.initial_spawn or {}) do
         local monName = tostring(one.name or "")
         local count = tonumber(one.count) or 0
         local monCfg = _mskh_get_mon_cfg(monName, cfg) or {}
         local hpHits = tonumber(monCfg.hp_hits) or 10
+        release_print("[MSKH_SPAWN_ENTRY]", "mon=" .. tostring(monName), "count=" .. tostring(count), "hp=" .. tostring(hpHits), "mon_cfg=" .. tostring(_mskh_get_mon_cfg(monName, cfg) ~= nil))
         for _ = 1, count do
             if _mskh_spawn_one_mon(cfg, state, monName, hpHits) then
                 spawned = spawned + 1
@@ -2573,6 +2603,7 @@ local function _mskh_spawn_all(cfg, state)
         end
     end
     state.spawn_done = spawned > 0 and 1 or 0
+    release_print("[MSKH_SPAWN_RESULT]", "spawned=" .. tostring(spawned), "spawn_done=" .. tostring(state.spawn_done))
     state.last_spawn_ts = os.time()
     _mskh_save_state(state)
     return spawned
@@ -2635,6 +2666,7 @@ local function _mskh_build_rank_data(cfg)
 end
 
 local function _mskh_start(dqfz, cfg, fromBot)
+    release_print("[MSKH_START_ENTER]", "minute=" .. tostring(dqfz), "fromBot=" .. tostring(fromBot and 1 or 0), "map=" .. tostring(cfg and cfg.map or ""), "status=" .. tostring(getsysvar(VarCfg["G_美食狂欢状态"]) or 0))
     if getsysvar(VarCfg["G_美食狂欢状态"]) == 1 then
         return false
     end
@@ -2654,6 +2686,19 @@ local function _mskh_start(dqfz, cfg, fromBot)
     setsysvar(VarCfg["G_美食狂欢状态"], 1)
     _mskh_save_state(state)
     _mskh_tick_runtime(cfg, state)
+    if tonumber(state.spawn_done) ~= 1 then
+        state.open = 0
+        state.finished = 0
+        state.spawn_done = 0
+        if not fromBot then
+            state.schedule_day = nil
+        end
+        _mskh_save_state(state)
+        setsysvar(VarCfg["G_美食狂欢状态"], 0)
+        release_print("[MSKH_START_FAIL]", "reason=no_spawned_mon", "retry=" .. tostring(fromBot and 0 or 1))
+        return false
+    end
+    release_print("[MSKH_START_RESULT]", "status=" .. tostring(getsysvar(VarCfg["G_美食狂欢状态"]) or 0), "alive=" .. tostring(_mskh_count_alive_monsters(cfg, state)), "spawn_done=" .. tostring(state.spawn_done or 0), "state_open=" .. tostring(state.open or 0))
     sendmovemsg("0", 1, 254, 0, 300, 1, "活动：活动《美食狂欢》已开启，请尽快前往【" .. tostring(cfg.map or "美食狂欢") .. "】参与...")
     sendmovemsg("0", 1, 254, 0, 270, 1, "活动：活动《美食狂欢》已开启，击杀鸡-羊-鹿会直接掉落对应肉类...")
     for _, player in ipairs(getplayerlst() or {}) do
@@ -2697,6 +2742,7 @@ end
 
 local function _mskh_tick(dqfz, cfg)
     local state = _mskh_get_state()
+    release_print("[MSKH_TICK]", "minute=" .. tostring(dqfz), "open=" .. tostring(state.open or 0), "schedule_day=" .. tostring(state.schedule_day or ""), "force_start=" .. tostring(state.force_start or 0), "force_end=" .. tostring(state.force_end or 0))
     if tonumber(state.force_end) == 1 then
         state.force_end = nil
         _mskh_save_state(state)
@@ -2719,7 +2765,9 @@ local function _mskh_tick(dqfz, cfg)
         return
     end
     if dqfz >= ((tonumber(cfg.min_open_day) - 1) * 24 * 60) then
-        if _activity_schedule_due(cfg, state) then
+        local scheduleDue = _activity_schedule_due(cfg, state, true)
+        release_print("[MSKH_SCHEDULE]", "minute=" .. tostring(dqfz), "due=" .. tostring(scheduleDue), "start=" .. tostring(cfg.start_hour or 0) .. ":" .. tostring(cfg.start_minute_clock or 0), "state_day=" .. tostring(state.schedule_day or ""))
+        if scheduleDue then
             _mskh_start(dqfz, cfg, false)
         end
     end
@@ -2959,11 +3007,32 @@ TxzrApi.broadcast_top_countdown = function()
 end
 GameEvent.add(EventCfg.onLogin, TxzrApi.send_top_countdown, "天选之人顶部倒计时登录同步")
 GameEvent.add(EventCfg.onKFLogin, TxzrApi.send_top_countdown, "天选之人顶部倒计时跨服同步")
+
+function _activity_safe_tick(tag, fn)
+    local ok, err = pcall(fn)
+    if not ok then
+        release_print("[ACTIVITY_TICK_ERROR]", tostring(tag or ""), tostring(err or ""))
+    end
+end
 function ontimerex1()
     local xqyz = tonumber(getsysvar(VarCfg["G_新区验证"])) or 0
     if xqyz > 0 and not checkkuafuserver() then
         local dqfz = (tonumber(getsysvar(VarCfg["G_开区分钟"])) or 0) + 1
         setsysvar(VarCfg["G_开区分钟"], dqfz)
+        _activity_safe_tick("mskh", function()
+            local mskhCfg = _mskh_get_cfg()
+            if mskhCfg then
+                _mskh_tick(dqfz, mskhCfg)
+            else
+                release_print("[MSKH_CFG_MISSING]", "minute=" .. tostring(dqfz))
+            end
+        end)
+        _activity_safe_tick("bwcz", function()
+            local bwczCfg = _bwcz_get_cfg()
+            if bwczCfg then
+                _bwcz_tick(dqfz, bwczCfg)
+            end
+        end)
         -- 在全局每分钟心跳中轮询血契之门真实编号的开放提示。
         if Npclib and Npclib[81] and Npclib[81].roll_open_notice then
             pcall(Npclib[81].roll_open_notice)
@@ -3155,10 +3224,6 @@ function ontimerex1()
                 end
             end
         end
-        local mskhCfg = _mskh_get_cfg()
-        if mskhCfg then
-            _mskh_tick(dqfz, mskhCfg)
-        end
         local qmdkCfg = _qmdk_get_cfg()
         if qmdkCfg then
             _qmdk_tick(dqfz, qmdkCfg)
@@ -3166,10 +3231,6 @@ function ontimerex1()
         local hdjdCfg = _hdjd_get_cfg()
         if hdjdCfg then
             _hdjd_tick(dqfz, hdjdCfg)
-        end
-        local bwczCfg = _bwcz_get_cfg()
-        if bwczCfg then
-            _bwcz_tick(dqfz, bwczCfg)
         end
         TxzrApi.broadcast_top_countdown()
     end

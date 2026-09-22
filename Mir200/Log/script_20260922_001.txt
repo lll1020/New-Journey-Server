@@ -12,3 +12,34 @@
 [2026-09-22 01:14:57:472] LuaNPC:玩家名字 ID:999999999 执行 moneychange16 player:玩家名字 耗时：31; NpcThreadId: 7676, CurPlayThreadId: 7676
 [2026-09-22 01:14:57:481] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 7676, CurPlayThreadId: 7676
 
+[2026-09-22 16:11:37:735] LuaNPC:玩家名字 ID:999999999 执行 entermap player:玩家名字 耗时：31; NpcThreadId: 35648, CurPlayThreadId: 35648
+[2026-09-22 16:11:37:735] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：125; NpcThreadId: 35648, CurPlayThreadId: 35648
+[2026-09-22 16:11:37:735] [玩家名字]Lua执行耗时过高:125ms msgid:100 503 1 0 
+
+[2026-09-22 16:12:07:695] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：78; NpcThreadId: 35648, CurPlayThreadId: 35648
+[2026-09-22 16:12:07:695] [玩家名字]Lua执行耗时过高:78ms msgid:105 22 22 0 
+
+[2026-09-22 16:12:23:265] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：32; NpcThreadId: 35648, CurPlayThreadId: 35648
+[2026-09-22 16:12:23:265] [玩家名字]Lua执行耗时过高:32ms msgid:100 22 1 0 {"id":"wood_M2"}
+[2026-09-22 16:12:24:489] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 35648, CurPlayThreadId: 35648
+[2026-09-22 16:12:24:489] [玩家名字]Lua执行耗时过高:31ms msgid:100 22 1 0 {"id":"wood_M3"}
+
+[2026-09-22 18:00:54:106] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：62; NpcThreadId: 35648, CurPlayThreadId: 35648
+
+[2026-09-22 18:58:54:330] LuaNPC:玩家名字 ID:999999999 执行 playreconnection player:玩家名字 耗时：141; NpcThreadId: 35648, CurPlayThreadId: 35648
+
+[2026-09-22 18:59:14:024] LuaNPC:玩家名字k ID:999999999 执行 login player:玩家名字k 耗时：390; NpcThreadId: 35648, CurPlayThreadId: 35648
+
+[2026-09-22 19:00:54:065] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：31; NpcThreadId: 35648, CurPlayThreadId: 35648
+
+[2026-09-22 20:19:45:750] LuaNPC:玩家名字k ID:999999999 执行 entermap player:玩家名字k 耗时：32; NpcThreadId: 35648, CurPlayThreadId: 35648
+[2026-09-22 20:19:45:752] LuaNPC:玩家名字k ID:999999999 执行 stdmodefunc10 player:玩家名字k 耗时：79; NpcThreadId: 35648, CurPlayThreadId: 35648
+
+[2026-09-22 20:56:38:793] LuaNPC:玩家名字k ID:999999999 执行 ontimer5 player:玩家名字k 耗时：125; NpcThreadId: 35648, CurPlayThreadId: 35648
+
+[2026-09-22 20:56:51:129] LuaNPC:玩家名字k ID:999999999 执行 playoffline player:玩家名字k 耗时：110; NpcThreadId: 35648, CurPlayThreadId: 35648
+
+[2026-09-22 20:59:00:692] LuaNPC:系统控制 ID:999999999 执行 jqr_shabake player:系统控制 耗时：297; NpcThreadId: 35648, CurPlayThreadId: 35648
+
+[2026-09-22 21:00:00:430] LuaNPC:系统控制 ID:999999999 执行 jqr_zxht_change player:系统控制 耗时：31; NpcThreadId: 35648, CurPlayThreadId: 35648
+

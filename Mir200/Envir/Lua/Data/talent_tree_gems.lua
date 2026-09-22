@@ -7,8 +7,8 @@ local function build_attrs(hp, block, defense, all_percent)
         {id = 1, value = hp},
         {id = 2, value = hp},
         {id = 244, value = block},
-        {id = 5, value = defense},
-        {id = 6, value = defense},
+        {id = 10, value = defense},
+        {id = 12, value = defense},
     }
     for _, attr_id in ipairs(ALL_ATTR_IDS) do
         attrs[#attrs + 1] = {id = attr_id, value = all_percent}

@@ -1379,6 +1379,9 @@ function struckdamage(play, Hiter, Target, MagicId, Damage)
             final = math.floor(final * huijie_hurt_rate)
         end
     end
+    if YeHuo and YeHuo.adjustHarm and Hiter and (not getbaseinfo(Hiter, -1)) and final > 0 then
+        final = YeHuo.adjustHarm(play, final, Hiter)
+    end
     local realDamage = final > 0 and final or 1
     if Hiter and (not getbaseinfo(Hiter, -1)) and BwczApi and BwczApi.get_cfg then
         local bwcz_cfg = BwczApi.get_cfg()

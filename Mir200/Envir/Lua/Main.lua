@@ -63,6 +63,7 @@ safeRequire("Envir/lua/Data/paokujl.lua")                                       
 safeRequire("Envir/lua/Data/jinzhigj.lua")                                                                      --禁止记录地图
 safeRequire("Envir/lua/Data/guaiwutype.lua")                                                                        --怪物类型
 safeRequire("Envir/lua/Data/teshudata.lua")
+safeRequire("Envir/Lua/LuaLib/yehuo.lua")
 
 
 
@@ -148,6 +149,5 @@ Npclib = setmetatable(npcliby, {
         end
     end
 })
-
 
 

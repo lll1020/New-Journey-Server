@@ -1924,6 +1924,10 @@ npc[507] = function(play, p2, p3, msgData) --活动面板
             Player.sendmsgEx(play, "暂未开放#57")
             return
         elseif p3 == 1 then
+            if not _activity507_is_open(p3) then
+                Player.sendmsgEx(play, "参数错误!#57")
+                return
+            end
             local bwcz_cfg = BwczApi and BwczApi.get_cfg and BwczApi.get_cfg() or (teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].bwcz or {})
             local enter_pos = type(bwcz_cfg.enter_pos) == "table" and bwcz_cfg.enter_pos or {126, 107}
             mapmove(play, tostring(bwcz_cfg.map or "村庄"), tonumber(enter_pos[1]) or 126, tonumber(enter_pos[2]) or 107, 2)
@@ -1963,6 +1967,10 @@ npc[507] = function(play, p2, p3, msgData) --活动面板
             mapmove(play, "xtc",137,138)
             _activity507_enter_notice(play, 5, "土城跑酷")
         elseif p3 == 6 then
+            if not _activity507_is_open(p3) then
+                Player.sendmsgEx(play, "参数错误!#57")
+                return
+            end
             local mskh_cfg = MskhApi and MskhApi.get_cfg and MskhApi.get_cfg() or (teshudata and teshudata["anniu_507"] and teshudata["anniu_507"].mskh or {})
             map(play, tostring(mskh_cfg.map or "美食狂欢"))
             if MskhApi and MskhApi.add_activity_score then

@@ -17,7 +17,7 @@ end
 local function _get_data(play)
     local data = Player.getJsonTableByVar(play, _var_name) or {}
     data.point = _toint(data.point)
-    data.fire = _toint(data.fire)
+    data.fire = tonumber(data.fire) or 0
     data.buy = type(data.buy) == "table" and data.buy or {}
     data.title_claim = _toint(data.title_claim)
     data.level_bonus = _toint(data.level_bonus)
@@ -43,13 +43,19 @@ end
 -- 组装商店面板下发给客户端的数据。
 local function _build_payload(play)
     local data = _get_data(play)
-    return {
+    local payload = {
         T_data = data,
         point = data.point,
         fire = data.fire,
         has_title = _has_title(play) and 1 or 0,
         title_bonus_done = Player.hasTitleLevelBonusReward(play, _title_name) and 1 or 0,
     }
+    if YeHuo and YeHuo.buildPayload then
+        for key, value in pairs(YeHuo.buildPayload(play)) do
+            payload[key] = value
+        end
+    end
+    return payload
 end
 
 -- 发放物品奖励或最终称号奖励。
@@ -89,8 +95,15 @@ function npc.link(play, npcid, p2, p3, msgData)
         return
     end
     p2 = __guardAction
-    local __guardAllowedActions = Guard.newActionSet({1,2,9})
+    local __guardAllowedActions = Guard.newActionSet({1,2,3,9})
     if not Guard.ensureActionAllowed(play, npcid, p2, __guardAllowedActions) then
+        return
+    end
+
+    if p2 == 3 then
+        if YeHuo and YeHuo.enter then
+            YeHuo.enter(play)
+        end
         return
     end
 
@@ -179,7 +192,10 @@ end
 
 -- 对外接口：增减火毒值并返回最新结果。
 function npc.add_fire(play, num)
-    num = _toint(num)
+    num = tonumber(num) or 0
+    if YeHuo and YeHuo.addFire then
+        return YeHuo.addFire(play, num)
+    end
     if num == 0 then
         return _toint((_get_data(play) or {}).fire)
     end
@@ -234,4 +250,3 @@ GameEvent.add(EventCfg.onPlaydie, _on_playdie, "残魂商店")
 GameEvent.add(EventCfg.onAttackDamageMonster, _on_attack_damage_monster, "残魂商店")
 
 return npc
-

@@ -87,7 +87,7 @@ local function _guide_cultivation_pill(play)
 end
 function npc.main(play,npcid)
     if not _has_realm_task_access(play) then
-        Player.sendmsgEx(play, "请先到达主线任务【提升修为至筑基境】后再开启境界功能")
+        Player.sendmsgEx(play, "请先完成#57|【提升修为至筑基境】#218|后再开启境界功能#57")
         return
     end
     _send_sync_data(play, npcid, 0)
@@ -96,7 +96,7 @@ end
 
 function npc.link(play,npcid,ew,aid)
     if not _has_realm_task_access(play) then
-        Player.sendmsgEx(play, "请先到达主线任务【提升修为至筑基境】后再开启境界功能")
+        Player.sendmsgEx(play, "请先完成#57|【提升修为至筑基境】#218|后再开启境界功能#57")
         return
     end
     -- npc_guard: 入参校验
