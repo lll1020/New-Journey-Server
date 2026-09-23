@@ -124,3 +124,44 @@
 [2026-09-23 05:19:19:496] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：313; NpcThreadId: 34352, CurPlayThreadId: 34352
 [2026-09-23 05:19:19:496] [玩家名字]Lua执行耗时过高:313ms msgid:100 231 1 0 
 
+[2026-09-23 05:31:33:602] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：62; NpcThreadId: 34352, CurPlayThreadId: 34352
+[2026-09-23 05:31:33:602] [玩家名字]Lua执行耗时过高:62ms msgid:105 22 22 0 
+
+[2026-09-23 06:49:03:396] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：94; NpcThreadId: 34352, CurPlayThreadId: 34352
+
+[2026-09-23 06:53:03:376] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：79; NpcThreadId: 34352, CurPlayThreadId: 34352
+
+[2026-09-23 07:00:00:422] LuaNPC:系统控制 ID:999999999 执行 jqr_zxht_change player:系统控制 耗时：31; NpcThreadId: 34352, CurPlayThreadId: 34352
+
+[2026-09-23 07:14:03:712] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：407; NpcThreadId: 34352, CurPlayThreadId: 34352
+
+[2026-09-23 08:00:00:144] LuaNPC:系统控制 ID:999999999 执行 jqr_zxht_change player:系统控制 耗时：31; NpcThreadId: 34352, CurPlayThreadId: 34352
+
+[2026-09-23 08:15:03:343] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：31; NpcThreadId: 34352, CurPlayThreadId: 34352
+
+[2026-09-23 08:20:03:325] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：32; NpcThreadId: 34352, CurPlayThreadId: 34352
+
+[2026-09-23 10:00:00:480] LuaNPC:系统控制 ID:999999999 执行 jqr_zxht_change player:系统控制 耗时：47; NpcThreadId: 34352, CurPlayThreadId: 34352
+
+[2026-09-23 10:01:03:323] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：31; NpcThreadId: 34352, CurPlayThreadId: 34352
+
+[2026-09-23 10:23:03:307] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：32; NpcThreadId: 34352, CurPlayThreadId: 34352
+
+[2026-09-23 12:10:03:307] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：32; NpcThreadId: 34352, CurPlayThreadId: 34352
+
+[2026-09-23 16:00:03:331] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：79; NpcThreadId: 34352, CurPlayThreadId: 34352
+
+[2026-09-23 18:00:03:383] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：125; NpcThreadId: 34352, CurPlayThreadId: 34352
+
+[2026-09-23 18:30:03:482] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：219; NpcThreadId: 34352, CurPlayThreadId: 34352
+
+[2026-09-23 19:00:03:276] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：32; NpcThreadId: 34352, CurPlayThreadId: 34352
+
+[2026-09-23 19:20:03:265] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：32; NpcThreadId: 34352, CurPlayThreadId: 34352
+
+[2026-09-23 20:00:00:357] LuaNPC:系统控制 ID:999999999 执行 jqr_wudaohui_start player:系统控制 耗时：31; NpcThreadId: 34352, CurPlayThreadId: 34352
+
+[2026-09-23 21:14:17:625] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：484; NpcThreadId: 34352, CurPlayThreadId: 34352
+
+[2026-09-23 22:10:00:302] LuaNPC:系统控制 ID:999999999 执行 jqr_zxdz_end player:系统控制 耗时：63; NpcThreadId: 34352, CurPlayThreadId: 34352
+

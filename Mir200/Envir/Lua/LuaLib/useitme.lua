@@ -650,14 +650,16 @@ function stdmodefunc36(play, item) --海盗宝箱  海盗眼罩  海盗眼罩 10%、90% 金币*
     delitembymakeindex(play, getiteminfo(play, item, 1), 1)
     return false
 end
-function stdmodefunc37(play, item) --船长的宝藏  开启随机获得以下奖励之一：金币88w、元宝8w、五行石*5
-    local roll = math.random(3)
+function stdmodefunc37(play, item) --船长的宝藏  随机获得一项：金币88W、2000W经验卷、千年玄铁*30、辉耀水晶*3
+    local roll = math.random(4)
     if roll == 1 then
         changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, "+", 880000, "船长的宝藏", true)
     elseif roll == 2 then
-        changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 2 or 4, "+", 80000, "船长的宝藏", true)
+        giveitem(play, "2000W经验卷", 1)
+    elseif roll == 3 then
+        giveitem(play, "千年玄铁", 30)
     else
-        giveitem(play, "五行石", 5)
+        giveitem(play, "辉耀水晶", 3)
     end
     delitembymakeindex(play, getiteminfo(play, item, 1), 1)
     return false
