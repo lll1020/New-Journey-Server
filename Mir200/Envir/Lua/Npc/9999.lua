@@ -272,28 +272,23 @@ end
 local function _ff9999_complete_continent_gates(play, continent)
     continent = math.max(2, math.min(6, tonumber(continent) or 2))
     local min_zs = {
-        [2] = 20,
-        [3] = 30,
-        [4] = 40,
-        [5] = 50,
-        [6] = 60,
+        [2] = 0,
+        [3] = 0,
+        [4] = 30,
+        [5] = 40,
+        [6] = 50,
     }
     if continent >= 2 then
+        local target_task = continent == 2 and 16 or 35
         local cur_task = tonumber(getplaydef(play, VarCfg.U_zxrw[1])) or 0
-        if cur_task < 35 then
-            setplaydef(play, VarCfg.U_zxrw[1], 35)
+        if cur_task < target_task then
+            setplaydef(play, VarCfg.U_zxrw[1], target_task)
             setplaydef(play, VarCfg.U_zxrw[2], 0)
-            sendluamsg(play, 103, 1, 0, 0, '{"rwid":35}')
+            sendluamsg(play, 103, 1, 0, 0, tbl2json({rwid = target_task}))
         end
     end
-    _ff9999_set_min_level_and_rebirth(play, 150, min_zs[continent] or 0)
+    _ff9999_set_min_level_and_rebirth(play, continent == 4 and 150 or 0, min_zs[continent] or 0)
     _ff9999_clear_xyl_story(play, continent)
-    if continent >= 5 then
-        _ff9999_complete_basic_linggen(play)
-    end
-    if continent >= 6 then
-        _ff9999_complete_destiny_plate(play)
-    end
     local xyl_continent = continent - 1
     if xyl_continent == 2 then
         _ff9999_finish_second_continent_xyl(play)
@@ -728,11 +723,11 @@ local function _ff9999_get_continent_unlock_desc(continent)
     elseif continent == 3 then
         return "对应主线门槛"
     elseif continent == 4 then
-        return "对应xyl、转生、等级与主线门槛"
+        return "对应剧情点、转生、等级与灵根宝石门槛"
     elseif continent == 5 then
-        return "对应xyl、转生与全部基础灵根Lv.1门槛"
+        return "对应剧情点、转生与三级灵根宝石门槛"
     elseif continent == 6 then
-        return "对应xyl、转生与天道命盘门槛"
+        return "对应剧情点与转生门槛"
     end
     return "对应xyl、转生、主线与功能门槛"
 end

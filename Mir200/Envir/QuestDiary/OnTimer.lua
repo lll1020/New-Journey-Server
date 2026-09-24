@@ -367,9 +367,9 @@ local function _qmdt_get_cfg()
         return nil
     end
     cfg.start_minute = tonumber(cfg.start_minute) or 33
-    cfg.question_count = math.min(tonumber(cfg.question_count) or 5, #cfg.questions)
-    cfg.per_question_sec = tonumber(cfg.per_question_sec) or 52
-    cfg.final_question_sec = tonumber(cfg.final_question_sec) or 30
+    cfg.question_count = math.min(tonumber(cfg.question_count) or 12, #cfg.questions)
+    cfg.per_question_sec = tonumber(cfg.per_question_sec) or 20
+    cfg.final_question_sec = tonumber(cfg.final_question_sec) or 20
     cfg.settle_before_sec = tonumber(cfg.settle_before_sec) or 5
     cfg.base_score = tonumber(cfg.base_score) or 100
     cfg.map = tostring(cfg.map or "È«Ãñ´ðÌâ")
@@ -394,9 +394,9 @@ local function _qmdt_save_state(state)
 end
 local function _qmdt_question_duration(cfg, qidx)
     if tonumber(qidx) >= tonumber(cfg.question_count) then
-        return tonumber(cfg.final_question_sec) or 30
+        return tonumber(cfg.final_question_sec) or 20
     end
-    return tonumber(cfg.per_question_sec) or 52
+    return tonumber(cfg.per_question_sec) or 20
 end
 local function _qmdt_get_answer_point(cfg, idx)
     local point = cfg.answer_points and cfg.answer_points[idx]

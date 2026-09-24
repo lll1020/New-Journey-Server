@@ -1582,8 +1582,8 @@ local function _qmdt_get_cfg_507()
     if type(cfg.questions) ~= "table" or #cfg.questions <= 0 then
         return nil
     end
-    cfg.question_count = math.min(tonumber(cfg.question_count) or 5, #cfg.questions)
-    cfg.per_question_sec = tonumber(cfg.per_question_sec) or 120
+    cfg.question_count = math.min(tonumber(cfg.question_count) or 12, #cfg.questions)
+    cfg.per_question_sec = tonumber(cfg.per_question_sec) or 20
     cfg.base_score = tonumber(cfg.base_score) or 100
     cfg.time_bonus_per_sec = tonumber(cfg.time_bonus_per_sec) or 1
     return cfg
