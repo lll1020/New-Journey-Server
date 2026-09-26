@@ -17,7 +17,7 @@ function npc.main(play,npcid)
     sendluamsg(play,100,npcid,0,0,tbl2json(data))
 end
 
-local function npc_654_finish(play, dtm, win)
+local function npc_654_finish(play, npcid, dtm, win)
     if dtm then
         setenvirofftimer(dtm,1)
         if checkmirrormap(dtm) then
@@ -147,7 +147,7 @@ function npc_654_dsq(xt, play, dtm, data)
     local limit = _config.time or 600
     local start = jq_data[key.."_st"] or 0
     if limit > 0 and (os.time() - start) > limit then
-        npc_654_finish(play, dtm, false)
+        npc_654_finish(play, nil, dtm, false)
         return
     end
 
@@ -155,14 +155,14 @@ function npc_654_dsq(xt, play, dtm, data)
         local px = getbaseinfo(play,4)
         local py = getbaseinfo(play,5)
         if math.abs(px - ex) <= 2 and math.abs(py - ey) <= 2 then
-            npc_654_finish(play, dtm, true)
+            npc_654_finish(play, nil, dtm, true)
             return
         end
     end
 
     local mons = getobjectinmap(dtm, ex, ey, 1, 2)
     if mons and #mons > 0 then
-        npc_654_finish(play, dtm, false)
+        npc_654_finish(play, nil, dtm, false)
         return
     end
 end

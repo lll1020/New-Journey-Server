@@ -81,9 +81,9 @@ function npc.link(play,npcid,ew,aid,data)
                     Player.title_give(play, _config.ch)
                 end
                 sendluamsg(play,101,1005,0,0,"rwwc")
-                local rewards = type(_config.rwjl) == "table" and #_config.rwjl > 0 and _config.rwjl or nil
+                local rewards = _config.jl or _config.rwjl
                 if rewards then
-                    Player.rwjl(play, rewards, (_config.name or "剧情任务").."奖励", 0)
+                    Player.rwjl(play, rewards, (_config.name or "剧情任务").."奖励", 1)
                 end
                 sendluamsg(play,100,npcid,1,2,"")
             else

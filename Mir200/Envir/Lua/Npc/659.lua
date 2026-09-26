@@ -54,6 +54,15 @@ function npc.link(play,npcid,ew,aid,data)
             end
             Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
             Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "该任务").."】#218|")
+            if _config.ch then
+                Player.title_give(play, _config.ch)
+            end
+            sendluamsg(play,101,1005,0,0,"rwwc")
+            local reward = _config.jl or _config.rwjl
+            if reward then
+                Player.rwjl(play, reward, (_config.name or "剧情任务").."奖励", 1)
+            end
+            sendluamsg(play,100,npcid,1,2,"")
             return
         end
 

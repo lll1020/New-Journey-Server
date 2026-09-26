@@ -1,0 +1,99 @@
+[2026-09-26 18:53:02:997] LuaNPC:玩家名字 ID:999999999 执行 sendability player:玩家名字 耗时：32; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 18:53:03:016] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 18:55:33:575] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：110; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 19:26:17:057] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 19:29:46:495] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：32; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:04:29:048] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：46; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:04:41:076] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：32; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:04:51:476] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:05:43:441] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:06:00:387] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:07:21:326] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：32; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:09:06:327] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：32; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:09:12:339] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:09:53:371] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：32; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:11:41:114] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:12:16:107] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:12:43:458] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：32; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:12:58:228] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:13:13:536] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:13:53:446] >>>>>>HumTime id:0  onTimer5-16 
+
+[2026-09-26 20:15:25:324] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：32; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:16:58:295] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:18:38:371] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：32; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:21:08:239] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:21:57:452] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：32; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:22:24:249] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：32; NpcThreadId: 33624, CurPlayThreadId: 33624
+[2026-09-26 20:22:24:249] >>>>>>HumTime id:0  onTimer5-32 
+
+[2026-09-26 20:23:03:094] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:24:03:253] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：32; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:24:15:298] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:24:27:327] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：32; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:25:01:231] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:25:13:281] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：47; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:25:58:104] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:27:38:197] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:28:32:332] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：32; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:28:47:094] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:28:58:029] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:29:12:267] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:29:29:227] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:29:48:358] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:30:28:277] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:31:03:277] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:32:23:156] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:33:09:089] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:33:41:354] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:35:17:060] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:35:33:474] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:35:59:168] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+
+[2026-09-26 20:36:58:236] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 33624, CurPlayThreadId: 33624
+

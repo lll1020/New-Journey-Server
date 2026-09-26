@@ -2245,11 +2245,7 @@ local function _bwcz_add_merit(play, monName, cfg)
 end
 
 local function _bwcz_give_kill_reward(play, monName, cfg)
-    local monType = _bwcz_get_mon_type(monName, cfg)
-    local reward = cfg.kill_reward and cfg.kill_reward[monType] or nil
-    if type(reward) == "table" and #reward > 0 then
-        Player.rwjl(play, reward, _BWCZ.EVENT_NAME, 1, 0)
-    end
+    return
 end
 
 BwczApi.get_cfg = _bwcz_get_cfg
