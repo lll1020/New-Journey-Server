@@ -1,0 +1,40 @@
+[2026-09-28 19:45:37:751] LuaNPC:玩家名字 ID:999999999 执行 sendability player:玩家名字 耗时：63; NpcThreadId: 41772, CurPlayThreadId: 41772
+[2026-09-28 19:45:37:855] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：282; NpcThreadId: 41772, CurPlayThreadId: 41772
+
+[2026-09-28 19:46:46:217] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 41772, CurPlayThreadId: 41772
+[2026-09-28 19:46:46:217] [玩家名字]Lua执行耗时过高:31ms msgid:105 13 13 0 
+
+[2026-09-28 19:48:33:693] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：78; NpcThreadId: 41772, CurPlayThreadId: 41772
+[2026-09-28 19:48:33:693] [玩家名字]Lua执行耗时过高:78ms msgid:100 103 2 0 
+
+[2026-09-28 19:50:58:396] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：32; NpcThreadId: 41772, CurPlayThreadId: 41772
+[2026-09-28 19:50:58:396] [玩家名字]Lua执行耗时过高:32ms msgid:105 603 603 0 
+
+[2026-09-28 19:51:10:957] LuaNPC: ID:999999999 执行 hd_tcppk player: 耗时：328; NpcThreadId: 41772, CurPlayThreadId: 41772
+
+[2026-09-28 19:56:09:403] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：32; NpcThreadId: 41772, CurPlayThreadId: 41772
+
+[2026-09-28 20:10:15:281] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：31; NpcThreadId: 41772, CurPlayThreadId: 41772
+
+[2026-09-28 20:15:59:098] LuaNPC:玩家名字 ID:999999999 执行 mondropitemex player:玩家名字 耗时：32; NpcThreadId: 41772, CurPlayThreadId: 41772
+
+[2026-09-28 21:39:47:511] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：47; NpcThreadId: 41772, CurPlayThreadId: 41772
+
+[2026-09-28 21:41:36:060] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 41772, CurPlayThreadId: 41772
+
+[2026-09-28 21:41:50:446] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 41772, CurPlayThreadId: 41772
+
+[2026-09-28 22:00:00:166] LuaNPC:系统控制 ID:999999999 执行 jqr_wudaohui_end player:系统控制 耗时：31; NpcThreadId: 41772, CurPlayThreadId: 41772
+
+[2026-09-28 22:30:12:226] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 41772, CurPlayThreadId: 41772
+
+[2026-09-28 22:30:16:071] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：63; NpcThreadId: 41772, CurPlayThreadId: 41772
+[2026-09-28 22:30:17:661] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 41772, CurPlayThreadId: 41772
+
+[2026-09-28 22:30:42:386] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 41772, CurPlayThreadId: 41772
+
+[2026-09-28 22:34:37:660] LuaNPC:玩家名字 ID:999999999 执行 entermap player:玩家名字 耗时：32; NpcThreadId: 41772, CurPlayThreadId: 41772
+[2026-09-28 22:34:37:660] LuaNPC:玩家名字 ID:999999999 执行 stdmodefunc10 player:玩家名字 耗时：32; NpcThreadId: 41772, CurPlayThreadId: 41772
+
+[2026-09-28 22:40:43:472] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 41772, CurPlayThreadId: 41772
+

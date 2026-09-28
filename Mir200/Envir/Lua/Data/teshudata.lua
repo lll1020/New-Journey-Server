@@ -2864,8 +2864,8 @@ teshudata = {
         },
         -- 全民答题（答题提交走 npc[507]）
         qmdt = {
-            start_minute = 35,           -- 活动开启分钟（开服后第几分钟）
-            duration_min = 4,            -- 活动总时长（分钟）
+            start_minute = 30,           -- 活动开启分钟（开服后第几分钟）
+            duration_min = 5,            -- 活动总时长（分钟）
             question_count = 12,          -- 题目数量，当前共 4 轮
             per_question_sec = 20,       -- 每题答题时长（秒）
             final_question_sec = 20,     -- 最后一题倒计时（秒）

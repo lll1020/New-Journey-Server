@@ -3109,11 +3109,11 @@ function ontimerex1()
                 elseif txsj == 29 then
                     sendmovemsg("0", 1, 253, 0, 300, 1,"天选之人：活动《天选之人》即将开启,请玩家做好准备...")
                     sendmovemsg("0", 1, 249, 0, 250, 1,"天选之人：活动《天选之人》即将开启,请玩家做好准备...")
-                    local player_list = getplayerlst()
-                    for i, player  in ipairs(player_list or {}) do
-                        -- sendluamsg(player,101,1,13,0,"")
-                        sendluamsg(player,101,12,1,7,'{"sk":2,"kf":2,"idx":7}')
-                    end
+                    -- local player_list = getplayerlst()
+                    -- for i, player  in ipairs(player_list or {}) do
+                    --     -- sendluamsg(player,101,1,13,0,"")
+                    --     sendluamsg(player,101,12,1,7,'{"sk":2,"kf":2,"idx":7}')
+                    -- end
                 end
             end
             if dqfz == 5 then
@@ -3146,7 +3146,7 @@ function ontimerex1()
                 sendmovemsg("0", 1, 254, 0, 300, 1,"活动：活动《土城跑酷》已关闭...")
                 sendmovemsg("0", 1, 254, 0, 270, 1,"活动：活动《土城跑酷》已关闭...")
             end
-            if dqfz == 15 then
+            if dqfz == 12 then
                 sendmovemsg("0", 1, 254, 0, 300, 1,"活动：活动《随机夺宝》已开启奖励丰厚,请尽快参加活动...")
                 sendmovemsg("0", 1, 254, 0, 270, 1,"活动：活动《随机夺宝》已开启奖励丰厚,请尽快参加活动...")
                 sendmovemsg("0", 1, 254, 0, 240, 1,"活动：活动《随机夺宝》已开启奖励丰厚,请尽快参加活动...")
@@ -3170,7 +3170,7 @@ function ontimerex1()
                     _qmdt_tick(dqfz, qmdtCfg)
                 end
             end
-            if dqfz == 25 then
+            if dqfz == 20 then
                 setenvirontimer(_WLMZ.MAP_NAME,2,10,"@hd_tcppk,".._WLMZ.MAP_NAME)
                 sendmovemsg("0", 1, 254, 0, 300, 1,"活动：活动《".._WLMZ.EVENT_NAME.."》已开启奖励丰厚,请尽快参加活动...")
                 sendmovemsg("0", 1, 254, 0, 270, 1,"活动：活动《".._WLMZ.EVENT_NAME.."》已开启奖励丰厚,请尽快参加活动...")
@@ -3178,7 +3178,7 @@ function ontimerex1()
                 for i, player  in ipairs(player_list or {}) do
                     sendluamsg(player,101,12,1,9,'{"sk":'..5 ..',"kf":'..2 ..',"idx":'..9 ..'}')
                 end
-            elseif dqfz == 30 then
+            elseif dqfz == 25 then
                 setenvirofftimer(_WLMZ.MAP_NAME,2)
                 local wanjia = getobjectinmap(_WLMZ.MAP_NAME,25,29,65,1)
                 for k, v in pairs(wanjia) do
