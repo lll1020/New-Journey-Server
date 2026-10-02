@@ -654,16 +654,15 @@ end
 local function aggregate_attributes(state)
     local attrs = {}
     local special = {}
-    for level = 1, toint(state.core_level, 0) do
-        local levelCfg = Cfg.core_level_map and Cfg.core_level_map[level] or nil
-        if levelCfg and type(levelCfg.attrs) == "table" then
-            add_attr_list(attrs, levelCfg.attrs.cut, true)
-            add_attr_list(attrs, levelCfg.attrs.hp, false)
-            add_attr_list(attrs, levelCfg.attrs.attack, false)
-            add_attr_list(attrs, levelCfg.attrs.defense, false)
-            add_attr_list(attrs, levelCfg.attrs.recovery, false)
-            add_attr_list(attrs, levelCfg.attrs.percent, false)
-        end
+    local coreLevel = toint(state.core_level, 0)
+    local coreCfg = Cfg.core_level_map and Cfg.core_level_map[coreLevel] or nil
+    if coreCfg and type(coreCfg.attrs) == "table" then
+        add_attr_list(attrs, coreCfg.attrs.cut, false)
+        add_attr_list(attrs, coreCfg.attrs.hp, false)
+        add_attr_list(attrs, coreCfg.attrs.attack, false)
+        add_attr_list(attrs, coreCfg.attrs.defense, false)
+        add_attr_list(attrs, coreCfg.attrs.recovery, false)
+        add_attr_list(attrs, coreCfg.attrs.percent, false)
     end
     for node_id, value in pairs(state.nodes or {}) do
         if toint(value, 0) == 1 then

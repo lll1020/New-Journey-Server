@@ -224,7 +224,7 @@ teshudata = {
         id = 20,
         name = "冠名",
         ch = "天下谁人不识君",
-        cost = 588,
+        cost = 888,
     },
     ["npc_21"] = {
         id = 21,
@@ -2754,7 +2754,7 @@ teshudata = {
         buy_cost = {{"灵石",30}}, -- 购买1次的消耗
         draw_once_cost = 1, -- 单抽消耗次数
         draw_ten_cost = 10, -- 十连消耗次数
-        crown_cost = 588, -- 天下谁人不识君累计充值
+        crown_cost = 888, -- 天下谁人不识君累计充值
         -- 灵根宝石随机宝箱：累计真实充值不足300元时不产出三级宝石自选包。
         gem_level3_min_real_charge = 300,
         day_card = {need_charge = 28, title = "日卡", rewards = {{"元宝",88888},{"灵石",280}}, token_count = 3, exchange_daily_limit = 50}, -- 日卡礼包：今日累计充值达到金额后可领取

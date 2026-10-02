@@ -1734,7 +1734,7 @@ shaguai = {
 		local frag_count = tonumber(getbagitemcount(play, "Öþ»ùµ¤ËéÆ¬") or 0) or 0
 		local dan_count = tonumber(getbagitemcount(play, "Öþ»ùµ¤") or 0) or 0
 		local total_frag_progress = jz_count * 10 + dan_count * 10 + frag_count
-		if jz_count >= 3 or total_frag_progress >= 30 then
+		if jz_count >= 2 or total_frag_progress >= 21 then
 			return
 		end
 		local mapName = tostring(getbaseinfo(play,3) or "")
@@ -1744,7 +1744,7 @@ shaguai = {
 		end
 		local key = "kill_pity_Öþ»ùµ¤ËéÆ¬"
 		local cur, dropData = _sg_drop_record_inc(play, key)
-		if cur % 500 ~= 0 then
+		if cur % 1000 ~= 0 then
 			return
 		end
 		if shaguai.temp_drop(play, mob, "Öþ»ùµ¤ËéÆ¬") then

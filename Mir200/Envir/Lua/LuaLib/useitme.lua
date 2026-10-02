@@ -565,7 +565,9 @@ function stdmodefunc32(play, item) --神石召唤
         return false
     end
     Player.takeItemByTable(play, keyCost, ",神石宝箱开启", nil)
+    -- check limit before consuming item
     delitembymakeindex(play, getiteminfo(play, item, 1), 1)
+
     giveitem(play, rewardName, 1)
     if Npclib and Npclib[53] and Npclib[53].markOwned then
         Npclib[53].markOwned(play, rewardName)
@@ -1355,15 +1357,16 @@ function stdmodefunc61(play, item) --筑基丹
         rec = {}
     end
     local cur = tonumber(rec.jz_dan_count or 0) or 0
-    delitembymakeindex(play, getiteminfo(play, item, 1), 1)
-    if cur >= 3 then
+    if cur >= 2 then
         Player.sendmsgEx(play, "筑基丹已达到计数上限，本次仅消耗物品，不再增加属性#57")
+        delitembymakeindex(play, getiteminfo(play, item, 1), 1)
         return false
     end
+    delitembymakeindex(play, getiteminfo(play, item, 1), 1)
     rec.jz_dan_count = cur + 1
     setplaydef(play, VarCfg["T_物品使用记录"], tbl2json(rec))
     Player.add_attlist(play, "筑基丹", "=", _get_jz_dan_attr_str(rec.jz_dan_count), 1)
-    Player.sendmsgEx(play, "筑基丹服用成功，当前已服用|" .. tostring(rec.jz_dan_count) .. "/3#218")
+    Player.sendmsgEx(play, "筑基丹服用成功，当前已服用|" .. tostring(rec.jz_dan_count) .. "/2#218")
     return false
 end
 function stdmodefunc62(play, item) --神石碎片

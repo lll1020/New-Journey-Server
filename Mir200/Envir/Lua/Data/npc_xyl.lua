@@ -764,7 +764,7 @@ local npc_xyl = {
                     "灾厄入侵",
                     tk = "npc_46",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -819,7 +819,7 @@ local npc_xyl = {
                 {
                     "寻宝大师",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play)
                         return _xyl_check_task(play, "开辟仙府") and _xyl_check_task(play, "寻宝大师")
                     end,
@@ -889,7 +889,7 @@ local npc_xyl = {
                     -- ydtk = "npc_629",
                     -- ydtip = "沉船之谜",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -955,7 +955,7 @@ local npc_xyl = {
                     "热血的友情",
                     tk = "npc_636",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -972,7 +972,7 @@ local npc_xyl = {
                     "真正的海贼王",
                     tk = "npc_637",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1006,7 +1006,7 @@ local npc_xyl = {
                     "海盗宝藏",
                     tk = "npc_633",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1053,7 +1053,7 @@ local npc_xyl = {
                     "丹仙秘辛",
                     tk = "npc_639",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1070,7 +1070,7 @@ local npc_xyl = {
                     "棋痴老王",
                     tk = "npc_640",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1099,7 +1099,7 @@ local npc_xyl = {
                 {
                     "拥有传说神石",
                     id = 999,
-                    jl = { { "剧情点", 3 } },
+                    jl = { },
                     yd = { 1, "三大陆主城", 53, 161, 226 },
                     fwdjy = function(play)
                         return _xyl_check_task(play, "拥有传说神石")
@@ -1112,7 +1112,7 @@ local npc_xyl = {
                 {
                     "传说·斗笠",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { },
                     fwdjy = function(play)
                         return _xyl_check_task(play, "传说·斗笠")
                     end,
@@ -1125,7 +1125,7 @@ local npc_xyl = {
                 {
                     "神·酒葫芦",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { },
                     fwdjy = function(play)
                         return _xyl_check_task(play, "神·酒葫芦")
                     end,
@@ -1139,7 +1139,7 @@ local npc_xyl = {
                     "高级淬体",
                     tk = "高级淬体",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1155,7 +1155,7 @@ local npc_xyl = {
                 {
                     "转生·三",
                     id = 999,
-                    jl = { { "剧情点", 1 } },
+                    jl = { },
                     fwdjy = function(play)
                         return _xyl_check_task(play, "转生·三")
                     end,
@@ -1184,7 +1184,7 @@ local npc_xyl = {
                     "捉鬼人",
                     tk = "npc_666",
                     id = 999,
-                    jl = { { "剧情点", 1 } },
+                    jl = { { "剧情点", 1 }, },
                     fwdjy = function(play,tk)
                         return _xyl_check_task(play, tk)
                     end,
@@ -1198,7 +1198,7 @@ local npc_xyl = {
                     "买路钱",
                     tk = "npc_667",
                     id = 999,
-                    jl = { { "剧情点", 1 } },
+                    jl = { { "剧情点", 1 }, },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1215,7 +1215,7 @@ local npc_xyl = {
                     "思念之人",
                     tk = "npc_668",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 }, },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1232,7 +1232,7 @@ local npc_xyl = {
                     "忘却前生情",
                     tk = "npc_669",
                     id = 999,
-                    jl = { { "剧情点", 1 } },
+                    jl = { { "剧情点", 1 }, },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1249,7 +1249,7 @@ local npc_xyl = {
                     "讨伐六天宫",
                     tk = "npc_670",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 }, },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1266,7 +1266,7 @@ local npc_xyl = {
                     "地狱使者",
                     tk = "npc_671",
                     id = 999,
-                    jl = { { "剧情点", 3 } },
+                    jl = { { "剧情点", 1 }, },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1283,7 +1283,7 @@ local npc_xyl = {
                     "轮回之路",
                     tk = "npc_672",
                     id = 999,
-                    jl = { { "剧情点", 3 } },
+                    jl = { { "剧情点", 1 }, },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1330,7 +1330,7 @@ local npc_xyl = {
                     "龙王的噩梦",
                     tk = "npc_643",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1347,7 +1347,7 @@ local npc_xyl = {
                     "我的袈裟！",
                     tk = "npc_644",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1364,7 +1364,7 @@ local npc_xyl = {
                     "黄风大圣",
                     tk = "npc_645",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1398,7 +1398,7 @@ local npc_xyl = {
                     "驮我过河",
                     tk = "npc_647",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1415,7 +1415,7 @@ local npc_xyl = {
                     "大闹狮驼岭",
                     tk = "npc_648",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1432,7 +1432,7 @@ local npc_xyl = {
                     "真假经书",
                     tk = "npc_649",
                     id = 999,
-                    jl = { { "剧情点", 3 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1449,7 +1449,7 @@ local npc_xyl = {
                     "重走西游路",
                     tk = "npc_641",
                     id = 999,
-                    jl = {},
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1514,7 +1514,7 @@ local npc_xyl = {
                     "天虎的游戏",
                     tk = "npc_653",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1531,7 +1531,7 @@ local npc_xyl = {
                     "天兔的游戏",
                     tk = "npc_654",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1579,7 +1579,7 @@ local npc_xyl = {
                     "天龙的游戏",
                     tk = "npc_655",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1596,7 +1596,7 @@ local npc_xyl = {
                     "天蛇的游戏",
                     tk = "npc_656",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1613,7 +1613,7 @@ local npc_xyl = {
                     "天马的游戏",
                     tk = "npc_657",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1678,7 +1678,7 @@ local npc_xyl = {
                     "天猴的游戏",
                     tk = "npc_659",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1695,7 +1695,7 @@ local npc_xyl = {
                     "天鸡的游戏",
                     tk = "npc_660",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1712,7 +1712,7 @@ local npc_xyl = {
                     "天狗的游戏",
                     tk = "npc_661",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1729,7 +1729,7 @@ local npc_xyl = {
                     "天猪的游戏",
                     tk = "npc_662",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1763,7 +1763,7 @@ local npc_xyl = {
                     "生肖守护",
                     tk = "npc_67",
                     id = 999,
-                    jl = { { "剧情点", 5 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1794,7 +1794,7 @@ local npc_xyl = {
                     "传说修复局",
                     tk = "npc_673",
                     id = 999,
-                    jl = {},
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1828,7 +1828,7 @@ local npc_xyl = {
                     "羿射九日",
                     tk = "npc_675",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1862,7 +1862,7 @@ local npc_xyl = {
                     "女娲补天",
                     tk = "npc_677",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1879,7 +1879,7 @@ local npc_xyl = {
                     "后土娘娘",
                     tk = "npc_678",
                     id = 999,
-                    jl = { { "剧情点", 3 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1896,7 +1896,7 @@ local npc_xyl = {
                     "黑白无常",
                     tk = "npc_679",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1913,7 +1913,7 @@ local npc_xyl = {
                     "真假玉帝",
                     tk = "npc_680",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1930,7 +1930,7 @@ local npc_xyl = {
                     "白蛇传说",
                     tk = "npc_681",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -1958,7 +1958,7 @@ local npc_xyl = {
                 {
                     "灵兽全一星",
                     id = 999,
-                    jl = { { "剧情点", 3 } },
+                    jl = { },
                     fwdjy = function(play)
                         return _xyl_check_task(play, "灵兽全一星")
                     end,
@@ -1971,7 +1971,7 @@ local npc_xyl = {
                 {
                     "灵兽全二星",
                     id = 999,
-                    jl = { { "剧情点", 5 } },
+                    jl = { },
                     fwdjy = function(play)
                         return _xyl_check_task(play, "灵兽全二星")
                     end,
@@ -1984,7 +1984,7 @@ local npc_xyl = {
                 {
                     "灵兽全三星",
                     id = 999,
-                    jl = { { "剧情点", 10 } },
+                    jl = { },
                     fwdjy = function(play)
                         return _xyl_check_task(play, "灵兽全三星")
                     end,
@@ -1997,7 +1997,7 @@ local npc_xyl = {
                 {
                     "唐代古玩",
                     id = 999,
-                    jl = { { "剧情点", 3 } },
+                    jl = { },
                     fwdjy = function(play)
                         return _xyl_check_task(play, "唐代古玩")
                     end,
@@ -2010,7 +2010,7 @@ local npc_xyl = {
                 {
                     "红色仙法",
                     id = 999,
-                    jl = { { "剧情点", 3 } },
+                    jl = { },
                     fwdjy = function(play)
                         return _xyl_check_task(play, "红色仙法")
                     end,
@@ -2023,7 +2023,7 @@ local npc_xyl = {
                 {
                     "转生·四",
                     id = 999,
-                    jl = { { "剧情点", 1 } },
+                    jl = { },
                     fwdjy = function(play)
                         return _xyl_check_task(play, "转生·四")
                     end,
@@ -2052,7 +2052,7 @@ local npc_xyl = {
                     "时空之门",
                     tk = "npc_688",
                     id = 999,
-                    jl = { { "剧情点", 1 } },
+                    jl = { { "剧情点", 1 }, },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2072,7 +2072,7 @@ local npc_xyl = {
                     prev_need = 1,
                     prev_name = "时空之门·倚天江湖",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 }, },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2092,7 +2092,7 @@ local npc_xyl = {
                     prev_need = 1,
                     prev_name = "时空之门·倚天江湖",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 }, },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2112,7 +2112,7 @@ local npc_xyl = {
                     prev_need = 1,
                     prev_name = "时空之门·三国乱世",
                     id = 999,
-                    jl = { { "剧情点", 3 } },
+                    jl = { { "剧情点", 1 }, },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2132,7 +2132,7 @@ local npc_xyl = {
                     prev_need = 1,
                     prev_name = "时空之门·三国乱世",
                     id = 999,
-                    jl = { { "剧情点", 3 } },
+                    jl = { { "剧情点", 1 }, },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2152,7 +2152,7 @@ local npc_xyl = {
                     prev_need = 1,
                     prev_name = "时空之门·水浒再临",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 }, },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2172,7 +2172,7 @@ local npc_xyl = {
                     prev_need = 1,
                     prev_name = "时空之门·水浒再临",
                     id = 999,
-                    jl = { { "剧情点", 3 } },
+                    jl = { { "剧情点", 1 }, },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2189,7 +2189,7 @@ local npc_xyl = {
                     "时空守护者",
                     tk = "npc_690",
                     id = 999,
-                    jl = {},
+                    jl = { { "剧情点", 1 },},
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2235,7 +2235,7 @@ local npc_xyl = {
                     "祭祀河神",
                     tk = "npc_698",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2252,7 +2252,7 @@ local npc_xyl = {
                     "赤焰试炼",
                     tk = "npc_700",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2269,7 +2269,7 @@ local npc_xyl = {
                     "葬天试炼",
                     tk = "npc_701",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2286,7 +2286,7 @@ local npc_xyl = {
                     "生命边界之谜",
                     tk = "npc_692",
                     id = 999,
-                    jl = {},
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2315,7 +2315,7 @@ local npc_xyl = {
                     "倩女幽魂",
                     tk = "npc_702",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2332,7 +2332,7 @@ local npc_xyl = {
                     "画中仙境",
                     tk = "npc_703",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2349,7 +2349,7 @@ local npc_xyl = {
                     "崂山学法",
                     tk = "npc_704",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2366,7 +2366,7 @@ local npc_xyl = {
                     "是非难辨",
                     tk = "npc_720",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2396,7 +2396,7 @@ local npc_xyl = {
                     "守护壁画",
                     tk = "npc_706",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2413,7 +2413,7 @@ local npc_xyl = {
                     "沙海明珠",
                     tk = "npc_707",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2430,7 +2430,7 @@ local npc_xyl = {
                     "丝路往事",
                     tk = "npc_708",
                     id = 999,
-                    jl = { { "剧情点", 2 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2447,7 +2447,7 @@ local npc_xyl = {
                     "故人远行",
                     tk = "npc_709",
                     id = 999,
-                    jl = { { "剧情点", 3 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2493,7 +2493,7 @@ local npc_xyl = {
                     "大地之王",
                     tk = "npc_710",
                     id = 999,
-                    jl = { { "剧情点", 3 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2510,7 +2510,7 @@ local npc_xyl = {
                     "天空之王",
                     tk = "npc_711",
                     id = 999,
-                    jl = { { "剧情点", 3 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2527,7 +2527,7 @@ local npc_xyl = {
                     "海洋之王",
                     tk = "npc_712",
                     id = 999,
-                    jl = { { "剧情点", 3 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2544,7 +2544,7 @@ local npc_xyl = {
                     "青铜之王",
                     tk = "npc_713",
                     id = 999,
-                    jl = { { "剧情点", 3 } },
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2561,7 +2561,7 @@ local npc_xyl = {
                     "重启世界",
                     tk = "npc_691",
                     id = 999,
-                    jl = {},
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2590,7 +2590,7 @@ local npc_xyl = {
                     "灵兽奥秘",
                     tk = "npc_682",
                     id = 999,
-                    jl = {},
+                    jl = { },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2606,7 +2606,7 @@ local npc_xyl = {
                 {
                     "激活全部圣遗物",
                     id = 999,
-                    jl = { { "剧情点", 5 } },
+                    jl = { },
                     fwdjy = function(play)
                         return _xyl_check_task(play, "激活全部圣遗物")
                     end,
@@ -2619,7 +2619,7 @@ local npc_xyl = {
                 {
                     "激活全部天命装备",
                     id = 999,
-                    jl = { { "剧情点", 5 } },
+                    jl = { },
                     fwdjy = function(play)
                         return _xyl_check_task(play, "激活全部天命装备")
                     end,
@@ -2632,7 +2632,7 @@ local npc_xyl = {
                 {
                     "完成转生·五",
                     id = 999,
-                    jl = { { "剧情点", 1 } },
+                    jl = { },
                     fwdjy = function(play)
                         return _xyl_check_task(play, "完成转生·五")
                     end,
@@ -2660,7 +2660,7 @@ local npc_xyl = {
                     "天机道长",
                     tk = "npc_721",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { { "剧情点", 1 },},
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2681,7 +2681,7 @@ local npc_xyl = {
                     prev_need = 1,
                     prev_name = "天机道长",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { { "剧情点", 1 },},
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2701,7 +2701,7 @@ local npc_xyl = {
                     prev_need = 1,
                     prev_name = "天机道长",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { { "剧情点", 1 },},
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2720,7 +2720,7 @@ local npc_xyl = {
                     prev_task = "npc_723",
                     prev_name = "凌雪",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { { "剧情点", 1 },},
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2739,7 +2739,7 @@ local npc_xyl = {
                     prev_task = "npc_724",
                     prev_name = "守城士兵甲",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { { "剧情点", 1 },},
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2758,7 +2758,7 @@ local npc_xyl = {
                     prev_task = "npc_725",
                     prev_name = "赤焰",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { { "剧情点", 1 },},
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2778,7 +2778,7 @@ local npc_xyl = {
                     prev_need = 1,
                     prev_name = "幽影",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { { "剧情点", 1 },},
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2797,7 +2797,7 @@ local npc_xyl = {
                     prev_task = "npc_739",
                     prev_name = "幽影的分身",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { { "剧情点", 1 },},
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2826,7 +2826,7 @@ local npc_xyl = {
                     "盛世重游",
                     tk = "npc_733",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2843,7 +2843,7 @@ local npc_xyl = {
                     "万国之首",
                     tk = "npc_734",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2860,7 +2860,7 @@ local npc_xyl = {
                     "洛水杜康",
                     tk = "npc_735",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2877,7 +2877,7 @@ local npc_xyl = {
                     "大宋的菜肴",
                     tk = "npc_736",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2894,7 +2894,7 @@ local npc_xyl = {
                     "天青色的秘密",
                     tk = "npc_737",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2923,7 +2923,7 @@ local npc_xyl = {
                     "雪域特使",
                     tk = "npc_729",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2940,7 +2940,7 @@ local npc_xyl = {
                     "魔域特使",
                     tk = "npc_730",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2957,7 +2957,7 @@ local npc_xyl = {
                     "边关特使",
                     tk = "npc_731",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -2974,7 +2974,7 @@ local npc_xyl = {
                     "古城特使",
                     tk = "npc_732",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -3003,7 +3003,7 @@ local npc_xyl = {
                     "恶魔契约",
                     tk = "npc_728",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -3020,7 +3020,7 @@ local npc_xyl = {
                     "密令护灵旗",
                     tk = "npc_738",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -3037,7 +3037,7 @@ local npc_xyl = {
                     "上古寒冰剑",
                     tk = "npc_740",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { { "剧情点", 1 } },
                     fwdjy = function(play, tk)
                         if tk then
                             return _xyl_check_task(play, tk)
@@ -3066,7 +3066,7 @@ local npc_xyl = {
                     "完成兵神道自证",
                     tk = "完成兵神道自证",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { },
                     fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
                     khdjy = function() return true end,
                     yd = {1, "六大陆主城", 77, 77, 113},
@@ -3076,7 +3076,7 @@ local npc_xyl = {
                     "完成鬼神道自证",
                     tk = "完成鬼神道自证",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { },
                     fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
                     khdjy = function() return true end,
                     yd = {1, "六大陆主城", 77, 77, 113},
@@ -3086,7 +3086,7 @@ local npc_xyl = {
                     "获得全部世界符文",
                     tk = "获得全部世界符文",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { },
                     fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
                     khdjy = function() return true end,
                     yd = {1, "六大陆主城", 84, 95, 129},
@@ -3096,7 +3096,7 @@ local npc_xyl = {
                     "星象圣图达到耀星",
                     tk = "星象圣图达到耀星",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { },
                     fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
                     khdjy = function() return true end,
                     yd = {1, "六大陆主城", 85, 89, 113},
@@ -3106,7 +3106,7 @@ local npc_xyl = {
                     "星象圣图达到圣星",
                     tk = "星象圣图达到圣星",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { },
                     fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
                     khdjy = function() return true end,
                     yd = {1, "六大陆主城", 85, 89, 113},
@@ -3116,7 +3116,7 @@ local npc_xyl = {
                     "星象圣图达到帝星",
                     tk = "星象圣图达到帝星",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { },
                     fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
                     khdjy = function() return true end,
                     yd = {1, "六大陆主城", 85, 89, 113},
@@ -3126,7 +3126,7 @@ local npc_xyl = {
                     "完成转生·六",
                     tk = "完成转生·六",
                     id = 999,
-                    jl = {{"剧情点", 1}},
+                    jl = { },
                     fwdjy = function(play, tk) return _xyl_check_task(play, tk) end,
                     khdjy = function() return true end,
                     yd = {1, "六大陆主城", 36, 83, 121},
