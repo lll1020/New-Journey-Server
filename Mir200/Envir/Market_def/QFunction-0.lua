@@ -1667,6 +1667,7 @@ function zxdz_enter(play)
     return true
 end
 function jqr_zxdz_start()
+    if _zxdz_toint(getsysvar(_ZXDZ_STATUS_VAR), 0) == 1 then return false end
     if (tonumber(getsysvar(VarCfg["G_开区分钟"]) or 0) or 0) < 1440 then
         release_print("正邪大战未开启：开服未满第二天")
         return false
@@ -1703,6 +1704,7 @@ function zxdz_map_tick()
 end
 
 function jqr_zxdz_end()
+    if _zxdz_toint(getsysvar(_ZXDZ_STATUS_VAR), 0) ~= 1 then return false end
     setenvirofftimer(_ZXDZ_MAP_NAME, 8)
     setsysvar(_ZXDZ_STATUS_VAR, 0)
     local rank = sorthumvar(_ZXDZ_SCORE_VAR, 1, 1, 5) or {}
@@ -2291,6 +2293,18 @@ function jqr_wudaohui_rank_reward()
     local mod = _wdh_module()
     if mod and rawget(_G, "__wudaohui_module") and __wudaohui_module.rankReward then
         __wudaohui_module.rankReward()
+    end
+end
+function qf_kfmatch_stop()
+    local mod = _wdh_module()
+    if mod and rawget(_G, "__wudaohui_module") and __wudaohui_module.stopMatchTimer then
+        __wudaohui_module.stopMatchTimer()
+    end
+end
+function qf_kfmatch()
+    local mod = _wdh_module()
+    if mod and rawget(_G, "__wudaohui_module") and __wudaohui_module.match then
+        __wudaohui_module.match()
     end
 end
 function qf_kfdz(xt, mapIdx)

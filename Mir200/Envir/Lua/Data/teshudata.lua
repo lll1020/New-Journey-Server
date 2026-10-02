@@ -1982,6 +1982,7 @@ teshudata = {
             },
             gh = {
                 {name = "光环：五行至尊", sEffect = 11502, need_core_level = 39},
+                {name = "跨服霸主", sEffect = 11505, need_cross_point = 10000, attr = {{200,1000},{79,1000},{80,1000}},},
                 {name = "光环：诸邪退散", sEffect = 11503, title = "诸邪退散"},
                 {name = "光环：神豪降临", sEffect = 11504, title = "第一神壕"},
             }

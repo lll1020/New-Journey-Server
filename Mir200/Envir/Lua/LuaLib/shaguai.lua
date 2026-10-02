@@ -1744,12 +1744,12 @@ shaguai = {
 		end
 		local key = "kill_pity_筑基丹碎片"
 		local cur, dropData = _sg_drop_record_inc(play, key)
-		if cur % 100 ~= 0 then
+		if cur % 500 ~= 0 then
 			return
 		end
 		if shaguai.temp_drop(play, mob, "筑基丹碎片") then
 			_sg_drop_record_set(play, key, 0, dropData)
-			Player.sendmsgEx(play, "打怪掉落【筑基丹碎片】#57")
+			-- Player.sendmsgEx(play, "打怪掉落【筑基丹碎片】#57")
 		end
 	end,
 	["35"] = function(play,mob)      --修为丹独立掉落：不吃全局爆率，小丹二大陆起掉，大丹需真实充值大于 100

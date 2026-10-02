@@ -6,17 +6,25 @@ local _point_var = VarCfg["U_跨服积分"] or "U49"
 local _medal_name = "跨服勋章"
 
 local _point_rewards = {
-    [1] = {need = 50, reward = {{"千年玄铁", 288}}},
-    [2] = {need = 100, reward = {{"五行石", 50}}},
-    [3] = {need = 200, reward = {{"灵兽蛋", 3}}},
-    [4] = {need = 300, reward = {{"神石宝箱钥匙", 5}}},
+    [1] = {need = 50, reward = {{"千年玄铁", 388}}},
+    [2] = {need = 100, reward = {{"辉耀水晶", 30}}},
+    [3] = {need = 200, reward = {{"五行石", 20}}},
+    [4] = {need = 300, reward = {{"神石宝箱钥匙", 2}}},
+    [5] = {need = 500, reward = {{"灵兽蛋", 1}}},
+    [6] = {need = 1000, reward = {{"极品仙法卷轴", 1}}},
+    [7] = {need = 3000, reward = {{"三级宝石自选包", 1}}},
+    [8] = {need = 5000, reward = {{"裁决之杖（经典）", 1}}},
+    [9] = {need = 10000, reward = {{"光环：跨服霸主", 1}}, special = "halo"},
 }
 
 local _medal_shop = {
-    [1] = {cost = 100, limit = 2, reward = {{"帝星本源", 1}}},
-    [2] = {cost = 50, limit = 5, reward = {{"圣星核", 1}}},
-    [3] = {cost = 10, limit = 10, reward = {{"星核碎片", 1}}},
-    [4] = {cost = 5, limit = 0, reward = {{"深渊门票", 1}}},
+    [1] = {cost = 88, limit = 5, reward = {{"帝星本源", 1}}},
+    [2] = {cost = 30, limit = 10, reward = {{"圣星核", 1}}},
+    [3] = {cost = 3, limit = 50, reward = {{"星核碎片", 1}}},
+    [4] = {cost = 1, limit = 30, reward = {{"深渊门票", 1}}},
+    [5] = {cost = 50, limit = 1, reward = {{"特级材料自选箱", 1}}},
+    [6] = {cost = 10, limit = 5, reward = {{"高级材料自选箱", 1}}},
+    [7] = {cost = 2, limit = 10, reward = {{"低级材料自选箱", 1}}},
 }
 
 local function _toint(v)
@@ -87,7 +95,9 @@ local function _claim_point_reward(play, npcid, idx)
     data.point_claim[key] = 1
     -- 先保存领取标记，再发放奖励，避免发奖中断后重复领取。
     _save_state(play, data)
-    Player.rwjl(play, cfg.reward, "跨服积分领奖", 1, 0)
+    if cfg.special ~= "halo" then
+        Player.rwjl(play, cfg.reward, "跨服积分领奖", 1, 0)
+    end
     Player.sendmsgEx(play, "跨服积分奖励领取成功#218")
     _refresh(play, npcid, 1)
 end

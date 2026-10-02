@@ -680,7 +680,21 @@ local function _equip_lock_series(play, zt, Damage, Target, MagicId, idx)
         end
     end
 end
-Buff = {
+
+-- 特殊效果配置：五个新增特殊效果的配置说明。
+    -- 特殊效果：577。
+    -- 特殊效果：578。
+    -- 特殊效果：579。
+    -- 特殊效果：580。
+    -- 特殊效果：581。
+-- 特殊效果配置：五个新增特殊效果的配置说明。
+SpecialBuffConfig = {
+    [577] = {chance = 0, cd = 180, duration = 10},
+    [578] = {chance = 0, cd = 180, duration = 0, map = ""},
+    [579] = {chance = 0, cd = 180, executeChance = 50},
+    [580] = {chance = 0, cd = 180, duration = 60},
+    [581] = {chance = 0, cd = 180, damageRate = 888},
+}Buff = {
     [565] = function(play, zt, Damage, Target, MagicId)
         -- 神石攻击触发：火焰增伤、雷电控制。
         if zt ~= 3 then
@@ -4600,6 +4614,84 @@ Buff = {
             _toggle_buff_var(play, VarCfg.S_buffgwq, 560, zt == 1)
             if zt == 2 then
                 _equip_clear_state(play, 560)
+            end
+        end
+    end,
+    -- 特殊效果：577。
+    [577] = function(play, zt, Damage, Target, MagicId)
+        if zt == 3 then
+            if Target and _equip_is_player(Target) and _equip_roll(play, 577, SpecialBuffConfig[577].chance, SpecialBuffConfig[577].cd) then
+                setplaydef(play, "N$special_buff_577_until", os.time() + SpecialBuffConfig[577].duration)
+            end
+            return 0
+        end
+        setplaydef(play, "N$special_buff_577_enabled", zt == 1 and 1 or 0)
+    end,
+    -- 特殊效果：578。
+    [578] = function(play, zt, Damage, Target, MagicId)
+        if zt == 3 then
+            if Target and _equip_is_player(Target) and _equip_roll(play, 578, SpecialBuffConfig[578].chance, SpecialBuffConfig[578].cd) then
+                setplaydef(play, "N$special_buff_578_target", tostring(getbaseinfo(Target, ConstCfg.gbase.name) or ""))
+                setplaydef(play, "N$special_buff_578_pending", 1)
+            end
+            return 0
+        end
+        setplaydef(play, "N$special_buff_578_enabled", zt == 1 and 1 or 0)
+    end,
+    -- 特殊效果：579。
+    [579] = function(play, zt, Damage, Target, MagicId)
+        if zt == 3 then
+            if Target and _equip_roll(play, 579, SpecialBuffConfig[579].chance, SpecialBuffConfig[579].cd) then
+                local targetMax = _equip_get_maxhp(Target)
+                if targetMax > 0 then
+                    if math.random(100) <= SpecialBuffConfig[579].executeChance then
+                        humanhp(Target, "-", targetMax, 110, 0, play, 1)
+                    else
+                        local selfMax = _equip_get_maxhp(play)
+                        if selfMax > 0 then
+                            humanhp(play, "-", selfMax, 110, 0, Target, 1)
+                        end
+                    end
+                end
+            end
+            return 0
+        end
+        setplaydef(play, "N$special_buff_579_enabled", zt == 1 and 1 or 0)
+    end,
+    -- 特殊效果：580。
+    [580] = function(play, zt, Damage, Target, MagicId)
+        if zt == 3 then
+            if Target and _equip_is_player(Target) and _equip_roll(play, 580, SpecialBuffConfig[580].chance, SpecialBuffConfig[580].cd) then
+                setplaydef(Target, "N$special_buff_580_until", os.time() + SpecialBuffConfig[580].duration)
+            end
+            return 0
+        end
+        setplaydef(play, "N$special_buff_580_enabled", zt == 1 and 1 or 0)
+    end,
+    -- 特殊效果：581。
+    [581] = function(play, zt, Damage, Target, MagicId)
+        if zt == 3 then
+            if Target and _equip_roll(play, 581, SpecialBuffConfig[581].chance, SpecialBuffConfig[581].cd) then
+                local maxAttack = tonumber(getbaseinfo(play, ConstCfg.gbase.dc2) or 0) or 0
+                if maxAttack > 0 then
+                    humanhp(Target, "-", math.floor(maxAttack * SpecialBuffConfig[581].damageRate / 100), 110, 0, play, 1)
+                end
+            end
+            return 0
+        end
+        setplaydef(play, "N$special_buff_581_enabled", zt == 1 and 1 or 0)
+    end,
+    [582] = function(play, zt, Damage, Target, MagicId) -- level bonus
+        local flag = "N$buff582_level_applied"
+        if zt == 1 then
+            if tonumber(getplaydef(play, flag) or 0) ~= 1 then
+                callscriptex(play, "CHANGELEVEL", "+", 10)
+                setplaydef(play, flag, 1)
+            end
+        elseif zt == 2 then
+            if tonumber(getplaydef(play, flag) or 0) == 1 then
+                callscriptex(play, "CHANGELEVEL", "-", 10)
+                setplaydef(play, flag, 0)
             end
         end
     end,

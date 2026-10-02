@@ -34,8 +34,8 @@ local function _open_day()
     return math.floor(minute / 1440) + 1
 end
 
-local function _has_kuangbao(play)
-    return checktitle(play, "狂暴之力")
+local function _has_day_card(play)
+    return checktitle(play, "日卡")
 end
 
 local function _has_all_linggen(play)
@@ -54,7 +54,7 @@ local _cfg = {
         name = "幽邃地窟",
         map = "幽邃地窟",
         open_day = 1,
-        condition_desc = "开启狂暴之力",
+        condition_desc = "日卡",
         check = function(play)
             if _toint(getbaseinfo(play, 6), 0) < 150 then
                 return false, "玩家等级达到150级后才可进入"
@@ -66,11 +66,8 @@ local _cfg = {
         name = "摄魂红尘",
         map = "摄魂红尘",
         open_day = 5,
-        condition_desc = "开启狂暴之力",
+        condition_desc = "日卡",
         check = function(play)
-            if not _has_all_linggen(play) then
-                return false, "需要激活全部灵根后才可进入"
-            end
             return true
         end,
     },
@@ -78,7 +75,7 @@ local _cfg = {
         name = "逆灵离心",
         map = "逆灵离心",
         open_day = 10,
-        condition_desc = "开启狂暴之力",
+        condition_desc = "完成天道命盘",
         check = function(play)
             if not _has_all_destiny(play) then
                 return false, "需要完成天道命盘后才可进入"
@@ -89,8 +86,8 @@ local _cfg = {
     [1016] = {
         name = "生死之门",
         map = "生死之门",
-        open_day = 15,
-        condition_desc = "开启狂暴之力",
+        open_day = 30,
+        condition_desc = "世界符文·[真我]",
         check = function(play)
             if not checktitle(play, "世界符文·[真我]") then
                 return false, "需要获得世界符文·[真我]称号后才可进入"
@@ -102,9 +99,9 @@ local _cfg = {
         name = "跨服秘境",
         map = "跨服秘境",
         open_day = 3,
-        condition_desc = "开启狂暴之力",
+        condition_desc = "至尊赞助",
         check = function(play)
-            if not _has_any_title(play, {"至尊玩家", "至尊玩家赞助"}) then
+            if not checktitle(play, "至尊赞助") then
                 return false, "需要至尊玩家赞助后才可进入"
             end
             return true
@@ -123,9 +120,11 @@ local function _check_enter(play, cfg)
     if not checkkuafuconnect() then
         return false, "跨服未开启，请稍后再试"
     end
-    if not _has_kuangbao(play) then
-        return false, "进入前需先开启狂暴之力"
+    if _open_day() < _toint(cfg.open_day, 0) then return false, "开放时间未到" end
+    if not _has_day_card(play) then
+        return false, "日卡"
     end
+    if cfg.check then local ok, err = cfg.check(play); if not ok then return false, err end end
     return true
 end
 
@@ -137,7 +136,7 @@ function KuafuMapEntry.main(play, npcid)
         open_day = cfg and cfg.open_day or 0,
         condition_desc = cfg and cfg.condition_desc or "",
         open_day_now = _open_day(),
-        has_kuangbao = _has_kuangbao(play) and 1 or 0,
+        has_day_card = _has_day_card(play) and 1 or 0,
     }
     local ok = _check_enter(play, cfg)
     data.can_enter = ok and 1 or 0

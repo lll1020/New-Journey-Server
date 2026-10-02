@@ -2187,7 +2187,7 @@ end
 
 local function _bwcz_tick(dqfz, cfg)
     local state = _bwcz_get_state()
-    release_print("[BWCZ_TICK]", "minute=" .. tostring(dqfz), "open=" .. tostring(state.open or 0), "schedule_day=" .. tostring(state.schedule_day or ""), "force_start=" .. tostring(state.force_start or 0), "force_end=" .. tostring(state.force_end or 0))
+    -- release_print("[BWCZ_TICK]", "minute=" .. tostring(dqfz), "open=" .. tostring(state.open or 0), "schedule_day=" .. tostring(state.schedule_day or ""), "force_start=" .. tostring(state.force_start or 0), "force_end=" .. tostring(state.force_end or 0))
     if tonumber(state.force_end) == 1 then
         state.force_end = nil
         _bwcz_save_state(state)
@@ -2215,7 +2215,7 @@ local function _bwcz_tick(dqfz, cfg)
     end
     if dqfz >= ((tonumber(cfg.min_open_day) - 1) * 24 * 60) then
         local scheduleDue = _activity_schedule_due(cfg, state)
-        release_print("[BWCZ_SCHEDULE]", "minute=" .. tostring(dqfz), "due=" .. tostring(scheduleDue), "start=" .. tostring(cfg.start_hour or 0) .. ":" .. tostring(cfg.start_minute_clock or 0), "state_day=" .. tostring(state.schedule_day or ""))
+        -- release_print("[BWCZ_SCHEDULE]", "minute=" .. tostring(dqfz), "due=" .. tostring(scheduleDue), "start=" .. tostring(cfg.start_hour or 0) .. ":" .. tostring(cfg.start_minute_clock or 0), "state_day=" .. tostring(state.schedule_day or ""))
         if scheduleDue then
             _bwcz_start(dqfz, cfg, false)
         elseif tostring(state.schedule_notice_day or "") ~= _activity_schedule_day()
@@ -2729,7 +2729,7 @@ end
 
 local function _mskh_tick(dqfz, cfg)
     local state = _mskh_get_state()
-    release_print("[MSKH_TICK]", "minute=" .. tostring(dqfz), "open=" .. tostring(state.open or 0), "schedule_day=" .. tostring(state.schedule_day or ""), "force_start=" .. tostring(state.force_start or 0), "force_end=" .. tostring(state.force_end or 0))
+    -- release_print("[MSKH_TICK]", "minute=" .. tostring(dqfz), "open=" .. tostring(state.open or 0), "schedule_day=" .. tostring(state.schedule_day or ""), "force_start=" .. tostring(state.force_start or 0), "force_end=" .. tostring(state.force_end or 0))
     if tonumber(state.force_end) == 1 then
         state.force_end = nil
         _mskh_save_state(state)
@@ -2753,7 +2753,7 @@ local function _mskh_tick(dqfz, cfg)
     end
     if dqfz >= ((tonumber(cfg.min_open_day) - 1) * 24 * 60) then
         local scheduleDue = _activity_schedule_due(cfg, state)
-        release_print("[MSKH_SCHEDULE]", "minute=" .. tostring(dqfz), "due=" .. tostring(scheduleDue), "start=" .. tostring(cfg.start_hour or 0) .. ":" .. tostring(cfg.start_minute_clock or 0), "state_day=" .. tostring(state.schedule_day or ""))
+        -- release_print("[MSKH_SCHEDULE]", "minute=" .. tostring(dqfz), "due=" .. tostring(scheduleDue), "start=" .. tostring(cfg.start_hour or 0) .. ":" .. tostring(cfg.start_minute_clock or 0), "state_day=" .. tostring(state.schedule_day or ""))
         if scheduleDue then
             _mskh_start(dqfz, cfg, false)
         end

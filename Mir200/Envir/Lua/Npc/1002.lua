@@ -29,6 +29,10 @@ local function hasHalo(play, index)
     if cfg.title and cfg.title ~= "" then
         return checktitle(play, cfg.title)
     end
+    if cfg.need_cross_point then
+        local pointVar = VarCfg["U_¿ç·þ»ý·Ö"] or "U49"
+        return (tonumber(getplaydef(play, pointVar) or 0) or 0) >= tonumber(cfg.need_cross_point)
+    end
     return false
 end
 
@@ -85,6 +89,14 @@ local function refreshFashionAttr(play)
                     attrs[attrId] = (attrs[attrId] or 0) + attrValue
                 end
             end
+        end
+    end
+    local halo = _config.details.gh and _config.details.gh[T_data.dqgh or 0]
+    if halo and T_data.gh[tostring(T_data.dqgh)] == 1 then
+        for _, attr in ipairs(halo.attr or {}) do
+            local attrId = tonumber(attr[1])
+            local attrValue = tonumber(attr[2]) or 0
+            if attrId and attrValue > 0 then attrs[attrId] = (attrs[attrId] or 0) + attrValue end
         end
     end
     for idx, cfg in ipairs(_config.details.zj or {}) do

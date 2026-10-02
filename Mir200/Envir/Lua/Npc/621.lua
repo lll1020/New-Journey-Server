@@ -77,7 +77,7 @@ function npc.link(play,npcid,ew,aid)
                 sendluamsg(play,101,1005,0,0,"rwwc")
                 local rewards = type(_config.rwjl) == "table" and #_config.rwjl > 0 and _config.rwjl or nil
                 if rewards then
-                    Player.rwjl(play, rewards, tostring(_config.name or "npc_621") .. "_reward", 1)
+                    Player.rwjl(play, rewards, tostring(_config.name or "npc_621") .. "_reward", 1,999)
                 end
                 sendluamsg(play,100,npcid,1,2,"")
             else

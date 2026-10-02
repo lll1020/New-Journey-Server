@@ -11,6 +11,10 @@ local LOBBY_MAP = "跨服地图"
 local LOBBY_X, LOBBY_Y = 26, 55
 local BATTLE_PREFIX = "kftt"
 local BATTLE_TIMER_ID = 1
+local MATCH_TIMER_ID = 99
+local MATCH_TIMER_SECONDS = 5
+local MATCH_STOP_TIMER_ID = 100
+local MATCH_STOP_DELAY_SECONDS = 120
 local BATTLE_SECONDS = 180
 local WIN_RANK_SCORE, LOSE_RANK_SCORE = 10, 2
 local WIN_CROSS_SCORE, LOSE_CROSS_SCORE = 10, 2
@@ -221,18 +225,27 @@ function WDH.start()
         release_print("武道大会未开启：跨服未连接")
         return false
     end
+
+    if _is_active() then return true end
+    setenvirofftimer(LOBBY_MAP, MATCH_STOP_TIMER_ID)
     setsysvar(ACTIVE_SYS_VAR, 1)
     WDH.queue, WDH.queueIndex = {}, {}
     _ensure_map_pool()
+    setenvirontimer(LOBBY_MAP, MATCH_TIMER_ID, MATCH_TIMER_SECONDS, "@qf_kfmatch")
     _broadcast("跨服活动：武道大会已开启，奖励丰厚，请前往跨服参加！")
 end
 
 function WDH.stop()
+    if not _is_active() then return end
     setsysvar(ACTIVE_SYS_VAR, 0)
+    setenvirontimer(LOBBY_MAP, MATCH_STOP_TIMER_ID, MATCH_STOP_DELAY_SECONDS, "@qf_kfmatch_stop")
     WDH.queue, WDH.queueIndex = {}, {}
     _broadcast("跨服活动：武道大会已结束，未匹配玩家已自动退出队列。")
 end
 
+function WDH.stopMatchTimer()
+    setenvirofftimer(LOBBY_MAP, MATCH_TIMER_ID)
+end
 function WDH.rankReward()
     if not checkkuafuserver() then
         return

@@ -5,10 +5,13 @@ local _state_var = "T$npc_1027_shop"
 local _medal_name = "跨服勋章"
 
 local _shop = {
-    [1] = {cost = 100, limit = 2, reward = {{"帝星本源", 1}}},
-    [2] = {cost = 50, limit = 5, reward = {{"圣星核", 1}}},
-    [3] = {cost = 10, limit = 10, reward = {{"星核碎片", 1}}},
-    [4] = {cost = 5, limit = 0, reward = {{"深渊门票", 1}}},
+    [1] = {cost = 88, limit = 5, reward = {{"帝星本源", 1}}},
+    [2] = {cost = 30, limit = 10, reward = {{"圣星核", 1}}},
+    [3] = {cost = 3, limit = 50, reward = {{"星核碎片", 1}}},
+    [4] = {cost = 1, limit = 30, reward = {{"深渊门票", 1}}},
+    [5] = {cost = 50, limit = 1, reward = {{"特级材料自选箱", 1}}},
+    [6] = {cost = 10, limit = 5, reward = {{"高级材料自选箱", 1}}},
+    [7] = {cost = 2, limit = 10, reward = {{"低级材料自选箱", 1}}},
 }
 
 local function _toint(v)
