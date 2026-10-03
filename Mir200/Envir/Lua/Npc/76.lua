@@ -659,6 +659,7 @@ function npc.use_dujie_dan(play, item)
         mapeffect(run_map.."lei"..os.time(), run_map, 33 + math.random(-30, 30), 37 + math.random(-30, 30), 56, 1, 0)
     end
     Player.sendmsgEx(play, string.format("你服用了【%s】, %d秒内可免疫1次雷劫#57", cfg.dan_item or "天道·渡劫丹", keep_sec))
+    return true
 end
 
 function npc_76_dsq(xt, play, dtm, data)

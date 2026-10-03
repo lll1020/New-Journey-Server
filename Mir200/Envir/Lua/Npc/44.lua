@@ -487,6 +487,9 @@ local function applyPlantToPlot(play, record, plot, seedId, now)
     plot.state = "growing"
     plot.plantedAt = startAt
     local mature = tonumber(cfg.matureTime or 0) or 0
+    if checktitle(play, '丹仙秘辛') then
+        mature = math.ceil(mature * 0.5)
+    end
     if mature > 0 and getplaydef(play,"N$buff306") == 1 then
         -- 黑化肥会挥发：仙草成熟时间加快 30%。
         mature = math.ceil(mature * 0.7)

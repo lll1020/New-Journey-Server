@@ -1,4 +1,5 @@
 npc = {}
+local WOODCUT_VAR = "T55"
 
 -- 自动砍树奖励只先存储，打开仙府时领取，跨天时转邮件。
 local function _woodcut_merge_reward(storage, name, amount)
@@ -126,14 +127,14 @@ npc[2] = function(play, p2, p3, msgData) --背包  面板
         setplaydef(play, VarCfg.T_hsdg, tbl2json(hspz))
     elseif p2 == 3 then
     elseif p2 == 4 then
-        if p3 == 1 then
+        if p3 == 0 then
             if msgData == "1" then
                 sendmsg(play,1,'{"Msg":"<font color=\'#00ff00\'>自动吃元宝已开启...</font>","Type":9}' )
             else
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff0000\'>自动吃元宝已关闭...</font>","Type":9}' )
             end
             setflagstatus(play, VarCfg.BS_huishou[1], msgData)
-        elseif p3 == 2 then
+        elseif p3 == 1 or p3 == 2 then
             if msgData == "1" then
                 sendmsg(play,1,'{"Msg":"<font color=\'#00ff00\'>自动吃元宝已开启...</font>","Type":9}' )
             else
@@ -1102,12 +1103,12 @@ npc[30] = function(play, p2, p3, data) --砍树系统
     if p2 == 0 then
         --砍树系统  --初始化页面
         local tmp_data = {}
-        tmp_data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
+        tmp_data["T_data"] = Player.getJsonTableByVar(play, WOODCUT_VAR)
         sendluamsg(play, 101, 30, 0, 0, tbl2json(tmp_data))
     elseif p2 == 1 then --升级
-        local T_data = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
+        local T_data = Player.getJsonTableByVar(play, WOODCUT_VAR)
         local config = teshudata["anniu_30"]
-        if p3 == 1 then  --升级斧子
+        if p3 == 0 then -- p3=0 领取存储奖励；兼容旧客户端的 p3=1 继续走砍树分支  --升级斧子
             T_data.axe = T_data.axe or 1
             if T_data.axe >= config.updata[1].max_level then
                 Player.sendmsgEx(play, "斧子已满级，无需升级...#57")
@@ -1120,7 +1121,7 @@ npc[30] = function(play, p2, p3, data) --砍树系统
             end
             Player.takeItemByTable(play, config.updata[1].details[T_data.axe].cost, ",砍树系统",nil)
             T_data.axe = T_data.axe + 1
-            Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
+            Player.setJsonVarByTable(play, WOODCUT_VAR, T_data)
             Player.sendmsgEx(play, "斧子升级成功，当前斧子等级为|【"..T_data.axe.."】#218|")
             sendluamsg(play, 101, 30, 2, 1, tbl2json({T_data = T_data}))
         elseif p3 == 2 then--升级自动升级
@@ -1136,18 +1137,18 @@ npc[30] = function(play, p2, p3, data) --砍树系统
             end
             Player.takeItemByTable(play, config.updata[2].details[T_data.auto].cost, ",砍树系统",nil)
             T_data.auto = T_data.auto + 1
-            Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
+            Player.setJsonVarByTable(play, WOODCUT_VAR, T_data)
             Player.sendmsgEx(play, "自动砍树升级成功，当前自动砍树等级为|【"..T_data.auto.."】#218|")
             sendluamsg(play, 101, 30, 2, 2, tbl2json({T_data = T_data}))
         end
     elseif p2 == 2 then --获得奖励
         local config = teshudata["anniu_30"]
-        local T_data = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
+        local T_data = Player.getJsonTableByVar(play, WOODCUT_VAR)
         T_data.axe = T_data.axe or 1
         T_data.num = T_data.num or 0
-        if p3 == 1 then -- 打开页面时领取已存储奖励
+        if p3 == 0 then -- 领取已存储奖励
             local rewards = _woodcut_flush_storage(play, false)
-            local current = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
+            local current = Player.getJsonTableByVar(play, WOODCUT_VAR)
             current.axe = current.axe or 1
             current.auto = current.auto or 0
             current.num = current.num or 0
@@ -1155,15 +1156,15 @@ npc[30] = function(play, p2, p3, data) --砍树系统
             if rewards and #rewards > 0 then
                 sendluamsg(play, 101, 30, 3, 0, tbl2json(rewards))
             end
-        elseif p3 == 2 then -- 打开页面时手动点击的奖励
-            local name, num = Player.checkItemNumByTable(play, config.click.cost)
-            if name then
-                Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
-                return
-            end
-            Player.takeItemByTable(play, config.click.cost, ",砍树系统",nil)
+        elseif p3 == 1 or p3 == 2 then -- 手动砍树，兼容两种客户端参数
+            -- local name, num = Player.checkItemNumByTable(play, config.click.cost)
+            -- if name then
+            --     Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+            --     return
+            -- end
+            -- Player.takeItemByTable(play, config.click.cost, ",砍树系统",nil)
             T_data.num = T_data.num + 1
-            Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
+            Player.setJsonVarByTable(play, WOODCUT_VAR, T_data)
             if FairyFate and FairyFate.touch then FairyFate.touch(play, "woodcut", 1) end
             if Npclib and Npclib[44] and Npclib[44].touchGrowth then
                 Npclib[44].touchGrowth(play, "woodcut", 1)
@@ -1175,24 +1176,24 @@ npc[30] = function(play, p2, p3, data) --砍树系统
             sendluamsg(play, 101, 30, 3, 0, tbl2json({{jl,1}}))
         end
     elseif p2 == 3 then --定时器开关
-        local T_data = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
+        local T_data = Player.getJsonTableByVar(play, WOODCUT_VAR)
         if getflagstatus(play, VarCfg.BS_mztq) ~= 1 then
             sendmsg(play, 1, '{"Msg":"<font color=\'#ff7700\'>[自动砍树]</font><font color=\'#ff0500\'>未激活特权，无法开启自动砍树...</font>","Type":9}')
             return
         end
         if not (getplaydef(play,"N$自动砍树") == 1) then
             T_data.auto = T_data.auto or 1
-            Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
+            Player.setJsonVarByTable(play, WOODCUT_VAR, T_data)
             setontimer(play,7,60*20,0,1)
             sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>自动砍树已开启...</font>","Type":9}')
             setplaydef(play,"N$自动砍树",os.time())
             if p2 == 1 then
                 local tmp_data = {}
-                tmp_data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_砍树系统"])
+                tmp_data["T_data"] = Player.getJsonTableByVar(play, WOODCUT_VAR)
                 sendluamsg(play, 101, 30, 0, 0, tbl2json(tmp_data))
             end
         -- else
-        --     Player.setJsonVarByTable(play, VarCfg["T_砍树系统"], T_data)
+        --     Player.setJsonVarByTable(play, WOODCUT_VAR, T_data)
         --     setofftimer(play,7)
         --     sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>自动砍树已关闭...</font>","Type":9}')
         --     setplaydef(play,"N$自动砍树",os.time())

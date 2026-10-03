@@ -417,6 +417,9 @@ end
 -- 仙府丹药统一使用到期时间驱动；同类丹药只延长持续时间，不重复叠加效果。
 local function _xianfu_dan_set_expire(play, varName, seconds)
     seconds = tonumber(seconds or 0) or 0
+    if checktitle(play, '丹仙秘辛') then
+        seconds = math.floor(seconds * 1.5)
+    end
     if seconds <= 0 then
         setplaydef(play, varName, 0)
         return 0
@@ -693,18 +696,18 @@ end
 function stdmodefunc39(play, item) --特殊丹药
     local itemName = tostring(getiteminfo(play, item, ConstCfg.iteminfo.name) or "")
     if itemName == "稳固丹" then
-        local expireAt = _xianfu_dan_set_expire(play, "N$xf_dan_low_expire", 30 * 60)
+        local expireAt = _xianfu_dan_set_expire(play, "N$xf_dan_low_expire", 10 * 60)
         delitembymakeindex(play, getiteminfo(play, item, 1), 1)
         Player.sendmsgEx(play, string.format("已服用#57|【稳固丹】#218|，持续至#57|【%s】#218|#57", os.date("%H:%M:%S", expireAt)))
         return false
     elseif itemName == "幸运丹" then
-        local expireAt = _xianfu_dan_set_expire(play, "N$xf_dan_mid_expire", 30 * 60)
+        local expireAt = _xianfu_dan_set_expire(play, "N$xf_dan_mid_expire", 10 * 60)
         Player.add_attlist(play, "仙府幸运丹", "=", Player.getAttrTableToStr({[246] = 1000, [245] = 500}), 1)
         delitembymakeindex(play, getiteminfo(play, item, 1), 1)
         Player.sendmsgEx(play, string.format("已服用#57|【幸运丹】#218|，持续至#57|【%s】#218|#57", os.date("%H:%M:%S", expireAt)))
         return false
     elseif itemName == "凝萃神丹" then
-        local expireAt = _xianfu_dan_set_expire(play, "N$xf_dan_high_expire", 30 * 60)
+        local expireAt = _xianfu_dan_set_expire(play, "N$xf_dan_high_expire", 10 * 60)
         delitembymakeindex(play, getiteminfo(play, item, 1), 1)
         Player.sendmsgEx(play, string.format("已服用#57|【凝萃神丹】#218|，持续至#57|【%s】#218|#57", os.date("%H:%M:%S", expireAt)))
         return false

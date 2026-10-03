@@ -4755,15 +4755,15 @@ function Buff.login(play)
         end
     end
     -------------------------------------------------------------------first charge effect initialization
-    local T_data = _sc_get_data(play)
-    if (T_data["ok"] and T_data["ok"] == 1) then
-        Buff[73](play,1)
-    end
-    if _has_first_charge_reward(play) then
-        Buff[102](play, 1)
-    else
-        Buff[102](play, 2)
-    end
+    -- local T_data = _sc_get_data(play)
+    -- if (T_data["ok"] and T_data["ok"] == 1) then
+    --     Buff[73](play,1)
+    -- end
+    -- if _has_first_charge_reward(play) then
+    --     Buff[102](play, 1)
+    -- else
+    --     Buff[102](play, 2)
+    -- end
     -------------------------------------------------------------------额外附加属性登录初始化
     --灵根鉴定
     local data = Player.getJsonTableByVar(play, VarCfg["T_灵根鉴定"])

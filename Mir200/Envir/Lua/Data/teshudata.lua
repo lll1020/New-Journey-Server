@@ -822,9 +822,9 @@ teshudata = {
         growth_daily_limit = 300,                  -- 每日总成长值上限
         level_cfg = {
             [1] = {level = 1, plot_unlock = 1, open_slots = 2},
-            [2] = {level = 2, plot_unlock = 3, open_slots = 4, need_growth = 100, need_harvest = 25, need_refine_low = 5, cost = {}},
-            [3] = {level = 3, plot_unlock = 6, open_slots = 6, need_growth = 300, need_harvest = 35, need_refine_mid = 10, cost = {{"神石碎片",10}}},
-            [4] = {level = 4, plot_unlock = 9, open_slots = 8, need_growth = 600, need_harvest = 50, need_refine_low = 10, cost = {{"神石碎片",150}}},
+            [2] = {level = 2, plot_unlock = 3, open_slots = 4, need_growth = 500, need_harvest = 25, need_refine_low = 5, cost = {}},
+            [3] = {level = 3, plot_unlock = 6, open_slots = 6, need_growth = 1000,need_harvest = 35, need_refine_mid = 10, cost = {{"神石碎片",10}}},
+            [4] = {level = 4, plot_unlock = 9, open_slots = 8, need_growth = 1800,need_harvest = 50, need_refine_low = 10, cost = {{"神石碎片",150}}},
         },
         growth_rules = {
             woodcut = {value = 1, daily_limit = 100},
@@ -839,7 +839,7 @@ teshudata = {
                 id = 1,
                 name = "低阶灵草",
                 need_level = 1,
-                matureTime = 30 * 60,
+                matureTime = 60 * 60,              
                 canSteal = true,
                 product = {
                     {rate = 80, give = {{"下品丹材",10}}},
@@ -862,7 +862,7 @@ teshudata = {
                 id = 3,
                 name = "高阶灵草",
                 need_level = 3,
-                matureTime = 120 * 60,
+                matureTime = 8 * 60 * 60,              
                 canSteal = false,
                 product = {
                     {rate = 30, give = {{"上品丹材",10}}},
@@ -1850,7 +1850,7 @@ teshudata = {
     ["npc_675"]  = {id = 675, name = "羿射九日",bag_cost = {{"逐日弓",1}},cost = {{"箭矢",1}},ch = '太阳杀手',hb = {{"元宝",1000000}},attr = {{244,1888}},max_num = 9},
     -- 9.8-1 聚宝魔石任务奖励已停用，当前奖励配置中不再发放聚宝魔石。
 -- 9.8-1 聚宝魔石原奖励：{"五行石",3},{"聚宝魔石",1},{"杀伐神石[大]",1}
-    ["npc_676"]  = {id = 676, name = "共公怒触不周山",map = "不周山",shaguai_id = 676,num = 500,jl_num = 100,ch = "五拳轰碎不周山",jl_c = {{"五行石",3},{"杀伐神石[大]",1}},},
+    ["npc_676"]  = {id = 676, name = "共公怒触不周山",map = "不周山",shaguai_id = 676,num = 500,jl_num = 100,ch = "五拳轰碎不周山",jl_c = {{"五行石",3},{"杀伐神石[大]",1},{"绑定金币",1880000}},},
     ["npc_677"]  = {id = 677, name = "女娲补天",cost = {{"五彩石",1}},max_num = 9,ch = "补天神子",jl_c = {{"1元真实充值",1}},},
     ["npc_678"]  = {id = 678, name = "后土娘娘",ch = "后土之力",
         details = {
@@ -1952,12 +1952,12 @@ teshudata = {
         details = {
             sz = {
                 {name = "时装：小小裁决战士", sEffect = 60048, shape = 1312,attr = {{244,13888},{25,15},{1,1000},{2,1000},{3,50},{4,50}}},
-                {name = "时装：拉大车", sEffect = 60049, shape = 1313,attr = {{1,2500},{2,2500},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{200,1000},{201,1000},{25,30}}},
-                {name = "时装：圣诞老人", sEffect = 60050, shape = 1314,attr = {{1,2500},{2,2500},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{200,1000},{201,1000},{25,30}}},
-                {name = "时装：暗黑天使", sEffect = 60052, shape = 1316,attr = {{1,2500},{2,2500},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{200,1000},{201,1000},{25,30}}},
-                {name = "时装：熊猫人", sEffect = 60053, shape = 1317,attr = {{1,2500},{2,2500},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{200,1000},{201,1000},{25,30}}},
-                {name = "时装：开挖掘机", sEffect = 60054, shape = 1318,attr = {{1,2500},{2,2500},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{200,1000},{201,1000},{25,30}}},
-                {name = "时装：天刀", sEffect = 60045, shape = 1309,attr = {{1,2500},{2,2500},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{200,1000},{201,1000},{25,30}}},
+                {name = "时装：拉大车", sEffect = 60049, shape = 1313,attr = {{1,2500},{2,2500},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{200,800},{201,800},{25,25}}},
+                {name = "时装：圣诞老人", sEffect = 60050, shape = 1314,attr = {{1,2500},{2,2500},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{200,800},{201,800},{25,25}}},
+                {name = "时装：暗黑天使", sEffect = 60052, shape = 1316,attr = {{1,2500},{2,2500},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{200,800},{201,800},{25,25}}},
+                {name = "时装：熊猫人", sEffect = 60053, shape = 1317,attr = {{1,2500},{2,2500},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{200,800},{201,800},{25,25}}},
+                {name = "时装：开挖掘机", sEffect = 60054, shape = 1318,attr = {{1,2500},{2,2500},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{200,800},{201,800},{25,25}}},
+                {name = "时装：天刀", sEffect = 60045, shape = 1309,attr = {{1,2500},{2,2500},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{200,800},{201,800},{25,25}}},
                 {name = "时装：天下谁人不识君", sEffect = 60057, shape = 1321,attr = {{1,8888},{2,8888},{3,188},{4,188},{5,188},{6,188},{7,188},{8,188}}},
                 {name = "时装：吕奉先", sEffect = 60043, shape = 1307,attr = {{3,100},{4,500}}},
                 {name = "时装：火柴人", sEffect = 60055, shape = 1319,attr = {{1,500},{2,500},{3,10},{4,50},{5,10},{6,50},{7,10},{8,50},{244,1000}}},
@@ -2636,7 +2636,7 @@ teshudata = {
         --手点击
         click = {
             ratio = 0.5,
-            cost = {{"金币",10000}},
+            -- cost = {},
         },
         dh = {
             cost = {{"仙府币",10000}},
@@ -2796,7 +2796,6 @@ teshudata = {
             {every = 20, box = "low", num = 1, label = "低级材料自选箱*1"},
             {every = 50, box = "high", num = 1, label = "高级材料自选箱*1"},
             {every = 100, box = "super", num = 1, label = "特级材料自选箱*1"},
-            {every = 100, box = "gem", num = 1, label = "灵根宝石随机宝箱*1"},
         },
         fashion_pity_every = 200, -- 每200抽保底1个时装
         box_pool = {
@@ -2807,11 +2806,12 @@ teshudata = {
             },
             high = {
                 {kind = "item", give = {{"辉耀水晶",50}}, label = "辉耀水晶*50"},
-                {kind = "item", give = {{"神石宝箱钥匙",10}}, label = "神石宝箱钥匙*10"},
+                {kind = "item", give = {{"神石宝箱钥匙",5}}, label = "神石宝箱钥匙*5"},
                 {kind = "item", give = {{"天道命石",5}}, label = "天道命石*5"},
+                {kind = "item", give = {{"高级强化石",10}}, label = "高级强化石*10"},
             },
             super = {
-                {kind = "item", give = {{"天道·渡劫丹",3}}, label = "天道·渡劫丹*3"},
+                {kind = "item", give = {{"灵根灵石随机箱",1}}, label = "灵根灵石随机箱*1"},
                 {kind = "item", give = {{"鉴古符",3}}, label = "鉴古符*3"},
                 {kind = "item", give = {{"灵兽蛋",5}}, label = "灵兽蛋*5"},
             },
@@ -2835,7 +2835,7 @@ teshudata = {
             [4] = {draw = 100, normal = {main = {kind = "item", give = {{"神石宝箱钥匙",3}}, label = "神石宝箱钥匙*3"}}, crown = {main = {kind = "item", give = {{"千年玄铁",666}}, label = "千年玄铁*666"}}},
             [5] = {draw = 150, normal = {main = {kind = "item", give = {{"辉耀水晶",88}}, label = "辉耀水晶*88"}}, crown = {main = {kind = "item", give = {{"辉耀水晶",188}}, label = "辉耀水晶*188"}}},
             [6] = {draw = 200, normal = {main = {kind = "item", give = {{"仙法卷轴",18}}, label = "仙法卷轴*18"}}, crown = {main = {kind = "item", give = {{"极品仙法卷轴",1}}, label = "极品仙法卷轴*1"}}},
-            [7] = {draw = 250, normal = {main = {kind = "item", give = {{"高阶强化石",88}}, label = "高阶强化石*88"}}, crown = {main = {kind = "item", give = {{"元宝",1280000}}, label = "元宝*128W"}}},
+            [7] = {draw = 250, normal = {main = {kind = "item", give = {{"天道·渡劫丹",1}}, label = "天道·渡劫丹*1"}}, crown = {main = {kind = "item", give = {{"元宝",1280000}}, label = "元宝*128W"}}},
             [8] = {draw = 300, normal = {main = {kind = "item", give = {{"灵兽蛋",5}}, label = "灵兽蛋*5"}}, crown = {main = {kind = "item", give = {{"神·五行石",1}}, label = "神·五行石*1"}}},
             [9] = {draw = 400, normal = {main = {kind = "item", give = {{"仙法卷轴",88}}, label = "仙法卷轴*88"}}, crown = {main = {kind = "item", give = {{"极品仙法卷轴",2}}, label = "极品仙法卷轴*2"}}},
             [10] = {draw = 600, normal = {main = {kind = "item", give = {{"时光鉴定石",30}}, label = "时光鉴定石*30"}}, crown = {main = {kind = "item", give = {{"四级宝石[万能]",1}}, label = "四级宝石[万能]*1"}}},
