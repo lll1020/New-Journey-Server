@@ -88,6 +88,11 @@ function npc.link(play,npcid,ew,aid)
 
     -- ew=2：屠龙刀升级（额外功能）
     if ew == 2 then
+        local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
+        if tonumber(jq_data[_cfg_key] or 0) < 2 then
+            Player.sendmsgEx(play, "请先完成屠龙宝刀任务#57")
+            return
+        end
         _try_upgrade_artifact(play)
         return
     end

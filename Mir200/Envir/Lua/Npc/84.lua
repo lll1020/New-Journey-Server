@@ -42,7 +42,7 @@ end
 
 -- 检查灵根条件是否达成。
 local function _has_all_linggen(play)
-    return TalentTree and TalentTree.hasBaseUnlock and TalentTree.hasBaseUnlock(play) == true
+    return TalentTree and TalentTree.hasCoreLevel and TalentTree.hasCoreLevel(play, 40) == true
 end
 local function _has_all_lingshou(play)
     local cfg = ((teshudata or {})["npc_64"] or {}).config or {}
@@ -102,28 +102,11 @@ end
 
 -- 检查双神道相关任务是否全部完成。
 local function _has_double_shendao(play)
-    local compat = (_config and _config.compat) or {}
     local god_data = Player.getJsonTableByVar(play, VarCfg["T_神道之路"] or "T_神道之路") or {}
     local gods = type(god_data.gods) == "table" and god_data.gods or {}
     local god_one = gods["1"] or gods[1] or {}
     local god_two = gods["2"] or gods[2] or {}
-    if _toint(god_one.cert) >= 1 and _toint(god_two.cert) >= 1 then
-        return true
-    end
-
-    -- Keep the original task-progress check for players with legacy saves.
-    local jq = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
-    local tasks = compat.shendao_tasks or {}
-    for _, entry in ipairs(tasks) do
-        local key, need = _resolve_task_need(entry, 0)
-        if key == nil or key == "" then
-            return false
-        end
-        if _toint(jq[key]) < need then
-            return false
-        end
-    end
-    return #tasks > 0
+    return _toint(god_one.cert) >= 1 and _toint(god_two.cert) >= 1
 end
 local function _has_all_destiny(play)
     local jq = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}

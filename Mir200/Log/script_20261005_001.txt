@@ -1,0 +1,6 @@
+[2026-10-05 12:34:22:304] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：78; NpcThreadId: 6236, CurPlayThreadId: 6236
+
+[2026-10-05 15:42:24:643] LuaNPC:玩家名字 ID:999999999 执行 pickupitemex player:玩家名字 耗时：31; NpcThreadId: 6236, CurPlayThreadId: 6236
+
+[2026-10-05 15:49:57:545] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：203; NpcThreadId: 6236, CurPlayThreadId: 6236
+

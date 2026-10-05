@@ -1645,7 +1645,12 @@ local function hs_collect_reward(reward, group_name, idx, cfg)
     end
     local v4 = tonumber(cfg[4]) or 0
     local v5 = tonumber(cfg[5]) or 0
-    if group_name == "zzhs" or group_name == "sqhs" or group_name == "clfj" or group_name == "teshuhuihsou" then
+    if group_name == "gwfj" then
+        reward.coin = reward.coin + v4
+        hs_add_item_reward(reward, hs_name_hlsj, v5)
+    elseif group_name == "teshuhuihsou" then
+        reward.coin = reward.coin + v4
+    elseif group_name == "zzhs" or group_name == "sqhs" or group_name == "clfj" then
         reward.coin = reward.coin + v4
         reward.yb = reward.yb + v5
     elseif group_name == "zsfj" then
@@ -1653,9 +1658,8 @@ local function hs_collect_reward(reward, group_name, idx, cfg)
         if material_name then
             hs_add_item_reward(reward, material_name, v4)
         end
-    elseif group_name == "ssfj" or group_name == "gwfj" then
-        local material_name = type(cfg[6]) == "string" and cfg[6] or hs_name_lingshi
-        hs_add_item_reward(reward, material_name, v4)
+    elseif group_name == "ssfj" then
+        reward.lingshi = reward.lingshi + v4
     end
 end
 -- 将累计奖励统一结算到玩家，减少重复调用和提示。
