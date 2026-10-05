@@ -11,7 +11,7 @@ local FairyFate = include("lua/LuaLib/fairy_fate.lua")
 function npc.main(play,npcid)
     local data = {}
     for k,v in pairs(_config.where) do
-        data[k] = getplaydef(play, VarCfg["U_装备强化_"..v[1]])
+        data[k] = tonumber(getplaydef(play, VarCfg["U_装备强化_"..v[1]]) or 0) or 0
     end
     sendluamsg(play,100,npcid,0,0,tbl2json(data))
 end
@@ -145,7 +145,7 @@ function Login_zbqh(play)
     local data = {}
     local min = 99
     for k,v in pairs(_config.where) do
-        data[k] = getplaydef(play, VarCfg["U_装备强化_"..v[1]])
+        data[k] = tonumber(getplaydef(play, VarCfg["U_装备强化_"..v[1]]) or 0) or 0
         if min > data[k] then
             min = data[k]
         end

@@ -70,8 +70,8 @@ function npc.link(play,npcid,ew,aid)
         return
     end
 
-    if choice == 1 then
-        local cost = _task_cfg.cost_a
+    if choice == 2 then
+        local cost = _task_cfg.cost_b
         if type(cost) == "table" and #cost > 0 then
             if not Guard.ensureCost(play, cost) then
                 return

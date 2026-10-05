@@ -3,14 +3,14 @@ npc = {}
 local _config = Guard.getConfig("sjdt")
 function npc.main(play,npcid)
     if tonumber(npcid) == 507 then
-        Player.sendmsgEx(play, "当前开启条件未达成#57")
+        Player.sendmsgEx(play, "请获得世界符文后再来#57")
         return
     end
     sendluamsg(play,100,npcid,0,0,"")
 end
 function npc.link(play,npcid,ew,aid)
     if tonumber(npcid) == 507 then
-        Player.sendmsgEx(play, "当前开启条件未达成#57")
+        Player.sendmsgEx(play, "请获得世界符文后再来#57")
         return
     end
     -- npc_guard: 入参校验

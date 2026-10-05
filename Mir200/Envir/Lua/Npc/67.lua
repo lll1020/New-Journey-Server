@@ -103,6 +103,9 @@ end
 
 function Login_sxsh(play)
     local T_data = Player.getJsonTableByVar(play, VarCfg["T_…˙–§ ÿª§"])
+    if T_data["jl_all"] and _config and _config.ch then
+        Player.title_give(play, _config.ch)
+    end
     if T_data["jl1"] then Player.updateSomeAddr(play,nil, {{81,300}}) end
     if T_data["jl2"] then Player.updateSomeAddr(play,nil, {{79,300}}) end
     if T_data["jl3"] then Player.updateSomeAddr(play,nil, {{22,3}}) end
