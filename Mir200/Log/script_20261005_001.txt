@@ -4,3 +4,15 @@
 
 [2026-10-05 15:49:57:545] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：203; NpcThreadId: 6236, CurPlayThreadId: 6236
 
+[2026-10-05 18:00:12:975] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：31; NpcThreadId: 6236, CurPlayThreadId: 6236
+
+[2026-10-05 20:39:56:587] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：32; NpcThreadId: 6236, CurPlayThreadId: 6236
+
+[2026-10-05 21:48:04:646] LuaNPC: ID:999999999 执行 startup player: 耗时：32; NpcThreadId: 21072, CurPlayThreadId: 21072
+
+[2026-10-05 21:48:45:827] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：32; NpcThreadId: 21072, CurPlayThreadId: 21072
+
+[2026-10-05 21:50:31:876] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 52868, CurPlayThreadId: 52868
+
+[2026-10-05 22:03:01:397] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 48836, CurPlayThreadId: 48836
+

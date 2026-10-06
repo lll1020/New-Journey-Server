@@ -3,6 +3,35 @@ local Cfg = include("lua/Data/talent_tree_cfg.lua") or {}
 local GemCfg = include("lua/Data/talent_tree_gems.lua") or {}
 local SkillLogic = rawget(_G, "TalentTreeSkills")
 
+-- four-level gem extra sockets
+local function setup_extra_socket_nodes()
+    Cfg.node_map = type(Cfg.node_map) == "table" and Cfg.node_map or {}
+    Cfg.nodes = type(Cfg.nodes) == "table" and Cfg.nodes or {}
+    local elements = {"metal", "wood", "water", "fire", "earth"}
+    for _, element in ipairs(elements) do
+        for _, parent_suffix in ipairs({"M12", "F1_8", "F2_8"}) do
+            local parent_id = element .. "_" .. parent_suffix
+            if Cfg.node_map[parent_id] then
+                for index = 1, 2 do
+                    local id = parent_id .. "_extra_" .. tostring(index)
+                    if not Cfg.node_map[id] then
+                        local parent = Cfg.node_map[parent_id]
+                        local node = {
+                            id = id, kind = "socket", slot_type = "extra_socket",
+                            name = "额外宝石槽位", element = parent.element or element,
+                            parent_socket = parent_id, point_cost = 0,
+                            requires = {}, requires_any = {},
+                        }
+                        Cfg.node_map[id] = node
+                        Cfg.nodes[#Cfg.nodes + 1] = node
+                    end
+                end
+            end
+        end
+    end
+end
+setup_extra_socket_nodes()
+
 local STATE_VAR = (VarCfg and VarCfg.T_talent_tree) or "T74"
 local ATTR_LIST = "talent_tree_attrs"
 local REDPOINT_ICON = 22
@@ -158,8 +187,37 @@ local function node_cfg(node_id)
     return Cfg.node_map and Cfg.node_map[tostring(node_id)] or nil
 end
 
+local function has_level4_gem(state, node_id)
+    local gem_name = tostring((state.sockets or {})[tostring(node_id)] or "")
+    if gem_name == "" then
+        return false
+    end
+    local gem_idx = tonumber(gem_name) or tonumber(getstditeminfo(gem_name, 0) or 0) or 0
+    local gem_def = GemCfg.items and (GemCfg.items[gem_idx] or GemCfg.items[tostring(gem_idx)])
+    if gem_def and tonumber(gem_def.level) and tonumber(gem_def.level) >= 4 then
+        return true
+    end
+    local display = gem_idx > 0 and tostring(getstditeminfo(gem_idx, 1) or gem_name) or gem_name
+    return display:match("[Ll][Vv][%.%- ]*4") ~= nil or display:match("4") ~= nil
+end
+
 local function active(state, node_id)
-    return toint((state.nodes or {})[tostring(node_id)] or 0, 0) == 1
+    local node = node_cfg(node_id)
+    if node and tostring(node.slot_type or "") == "extra_socket" then
+        return has_level4_gem(state, node.parent_socket)
+    end
+    if toint((state.nodes or {})[tostring(node_id)] or 0, 0) == 1 then
+        return true
+    end
+    local element, branch = tostring(node_id or ""):match("^([^_]+)_(F[12]_8)$")
+    if element and branch then
+        local m12 = element .. "_M12"
+        local gem = tostring((state.sockets or {})[m12] or "")
+        local gem_idx = tonumber(getstditeminfo(gem, 0) or 0) or 0
+        local gem_name = gem_idx > 0 and tostring(getstditeminfo(gem_idx, 1) or gem) or gem
+        return gem_name:match("[Ll][Vv][%.%- ]*4") ~= nil or gem_name:match("4") ~= nil
+    end
+    return false
 end
 
 local function is_m1_node(node)
@@ -355,6 +413,10 @@ local function is_gem_item(item_name, item_idx)
 end
 
 local function socket_level_limit(node)
+    local node_id = tostring(node and node.id or "")
+    if node_id:match("_M12$") or node_id:match("_F1_8$") or node_id:match("_F2_8$") then
+        return {1, 2, 3, 4}
+    end
     local node_text = tostring(node and node.effect or "") .. tostring(node and node.desc or "")
     if string.find(node_text, "只能装3级", 1, true) then
         return {3}
@@ -367,18 +429,23 @@ end
 
 local function can_socket_gem(node, item_name, item_idx)
     if not node or not is_gem_item(item_name, item_idx) then
-        return false, "该物品不是灵根天赋宝石#57"
+        return false, "无效宝石物品#57"
     end
     local gem_def = get_gem_def(item_name, item_idx)
     local gem_level = get_gem_level(item_name, gem_def)
-    if not contains_id(socket_level_limit(node), gem_level) then
-        return false, "该宝石等级不符合当前槽位要求#57"
+    local is_extra_socket = tostring(node.slot_type or "") == "extra_socket"
+    if is_extra_socket then
+        if gem_level < 1 or gem_level > 3 then
+            return false, "额外宝石槽位只能镶嵌一至三级宝石#57"
+        end
+    elseif not contains_id(socket_level_limit(node), gem_level) then
+        return false, "宝石等级不符合当前槽位要求#57"
     end
-    if gem_def and type(gem_def.allowed_socket_types) == "table"
+    if not is_extra_socket and gem_def and type(gem_def.allowed_socket_types) == "table"
         and not contains_id(gem_def.allowed_socket_types, tostring(node.slot_type or ""))
         and not contains_id(gem_def.allowed_socket_types, tostring(node.kind or ""))
     then
-        return false, "该宝石不能镶嵌在当前槽位#57"
+        return false, "宝石类型不能镶嵌到当前槽位#57"
     end
     return true, gem_def, gem_level
 end
@@ -981,8 +1048,12 @@ local function socket_gem(play, npcid, request)
         Player.sendmsgEx(play, "该节点不是宝石槽#57")
         return
     end
-    if not active(state, node_id) then
-        Player.sendmsgEx(play, "需要先点亮宝石槽节点#57")
+    if tostring(node.slot_type or "") ~= "extra_socket" and not active(state, node_id) then
+        Player.sendmsgEx(play, "请先在对应母节点镶嵌四级宝石#57")
+        return
+    end
+    if tostring(node.slot_type or "") == "extra_socket" and not has_level4_gem(state, node.parent_socket) then
+        Player.sendmsgEx(play, "请先在对应母节点镶嵌四级宝石#57")
         return
     end
     local requested_gem = tostring(request.gem or "")

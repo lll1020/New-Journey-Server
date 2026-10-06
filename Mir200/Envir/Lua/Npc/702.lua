@@ -88,7 +88,7 @@ function npc_702_savepos(play)
 end
 
 -- 回到进入副本前坐标
-function npc_702_back(play)
+local function npc_702_finish_back(play)
     local dtm = getplaydef(play, _run_map_var)
     local back = getplaydef(play, _back_pos_var)
     if back and back ~= "" then
@@ -107,6 +107,21 @@ function npc_702_back(play)
     setplaydef(play, _run_main_spawn_ok_var, 0)
     setplaydef(play, _run_hide_spawn_ok_var, 0)
     _state_clear(dtm)
+end
+function npc_702_back(play)
+    if tonumber(getplaydef(play, "U$npc702_back_pending") or 0) == 1 then
+        return
+    end
+    setplaydef(play, "U$npc702_back_pending", 1)
+    senddelaymsg(play, "副本结束，开始倒计时间%s秒后返回", 5, 250, 1, "@npc_702_delay_back")
+end
+
+function npc_702_delay_back(play)
+    if tonumber(getplaydef(play, "U$npc702_back_pending") or 0) ~= 1 then
+        return
+    end
+    npc_702_finish_back(play)
+    setplaydef(play, "U$npc702_back_pending", 0)
 end
 
 -- 统计地图内指定怪物数量（仅统计存活怪）
@@ -239,6 +254,7 @@ local function _on_hidden_boss_killed(play)
     end
 
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+    npc_702_back(play)
 end
 
 -- 召唤隐藏BOSS前置校验（返回副本镜像地图名）
@@ -540,6 +556,7 @@ function npc_702_timeout(play)
     if getbaseinfo(play,3) == dtm then
         Player.sendmsgEx(play, "副本时间结束#57")
         npc_702_back(play)
+        return
     end
 
     if checkmirrormap(dtm) then
