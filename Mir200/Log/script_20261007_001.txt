@@ -19,3 +19,20 @@
 [2026-10-07 11:21:28:159] LuaNPC:玩家名字k ID:999999999 执行 handlerequest player:玩家名字k 耗时：47; NpcThreadId: 50548, CurPlayThreadId: 50548
 [2026-10-07 11:21:28:159] [玩家名字k]Lua执行耗时过高:47ms msgid:105 629 629 0 
 
+[2026-10-07 13:02:51:903] LuaNPC:玩家名字 ID:999999999 执行 ggna player:玩家名字 耗时：31; NpcThreadId: 50548, CurPlayThreadId: 50548
+
+[2026-10-07 13:52:06:005] LuaNPC: ID:999999999 执行 startup player: 耗时：47; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-07 13:53:43:105] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-07 14:06:39:432] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-07 14:15:27:970] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：500; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-07 14:19:50:210] LuaNPC:玩家名字 ID:999999999 执行 stdmodefunc34 player:玩家名字 耗时：172; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-07 14:20:30:721] LuaNPC:玩家名字 ID:999999999 执行 takeoffex player:玩家名字 耗时：47; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-07 14:21:03:283] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：156; NpcThreadId: 18380, CurPlayThreadId: 18380
+[2026-10-07 14:21:03:283] [玩家名字]Lua执行耗时过高:156ms msgid:100 22 4 0 {"gem":"四级宝石[万能]","id":"fire_M12"}
+

@@ -198,10 +198,10 @@ local function _back(play)
         if map and map ~= "" and x > 0 and y > 0 then
             mapmove(play, map, x, y, 2)
         else
-            mapmove(play, "六大陆主城", 17, 74, 2)
+            mapmove(play, "六大陆主城", 53, 44, 2)
         end
     else
-        mapmove(play, "六大陆主城", 17, 74, 2)
+        mapmove(play, "六大陆主城", 53, 44, 2)
     end
     _clear_run_vars(play, dtm)
 end

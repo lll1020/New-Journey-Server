@@ -151,7 +151,7 @@ function stdmodefunc10(play, item)
             end
         elseif daluditu[du] and daluditu[du] == 4 then mapmove(play, "四大陆主城",32,29,3) addhpper(play, '=', 100) addmpper(play, '=', 100)
         elseif daluditu[du] and daluditu[du] == 5 then mapmove(play, "五大陆主城",87,28,4) addhpper(play, '=', 100) addmpper(play, '=', 100)
-        elseif daluditu[du] and daluditu[du] == 6 then mapmove(play, "六大陆主城",83,121,4) addhpper(play, '=', 100) addmpper(play, '=', 100)
+        elseif daluditu[du] and daluditu[du] == 6 then mapmove(play, "六大陆主城",52,44,4) addhpper(play, '=', 100) addmpper(play, '=', 100)
         elseif daluditu[du] and daluditu[du] == 7 then
             -- 世界符文总奖励是第七大陆通行的统一门槛。
             if not Player.ensureSeventhContinentPass(play, "请先满足七大陆进入条件后再前往七大陆#57") then

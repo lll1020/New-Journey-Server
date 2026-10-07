@@ -2670,7 +2670,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = {1, "六大陆主城", 721, 25, 149},
+                    yd = {1, "六大陆主城", 721, 81, 84},
                     desc = "星图已见三光，前往冰川雪域寻回帝星遗失的线索",
                 },
                 {
@@ -2691,7 +2691,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = {1, "六大陆主城", 722, 108, 44},
+                    yd = {1, "六大陆主城", 722, 52, 72},
                     desc = "玉佩重铸，六大陆可爆玉佩碎片",
                 },
                 {
@@ -2807,7 +2807,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = {1, "六大陆主城", 727, 17, 74},
+                    yd = {1, "六大陆主城", 727, 52, 77},
                     desc = "帝星本源归位，解除星象圣图封印",
                 },
             },
@@ -2836,7 +2836,7 @@ local npc_xyl = {
                     khdjy = function()
                         return true
                     end,
-                    yd = {1, "六大陆主城", 733, 82, 113},
+                    yd = {1, "六大陆主城", 733, 51, 37},
                     desc = "重游古城，集齐四地信物再来交付",
                 },
                 {
