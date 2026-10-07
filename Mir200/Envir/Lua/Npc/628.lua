@@ -89,6 +89,14 @@ local function _try_send_gray_entry_guide(play)
         sendluamsg(play, 101, 0, 1, 1, '{"lx":2,"npcdt":"灰界","npcid":46,"xx":205,"yy":196}')
     end
 end
+function npc_628_open_challenge(play)
+    stopautoattack(play)
+    if Guard and Guard.closeNpc then Guard.closeNpc(play, 628) end
+    mapmove(play, "虚妄山脉1", 91, 54, 2)
+    if Npclib and Npclib[628] and Npclib[628].main then
+        Npclib[628].main(play, 744)
+    end
+end
 function npc.main(play,npcid)
     if not _config then
         return
@@ -208,6 +216,7 @@ function npc.link(play,npcid,ew,aid)
         giveitem(play, item_name, 1)
         Player.sendmsgEx(play, "任务完成，获得物品#57|"..item_name.."#249|#57")
         sendluamsg(play,100,npcid,1,2,"")
+        messagebox(play, "前置任务已完成，是否前往挑战入口？", "@npc_628_open_challenge")
     end
 end
 

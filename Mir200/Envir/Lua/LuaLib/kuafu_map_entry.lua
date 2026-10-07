@@ -124,7 +124,7 @@ local function _check_enter(play, cfg)
     if not _has_day_card(play) then
         return false, "日卡"
     end
-    if cfg.check then local ok, err = cfg.check(play); if not ok then return false, err end end
+    if cfg ~= _cfg[1013] and cfg ~= _cfg[1014] and cfg ~= _cfg[1015] and cfg ~= _cfg[1016] and cfg.check then local ok, err = cfg.check(play); if not ok then return false, err end end
     return true
 end
 
@@ -134,7 +134,7 @@ function KuafuMapEntry.main(play, npcid)
         name = cfg and cfg.name or "跨服地图",
         map = cfg and cfg.map or "",
         open_day = cfg and cfg.open_day or 0,
-        condition_desc = cfg and cfg.condition_desc or "",
+        condition_desc = (cfg and (cfg == _cfg[1013] or cfg == _cfg[1014] or cfg == _cfg[1015] or cfg == _cfg[1016])) and "日卡特权" or (cfg and cfg.condition_desc or ""),
         open_day_now = _open_day(),
         has_day_card = _has_day_card(play) and 1 or 0,
     }

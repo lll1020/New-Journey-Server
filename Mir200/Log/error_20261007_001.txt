@@ -1,0 +1,389 @@
+[2026-10-07 07:28:14:550] D701 - secret map not found !!
+[2026-10-07 07:28:14:550] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-39300] 当前Thread:50800
+[2026-10-07 07:28:14:551] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2026-10-07 07:28:14:551] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-39300] 当前Thread:50800
+[2026-10-07 07:28:14:551] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2026-10-07 07:28:14:551] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-39300] 当前Thread:50800
+[2026-10-07 07:28:14:551] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2026-10-07 07:28:14:551] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-39300] 当前Thread:50800
+[2026-10-07 07:28:14:551] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2026-10-07 07:28:14:679] ---------------------线程耗时监控
+[2026-10-07 07:28:14:744] Frame-----------------------------------
+
+[2026-10-07 07:28:15:054] MainRunThread(0)-----------------------------------
+
+[2026-10-07 07:28:15:071] EnvirThread 0/0(9468-0)flag:50000004  lua: 1 CallLua:setontimerex 483-----------------------------------
+
+[2026-10-07 07:28:15:116] DbThread(0-0)-----------------------------------
+
+[2026-10-07 07:28:15:138] BoxSellDbThread(0)-----------------------------------
+
+[2026-10-07 07:28:15:158] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-10-07 07:45:07:873] D701 - secret map not found !!
+[2026-10-07 07:45:07:873] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-51212] 当前Thread:37140
+[2026-10-07 07:45:07:873] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2026-10-07 07:45:07:873] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-51212] 当前Thread:37140
+[2026-10-07 07:45:07:873] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2026-10-07 07:45:07:873] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-51212] 当前Thread:37140
+[2026-10-07 07:45:07:873] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2026-10-07 07:45:07:873] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-51212] 当前Thread:37140
+[2026-10-07 07:45:07:873] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2026-10-07 07:45:08:008] ---------------------线程耗时监控
+[2026-10-07 07:45:08:278] Frame-----------------------------------
+
+[2026-10-07 07:45:08:316] MainRunThread(0)-----------------------------------
+
+[2026-10-07 07:45:08:369] EnvirThread 0/0(7031-0)flag:50000004  lua: 1 CallLua:setontimerex 491-----------------------------------
+
+[2026-10-07 07:45:08:395] DbThread(0-0)-----------------------------------
+
+[2026-10-07 07:45:08:420] BoxSellDbThread(0)-----------------------------------
+
+[2026-10-07 07:45:08:446] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-10-07 08:21:31:164] D701 - secret map not found !!
+[2026-10-07 08:21:31:164] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-34684] 当前Thread:12580
+[2026-10-07 08:21:31:164] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2026-10-07 08:21:31:164] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-34684] 当前Thread:12580
+[2026-10-07 08:21:31:164] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2026-10-07 08:21:31:164] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-34684] 当前Thread:12580
+[2026-10-07 08:21:31:164] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2026-10-07 08:21:31:164] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-34684] 当前Thread:12580
+[2026-10-07 08:21:31:164] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2026-10-07 08:21:31:243] ---------------------线程耗时监控
+[2026-10-07 08:21:31:299] Frame-----------------------------------
+
+[2026-10-07 08:21:31:408] MainRunThread(0)-----------------------------------
+
+[2026-10-07 08:21:31:432] EnvirThread 0/0(5953-0)flag:50000004  lua: 1 CallLua:setontimerex 491-----------------------------------
+
+[2026-10-07 08:21:31:457] DbThread(0-0)-----------------------------------
+
+[2026-10-07 08:21:31:483] BoxSellDbThread(0)-----------------------------------
+
+[2026-10-07 08:21:31:499] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-10-07 08:59:36:494] D701 - secret map not found !!
+[2026-10-07 08:59:36:494] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-45776] 当前Thread:10816
+[2026-10-07 08:59:36:494] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2026-10-07 08:59:36:494] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-45776] 当前Thread:10816
+[2026-10-07 08:59:36:494] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2026-10-07 08:59:36:494] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-45776] 当前Thread:10816
+[2026-10-07 08:59:36:494] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2026-10-07 08:59:36:494] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-45776] 当前Thread:10816
+[2026-10-07 08:59:36:494] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2026-10-07 08:59:36:641] ---------------------线程耗时监控
+[2026-10-07 08:59:36:742] Frame-----------------------------------
+
+[2026-10-07 08:59:36:944] MainRunThread(0)-----------------------------------
+
+[2026-10-07 08:59:36:965] EnvirThread 0/0(7281-0)flag:50000004  lua: 1 CallLua:setontimerex 491-----------------------------------
+
+[2026-10-07 08:59:37:001] DbThread(0-0)-----------------------------------
+
+[2026-10-07 08:59:37:028] BoxSellDbThread(0)-----------------------------------
+
+[2026-10-07 08:59:37:053] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-10-07 09:00:34:399] D701 - secret map not found !!
+[2026-10-07 09:00:34:399] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-2956] 当前Thread:54404
+[2026-10-07 09:00:34:399] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2026-10-07 09:00:34:399] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-2956] 当前Thread:54404
+[2026-10-07 09:00:34:399] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2026-10-07 09:00:34:399] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-2956] 当前Thread:54404
+[2026-10-07 09:00:34:399] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2026-10-07 09:00:34:399] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-2956] 当前Thread:54404
+[2026-10-07 09:00:34:399] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2026-10-07 09:00:34:527] ---------------------线程耗时监控
+[2026-10-07 09:00:34:630] Frame-----------------------------------
+
+[2026-10-07 09:00:34:859] MainRunThread(0)-----------------------------------
+
+[2026-10-07 09:00:34:902] EnvirThread 0/0(6969-0)flag:50000004  lua: 1 CallLua:setontimerex 491-----------------------------------
+
+[2026-10-07 09:00:34:961] DbThread(0-0)-----------------------------------
+
+[2026-10-07 09:00:35:010] BoxSellDbThread(0)-----------------------------------
+
+[2026-10-07 09:00:35:040] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-10-07 09:22:34:088] D701 - secret map not found !!
+[2026-10-07 09:22:34:088] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-54732] 当前Thread:33328
+[2026-10-07 09:22:34:088] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2026-10-07 09:22:34:088] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-54732] 当前Thread:33328
+[2026-10-07 09:22:34:088] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2026-10-07 09:22:34:088] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-54732] 当前Thread:33328
+[2026-10-07 09:22:34:088] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2026-10-07 09:22:34:088] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-54732] 当前Thread:33328
+[2026-10-07 09:22:34:088] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2026-10-07 09:22:34:221] ---------------------线程耗时监控
+[2026-10-07 09:22:34:334] Frame-----------------------------------
+
+[2026-10-07 09:22:34:534] MainRunThread(0)-----------------------------------
+
+[2026-10-07 09:22:34:552] EnvirThread 0/0(7109-0)flag:50000004  lua: 1 CallLua:setontimerex 491-----------------------------------
+
+[2026-10-07 09:22:34:587] DbThread(0-0)-----------------------------------
+
+[2026-10-07 09:22:34:622] BoxSellDbThread(0)-----------------------------------
+
+[2026-10-07 09:22:34:647] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-10-07 09:39:39:489] D701 - secret map not found !!
+[2026-10-07 09:39:39:489] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-55528] 当前Thread:50224
+[2026-10-07 09:39:39:489] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2026-10-07 09:39:39:489] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-55528] 当前Thread:50224
+[2026-10-07 09:39:39:489] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2026-10-07 09:39:39:489] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-55528] 当前Thread:50224
+[2026-10-07 09:39:39:489] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2026-10-07 09:39:39:489] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-55528] 当前Thread:50224
+[2026-10-07 09:39:39:489] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2026-10-07 09:39:39:657] ---------------------线程耗时监控
+[2026-10-07 09:39:39:752] Frame-----------------------------------
+
+[2026-10-07 09:39:39:975] MainRunThread(0)-----------------------------------
+
+[2026-10-07 09:39:40:029] EnvirThread 0/0(7562-0)flag:50000004  lua: 1 CallLua:setontimerex 491-----------------------------------
+
+[2026-10-07 09:39:40:062] DbThread(0-0)-----------------------------------
+
+[2026-10-07 09:39:40:112] BoxSellDbThread(0)-----------------------------------
+
+[2026-10-07 09:39:40:139] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-10-07 09:48:34:321] D701 - secret map not found !!
+[2026-10-07 09:48:34:321] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-54424] 当前Thread:39356
+[2026-10-07 09:48:34:321] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2026-10-07 09:48:34:321] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-54424] 当前Thread:39356
+[2026-10-07 09:48:34:321] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2026-10-07 09:48:34:321] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-54424] 当前Thread:39356
+[2026-10-07 09:48:34:321] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2026-10-07 09:48:34:321] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-54424] 当前Thread:39356
+[2026-10-07 09:48:34:321] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2026-10-07 09:48:34:407] ---------------------线程耗时监控
+[2026-10-07 09:48:34:465] Frame-----------------------------------
+
+[2026-10-07 09:48:34:575] MainRunThread(0)-----------------------------------
+
+[2026-10-07 09:48:34:604] EnvirThread 0/0(5844-0)flag:50000004  lua: 1 CallLua:setontimerex 491-----------------------------------
+
+[2026-10-07 09:48:34:619] DbThread(0-0)-----------------------------------
+
+[2026-10-07 09:48:34:646] BoxSellDbThread(0)-----------------------------------
+
+[2026-10-07 09:48:34:662] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-10-07 10:02:14:143] D701 - secret map not found !!
+[2026-10-07 10:02:14:143] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-53656] 当前Thread:44208
+[2026-10-07 10:02:14:143] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2026-10-07 10:02:14:143] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-53656] 当前Thread:44208
+[2026-10-07 10:02:14:143] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2026-10-07 10:02:14:143] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-53656] 当前Thread:44208
+[2026-10-07 10:02:14:143] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2026-10-07 10:02:14:143] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-53656] 当前Thread:44208
+[2026-10-07 10:02:14:143] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2026-10-07 10:02:14:329] ---------------------线程耗时监控
+[2026-10-07 10:02:14:435] Frame-----------------------------------
+
+[2026-10-07 10:02:14:646] MainRunThread(16)-----------------------------------
+
+[2026-10-07 10:02:14:688] EnvirThread 0/0(6515-0)flag:50000004  lua: 1 CallLua:setontimerex 491-----------------------------------
+
+[2026-10-07 10:02:14:725] DbThread(0-0)-----------------------------------
+
+[2026-10-07 10:02:14:763] BoxSellDbThread(0)-----------------------------------
+
+[2026-10-07 10:02:14:798] NewHttpPost(0-0-0)-----------------------------------
+
+
+[2026-10-07 10:03:00:524] lua.Json2Tbl Except：Expected "{" but found value (1, 2)[0000000001E08281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001E07AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001E079B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001E0AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001DF9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001DF996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001DF9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000E323B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000E32418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[00000000015181FA] JsonDataObjects._ZN15Jsondataobjects15TJsonBaseObject5ParseEPwiPNS_22TJsonReaderProgressRecE (Line 3214, "JsonDataObjects.pas" + 30)
+[0000000001AE57E2] uMyLua._ZN6Umylua6TMyLua8Json2TblEPv (Line 8698, "uMyLua.pas" + 6)
+[0000000001721E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FF8F4D12C36]
+[00007FF8F4D189EA] lua_pcall
+[0000000001B1B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000001B19256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001F60DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001F29DD7] ObjPlay._ZN7Objplay11TPlayObject14ClientClickNPCEN6System13UnicodeStringEi (Line 14614, "ObjPlay.pas" + 70)
+[0000000001EF1DDB] ObjPlay._ZN7Objplay11TPlayObject7OperateEPN7Grobal215TProcessMessageE (Line 4155, "ObjPlay.pas" + 507)
+[0000000001EE6059] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 2308, "ObjPlay.pas" + 12)
+[0000000001CC22E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001CC1D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[0000000001CDD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000001A0B12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000012521D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000001251D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000F52963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000E32F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FF94D2DCD87] BaseThreadInitThunk
+[00007FF94E5CCAEC] RtlUserThreadStart
+
+
+[2026-10-07 10:03:11:673] lua.Json2Tbl Except：Expected "{" but found value (1, 2)[0000000001E08281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001E07AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001E079B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001E0AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001DF9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001DF996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001DF9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000E323B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000E32418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[00000000015181FA] JsonDataObjects._ZN15Jsondataobjects15TJsonBaseObject5ParseEPwiPNS_22TJsonReaderProgressRecE (Line 3214, "JsonDataObjects.pas" + 30)
+[0000000001AE57E2] uMyLua._ZN6Umylua6TMyLua8Json2TblEPv (Line 8698, "uMyLua.pas" + 6)
+[0000000001721E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FF8F4D12C36]
+[00007FF8F4D189EA] lua_pcall
+[0000000001B1B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000001B19256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001F60DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001F29DD7] ObjPlay._ZN7Objplay11TPlayObject14ClientClickNPCEN6System13UnicodeStringEi (Line 14614, "ObjPlay.pas" + 70)
+[0000000001EF1DDB] ObjPlay._ZN7Objplay11TPlayObject7OperateEPN7Grobal215TProcessMessageE (Line 4155, "ObjPlay.pas" + 507)
+[0000000001EE6059] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 2308, "ObjPlay.pas" + 12)
+[0000000001CC22E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001CC1D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[0000000001CDD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000001A0B12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000012521D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000001251D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000F52963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000E32F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FF94D2DCD87] BaseThreadInitThunk
+[00007FF94E5CCAEC] RtlUserThreadStart
+
+
+[2026-10-07 10:04:52:854] lua.Json2Tbl Except：Expected "{" but found value (1, 2)[0000000001E08281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001E07AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001E079B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001E0AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001DF9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001DF996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001DF9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000E323B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000E32418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[00000000015181FA] JsonDataObjects._ZN15Jsondataobjects15TJsonBaseObject5ParseEPwiPNS_22TJsonReaderProgressRecE (Line 3214, "JsonDataObjects.pas" + 30)
+[0000000001AE57E2] uMyLua._ZN6Umylua6TMyLua8Json2TblEPv (Line 8698, "uMyLua.pas" + 6)
+[0000000001721E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FF8F4D12C36]
+[00007FF8F4D189EA] lua_pcall
+[0000000001B1B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000001B19256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001F60DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001F29DD7] ObjPlay._ZN7Objplay11TPlayObject14ClientClickNPCEN6System13UnicodeStringEi (Line 14614, "ObjPlay.pas" + 70)
+[0000000001EF1DDB] ObjPlay._ZN7Objplay11TPlayObject7OperateEPN7Grobal215TProcessMessageE (Line 4155, "ObjPlay.pas" + 507)
+[0000000001EE6059] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 2308, "ObjPlay.pas" + 12)
+[0000000001CC22E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001CC1D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[0000000001CDD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000001A0B12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000012521D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000001251D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000F52963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000E32F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FF94D2DCD87] BaseThreadInitThunk
+[00007FF94E5CCAEC] RtlUserThreadStart
+
+[2026-10-07 10:04:54:921] lua.Json2Tbl Except：Expected "{" but found value (1, 2)[0000000001E08281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001E07AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001E079B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001E0AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001DF9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001DF996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001DF9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000E323B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000E32418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[00000000015181FA] JsonDataObjects._ZN15Jsondataobjects15TJsonBaseObject5ParseEPwiPNS_22TJsonReaderProgressRecE (Line 3214, "JsonDataObjects.pas" + 30)
+[0000000001AE57E2] uMyLua._ZN6Umylua6TMyLua8Json2TblEPv (Line 8698, "uMyLua.pas" + 6)
+[0000000001721E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FF8F4D12C36]
+[00007FF8F4D189EA] lua_pcall
+[0000000001B1B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000001B19256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001F60DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001F29DD7] ObjPlay._ZN7Objplay11TPlayObject14ClientClickNPCEN6System13UnicodeStringEi (Line 14614, "ObjPlay.pas" + 70)
+[0000000001EF1DDB] ObjPlay._ZN7Objplay11TPlayObject7OperateEPN7Grobal215TProcessMessageE (Line 4155, "ObjPlay.pas" + 507)
+[0000000001EE6059] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 2308, "ObjPlay.pas" + 12)
+[0000000001CC22E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001CC1D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[0000000001CDD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000001A0B12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000012521D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000001251D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000F52963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000E32F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FF94D2DCD87] BaseThreadInitThunk
+[00007FF94E5CCAEC] RtlUserThreadStart
+
+
+[2026-10-07 10:05:03:781] lua.Json2Tbl Except：Expected "{" but found value (1, 2)[0000000001E08281] JclDebug._ZN8Jcldebug17TJclStackInfoListC3EbiPvbS1_S1_ (Line 5509, "JclDebug.pas" + 34)
+[0000000001E07AD2] JclDebug._ZN8Jcldebug18JclCreateStackListEbiPvbS0_ (Line 5351, "JclDebug.pas" + 1)
+[0000000001E079B2] JclDebug._ZN8Jcldebug21DoExceptionStackTraceEPN6System7TObjectEPvbS3_ (Line 5292, "JclDebug.pas" + 20)
+[0000000001E0AAA5] JclDebug._ZN8Jcldebug14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 6741, "JclDebug.pas" + 7)
+[0000000001DF9702] JclHookExcept._ZN13Jclhookexcept13TNotifierItem8DoNotifyEPN6System7TObjectEPvbS4_ (Line 272, "JclHookExcept.pas" + 5)
+[0000000001DF996B] JclHookExcept._ZN13Jclhookexcept14DoExceptNotifyEPN6System7TObjectEPvbS3_ (Line 339, "JclHookExcept.pas" + 13)
+[0000000001DF9AD0] JclHookExcept._ZN13Jclhookexcept20HookedRaiseExceptionEjjjPNS_19TExceptionArgumentsE (Line 381, "JclHookExcept.pas" + 14)
+[0000000000E323B3] System._ZN6System14_RaiseAtExceptEPNS_7TObjectEPv (Line 22402, "System.pas" + 32)
+[0000000000E32418] System._ZN6System11_RaiseAgainEv (Line 23481, "System.pas" + 9)
+[00000000015181FA] JsonDataObjects._ZN15Jsondataobjects15TJsonBaseObject5ParseEPwiPNS_22TJsonReaderProgressRecE (Line 3214, "JsonDataObjects.pas" + 30)
+[0000000001AE57E2] uMyLua._ZN6Umylua6TMyLua8Json2TblEPv (Line 8698, "uMyLua.pas" + 6)
+[0000000001721E46] Lua._ZN3Lua11LuaCallBackEPv (Line 106, "Lua.pas" + 15)
+(0000000000001C36) [00007FF8F4D12C36]
+[00007FF8F4D189EA] lua_pcall
+[0000000001B1B2B5] uMyLua._ZN6Umylua6TMyLua12CallFunctionEPN7Objbase11TBaseObjectEN6System11AnsiStringTILt0EEEiPKNS4_7TVarRecEiPNS4_12DynamicArrayINS4_7VariantEEENS4_13UnicodeStringE (Line 16337, "uMyLua.pas" + 29)
+[0000000001B19256] uMyLua._ZN6Umylua6TMyLua4CallEPN7Objplay11TPlayObjectEN6System13UnicodeStringEPKNS4_7TVarRecEiRKNS4_7VariantES5_ (Line 16169, "uMyLua.pas" + 46)
+[0000000001F60DFB] ObjPlay._ZN7Objplay11TPlayObject11FuncNpcCallEN6System13UnicodeStringEbPKNS1_7TVarRecEiRKNS1_7VariantEb (Line 25139, "ObjPlay.pas" + 36)
+[0000000001F29DD7] ObjPlay._ZN7Objplay11TPlayObject14ClientClickNPCEN6System13UnicodeStringEi (Line 14614, "ObjPlay.pas" + 70)
+[0000000001EF1DDB] ObjPlay._ZN7Objplay11TPlayObject7OperateEPN7Grobal215TProcessMessageE (Line 4155, "ObjPlay.pas" + 507)
+[0000000001EE6059] ObjPlay._ZN7Objplay11TPlayObject3RunEv (Line 2308, "ObjPlay.pas" + 12)
+[0000000001CC22E3] PlayManage._ZN10Playmanage12TPlayManager9RunPlayerEv (Line 210, "playManage.pas" + 100)
+[0000000001CC1D2A] PlayManage._ZN10Playmanage12TPlayManager3RunEv (Line 80, "playManage.pas" + 2)
+[0000000001CDD71A] Envir._ZN5Envir12TEnvirnoment3RunEv (Line 898, "Envir.pas" + 24)
+[0000000001A0B12F] uThread_Envir._ZN13Uthread_envir12TEnvirThread5OnRunEv (Line 660, "uThread_Envir.pas" + 130)
+[00000000012521D6] uThreadPools._ZN12Uthreadpools11TThreadPool10ThreadProcEv (Line 174, "uThreadPools.pas" + 18)
+[0000000001251D8F] uThreadPools._ZN12Uthreadpools9TMyThread7ExecuteEv (Line 74, "uThreadPools.pas" + 4)
+[0000000000F52963] System.Classes._ZN6System7Classes10ThreadProcEPNS0_7TThreadE (Line 15845, "System.Classes.pas" + 18)
+[0000000000E32F8D] System._ZN6System13ThreadWrapperEPv (Line 25726, "System.pas" + 9)
+[00007FF94D2DCD87] BaseThreadInitThunk
+[00007FF94E5CCAEC] RtlUserThreadStart
+
+
+[2026-10-07 10:32:01:128] D701 - secret map not found !!
+[2026-10-07 10:32:01:128] >>>>>RegenMonsterByName ThreadError :[城门]-0[hjsbk-50548] 当前Thread:55816
+[2026-10-07 10:32:01:128] MainDoor Name:城门 Map:hjsbk X:154 Y:171 HP:10000
+[2026-10-07 10:32:01:128] >>>>>RegenMonsterByName ThreadError :[左城墙]-0[hjsbk-50548] 当前Thread:55816
+[2026-10-07 10:32:01:128] LeftWall Name:左城墙 Map:hjsbk X:75 Y:105 HP:5000
+[2026-10-07 10:32:01:128] >>>>>RegenMonsterByName ThreadError :[中城墙]-0[hjsbk-50548] 当前Thread:55816
+[2026-10-07 10:32:01:128] CenterWall Name:中城墙 Map:hjsbk X:80 Y:105 HP:5000
+[2026-10-07 10:32:01:128] >>>>>RegenMonsterByName ThreadError :[右城墙]-0[hjsbk-50548] 当前Thread:55816
+[2026-10-07 10:32:01:128] RightWall Name:右城墙 Map:hjsbk X:89 Y:96 HP:5000
+[2026-10-07 10:32:01:291] ---------------------线程耗时监控
+[2026-10-07 10:32:01:351] Frame-----------------------------------
+
+[2026-10-07 10:32:01:665] MainRunThread(0)-----------------------------------
+
+[2026-10-07 10:32:01:720] EnvirThread 0/0(10688-0)flag:50000004  lua: 1 CallLua:setontimerex 491-----------------------------------
+
+[2026-10-07 10:32:01:742] DbThread(0-0)-----------------------------------
+
+[2026-10-07 10:32:01:762] BoxSellDbThread(0)-----------------------------------
+
+[2026-10-07 10:32:01:782] NewHttpPost(0-0-0)-----------------------------------
+
+

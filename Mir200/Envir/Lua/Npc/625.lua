@@ -54,6 +54,14 @@ local function _try_send_gray_entry_guide(play)
         sendluamsg(play, 101, 0, 1, 1, '{"lx":2,"npcdt":"灰界","npcid":46,"xx":205,"yy":196}')
     end
 end
+function npc_625_open_challenge(play)
+    stopautoattack(play)
+    if Guard and Guard.closeNpc then Guard.closeNpc(play, 625) end
+    mapmove(play, "鬼嘲深渊2", 180, 436, 2)
+    if Npclib and Npclib[625] and Npclib[625].main then
+        Npclib[625].main(play, 741)
+    end
+end
 function npc.main(play,npcid)
     if not _config then
         return
@@ -130,6 +138,7 @@ function npc.link(play,npcid,ew,aid)
         Buff[106](play, 2)
         Player.sendmsgEx(play, "任务完成，已压制嘲灾反弹伤害#57")
         sendluamsg(play,100,npcid,1,2,"")
+        messagebox(play, "前置任务已完成，是否前往挑战入口？", "@npc_625_open_challenge")
     end
 end
 

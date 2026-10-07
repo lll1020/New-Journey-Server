@@ -4,56 +4,12 @@ local _config = Guard.getConfig("npc_46")
 local _INTRO_SEEN_VAR = "N$three_city_intro_seen"
 local _need_keys = {621, 622, 623, 624, 625, 626, 627, 628}
 local _route_map = {
-    [1] = {
-        step_id = 623,
-        boss_id = 625,
-        step_map = "灰界东部",
-        step_x = 42,
-        step_y = 52,
-        boss_map = "鬼嘲深渊",
-        boss_x = 174,
-        boss_y = 460,
-    },
-    [2] = {
-        step_id = 622,
-        boss_id = 627,
-        step_map = "灰界北部",
-        step_x = 41,
-        step_y = 43,
-        boss_map = "叹息旷野",
-        boss_x = 85,
-        boss_y = 126,
-    },
-    [3] = {
-        step_id = 624,
-        boss_id = 626,
-        step_map = "灰界西部",
-        step_x = 21,
-        step_y = 77,
-        boss_map = "禁忌之海",
-        boss_x = 74,
-        boss_y = 67,
-    },
-    [4] = {
-        step_id = 621,
-        boss_id = 628,
-        step_map = "灰界南部",
-        step_x = 229,
-        step_y = 144,
-        boss_map = "虚妄山脉",
-        boss_x = 107,
-        boss_y = 97,
-    },
-    [5] = {
-        guide_self = true,
-        step_id = 46,
-        step_map = "灰界",
-        step_x = 205,
-        step_y = 196,
-    },
-}
-
-local function _get_missing_task_name(jq_data)
+    [1] = {step_id = 623, boss_id = 625, challenge_id = 741, step_map = "灰界东部", step_x = 42, step_y = 52, boss_map = "鬼嘲深渊", boss_x = 174, boss_y = 460, challenge_map = "鬼嘲深渊2", challenge_x = 180, challenge_y = 436},
+    [2] = {step_id = 622, boss_id = 627, challenge_id = 743, step_map = "灰界北部", step_x = 41, step_y = 43, boss_map = "叹息旷野", boss_x = 85, boss_y = 126, challenge_map = "叹息旷野3", challenge_x = 85, challenge_y = 120},
+    [3] = {step_id = 624, boss_id = 626, challenge_id = 742, step_map = "灰界西部", step_x = 21, step_y = 77, boss_map = "禁忌之海", boss_x = 74, boss_y = 67, challenge_map = "禁忌之海4", challenge_x = 107, challenge_y = 97},
+    [4] = {step_id = 621, boss_id = 628, challenge_id = 744, step_map = "灰界南部", step_x = 229, step_y = 144, boss_map = "虚妄山脉", boss_x = 107, boss_y = 97, challenge_map = "虚妄山脉1", challenge_x = 91, challenge_y = 54},
+    [5] = {guide_self = true, step_id = 46, step_map = "灰界", step_x = 205, step_y = 196},
+}local function _get_missing_task_name(jq_data)
     for _, id in ipairs(_need_keys) do
         local key = "npc_" .. id
         if tonumber(jq_data[key] or 0) < 2 then
@@ -132,13 +88,15 @@ local function _jump_to_route(play, route_idx)
     local step_key = "npc_" .. route.step_id
     local step_done = tonumber(T_data[step_key] or 0) >= 2
 
-    if step_done then
+    local prep_done = tonumber(T_data["npc_" .. tostring(route.boss_id) .. "_rw"] or 0) >= 2
+    if not step_done then
+        _guide_to_npc(play, route.step_map, route.step_id, route.step_x, route.step_y)
+    elseif not prep_done then
         _guide_to_npc(play, route.boss_map, route.boss_id, route.boss_x, route.boss_y)
     else
-        _guide_to_npc(play, route.step_map, route.step_id, route.step_x, route.step_y)
+        _guide_to_npc(play, route.challenge_map, route.challenge_id, route.challenge_x, route.challenge_y)
     end
 end
-
 function npc.main(play,npcid)
     local data = {}
     data["T_data"] = Player.getJsonTableByVar(play, VarCfg["T_dljq"])

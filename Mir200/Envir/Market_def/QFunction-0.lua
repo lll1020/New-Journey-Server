@@ -2408,27 +2408,23 @@ function jqr_zxht_change()
     end
 end
 function jqr_kuafu_mon_spawn()
-    if not checkkuafuconnect() then
-        release_print("跨服地图刷怪跳过：跨服未连接")
-        return
-    end
+    if not checkkuafuconnect() then return end
     local spawn_list = {
-        {"幽邃地窟", 32, 32, "幽邃小怪—[跨服]",30},
-        {"幽邃地窟", 35, 35, "幽邃精英—[跨服]",30},
-        {"摄魂红尘", 32, 32, "摄魂小怪—[跨服]",30},
-        {"摄魂红尘", 35, 35, "摄魂精英—[跨服]",30},
-        {"逆灵离心", 32, 32, "逆灵小怪—[跨服]",30},
-        {"逆灵离心", 35, 35, "逆灵精英—[跨服]",30},
-        {"生死之门", 32, 32, "生死小怪—[跨服]",30},
-        {"生死之门", 35, 35, "生死精英—[跨服]",30},
-        {"跨服秘境", 28, 28, "跨服小怪—[跨服]",30},
-        {"跨服秘境", 32, 32, "跨服精英—[跨服]",30},
-        {"跨服秘境", 36, 36, "跨服boss—[跨服]",3},
+        {"幽邃地窟",32,32,"幽邃小怪—[跨服]",30},{"幽邃地窟",35,35,"幽邃精英—[跨服]",30},
+        {"摄魂红尘",32,32,"摄魂小怪—[跨服]",30},{"摄魂红尘",35,35,"摄魂精英—[跨服]",30},
+        {"逆灵离心",32,32,"逆灵小怪—[跨服]",30},{"逆灵离心",35,35,"逆灵精英—[跨服]",30},
+        {"生死之门",32,32,"生死小怪—[跨服]",30},{"生死之门",35,35,"生死精英—[跨服]",30},
+        {"跨服秘境",28,28,"跨服小怪—[跨服]",30},{"跨服秘境",32,32,"跨服精英—[跨服]",30},{"跨服秘境",36,36,"跨服boss—[跨服]",3},
     }
-    for _, row in ipairs(spawn_list) do
-        genmonex(row[1], row[2], row[3], row[4], 9999, row[5], 0, 54, "", 0)
+    local state = _G.__kuafu_spawn_state or {}; _G.__kuafu_spawn_state = state
+    local wave = os.date("%Y%m%d%H"); local groups = {}
+    for _,row in ipairs(spawn_list) do groups[row[1]]=groups[row[1]] or {rows={},initial=0}; local g=groups[row[1]]; g.rows[#g.rows+1]=row; g.initial=g.initial+row[5] end
+    for map,g in pairs(groups) do
+        local st=state[map] or {}; local count=tonumber(getmoncount(map,-1,true) or 0) or 0
+        if st.wave ~= wave then for _,row in ipairs(g.rows) do genmonex(row[1],row[2],row[3],row[4],9999,row[5],0,54,"",0) end; st.wave=wave; st.initial=g.initial; st.refilled=0
+        elseif st.refilled ~= 1 and count <= math.floor((tonumber(st.initial) or g.initial)*0.5) then for _,row in ipairs(g.rows) do genmonex(row[1],row[2],row[3],row[4],9999,row[5],0,54,"",0) end; st.refilled=1 end
+        state[map]=st
     end
-    release_print("跨服地图定时刷怪完成", #spawn_list)
 end
 --------------------加入行会后触发-------------------
 function guildaddmemberafter(play,guild,name)
@@ -2981,6 +2977,15 @@ local qf_teshunpc = {
     [623] = 623, -- 可能会卡tp的 npc
     [518] = 518, -- atlas
     [1030] = 1030, -- 合成夜明珠
+
+    [625] = 625,[626] = 626,[627] = 627,[628] = 628,
+    [741] = 625,[742] = 626,[743] = 627,[744] = 628,
+    
+
+
+
+
+
 }
 local yishanchu_npcid = {
     [106] = 100, -- 要删除的 npc

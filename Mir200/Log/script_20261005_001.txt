@@ -16,3 +16,7 @@
 
 [2026-10-05 22:03:01:397] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：47; NpcThreadId: 48836, CurPlayThreadId: 48836
 
+[2026-10-06 18:00:13:180] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：31; NpcThreadId: 48836, CurPlayThreadId: 48836
+
+[2026-10-06 22:00:00:504] LuaNPC:系统控制 ID:999999999 执行 jqr_wudaohui_end player:系统控制 耗时：31; NpcThreadId: 48836, CurPlayThreadId: 48836
+

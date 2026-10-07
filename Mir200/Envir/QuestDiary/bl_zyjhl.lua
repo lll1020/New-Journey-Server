@@ -420,3 +420,32 @@ function bl_zyjhl19(play, mingzi)
     return true
 end
 
+
+-- 跨服勋章专用爆率监听：仅允许跨服怪物掉落，最终概率1/100。
+function bl_zyjhl20(play, mingzi)
+    if mingzi ~= "跨服勋章" or not play then
+        return false
+    end
+    local map_name = tostring(getbaseinfo(play, 3) or "")
+    local maps = {
+        ["幽邃地窟"] = true, ["摄魂红尘"] = true, ["逆灵离心"] = true,
+        ["生死之门"] = true, ["跨服秘境"] = true,
+    }
+    if not maps[map_name] then
+        return false
+    end
+    local ok = math.random(100) == 1
+    return ok
+end
+
+-- 跨服勋章掉落后设为绑定，禁止交易和出售。
+if GameEvent and EventCfg and EventCfg.onMondropItemex and not rawget(_G, "__kuafu_medal_bind_event") then
+    _G.__kuafu_medal_bind_event = true
+    GameEvent.add(EventCfg.onMondropItemex, function(play, drop_item)
+        if not drop_item then return end
+        local item_name = tostring(getstditeminfo(drop_item, 1) or "")
+        if item_name == "跨服勋章" then
+            setitemstate(drop_item, 1, 1)
+        end
+    end, "kuafu_medal_bind")
+end
