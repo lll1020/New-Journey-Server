@@ -155,6 +155,10 @@ local function _zxrw_has_any_xianfa(play)
     end
     return false
 end
+local function _zxrw_has_xianfa_refresh_count(play, need)
+    local data = _zxrw_get_json(play, VarCfg["T_ÌìÊé"])
+    return (tonumber(data.xianfa_refresh_count or 0) or 0) >= (tonumber(need) or 2)
+end
 local function _zxrw_story_done(play, key)
     key = tostring(key or "")
     if key == "" then
@@ -298,6 +302,8 @@ local function _zxrw_main_task_done(play, taskCfg)
         return _zxrw_has_tianshu_level(play)
     elseif kind == "tianshu_xianfa" then
         return _zxrw_has_any_xianfa(play)
+    elseif kind == "tianshu_xianfa_refresh" then
+        return _zxrw_has_xianfa_refresh_count(play, taskCfg.need)
     elseif kind == "story" then
         return _zxrw_story_done(play, taskCfg.tk)
     elseif kind == "main_linggen" then

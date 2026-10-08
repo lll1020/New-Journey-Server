@@ -9,6 +9,8 @@
 [黑暗禁地|zzmj	黑暗禁地] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5 dark
 [村庄|qcdl	村庄] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5
 
+[跨服战场|srsjq	跨服战场] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE FIGHT5 Kuafu
+
 [全民答题|qcdl	全民答题] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1) RUNHUMAN(1) NOALLOWUSEITEMS(随机传送石) day safe
 [0 0]
 [3 3]

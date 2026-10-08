@@ -2426,6 +2426,7 @@ function jqr_kuafu_mon_spawn()
         state[map]=st
     end
 end
+
 --------------------加入行会后触发-------------------
 function guildaddmemberafter(play,guild,name)
     GameEvent.push(EventCfg.goGuild, play, guild, name)

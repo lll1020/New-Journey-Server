@@ -22,7 +22,6 @@
 	1/7176	    2亿经验卷|@bl_zyjhl12
 	1/19176	    5亿经验卷|@bl_zyjhl12
 
-	1/1	仙法卷轴残页|@bl_zyjhl8
 	#CHILD 1/3 RANDOM
 	(
 		1/2	    千年玄铁

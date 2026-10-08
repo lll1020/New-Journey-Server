@@ -1728,7 +1728,12 @@ shaguai = {
 -- 9.8-1         end
 -- 9.8-1     end
 -- 9.8-1 end,
-	["34"] = function(play,mob)      --筑基丹碎片：二、三大陆普通怪每累计 100 只保底掉落，总上限 30 个碎片
+	["34"] = function(play,mob)      -- zhuji fragment: mainline task 32, first drop 1/2, then pity every 1000, max 21
+		local mainline_id = tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0
+		if mainline_id < 32 then
+			return
+		end
+
 		local record = Player.getJsonTableByVar(play, "T39") or {}
 		local jz_count = tonumber(record.jz_dan_count or 0) or 0
 		local frag_count = tonumber(getbagitemcount(play, "筑基丹碎片") or 0) or 0
@@ -1737,11 +1742,26 @@ shaguai = {
 		if jz_count >= 2 or total_frag_progress >= 21 then
 			return
 		end
+
 		local mapName = tostring(getbaseinfo(play,3) or "")
 		local dl = tonumber((daluditu and daluditu[mapName]) or 0) or 0
 		if dl ~= 2 and dl ~= 3 then
 			return
 		end
+
+		local first_drop_key = "N$zhuji_fragment_first_drop"
+		local first_drop_done = tonumber(getplaydef(play, first_drop_key) or 0) or 0
+		if first_drop_done <= 0 and total_frag_progress > 0 then
+			first_drop_done = 1
+			setplaydef(play, first_drop_key, 1)
+		end
+		if first_drop_done <= 0 then
+			if math.random(2) == 1 and shaguai.temp_drop(play, mob, "筑基丹碎片") then
+				setplaydef(play, first_drop_key, 1)
+			end
+			return
+		end
+
 		local key = "kill_pity_筑基丹碎片"
 		local cur, dropData = _sg_drop_record_inc(play, key)
 		if cur % 1000 ~= 0 then
@@ -1749,7 +1769,6 @@ shaguai = {
 		end
 		if shaguai.temp_drop(play, mob, "筑基丹碎片") then
 			_sg_drop_record_set(play, key, 0, dropData)
-			-- Player.sendmsgEx(play, "打怪掉落【筑基丹碎片】#57")
 		end
 	end,
 	["35"] = function(play,mob)      --修为丹独立掉落：不吃全局爆率，小丹二大陆起掉，大丹需真实充值大于 100

@@ -30,6 +30,8 @@ safeRequire("Envir/Lua/LuaLib/constant.lua")
 safeRequire("Envir/Lua/LuaLib/Buff.lua")
 --------------------杀怪模块--------------------
 safeRequire("Envir/Lua/LuaLib/shaguai.lua")
+safeRequire("Envir/Lua/LuaLib/kuafu_boss.lua")
+safeRequire("Envir/Lua/LuaLib/kuafu_boss_drop.lua")
 -------------------物品使用模块--------------------
 safeRequire("Envir/Lua/LuaLib/useitme.lua")
 safeRequire("Envir/Lua/LuaLib/atlas.lua")

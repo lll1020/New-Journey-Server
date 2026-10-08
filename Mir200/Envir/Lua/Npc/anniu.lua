@@ -566,7 +566,7 @@ local function _ywl_finish_single_task_state(play, T_ywl, sj, shuju)
         if tonumber(sj.i) == 2 then
             Player.rwjl(play, taskReward, "xyl", 1, 0)
         else
-            Player.rwjl(play, taskReward, "xyl", 1)
+            Player.rwjl(play, taskReward, "xyl", 1, 0)
         end
     end
     return T_ywl

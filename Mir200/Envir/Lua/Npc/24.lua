@@ -421,6 +421,11 @@ function npc.link(play,npcid,ew,aid,data)
             end
 
             local max_group = (redBonus > 0) and 5 or 3
+            local first_slot_blue_purple = (slot == 1 and not force_xianpin)
+            if first_slot_blue_purple then
+                -- 第一个仙法槽位普通刷新只从蓝色、紫色仙法中等权随机，仍使用原有非重复与保底记录。
+                weight = "2#1|3#1"
+            end
             local randomNum, idx = _xianfa_roll_non_repeat(T_data, slot, weight, max_group, force_xianpin and 5 or nil)
             if not randomNum or not idx then
                 Player.sendmsgEx(play, "当前已没有可抽取的新仙法，请先更换槽位或调整已有仙法#57")
@@ -467,6 +472,12 @@ function npc.link(play,npcid,ew,aid,data)
             xianfa_refresh(play)
 
             xianfa_add(play,randomNum,idx)
+            local currentMainline = tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0
+            if currentMainline == 20 then
+                T_data.xianfa_refresh_count = (tonumber(T_data.xianfa_refresh_count or 0) or 0) + 1
+                Player.setJsonVarByTable(play, VarCfg["T_天书"], T_data)
+                newchangetask(play, 20, T_data.xianfa_refresh_count)
+            end
             _try_finish_mainline_task(play, 18)
             sendluamsg(play,100,npcid,2,0,tbl2json(_build_npc24_payload(play, T_data)))
             sendluamsg(play,100,npcid,10,0,tbl2json({ ["group"] = randomNum,["idx"] = idx} ))
@@ -961,9 +972,19 @@ function xianfa_refresh(actor, new_group, new_idx)
             end
             _add_attr_list(attrs, cfg.spa_attr, days)
         elseif name == "灵根之主" then
-            local cnt = get_lg_count5()
-            if cnt > 0 then
-                _add_attr_list(attrs, cfg.spa_attr, cnt)
+            local gem_count = 0
+            local talent_tree = rawget(_G, "TalentTree")
+            local talent_state = talent_tree and talent_tree.getState and talent_tree.getState(actor) or nil
+            if talent_state and type(talent_state.sockets) == "table" then
+                for _, gem_name in pairs(talent_state.sockets) do
+                    if type(gem_name) == "string" and gem_name ~= "" then
+                        gem_count = gem_count + 1
+                    end
+                end
+            end
+            if gem_count > 0 then
+                _add_attr(attrs, 72, 10 * gem_count)
+                _add_attr(attrs, 245, 200 * gem_count)
             end
         elseif name == "灵兽之王" then
             ls_count2 = ls_count2 or get_ls_count(2)
