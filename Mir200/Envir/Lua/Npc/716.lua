@@ -277,7 +277,7 @@ function npc_716_dsq(xt,play,dtm,data)
         _on_pass(run_play)
 
         if getbaseinfo(run_play,3) == dtm then
-            _back(run_play)
+            delaygoto(run_play, 5000, "@npc_716_delay_back")
         else
             setplaydef(run_play, _run_map_var, "")
             setplaydef(run_play, _run_boss_state_var, 0)
@@ -293,6 +293,10 @@ function npc_716_dsq(xt,play,dtm,data)
 end
 
 -- 副本超时：强制离开并清理镜像
+function npc_716_delay_back(play)
+    _back(play)
+end
+
 function npc_716_timeout(play)
     local dtm = getplaydef(play, _run_map_var)
     if not dtm or dtm == "" then

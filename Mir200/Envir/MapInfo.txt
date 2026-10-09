@@ -18,6 +18,8 @@
 
 [gm|q004 GM地图] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
 [sg169   船地图] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[xbsl   副本地图] noreconnect(xtc:137:138:9) NEEDSET_OFF(300) RUNMON(1)
+[n0150 副本地图] noreconnect(xtc:137:138:9)  NEEDSET_OFF(300) RUNMON(1)
 
 
 
@@ -29,6 +31,7 @@
 
 [hjsbk|03023 沙巴克] noreconnect(xtc:137:138:9) NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE day
 [hg|n0150 沙巴克皇宫] noreconnect(xtc:137:138:9)  NOALLOWUSEITEMS(随机传送石) NOPOSITIONMOVE day
+
 hjsbk 85 100 -> hg 20 24
 hjsbk 80 105 -> hg 16 29
 hjsbk 78 105 -> hg 10 29

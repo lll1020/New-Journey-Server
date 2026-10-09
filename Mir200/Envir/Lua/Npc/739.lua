@@ -331,7 +331,7 @@ function npc_739_dsq(xt, play, dtm, data)
         end
         _on_pass(run_play)
         if getbaseinfo(run_play, 3) == dtm then
-            _back(run_play)
+            delaygoto(run_play, 5000, "@npc_739_delay_back")
         else
             _clear_run_vars(run_play, dtm)
         end
@@ -340,6 +340,10 @@ function npc_739_dsq(xt, play, dtm, data)
             delmirrormap(dtm)
         end
     end
+end
+
+function npc_739_delay_back(play)
+    _back(play)
 end
 
 function npc_739_timeout(play)

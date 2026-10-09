@@ -269,15 +269,15 @@ function YeHuo.enter(play)
     local backMap = mapOf(play, 3)
     local backX = toInt(getbaseinfo(play, 4))
     local backY = toInt(getbaseinfo(play, 5))
-    addmirrormap(INSTANCE_BASE_MAP, instanceMap, TEXT_TIANFA_INSTANCE, INSTANCE_TIME, "xtc", 136, 136)
+    addmirrormap("xbsl", instanceMap, TEXT_TIANFA_INSTANCE, INSTANCE_TIME, "xtc", 136, 136)
 
     data.tianfa_active = 1
     data.tianfa_map = instanceMap
     data.tianfa_back = backMap .. "," .. tostring(backX) .. "," .. tostring(backY)
     saveData(play, data)
 
-    mapmove(play, instanceMap, 29, 27, 2)
-    genmonex(instanceMap, 32, 36, TEXT_HUNTER, 1, 1, play, 54, "", 0)
+    mapmove(play, instanceMap, 30, 39, 2)
+    genmonex(instanceMap, 28, 31, TEXT_HUNTER, 1, 1, play, 54, "", 0)
     setenvirontimer(instanceMap, TIMER_ID, 1, "@yehuo_tianfa_tick," .. tostring(play) .. "," .. instanceMap)
     senddelaymsg(play, "天罚秘境挑战剩余时间：%s", INSTANCE_TIME, 250, 1, "@yehuo_tianfa_timeout")
     Player.sendmsgEx(play, "已进入天罚猎杀者秘境，击败猎杀者完成挑战。#57")
