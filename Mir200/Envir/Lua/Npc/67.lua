@@ -102,7 +102,7 @@ function npc.link(play,npcid,ew,aid,data)
 end
 
 function Login_sxsh(play)
-    local T_data = Player.getJsonT|ableByVar(play, VarCfg["T_生肖守护"])
+    local T_data = Player.getJsonTableByVar(play, VarCfg["T_生肖守护"])
     if T_data["jl1"] and T_data["jl2"] and T_data["jl3"] and not T_data["jl_all"] then
         T_data["jl_all"] = 1
         Player.setJsonTableByVar(play, VarCfg["T_生肖守护"], T_data)

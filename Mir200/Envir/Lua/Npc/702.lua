@@ -16,6 +16,7 @@ local _pass_done_key = _persist_prefix .. "pass_done"
 local _hidden_kill_key = _persist_prefix .. "hidden_kill"
 local _hidden_title_key = _persist_prefix .. "hidden_title"
 local _reward_done_key = _persist_prefix .. "reward_done"
+local _choice_key = _persist_prefix .. "choice"
 
 -- 运行态字段（玩家变量）
 local _back_pos_var = "S$npc702_back"
@@ -157,20 +158,88 @@ local function _fb_cfg()
     return cfg
 end
 
+local function _submit_need()
+    local submit = _task_cfg.submit or {}
+    local item = submit[1]
+    if type(item) ~= "table" then
+        return nil
+    end
+    return item
+end
+
+local function _is_finished(play)
+    local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}
+    return (tonumber(jq_data[_cfg_key] or 0) or 0) >= 3
+end
+
+local function _reject_finished(play)
+    if _is_finished(play) then
+        Player.sendmsgEx(play, "倩女幽魂任务已经完成，不能再次进入副本#57")
+        return true
+    end
+    return false
+end
+
+local function _refresh_client(play)
+    local data = {T_dljq = Player.getJsonTableByVar(play, VarCfg.T_dljq) or {}}
+    sendluamsg(play, 100, 702, 1, 0, tbl2json(data))
+end
+
+local _spawn_main_boss
+local _spawn_hidden_boss
+
+local function _enter_boss(play, choice)
+    if _reject_finished(play) then
+        return false
+    end
+    npc_702_savepos(play)
+    local cfg = _fb_cfg()
+    local dtm = getbaseinfo(play,1) .. "_npc702"
+    if checkmirrormap(dtm) then
+        delmirrormap(dtm)
+    end
+    _state_clear(dtm)
+    addmirrormap(cfg.base_map, dtm, _config.name or "倩女幽魂", cfg.fb_time,"xtc",136,136)
+    mapmove(play, dtm, tonumber(cfg.enter_pos[1] or 29) or 29, tonumber(cfg.enter_pos[2] or 27) or 27, 2)
+    setplaydef(play, _run_map_var, dtm)
+    setplaydef(play, _choice_key, choice)
+    local st = _state_get(dtm)
+    if choice == 1 then
+        _spawn_main_boss(dtm)
+        st.main_state = 1
+        st.main_spawn_ok = 1
+        setplaydef(play, _run_main_state_var, 1)
+        setplaydef(play, _run_main_spawn_ok_var, 1)
+    else
+        _spawn_hidden_boss(dtm)
+        st.hide_state = 1
+        st.hide_spawn_ok = 1
+        setplaydef(play, _run_hide_state_var, 1)
+        setplaydef(play, _run_hide_spawn_ok_var, 1)
+    end
+    startautoattack(play)
+    setenvirontimer(dtm, 1, 1, "@npc_702_dsq,"..play..","..dtm)
+    senddelaymsg(play, "副本剩余时间%s秒", cfg.fb_time, 250, 1, "@npc_702_timeout")
+    return true
+end
+
 -- 生成主BOSS
-local function _spawn_main_boss(dtm)
+_spawn_main_boss = function(dtm)
     local cfg = _fb_cfg()
     genmonex(dtm, tonumber(cfg.main_pos[1] or 32) or 32, tonumber(cfg.main_pos[2] or 36) or 36, cfg.main_boss, 1, 1, 0, 54, "", 0)
 end
 
 -- 生成隐藏BOSS
-local function _spawn_hidden_boss(dtm)
+_spawn_hidden_boss = function(dtm)
     local cfg = _fb_cfg()
     genmonex(dtm, tonumber(cfg.hide_pos[1] or 35) or 35, tonumber(cfg.hide_pos[2] or 36) or 36, cfg.hidden_boss, 1, 1, 0, 54, "", 0)
 end
 
 -- 进入副本（可重复）
 function npc_702_enter(play)
+    if _reject_finished(play) then
+        return false
+    end
     npc_702_savepos(play)
 
     local cfg = _fb_cfg()
@@ -212,6 +281,7 @@ function npc_702_enter(play)
     setenvirontimer(dtm, 1, 1, "@npc_702_dsq,"..play..","..dtm)
     senddelaymsg(play, "距离副本结束剩余%s", cfg.fb_time, 250, 1, "@npc_702_timeout")
     Player.sendmsgEx(play, "已进入副本，击杀主BOSS可通关；副本内可再次提交召唤隐藏BOSS#57")
+    return true
 end
 
 -- 主BOSS击杀后的通关处理：完成任务 + 发称号ch[1]
@@ -224,8 +294,8 @@ local function _on_main_boss_killed(play)
     end
     jq_data[_pass_done_key] = 1
 
-    if (tonumber(jq_data[_cfg_key] or 0) or 0) < 2 then
-        jq_data[_cfg_key] = 2
+    if (tonumber(jq_data[_cfg_key] or 0) or 0) < 3 then
+        jq_data[_cfg_key] = 3
         sendluamsg(play,101,1005,0,0,"rwwc")
         Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成#57")
         if npcid then Guard.closeNpc(play, npcid) end
@@ -237,12 +307,14 @@ local function _on_main_boss_killed(play)
     end
 
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+    npc_702_back(play)
 end
 
 -- 隐藏BOSS击杀：发称号ch[2]
 local function _on_hidden_boss_killed(play)
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
     jq_data[_hidden_kill_key] = (tonumber(jq_data[_hidden_kill_key] or 0) or 0) + 1
+    jq_data[_cfg_key] = 3
 
     local title2 = _get_title(2)
     if title2 and title2 ~= "" and tonumber(jq_data[_hidden_title_key] or 0) ~= 1 then
@@ -352,6 +424,9 @@ end
 
 -- 供 useitme.lua 调用：副本内双击道具召唤隐藏BOSS（仅消耗当前点击的1个道具）
 function npc_702_use_item(play, item)
+    if _reject_finished(play) then
+        return false
+    end
     local dtm = _check_hidden_summon_ready(play)
     if not dtm then
         return false
@@ -412,48 +487,59 @@ function npc.link(play,npcid,ew,aid)
         return
     end
     ew = __guardAction
-    local __guardAllowedActions = Guard.newActionSet({1,2})
+    local __guardAllowedActions = Guard.newActionSet({1,2,3})
     if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
         return
     end
 
     local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
 
-    if ew == 2 then
-        local dtm = getplaydef(play, _run_map_var)
-        if dtm and dtm ~= "" and getbaseinfo(play,3) == dtm then
-            npc_702_back(play)
-            Player.sendmsgEx(play, "已离开副本#57")
+    if _reject_finished(play) then
+        return
+    end
+
+    local state = tonumber(jq_data[_cfg_key] or 0) or 0
+    if state >= 3 then
+        Player.sendmsgEx(play, "该任务已经完成，不能再次挑战#57")
+        return
+    end
+
+    if ew == 2 or ew == 3 then
+        if state < 2 then
+            Player.sendmsgEx(play, "请先提交完所有物品#57")
             return
         end
-        Player.sendmsgEx(play, "你当前不在倩女幽魂副本#57")
-        return
-    end
-
-    -- ew=1：
-    -- 1) 在副本外：提交道具进入副本（可重复）
-    -- 2) 在副本内：再次提交道具召唤隐藏BOSS
-    local dtm = getplaydef(play, _run_map_var)
-    if dtm and dtm ~= "" and getbaseinfo(play,3) == dtm then
-        _try_summon_hidden(play)
-        return
-    end
-
-    if (tonumber(jq_data[_cfg_key] or 0) or 0) < 1 then
-        jq_data[_cfg_key] = 1
+        local choice = ew == 2 and 1 or 2
+        jq_data[_choice_key] = choice
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#218|")
         if npcid then Guard.closeNpcAndAuto(play, npcid) end
-        sendluamsg(play,101,1005,0,0,"rwjs")
-    end
-
-    local costs = _task_cfg.submit or {}
-    if not Guard.ensureCost(play, costs) then
+        _enter_boss(play, choice)
         return
     end
-    Guard.consumeCost(play, costs, ","..(_config.name or "剧情任务").."进入副本")
 
-    npc_702_enter(play)
+    local need = _submit_need()
+    if not need then
+        return
+    end
+    local submitted = tonumber(jq_data[_cfg_key .. "_a"] or 0) or 0
+    local required = tonumber(need[2] or 1) or 1
+    if submitted >= required then
+        jq_data[_cfg_key] = 2
+        Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+        Player.sendmsgEx(play, "物品已经提交完成，请选择挑战路线#57")
+        _refresh_client(play)
+        return
+    end
+    if not Guard.ensureCost(play, {{need[1], 1}}) then
+        return
+    end
+    Guard.consumeCost(play, {{need[1], 1}}, ","..(_config.name or "剧情任务").."提交物品")
+    submitted = submitted + 1
+    jq_data[_cfg_key .. "_a"] = submitted
+    jq_data[_cfg_key] = submitted >= required and 2 or 1
+    Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
+    Player.sendmsgEx(play, submitted >= required and "物品已提交完成，请选择挑战路线#57" or ("提交成功，进度 " .. submitted .. "/" .. required .. "#57"))
+    _refresh_client(play)
 end
 
 -- 副本计时器：检测主BOSS/隐藏BOSS击杀
@@ -553,23 +639,8 @@ function npc_702_timeout(play)
         return
     end
 
-    if getbaseinfo(play,3) == dtm then
-        Player.sendmsgEx(play, "副本时间结束#57")
-        npc_702_back(play)
-        return
-    end
-
-    if checkmirrormap(dtm) then
-        setenvirofftimer(dtm, 1)
-        delmirrormap(dtm)
-    end
-
-    setplaydef(play, _run_map_var, "")
-    setplaydef(play, _run_main_state_var, 0)
-    setplaydef(play, _run_hide_state_var, 0)
-    setplaydef(play, _run_main_spawn_ok_var, 0)
-    setplaydef(play, _run_hide_spawn_ok_var, 0)
-    _state_clear(dtm)
+    Player.sendmsgEx(play, "副本时间结束，5秒后返回原地图#57")
+    npc_702_back(play)
 end
 
 return npc

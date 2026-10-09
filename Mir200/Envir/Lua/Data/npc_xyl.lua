@@ -51,6 +51,9 @@ local function _xyl_check_story(play, name)
     if key == "npc_633" then
         return node >= 2
     end
+    if key == "npc_702" then
+        return (tonumber(node) or 0) >= 3
+    end
     if type(node) == "number" then
         if max_num and max_num > 0 then
             return node >= max_num
@@ -3145,7 +3148,6 @@ local npc_xyl = {
 }
 npc_xyl.check_task = _xyl_check_task
 return npc_xyl
-
 
 
 

@@ -3255,4 +3255,68 @@ for npcId, handler in pairs(npc) do
         end)(npcId, handler)
     end
 end
+-- 狂欢福利（npc_520）：累计充值奖励，统一由顶部 anniu 模块处理。
+npc[520] = function(play, p2, p3, data)
+    local cfg = teshudata["npc_520"] or {}
+    local rewards = cfg.rewards or {}
+    local state = Player.getJsonTableByVar(play, VarCfg.T_czlb) or {}
+    state.khfl520 = type(state.khfl520) == "table" and state.khfl520 or {}
+    local charge = tonumber(querymoney(play, 23) or 0) or 0
+    local thirdNeed = tonumber(rewards[3] and rewards[3].need or 888) or 888
+    local visible = charge >= thirdNeed and #rewards or math.min(3, #rewards)
+
+    if tonumber(p2 or 0) == 1 then
+        local idx = tonumber(p3 or 0) or 0
+        local item = rewards[idx]
+        if tonumber(globalinfo(3) or 0) < 1 then
+            Player.sendmsgEx(play, "狂欢福利将在第一次合区后开启#57")
+        elseif not item then
+            Player.sendmsgEx(play, "奖励档位不存在#57")
+        elseif idx > 3 and charge < thirdNeed then
+            Player.sendmsgEx(play, "累计充值达到第三档后解锁后续奖励#57")
+        elseif tonumber(state.khfl520[tostring(idx)] or 0) == 1 then
+            Player.sendmsgEx(play, "该档奖励已经领取#57")
+        elseif charge < (tonumber(item.need or 0) or 0) then
+            Player.sendmsgEx(play, "累计充值金额不足#57")
+        else
+            state.khfl520[tostring(idx)] = 1
+            Player.setJsonVarByTable(play, VarCfg.T_czlb, state)
+            if type(item.items) == "table" then
+                Player.rwjl(play, item.items, "狂欢福利", 1, 0)
+            end
+            if item.title_reward and item.title_reward ~= "" and not checktitle(play, item.title_reward) then
+                Player.title_give(play, item.title_reward)
+            end
+            Player.sendmsgEx(play, "狂欢福利奖励领取成功#57")
+        end
+    end
+
+    state = Player.getJsonTableByVar(play, VarCfg.T_czlb) or {}
+    state.khfl520 = type(state.khfl520) == "table" and state.khfl520 or {}
+    local rows = {}
+    for i, item in ipairs(rewards) do
+        local rewardRows = {}
+        for rewardIndex, reward in ipairs(item.items or {}) do
+            rewardRows[rewardIndex] = {name = tostring(reward[1] or ""), count = tonumber(reward[2] or 0) or 0}
+        end
+        rows[i] = {
+            idx = i,
+            need = tonumber(item.need or 0) or 0,
+            claimed = tonumber(state.khfl520[tostring(i)] or 0) or 0,
+            visible = i <= visible and 1 or 0,
+            rewards = rewardRows,
+        }
+    end
+    sendluamsg(play, 101, 520, 0, 0, tbl2json({
+        title = cfg.title or "狂欢福利",
+        slogan = cfg.slogan or "福利狂欢送送送！累充奖励拿不停！",
+        open = tonumber(globalinfo(3) or 0) >= 1 and 1 or 0,
+        charge = charge,
+        merge_count = tonumber(globalinfo(3) or 0) or 0,
+        visible_count = visible,
+        rows = rows,
+    }))
+end
+
+
 return npc

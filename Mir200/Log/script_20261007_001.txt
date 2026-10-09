@@ -6578,3 +6578,151 @@
 
 [2026-10-09 15:20:01:386] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
 
+[2026-10-09 15:20:42:750] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：63; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:22:32:217] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:22:54:624] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:25:53:048] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:26:36:601] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：32; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:26:46:226] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：32; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:28:39:018] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：32; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:28:59:367] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:30:10:125] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:33:09:173] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:33:16:400] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：32; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:37:31:581] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：47; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:38:12:033] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:38:28:119] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:39:06:848] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：32; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:39:25:669] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:39:34:954] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:40:11:491] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:44:49:538] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：47; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:45:03:856] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：32; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:48:55:283] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:49:24:925] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:49:34:773] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：32; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:50:38:335] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：47; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:51:12:357] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：32; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:51:19:130] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:52:35:427] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：94; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:52:41:538] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：78; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:52:48:721] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：47; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:55:59:564] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:56:20:563] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:57:12:953] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:57:19:311] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:57:51:565] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 15:59:52:990] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:01:29:899] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：32; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:01:36:350] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：32; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:04:06:852] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：32; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:07:32:375] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：47; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:07:54:587] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：47; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:08:09:547] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:08:30:238] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：47; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:09:27:095] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：32; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:09:54:990] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:10:27:258] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:10:40:922] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:11:26:873] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:11:54:318] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:13:06:291] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:13:13:338] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：78; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:13:19:752] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：47; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:14:36:085] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:15:19:616] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:16:47:555] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:22:33:505] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:22:53:754] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：47; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:26:06:455] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:28:35:987] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:29:05:302] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:29:44:787] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:29:50:917] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:30:05:695] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:31:22:369] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:32:20:552] LuaNPC:玩家名字l ID:999999999 执行 beginmagic player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 16:35:58:173] LuaNPC:玩家名字l ID:999999999 执行 login player:玩家名字l 耗时：47; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 17:49:43:346] LuaNPC:玩家名字l ID:999999999 执行 login player:玩家名字l 耗时：32; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 20:17:23:869] LuaNPC:玩家名字l ID:999999999 执行 login player:玩家名字l 耗时：62; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 21:07:51:845] LuaNPC:玩家名字l ID:999999999 执行 login player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-09 21:21:24:745] LuaNPC:玩家名字l ID:999999999 执行 login player:玩家名字l 耗时：63; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-10 02:05:27:108] LuaNPC:玩家名字l ID:999999999 执行 handlerequest player:玩家名字l 耗时：62; NpcThreadId: 18380, CurPlayThreadId: 18380
+[2026-10-10 02:05:27:108] [玩家名字l]Lua执行耗时过高:62ms msgid:100 702 2 0 
+
+[2026-10-10 02:09:43:486] LuaNPC:玩家名字l ID:999999999 执行 playlevelup player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+[2026-10-10 02:09:43:487] LuaNPC: ID:999999999 执行 npc_702_dsq player: 耗时：62; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-10 02:30:40:152] LuaNPC:玩家名字l ID:999999999 执行 login player:玩家名字l 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+
+[2026-10-10 02:55:14:754] LuaNPC:玩家名字z ID:999999999 执行 login player:玩家名字z 耗时：31; NpcThreadId: 18380, CurPlayThreadId: 18380
+

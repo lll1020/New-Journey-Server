@@ -1,22 +1,5 @@
-42?34
-46?30
-50?30
-64?50
-64?36
-64?41
-64?46
-58?30
-82?-32
-45?52
-48?52
-51?52
-54?52
-57?52
-60?52
-42?41
--6?66
-77?-39
--14?-9
-51?30
-113?42
-42?48
+[LUA-print] [GUI LOG] OnLuaMessage      101     1       10      515     1
+[LUA-print] [GUI LOG] OnLuaMessage      101     1       10      16      0
+[LUA-print] [GUI LOG] OnLuaMessage      101     12      11      7       {"round":4,"seconds":0,"finished":1}
+[LUA-print] [GUI LOG] OnLuaMessage      100     702     0       0       {"T_dljq":{"npc_646":2,"∏ﬂº∂¥„ÃÂ":2,"npc_647":2,"npc_631":2,"npc_664":2,"npc_634":2,"npc_665":2,"npc_635":2,"npc_667":2,"npc_607":2,"npc_668":2,"npc_669":2,"npc_644":2,"npc_671":2,"npc_652":2,"npc_654":2,"npc_610":2,"npc_1030":1,"npc_674":2,"npc_655":2,"npc_675":2,"npc_1031":1,"npc_609":2,"npc_677":2,"npc_74":{"3":0,"4":0,"1":0,"2":0,"path_order_version":2},"npc631_cut_count":4,"npc_702_a":10,"npc_55_way":2,"npc_625":2,"npc_679":2,"npc_621":2,"npc_622":2,"npc_623":2,"npc_624":2,"npc_626":2,"npc_629_a":1,"npc_642":2,"npc_46":{"start":1,"wc":1},"npc_67":2,"npc_639":2,"npc_627":2,"npc_629":2,"npc_55":2,"npc_630":2,"npc_680":2,"npc_628":2,"npc_661":2,"npc_632":2,"npc_663":2,"npc_673":2,"npc_633":2,"npc_702":2,"npc_681":2,"npc_678":2,"npc_636":2,"npc_637":2,"npc_641":2,"npc_666":2,"npc_638":2,"npc_645":2,"npc_657":2,"npc_653":2,"npc_640":2,"npc702_hidden_title":1,"npc_658":2,"npc702_choice":2,"npc_656":2,"npc_603":2,"npc_608":2,"npc_605":2,"npc_606":2,"npc_648":2,"npc_672":2,"npc_629_b":1,"npc_649":2,"npc_659":2,"npc_651":2,"npc_643":2,"npc_660":2,"npc_670":2,"npc_676":2,"npc702_hidden_kill":1,"npc_662":2}}
+Inner width <= scrollview width, it will be force sized!
