@@ -68,24 +68,24 @@ function npc.link(play,npcid,ew,aid,data)
             T_data["jl1"] = 1
             Player.setJsonTableByVar(play, VarCfg["T_生肖守护"], T_data)
             Player.updateSomeAddr(play,nil, {{81,300}})
-            Player.giveItemByTable(play, _config.details.jl[1].give or {}, "生肖守护全激活奖励", nil)
-            Player.sendmsgEx(play, "恭喜你激活了第一层生肖守护，获得奖励：|【生肖守护神】#218|")
+            -- Player.giveItemByTable(play, _config.details.jl[1].give or {}, "生肖守护全激活奖励", nil)
+            Player.sendmsgEx(play, "恭喜你激活了第一层生肖守护，获得奖励")
             sendluamsg(play,100,npcid,2,1,"")
         elseif T_data["5"] and T_data["6"] and T_data["7"] and T_data["8"] and not T_data["jl2"] then
             -- 全部激活，发奖励
             T_data["jl2"] = 1
             Player.setJsonTableByVar(play, VarCfg["T_生肖守护"], T_data)
             Player.updateSomeAddr(play,nil, {{79,300}})
-            Player.giveItemByTable(play, _config.details.jl[2].give or {}, "生肖守护全激活奖励", nil)
-            Player.sendmsgEx(play, "恭喜你激活了第二层生肖守护，获得奖励：|【生肖守护神】#218|")
+            -- Player.giveItemByTable(play, _config.details.jl[2].give or {}, "生肖守护全激活奖励", nil)
+            Player.sendmsgEx(play, "恭喜你激活了第二层生肖守护，获得奖励")
             sendluamsg(play,100,npcid,2,2,"")
         elseif T_data["9"] and T_data["10"] and T_data["11"] and T_data["12"] and not T_data["jl3"] then
             -- 全部激活，发奖励
             T_data["jl3"] = 1
             Player.setJsonTableByVar(play, VarCfg["T_生肖守护"], T_data)
             Player.updateSomeAddr(play,nil, {{22,3}})
-            Player.giveItemByTable(play, _config.details.jl[3].give or {}, "生肖守护全激活奖励", nil)
-            Player.sendmsgEx(play, "恭喜你激活了第三层生肖守护，获得奖励：|【生肖守护神】#218|")
+            -- Player.giveItemByTable(play, _config.details.jl[3].give or {}, "生肖守护全激活奖励", nil)
+            Player.sendmsgEx(play, "恭喜你激活了第三层生肖守护，获得奖励")
             sendluamsg(play,100,npcid,2,3,"")
            
         end
@@ -102,7 +102,11 @@ function npc.link(play,npcid,ew,aid,data)
 end
 
 function Login_sxsh(play)
-    local T_data = Player.getJsonTableByVar(play, VarCfg["T_生肖守护"])
+    local T_data = Player.getJsonT|ableByVar(play, VarCfg["T_生肖守护"])
+    if T_data["jl1"] and T_data["jl2"] and T_data["jl3"] and not T_data["jl_all"] then
+        T_data["jl_all"] = 1
+        Player.setJsonTableByVar(play, VarCfg["T_生肖守护"], T_data)
+    end
     if T_data["jl_all"] and _config and _config.ch then
         Player.title_give(play, _config.ch)
     end

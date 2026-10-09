@@ -63,7 +63,7 @@ function npc.link(play,npcid,ew,aid)
                     attrs[v[1]] = v[2]
                 end
                 attrsstr = Player.getAttrTableToStr(attrs)
-                setaddnewabil(play, -2, "=",attrsstr, itemobj)
+                _set_strength_custom_abil(play, itemobj, nextLevel, cfg.attr)
                 refreshitem(play, itemobj)
                 recalcabilitys(play)
                 -- 二大陆伏妖录：装备强化成功后立即尝试自动结算当前任务。
@@ -96,15 +96,44 @@ end
 
 
 --清理附加属性封装
-local function convert_str(str)
-    local result = {}
-    for pair in string.gmatch(str, "([^,]+)") do
-        local key, value = string.match(pair, "(%d+)=(%d+)")
-        table.insert(result, "3#" .. key .. "#0")
+local function _set_strength_custom_abil(actor, itemobj, level, attr)
+    local ok, item_json = pcall(json2tbl, getitemcustomabil(actor, itemobj))
+    item_json = ok and type(item_json) == "table" and item_json or {}
+    item_json.abil = type(item_json.abil) == "table" and item_json.abil or {}
+    local target = nil
+    for index, one in ipairs(item_json.abil) do
+        if type(one) == "table" and tonumber(one.i) == 5 then target = index break end
     end
-    return table.concat(result, "|")
+    local values = {}
+    local row_by_attr = {
+        [1] = 1,
+        [3] = 2, [4] = 2,
+        [5] = 3, [6] = 3,
+        [7] = 4, [8] = 4,
+        [9] = 5, [10] = 5,
+    }
+    local next_row = 6
+    for _, one in ipairs(attr or {}) do
+        local attr_id = tonumber(one[1]) or 0
+        local row = row_by_attr[attr_id]
+        if not row then
+            row = next_row
+            next_row = next_row + 1
+        end
+        table.insert(values, {254, attr_id, tonumber(one[2]) or 0, 0, 0, row, #values})
+    end
+    target = target or (#item_json.abil + 1)
+    item_json.abil[target] = {i = 5, t = "[强化属性]\\<IMG:3>\\强化等级:" .. tostring(level), c = 251, v = values}
+    setitemcustomabil(actor, itemobj, tbl2json(item_json))
 end
-
+local function _clear_strength_custom_abil(actor, itemobj)
+    local ok, item_json = pcall(json2tbl, getitemcustomabil(actor, itemobj))
+    if not ok or type(item_json) ~= "table" or type(item_json.abil) ~= "table" then return end
+    local kept = {}
+    for _, one in ipairs(item_json.abil) do if not (type(one) == "table" and tonumber(one.i) == 5) then table.insert(kept, one) end end
+    item_json.abil = kept
+    setitemcustomabil(actor, itemobj, tbl2json(item_json))
+end
 --穿装备
 local function _onTakeOnEx(actor, itemobj, where, itemname, makeid)
     if _config.where[where] then
@@ -121,7 +150,7 @@ local function _onTakeOnEx(actor, itemobj, where, itemname, makeid)
             attrs[v[1]] = v[2]
         end
         attrsstr = Player.getAttrTableToStr(attrs)
-        setaddnewabil(actor, -2, "=",attrsstr, itemobj)
+        _set_strength_custom_abil(actor, itemobj, level, cfg.attr)
         refreshitem(actor, itemobj)
         recalcabilitys(actor)
     end
@@ -131,14 +160,8 @@ end
 local function _onTakeOffEx(actor, itemobj, where, itemname, makeid)
     setitemaddvalue(actor, itemobj, 2, 3, 0) --星星
     if _config.where[where] then
-        local attr = json2tbl(getitemcustomabil(actor,itemobj))
-        if attr.abilex then
-            local temp_str = convert_str(attr.abilex)
-            release_print("temp_str",temp_str)
-            setaddnewabil(actor, -2, "=",temp_str, itemobj)
-            refreshitem(actor, itemobj)
-        end
-    end
+        _clear_strength_custom_abil(actor, itemobj)
+        refreshitem(actor, itemobj)    end
 end
 
 function Login_zbqh(play)
