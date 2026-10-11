@@ -44,7 +44,7 @@ function npc.link(play,npcid,ew,aid)
                 GameEvent.push(EventCfg.OpenKuangBao, play)
                 sendluamsg(play,100,npcid,1,0,'{"opened":1}')
             else
-                sendmsg(play,1,string.format('{"Msg":"<font color=\'#ff7700\'>[狂暴之力]</font><font color=\'#ff0000\'>您没有%d灵石，无法开启</font>","Type":9}', cost))
+                sendmsg(play,1,string.format('{"Msg":"<font color=\'#ff7700\'>[狂暴之力]</font><font color=\'#ff0000\'>您没有%d非绑定灵石，无法开启</font>","Type":9}', cost))
             end
         end
     end

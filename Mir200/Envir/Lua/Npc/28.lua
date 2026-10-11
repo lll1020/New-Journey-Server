@@ -7,6 +7,9 @@ npc = {}
 local _config = Guard.getConfig("npc_28")
 local FairyFate = include("lua/LuaLib/fairy_fate.lua")
 
+local _set_strength_custom_abil
+local _clear_strength_custom_abil
+
 
 function npc.main(play,npcid)
     local data = {}
@@ -96,7 +99,7 @@ end
 
 
 --清理附加属性封装
-local function _set_strength_custom_abil(actor, itemobj, level, attr)
+_set_strength_custom_abil = function(actor, itemobj, level, attr)
     local ok, item_json = pcall(json2tbl, getitemcustomabil(actor, itemobj))
     item_json = ok and type(item_json) == "table" and item_json or {}
     item_json.abil = type(item_json.abil) == "table" and item_json.abil or {}
@@ -126,7 +129,7 @@ local function _set_strength_custom_abil(actor, itemobj, level, attr)
     item_json.abil[target] = {i = 5, t = "[强化属性]\\<IMG:3>\\强化等级:" .. tostring(level), c = 251, v = values}
     setitemcustomabil(actor, itemobj, tbl2json(item_json))
 end
-local function _clear_strength_custom_abil(actor, itemobj)
+_clear_strength_custom_abil = function(actor, itemobj)
     local ok, item_json = pcall(json2tbl, getitemcustomabil(actor, itemobj))
     if not ok or type(item_json) ~= "table" or type(item_json.abil) ~= "table" then return end
     local kept = {}

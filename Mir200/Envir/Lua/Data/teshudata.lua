@@ -186,11 +186,11 @@ teshudata = {
             [3] = {ratio = 3000,cost =  { {"玫瑰花",60} },gl = 100},
             [4] = {ratio = 4000,cost =  { {"玫瑰花",80} },gl = 100},
             [5] = {ratio = 5000,cost =  { {"玫瑰花",100} },gl = 100},
-            [6] = {ratio = 11110,cost =  { {"玫瑰花",200} },gl = 70},
-            [7] = {ratio = 17770,cost =  { {"玫瑰花",250} },gl = 60},
-            [8] = {ratio = 23330,cost =  { {"玫瑰花",300} },gl = 50},
-            [9] = {ratio = 33330,cost =  { {"玫瑰花",488} },gl = 30},
-            [10] = {ratio = 55550,cost =  { {"玫瑰花",588} },gl = 30},
+            [6] = {ratio = 11110,cost =  { {"玫瑰花",200} },gl = 80},
+            [7] = {ratio = 17770,cost =  { {"玫瑰花",250} },gl = 70},
+            [8] = {ratio = 23330,cost =  { {"玫瑰花",300} },gl = 60},
+            [9] = {ratio = 33330,cost =  { {"玫瑰花",488} },gl = 40},
+            [10] = {ratio = 55550,cost =  { {"玫瑰花",588} },gl = 40},
         },
     },
     ["npc_14"] = {
@@ -200,11 +200,11 @@ teshudata = {
         title = "酒仙",
         config = {
             --配置
-            [1] = {attr_desc = "人物攻击",attrwz = 21,attrID = 4,ratio = 1,cost =  { {"女儿红",1} },max_level = 750,},
-            [2] = {attr_desc = "人物生命",attrwz = 20,attrID = 1,ratio = 20,cost =  { {"莲花白",1} },max_level = 750,},
-            [3] = {attr_desc = "人物切割",attrwz = 23,attrID = 244,ratio = 80,cost =  { {"竹叶青",1} },max_level = 550,},
-            [4] = {attr_desc = "怪物格挡",attrwz = 22,attrID = 255,ratio = 10,cost =  { {"百花酿",1} },max_level = 200,},
-            [5] = {attr_desc = "打怪爆率",attrwz = 24,attrID = 242,ratio = 100,cost =  { {"八仙醉",1} },max_level = 200,},
+            [1] = {attr_desc = "人物攻击",attrID = 4,ratio = 1,cost =  { {"女儿红",1} },max_level = 750,},
+            [2] = {attr_desc = "人物生命",attrID = 1,ratio = 20,cost =  { {"莲花白",1} },max_level = 750,},
+            [3] = {attr_desc = "人物切割",attrID = 244,ratio = 80,cost =  { {"竹叶青",1} },max_level = 550,},
+            [4] = {attr_desc = "怪物格挡",attrID = 255,ratio = 10,cost =  { {"百花酿",1} },max_level = 200,},
+            [5] = {attr_desc = "打怪爆率",attrID = 242,ratio = 100,cost =  { {"八仙醉",1} },max_level = 200,},
         },
     },
     ["npc_15"] = {
@@ -225,6 +225,7 @@ teshudata = {
         name = "冠名",
         ch = "天下谁人不识君",
         cost = 888,
+        -- jl = { { "龙纹铜钱", 100 },{3,10000000,"绑定金币"},{4,2000000,"绑定元宝"}},
     },
     ["npc_21"] = {
         id = 21,
@@ -380,7 +381,13 @@ teshudata = {
         id = 24,
         name = "天书",
         where = 90,
-        shaqi_gain_rate = 3, -- 击杀怪物获得杀气概率(%)
+        splash_range = 2, -- 天书AOE影响半径
+        splash_trigger_rate = 30, -- 攻击怪物时30%概率触发溅射
+        splash_damage_rate = 100, -- 溅射伤害=攻击力100%
+        splash_effect = 0, -- AOE范围特效
+        splash_hit_effect = 14152, -- AOE命中特效
+        splash_max_targets = 12, -- 单次AOE最多作用怪物数量
+        shaqi_gain_rate = 10, -- 击杀怪物获得杀气概率(%)
         shaqi_max = 1000, -- 杀气层数上限
         shaqi_attack_attr = 4, -- 杀气增加的固定攻击属性ID
         shaqi_attack_per = 1, -- 每层杀气增加固定攻击
@@ -447,12 +454,12 @@ teshudata = {
                 -- attr 的ID/数值类型来源于 AAAA.txt；部分触发/条件/副作用在 npc_24.lua 中实现
                 unlock_cond = {
                     [1] = {kind = "free", desc = "免费解锁"},
-                    [2] = {kind = "level", level = 80, desc = "玩家等级Lv80"},
-                    [3] = {kind = "level", level = 100, desc = "玩家等级Lv100"},
-                    [4] = {kind = "level", level = 120, desc = "玩家等级Lv120"},
-                    [5] = {kind = "level", level = 140, desc = "玩家等级Lv140"},
-                    [6] = {kind = "level", level = 150, desc = "玩家等级Lv150"},
-                    [7] = {kind = "free", desc = "免费解锁"},
+                    [2] = {kind = "free", desc = "免费解锁"},
+                    [3] = {kind = "level", level = 80, desc = "玩家等级Lv80"},
+                    [4] = {kind = "level", level = 100, desc = "玩家等级Lv100"},
+                    [5] = {kind = "level", level = 120, desc = "玩家等级Lv120"},
+                    [6] = {kind = "level", level = 140, desc = "玩家等级Lv140"},
+                    [7] = {kind = "level", level = 150, desc = "玩家等级Lv150"},
                     [8] = {kind = "tianshu", level = 25, desc = "天书等级25级"},
                     [9] = {kind = "tianshu", level = 40, desc = "天书等级40级"},
                     [10] = {kind = "tianshu", level = 50, desc = "天书等级50级"},
@@ -460,139 +467,140 @@ teshudata = {
                 weight = "1#120|2#48|3#20|4#10|5#1",
                 cost = {
                     [1] = {{"仙法卷轴",1}},
+                    [2] = {{"灵石",100}}
                 },
                 details = {
                     [1] = {
-                        {name = "小强般顽强",attr = {{1,100}},wz = "生命值+100"},
+                        {name = "小强般顽强",icon = "res/buff_icon/420.PNG",attr = {{1,100}},wz = "生命值+100"},
                         -- 特殊逻辑：选中该仙法时一次性给金币（npc_24.lua/xianfa_refresh）
-                        {name = "捡钱啦",attr = {},wz = "选择后立即获得10w金币"},
+                        {name = "捡钱啦",icon = "res/buff_icon/421.PNG",attr = {},wz = "选择后立即获得10w金币"},
                         -- 特殊逻辑：仅在拥有"狂暴之力"称号时生效（npc_24.lua/xianfa_refresh）
-                        {name = "狂暴到底",attr = {},spa_attr = {{1,50},{2,50},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{9,50},{10,50},{11,50},{12,50}},wz = "开狂暴时，额外获得50点全属性"},
-                        {name = "来财",attr = {{204,500},{205,500}},wz = "装备回收收益+5%"},
-                        {name = "血蓝双修",attr = {{1,100},{2,100}},wz = "生命值+100，魔法值+100"},
-                        {name = "多穿点衣服",attr = {{36,100},{37,100}},wz = "防御加成+1%"},
-                        {name = "打人好痛",attr = {{76,500}},wz = "PK增伤+5%"},
-                        {name = "嘻嘻不疼",attr = {{77,500}},wz = "PK减伤+5%"},
-                        {name = "杀怪老手",attr = {{66,1000}},wz = "杀怪经验+10%"},
-                        {name = "变强咯",attr = {{1,50},{2,50},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{9,50},{10,50},{11,50},{12,50}},wz = "全属性+50-50"},
-                        {name = "怪物杀手",attr = {{245,200}},wz = "对怪增伤+2% "},
-                        {name = "力量涌动",attr = {{3,50},{4,50}},wz = "攻击+50"},
-                        {name = "治疗术",attr = {{71,50},{91,50}},wz = "每秒恢复50点HP和MP"},
+                        {name = "狂暴到底",icon = "res/buff_icon/422.PNG",attr = {},spa_attr = {{1,50},{2,50},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{9,50},{10,50},{11,50},{12,50}},wz = "开狂暴时，额外获得50点全属性"},
+                        {name = "来财",icon = "res/buff_icon/423.PNG",attr = {{204,500},{205,500}},wz = "装备回收收益+5%"},
+                        {name = "血蓝双修",icon = "res/buff_icon/424.PNG",attr = {{1,100},{2,100}},wz = "生命值+100，魔法值+100"},
+                        {name = "多穿点衣服",icon = "res/buff_icon/425.PNG",attr = {{36,100},{37,100}},wz = "防御加成+1%"},
+                        {name = "打人好痛",icon = "res/buff_icon/426.PNG",attr = {{76,500}},wz = "PK增伤+5%"},
+                        {name = "嘻嘻不疼",icon = "res/buff_icon/427.PNG",attr = {{77,500}},wz = "PK减伤+5%"},
+                        {name = "杀怪老手",icon = "res/buff_icon/428.PNG",attr = {{66,1000}},wz = "杀怪经验+10%"},
+                        {name = "变强咯",icon = "res/buff_icon/429.PNG",attr = {{1,50},{2,50},{3,50},{4,50},{5,50},{6,50},{7,50},{8,50},{9,50},{10,50},{11,50},{12,50}},wz = "全属性+50-50"},
+                        {name = "怪物杀手",icon = "res/buff_icon/430.PNG",attr = {{245,200}},wz = "对怪增伤+2% "},
+                        {name = "力量涌动",icon = "res/buff_icon/431.PNG",attr = {{3,50},{4,50}},wz = "攻击+50"},
+                        {name = "治疗术",icon = "res/buff_icon/432.PNG",attr = {{71,50},{91,50}},wz = "每秒恢复50点HP和MP"},
                         -- 特殊逻辑：复活触发移速加成30秒（npc_24.lua/xianfa_revive_trigger + Buff[302]）
-                        {name = "溜了溜了",attr = {},spa_attr = {{243,5}},wz = "复活后：移动速度+5%，持续30秒。"},
-                        {name = "揭示弱点",attr = {{28,3}},wz = "忽视目标防御+3%"},
+                        {name = "溜了溜了",icon = "res/buff_icon/433.PNG",attr = {},spa_attr = {{243,5}},wz = "复活后：移动速度+5%，持续30秒。"},
+                        {name = "揭示弱点",icon = "res/buff_icon/434.PNG",attr = {{28,3}},wz = "忽视目标防御+3%"},
                     },
                     [2] = {
                         -- 特殊逻辑：组队时才生效（npc_24.lua/xianfa_refresh）
-                        {name = "朋友多多",attr = {},spa_attr = {{1,200},{2,200},{3,200},{4,200},{5,200},{6,200},{7,200},{8,200},{9,200},{10,200},{11,200},{12,200}},wz = "组队时：全属性+200-200"},
+                        {name = "朋友多多",icon = "res/buff_icon/435.PNG",attr = {},spa_attr = {{1,200},{2,200},{3,200},{4,200},{5,200},{6,200},{7,200},{8,200},{9,200},{10,200},{11,200},{12,200}},wz = "组队时：全属性+200-200"},
                         -- 特殊逻辑：AI挂机开启时才生效（npc_24.lua/xianfa_refresh）
-                        {name = "挂机佬",attr = {},spa_attr = {{206,500}},wz = "挂机时，受到伤害降低5%"},
-                        {name = "兰顿之兆",attr = {{24,2}},wz = "暴伤抵抗+2%"},
-                        {name = "暴击斗篷",attr = {{21,2}},wz = "暴击几率+2%"},
+                        {name = "挂机佬",icon = "res/buff_icon/436.PNG",attr = {},spa_attr = {{206,500}},wz = "挂机时，受到伤害降低5%"},
+                        {name = "兰顿之兆",icon = "res/buff_icon/437.PNG",attr = {{24,2}},wz = "暴伤抵抗+2%"},
+                        {name = "暴击斗篷",icon = "res/buff_icon/438.PNG",attr = {{21,2}},wz = "暴击几率+2%"},
                         -- 特殊逻辑：技能伤害+3%（npc_24.lua/_xianfa_apply_skill_bonus）
-                        {name = "熟能生巧",attr = {},wz = "全部技能伤害+3%"},
-                        {name = "瞄准镜",attr = {{13,3}},wz = "命中率+3%"},
-                        {name = "蝴蝶",attr = {{14,3}},wz = "闪避+3%"},
-                        {name = "怪物猎人",attr = {{245,800}},wz = "对怪增伤+8%"},
+                        {name = "熟能生巧",icon = "res/buff_icon/439.PNG",attr = {},wz = "全部技能伤害+3%"},
+                        {name = "瞄准镜",icon = "res/buff_icon/440.PNG",attr = {{13,3}},wz = "命中率+3%"},
+                        {name = "蝴蝶",icon = "res/buff_icon/441.PNG",attr = {{14,3}},wz = "闪避+3%"},
+                        {name = "怪物猎人",icon = "res/buff_icon/442.PNG",attr = {{245,800}},wz = "对怪增伤+8%"},
                         -- 特殊逻辑：随开服天数叠加，最高40天（npc_24.lua/xianfa_refresh）
-                        {name = "开服元老",attr = {},spa_attr = {{9,5},{10,5},{11,5},{12,5}},wz = "获得随开服天数的防御：每天+5-5（最高200）"},
+                        {name = "开服元老",icon = "res/buff_icon/443.PNG",attr = {},spa_attr = {{9,5},{10,5},{11,5},{12,5}},wz = "获得随开服天数的防御：每天+5-5（最高200）"},
                         -- 特殊逻辑：攻击2%概率蛛网减速3秒（npc_24.lua/xianfa_attack_trigger）
-                        {name = "蜘蛛侠",attr = {},wz = "攻击有2%概率释放蛛网，减速对方3秒"},
-                        {name = "不怕暴击",attr = {{23,5}},wz = "暴击抵抗+5%"},
+                        {name = "蜘蛛侠",icon = "res/buff_icon/444.PNG",attr = {},wz = "攻击有2%概率释放蛛网，减速对方3秒"},
+                        {name = "不怕暴击",icon = "res/buff_icon/445.PNG",attr = {{23,5}},wz = "暴击抵抗+5%"},
                     },
                     [3] = {
-                        {name = "追求专属",attr = {{246,5000}},wz = "专属装备爆率+50%"},
+                        {name = "追求专属",icon = "res/buff_icon/446.PNG",attr = {{246,5000}},wz = "专属装备爆率+50%"},
                         -- 特殊逻辑：攻击低血怪物额外真实伤害（npc_24.lua/xianfa_attack_trigger）
-                        {name = "欺负弱小",attr = {},wz = "攻击时对生命值低于30%的怪物额外造成75%的真实伤害"},
+                        {name = "欺负弱小",icon = "res/buff_icon/447.PNG",attr = {},wz = "攻击时对生命值低于30%的怪物额外造成75%的真实伤害"},
                         -- 特殊逻辑：按LV5+灵根数量叠加（npc_24.lua/xianfa_refresh）
-                        {name = "灵根之主",attr = {},spa_attr = {{1,500},{3,50},{4,50}},wz = "每拥有一个LV.5以上的灵根：攻击+50，生命+500"},
+                        {name = "灵根之主",icon = "res/buff_icon/448.PNG",attr = {},spa_attr = {},wz = "灵根中每镶嵌1颗宝石：对怪暴击+10%，对怪伤害+2%"},
                         -- 特殊逻辑：受伤+8%由代码叠加（npc_24.lua/xianfa_struck_adjust）
-                        {name = "双刃剑",attr = {{35,800}},wz = "所有攻击伤害+8%，且受到伤害+8%"},
+                        {name = "双刃剑",icon = "res/buff_icon/449.PNG",attr = {{35,800}},wz = "所有攻击伤害+8%，且受到伤害+8%"},
                         -- 特殊逻辑：按2星+灵兽数量叠加（npc_24.lua/xianfa_refresh）
-                        {name = "灵兽之王",attr = {},wz = "每拥有一个2星以上的灵兽：攻击+100，生命+1000"},
+                        {name = "灵兽之王",icon = "res/buff_icon/450.PNG",attr = {},wz = "每拥有一个2星以上的灵兽：攻击+100，生命+1000"},
                         -- 特殊逻辑：1%偷金币，单次/每日上限（npc_24.lua/xianfa_attack_trigger）
-                        {name = "神偷",attr = {},wz = "攻击玩家时，有1%概率窃取对方1%的金币（每次最多100w，单日上限2000w）"},
+                        {name = "神偷",icon = "res/buff_icon/451.PNG",attr = {},wz = "攻击玩家时，有1%概率窃取对方1%的金币（每次最多100w，单日上限2000w）"},
                         -- 特殊逻辑：死亡反伤击杀者最大HP 30%（npc_24.lua/_xianfa_on_playdie）
-                        {name = "自爆",attr = {},wz = "死亡时，对击杀者造成其最大生命值30%的真实伤害"},
+                        {name = "自爆",icon = "res/buff_icon/452.PNG",attr = {},wz = "死亡时，对击杀者造成其最大生命值30%的真实伤害"},
                         -- 特殊逻辑：不组队时生效（npc_24.lua/xianfa_refresh）
-                        {name = "独狼",attr = {},wz = "不组队时：对怪增伤+10%"},
-                        {name = "鹰眼",attr = {{28,10}},wz = "忽视目标防御+10%"},
-                        {name = "猎手本能",attr = {{72,15}},wz = "对怪暴击+15%"},
-                        {name = "身经百战",attr = {{206,500},{208,500}},wz = "伤害减免+5%，最大生命+5%"},
-                        {name = "狂战暴血",attr = {{208,-1000}},wz = "最大生命-10%，"},
+                        {name = "独狼",icon = "res/buff_icon/453.PNG",attr = {},wz = "不组队时：对怪增伤+10%"},
+                        {name = "鹰眼",icon = "res/buff_icon/454.PNG",attr = {{28,10}},wz = "忽视目标防御+10%"},
+                        {name = "猎手本能",icon = "res/buff_icon/455.PNG",attr = {{72,15}},wz = "对怪暴击+15%"},
+                        {name = "身经百战",icon = "res/buff_icon/456.PNG",attr = {{206,500},{208,500}},wz = "伤害减免+5%，最大生命+5%"},
+                        {name = "狂战暴血",icon = "res/buff_icon/457.PNG",attr = {{208,-1000}},wz = "最大生命-10%，"},
                         -- 特殊逻辑：击杀玩家回血5%最大HP（npc_24.lua/_xianfa_on_killplay）
-                        {name = "饮血剑",attr = {},wz = "杀死一名玩家后：恢复5%最大生命值"},
+                        {name = "饮血剑",icon = "res/buff_icon/458.PNG",attr = {},wz = "杀死一名玩家后：恢复5%最大生命值"},
                         -- 特殊逻辑：血量<50%加双防，需定时监控（npc_24.lua/xianfa_apply_hp_state）
-                        {name = "愈战愈勇",attr = {},wz = "血量低于50%时：自身双防御+20%"},
+                        {name = "愈战愈勇",icon = "res/buff_icon/459.PNG",attr = {},wz = "血量低于50%时：自身双防御+20%"},
                         -- 特殊逻辑：3%概率额外伤害（npc_24.lua/xianfa_attack_trigger）
-                        {name = "扼雷指",attr = {},wz = "攻击有3%概率引发雷电，对目标造成最大攻击50%的伤害"},
-                        {name = "无尽之刃",attr = {{21,8}},wz = "暴击几率+8%"},
-                        {name = "精准而优雅",attr = {{13,12}},wz = "命中率+12%"},
-                        {name = "闪避高手",attr = {{14,12}},wz = "闪避+12%"},
+                        {name = "扼雷指",icon = "res/buff_icon/460.PNG",attr = {},wz = "攻击有3%概率引发雷电，对目标造成最大攻击50%的伤害"},
+                        {name = "无尽之刃",icon = "res/buff_icon/461.PNG",attr = {{21,8}},wz = "暴击几率+8%"},
+                        {name = "精准而优雅",icon = "res/buff_icon/462.PNG",attr = {{13,12}},wz = "命中率+12%"},
+                        {name = "闪避高手",icon = "res/buff_icon/463.PNG",attr = {{14,12}},wz = "闪避+12%"},
                         -- 特殊逻辑：幸运强化成功率+10%（npc_25.lua）
-                        {name = "无比幸运",attr = {},wz = "幸运强化时：成功几率+10%"},
+                        {name = "无比幸运",icon = "res/buff_icon/464.PNG",attr = {},wz = "幸运强化时：成功几率+10%"},
                         -- 特殊逻辑：随天书等级提升爆率（npc_24.lua/xianfa_refresh）
-                        {name = "读书人",attr = {},wz = "天书每升一级：打怪爆率+2%"},
+                        {name = "读书人",icon = "res/buff_icon/465.PNG",attr = {},wz = "天书每升一级：打怪爆率+2%"},
                     },
                     [4] = {
                         -- 特殊逻辑：血量<30%每秒回血，需定时监控（npc_24.lua/xianfa_apply_hp_state）
-                        {name = "不死族",attr = {},wz = "血量低于30%时，每秒恢复3%最大生命值，直至血量大于30%"},
+                        {name = "不死族",icon = "res/buff_icon/466.PNG",attr = {},wz = "血量低于30%时，每秒恢复3%最大生命值，直至血量大于30%"},
                         -- 特殊逻辑：额外按等级增加切割（npc_24.lua/xianfa_refresh）
-                        {name = "天胡",attr = {{66,5000}},wz = "打怪经验倍率+50%，等级每升一级获得100点打怪切割。"},
-                        {name = "爆爆爆",attr = {{242,10000}},wz = "打怪爆率+100%"},
+                        {name = "天胡",icon = "res/buff_icon/467.PNG",attr = {{66,5000}},wz = "打怪经验倍率+50%，等级每升一级获得100点打怪切割。"},
+                        {name = "爆爆爆",icon = "res/buff_icon/468.PNG",attr = {{242,10000}},wz = "打怪爆率+100%"},
                         -- 特殊逻辑：选中该仙法时一次性给绑定金币（npc_24.lua/xianfa_refresh）
-                        {name = "天降横财",attr = {},wz = "选择后立即获得3000w绑定金币"},
+                        {name = "天降横财",icon = "res/buff_icon/469.PNG",attr = {},wz = "选择后立即获得3000w绑定金币"},
                         -- 特殊逻辑：背后攻击才触发普攻/技能增伤（npc_24.lua/xianfa_attack_trigger）
-                        {name = "刺客信条",attr = {},wz = "在背后攻击敌人时，普通伤害+20%，技能伤害+50%"},
+                        {name = "刺客信条",icon = "res/buff_icon/470.PNG",attr = {},wz = "在背后攻击敌人时，普通伤害+20%，技能伤害+50%"},
                         -- 特殊逻辑：对低等级玩家1%禁锢，CD60s（npc_24.lua/xianfa_attack_trigger）
-                        {name = "魅惑",attr = {},wz = "攻击比自己等级低的敌人时，有1%概率使其无法攻击。CD：60s"},
+                        {name = "魅惑",icon = "res/buff_icon/471.PNG",attr = {},wz = "攻击比自己等级低的敌人时，有1%概率使其无法攻击。CD：60s"},
                         -- 特殊逻辑：释放技能后下一普攻增伤（npc_24.lua/xianfa_attack_trigger）
-                        {name = "咒术回响",attr = {},wz = "释放主动技能后，下一次普通攻击造成额外30%的伤害"},
+                        {name = "咒术回响",icon = "res/buff_icon/472.PNG",attr = {},wz = "释放主动技能后，下一次普通攻击造成额外30%的伤害"},
                         -- 特殊逻辑：按金币数额外伤害（npc_24.lua/xianfa_attack_trigger）
-                        {name = "富可敌国",attr = {},wz = "每拥有1000W金币，额外造成1%的伤害（最多10%）"},
+                        {name = "富可敌国",icon = "res/buff_icon/473.PNG",attr = {},wz = "每拥有1000W金币，额外造成1%的伤害（最多10%）"},
                         -- 特殊逻辑：隐身模式（npc_24.lua/_xianfa_set_invis）
-                        {name = "我是六娃",attr = {},wz = "获得隐身效果（怪物无法看见你）"},
+                        {name = "我是六娃",icon = "res/buff_icon/474.PNG",attr = {},wz = "获得隐身效果（怪物无法看见你）"},
                         -- 特殊逻辑：等级上限+2且受伤+10%（npc_24.lua/xianfa_refresh + xianfa_struck_adjust）
-                        {name = "诅咒冠冕",attr = {},wz = "人物等级上限+2，但受到伤害+10%"},
+                        {name = "诅咒冠冕",icon = "res/buff_icon/475.PNG",attr = {},wz = "人物等级上限+2，但受到伤害+10%"},
                         -- 特殊逻辑：技能伤害+20%（npc_24.lua/_xianfa_apply_skill_bonus）
-                        {name = "技能导师",attr = {},wz = "技能伤害+20%"},
+                        {name = "技能导师",icon = "res/buff_icon/476.PNG",attr = {},wz = "技能伤害+20%"},
                         -- 特殊逻辑：每日一次防掉落（QFunction-0.lua/xianfa_check_drop）
-                        {name = "守财奴",attr = {},wz = " 每天获得1次防止身上装备掉落。（凌晨12点刷新）"},
-                        {name = "要钱不要命",attr = {{242,10000},{208,-2000}},wz = "打怪爆率+100%，最大生命-20%"},
-                        {name = "圣遗物我来了",attr = {},wz = "神兽圣遗物爆率+100%"},
+                        {name = "守财奴",icon = "res/buff_icon/477.PNG",attr = {},wz = " 每天获得1次防止身上装备掉落。（凌晨12点刷新）"},
+                        {name = "要钱不要命",icon = "res/buff_icon/478.PNG",attr = {{242,10000},{208,-2000}},wz = "打怪爆率+100%，最大生命-20%"},
+                        {name = "圣遗物我来了",icon = "res/buff_icon/479.PNG",attr = {},wz = "神兽圣遗物爆率+100%"},
                         -- 特殊逻辑：基础+每只3星神兽叠加（npc_24.lua/xianfa_refresh）
-                        {name = "神兽大帝",attr = {},wz = "最终攻击+3%，最终生命+3%，每拥有一个3星神兽：最终攻击+5%，最终生命+5%"},
-                        {name = "最后的轻语",attr = {{28,15}},wz = "破防几率+15%"},
-                        {name = "力中暴力",attr = {{21,15}},wz = "暴击几率+15%"},
+                        {name = "神兽大帝",icon = "res/buff_icon/480.PNG",attr = {},wz = "最终攻击+3%，最终生命+3%，每拥有一个3星神兽：最终攻击+5%，最终生命+5%"},
+                        {name = "最后的轻语",icon = "res/buff_icon/481.PNG",attr = {{28,15}},wz = "破防几率+15%"},
+                        {name = "力中暴力",icon = "res/buff_icon/482.PNG",attr = {{21,15}},wz = "暴击几率+15%"},
                         -- 特殊逻辑：每刀吸对方最大MP 3%（npc_24.lua/xianfa_attack_trigger）
-                        {name = "吸蓝刀",attr = {},wz = "每刀吸收对方3%最大魔法值"},
+                        {name = "吸蓝刀",icon = "res/buff_icon/483.PNG",attr = {},wz = "每刀吸收对方3%最大魔法值"},
                         -- 特殊逻辑：死亡标记仇人，对其额外伤害（npc_24.lua/_xianfa_on_playdie + xianfa_attack_trigger）
-                        {name = "睚眦必报",attr = {},wz = "死亡后将击杀者标记为仇人：对仇人额外造成20%的伤害。"},
+                        {name = "睚眦必报",icon = "res/buff_icon/484.PNG",attr = {},wz = "死亡后将击杀者标记为仇人：对仇人额外造成20%的伤害。"},
                     },
                     [5] = {
-                        {name = "为我独尊",attr = {{21,15},{22,15}},wz = "暴击几率+15%，暴击伤害+15%"},
-                        {name = "金刚不坏",attr = {{208,200},{77,2000},{1,66666}},wz = "最大生命+2%，PK减伤+20%，固定生命+66666"},
-                        {name = "唯快不破",attr = {{200,6600},{201,6600},{243,10}},wz = "攻击速度+66%，移动速度+10%"},
-                        {name = "切割之王",attr = {{244,88888},{253,880}},wz = "打怪切割+88888，切割倍率+8.8%"},
+                        {name = "为我独尊",icon = "res/buff_icon/485.PNG",attr = {{21,15},{22,15}},wz = "暴击几率+15%，暴击伤害+15%"},
+                        {name = "金刚不坏",icon = "res/buff_icon/486.PNG",attr = {{208,200},{77,2000},{1,66666}},wz = "最大生命+2%，PK减伤+20%，固定生命+66666"},
+                        {name = "唯快不破",icon = "res/buff_icon/487.PNG",attr = {{200,6600},{201,6600},{243,10}},wz = "攻击速度+66%，移动速度+10%"},
+                        {name = "切割之王",icon = "res/buff_icon/488.PNG",attr = {{244,88888},{253,880}},wz = "打怪切割+88888，切割倍率+8.8%"},
                         -- 特殊逻辑：按高品质仙法数量叠加（npc_24.lua/xianfa_refresh）
-                        {name = "仙法大佬",attr = {{300,2},{280,2},{281,2},{282,2},{283,2},{284,2},{285,2},{286,2},{287,2},{288,2},{289,2},{290,2},{291,2}},wz = "每拥有一个圣品仙法或极品仙法：全属性+2%"},
-                        {name = "谁敢惹我",attr = {{76,2000},{77,2000}},wz = "PK增伤+20%，PK减伤+20%"},
+                        {name = "仙法大佬",icon = "res/buff_icon/489.PNG",attr = {{300,2},{280,2},{281,2},{282,2},{283,2},{284,2},{285,2},{286,2},{287,2},{288,2},{289,2},{290,2},{291,2}},wz = "每拥有一个圣品仙法或极品仙法：全属性+2%"},
+                        {name = "谁敢惹我",icon = "res/buff_icon/490.PNG",attr = {{76,2000},{77,2000}},wz = "PK增伤+20%，PK减伤+20%"},
                         -- 特殊逻辑：150级后等级上限+5（npc_24.lua/xianfa_refresh）
-                        {name = "打破枷锁",attr = {},wz = "150级后等级+5"},
+                        {name = "打破枷锁",icon = "res/buff_icon/491.PNG",attr = {},wz = "150级后等级+5"},
                         -- 特殊逻辑：2%召唤元神协战50秒（npc_24.lua/xianfa_attack_trigger）
-                        {name = "元神助战",attr = {},wz = "攻击有2%的几率召唤元神协助作战，元神拥有100%自身属性，持续50秒"},
-                        {name = "寻宝大师",attr = {{246,8800},{242,18800}},wz = "专属爆率+88%，打怪爆率+188%"},
+                        {name = "元神助战",icon = "res/buff_icon/492.PNG",attr = {},wz = "攻击有2%的几率召唤元神协助作战，元神拥有100%自身属性，持续50秒"},
+                        {name = "寻宝大师",icon = "res/buff_icon/493.PNG",attr = {{246,8800},{242,18800}},wz = "专属爆率+88%，打怪爆率+188%"},
                         -- 特殊逻辑：攻沙期间PK增/减伤（npc_24.lua/xianfa_refresh）
-                        {name = "沙老大",attr = {},wz = "攻沙期间：PK增伤+50%，PK减伤+50%"},
+                        {name = "沙老大",icon = "res/buff_icon/494.PNG",attr = {},wz = "攻沙期间：PK增伤+50%，PK减伤+50%"},
                         -- 特殊逻辑：击杀玩家回血20%最大HP（npc_24.lua/_xianfa_on_killplay）
-                        {name = "修罗血衣",attr = {},wz = "击杀一名玩家，恢复20%最大生命值"},
+                        {name = "修罗血衣",icon = "res/buff_icon/495.PNG",attr = {},wz = "击杀一名玩家，恢复20%最大生命值"},
                         -- 特殊逻辑：2%禁锢2秒（npc_24.lua/xianfa_attack_trigger）
-                        {name = "跪下",attr = {},wz = "攻击有2%的几率使得对方玩家禁锢原地，持续2秒"},
-                        {name = "神力灌体",attr = {{67,800},{203,1000},{3,1888},{4,1888}},wz = "神力倍功+8%，人物攻击+10%，攻击力+1888，"},
+                        {name = "跪下",icon = "res/buff_icon/496.PNG",attr = {},wz = "攻击有2%的几率使得对方玩家禁锢原地，持续2秒"},
+                        {name = "神力灌体",icon = "res/buff_icon/497.PNG",attr = {{67,800},{203,1000},{3,1888},{4,1888}},wz = "神力倍功+8%，人物攻击+10%，攻击力+1888，"},
                         -- 特殊逻辑：名字更长额外伤害（npc_24.lua/xianfa_attack_trigger）
-                        {name = "名字长就牛比",attr = {},wz = "对名字比自己短的玩家造成额外20%的伤害"},
+                        {name = "名字长就牛比",icon = "res/buff_icon/498.PNG",attr = {},wz = "对名字比自己短的玩家造成额外20%的伤害"},
                         -- 特殊逻辑：名字更短额外伤害（npc_24.lua/xianfa_attack_trigger）
-                        {name = "名字短就牛比",attr = {},wz = "对名字比自己长的玩家造成额外20%的伤害"},
+                        {name = "名字短就牛比",icon = "res/buff_icon/499.PNG",attr = {},wz = "对名字比自己长的玩家造成额外20%的伤害"},
                     },
                 }
             },
@@ -636,12 +644,12 @@ teshudata = {
         id = 27,
         name = "技能升级",
         details = {
-            {name = "攻杀剑术",eff = 60334,buff = 74,attr = {{}},max_level = 10, cost = {{"书页",20},{"金币",1000000},{"辉耀水晶",5}},mz = "攻杀剑术额外附加自身攻击上限35%的真实伤害"},
-            {name = "刺杀剑术",eff = 60334,buff = 75,attr = {{}},max_level = 10, cost = {{"书页",20},{"金币",2000000},{"辉耀水晶",5}},mz = "刺杀剑术有5%的几率使目标受到的伤害翻倍"},
-            {name = "半月弯刀",eff = 60334,buff = 76,attr = {{}},max_level = 10, cost = {{"书页",20},{"金币",2000000},{"辉耀水晶",5}},mz = "半月弯刀攻击目标时，有20%的几率使攻击速度+2.持续5秒"},
-            {name = "烈火剑法",eff = 60334,buff = 77,attr = {{}},max_level = 10, cost = {{"书页",20},{"金币",3000000},{"辉耀水晶",5}},mz = "烈火剑法点燃被击中的目标3秒，没秒减少等同于释放者攻击上限20%的生命"},
-            {name = "开天斩",eff = 60334,buff = 78,attr = {{}},max_level = 10, cost = {{"书页",20},{"金币",5000000},{"辉耀水晶",5}},mz = "开天斩命中目标后，使目标5秒内降低20%的防御"},
-            {name = "逐日剑法",eff = 60334,buff = 79,attr = {{}},max_level = 10, cost = {{"书页",20},{"金币",5000000},{"辉耀水晶",5}},mz = "逐日剑法击中的目标为玩家时，有35%的几率使其额外减少当前HP10%的生命"},
+            {name = "攻杀剑术",eff = 15,buff = 74,attr = {{}},max_level = 10, cost = {{"书页",20},{"金币",1000000},{"辉耀水晶",5}},mz = "攻杀剑术额外附加自身攻击上限35%的真实伤害"},
+            {name = "刺杀剑术",eff = 20304,buff = 75,attr = {{}},max_level = 10, cost = {{"书页",20},{"金币",2000000},{"辉耀水晶",5}},mz = "刺杀剑术有5%的几率使目标受到的伤害翻倍"},
+            {name = "半月弯刀",eff = 20305,buff = 76,attr = {{}},max_level = 10, cost = {{"书页",20},{"金币",2000000},{"辉耀水晶",5}},mz = "半月弯刀攻击目标时，有20%的几率使攻击速度+2.持续5秒"},
+            {name = "烈火剑法",eff = 60339,buff = 77,attr = {{}},max_level = 10, cost = {{"书页",20},{"金币",3000000},{"辉耀水晶",5}},mz = "烈火剑法点燃被击中的目标3秒，没秒减少等同于释放者攻击上限20%的生命"},
+            {name = "开天斩",eff = 60340,buff = 78,attr = {{}},max_level = 10, cost = {{"书页",20},{"金币",5000000},{"辉耀水晶",5}},mz = "开天斩命中目标后，使目标5秒内降低20%的防御"},
+            {name = "逐日剑法",eff = 60343,buff = 79,attr = {{}},max_level = 10, cost = {{"书页",20},{"金币",5000000},{"辉耀水晶",5}},mz = "逐日剑法击中的目标为玩家时，有35%的几率使其额外减少当前HP10%的生命"},
         },
     },
     ["npc_28"] = {
@@ -767,7 +775,8 @@ teshudata = {
     },
     ["npc_41"] = {
         id = 41,
-        name = "斗笠升级1",
+        name = "江湖斗笠",
+        title = "江湖·斗笠",
         where = 13,
         cost = {
             {"辉耀水晶",30},
@@ -780,7 +789,8 @@ teshudata = {
     },
     ["npc_42"] = {
         id = 42,
-        name = "葫芦升级1",
+        name = "酒仙葫芦",
+        title = "真·酒葫芦",
         where = 16,
         cost = {
             {"辉耀水晶",88},
@@ -823,8 +833,8 @@ teshudata = {
         level_cfg = {
             [1] = {level = 1, plot_unlock = 1, open_slots = 2},
             [2] = {level = 2, plot_unlock = 3, open_slots = 4, need_growth = 500, need_harvest = 25, need_refine_low = 5, cost = {}},
-            [3] = {level = 3, plot_unlock = 6, open_slots = 6, need_growth = 1000,need_harvest = 35, need_refine_mid = 10, cost = {{"神石碎片",10}}},
-            [4] = {level = 4, plot_unlock = 9, open_slots = 8, need_growth = 1800,need_harvest = 50, need_refine_low = 10, cost = {{"神石碎片",150}}},
+            [3] = {level = 3, plot_unlock = 6, open_slots = 6, need_growth = 1000, need_harvest = 35, need_refine_mid = 10, cost = {{"神石碎片",10}}},
+            [4] = {level = 4, plot_unlock = 9, open_slots = 8, need_growth = 1800, need_harvest = 50, need_refine_low = 10, cost = {{"神石碎片",150}}},
         },
         growth_rules = {
             woodcut = {value = 1, daily_limit = 100},
@@ -839,7 +849,7 @@ teshudata = {
                 id = 1,
                 name = "低阶灵草",
                 need_level = 1,
-                matureTime = 60 * 60,              
+                matureTime = 60 * 60,
                 canSteal = true,
                 product = {
                     {rate = 80, give = {{"下品丹材",10}}},
@@ -850,7 +860,7 @@ teshudata = {
                 id = 2,
                 name = "中阶灵草",
                 need_level = 2,
-                matureTime = 60 * 60,
+                matureTime = 3 * 60 * 60,
                 canSteal = true,
                 product = {
                     {rate = 50, give = {{"中品丹材",10}}},
@@ -862,7 +872,7 @@ teshudata = {
                 id = 3,
                 name = "高阶灵草",
                 need_level = 3,
-                matureTime = 8 * 60 * 60,              
+                matureTime = 8 * 60 * 60,
                 canSteal = false,
                 product = {
                     {rate = 30, give = {{"上品丹材",10}}},
@@ -874,7 +884,7 @@ teshudata = {
         StealCfg = {                               -- 偷菜规则
             dailyStealLimit = 10,                  -- 每日偷菜总次数
             perTargetDailyLimit = 2,               -- 同一目标每日可被偷次数
-            cooldown = 0,                     -- 偷同一目标冷却(秒)
+            cooldown = 5 * 60,                     -- 偷同一目标冷却(秒)
             stealAmount = 1,                       -- 单次偷取株数
         },
         LikeCfg = {                                -- 点赞规则
@@ -963,7 +973,7 @@ teshudata = {
                 hidden_3 = {id = "hidden_3", name = "◇玄冰凶麟◇", quality = "hidden", quality_name = "隐藏", asset_group = 3, attr = {{242,1000},{300,1},{280,1},{281,1},{282,1},{283,1},{284,1},{285,1},{286,1},{287,1},{288,1},{289,1},{290,1},{291,1}}, attr_desc = "全属性+1% / 打怪爆率+10%"},
                 hidden_4 = {id = "hidden_4", name = "◇寒晶灵兽◇", quality = "hidden", quality_name = "隐藏", asset_group = 4, attr = {{242,1000},{300,1},{280,1},{281,1},{282,1},{283,1},{284,1},{285,1},{286,1},{287,1},{288,1},{289,1},{290,1},{291,1}}, attr_desc = "全属性+1% / 打怪爆率+10%"},
                 hidden_5 = {id = "hidden_5", name = "◇太虚战神◇", quality = "hidden", quality_name = "隐藏", asset_group = 5, attr = {{242,1000},{300,1},{280,1},{281,1},{282,1},{283,1},{284,1},{285,1},{286,1},{287,1},{288,1},{289,1},{290,1},{291,1}}, attr_desc = "全属性+1% / 打怪爆率+10%"},
-               },
+            },
             summary_labels = {
                 [1] = "固定生命",
                 [4] = "固定攻击",
@@ -996,7 +1006,7 @@ teshudata = {
         id = 46,
         name = "灾厄入侵",
         details = {
-            {idx = 1, key = 625,name = "嘲灾", mob_name = "嘲灾", mob_eff = 16416, num = 1,jl = {{"无相镜",1}},map = "旷野之原",spa = "无相",spa_details = "未完成前置任务时，嘲灾会反弹所受伤害", time = 300,kz = "前置：压制反弹", kz_details = "旷野之原击杀50只怪物并提交，完成后挑战嘲灾时不再受到反弹伤害"},
+            {idx = 1, key = 625,name = "嘲灾", mob_name = "嘲灾", mob_eff = 16416, num = 1,jl = {{"无相镜",1}},map = "旷野之原",spa = "无相",spa_details = "未完成前置任务时，嘲灾会反弹所受伤害", time = 300,kz = "前置：压制反弹", kz_details = "旷野之原击杀20只怪物并提交，完成后挑战嘲灾时不再受到反弹伤害"},
             {idx = 2, key = 627,name = "息灾", mob_name = "息灾", mob_eff = 16408, num = 1,jl = {{"定风珠",1}},map = "恐怖裂隙",spa = "叹息",spa_details = "被攻击时，会快速逃离玩家", time = 300,kz = "前置：定身符", kz_details = "恐怖裂隙打怪收集10个定身符碎片，提交后挑战息灾时可压制逃离"},
             {idx = 3, key = 626,name = "忌灾", mob_name = "忌灾", mob_eff = 16418, num = 1,jl = {{"诅咒傀儡",1}},map = "海峰孤岛",spa = "诅咒",spa_details = "攻击会令你陷入诅咒", time = 300,kz = "前置：净化宝石", kz_details = "海峰孤岛打怪收集10个净化之泪，提交后挑战忌灾时可抵御诅咒"},
             {idx = 4, key = 628,name = "妄灾", mob_name = "妄灾", mob_eff = 16419, num = 1,jl = {{"破妄之瞳",1}},map = "山脉入口",spa = "隐身",spa_details = "平时无法直视妄灾", time = 300,kz = "前置：真视之眼", kz_details = "山脉入口先后找回真视之眼左、真视之眼右，提交后挑战妄灾时可看见真身"},
@@ -1011,28 +1021,10 @@ teshudata = {
         weight = "1#70|2#20|3#10",
         max = 3,
         details = {
-            {item = "王室藏宝图",mob_name = "王室宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"绑定金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "藏星内海",map_x = 152,map_y = 229},{map_name = "苍云城郊外",map_x = 32,map_y = 107},{map_name = "草药谷",map_x = 93,map_y = 140},{map_name = "丹道古藏",map_x = 140,map_y = 266},}},
-            {item = "贵族藏宝图",mob_name = "贵族宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"绑定金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "草药古深处",map_x = 48,map_y = 46},{map_name = "苍云城",map_x = 57,map_y = 145},{map_name = "葬星城",map_x = 87,map_y = 159},{map_name = "七星岛",map_x = 509,map_y = 307},{map_name = "灰界",map_x = 146,map_y = 98},}},
-            {item = "普通藏宝图",mob_name = "普通宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"绑定金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "灰界",map_x = 100,map_y = 188},{map_name = "黑暗洞窟",map_x = 348,map_y = 220},{map_name = "神秘岛屿",map_x = 208,map_y = 283},}},
+            {item = "王室藏宝图",mob_name = "王室宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "藏星内海",map_x = 51,map_y = 178},{map_name = "黑暗洞窟",map_x = 214,map_y = 91},{map_name = "苍云城郊外",map_x = 135,map_y = 92}}},
+            {item = "贵族藏宝图",mob_name = "贵族宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "山脉入口",map_x = 131,map_y = 129},{map_name = "旷野之原",map_x = 87,map_y = 148},{map_name = "恐怖裂隙",map_x = 161,map_y = 67},{map_name = "海峰孤岛",map_x = 79,map_y = 53}}},
+            {item = "普通藏宝图",mob_name = "普通宝藏",jl = {weight = "1#40|2#40|3#25|4#10",details = {{"金币",10000},{"元宝",1000},{"神石宝箱",1},{"神石宝箱钥匙",1}}},map = {{map_name = "草药古深处",map_x = 37,map_y = 54},{map_name = "丹道古藏",map_x = 188,map_y = 432}}},
         },
-    },
-    ["npc_1029"] = {
-        id = 1029,
-        name = "合成夜明珠",
-        cost = {{"夜明珠",1},{"金币",880000},{"千年玄铁",38}},
-        ch = "诸邪退散",
-    },
-    ["npc_1030"] = {
-        id = 1030,
-        name = "合成夜明珠",
-        cost = {{"夜明珠",1},{"金币",880000},{"千年玄铁",38}},
-        ch = "诸邪退散",
-    },
-    ["npc_1031"] = {
-        id = 1031,
-        name = "进入三大陆",
-        need_title = "灾厄杀手",
-        tp_map = {"三大陆主城",159,231,5},
     },
     ["npc_49"] = {
         id = 49,
@@ -1056,7 +1048,8 @@ teshudata = {
     },
     ["npc_51"] = {
         id = 51,
-        name = "斗笠升级2",
+        name = "江湖斗笠",
+        title = "传说·斗笠",
         where = 13,
         cost = {
             {"辉耀水晶",88},
@@ -1069,7 +1062,8 @@ teshudata = {
     },
     ["npc_52"] = {
         id = 52,
-        name = "葫芦升级2",
+        name = "酒仙葫芦",
+        title = "神·酒葫芦",
         where = 16,
         cost = {
             {"辉耀水晶",288},
@@ -1085,6 +1079,7 @@ teshudata = {
         extra_cost = {
             [3] = {{"高阶神石卷轴",1}},
         },
+        compose_desc = "十个相同品质的神石可以合成出更高一级的神石",
         open_rate = {
             rare = 8400,
             epic = 1000,
@@ -1141,7 +1136,7 @@ teshudata = {
         randomdata = { 100, 30, 30, 30, 30, 30, 30, 30, 20, 20        ,100, 30, 30, 30, 30, 30, 30, 30, 20, 20 },
         fake_randomdata = { 100, 30, 30, 30, 30, 30, 30, 30, 20, 20 },
         max_level = 20,
-        attrID = {25,30,28,21,26},
+        attrID = {21,25,26,28,30},
         cost =  { {"千年玄铁",70} ,{"辉耀水晶",10},{"金币",1000000}},
         max_cost =  { {"灵石",2888} },
         del_title = "基础淬体",
@@ -1173,11 +1168,11 @@ teshudata = {
         },
         config = {
             ls = {
-                {name = "麒麟",attr_wz = "人物基础属性：攻击+0-500、生命+5000",attr_give_wz = "灵兽本体属性：攻击+0-500、生命+5000；亲密度和羁绊另行计算",attr_give = {{1,5000},{3,0},{4,500}},syw = "上古麒麟怒角",b_attr = {{282,10},{76,1000}},s_skill_req = "装备对应圣遗物并召唤麒麟；召唤期间生效，召唤结束后立即失效",s_skill = "【地王】麒麟在场时：玩家土灵根土系伤害增加5%",cost = {},yq = {5,10},},
-                {name = "青龙",attr_wz = "人物基础属性：攻击+0-500、生命+5000",attr_give_wz = "灵兽本体属性：攻击+0-500、生命+5000；亲密度和羁绊另行计算",attr_give = {{1,5000},{3,0},{4,500}},syw = "上古青龙逆鳞",b_attr = {{282,10},{76,1000}},s_skill_req = "装备对应圣遗物并召唤青龙；召唤期间生效，召唤结束后立即失效",s_skill = "【木灵】青龙在场时：玩家木灵根木系伤害增加5%",cost = {},yq = {2,7},},
-                {name = "朱雀",attr_wz = "人物基础属性：攻击+0-500、生命+5000",attr_give_wz = "灵兽本体属性：攻击+0-500、生命+5000；亲密度和羁绊另行计算",attr_give = {{1,5000},{3,0},{4,500}},syw = "上古朱雀火羽",b_attr = {{282,10},{76,1000}},s_skill_req = "装备对应圣遗物并召唤朱雀；召唤期间生效，召唤结束后立即失效",s_skill = "【焚天】朱雀在场时：玩家火灵根火系伤害增加5%",cost = {},yq = {4,9},},
-                {name = "白虎",attr_wz = "人物基础属性：攻击+0-500、生命+5000",attr_give_wz = "灵兽本体属性：攻击+0-500、生命+5000；亲密度和羁绊另行计算",attr_give = {{1,5000},{3,0},{4,500}},syw = "上古白虎獠牙",b_attr = {{282,10},{76,1000}},s_skill_req = "装备对应圣遗物并召唤白虎；召唤期间生效，召唤结束后立即失效",s_skill = "【金煞】白虎在场时：玩家金灵根金系伤害增加5%",cost = {},yq = {1,6},},
-                {name = "玄武",attr_wz = "人物基础属性：攻击+0-500、生命+5000",attr_give_wz = "灵兽本体属性：攻击+0-500、生命+5000；亲密度和羁绊另行计算",attr_give = {{1,5000},{3,0},{4,500}},syw = "上古玄武鎏甲",b_attr = {{282,10},{76,1000}},s_skill_req = "装备对应圣遗物并召唤玄武；召唤期间生效，召唤结束后立即失效",s_skill = "【水魂】玄武在场时：玩家水灵根水系伤害增加5%",cost = {},yq = {3,8},},
+                {name = "麒麟",attr_wz = "人物基础属性：攻击+0-500、生命+5000",attr_give_wz = "灵兽本体属性：攻击+0-500、生命+5000",syw = "上古麒麟怒角",b_attr = {{282,10},{76,1000}},s_skill_req = "装备对应圣遗物并召唤麒麟；召唤期间生效，召唤结束后立即失效",s_skill = "【地王】麒麟在场时：玩家土灵根土系伤害增加5%",cost = {},yq = {5,10},},
+                {name = "青龙",attr_wz = "人物基础属性：攻击+0-500、生命+5000",attr_give_wz = "灵兽本体属性：攻击+0-500、生命+5000",syw = "上古青龙逆鳞",b_attr = {{282,10},{76,1000}},s_skill_req = "装备对应圣遗物并召唤青龙；召唤期间生效，召唤结束后立即失效",s_skill = "【木灵】青龙在场时：玩家木灵根木系伤害增加5%",cost = {},yq = {2,7},},
+                {name = "朱雀",attr_wz = "人物基础属性：攻击+0-500、生命+5000",attr_give_wz = "灵兽本体属性：攻击+0-500、生命+5000",syw = "上古朱雀火羽",b_attr = {{282,10},{76,1000}},s_skill_req = "装备对应圣遗物并召唤朱雀；召唤期间生效，召唤结束后立即失效",s_skill = "【焚天】朱雀在场时：玩家火灵根火系伤害增加5%",cost = {},yq = {4,9},},
+                {name = "白虎",attr_wz = "人物基础属性：攻击+0-500、生命+5000",attr_give_wz = "灵兽本体属性：攻击+0-500、生命+5000",syw = "上古白虎獠牙",b_attr = {{282,10},{76,1000}},s_skill_req = "装备对应圣遗物并召唤白虎；召唤期间生效，召唤结束后立即失效",s_skill = "【金煞】白虎在场时：玩家金灵根金系伤害增加5%",cost = {},yq = {1,6},},
+                {name = "玄武",attr_wz = "人物基础属性：攻击+0-500、生命+5000",attr_give_wz = "灵兽本体属性：攻击+0-500、生命+5000",syw = "上古玄武鎏甲",b_attr = {{282,10},{76,1000}},s_skill_req = "装备对应圣遗物并召唤玄武；召唤期间生效，召唤结束后立即失效",s_skill = "【水魂】玄武在场时：玩家水灵根水系伤害增加5%",cost = {},yq = {3,8},},
             },
             --喂养
             wy = {
@@ -1192,7 +1187,8 @@ teshudata = {
                     {{"辉耀水晶",35},{"元宝",580000},{"妖怪精魄",35}},
                     {{"辉耀水晶",50},{"元宝",680000},{"妖怪精魄",40}},
                     {{"辉耀水晶",60},{"元宝",780000},{"妖怪精魄",50}},
-                    {{"辉耀水晶",88},{"元宝",880000},{"妖怪精魄",88}},                },
+                    {{"辉耀水晶",88},{"元宝",880000},{"妖怪精魄",88}},
+                },
                 det = {
                     {attr = {{244,2000}},time = 5,},
                     {attr = {{244,3000}},time = 6,},
@@ -1207,11 +1203,11 @@ teshudata = {
                 },
             },
             syw = {
-                {map = "麒麟之境",pos = {x = 0,y = 0},jl = {{"上古麒麟怒角",1}},boss = "≮万瑞源首·麒麟尊≯"},
-                {map = "青龙之境",pos = {x = 0,y = 0},jl = {{"上古青龙逆鳞",1}},boss = "≮东方青帝·真龙尊≯"},
-                {map = "朱雀之境",pos = {x = 0,y = 0},jl = {{"上古朱雀火羽",1}},boss = "★南炎圣象·朱雀皇★"},
-                {map = "白虎之境",pos = {x = 0,y = 0},jl = {{"上古白虎獠牙",1}},boss = "★西极杀神·白虎皇★"},
-                {map = "玄武之境",pos = {x = 0,y = 0},jl = {{"上古玄武鎏甲",1}},boss = "≮北冥玄帝·镇世尊≯"},
+                    {map = "麒麟之境",pos = {x = 0,y = 0},jl = {{"上古麒麟怒角",1}},boss = "≮万瑞源首·麒麟尊≯"},
+                    {map = "青龙之境",pos = {x = 0,y = 0},jl = {{"上古青龙逆鳞",1}},boss = "≮东方青帝·真龙尊≯"},
+                    {map = "朱雀之境",pos = {x = 0,y = 0},jl = {{"上古朱雀火羽",1}},boss = "★南炎圣象·朱雀皇★"},
+                    {map = "白虎之境",pos = {x = 0,y = 0},jl = {{"上古白虎獠牙",1}},boss = "★西极杀神·白虎皇★"},
+                    {map = "玄武之境",pos = {x = 0,y = 0},jl = {{"上古玄武鎏甲",1}},boss = "≮北冥玄帝·镇世尊≯"},
             },
         },
     },
@@ -1224,8 +1220,8 @@ teshudata = {
         era_base_ratio = {20,10,5,3,1.5,1},
         era_adapt_ratio = {30,20,10,5,2,1},
         fake_ratio = 0.1,
-        true_rate = 80,
-        false_rate = 20,
+        true_rate = 90,
+        false_rate = 10,
         -- 年代概率：唐0.10%、宋1.90%、元5%、明15%、清29%、近代49%。
         era_weight = {1,19,50,150,290,490},
         -- 唐代已是最古年代，不允许继续断代；其余按表执行。
@@ -1367,8 +1363,8 @@ teshudata = {
     ["npc_79"] = {
         id = 79,
         name = "秘宝·破龙吟【兵】",
-        bg = "res/custom/six_city/兵 鬼道秘宝/兵道秘宝.png",
-        title_img = "res/custom/six_city/兵 鬼道秘宝/标题.png",
+        bg = "res/custom/six_city/war_ghost_treasure/war_path_treasure.png",
+        title_img = "res/custom/six_city/war_ghost_treasure/title.png",
         item_name = "秘宝·破龙吟【兵】",
         need_cert_god = 1,
         cost = {{"元宝",5000000},{"道基碎片[兵]",1},{"业火结晶",100},{"天下太平",1},{"封刃护生",1},{"破军弑神",1},{"碎星戮仙",1}},
@@ -1377,13 +1373,14 @@ teshudata = {
     ["npc_80"] = {
         id = 80,
         name = "秘宝·万鬼啸【鬼】",
-        bg = "res/custom/six_city/兵 鬼道秘宝/鬼道秘宝.png",
-        title_img = "res/custom/six_city/兵 鬼道秘宝/标题1.png",
+        bg = "res/custom/six_city/war_ghost_treasure/ghost_path_treasure.png",
+        title_img = "res/custom/six_city/war_ghost_treasure/title_1.png",
         item_name = "秘宝·万鬼啸【鬼】",
         need_cert_god = 2,
         cost = {{"元宝",5000000},{"道基碎片[鬼]",1},{"业火结晶",100},{"世事无常",1},{"但求无悔",1},{"无间阎罗",1},{"虐杀四方",1}},
         desc = "全属性+3%，150级后等级+3，对人攻速+50%，对人刀刀真伤6666，PK增伤+5%，PK减伤+5%，最终攻击+1%，最终生命+1%",
-    },    -- 六大陆功能：世界符文作为第七大陆通行前置。
+    },
+    -- 六大陆功能：世界符文作为第七大陆通行前置。
     ["npc_84"] = {
         id = 84,
         name = "世界符文",
@@ -1397,18 +1394,18 @@ teshudata = {
         rune_order = {1,2,3,4,5,6,7},
         -- 面板展示的符文列表及其条件说明。
         runes = {
-            [1] = {key = "spirit", name = "灵力符文", short = "灵力", desc = "激活全部灵根、灵兽", check_desc = "激活全部灵根、灵兽"},
-            [2] = {key = "realm", name = "修为符文", short = "修为", desc = "修为达到圆满", check_desc = "修为达到圆满"},
-            [3] = {key = "wine", name = "酒仙符文", short = "酒仙", desc = "75槽位穿戴酒仙剑", check_desc = "75槽位穿戴酒仙剑"},
-            [4] = {key = "shendao", name = "神道符文", short = "神道", desc = "完成双神道自证", check_desc = "完成双神道自证"},
-            [5] = {key = "destiny", name = "天命符文", short = "天命", desc = "激活全部天道命盘", check_desc = "激活全部天道命盘"},
-            [6] = {key = "yehuo", name = "业火符文", short = "业火", desc = "参加业火清算", check_desc = "参加业火清算"},
-            [7] = {key = "star", name = "星象符文", short = "星象", desc = "星象达到：帝星", check_desc = "星象达到：帝星"},
+            [1] = {key = "spirit", name = "灵力符文", short = "灵力", resource_key = "spirit_power", desc = "灵根核心达到Lv.40", check_desc = "灵根核心达到Lv.40", condition_resource_key = "activate_all_spirit_roots_beasts"},
+            [2] = {key = "realm", name = "修为符文", short = "修为", resource_key = "cultivation", desc = "修为达到圆满", check_desc = "修为达到圆满", condition_resource_key = "cultivation_reach_complete"},
+            [3] = {key = "wine", name = "酒仙符文", short = "酒仙", resource_key = "drunken_immortal", desc = "75槽位穿戴酒仙剑", check_desc = "75槽位穿戴酒仙剑", condition_resource_key = "slot75_equip_drunken_sword"},
+            [4] = {key = "shendao", name = "神道符文", short = "神道", resource_key = "divine_path", desc = "完成两个神道证明", check_desc = "完成两个神道证明", condition_resource_key = "double_divine_path_proof_complete"},
+            [5] = {key = "destiny", name = "天命符文", short = "天命", resource_key = "destiny", desc = "激活全部天道命盘", check_desc = "激活全部天道命盘", condition_resource_key = "activate_all_heavenly_fate_charts"},
+            [6] = {key = "yehuo", name = "业火符文", short = "业火", resource_key = "karma_fire", desc = "参加业火清算", check_desc = "参加业火清算", condition_resource_key = "join_karma_fire_trial"},
+            [7] = {key = "star", name = "星象符文", short = "星象", resource_key = "astrology", desc = "星象达到：帝星", check_desc = "星象达到：帝星", condition_resource_key = "astrology_reach_emperor_star"},
         },
         -- 符文校验依赖的旧系统兼容取值配置。
         compat = {
             wine_items = {"酒仙剑", "酒仙剑1"},
-            yehuo_flags = {"npc_79", "npc_80"}, -- npc_78 暂时停用
+            yehuo_flags = {"npc_79", "npc_80"},
         },
     },
     ["npc_72"] = {
@@ -1455,8 +1452,7 @@ teshudata = {
             {name = "修为", reward_desc = "修为丹*5、元宝*10W", desc = "境界达到元婴境", cost = {{"天道命石",10},{"元宝",1000000}}, reward = {{"修为丹（大）",5},{"元宝",100000}}, title = "增加攻击伤害10%\n对境界比你低的敌人伤害加深10%", attr = {{25,10}}},
             {name = "仙法", reward_desc = "元宝*10W、仙法卷轴*20", desc = "拥有至少2条红色仙法", cost = {{"天道命石",10},{"元宝",1000000}}, reward = {{"元宝",100000},{"仙法卷轴",20}}, title = "增加攻击伤害10%\n红色仙法概率+5%", attr = {{25,10}}},
         },
-    },
-    ["npc_75"] = {
+    },    ["npc_75"] = {
         id = 75,
         name = "装备解封",
         details = {
@@ -1598,11 +1594,11 @@ teshudata = {
                 },
                 reward = {type = "item", give = {{name = "万年仙酒", num = 1}}},
                 nodes = {
-                    {name = "日曜", cost = {{name = "初阶星尘", num = 15}, {name = "元宝", num = 500000}}, attr = {{1,20000}}},
-                    {name = "月曜", cost = {{name = "初阶星尘", num = 15}, {name = "元宝", num = 500000}}, attr = {{3,1500},{4,1500}}},
-                    {name = "火曜", cost = {{name = "初阶星尘", num = 15}, {name = "元宝", num = 500000}}, attr = {{9,400},{10,400},{11,400},{12,400}}},
-                    {name = "水曜", cost = {{name = "初阶星尘", num = 20}, {name = "元宝", num = 500000}}, attr = {{13,200}}},
-                    {name = "木曜", cost = {{name = "初阶星尘", num = 20}, {name = "元宝", num = 500000}}, attr = {{14,100}}},
+                    {name = "日曜", cost = {{name = "初阶星尘", num = 30}, {name = "元宝", num = 500000}}, attr = {{1,20000}}},
+                    {name = "月曜", cost = {{name = "初阶星尘", num = 30}, {name = "元宝", num = 500000}}, attr = {{3,1500},{4,1500}}},
+                    {name = "火曜", cost = {{name = "初阶星尘", num = 30}, {name = "元宝", num = 500000}}, attr = {{9,400},{10,400},{11,400},{12,400}}},
+                    {name = "水曜", cost = {{name = "初阶星尘", num = 40}, {name = "元宝", num = 500000}}, attr = {{13,200}}},
+                    {name = "木曜", cost = {{name = "初阶星尘", num = 40}, {name = "元宝", num = 500000}}, attr = {{14,100}}},
                 },
             },
             [3] = {
@@ -1753,14 +1749,14 @@ teshudata = {
     ["npc_609"] = {id = 609,name = "古刹之谜",level = 2,map = "洞穴秘境",desc = "提交：杀意碎片*5、煞气*5",cost = {{"杀意碎片",5},{"煞气",5}},rwjl = {{"古刹魔瓶",1}},},
     ["npc_610"] = {id = 610,name = "掘墓人",level = 2,map = "乱葬岗",desc = "提交：唐三彩*5",cost = {{"唐三彩",5}},rwjl = {{"绑定金币",150000}},ch = "摸金校尉"},
     ["npc_620"] = {id = 620,name = "阴阳玉佩",cost = {{"极阴石",1},{"极阳石",1},{"天道魂魄",1},{"元宝",280000},},give = {{"阴阳玉佩",1}},},
-    ["npc_621"]  = {id = 621, name = "踏入·山脉入口",map = "灰界南部",shaguai_id = 621,num = 30,tp_map = {"虚妄山脉",92,50},rwjl = {{"玫瑰花",88},{"绑定金币",500000},{"千年玄铁",20}}},   
+    ["npc_621"]  = {id = 621, name = "踏入·山脉入口",map = "灰界南部",shaguai_id = 621,num = 30,tp_map = {"虚妄山脉",92,50},rwjl = {{"玫瑰花",88},{"绑定金币",500000},{"千年玄铁",20}}},
     ["npc_622"]  = {id = 622, name = "踏入·恐怖裂隙",map = "灰界北部",shaguai_id = 622,num = 20,tp_map = {"叹息旷野",34,41},rwjl = {{"玫瑰花",66},{"绑定金币",300000},{"千年玄铁",15}}},
     ["npc_623"]  = {id = 623, name = "踏入·旷野之原",map = "灰界东部",shaguai_id = 623,num = 10,tp_map = {"鬼嘲深渊",273,33},rwjl = {{"玫瑰花",50},{"绑定金币",100000},{"千年玄铁",10}}},
     ["npc_624"]  = {id = 624, name = "踏入·海峰孤岛",map = "灰界西部",shaguai_id = 624,num = 30,tp_map = {"禁忌之海",33,133},rwjl = {{"玫瑰花",50},{"绑定金币",150000},{"千年玄铁",10}}},
-    ["npc_625"]  = {id = 625, name = "讨伐嘲灾",fb_map = "mwsl",mob = "嘲灾",jl = {{"无相镜",1}},prep_task = {task_name = "压制反弹",map = "鬼嘲深渊",show_map = "旷野之原",need = 20,progress_name = "压制反弹"}},
-    ["npc_626"]  = {id = 626, name = "讨伐忌灾",fb_map = "mwsl",mob = "忌灾",jl = {{"诅咒傀儡",1}},prep_task = {name = "净化宝石",map = "禁忌之海",show_map = "海峰孤岛",need = 10,drop_every = 5,item_name = "净化之泪"}},
-    ["npc_627"]  = {id = 627, name = "讨伐息灾",fb_map = "mwsl",mob = "息灾",jl = {{"定风珠",1}},prep_task = {name = "定身符",map = "叹息旷野",show_map = "恐怖裂隙",need = 10,drop_every = 5,item_name = "定身符碎片"}},
-    ["npc_628"]  = {id = 628, name = "讨伐妄灾",fb_map = "mwsl",mob = "妄灾",mob_x = "妄灾[未显]",jl = {{"破妄之瞳",1}},prep_task = {name = "真视之眼",map = "虚妄山脉",show_map = "山脉入口",left_need = 15,right_need = 35,left_name = "真视之眼左",right_name = "真视之眼右"}},
+    ["npc_625"]  = {id = 625, name = "讨伐嘲灾",fb_map = "mwsl",mob = "嘲灾",jl = {{"无相镜",1}},prep_task = {task_name = "压制反弹",map = "旷野之原",need = 20,progress_name = "压制反弹"}},
+    ["npc_626"]  = {id = 626, name = "讨伐忌灾",fb_map = "mwsl",mob = "忌灾",jl = {{"诅咒傀儡",1}},prep_task = {name = "净化宝石",map = "海峰孤岛",need = 10,drop_every = 5,item_name = "净化之泪"}},
+    ["npc_627"]  = {id = 627, name = "讨伐息灾",fb_map = "mwsl",mob = "息灾",jl = {{"定风珠",1}},prep_task = {name = "定身符",map = "恐怖裂隙",need = 10,drop_every = 5,item_name = "定身符碎片"}},
+    ["npc_628"]  = {id = 628, name = "讨伐妄灾",fb_map = "mwsl",mob = "妄灾",mob_x = "妄灾[未显]",jl = {{"破妄之瞳",1}},prep_task = {name = "真视之眼",map = "山脉入口",left_need = 15,right_need = 35,left_name = "真视之眼左",right_name = "真视之眼右"}},
     ["npc_629"]  = {id = 629, name = "沉船之谜",cost = {[1] = {{"船长室钥匙",1}},[2] = {{"水手舱钥匙",1}}}},
     ["npc_630"]  = {id = 630, name = "船长的宝藏",cost = {{"宝藏碎片",10}},jl = {{"船长的宝藏",1}},max_num = 3,},
     ["npc_631"]  = {id = 631, name = "谁是内鬼",map = "水手舱",shaguai_id = 631,num = 200,jl_num = 50,ch = "慧眼识珠"},
@@ -1768,7 +1764,7 @@ teshudata = {
     ["npc_633"]  = {id = 633, name = "海盗宝藏",cost = {{"海盗头目信物",5}},jl = {{"海盗宝箱",1}},max_num = 10,},
     ["npc_634"]  = {id = 634, name = "杀戮的欲望",map = "藏星外海",shaguai_id = 634,num = 300,ch = "杀戮的欲望"},
     ["npc_635"]  = {id = 635, name = "送葬者",map = "藏星内海",shaguai_id = 635,num = 50,ch = "送葬者"},
-    ["npc_636"]  = {id = 636, name = "热血的友情",cost = {{"热血的友情",10}},jl = {{"海贼王装备随机宝箱",1}},max_num = 3,}, 
+    ["npc_636"]  = {id = 636, name = "热血的友情",cost = {{"热血的友情",10}},jl = {{"海贼王装备随机宝箱",1}},max_num = 3,},
     ["npc_637"]  = {id = 637, name = "真正的海贼王",cost = {{"路飞的帽子",1},{"索隆的刀",1},{"乌索普的弹弓",1},{"海贼意志",1}},ch = "海贼王"},
     ["npc_638"]  = {id = 638, name = "采仙草咯",cost = {{"仙草[任务]",20}},ch = "黑化肥会挥发"},
     ["npc_639"]  = {id = 639, name = "丹仙秘辛",cost = {{"丹仙秘辛残页",10}},ch = "丹仙秘辛"},
@@ -1790,7 +1786,7 @@ teshudata = {
     ["npc_646"]  = {id = 646, name = "你竟是女王？",cost = {{"元宝",660000}},attr_wz = "切割+8000"},
     ["npc_647"]  = {id = 647, name = "驮我过河",attr_wz = "人物体力+5%"},
     ["npc_648"]  = {id = 648, name = "大闹狮驼岭",map = "狮驼岭",desc = "击杀怪物各1只",shaguai_id = 648,num_a = 1,num_b = 1,num_c = 1,mob_a = "★狮驼三圣·青狮★",mob_b = "★狮驼三圣·白象★",mob_c = "★狮驼三圣·大鹏★",attr_wz = "最终攻击+1%，最终生命+1%，最终防御+1%"},
-    ["npc_649"]  = {id = 649, name = "真假经书",cost = {{"经书",1},{"元宝",10000}},jl = {{"天竺·真经",1}},gl = 40,num = 81,desc = "每本收费1w元宝，鉴定为真经书时获得修为+1000、打怪切割+999"},
+    ["npc_649"]  = {id = 649, name = "真假经书",cost = {{"经书",1},{"元宝",10000}},jl = {{"天竺·真经",1}},gl = 50,num = 81,desc = "每本收费1w元宝，鉴定为真经书时获得修为+1000、打怪切割+999"},
     ["npc_650"]  = {id = 650, name = "铁扇公主",cost = {{"红孩儿的火尖枪",1},{"牛魔王的鼻环",1},{"铁扇公主的芭蕉扇",1}},jl = {{"芭蕉扇",1}}},
     ["npc_651"]  = {id = 651, name = "天鼠的游戏",jl = {{"生肖守护[鼠]",1}},ch = "天鼠的认可",answer = {4,4,3}},
     ["npc_652"]  = {id = 652, name = "天牛的游戏",jl = {{"生肖守护[牛]",1}},ch = "天牛的认可",value = 88888},
@@ -1841,16 +1837,14 @@ teshudata = {
             {idx = 3,wz = "提交99个修罗道令牌",cost = {{"修罗道令牌",99}},},
             {idx = 4,wz = "提交：地狱使者之剑",cost = {{"地狱使者之剑",1}},},
             {idx = 5,wz = "击杀本地图200只小怪",b_num = 200,},
-            {idx = 6,wz = "去四大陆隐藏地图击杀500只鸡",c_num = 500,},
+            {idx = 6,wz = "去四大陆隐藏地图击杀500只弱鸡",c_num = 500,},
         },
     },
     ["npc_673"]  = {id = 673, name = "传说修复局",xz = {674,675,676,677,678,679,680,681,},difficulty = {2,3,3,4,5,5,5,5},ch = "传说之神"},
     ["npc_674"]  = {id = 674, name = "盘古开天",cost = {{"洪荒真气",3}},ch = '我是盘古？'},
     ["npc_675"]  = {id = 675, name = "羿射九日",bag_cost = {{"逐日弓",1}},cost = {{"箭矢",1}},ch = '太阳杀手',hb = {{"元宝",1000000}},attr = {{244,1888}},max_num = 9},
-    -- 9.8-1 聚宝魔石任务奖励已停用，当前奖励配置中不再发放聚宝魔石。
--- 9.8-1 聚宝魔石原奖励：{"五行石",3},{"聚宝魔石",1},{"杀伐神石[大]",1}
-    ["npc_676"]  = {id = 676, name = "共公怒触不周山",map = "不周山",shaguai_id = 676,num = 500,jl_num = 100,ch = "五拳轰碎不周山",jl_c = {{"五行石",3},{"杀伐神石[大]",1},{"绑定金币",1880000}},},
-    ["npc_677"]  = {id = 677, name = "女娲补天",cost = {{"五彩石",1}},max_num = 9,ch = "补天神子",jl_c = {{"1元真实充值",1}},},
+    ["npc_676"]  = {id = 676, name = "共公怒触不周山",map = "不周山",shaguai_id = 676,num = 500,jl_num = 100,ch = "五拳轰碎不周山",jl_c = {{"绑定金币",1880000},{"杀伐神石[大]",1},{"五行石",3},{"五拳轰碎不周山[称号]",1}},},
+    ["npc_677"]  = {id = 677, name = "女娲补天",cost = {{"五彩石",1}},max_num = 9,ch = "补天神子",jl_c = {{"绑定金币",1880000},{"杀伐神石[大]",1},{"五行石",3},{"补天神子[称号]",1}},},
     ["npc_678"]  = {id = 678, name = "后土娘娘",ch = "后土之力",
         details = {
             {idx = 1,name = "崔珏",cost = {{"判官笔",1}},attr = {{245,300}},attr_desc = "对怪增伤+3%"},
@@ -1887,10 +1881,10 @@ teshudata = {
     ["npc_699"] = { id = 699, name = "墨河秘宝", task_cfg = { chapter = 5, task_type = "preview_board", }, },
     ["npc_700"] = { id = 700, name = "赤焰试炼", shaguai_id = 700, ch = "赤焰天使", num = 300, task_cfg = { chapter = 5, task_type = "kill_count", map = "赤焰焚殿", kill_count = 300, }, },
     ["npc_701"] = { id = 701, name = "葬天试炼", shaguai_id = 701, ch = "葬众生", task_cfg = { chapter = 5, task_type = "trial_chain", map = "葬天旧土", kill_count = 300, submit = {{"葬亡晶石",10}}, }, },
-    ["npc_702"] = { id = 702, name = "倩女幽魂", ch = {"镇杀幽魂","小倩的感谢"}, task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "兰若寺", fb_map = "xbsl", fb_time = 300, submit = {{"镇魂符",10}}, main_boss = "树妖姥姥", hidden_boss = "黑山老妖", enter_pos = {30,39}, main_pos = {28,31}, hide_pos = {28,31}, }, },
+    ["npc_702"] = { id = 702, name = "倩女幽魂", ch = {"镇杀幽魂","小倩的感谢"}, task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "兰若寺", fb_map = "xbsl", fb_time = 300, submit = {{"镇魂符",1}}, main_boss = "树妖姥姥", hidden_boss = "黑山老妖", enter_pos = {30,39}, main_pos = {28,31}, hide_pos = {28,31}, }, },
     ["npc_703"] = { id = 703, name = "画中仙境", ch = "画中仙境", task_cfg = { chapter = 5, task_type = "story", map = "画壁", submit = { {"诡异碎片一",1}, {"诡异碎片二",1}, {"诡异碎片三",1}, }, }, },
     ["npc_704"] = { id = 704, name = "崂山学法", ch = "崂山秘法", task_cfg = { chapter = 5, task_type = "story", map = "崂山", submit = { {"崂山秘法残页",10}, {"千年玄铁",200}, {"金币",8880000}, }, }, },
-    ["npc_705"] = { id = 705, name = "是非难辨", shaguai_id = 705, ch = {"以貌取人","迟来的清醒"}, task_cfg = { chapter = 5, task_type = "story", map = "罗刹海市", kill_small = 200, kill_boss = 2, mob_small = "海市魅影", mob_boss = "≮欲望具现·海市尊≯", submit_a = { {"赤血花",5} }, submit_b = { {"紫梦花",5} }, }, },
+    ["npc_705"] = { id = 705, name = "是非难辨", shaguai_id = 705, ch = {"迟来的清醒","以貌取人"}, task_cfg = { chapter = 5, task_type = "story", map = "罗刹海市", kill_small = 200, kill_boss = 2, mob_small = "海市魅影", mob_boss = "≮欲望具现·海市尊≯", submit_a = { {"赤血花",5} }, submit_b = { {"紫梦花",5} }, }, },
     ["npc_720"] = { id = 720, name = "是非难辨·终", task_cfg = { chapter = 5, task_type = "story", map = "罗刹海市", cost_b = { {"金币",880000} }, }, },
     ["npc_706"] = { id = 706, name = "守护壁画", ch = "守护壁画", task_cfg = { chapter = 5, task_type = "story", map = "莫高窟", submit = { {"莫高窟壁画上卷",10}, {"莫高窟壁画下卷",10}, }, }, },
     ["npc_707"] = { id = 707, name = "沙海明珠", ch = "沙海明珠", task_cfg = { chapter = 5, task_type = "story", map = "月牙泉", submit = {{"失落的秘宝",20}}, }, },
@@ -1903,28 +1897,28 @@ teshudata = {
     ["npc_714"] = { id = 714, name = "屠龙宝刀", shaguai_id = 714, task_cfg = { chapter = 5, task_type = "trial_chain", map = "冰火岛", kill_count = 10, kill_boss = "BOSS", scale_item = "冰火龙鳞", scale_drop_rate = 1000, artifact_item = "屠龙刀", artifact_upgrade_item = "真·屠龙刀", upgrade_submit = { {"冰火龙鳞",100}, {"元宝",1000000}, }, }, },
     ["npc_715"] = { id = 715, name = "围攻光明顶", ch = "乾坤大挪移", task_cfg = { chapter = 5, task_type = "trial_chain", map = "光明顶", submit = { {"乾坤大挪移残页",66}, {"元宝",500000}, }, }, },
     ["npc_716"] = { id = 716, name = "孤身战吕布", ch = "吕布之力",jl = {{"时装：吕奉先",1}}, task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "虎牢关", fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "吕布", boss_pos = {32,36}, submit = { {"刘备祝福",3}, {"张飞祝福",3}, {"关羽祝福",3}, }, }, },
-    ["npc_717"] = { id = 717, name = "火烧赤壁", ch = "火中取胜", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "赤壁", fb_map = "sg169", fb_time = 300, enter_pos = {35,33}, boss = "≮火烧连营·天命策尊≯", boss_pos = {29,29}, night_only = 1, night_start = 18, night_end = 6, fire_effect_id = 23, fire_tick_hurt_pct = 2, fire_burst_hurt_pct = 20, submit = {{"赤壁密函",10}}, }, },
-    ["npc_718"] = { id = 718, name = "景阳冈打虎", shaguai_id = 718, ch = "打虎英雄", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "景阳冈", fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "吊睛白额虎", boss_pos = {32,36}, submit = {{"武松的酒",3}}, }, },
-    ["npc_719"] = { id = 719, name = "血溅狮子楼", shaguai_id = 719, ch = "侠义祝福", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "狮子楼", fb_map = "n0150", limit_time_sec = 1200, enter_pos = {21,24}, submit = {{"净化水晶",1}}, drop_item = "净化水晶", drop_rate = 3000, stage1_mob = "暗影打手", stage1_count = 20, stage1_timeout = 300, stage1_elite_mob = "暗影打手·精英", stage1_elite_count = 2, stage2_boss = "王婆", stage2_boss_count = 1, stage2_mob = "暗影侍女", stage2_mob_count = 2, stage3_boss = "邪恶西门庆", stage3_boss_count = 1, stage3_mob = "暗影侍女", stage3_mob_count = 4, boss_pos = {13,16}, mob_center = {13,16}, rage_hp_pct = 50, explode_hurt_pct = 12, explode_effect_id = 4011, }, },
+    ["npc_717"] = { id = 717, name = "火烧赤壁", ch = "火中取胜", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "赤壁", fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "≮火烧连营·天命策尊≯", boss_pos = {32,36}, night_only = 1, night_start = 18, night_end = 6, fire_effect_id = 19, fire_tick_hurt_pct = 2, fire_burst_hurt_pct = 20, submit = {{"赤壁密函",10}}, }, },
+    ["npc_718"] = { id = 718, name = "景阳冈打虎", shaguai_id = 718, ch = "打虎英雄", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "景阳冈", fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "吊睛白额虎", boss_pos = {32,36}, submit = {{"武松的酒",3}}, drop_item = "武松的酒", drop_rate = 2500, }, },
+    ["npc_719"] = { id = 719, name = "血溅狮子楼", shaguai_id = 719, ch = "侠义祝福", task_cfg = { chapter = 5, task_type = "dungeon_submit", map = "狮子楼", fb_map = "mwsl", limit_time_sec = 1200, enter_pos = {29,27}, submit = {{"净化水晶",1}}, drop_item = "净化水晶", drop_rate = 3000, stage1_mob = "暗影打手", stage1_count = 20, stage1_timeout = 300, stage1_elite_mob = "暗影打手·精英", stage1_elite_count = 2, stage2_boss = "王婆", stage2_boss_count = 1, stage2_mob = "暗影侍女", stage2_mob_count = 2, stage3_boss = "邪恶西门庆", stage3_boss_count = 1, stage3_mob = "暗影侍女", stage3_mob_count = 4, boss_pos = {32,36}, mob_center = {32,36}, rage_hp_pct = 50, explode_hurt_pct = 12, explode_effect_id = 4011, }, },
     ["npc_721"] = { id = 721, name = "天机道长", ch = "帝星归位", task_cfg = { chapter = 6, task_type = "auto_claim", map = "六大陆主城", need_star_stage = 3, target = {"冰川雪域",723,120,120}, }, },
     ["npc_722"] = { id = 722, name = "星儿", shaguai_id = 722, jl = {{"星儿的玉佩",1}}, task_cfg = { chapter = 6, side_task = 1, prev_task = "npc_721", prev_need = 1, prev_name = "天机道长", task_type = "craft", map = "六大陆主城", submit = {{"星儿的玉佩碎片",66},{"元宝",1000000}}, craft_cost = {{"星儿的玉佩碎片",66},{"元宝",1000000}}, craft_reward = {{"星儿的玉佩",1}}, actions = {[2]="合成玉佩"}, }, },
     ["npc_723"] = { id = 723, name = "凌雪", shaguai_id = 723, jl = {{"星晶碎片",20}}, task_cfg = { chapter = 6, prev_task = "npc_721", prev_need = 1, prev_name = "天机道长", task_type = "dialog_submit", map = "冰川雪域", first_submit = {{"星儿的玉佩碎片",1}}, submit = {{"星力冰晶",10}}, actions = {[1]="提交碎片",[3]="提交任务"}, hidden_map = "星陨冰窟", hidden_drop_item = "高阶星尘", hidden_drop_rate = 6000, }, },
-    ["npc_724"] = { id = 724, name = "守城士兵甲", shaguai_id = 724, jl = {{"赤火令",1}}, task_cfg = { chapter = 6, prev_task = "npc_723", prev_name = "凌雪", task_type = "auto_claim", map = "边关烽城", kill_count = 300, actions = {[1]="领取/提交"}, }, },
+    ["npc_724"] = { id = 724, name = "守城士兵甲", jl = {{"赤火令",1}}, task_cfg = { chapter = 6, prev_task = "npc_723", prev_name = "凌雪", task_type = "auto_claim", map = "边关烽城", kill_count = 300, actions = {[1]="领取/提交"}, }, },
     ["npc_725"] = { id = 725, name = "赤焰", shaguai_id = 725, jl = {{"镇烽令牌",1}}, task_cfg = { chapter = 6, prev_task = "npc_724", prev_name = "守城士兵甲", task_type = "escort", map = "边关烽城", dart_mob = "军师", dart_target = {135,26}, dart_time = 60, assassin_delay = 30, drop_item = "密信", escort_boss = "刺客", actions = {[1]="领取护送"}, }, },
     ["npc_726"] = { id = 726, name = "幽影", shaguai_id = 726, jl = {{"被盗走的帝星本源",1},{"帝星本源",1}}, task_cfg = { chapter = 6, prev_task = "npc_725", prev_name = "赤焰", task_type = "boss_submit", map = "森罗魔域", kill_count = 888, submit = {{"森罗魔气",100}}, require_task = "npc_739", require_name = "幽影的分身", boss_map = "魔焰祭坛", boss = "幽影的分身", actions = {[1]="领取/提交"}, }, },
-    ["npc_727"] = { id = 727, name = "天玑道长", task_cfg = { chapter = 6, task_type = "auto_claim", map = "六大陆主城", prev_task = "npc_739", prev_name = "幽影的分身", }, },
+    ["npc_727"] = { id = 727, name = "天玑道长", task_cfg = { chapter = 6, prev_task = "npc_739", prev_name = "幽影的分身", task_type = "auto_claim", map = "六大陆主城", }, },
     ["npc_728"] = { id = 728, name = "恶魔契约", task_cfg = { chapter = 6, task_type = "kill_player_lottery", map = "血契之地二层", kill_per_draw = 10, max_draw = 10, draw_pool = {{"业火结晶",5},{"元宝",100000},{"星晶碎片",3},{"神石碎片",3}}, actions = {[1]="查看契约",[2]="开始抽奖"}, }, },
     ["npc_729"] = { id = 729, name = "雪域特使", shaguai_id = 729, task_cfg = { chapter = 6, task_type = "map_unlock", map = "冰川雪域", kill_count = 200, submit = {{"元宝",1280000}}, unlock_map = "冻魂冰窟", }, },
     ["npc_730"] = { id = 730, name = "魔域特使", shaguai_id = 730, task_cfg = { chapter = 6, task_type = "map_unlock", map = "森罗魔域", kill_count = 200, submit = {{"元宝",1280000}}, unlock_map = "魔焰祭坛", }, },
     ["npc_731"] = { id = 731, name = "边关特使", shaguai_id = 731, task_cfg = { chapter = 6, task_type = "map_unlock", map = "边关烽城", kill_count = 200, submit = {{"元宝",1280000}}, unlock_map = "镇关帅府", }, },
     ["npc_732"] = { id = 732, name = "古城特使", shaguai_id = 732, task_cfg = { chapter = 6, task_type = "map_unlock", map = "盛世古城", kill_count = 200, submit = {{"元宝",1280000}}, unlock_map = "长安西市", }, },
-    ["npc_733"] = { id = 733, name = "盛世重游", jl = {{"等级卷轴",5}}, task_cfg = { chapter = 6, task_type = "submit", map = "盛世古城", submit = {{"万国通商契",1},{"杜康酒",1},{"大宋食盒",1},{"青釉瓷碗",1}}, }, },
+    ["npc_733"] = { id = 733, name = "盛世重游", jl = {{"等级卷轴",5}}, task_cfg = { chapter = 6, task_type = "submit", map = "盛世古城", submit = {{"万国通商契",1},{"杜康酒",1},{"大宋食盒",1},{"青釉瓷碗",1}}, level_reward = 5, }, },
     ["npc_734"] = { id = 734, name = "万国之首", shaguai_id = 734, jl = {{"万国通商契",1}}, task_cfg = { chapter = 6, task_type = "submit", map = "长安西市", submit = {{"商契残页",88}}, }, },
     ["npc_735"] = { id = 735, name = "洛水杜康", shaguai_id = 735, jl = {{"杜康酒",1}}, task_cfg = { chapter = 6, task_type = "craft", map = "洛阳天街", submit = {{"杜康之力",1},{"酒糟",100},{"万籁清泉",50},{"金币",18880000}}, craft_cost = {{"杜康之力",1},{"酒糟",100},{"万籁清泉",50},{"金币",18880000}}, craft_reward = {{"杜康酒",1}}, }, },
     ["npc_736"] = { id = 736, name = "大宋的菜肴", shaguai_id = 736, jl = {{"大宋食盒",1}}, task_cfg = { chapter = 6, task_type = "submit", map = "汴京御街", submit = {{"空的食盒",1},{"美味的大宋菜肴",10}}, }, },
     ["npc_737"] = { id = 737, name = "天青色的秘密", shaguai_id = 737, jl = {{"青釉瓷碗",1}}, task_cfg = { chapter = 6, task_type = "burn", map = "临安古渡", submit = {{"神秘瓷釉",5},{"泥碗素胚",5},{"金币",8880000}}, burn_rewards = {"冰雪瓷碗","朱砂瓷碗","青釉瓷碗"}, actions = {[1]="开始烧制"}, }, },
     ["npc_738"] = { id = 738, name = "密令护灵旗", shaguai_id = 738, jl = {{"密令护灵旗",1}}, task_cfg = { chapter = 6, task_type = "submit", map = "镇关帅府", submit = {{"镇关灵旗",5},{"大帅密令",10},{"金币",18880000}}, }, },
-    ["npc_739"] = { id = 739, name = "幽影的分身", shaguai_id = 739, ch = "幽影之力", task_cfg = { chapter = 6, prev_task = "npc_726", prev_name = "幽影", prev_need = 1, task_type = "weakness_dungeon", map = "魔焰祭坛", kill_count = 1, reveal_cost = {{"幽影密函残页",10}}, fb_map = "slwtzdt", fb_time = 300, enter_pos = {25,35}, boss = "幽影的分身", boss_pos = {25,29}, half_fail_hp_pct = 50, actions = {[2]="揭示弱点",[3]="进入副本"}, }, },
+    ["npc_739"] = { id = 739, name = "幽影的分身", shaguai_id = 739, ch = "幽影之力", task_cfg = { chapter = 6, prev_task = "npc_726", prev_name = "幽影", prev_need = 1, task_type = "weakness_dungeon", map = "魔焰祭坛", kill_count = 1, reveal_cost = {{"幽影密函残页",10}}, fb_map = "mwsl", fb_time = 300, enter_pos = {29,27}, boss = "幽影的分身", boss_pos = {32,36}, half_fail_hp_pct = 50, actions = {[2]="揭示弱点",[3]="进入副本"}, }, },
     ["npc_740"] = { id = 740, name = "上古寒冰剑", shaguai_id = 740, rwjl = {}, task_cfg = { chapter = 6, task_type = "weapon_craft", map = "冻魂冰窟", skill_title = "寒冰剑诀", craft_cost = {{"上古玄冰",55},{"千年陨铁",99},{"元宝",1000000},{"极寒之心",1}}, craft_reward = {{"寒冰剑",1}}, skill_item = "寒冰剑诀", weapon = "寒冰剑", actions = {[2]="立即合成"}, }, },
     ["npc_103"] = {
         id = 103,
@@ -1980,9 +1974,9 @@ teshudata = {
                 {name = "足迹：星辰", sEffect = 60027,attr = {}},
             },
             gh = {
-                {name = "光环：五行至尊", sEffect = 11502, need_core_level = 39},
-                {name = "光环：诸邪退散", sEffect = 11503, title = "诸邪退散"},
-                {name = "光环：神豪降临", sEffect = 11504, title = "第一神壕"},
+                {name = "光环：五行至尊", sEffect = 11502, condition = "灵根核心达到Lv.39"},
+                {name = "光环：诸邪退散", sEffect = 11503, condition = "获得诸邪退散称号"},
+                {name = "光环：神豪降临", sEffect = 11504, condition = "获得第一神壕称号"},
                 {name = "光环：跨服霸主", sEffect = 11505, need_cross_point = 10000, attr = {{200,1000},{79,1000},{80,1000}},},
             }
         },
@@ -2028,9 +2022,9 @@ teshudata = {
         kf_winReward = 10000, -- 旧版跨服沙巴克胜利方总奖励
         kf_loserReward = 3000, -- 旧版跨服沙巴克失败方总奖励
         fixed_rewards = {
-            winner = {{"跨服积分",25},{"1元真实充值",20},{"绑定金币",1000000},{"沙城征服者秘药",1}},
-            loser = {{"跨服积分",10},{"1元真实充值",5},{"绑定金币",500000},{"沙城勇士药剂",1}},
-            chairman = {{"跨服积分",10},{"1元真实充值",8},{"绑定金币",500000},{"沙城霸主秘药",1}},
+            winner = {{"跨服积分",25},{"1元真实充值",20},{"金币",1000000},{"沙城征服者秘药",1}},
+            loser = {{"跨服积分",10},{"1元真实充值",5},{"金币",500000},{"沙城勇士药剂",1}},
+            chairman = {{"跨服积分",10},{"1元真实充值",8},{"金币",500000},{"沙城霸主秘药",1}},
         },
         chairman_title = {
             name = "沙城霸主",
@@ -2051,7 +2045,7 @@ teshudata = {
         ["zxjl"] = {
             {time = 10,jl = { { "1元真实充值", 1 }},},
             {time = 30,jl = { { "1元真实充值", 2 }},},
-            {time=60,jl={{"仙法卷轴残页",5}},},       
+            {time = 60,jl = { { "仙法卷轴残页", 5 }},},
             {time = 120,jl = { { "仙法卷轴残页", 5 }},},
             {time = 360,jl = { { "仙法卷轴残页", 5 }},},
         },
@@ -2060,7 +2054,7 @@ teshudata = {
             {num = 500,jl = { { "绑定金币", 200000}},},
             {num = 1000,jl = { { "绑定金币",300000}},},
             {num = 3000,jl = { { "绑定金币", 500000}},},
-            {num=5000,jl={{"金币",1000000}},},          
+            {num = 5000,jl = { { "金币", 1000000}},},
         },
         ["grss"] = {
             [1018] = { name = '枯灯客', give = { {'绑定金币',10000} } },
@@ -2101,9 +2095,6 @@ teshudata = {
             [1077] = { name = '霜风踏雪者', give = { {'绑定金币',30000} } },
             [1078] = { name = '「辉域守护者·冰霄」', give = { {'绑定金币',30000} } },
             [1079] = { name = '灵叶鹿', give = { {'绑定金币',30000} } },
-            [7044] = { name = '羊', give = { {'绑定金币',30000} } },
-            [7045] = { name = '鹿', give = { {'绑定金币',30000} } },
-            [7046] = { name = '鸡', give = { {'绑定金币',30000} } },
             [1080] = { name = '菌雾怪', give = { {'绑定金币',30000} } },
             [1081] = { name = '森语守望者', give = { {'绑定金币',30000} } },
             [1082] = { name = '幽藤缠心者', give = { {'绑定金币',30000} } },
@@ -2635,7 +2626,7 @@ teshudata = {
         --手点击
         click = {
             ratio = 0.5,
-            -- cost = {},
+            cost = {{"金币",10000}},
         },
         dh = {
             cost = {{"仙府币",10000}},
@@ -2682,8 +2673,8 @@ teshudata = {
             slots = {
                 [1] = {value = 12, show = {{"天选资格",1},{"群体施毒术",1}}},
                 [2] = {value = 32, show = {{"智能巡航",1},{"定点传送功能",1}}},
-                [3] = {value = 52, show = {{"半月弯刀",1}}},
-                [4] = {value = 92, show = {{"时装：小小裁决战士",1},{"仙法卷轴",3}}},
+                [3] = {value = 52, show = {{"半月弯刀",1},{"仙法卷轴",3}}},
+                [4] = {value = 92, show = {{"群攻效果",1},{"时装：小小裁决战士",1}}},
             },
             welfare = {
                 [1] = {wait_sec = 20 * 60, reward = {{"绑定金币",880000}}, label = "绑定金币*88W"},
@@ -2708,8 +2699,6 @@ teshudata = {
         ---充值档位
         fj = {10,30,68,128,198,328,648,998},
         jl = {
-            -- 9.8-1 首充原聚宝盆碎片奖励已停用，现改为按配置发放。
--- 9.8-1 首充10元原奖励：{"灵石",100},{"元宝",50000},{"千年玄铁",388},{"聚宝盆碎片",15}}
             {give = {{"绑定灵石",100},{"元宝",50000},{"千年玄铁",388},{"筑基丹",1}}},
             {give = {{"绑定灵石",300},{"元宝",100000},{"千年玄铁",666},{"夜明珠",1}}},
             {give = {{"绑定灵石",680},{"元宝",300000},{"斗笠碎片",500}},ch = "恭喜发财"},
@@ -2717,7 +2706,7 @@ teshudata = {
             {give = {{"绑定灵石",1980},{"元宝",880000},{"辉耀水晶",188}},skill = "魔法盾"},
             {give = {{"绑定灵石",3280},{"元宝",1180000},{"极品仙法卷轴",1}},show = {{"独享首曝特权",1}}},
             {give = {{"绑定灵石",6480},{"元宝",1580000},{"三级宝石自选包",1},{"阴阳八卦境",1}}},
-            {give = {{"绑定灵石",9980},{"元宝",1880000},{"极品仙法卷轴",2},{"雷霆双子剑",1}},show = {},},
+            {give = {{"绑定灵石",9980},{"元宝",1880000},{"极品仙法卷轴",2},{"雷霆双子剑[法宝]",1}},show = {},},
         },
         ch = "八荒六合我为尊"
     },
@@ -2748,7 +2737,7 @@ teshudata = {
         token_name = "鹤嘴锄", -- 抽奖次数显示名
         crown_title = "天下谁人不识君", -- 天下谁人不识君判定称号
         skill_name = "十步一杀", -- 足迹套装影响技能
-        kill_per_exchange = 188, -- 每188杀兑换1次
+        kill_per_exchange = 188, -- 每击杀188只怪兑换1个鹤嘴锄
         exchange_daily_limit = 10, -- 默认每日最多兑换次数
         buy_cost = {{"灵石",30}}, -- 购买1次的消耗
         draw_once_cost = 1, -- 单抽消耗次数
@@ -2760,7 +2749,7 @@ teshudata = {
         duplicate_fashion_reward = {{"元宝",660000}}, -- 时装重复补偿
         title_reward = {
             name = "马上发财",
-            attr = {{300,50},{280,25},{281,25},{282,25},{283,25},{284,25},{285,25},{286,25},{287,25},{288,25},{289,25},{290,25},{291,25},{200,5000},{201,5000}},
+            attr = {{300,25},{280,25},{281,25},{282,25},{283,25},{284,25},{285,25},{286,25},{287,25},{288,25},{289,25},{290,25},{291,25},{200,5000},{201,5000}},
         },
         fashion_bonus = {
             [3] = {attr = {{280,10},{281,10},{282,10},{283,10},{284,10},{285,10},{286,10},{287,10},{288,10},{289,10},{290,10},{291,10},{300,10},{200,3000},{201,3000}}},
@@ -2810,22 +2799,15 @@ teshudata = {
                 {kind = "item", give = {{"高级强化石",10}}, label = "高级强化石*10"},
             },
             super = {
-                {kind = "item", give = {{"灵根宝石随机宝箱",1}}, label = "灵根宝石随机宝箱*1"},
+                {kind = "item", give = {{"灵根灵石随机箱",1}}, label = "灵根灵石随机箱*1"},
                 {kind = "item", give = {{"鉴古符",3}}, label = "鉴古符*3"},
                 {kind = "item", give = {{"灵兽蛋",5}}, label = "灵兽蛋*5"},
             },
-            gem = {
-                {kind = "item", give = {{"一级宝石[通用]",1}}, rate = 70, show_rate = "70%", label = "一级宝石[通用]*1"},
-                {kind = "item", give = {{"二级宝石[通用]",1}}, rate = 25, show_rate = "25%", label = "二级宝石[通用]*1"},
-                {kind = "item", give = {{"三级宝石自选包",1}}, rate = 5, show_rate = "5%", label = "三级宝石自选包*1"},
-            },
-            relic = {
-                {kind = "item", give = {{"上古麒麟怒角",1}}, label = "上古麒麟怒角*1"},
-                {kind = "item", give = {{"上古青龙逆鳞",1}}, label = "上古青龙逆鳞*1"},
-                {kind = "item", give = {{"上古朱雀火羽",1}}, label = "上古朱雀火羽*1"},
-                {kind = "item", give = {{"上古白虎獠牙",1}}, label = "上古白虎獠牙*1"},
-                {kind = "item", give = {{"上古玄武鎏甲",1}}, label = "上古玄武鎏甲*1"},
-            },
+        },
+        gem_pool = {
+            {kind = "item", give = {{"一级宝石[通用]",1}}, rate = 70, show_rate = "70%", label = "一级宝石[通用]*1"},
+            {kind = "item", give = {{"二级宝石[通用]",1}}, rate = 25, show_rate = "25%", label = "二级宝石[通用]*1"},
+            {kind = "item", give = {{"三级宝石自选包",1}}, rate = 5, show_rate = "5%", label = "三级宝石自选包*1"},
         },
         milestones = {
             [1] = {draw = 10, normal = {main = {kind = "item", give = {{"仙法卷轴",3}}, label = "仙法卷轴*3"}}, crown = {main = {kind = "item", give = {{"千年玄铁",188}}, label = "千年玄铁*188"}}},
@@ -2865,8 +2847,8 @@ teshudata = {
         -- 全民答题（答题提交走 npc[507]）
         qmdt = {
             start_minute = 30,           -- 活动开启分钟（开服后第几分钟）
-            duration_min = 5,            -- 活动总时长（分钟）
-            question_count = 12,          -- 题目数量，当前共 4 轮
+            duration_min = 4.5,            -- 活动总时长（分钟）
+            question_count = 12,          -- 题目数量，共 12 题
             per_question_sec = 20,       -- 每题答题时长（秒）
             final_question_sec = 20,     -- 最后一题倒计时（秒）
             settle_before_sec = 5,       -- 下一题开始前多少秒结算上一题
@@ -2875,7 +2857,7 @@ teshudata = {
             map = "全民答题",
             enter_pos = {105, 104},
             answer_mob = "问题答案",
-            answer_range = 5,            -- 取最近答案点，距离小于该值才算作答
+            answer_range = 5,
             answer_points = {
                 {x = 95 + 4, y = 105},
                 {x = 102 + 4, y = 105},
@@ -2890,32 +2872,10 @@ teshudata = {
             },
             join_reward = {{"绑定金币", 50000}},
             questions = {
---             下面哪把武器是战士可以拿的？	屠龙	逍遥扇	神秘法杖
--- 经典的爆装圣地“猪洞”是指哪里？	猪洞7层	祖玛一层	封魔谷入口
--- 传奇最经典的“沃玛森林”属于什么区域？	比奇	盟重	沙城
--- 传奇中 PK 后名称变成"红名"的原因是？	杀了其他玩家	吃红药水	捡太多金币
--- 传奇中战士爆发最高的操作是什么？	刺杀+烈火连击	对着空气砍	狂按药水
--- 玩家常说的“放火”指的是哪个职业？	法师	战士	道士
--- 被称为“祖玛教主”的怪物是什么类型？	BOSS怪	普通小怪	任务怪
--- 西红柿炒鸡蛋放什么调料好吃？	白糖	酱油	醋
--- 早上起来第一件事应该是？	睁眼	刷牙	吃饭
--- 今天策划的内搭是什么颜色？	红色	蓝色	绿色
--- 世界最高的山峰是?	珠穆朗玛峰	乔戈拉峰	双山子峰
--- 当年在网吧里的【经典套餐】是什么？	泡面+肠+蛋	香蕉+牛奶	炒饭+可乐
--- 当年常说的【大陆巡】是指？	酷路泽	路虎	奔驰
-                {title = "下面哪把武器是战士可以拿的？", options = {"屠龙", "逍遥扇", "神秘法杖"}, answer = 1, score = 100},
-                {title = "经典的爆装圣地“猪洞”是指哪里？", options = {"猪洞7层", "祖玛一层", "封魔谷入口"}, answer = 1, score = 100},
-                {title = "传奇最经典的“沃玛森林”属于什么区域？", options = {"比奇", "盟重", "沙城"}, answer = 1, score = 100},
-                {title = "传奇中 PK 后名称变成【红名】的原因是？", options = {"杀了其他玩家", "吃红药水", "捡太多金币"}, answer = 1, score = 100},
-                {title = "传奇中战士爆发最高的操作是什么？", options = {"刺杀+烈火连击", "对着空气砍", "狂按药水"}, answer = 1, score = 100},
-                {title = "玩家常说的“放火”指的是哪个职业？", options = {"法师", "战士", "道士"}, answer = 1, score = 100},
-                {title = "被称为“祖玛教主”的怪物是什么类型？", options = {"BOSS怪", "普通小怪", "任务怪"}, answer = 1, score = 100},
-                {title = "西红柿炒鸡蛋放什么调料好吃？", options = {"白糖", "酱油", "醋"}, answer = 1, score = 100},
-                {title = "早上起来第一件事应该是？", options = {"睁眼", "刷牙", "吃饭"}, answer = 1, score = 100},
-                {title = "今天策划的内搭是什么颜色？", options = {"红色", "蓝色", "绿色"}, answer = 1, score = 100},
-                {title = "世界最高的山峰是?", options = {"珠穆朗玛峰", "乔戈拉峰", "双山子峰"}, answer = 1, score = 100},
-                {title = "当年在网吧里的【经典套餐】是什么？", options = {"泡面+肠+蛋", "香蕉+牛奶", "炒饭+可乐"}, answer = 1, score = 100},
-                {title = "当年常说的【大陆巡】是指？", options = {"酷路泽", "路虎", "奔驰"}, answer = 1, score = 100},
+                {title = "传奇里通常用于补给血量的药品是?", options = {"魔法药", "太阳水", "毒药", "随机石"}, answer = 2, score = 100},
+                {title = "下列哪个更偏向提升打怪效率?", options = {"打怪爆率", "回城石", "聊天字体", "交易税"}, answer = 1, score = 100},
+                {title = "行会战中最关键的是?", options = {"个人单挑", "团队配合", "挂机观战", "只看战力"}, answer = 2, score = 100},
+                {title = "以下哪项通常属于货币类奖励?", options = {"元宝", "称号", "时装外观", "地图特效"}, answer = 1, score = 100},
             },
         },
         -- 全民夺矿（每日定时活动，支持 bot 触发）
@@ -2966,9 +2926,9 @@ teshudata = {
             start_minute_clock = 30,
             vision = 1,
             rewards = {
-                {rate = 6500, base = 10000, give = {{"绑定金币", 380000}}, tip = "金币*38W"},
-                {rate = 700, base = 10000, give = {{"绑定元宝", {2000, 8000}}}, tip = "元宝*2000-8000"},
-                {rate = 300, base = 10000, give = {{"真实充值", 1}}, tip = "1元真实充值*1"},
+                {rate = 6500, base = 10000, give = {{"金币", 380000}}, tip = "金币*38W"},
+                {rate = 700, base = 10000, give = {{"元宝", {2000, 8000}}}, tip = "元宝*2000-8000"},
+                {rate = 300, base = 10000, give = {{"1元真实充值", 1}}, tip = "1元真实充值*1"},
                 {rate = 2500, base = 10000, random_one = {
                     {{"五行石", 1}},
                     {{"杀伐神石[小]", 2}},
@@ -2989,8 +2949,7 @@ teshudata = {
             prepare_notice_min = 5,
             enter_pos = {108, 105},
             center_pos = {108, 105},
-            spawn_pos = {73, 81},
-            spawn_points = {{146, 75}, {138, 13}, {269, 132}, {69, 79}},
+            spawn_pos = {67, 76},
             spawn_radius = 24,
             spawn_try_count = 60,
             fixed_damage = 1,
@@ -3000,9 +2959,9 @@ teshudata = {
             mail_title = "保卫村庄",
             rank_reward_need_title = "镇境武侯",
             kill_reward = {
-                small = {{"绑定金币", 180000}},
-                elite = {{"绑定金币", 880000}},
-                boss = {{"绑定元宝", 50000}},
+                small = {{"金币", 180000}},
+                elite = {{"金币", 880000}},
+                boss = {{"元宝", 50000}},
             },
             rank_rewards = {
                 {rank = 1, items = {{"50元真实充值", 1}}},
@@ -3095,6 +3054,7 @@ teshudata = {
             start_hour = 16,
             start_minute_clock = 0,
             duration_min = 30,
+            min_open_day = 2,
             score_per_join = 10,
             collect_sec = 8,
             title_collect_sec = 4,
@@ -3102,7 +3062,6 @@ teshudata = {
             center_pos = {18, 18},
             spawn_radius = 16,
             spawn_try_count = 40,
-            fixed_damage = 1,
             respawn_sec = 8,
             initial_spawn = {
                 {name = "鸡", count = 10},
@@ -3148,6 +3107,7 @@ teshudata = {
                 },
             },
         },
+        meishikuanghuan = nil,
     },
     ["anniu_515"] = {
         id = "anniu_515",
@@ -3226,15 +3186,6 @@ teshudata = {
             {level = 150, title = "统帅", limit = 1, desc = "称号：统帅、仙法卷轴*5、五行石*10", items = {{"仙法卷轴", 5}, {"五行石", 10}}},
         },
     },
-    ["anniu_516"] = {
-        id = "anniu_516",
-        name = "至尊赞助",
-        details = {
-            {ch = "入门玩家", sgsl = 0, need_real_charge = 16, show = {{"开荒BUFF",1}}},
-            {ch = "高级玩家", sgsl = 0, need_real_charge = 88, jl = {{"开辟许可证",1}}},
-            {ch = "至尊玩家", sgsl = 0, need_real_charge = 128, jl = {{"至尊黑卡",1},{"斗笠之魂",1}}},
-        },
-    },
     ["npc_520"] = {
         id = 520,
         name = "狂欢福利",
@@ -3252,6 +3203,15 @@ teshudata = {
             {need = 18888, items = {{"第一神豪光环", 1}, {"第一神豪时装", 1}}, title_reward = "第一神豪"},
         },
     },
+    ["anniu_516"] = {
+        id = "anniu_516",
+        name = "至尊赞助",
+        details = {
+            {ch = "入门玩家", sgsl = 0, need_real_charge = 16, show = {{"开荒BUFF",1}}},
+            {ch = "高级玩家", sgsl = 0, need_real_charge = 88, jl = {{"开辟许可证",1}}},
+            {ch = "至尊玩家", sgsl = 0, need_real_charge = 128, jl = {{"至尊黑卡",1},{"斗笠之魂",1}}},
+        },
+    },
     ["npc_106"] = {
         id = 106,
         name = "聚宝盆",
@@ -3265,11 +3225,13 @@ teshudata = {
             [5] = {level = 5, name = "极品聚宝盆", charge = 988, speed = 200, cap = 12, cap_text = "12小时"},
         },
         energy = {gold_per_sec = 200, gold_per_level = 100, iron_per_sec = 0.01, iron_per_level = 0.01, hat_per_sec = 0.01, hat_per_level = 0.01, offline_ratio = 50},
-        -- 9.8-1 原聚宝魔石炼灵材料配置已停用，不再作为聚宝盆材料产出。
--- 9.8-1 聚宝魔石原炼灵配置：{name = "聚宝魔石", kind = "normal", continent = 0, bind = 0, time = "30分钟"}
-        -- 9.8-1 Exclusive refining gems removed.
+        -- 9.8-1 原聚宝魔石炼灵材料配置已停用。
+-- 9.8-1 原客户端聚宝魔石配置：{name = "聚宝魔石", kind = "normal", continent = 0, bind = 0, time = "30分钟"}
+        -- 9.8-1 专属炼灵宝石已移除。
         stones = {},
+        
         forbidden = {
+
             [1] = {name = "焚天禁器·炎狱龙尊", skill = "天地异象", plus = "最大攻击+1%"},
             [2] = {name = "幽狱禁器·冥河鬼主", skill = "黄泉降世", plus = "最大生命+1%"},
             [3] = {name = "万灵禁器·太古神凰", skill = "万灵朝凤", plus = "人物双防+1%"},
@@ -3280,6 +3242,26 @@ teshudata = {
             [4] = {yuanbao = 2000000, need_level = 4},
             [5] = {yuanbao = 3000000, need_level = 5},
         },
+    },
+    ["npc_1029"] = {
+        id = 1029,
+        name = "合成夜明珠",
+        cost = {{"夜明珠", 1}, {"金币", 880000}, {"千年玄铁", 38}},
+        reward = {{"诸邪退散（光环）", 1}},
+    },
+    ["npc_1030"] = {
+        id = 1030,
+        name = "合成夜明珠",
+        cost = {{"夜明珠", 1}, {"金币", 880000}, {"千年玄铁", 38}},
+        reward = {{"诸邪退散（光环）", 1}},
+    },
+    ["npc_1031"] = {
+        id = 1031,
+        name = "进入三大陆",
+        need_title = "灾厄杀手",
+        map = "三大陆主城",
+        x = 159,
+        y = 231,
     },
     ["sjdt"] = {
         id = 500,
@@ -3294,12 +3276,12 @@ teshudata = {
         [501] = {"xtc",137,138,nil,nil,1,5},
         [502] = {"二大陆主城",105,120,nil,nil,2,5},
         [503] = {"三大陆主城",159,231,nil,nil,3,5},
-        [504] = {"四大陆主城",32,29,nil,nil,4,5},
-        [505] = {"五大陆主城",88,29,nil,nil,5,5},
-        [506] = {"六大陆主城",52,444,nil,nil,6,5},
+        [504] = {"四大陆主城",37,33,nil,nil,4,5},
+        [505] = {"五大陆主城",30,28,nil,nil,5,5},
+        [506] = {"六大陆主城",52,44,nil,nil,6,5},
         [507] = {"七大陆主城",92,76,nil,nil,7,5},
         [508] = {"八大陆主城",92,76,nil,nil,8,5},
         [509] = {"九大陆主城",92,76,nil,nil,9,5},
-    },
+    },   
 }
 return teshudata

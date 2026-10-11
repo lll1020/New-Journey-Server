@@ -154,11 +154,11 @@ constant.rw_syb = {
     [16] = {2,"xtc",502,125,146,jx = true},
     --二大陆主线任务：走 task.lua 主线逻辑，不再依赖 xyl 当前任务
     --天书强化1次，完成后奖励仙法卷轴
-    [17] = {20, "天书强化", task = {kind = "tianshu_level", yd = {3, 14}},["jl"] = {wp = {{"仙法卷轴",1}}}, jx = true},
+    [17] = {20, "天书强化", task = {kind = "tianshu_level", yd = {3, 14}}, jx = true},
     --天书仙法抽取1次
     [18] = {20, "天书仙法", task = {kind = "tianshu_xianfa", yd = {3, 14}}, jx = true},
     --进入野火帮并接取任务，击杀20只怪完成扫荡野火帮
-    [19] = {20, "扫荡野火帮", task = {kind = "story", tk = "npc_603", yd = {1, "野火帮", 603, 100, 223}, auto = true, need_receive = true}, jx = true},
+    [19] = {20, "扫荡野火帮", task = {kind = "story", tk = "npc_603", yd = {1, "野火帮", 603, 100, 223}, auto = true, need_receive = true},["jl"] = {wp = {{"仙法卷轴",1}}}, jx = true},
     --刷新2次仙法
     [20] = {20, "刷新2次仙法", task = {kind = "tianshu_xianfa_refresh", need = 2, yd = {3, 14}}, jx = true},
     --进入野火帮大营，收集并提交野火帮罪证*10
