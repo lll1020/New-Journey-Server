@@ -1589,7 +1589,7 @@ kfhg 23 26 -> kfhjsbk 86 102
 ;[WugongPTFB04 WugongPTFB04]
 ;[WugongPTFB05 WugongPTFB05]
 ;[wyg wyg]
-[xbsl xbsl]
+;[xbsl xbsl]
 ;[xbzd xbzd]
 ;[xlgm xlgm]
 ;[xlzd xlzd]

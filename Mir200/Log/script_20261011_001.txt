@@ -1,0 +1,9 @@
+[2026-10-11 14:51:27:918] LuaNPC:玩家名字l ID:999999999 执行 login player:玩家名字l 耗时：46; NpcThreadId: 5216, CurPlayThreadId: 5216
+
+[2026-10-11 18:30:02:885] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：344; NpcThreadId: 5216, CurPlayThreadId: 5216
+
+[2026-10-12 08:57:30:636] LuaNPC:玩家名字l ID:999999999 执行 handlerequest player:玩家名字l 耗时：32; NpcThreadId: 5216, CurPlayThreadId: 5216
+[2026-10-12 08:57:30:636] [玩家名字l]Lua执行耗时过高:32ms msgid:100 505 1 0 
+
+[2026-10-12 09:03:10:020] LuaNPC:玩家名字l ID:999999999 执行 login player:玩家名字l 耗时：32; NpcThreadId: 5216, CurPlayThreadId: 5216
+

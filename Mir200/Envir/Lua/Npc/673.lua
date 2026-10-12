@@ -83,7 +83,7 @@ function npc.link(play,npcid,ew,aid)
 
         local msg = string.format("进度：|【%d/%d】#218|", done, total)
         if #undone > 0 then
-            msg = msg.."\n未完成："..table.concat(undone, "、")
+            msg = msg.."未完成："..table.concat(undone, "、")
         end
         Player.sendmsgEx(play, msg)
     end

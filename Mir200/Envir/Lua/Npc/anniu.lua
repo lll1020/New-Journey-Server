@@ -3258,6 +3258,10 @@ end
 -- 狂欢福利（npc_520）：累计充值奖励，统一由顶部 anniu 模块处理。
 npc[520] = function(play, p2, p3, data)
     local cfg = teshudata["npc_520"] or {}
+    if tonumber(p2 or 0) == 9 then
+        sendluamsg(play, 101, 520, 9, 0, tbl2json({open = tonumber(globalinfo(3) or 0) >= 1 and 1 or 0}))
+        return
+    end
     local rewards = cfg.rewards or {}
     local state = Player.getJsonTableByVar(play, VarCfg.T_czlb) or {}
     state.khfl520 = type(state.khfl520) == "table" and state.khfl520 or {}

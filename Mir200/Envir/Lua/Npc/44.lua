@@ -1637,7 +1637,7 @@ function ActionHandler.refine(play, npcid, state, params)
         Player.sendmsgEx(play, res or "炼丹失败#57")
         return
     end
-    Player.sendmsgEx(play, "炼丹完成#57")
+    Player.sendmsgEx(play, "炼丹完成#250")
     pushAction(play, npcid, "refine", true, "炼丹完成", state, res)
 end
 

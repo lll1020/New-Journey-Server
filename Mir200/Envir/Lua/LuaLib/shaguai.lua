@@ -1728,7 +1728,7 @@ shaguai = {
 -- 9.8-1         end
 -- 9.8-1     end
 -- 9.8-1 end,
-	["34"] = function(play,mob)      -- zhuji fragment: mainline task 32, first drop 1/2, then pity every 1000, max 21
+	["34"] = function(play,mob)      -- zhuji fragment: mainline task 32, first drop 1/2, then pity every 200, max 21
 		local mainline_id = tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0
 		if mainline_id < 32 then
 			return
@@ -1764,7 +1764,7 @@ shaguai = {
 
 		local key = "kill_pity_Öþ»ùµ¤ËéÆ¬"
 		local cur, dropData = _sg_drop_record_inc(play, key)
-		if cur % 1000 ~= 0 then
+		if cur % 200 ~= 0 then
 			return
 		end
 		if shaguai.temp_drop(play, mob, "Öþ»ùµ¤ËéÆ¬") then
