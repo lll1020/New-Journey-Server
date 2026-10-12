@@ -1556,6 +1556,15 @@ end
 ---------------------------------------------------------------------
 local ActionHandler = {}
 
+local function sendActionTip(play, message, success)
+    local text = tostring(message or "")
+    local color = success and "#250" or "#57"
+    if not string.match(text, "#%d+$") then
+        text = text .. color
+    end
+    Player.sendmsgEx(play, text)
+end
+
 function ActionHandler.sync(play, npcid, state)
     dollRefreshAttr(play, state.record)
     persistState(state)
@@ -1566,10 +1575,10 @@ function ActionHandler.plant(play, npcid, state, params)
     local ok, res = Planting.plant(play, state.record, params or {}, state.now)
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "播种失败#57")
+        sendActionTip(play, res or "播种失败#57", false)
         return
     end
-    Player.sendmsgEx(play, "播种成功")
+    sendActionTip(play, "播种成功", true)
     pushAction(play, npcid, "plant", true, "播种成功", state, res)
 end
 
@@ -1577,12 +1586,12 @@ function ActionHandler.plantAll(play, npcid, state, params)
     local ok, res = Planting.plantAll(play, state.record, params or {}, state.now)
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "一键种植失败#57")
+        sendActionTip(play, res or "一键种植失败#57", false)
         return
     end
     local seedName = tostring((PlantCfg[tostring((params or {}).seedId or "")] or {}).name or "灵草")
     local msg = string.format("一键种植完成，已播种%s块%s", tostring(res.count or 0), seedName)
-    Player.sendmsgEx(play, msg)
+    sendActionTip(play, msg, true)
     pushAction(play, npcid, "plantAll", true, msg, state, res)
 end
 
@@ -1590,10 +1599,10 @@ function ActionHandler.harvest(play, npcid, state, params)
     local ok, res = Planting.harvest(play, state.record, params or {}, state.now)
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "尚未成熟#57")
+        sendActionTip(play, res or "尚未成熟#57", false)
         return
     end
-    Player.sendmsgEx(play, "收获完成#57")
+    sendActionTip(play, "收获完成#57", true)
     pushAction(play, npcid, "harvest", true, "收获完成", state, res)
 end
 
@@ -1601,10 +1610,10 @@ function ActionHandler.buySeed(play, npcid, state, params)
     local ok, res = Shop.buySeed(play, state.record, params or {})
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "购买失败#57")
+        sendActionTip(play, res or "购买失败#57", false)
         return
     end
-    Player.sendmsgEx(play, "购买成功")
+    sendActionTip(play, "购买成功", true)
     pushAction(play, npcid, "buySeed", true, "购买成功", state, res)
 end
 
@@ -1612,10 +1621,10 @@ function ActionHandler.buyEgg(play, npcid, state, params)
     local ok, res = Shop.buyEgg(play, state.record, params or {})
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "购买失败#57")
+        sendActionTip(play, res or "购买失败#57", false)
         return
     end
-    Player.sendmsgEx(play, "购买成功")
+    sendActionTip(play, "购买成功", true)
     pushAction(play, npcid, "buyEgg", true, "购买成功", state, res)
 end
 
@@ -1623,10 +1632,10 @@ function ActionHandler.buyMaterial(play, npcid, state, params)
     local ok, res = Shop.buyMaterial(play, state.record, params or {})
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "购买失败#57")
+        sendActionTip(play, res or "购买失败#57", false)
         return
     end
-    Player.sendmsgEx(play, "购买成功")
+    sendActionTip(play, "购买成功", true)
     pushAction(play, npcid, "buyMaterial", true, "购买成功", state, res)
 end
 
@@ -1634,10 +1643,10 @@ function ActionHandler.refine(play, npcid, state, params)
     local ok, res = Refine.start(play, state.record, params or {}, state.now)
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "炼丹失败#57")
+        sendActionTip(play, res or "炼丹失败#57", false)
         return
     end
-    Player.sendmsgEx(play, "炼丹完成#250")
+    sendActionTip(play, "炼丹完成#250", true)
     pushAction(play, npcid, "refine", true, "炼丹完成", state, res)
 end
 
@@ -1645,11 +1654,11 @@ function ActionHandler.levelUp(play, npcid, state, params)
     local ok, res = levelUp(play, state.record)
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, tostring(res or "仙府升级失败") .. "#57")
+        sendActionTip(play, res or "仙府升级失败", false)
         pushAction(play, npcid, "levelUp", false, tostring(res or "仙府升级失败"), state)
         return
     end
-    Player.sendmsgEx(play, string.format("仙府升级成功，当前#57|【%d级】#218|", tonumber(state.record.level or 1) or 1))
+    sendActionTip(play, string.format("仙府升级成功，当前#57|【%d级】#218|", tonumber(state.record.level or 1) or 1), true)
     pushAction(play, npcid, "levelUp", true, "仙府升级成功", state, res)
 end
 
@@ -1657,10 +1666,10 @@ function ActionHandler.buyDecoration(play, npcid, state, params)
     local ok, res = Decoration.buy(play, state.record, params and params.decoId)
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "购买失败#57")
+        sendActionTip(play, res or "购买失败#57", false)
         return
     end
-    Player.sendmsgEx(play, "购买成功")
+    sendActionTip(play, "购买成功", true)
     pushAction(play, npcid, "buyDecoration", true, "购买成功", state, res)
 end
 
@@ -1668,10 +1677,10 @@ function ActionHandler.equipDecoration(play, npcid, state, params)
     local ok, res = Decoration.equip(state.record, params and params.decoId)
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "装扮无法生效#57")
+        sendActionTip(play, res or "装扮无法生效#57", false)
         return
     end
-    Player.sendmsgEx(play, "装扮已生效#57")
+    sendActionTip(play, "装扮已生效#57", true)
     pushAction(play, npcid, "equipDecoration", true, "装扮已生效", state, res)
 end
 
@@ -1679,10 +1688,10 @@ function ActionHandler.hatch(play, npcid, state, params)
     local ok, res = Pet.hatch(play, state.record, params or {}, state.now)
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "孵化失败#57")
+        sendActionTip(play, res or "孵化失败#57", false)
         return
     end
-    Player.sendmsgEx(play, "孵化成功")
+    sendActionTip(play, "孵化成功", true)
     pushAction(play, npcid, "hatch", true, "孵化成功", state, res)
 end
 
@@ -1711,22 +1720,22 @@ function ActionHandler.dollDraw(play, npcid, state)
     local ok, res = Doll.draw(play, state.record, state.now)
     persistState(state)
     if not ok then
-        Player.sendmsgEx(play, res or "抓娃娃失败#57")
+        sendActionTip(play, res or "抓娃娃失败#57", false)
         return
     end
-    Player.sendmsgEx(play, string.format("抓取成功：%s", tostring(res.name or "娃娃")))
+    sendActionTip(play, string.format("抓取成功：%s", tostring(res.name or "娃娃")), true)
     pushAction(play, npcid, "dollDraw", true, "抓取成功", state, res)
 end
 
 local function handleVisit(play, npcid, state, params, fn)
     local targetName = params and params.targetName
     if not targetName or targetName == "" then
-        Player.sendmsgEx(play, "请输入要拜访的玩家名字#57")
+        sendActionTip(play, "请输入要拜访的玩家名字#57", true)
         return
     end
     local actor, record, err = findOnlineTargetByName(targetName)
     if not actor then
-        Player.sendmsgEx(play, (err or "对方不在线") .. "#57")
+        sendActionTip(play, (err or "对方不在线") .. "#57", true)
         return
     end
     fn(actor, record, params or {})
@@ -1741,10 +1750,10 @@ function ActionHandler.like(play, npcid, state, params)
         end
         persistState(state)
         if not ok then
-            Player.sendmsgEx(play, res or "点赞失败#57")
+            sendActionTip(play, res or "点赞失败#57", false)
             return
         end
-        Player.sendmsgEx(play, "点赞成功")
+        sendActionTip(play, "点赞成功", true)
         pushAction(play, npcid, "like", true, "点赞成功", state, res)
     end)
 end
@@ -1758,10 +1767,10 @@ function ActionHandler.steal(play, npcid, state, params)
         end
         persistState(state)
         if not ok then
-            Player.sendmsgEx(play, res or "偷取失败#57")
+            sendActionTip(play, res or "偷取失败#57", false)
             return
         end
-        Player.sendmsgEx(play, "偷取成功")
+        sendActionTip(play, "偷取成功", true)
         pushAction(play, npcid, "steal", true, "偷取成功", state, res)
     end)
 end
