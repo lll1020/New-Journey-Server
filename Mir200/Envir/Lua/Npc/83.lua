@@ -129,7 +129,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         end
         local cost = _toint(cfg.cost)
         if data.point < cost then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", _point_name, cost))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", _point_name, cost))
             return
         end
         local oldPoint = data.point
@@ -149,7 +149,7 @@ function npc.link(play, npcid, p2, p3, msgData)
             Player.sendmsgEx(play, "奖励配置未完成#57")
             return
         end
-        Player.sendmsgEx(play, string.format("兑换成功，获得#57|【%s】#218|", tostring(cfg.name or "奖励")))
+        Player.sendmsgEx(play, string.format("兑换成功，获得#250|【%s】#218|", tostring(cfg.name or "奖励")))
         sendluamsg(play, 100, npcid, 1, idx, tbl2json(_build_payload(play)))
     elseif p2 == 2 then
         sendluamsg(play, 100, npcid, 2, 0, tbl2json(_build_payload(play)))

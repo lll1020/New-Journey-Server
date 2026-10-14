@@ -514,7 +514,7 @@ function takeonbeforeex(play,item,where,makeIndex)
                 end
             end
             if equipped >= openCount then
-                Player.sendmsgEx(play, string.format("当前仙府等级仅开放%d个神石槽位#57", openCount))
+                Player.sendmsgEx(play, string.format("当前仙府等级仅开放%d个神石槽位#250", openCount))
                 return false
             end
         end
@@ -529,7 +529,7 @@ function takeonbeforeex(play,item,where,makeIndex)
                         local bodyName = tostring(getiteminfo(play, bodyItem, ConstCfg.iteminfo.name) or "")
                         local bodyBaseName = string.match(bodyName, "^(.-)【") or bodyName
                         if bodyBaseName ~= "" and bodyBaseName == baseName then
-                            Player.sendmsgEx(play, string.format("同名神石仅可装备一个：%s#57", baseName))
+                            Player.sendmsgEx(play, string.format("同名神石仅可装备一个：%s#250", baseName))
                             return false
                         end
                     end
@@ -548,7 +548,7 @@ function takeonbeforeex(play,item,where,makeIndex)
                         local bodyName = tostring(getiteminfo(play, bodyItem, ConstCfg.iteminfo.name) or "")
                         local bodyBaseName = string.match(bodyName, "^(.-)【") or bodyName
                         if bodyBaseName ~= "" and bodyBaseName == baseName then
-                            Player.sendmsgEx(play, string.format("同名背包神器仅可装备一个：%s#57", baseName))
+                            Player.sendmsgEx(play, string.format("同名背包神器仅可装备一个：%s#250", baseName))
                             return false
                         end
                     end
@@ -1484,7 +1484,7 @@ function killmon(play, mob)
                                 sg_data[task_key] = cur_kill
                                 sg_changed = true
                                 if cur_kill == target_need then
-                                    Player.sendmsgEx(play, string.format("%s击杀目标已达成(%d/%d)，可提交任务#57", (task_cfg_wrap.name or task_key), cur_kill, target_need))
+                                    Player.sendmsgEx(play, string.format("%s击杀目标已达成(%d/%d)，可提交任务#250", (task_cfg_wrap.name or task_key), cur_kill, target_need))
                                 end
                             end
                         end
@@ -2403,7 +2403,7 @@ function jqr_zxht_change()
     if players then
         for _, v in pairs(players) do
             map(v, target)      
-            Player.sendmsgEx(v, "葬星海滩涨落潮已切换，已为你传送#57")
+            Player.sendmsgEx(v, "葬星海滩涨落潮已切换，已为你传送#250")
         end
     end
 end
@@ -2513,7 +2513,7 @@ function func_cjcg(play)
         if sg_data["npc3"] >= 5 then
             messagebox(play,"已满足材料前往 NPC 处提交")
         end
-        Player.sendmsgEx(play,  "采集+"..1 .." ( "..sg_data["npc3"].."/5 )#57")
+        Player.sendmsgEx(play,  "采集+"..1 .." ( "..sg_data["npc3"].."/5 )#250")
         Player.setJsonVarByTable(play, VarCfg["T_各剧情杀怪"], sg_data)
     elseif monName == "贵族宝藏" then
         local jl = teshudata["npc_47"].details[1].jl

@@ -2796,7 +2796,7 @@ teshudata = {
                 {kind = "item", give = {{"辉耀水晶",50}}, label = "辉耀水晶*50"},
                 {kind = "item", give = {{"神石宝箱钥匙",5}}, label = "神石宝箱钥匙*5"},
                 {kind = "item", give = {{"天道命石",5}}, label = "天道命石*5"},
-                {kind = "item", give = {{"高级强化石",10}}, label = "高级强化石*10"},
+                {kind = "item", give = {{"高阶强化石",10}}, label = "高阶强化石*10"},
             },
             super = {
                 {kind = "item", give = {{"灵根宝石随机宝箱",1}}, label = "灵根宝石随机宝箱*1"},

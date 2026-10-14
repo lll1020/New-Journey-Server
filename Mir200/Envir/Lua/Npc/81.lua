@@ -335,7 +335,7 @@ local function _drop_one_equip(play)
     delitembymakeindex(play, makeindex, 1, "血契之门死亡掉落")
     setplaydef(play, VarCfg.Die_Drop_item, name)
     _touch_drop_death(play)
-    Player.sendmsgEx(play, string.format("血契生效，你掉落了#57|【%s】#218|", name))
+    Player.sendmsgEx(play, string.format("血契生效，你掉落了#250|【%s】#218|", name))
     return true
 end
 

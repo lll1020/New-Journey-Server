@@ -123,7 +123,7 @@ function npc.link(play, npcid, ew, aid, data)
     if BwczApi and BwczApi.save_player_data then
         BwczApi.save_player_data(play, saveData)
     end
-    Player.sendmsgEx(play, "成功晋升至#57|【" .. tostring(nextCfg.name or "") .. "】#218|")
+    Player.sendmsgEx(play, "成功晋升至#250|【" .. tostring(nextCfg.name or "") .. "】#218|")
     _refresh_panel(play, 1, 0)
 end
 

@@ -75,7 +75,7 @@ local function _auto_use_prep_item(play)
         return false
     end
     addbuff(play, 20112)
-    Player.sendmsgEx(play, "检测到背包中拥有#57|【"..item_name.."】#249|，已自动获得净化效果#57")
+    Player.sendmsgEx(play, "检测到背包中拥有#250|【"..item_name.."】#249|，已自动获得净化效果#250")
     return true
 end
 
@@ -170,7 +170,7 @@ function npc.link(play,npcid,ew,aid)
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         shaguai.jian(play, 626)
         giveitem(play, item_name, 1)
-        Player.sendmsgEx(play, "锻造成功，获得物品#57|"..item_name.."#249|#57")
+        Player.sendmsgEx(play, "锻造成功，获得物品#250|"..item_name.."#249|#250")
         sendluamsg(play,100,npcid,1,2,"")
         messagebox(play, "前置任务已完成，是否前往挑战入口？", "@npc_626_open_challenge")
     end

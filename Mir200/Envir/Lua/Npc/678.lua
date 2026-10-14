@@ -277,7 +277,7 @@ function npc.link(play,npcid,ew,aid)
         end
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         _apply_detail_attrs(play)
-        Player.sendmsgEx(play, "提交成功")
+        Player.sendmsgEx(play, "提交成功#250")
         if done >= #details and #details > 0 then
             Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成#57")
             if _config.ch then

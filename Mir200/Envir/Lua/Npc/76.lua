@@ -477,7 +477,7 @@ local function _tick_pet_trial(play, dtm, cfg, st)
         st.next_pet_tick = os.time() + (tonumber(cfg.pet_tick_sec or 1) or 1)
         if os.time() - (tonumber(st.last_pet_msg or 0) or 0) >= 5 then
             st.last_pet_msg = os.time()
-            Player.sendmsgEx(play, "灵兽已命中BOSS，伤害生效#57")
+            Player.sendmsgEx(play, "灵兽已命中BOSS，伤害生效#250")
         end
     end
 end
@@ -531,7 +531,7 @@ local function _tick_realm_trial(play, dtm, cfg, st)
         st.dujie_end = 0
         setplaydef(play, _dujie_end_var, 0)
         st.success = (tonumber(st.success or 0) or 0) + 1
-        Player.sendmsgEx(play, string.format("成功抵挡第%d次雷劫#57", st.success))
+        Player.sendmsgEx(play, string.format("成功抵挡第%d次雷劫#250", st.success))
         if st.success >= (tonumber(cfg.need_success or 3) or 3) then
             _finish_trial(play, 3, dtm)
         end
@@ -567,7 +567,7 @@ local function _tick_xianfa_trial(play, dtm, cfg, st)
     local dy = math.abs(py - (tonumber(st.safe_y or 0) or 0))
     if math.max(dx, dy) <= (tonumber(cfg.safe_radius or 2) or 2) and math.random(1, 100) <= 30 then
         st.score = (tonumber(st.score or 0) or 0) + 1
-        Player.sendmsgEx(play, string.format("天书仙法积分+1 ( %d/%d )#57", st.score, tonumber(cfg.score_target or 10) or 10))
+        Player.sendmsgEx(play, string.format("天书仙法积分+1 ( %d/%d )#250", st.score, tonumber(cfg.score_target or 10) or 10))
         if st.score >= (tonumber(cfg.score_target or 10) or 10) then
             _finish_trial(play, 4, dtm)
         end
@@ -643,9 +643,15 @@ function npc.link(play, npcid, p2, p3, msgData)
 end
 
 function npc.use_dujie_dan(play, item)
+    local current_map = tostring(getbaseinfo(play, 3) or "")
     local run_map = _get_current_trial_map(play)
     local run_idx = _get_run_idx(play, run_map, _state_get(run_map))
-    if run_idx ~= 3 or run_map == "" or getbaseinfo(play, 3) ~= run_map then
+    -- 以玩家当前所在的真实副本地图为准，避免旧的玩家变量残留导致在副本外误用。
+    if _idx_from_map(current_map) ~= 3
+        or not checkmirrormap(current_map)
+        or run_idx ~= 3
+        or run_map == ""
+        or current_map ~= run_map then
         Player.sendmsgEx(play, "【天道·渡劫丹】只能在境界试炼中使用#57")
         return false
     end

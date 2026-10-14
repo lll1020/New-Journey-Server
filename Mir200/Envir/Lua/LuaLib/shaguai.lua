@@ -399,52 +399,52 @@ shaguai = {
 			if getbaseinfo(mob,1) == "金灵根守护兽" and T_dljq["npc_602"][""..1] and T_dljq["npc_602"][""..1] == 0 then
 				T_dljq["npc_602"][""..1] = 1
 				Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
-				Player.sendmsgEx(play,  "成功击杀灵根守护兽#57")
+				Player.sendmsgEx(play,  "成功击杀灵根守护兽#250")
 				Npclib[602].link(play, 602, 2, 1, "")
 			elseif getbaseinfo(mob,1) == "木灵根守护兽" and T_dljq["npc_602"][""..2] and T_dljq["npc_602"][""..2] == 0 then
 				T_dljq["npc_602"][""..2] = 1
 				Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
-				Player.sendmsgEx(play,  "成功击杀灵根守护兽#57")
+				Player.sendmsgEx(play,  "成功击杀灵根守护兽#250")
 				Npclib[602].link(play, 602, 2, 2, "")
 			elseif getbaseinfo(mob,1) == "水灵根守护兽" and T_dljq["npc_602"][""..3] and T_dljq["npc_602"][""..3] == 0 then
 				T_dljq["npc_602"][""..3] = 1
 				Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
-				Player.sendmsgEx(play,  "成功击杀灵根守护兽#57")
+				Player.sendmsgEx(play,  "成功击杀灵根守护兽#250")
 				Npclib[602].link(play, 602, 2, 3, "")
 			elseif getbaseinfo(mob,1) == "火灵根守护兽" and T_dljq["npc_602"][""..4] and T_dljq["npc_602"][""..4] == 0 then
 				T_dljq["npc_602"][""..4] = 1
 				Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
-				Player.sendmsgEx(play,  "成功击杀灵根守护兽#57")
+				Player.sendmsgEx(play,  "成功击杀灵根守护兽#250")
 				Npclib[602].link(play, 602, 2, 4, "")
 			elseif getbaseinfo(mob,1) == "土灵根守护兽" and T_dljq["npc_602"][""..5] and T_dljq["npc_602"][""..5] == 0 then
 				T_dljq["npc_602"][""..5] = 1
 				Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
-				Player.sendmsgEx(play,  "成功击杀灵根守护兽#57")
+				Player.sendmsgEx(play,  "成功击杀灵根守护兽#250")
 				Npclib[602].link(play, 602, 2, 5, "")
 			elseif getbaseinfo(mob,1) == "雷灵根守护兽" and T_dljq["npc_68"][""..1] and T_dljq["npc_68"][""..1] == 0 then
 				T_dljq["npc_68"][""..1] = 1
 				Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
-				Player.sendmsgEx(play,  "成功击杀灵根守护兽#57")
+				Player.sendmsgEx(play,  "成功击杀灵根守护兽#250")
 				Npclib[68].link(play, 68, 2, 1, "")
 			elseif getbaseinfo(mob,1) == "风灵根守护兽" and T_dljq["npc_68"][""..2] and T_dljq["npc_68"][""..2] == 0 then
 				T_dljq["npc_68"][""..2] = 1
 				Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
-				Player.sendmsgEx(play,  "成功击杀灵根守护兽#57")
+				Player.sendmsgEx(play,  "成功击杀灵根守护兽#250")
 				Npclib[68].link(play, 68, 2, 2, "")
 			elseif getbaseinfo(mob,1) == "冰灵根守护兽" and T_dljq["npc_68"][""..3] and T_dljq["npc_68"][""..3] == 0 then
 				T_dljq["npc_68"][""..3] = 1
 				Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
-				Player.sendmsgEx(play,  "成功击杀灵根守护兽#57")
+				Player.sendmsgEx(play,  "成功击杀灵根守护兽#250")
 				Npclib[68].link(play, 68, 2, 3, "")
 			elseif getbaseinfo(mob,1) == "焚灵根守护兽" and T_dljq["npc_68"][""..4] and T_dljq["npc_68"][""..4] == 0 then
 				T_dljq["npc_68"][""..4] = 1
 				Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
-				Player.sendmsgEx(play,  "成功击杀灵根守护兽#57")
+				Player.sendmsgEx(play,  "成功击杀灵根守护兽#250")
 				Npclib[68].link(play, 68, 2, 4, "")
 			elseif getbaseinfo(mob,1) == "岩灵根守护兽" and T_dljq["npc_68"][""..5] and T_dljq["npc_68"][""..5] == 0 then
 				T_dljq["npc_68"][""..5] = 1
 				Player.setJsonVarByTable(play, VarCfg.T_dljq, T_dljq)
-				Player.sendmsgEx(play,  "成功击杀灵根守护兽#57")
+				Player.sendmsgEx(play,  "成功击杀灵根守护兽#250")
 				Npclib[68].link(play, 68, 2, 5, "")
 			end
 			
@@ -711,7 +711,7 @@ shaguai = {
 		if cur < need and sg_data[killKey] % (prep.drop_every or 5) == 0 then
 			giveitem(play, prep.item_name or "净化之泪", 1)
 			cur = getbagitemcount(play, prep.item_name or "净化之泪")
-			Player.sendmsgEx(play, (prep.item_name or "任务物品").."+1 ( "..cur.."/"..need.." )#57")
+			Player.sendmsgEx(play, (prep.item_name or "任务物品").."+1 ( "..cur.."/"..need.." )#250")
 			if cur >= need then
 				shaguai.jian(play,626)
 				messagebox(play,"已满足材料前往 NPC 处提交")
@@ -743,7 +743,7 @@ shaguai = {
 		if cur < need and sg_data[killKey] % (prep.drop_every or 3) == 0 then
 			giveitem(play, prep.item_name or "定身符碎片", 1)
 			cur = getbagitemcount(play, prep.item_name or "定身符碎片")
-			Player.sendmsgEx(play, (prep.item_name or "任务物品").."+1 ( "..cur.."/"..need.." )#57")
+			Player.sendmsgEx(play, (prep.item_name or "任务物品").."+1 ( "..cur.."/"..need.." )#250")
 			if cur >= need then
 				shaguai.jian(play,627)
 				messagebox(play,"已满足材料前往 NPC 处提交")
@@ -775,11 +775,11 @@ shaguai = {
 		local rightName = prep.right_name or "真视之眼右"
 		if curKill >= (prep.left_need or 15) and getbagitemcount(play, leftName) < 1 then
 			giveitem(play, leftName, 1)
-			Player.sendmsgEx(play, leftName.."已找到#57")
+			Player.sendmsgEx(play, leftName.."已找到#250")
 		end
 		if curKill >= (prep.right_need or 35) and getbagitemcount(play, rightName) < 1 then
 			giveitem(play, rightName, 1)
-			Player.sendmsgEx(play, rightName.."已找到#57")
+			Player.sendmsgEx(play, rightName.."已找到#250")
 		end
 		if getbagitemcount(play, leftName) >= 1 and getbagitemcount(play, rightName) >= 1 then
 			shaguai.jian(play,628)
@@ -1595,7 +1595,7 @@ shaguai = {
 		local drop_rate = tonumber(task_cfg.drop_rate or 3000) or 3000
 		if drop_item ~= "" and drop_rate > 0 and math.random(drop_rate) == 1 then
 			shaguai.temp_drop(play, mob, drop_item)
-			Player.sendmsgEx(play, "打怪掉落【"..drop_item.."】#57")
+			Player.sendmsgEx(play, "打怪掉落【"..drop_item.."】#250")
 		end
 	end,
 	["721"] = function(play,mob)      -- story npc kill route

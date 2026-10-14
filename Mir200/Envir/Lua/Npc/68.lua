@@ -199,7 +199,7 @@ local function _take_trial_cost(play)
     end
     local name, num = Player.checkItemNumByTable(play, cost)
     if name then
-        Player.sendmsgEx(play, string.format("缺少|%s#218|数量|%d#218", name, num))
+        Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
         return false
     end
     Player.takeItemByTable(play, cost, ",灵根试炼", nil)

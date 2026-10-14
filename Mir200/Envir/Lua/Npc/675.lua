@@ -319,7 +319,7 @@ function npc.link(play, npcid, ew, aid)
             jq_data[TASK_KEY] = 1
         end
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, string.format("射日成功，获得词条：#57|【%s】#218|", _build_affix_desc(new_affix)))
+        Player.sendmsgEx(play, string.format("射日成功，获得词条：#250|【%s】#218|", _build_affix_desc(new_affix)))
 
         if (not taskDone) and #affixes >= MAX_AFFIX then
             Guard.clearTaskTemp(jq_data, TASK_KEY)

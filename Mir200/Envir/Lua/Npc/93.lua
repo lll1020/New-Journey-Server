@@ -271,7 +271,7 @@ function npc_93_fb_end(play)
         end
         data.points = data.points + (tonumber(_config.floor_points[passFloor] or 0) or 0)
         _save_data(play, data)
-        Player.sendmsgEx(play, "成功通过通天塔第" .. tostring(passFloor) .. "层，获得通天积分+" .. tostring(_config.floor_points[passFloor] or 0) .. "#57")
+        Player.sendmsgEx(play, "成功通过通天塔第" .. tostring(passFloor) .. "层，获得通天积分+" .. tostring(_config.floor_points[passFloor] or 0) .. "#250")
         if passFloor >= _config.max_floor then
             data.in_run = 0
             data.run_floor = 0

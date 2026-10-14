@@ -650,7 +650,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         end
         local miss_name, miss_num = _check_costs(play, stage_cfg.unlock_cost or {})
         if miss_name then
-            Player.sendmsgEx(play, "你的#57|【" .. miss_name .. "】#218|不足：#57|【" .. miss_num .. "】#218|")
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", miss_name, miss_num))
             return
         end
         _take_costs(play, stage_cfg.unlock_cost or {}, ",星象圣图")
@@ -659,7 +659,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         _save_data(play, data)
         star_chart_refresh(play)
         _sync_star_chart_skills(play)
-        Player.sendmsgEx(play, "你成功解锁了#57|【" .. (stage_cfg.name or "星象阶段") .. "】#218|")
+        Player.sendmsgEx(play, "你成功解锁了#250|【" .. (stage_cfg.name or "星象阶段") .. "】#218|")
         sendluamsg(play, 100, npcid, 1, 0, tbl2json(_build_payload(play, data)))
     elseif p2 == 2 then
         local stage_idx = _toint(json_data.stage)
@@ -690,7 +690,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         local node_cfg = stage_cfg.nodes[node_idx]
         local miss_name, miss_num = _check_costs(play, node_cfg.cost or {})
         if miss_name then
-            Player.sendmsgEx(play, "你的#57|【" .. miss_name .. "】#218|不足：#57|【" .. miss_num .. "】#218|")
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", miss_name, miss_num))
             return
         end
         _take_costs(play, node_cfg.cost or {}, ",星象圣图")

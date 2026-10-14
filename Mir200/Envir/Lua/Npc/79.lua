@@ -27,7 +27,7 @@ end
 local function _check_cost(play, cost)
     local missName, missNum = Player.checkItemNumByTable(play, cost)
     if missName then
-        Player.sendmsgEx(play, string.format("材料不足：#57|【%s】#218| 需要 %d", tostring(missName), _toint(missNum)))
+        Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", tostring(missName), _toint(missNum)))
         return false
     end
     return true
@@ -56,7 +56,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         if not _check_cost(play, cfg.cost or {}) then return end
         Player.takeItemByTable(play, cfg.cost or {}, "道基秘宝合成")
         giveitem(play, tostring(cfg.item_name or ""), 1)
-        Player.sendmsgEx(play, string.format("合成成功，获得#57|【%s】#218|", tostring(cfg.item_name or "秘宝")))
+        Player.sendmsgEx(play, string.format("合成成功，获得#250|【%s】#218|", tostring(cfg.item_name or "秘宝")))
     end
     sendluamsg(play, 100, npcid, p2, p3 or 0, tbl2json(_build_payload(play, npcid)))
 end

@@ -72,7 +72,7 @@ local function _finish(play, reason, noReward)
     end
     if levelReward > 0 then
         callscriptex(play, "CHANGELEVEL", "+", levelReward)
-        Player.sendmsgEx(play, "等级提升+" .. levelReward .. "#57")
+        Player.sendmsgEx(play, "等级提升+" .. levelReward .. "#250")
     end
     sendluamsg(play, 101, 1005, 0, 0, "rwwc")
 end
@@ -203,7 +203,7 @@ local function _drop_by_rule(play, mob, state)
             if not rule.max_bag or getbagitemcount(play, rule.item) < _toint(rule.max_bag) then
                 local rate = math.max(1, _toint(rule.rate, 1))
                 if math.random(rate) == 1 and _sg_drop(play, mob, rule.item) then
-                    Player.sendmsgEx(play, "打怪掉落【" .. rule.item .. "】#57")
+                    Player.sendmsgEx(play, "打怪掉落【" .. rule.item .. "】#250")
                 end
             end
         end
@@ -250,7 +250,7 @@ local function _onKillMon(play, mob)
     cur = math.min(cur + 1, need)
     sg[_cfg_key] = cur
     _save_kill(play, sg)
-    Player.sendmsgEx(play, (_config.name or _cfg_key) .. "进度+1 ( " .. cur .. "/" .. need .. " )#57")
+    Player.sendmsgEx(play, (_config.name or _cfg_key) .. "进度+1 ( " .. cur .. "/" .. need .. " )#250")
     if cur >= need then
         _sg_remove(play, NPC_ID)
         messagebox(play, "已满足材料前往 NPC 处提交")
@@ -266,7 +266,7 @@ local function _handle(play, npcid, action, aid)
     end
     if action == 1 then
         if state >= 1 then
-            Player.sendmsgEx(play, "碎片已提交，请继续完成凌雪的请求#57")
+            Player.sendmsgEx(play, "碎片已提交，请继续完成凌雪的请求#250")
             return
         end
         if not Guard.ensureCost(play, FIRST_SUBMIT_ITEM) then
@@ -279,7 +279,7 @@ local function _handle(play, npcid, action, aid)
         if shaguaiId > 0 then
             _sg_add(play, shaguaiId)
         end
-        Player.sendmsgEx(play, "碎片已提交，请继续追查星力冰晶#57")
+        Player.sendmsgEx(play, "碎片已提交，请继续追查星力冰晶#250")
         sendluamsg(play, 101, 1005, 0, 0, "rwjs")
         return
     end

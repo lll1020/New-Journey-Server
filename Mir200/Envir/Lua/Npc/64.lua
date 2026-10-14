@@ -465,7 +465,7 @@ function npc.link(play,npcid,ew,aid,data)
     if ew == 1 then -- 抽取灵兽
         local name, num = Player.checkItemNumByTable(play, _config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
             return
         end
         local randomNum = _draw_lingshou_pool(T_data)
@@ -547,7 +547,7 @@ function npc.link(play,npcid,ew,aid,data)
         end
         local name, num = Player.checkItemNumByTable(play, _config.config.wy.cost[T_data.ls[""..json_data.idx] + 1] or {})
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
             return
         end
         Player.takeItemByTable(play, _config.config.wy.cost[T_data.ls[""..json_data.idx] + 1] or {}, ",灵兽喂养",nil)
@@ -628,7 +628,7 @@ function npc.link(play,npcid,ew,aid,data)
         end
         local name, num = Player.checkItemNumByTable(play, {{_config.config.ls[json_data.idx].syw,1}})
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
             return
         end
         -- 圣遗物装备额外增加辉耀水晶消耗，和配置表要求保持一致。

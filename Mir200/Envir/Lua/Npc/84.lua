@@ -281,7 +281,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         data.runes[key] = 1
         _refresh_count(data)
         _save_state(play, data)
-        Player.sendmsgEx(play, string.format("你成功激活了#57|【%s】#218|", cfg.name or "世界符文"))
+        Player.sendmsgEx(play, string.format("你成功激活了#250|【%s】#218|", cfg.name or "世界符文"))
         sendluamsg(play, 100, npcid, 1, idx, tbl2json(_build_payload(play)))
     elseif p2 == 2 then
         if _toint(data.claim) == 1 or checktitle(play, _title_name) then

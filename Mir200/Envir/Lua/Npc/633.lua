@@ -78,7 +78,7 @@ function npc.link(play,npcid,ew,aid)
                 Player.title_give(play, _config.ch)
             end
         else
-            Player.sendmsgEx(play, "提交成功")
+            Player.sendmsgEx(play, "提交成功#250")
         end
         local data = {}
         data["T_dljq"] = Player.getJsonTableByVar(play, VarCfg.T_dljq)

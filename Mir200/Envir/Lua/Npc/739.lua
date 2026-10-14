@@ -71,7 +71,7 @@ local function _finish(play, reason, noReward)
     end
     if levelReward > 0 then
         callscriptex(play, "CHANGELEVEL", "+", levelReward)
-        Player.sendmsgEx(play, "等级提升+" .. levelReward .. "#57")
+        Player.sendmsgEx(play, "等级提升+" .. levelReward .. "#250")
     end
     sendluamsg(play, 101, 1005, 0, 0, "rwwc")
 end
@@ -281,7 +281,7 @@ local function _enter_dungeon(play, npcid)
         Guard.closeNpcAndAuto(play, npcid)
     end
     if _has_zhuque_pet(play) then
-        Player.sendmsgEx(play, "已携带灵兽朱雀，幽影无法逃走#57")
+        Player.sendmsgEx(play, "已携带灵兽朱雀，幽影无法逃走#250")
     else
         Player.sendmsgEx(play, "未携带灵兽朱雀，幽影半血会逃走#57")
     end
@@ -435,7 +435,7 @@ local function _drop_by_rule(play, mob, state)
             if not rule.max_bag or getbagitemcount(play, rule.item) < _toint(rule.max_bag) then
                 local rate = math.max(1, _toint(rule.rate, 1))
                 if math.random(rate) == 1 and _sg_drop(play, mob, rule.item) then
-                    Player.sendmsgEx(play, "打怪掉落【" .. rule.item .. "】#57")
+                    Player.sendmsgEx(play, "打怪掉落【" .. rule.item .. "】#250")
                 end
             end
         end
@@ -482,7 +482,7 @@ local function _onKillMon(play, mob)
     cur = math.min(cur + 1, need)
     sg[_cfg_key] = cur
     _save_kill(play, sg)
-    Player.sendmsgEx(play, (_config.name or _cfg_key) .. "进度+1 ( " .. cur .. "/" .. need .. " )#57")
+    Player.sendmsgEx(play, (_config.name or _cfg_key) .. "进度+1 ( " .. cur .. "/" .. need .. " )#250")
     if cur >= need then
         _sg_remove(play, NPC_ID)
         if _task_cfg.task_type == "weakness_dungeon" then
@@ -507,7 +507,7 @@ local function _handle(play, npcid, action, aid)
             return
         end
         if _toint(jq[_cfg_key .. "_weak"]) == 1 then
-            Player.sendmsgEx(play, "幽影弱点已揭示，可进入副本挑战#57")
+            Player.sendmsgEx(play, "幽影弱点已揭示，可进入副本挑战#250")
             return
         end
         if not _consume_cost(play, taskCfg.reveal_cost or {{"幽影密函残页", 10}}, ",幽影弱点揭示") then
@@ -517,14 +517,14 @@ local function _handle(play, npcid, action, aid)
         jq[_cfg_key .. "_weak"] = 1
         _save_story(play, jq)
         _sg_add(play, NPC_ID)
-        Player.sendmsgEx(play, "已揭示弱点：击杀幽影的分身后自动完成任务#57")
+        Player.sendmsgEx(play, "已揭示弱点：击杀幽影的分身后自动完成任务#250")
         return
     end
     if action == 3 then
         _enter_dungeon(play, npcid)
         return
     end
-    Player.sendmsgEx(play, "该任务击杀幽影的分身后会自动完成#57")
+    Player.sendmsgEx(play, "该任务击杀幽影的分身后会自动完成#250")
 end
 
 function npc.main(play, npcid)

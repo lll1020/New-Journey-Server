@@ -189,7 +189,7 @@ function npc.spawnAssassin(play)
     local x = _toint(getbaseinfo(play, 4), 0)
     local y = _toint(getbaseinfo(play, 5), 0)
     genmon(map, x + 2, y + 2, ASSASSIN_MOB, 3, 1, 0)
-    Player.sendmsgEx(play, "刺客现身，击杀可获得#57|【密信】#218|#57")
+    Player.sendmsgEx(play, "刺客现身，击杀可获得#250|【密信】#218|#250")
 end
 
 function npc.carpathend(play)

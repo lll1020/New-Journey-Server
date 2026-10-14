@@ -148,7 +148,7 @@ end
 local function _check_cost(play, cost)
     local missName, missNum = Player.checkItemNumByTable(play, cost)
     if missName then
-        Player.sendmsgEx(play, string.format("材料不足：#57|【%s】#218| 需要 %d", tostring(missName), _toint(missNum)))
+        Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", tostring(missName), _toint(missNum)))
         return false
     end
     return true

@@ -75,7 +75,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         end
         local name, num = Player.checkItemNumByTable(play, _config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
             return
         end
         Player.takeItemByTable(play, _config.cost, ",灵根修炼",nil)
@@ -113,7 +113,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         release_print("领取称号")
         local name, num = Player.checkItemNumByTable(play, _config.max_cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
             return
         end
         Player.takeItemByTable(play, _config.max_cost, ",灵根修炼",nil)

@@ -164,12 +164,12 @@ function npc.link(play,npcid,ew,aid)
         Guard.clearTaskTemp(jq_data, _cfg_key)
         jq_data[_cfg_key] = 2
         shaguai.jian(play, 688)
-        Player.sendmsgEx(play, "随机解锁#57|【"..node.name.."】#218|成功，三图已全部解锁#57")
+        Player.sendmsgEx(play, "随机解锁#250|【"..node.name.."】#218|成功，三图已全部解锁#250")
         Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成#57")
         if npcid then Guard.closeNpc(play, npcid) end
         sendluamsg(play,101,1005,0,0,"rwwc")
     else
-        Player.sendmsgEx(play, "随机解锁#57|【"..node.name.."】#218|成功（#57"..new_unlocked_count.."/"..#list.."）#57")
+        Player.sendmsgEx(play, "随机解锁#250|【"..node.name.."】#218|成功（#250"..new_unlocked_count.."/"..#list.."）#250")
     end
 
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)

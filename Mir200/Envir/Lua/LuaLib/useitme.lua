@@ -559,7 +559,7 @@ function stdmodefunc32(play, item) --神石召唤
     local keyCost = {{"神石宝箱钥匙", 1}}
     local name, num = Player.checkItemNumByTable(play, keyCost)
     if name then
-        Player.sendmsgEx(play, string.format("缺少|%s#218|数量|%d#218", name, num))
+        Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
         return false
     end
     local rewardName, qualityTitle = _godstone_pick_reward(boxName)
@@ -575,7 +575,7 @@ function stdmodefunc32(play, item) --神石召唤
     if Npclib and Npclib[53] and Npclib[53].markOwned then
         Npclib[53].markOwned(play, rewardName)
     end
-    Player.sendmsgEx(play, string.format("开启|%s#218|成功，获得#57|【%s】#218|%s#57", boxName, rewardName, qualityTitle and ("（" .. qualityTitle .. "）") or ""))
+    Player.sendmsgEx(play, string.format("开启|%s#218|成功，获得#250|【%s】#218|%s#250", boxName, rewardName, qualityTitle and ("（" .. qualityTitle .. "）") or ""))
     return false
 end
 function stdmodefunc33(play, item) --灵兽圣遗物自选礼盒
@@ -647,7 +647,7 @@ function stdmodefunc36(play, item) --海盗宝箱  海盗眼罩  海盗眼罩 10%、90% 金币*
     if giveMask then
         rec.box36_mask = 1
         giveitem(play, "海盗眼罩", 1)
-        Player.sendmsgEx(play, "恭喜获得 海盗眼罩#57")
+        Player.sendmsgEx(play, "恭喜获得 海盗眼罩#250")
     else
         changemoney(play, getflagstatus(play,VarCfg.BS_mztq) == 1 and 1 or 3, "+", 10000, "海盗宝箱", true)
     end
@@ -1023,7 +1023,7 @@ function stdmodefunc41(play, item) --仙法卷轴残页  -- 10合一  仙法卷轴
     itemName = itemName or "仙法卷轴残页"
     local needNum = 10
     if sl < needNum then
-        Player.sendmsgEx(play, itemName .. "不足" .. needNum .. "个#57")
+        Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", itemName, needNum))
         return false
     end
     local makeCount = math.floor(sl / needNum)
@@ -1088,7 +1088,7 @@ function stdmodefunc46(play, item) --等级卷轴  等级 + 1
     end
     if useCount > 0 then
         _take_use_all_item(play, item, useCount, itemName)
-        Player.sendmsgEx(play, "等级卷轴使用成功，等级提升#57|【" .. useCount .. "】#218|级#57")
+        Player.sendmsgEx(play, "等级卷轴使用成功，等级提升#250|【" .. useCount .. "】#218|级#250")
     end
     return false
 end
@@ -1213,12 +1213,12 @@ function stdmodefunc54(play, item)  --使用足迹  getstditeminfo(getiteminfo(play,
 end
 function stdmodefunc55(play, item) --净化宝石
     addbuff(play, 20112)
-    Player.sendmsgEx(play, "使用成功，已获得净化宝石效果#57")
+    Player.sendmsgEx(play, "使用成功，已获得净化宝石效果#250")
     return false
 end
 function stdmodefunc56(play, item) --定身符
     addbuff(play, 20111)
-    Player.sendmsgEx(play, "使用成功，已获得定身符效果#57")
+    Player.sendmsgEx(play, "使用成功，已获得定身符效果#250")
     return false
 end
 local function _box57_pick_reward(pool)
@@ -1302,7 +1302,7 @@ function stdmodefunc58(play, item) --净业符
     end
     local after = shopNpc.reduce_fire(play, reduce) or 0
     delitembymakeindex(play, getiteminfo(play, item, 1), 1)
-    Player.sendmsgEx(play, string.format("使用成功，业火值从#57|【%d】#218|降至#57|【%d】#218|", before, tonumber(after) or 0))
+    Player.sendmsgEx(play, string.format("使用成功，业火值从#250|【%d】#218|降至#250|【%d】#218|", before, tonumber(after) or 0))
     return false
 end
 function stdmodefunc59(play, item, forceReward) --至尊黑卡
@@ -1337,7 +1337,7 @@ function stdmodefunc59(play, item, forceReward) --至尊黑卡
         "至尊黑卡今日奖励已通过邮件发放，请注意查收。",
         Player.jl_mail(rewardList)
     )
-    Player.sendmsgEx(play, "至尊黑卡使用成功，奖励已通过邮件发放#57")
+    Player.sendmsgEx(play, "至尊黑卡使用成功，奖励已通过邮件发放#250")
     return false
 end
 function stdmodefunc60(play, item) --筑基丹碎片
@@ -1345,13 +1345,13 @@ function stdmodefunc60(play, item) --筑基丹碎片
     itemName = itemName or "筑基丹碎片"
     local needNum = 10
     if sl < needNum then
-        Player.sendmsgEx(play, itemName .. "不足" .. needNum .. "个#57")
+        Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", itemName, needNum))
         return false
     end
     local makeCount = math.floor(sl / needNum)
     _take_use_all_item(play, item, makeCount * needNum, itemName)
     giveitem(play, "筑基丹", makeCount)
-    Player.sendmsgEx(play, "成功合成#57|【筑基丹*" .. makeCount .. "】#218|#57")
+    Player.sendmsgEx(play, "成功合成#250|【筑基丹*" .. makeCount .. "】#218|#250")
     return false
 end
 function stdmodefunc61(play, item) --筑基丹
@@ -1377,13 +1377,13 @@ function stdmodefunc62(play, item) --神石碎片
     itemName = itemName or "神石碎片"
     local needNum = 88
     if sl < needNum then
-        Player.sendmsgEx(play, itemName .. "不足" .. needNum .. "个#57")
+        Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", itemName, needNum))
         return false
     end
     local makeCount = math.floor(sl / needNum)
     _take_use_all_item(play, item, makeCount * needNum, itemName)
     giveitem(play, "神石宝箱", makeCount)
-    Player.sendmsgEx(play, "成功合成#57|【神石宝箱*" .. makeCount .. "】#218|#57")
+    Player.sendmsgEx(play, "成功合成#250|【神石宝箱*" .. makeCount .. "】#218|#250")
     return false
 end
 
@@ -1468,7 +1468,7 @@ function stdmodefunc65(play, item) --沙巴克攻防药剂
         return false
     end
     delitembymakeindex(play, getiteminfo(play, item, 1), 1)
-    Player.sendmsgEx(play, "使用成功：|【" .. itemName .. "】#218|#57")
+    Player.sendmsgEx(play, "使用成功：|【" .. itemName .. "】#218|#250")
     return false
 end
 function stdmodefunc66(play, item) --秘境称号/聚宝盆道具
@@ -1489,7 +1489,7 @@ function stdmodefunc66(play, item) --秘境称号/聚宝盆道具
     end
     Player.title_give(play, titleName)
     delitembymakeindex(play, getiteminfo(play, item, 1), 1)
-    Player.sendmsgEx(play, "恭喜你获得|【" .. titleName .. "】#218|称号#57")
+    Player.sendmsgEx(play, "恭喜你获得|【" .. titleName .. "】#218|称号#250")
     return false
 end
 function stdmodefunc67(play, item) --灵兽幼崽：真实累计充值99元后可立即孵化
@@ -1509,7 +1509,7 @@ function stdmodefunc67(play, item) --灵兽幼崽：真实累计充值99元后可立即孵化
         return false
     end
     delitembymakeindex(play, getiteminfo(play, item, 1), 1)
-    Player.sendmsgEx(play, msg or "灵兽幼崽孵化成功#57")
+    Player.sendmsgEx(play, msg or "灵兽幼崽孵化成功#250")
     return false
 end
 

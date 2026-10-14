@@ -323,7 +323,7 @@ local function finishSuccess(play)
     if not checktitle(play, TEXT_HUNTER_TITLE) then
         Player.title_give(play, TEXT_HUNTER_TITLE, 1)
     end
-    Player.sendmsgEx(play, "天罚猎杀者挑战成功，业火值已清零并获得奖励。#57")
+    Player.sendmsgEx(play, "天罚猎杀者挑战成功，业火值已清零并获得奖励。#250")
     moveToCity(play)
 end
 

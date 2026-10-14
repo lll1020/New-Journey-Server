@@ -95,7 +95,7 @@ function npc.link(play,npcid,ew,aid,data)
 
         local name, num = Player.checkItemNumByTable(play, _config.cost or {{"金币",1000000}})
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
             return
         end
         Player.takeItemByTable(play, _config.cost or {{"金币",1000000}}, ",福娃猜拳", nil)

@@ -93,7 +93,7 @@ function npc.link(play, npcid, ew, aid, data)
     if not checktitle(play, titleName) then
         Player.title_give(play, titleName, 1)
     end
-    Player.sendmsgEx(play, "合成成功，获得称号：诸邪退散#57")
+    Player.sendmsgEx(play, "合成成功，获得称号：诸邪退散#250")
     _sync(play, npcid, 1, true)
 end
 

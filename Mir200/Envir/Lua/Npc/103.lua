@@ -160,7 +160,7 @@ local function _enter_fb(play)
     setenvirontimer(dtm, 1, 1, "@npc_103_dsq,"..play..","..dtm)
     setenvirontimer(dtm, _boss_effect_timer_id, 5, "@npc_103_fx,"..dtm)
     senddelaymsg(play, "距离副本结束剩余%s", tonumber((_config and _config.fb_time) or 300) or 300, 250, 1, "@npc_103_timeout")
-    Player.sendmsgEx(play, "已进入|【天书试炼】#218|副本，击败炫光BOSS即可获得|【天书】#218|#57")
+    Player.sendmsgEx(play, "已进入|【天书试炼】#218|副本，击败炫光BOSS即可获得|【天书】#218|#250")
     sendluamsg(play, 101, 9999, 0, 0, "npc_"..103)
 end
 function npc.main(play, npcid)
@@ -210,7 +210,7 @@ function npc.link(play, npcid, ew, aid, data)
         end
         local missName, missNum = Player.checkItemNumByTable(play, cfg.cost or {})
         if missName then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", missName, tonumber(missNum) or 0))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", missName, tonumber(missNum) or 0))
             return
         end
         Player.takeItemByTable(play, cfg.cost or {}, ",天书试炼提交", nil)
@@ -245,7 +245,7 @@ function npc.link(play, npcid, ew, aid, data)
             Player.rwjl(play, _config.reward, (_config.name or "天书试炼").."奖励", 1, 0)
         end
         _finish_mainline(play, 14)
-        Player.sendmsgEx(play, "成功领取|【天书】#218|#57")
+        Player.sendmsgEx(play, "成功领取|【天书】#218|#250")
         sendluamsg(play, 101, 9999, 0, 0, "npc_"..103)
         return
     end

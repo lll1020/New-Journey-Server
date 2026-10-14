@@ -95,7 +95,7 @@ local function _activate_hanbingjianjue(play)
         ["color"] = 251,
     }))
     refreshitem(play, itemobj)
-    Player.sendmsgEx(play, "寒冰剑诀已激活#57")
+    Player.sendmsgEx(play, "寒冰剑诀已激活#250")
     return true
 end
 local function _finish(play, reason, noReward)
@@ -109,7 +109,7 @@ local function _finish(play, reason, noReward)
     end
     if levelReward > 0 then
         callscriptex(play, "CHANGELEVEL", "+", levelReward)
-        Player.sendmsgEx(play, "等级提升+" .. levelReward .. "#57")
+        Player.sendmsgEx(play, "等级提升+" .. levelReward .. "#250")
     end
     sendluamsg(play, 101, 1005, 0, 0, "rwwc")
 end
@@ -186,7 +186,7 @@ local function _craft(play, reward, stateSuffix)
         jq[_cfg_key .. stateSuffix] = 1
         _save_story(play, jq)
     end
-    Player.sendmsgEx(play, "合成成功#57")
+    Player.sendmsgEx(play, "合成成功#250")
     return true
 end
 
@@ -246,7 +246,7 @@ local function _drop_by_rule(play, mob, state)
                     _activate_hanbingjianjue(play)
                 elseif rule.item and rule.item ~= "" then
                     if (not rule.max_bag or getbagitemcount(play, rule.item) < _toint(rule.max_bag)) and _sg_drop(play, mob, rule.item) then
-                        Player.sendmsgEx(play, "打怪掉落【" .. rule.item .. "】#57")
+                        Player.sendmsgEx(play, "打怪掉落【" .. rule.item .. "】#250")
                     end
                 end
             end
@@ -294,7 +294,7 @@ local function _onKillMon(play, mob)
     cur = math.min(cur + 1, need)
     sg[_cfg_key] = cur
     _save_kill(play, sg)
-    Player.sendmsgEx(play, (_config.name or _cfg_key) .. "进度+1 ( " .. cur .. "/" .. need .. " )#57")
+    Player.sendmsgEx(play, (_config.name or _cfg_key) .. "进度+1 ( " .. cur .. "/" .. need .. " )#250")
     if cur >= need then
         _sg_remove(play, NPC_ID)
         messagebox(play, "已满足材料前往 NPC 处提交")

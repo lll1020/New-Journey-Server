@@ -538,7 +538,7 @@ function npc.link(play,npcid,ew,aid)
     jq_data[_cfg_key .. "_a"] = submitted
     jq_data[_cfg_key] = submitted >= required and 2 or 1
     Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-    Player.sendmsgEx(play, submitted >= required and "物品已提交完成，请选择挑战路线#57" or ("提交成功，进度 " .. submitted .. "/" .. required .. "#57"))
+    Player.sendmsgEx(play, submitted >= required and "物品已提交完成，请选择挑战路线#250" or ("提交成功，进度 " .. submitted .. "/" .. required .. "#250"))
     _refresh_client(play)
 end
 

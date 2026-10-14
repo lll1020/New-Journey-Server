@@ -44,7 +44,7 @@ local function _try_upgrade_artifact(play)
     end
 
     if getbagitemcount(play, src_item) < 1 then
-        Player.sendmsgEx(play, "缺少背包神器：#57|【"..src_item.."】#218|")
+        Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", src_item, 1))
         return
     end
 

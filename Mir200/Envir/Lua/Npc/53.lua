@@ -310,7 +310,7 @@ local function _take_extra_cost(play, level)
     end
     local name, num = Player.checkItemNumByTable(play, extra)
     if name then
-        Player.sendmsgEx(play, string.format("合成失败：缺少|%s#218|数量|%d#218", name, num))
+        Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
         return false
     end
     Player.takeItemByTable(play, extra, ",神石合成", nil)
@@ -375,7 +375,7 @@ local function _try_grant_collection_reward(play)
             changed = true
             local _, real_add = Player.addRoleLevel(play, add_level, false)
             if (tonumber(real_add or 0) or 0) > 0 then
-                Player.sendmsgEx(play, string.format("神石图鉴【%s】收集完成，获得等级+%d#57", _quality_title[quality_level] or tostring(quality_level), add_level))
+                Player.sendmsgEx(play, string.format("神石图鉴【%s】收集完成，获得等级+%d#250", _quality_title[quality_level] or tostring(quality_level), add_level))
             end
         end
     end
@@ -662,7 +662,7 @@ local function _open_box_by_name(play, npcid, box_name)
     end
     local missing_name, missing_num = Player.checkItemNumByTable(play, {{"神石宝箱钥匙", 1}})
     if missing_name then
-        Player.sendmsgEx(play, string.format("缺少|%s#218|数量|%d#218", missing_name, missing_num))
+        Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", missing_name, missing_num))
         return false
     end
     local reward_name, quality_title = _pick_box_reward(play, box_name)
@@ -710,7 +710,7 @@ local function _claim_pending_box_reward(play, npcid, token)
     _try_grant_collection_reward(play)
     _clear_pending_box_reward(play)
     _send_panel(play, npcid, 1, 0)
-    Player.sendmsgEx(play, string.format("开启%s，获得#57|【%s】#218|%s#57", tostring(pending.box_name or "神石宝箱"), reward_name, pending.quality_title and ("（" .. tostring(pending.quality_title) .. "）") or ""))
+    Player.sendmsgEx(play, string.format("开启%s，获得#250|【%s】#218|%s#250", tostring(pending.box_name or "神石宝箱"), reward_name, pending.quality_title and ("（" .. tostring(pending.quality_title) .. "）") or ""))
     return true
 end
 -- 一键卸下当前已装配的全部神石，便于玩家直接切回合成页操作。
@@ -891,9 +891,9 @@ local function _handle_compose(play, npcid, data)
     _try_grant_collection_reward(play)
     local tip = guaranteed and "（100%）" or string.format("（%d/%d）", tonumber(slot_weight or 0) or 0, _config.needitemnum or 10)
     if bonus_reward then
-        Player.sendmsgEx(play, string.format("合成成功，获得：|%s#218|%s；凝萃神丹额外暴击获得：|%s#218|#57", reward_name, tip, bonus_reward))
+        Player.sendmsgEx(play, string.format("合成成功，获得：|%s#218|%s；凝萃神丹额外暴击获得：|%s#218|#250", reward_name, tip, bonus_reward))
     else
-        Player.sendmsgEx(play, string.format("合成成功，获得：|%s#218|%s#57", reward_name, tip))
+        Player.sendmsgEx(play, string.format("合成成功，获得：|%s#218|%s#250", reward_name, tip))
     end
     _send_panel(play, npcid, 1, 0)
 end
@@ -1013,7 +1013,7 @@ local function _on_kill_mon_godstone_effect(play, mob)
         return
     end
     giveitem(play, "神石宝箱", 1)
-    Player.sendmsgEx(play, "火焰神石触发：击杀红名BOSS获得|神石宝箱#218|*1#57")
+    Player.sendmsgEx(play, "火焰神石触发：击杀红名BOSS获得|神石宝箱#218|*1#250")
 end
 GameEvent.add(EventCfg.onKillMon, _on_kill_mon_godstone_effect, "godstone_fire_kill_box")
 function npc.markOwned(play, item_name)

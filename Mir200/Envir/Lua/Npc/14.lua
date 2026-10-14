@@ -144,7 +144,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         end
         local name, num = Player.checkItemNumByTable(play, _config.config[jsonData.idx].cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足#57", name))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
             return
         end
         Player.takeItemByTable(play, _config.config[jsonData.idx].cost, ",仙食坊",nil)

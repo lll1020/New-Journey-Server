@@ -56,7 +56,7 @@ function npc.link(play,npcid,ew,aid,data)
 
         local name, num = Player.checkItemNumByTable(play, _config.cost[json_data.idx] or {})
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
             return
         end
         Player.takeItemByTable(play, _config.cost[json_data.idx] or {}, ",做酒水",nil)
@@ -74,7 +74,7 @@ function npc.link(play,npcid,ew,aid,data)
             return
         end
         giveitem(play, reward[1], tonumber(reward[2] or 1) or 1)
-        Player.sendmsgEx(play, string.format("酿造成功，获得|【%s】#218|*%d#57，使用后可增加醉意值#57", tostring(reward[1]), tonumber(reward[2] or 1) or 1))
+        Player.sendmsgEx(play, string.format("酿造成功，获得|【%s】#218|*%d#250，使用后可增加醉意值#250", tostring(reward[1]), tonumber(reward[2] or 1) or 1))
         sendluamsg(play,100,npcid,1,0,tbl2json({num = getplaydef(play, VarCfg["J_醉意值"])}))
         
     elseif ew == 2 then -- 开启吃货币
@@ -90,7 +90,7 @@ function npc.link(play,npcid,ew,aid,data)
 
             local name, num = Player.checkItemNumByTable(play, {{"元宝",200}})
             if name then
-                Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+                Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
                 return
             end
             addbuff(play, 20103)

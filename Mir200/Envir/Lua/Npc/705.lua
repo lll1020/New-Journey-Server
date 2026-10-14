@@ -124,7 +124,7 @@ function npc.link(play,npcid,ew,aid)
         jq_data[_cfg_key] = 1
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         shaguai.jia(play, 705)
-        Player.sendmsgEx(play, "领取#57|【"..(_config.name or "任务").."】#218|成功")
+        Player.sendmsgEx(play, "领取#250|【"..(_config.name or "任务").."】#218|成功")
         sendluamsg(play,101,1005,0,0,"rwjs")
         sendluamsg(play,100,npcid,1,0,"")
         return

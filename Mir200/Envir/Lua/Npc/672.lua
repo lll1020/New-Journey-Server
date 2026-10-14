@@ -147,7 +147,7 @@ function npc.link(play,npcid,ew,aid)
 
         jq_data[subKey] = 2
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        Player.sendmsgEx(play, "提交成功")
+        Player.sendmsgEx(play, "提交成功#250")
         sendluamsg(play,100,npcid,2,idx,"")
         return
     end

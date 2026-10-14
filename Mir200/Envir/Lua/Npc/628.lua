@@ -214,7 +214,7 @@ function npc.link(play,npcid,ew,aid)
         Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
         shaguai.jian(play, 628)
         giveitem(play, item_name, 1)
-        Player.sendmsgEx(play, "任务完成，获得物品#57|"..item_name.."#249|#57")
+        Player.sendmsgEx(play, "任务完成，获得物品#250|"..item_name.."#249|#250")
         sendluamsg(play,100,npcid,1,2,"")
         messagebox(play, "前置任务已完成，是否前往挑战入口？", "@npc_628_open_challenge")
     end

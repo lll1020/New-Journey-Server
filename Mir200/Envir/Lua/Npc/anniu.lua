@@ -1116,7 +1116,7 @@ npc[30] = function(play, p2, p3, data) --砍树系统
             end
             local name, num = Player.checkItemNumByTable(play, config.updata[1].details[T_data.axe].cost)
             if name then
-                Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+                Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
                 return
             end
             Player.takeItemByTable(play, config.updata[1].details[T_data.axe].cost, ",砍树系统",nil)
@@ -1132,7 +1132,7 @@ npc[30] = function(play, p2, p3, data) --砍树系统
             end
             local name, num = Player.checkItemNumByTable(play, config.updata[2].details[T_data.auto].cost)
             if name then
-                Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+                Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
                 return
             end
             Player.takeItemByTable(play, config.updata[2].details[T_data.auto].cost, ",砍树系统",nil)
@@ -1214,7 +1214,7 @@ npc[30] = function(play, p2, p3, data) --砍树系统
         end
         local lastResult = (((payload or {}).extra or {}).results or {})
         lastResult = lastResult[#lastResult] or ((payload or {}).extra or {})
-        Player.sendmsgEx(play, string.format("抓取成功：%s", tostring((lastResult or {}).name or "娃娃")))
+        Player.sendmsgEx(play, string.format("抓取成功：%s", tostring((lastResult or {}).name or "娃娃")) .. "#250")
         sendluamsg(play, 101, 30, 5, 0, tbl2json(payload or {}))
     end
 end
@@ -3291,7 +3291,7 @@ npc[520] = function(play, p2, p3, data)
             if item.title_reward and item.title_reward ~= "" and not checktitle(play, item.title_reward) then
                 Player.title_give(play, item.title_reward)
             end
-            Player.sendmsgEx(play, "狂欢福利奖励领取成功#57")
+            Player.sendmsgEx(play, "狂欢福利奖励领取成功#250")
         end
     end
 

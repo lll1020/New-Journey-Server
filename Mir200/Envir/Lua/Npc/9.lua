@@ -40,7 +40,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         local config = _config.config[p3][equipLevel]
         local name, num = Player.checkItemNumByTable(play, config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
             return
         end
         Player.takeItemByTable(play, config.cost, ",升级特戒",nil)

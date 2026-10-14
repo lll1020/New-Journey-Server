@@ -71,7 +71,7 @@ local function _finish(play, reason, noReward)
     end
     if levelReward > 0 then
         callscriptex(play, "CHANGELEVEL", "+", levelReward)
-        Player.sendmsgEx(play, "等级提升+" .. levelReward .. "#57")
+        Player.sendmsgEx(play, "等级提升+" .. levelReward .. "#250")
     end
     sendluamsg(play, 101, 1005, 0, 0, "rwwc")
 end
@@ -126,7 +126,7 @@ local function _drop_by_rule(play, mob, state)
             if not rule.max_bag or getbagitemcount(play, rule.item) < _toint(rule.max_bag) then
                 local rate = math.max(1, _toint(rule.rate, 1))
                 if math.random(rate) == 1 and _sg_drop(play, mob, rule.item) then
-                    Player.sendmsgEx(play, "打怪掉落【" .. rule.item .. "】#57")
+                    Player.sendmsgEx(play, "打怪掉落【" .. rule.item .. "】#250")
                 end
             end
         end
@@ -173,7 +173,7 @@ local function _onKillMon(play, mob)
     cur = math.min(cur + 1, need)
     sg[_cfg_key] = cur
     _save_kill(play, sg)
-    Player.sendmsgEx(play, (_config.name or _cfg_key) .. "进度+1 ( " .. cur .. "/" .. need .. " )#57")
+    Player.sendmsgEx(play, (_config.name or _cfg_key) .. "进度+1 ( " .. cur .. "/" .. need .. " )#250")
     if cur >= need then
         _sg_remove(play, NPC_ID)
         messagebox(play, "已满足材料前往 NPC 处提交")
@@ -197,7 +197,7 @@ end
 
 local function _handle(play, npcid, action, aid)
     if action ~= 2 then
-        Player.sendmsgEx(play, "进入血契之地击杀玩家自动累计，每击杀10名玩家可抽奖一次，最多10次#57")
+        Player.sendmsgEx(play, "进入血契之地击杀玩家自动累计，每击杀10名玩家可抽奖一次，最多10次#250")
         return
     end
     local taskCfg = _task_cfg
@@ -221,7 +221,7 @@ local function _handle(play, npcid, action, aid)
     jq[_cfg_key .. "_draw"] = draws
     _save_story(play, jq)
     _give_items(play, {reward}, "恶魔契约抽奖")
-    Player.sendmsgEx(play, string.format("恶魔契约抽奖成功：%d/%d#57", draws, maxDraw))
+    Player.sendmsgEx(play, string.format("恶魔契约抽奖成功：%d/%d#250", draws, maxDraw))
     if draws >= maxDraw then
         _finish(play, "恶魔契约奖励")
     end

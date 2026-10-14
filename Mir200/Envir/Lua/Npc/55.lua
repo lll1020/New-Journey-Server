@@ -46,7 +46,7 @@ local function _finish_open(play, npcid, jq_data, sg_data, open_way)
     if Npclib and Npclib[44] and Npclib[44].markOpened then
         Npclib[44].markOpened(play)
     end
-    Player.sendmsgEx(play, "开辟成功#57")
+    Player.sendmsgEx(play, "开辟成功#250")
     sendluamsg(play,101,1005,0,0,"rwwc")
     -- Player.rwjl(play, _config.rwjl, "开辟仙府任务奖励",1)
     sendluamsg(play,100,npcid,1,2,tbl2json(_build_main_data(play)))
@@ -84,7 +84,7 @@ function npc.link(play, npcid, p2, p3, msgData)
     elseif p2 == 2 then
         local name, num = Player.checkItemNumByTable(play, _config.force_cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
             return
         end
         Player.takeItemByTable(play, _config.force_cost, ",强行开辟仙府", nil)

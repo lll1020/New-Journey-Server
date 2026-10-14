@@ -200,7 +200,7 @@ function npc.link(play,npcid,ew,aid,data)
         end
         local name, num = Player.checkItemNumByTable(play, _config.cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
             return
         end
         Player.takeItemByTable(play, _config.cost, ",灵兽抽取",nil)
@@ -255,7 +255,7 @@ function npc.link(play,npcid,ew,aid,data)
         local old_best = _get_type_best_feed(warehouse, it.id)
         local name, num = Player.checkItemNumByTable(play, _config.config.wy.cost[it.feed + 1] or {})
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
             return
         end
         Player.takeItemByTable(play, _config.config.wy.cost[it.feed + 1] or {}, ",灵兽喂养",nil)
@@ -332,7 +332,7 @@ function npc.link(play,npcid,ew,aid,data)
         end
         local name, num = Player.checkItemNumByTable(play, {{_config.config.ls[it.id].syw,1}})
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
             return
         end
         Player.takeItemByTable(play, {{_config.config.ls[it.id].syw,1},{"元宝",1880000},{"辉耀水晶",88}}, ",灵兽圣遗物",nil)

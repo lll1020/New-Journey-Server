@@ -595,7 +595,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         T_data.token_count = T_data.token_count + count
         _append_log(T_data, "杀怪兑换：获得" .. _token_name .. "*" .. count)
         _save_data(play, T_data)
-        Player.sendmsgEx(play, string.format("兑换成功：获得#251|【%s*%d】#218|，今日兑换进度#57|【%d/%d】#218|", _token_name, count, tonumber(T_data.exchange_used) or 0, dailyLimit))
+        Player.sendmsgEx(play, string.format("兑换成功：获得#251|【%s*%d】#218|，今日兑换进度#250|【%d/%d】#218|", _token_name, count, tonumber(T_data.exchange_used) or 0, dailyLimit))
         _refresh_panel(play, npcid, p2)
     elseif p2 == 4 then -- buy by cost
         local count = tonumber(json_data.count or p3) or 1
@@ -603,7 +603,7 @@ function npc.link(play, npcid, p2, p3, msgData)
         local cost = _ensure_cost_table(_config.buy_cost, count)
         local name, num = Player.checkItemNumByTable(play, cost)
         if name then
-            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
             return
         end
         Player.takeItemByTable(play, cost, ",msfc_buy", nil)

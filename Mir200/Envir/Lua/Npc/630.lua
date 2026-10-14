@@ -70,7 +70,7 @@ function npc.link(play,npcid,ew,aid)
             sendluamsg(play,101,1005,0,0,"rwwc")
             sendluamsg(play,100,npcid,1,cnt,"")
         else
-            Player.sendmsgEx(play, "提交成功")
+            Player.sendmsgEx(play, "提交成功#250")
             sendluamsg(play,100,npcid,1,cnt,"")
         end
     end

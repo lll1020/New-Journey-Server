@@ -602,7 +602,7 @@ local function take_cost(play, cost, reason)
     end
     local missing, amount = Player.checkItemNumByTable(play, cost)
     if missing then
-        Player.sendmsgEx(play, "材料不足：#57|" .. tostring(missing) .. "#218| x" .. tostring(amount or 0))
+        Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", tostring(missing), tonumber(amount) or 0))
         return false
     end
     Player.takeItemByTable(play, cost, reason or "天赋树消耗", nil)
@@ -1091,7 +1091,7 @@ local function socket_gem(play, npcid, request)
         refund_cost(play, {{old_gem, 1}}, "天赋树替换宝石返还")
     end
     touch_fairy_fate(play)
-    Player.sendmsgEx(play, "宝石镶嵌成功，属性已刷新#7")
+    Player.sendmsgEx(play, "宝石镶嵌成功，属性已刷新#250")
     send_partial(play, npcid, 4, node_id, state, get_owned_gems(play, node), 1)
 end
 
@@ -1169,7 +1169,7 @@ function TalentTree.addNormalPoints(play, count, reason)
     state.normal_total = state.normal_total + gain
     state.normal_points = state.normal_points + gain
     save_state(play, state)
-    Player.sendmsgEx(play, "获得普通天赋点 +" .. tostring(gain) .. "#7")
+    Player.sendmsgEx(play, "获得普通天赋点 +" .. tostring(gain) .. "#250")
     send_redpoint(play, state)
     return gain
 end

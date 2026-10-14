@@ -67,7 +67,7 @@ local function _finish(play, reason, noReward)
     end
     if levelReward > 0 then
         callscriptex(play, "CHANGELEVEL", "+", levelReward)
-        Player.sendmsgEx(play, "等级提升+" .. levelReward .. "#57")
+        Player.sendmsgEx(play, "等级提升+" .. levelReward .. "#250")
     end
     sendluamsg(play, 101, 1005, 0, 0, "rwwc")
 end
@@ -136,7 +136,7 @@ local function _drop_by_rule(play, mob, state)
             if not rule.max_bag or getbagitemcount(play, rule.item) < _toint(rule.max_bag) then
                 local rate = math.max(1, _toint(rule.rate, 1))
                 if math.random(rate) == 1 and _sg_drop(play, mob, rule.item) then
-                    Player.sendmsgEx(play, "打怪掉落【" .. rule.item .. "】#57")
+                    Player.sendmsgEx(play, "打怪掉落【" .. rule.item .. "】#250")
                 end
             end
         end
@@ -183,7 +183,7 @@ local function _onKillMon(play, mob)
     cur = math.min(cur + 1, need)
     sg[_cfg_key] = cur
     _save_kill(play, sg)
-    Player.sendmsgEx(play, (_config.name or _cfg_key) .. "进度+1 ( " .. cur .. "/" .. need .. " )#57")
+    Player.sendmsgEx(play, (_config.name or _cfg_key) .. "进度+1 ( " .. cur .. "/" .. need .. " )#250")
     if cur >= need then
         _sg_remove(play, NPC_ID)
         messagebox(play, "已满足材料前往 NPC 处提交")
@@ -193,14 +193,14 @@ end
 local function _give_dialog_reward(play, jq)
     jq = jq or _get_story(play)
     if _toint(jq[_cfg_key .. "_got"]) >= 1 then
-        Player.sendmsgEx(play, "天机道长已交付线索#57")
+        Player.sendmsgEx(play, "天机道长已交付线索#250")
         return false
     end
     Player.rwjl(play, DIALOG_GIVE_ITEM, "天机道长交付道具", 1)
     jq[_cfg_key] = math.max(1, _toint(jq[_cfg_key]))
     jq[_cfg_key .. "_got"] = 1
     _save_story(play, jq)
-    Player.sendmsgEx(play, "获得天机道长交付的线索#57")
+    Player.sendmsgEx(play, "获得天机道长交付的线索#250")
     return true
 end
 
@@ -211,7 +211,7 @@ local function _handle(play, npcid, action, aid)
     end
     local jq = _get_story(play)
     if _toint(jq[_cfg_key]) >= 2 then
-        Player.sendmsgEx(play, "天机已明，继续追查帝星本源#57")
+        Player.sendmsgEx(play, "天机已明，继续追查帝星本源#250")
         return
     end
     if action == 2 then

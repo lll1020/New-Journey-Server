@@ -436,7 +436,7 @@ function npc.link(play,npcid,ew,aid,data)
                 local need = {{"极品仙法卷轴",1}}
                 local name, num = Player.checkItemNumByTable(play, need)
                 if name then
-                    Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+                    Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
                     return
                 end
                 Player.takeItemByTable(play, need, ",天书仙法", nil)
@@ -445,7 +445,7 @@ function npc.link(play,npcid,ew,aid,data)
                 if cost_cfg then
                     local name, num = Player.checkItemNumByTable(play, cost_cfg)
                     if name then
-                        Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足：#57|【%d】#218|", name, num))
+                        Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
                         return
                     end
                     Player.takeItemByTable(play, cost_cfg, ",天书仙法", nil)

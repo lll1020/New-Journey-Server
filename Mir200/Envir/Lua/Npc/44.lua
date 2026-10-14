@@ -1559,7 +1559,9 @@ local ActionHandler = {}
 local function sendActionTip(play, message, success)
     local text = tostring(message or "")
     local color = success and "#250" or "#57"
-    if not string.match(text, "#%d+$") then
+    if string.match(text, "#%d+$") then
+        text = string.gsub(text, "#%d+$", color)
+    else
         text = text .. color
     end
     Player.sendmsgEx(play, text)
@@ -1602,7 +1604,7 @@ function ActionHandler.harvest(play, npcid, state, params)
         sendActionTip(play, res or "尚未成熟#57", false)
         return
     end
-    sendActionTip(play, "收获完成#57", true)
+    sendActionTip(play, "收获完成", true)
     pushAction(play, npcid, "harvest", true, "收获完成", state, res)
 end
 
@@ -1680,7 +1682,7 @@ function ActionHandler.equipDecoration(play, npcid, state, params)
         sendActionTip(play, res or "装扮无法生效#57", false)
         return
     end
-    sendActionTip(play, "装扮已生效#57", true)
+    sendActionTip(play, "装扮已生效", true)
     pushAction(play, npcid, "equipDecoration", true, "装扮已生效", state, res)
 end
 
@@ -1730,7 +1732,7 @@ end
 local function handleVisit(play, npcid, state, params, fn)
     local targetName = params and params.targetName
     if not targetName or targetName == "" then
-        sendActionTip(play, "请输入要拜访的玩家名字#57", true)
+        sendActionTip(play, "请输入要拜访的玩家名字", true)
         return
     end
     local actor, record, err = findOnlineTargetByName(targetName)

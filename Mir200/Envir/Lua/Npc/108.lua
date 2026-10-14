@@ -97,7 +97,7 @@ function npc.link(play, npcid, p2, p3, msgData)
             return
         end
         if _count_item(play, itemName) < count then
-            Player.sendmsgEx(play, "该肉类数量不足#57")
+            Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", itemName, count))
             return
         end
         if not MskhApi or not MskhApi.sell_meat or not MskhApi.sell_meat(play, itemName, count, cfg) then
