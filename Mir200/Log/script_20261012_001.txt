@@ -369,3 +369,30 @@
 
 [2026-10-12 17:08:54:819] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：47; NpcThreadId: 25948, CurPlayThreadId: 25948
 
+[2026-10-14 15:45:17:141] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：63; NpcThreadId: 25948, CurPlayThreadId: 25948
+
+[2026-10-14 15:49:31:743] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：531; NpcThreadId: 25948, CurPlayThreadId: 25948
+[2026-10-14 15:49:31:743] [玩家名字]Lua执行耗时过高:531ms msgid:100 101 2 0 
+[2026-10-14 15:49:34:128] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：828; NpcThreadId: 25948, CurPlayThreadId: 25948
+[2026-10-14 15:49:34:128] [玩家名字]Lua执行耗时过高:828ms msgid:100 101 2 0 
+[2026-10-14 15:49:35:641] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：78; NpcThreadId: 25948, CurPlayThreadId: 25948
+[2026-10-14 15:49:35:641] [玩家名字]Lua执行耗时过高:78ms msgid:100 101 2 0 
+
+[2026-10-14 15:49:37:809] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：610; NpcThreadId: 25948, CurPlayThreadId: 25948
+[2026-10-14 15:49:37:809] [玩家名字]Lua执行耗时过高:610ms msgid:100 101 2 0 
+
+[2026-10-14 15:49:51:659] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：484; NpcThreadId: 25948, CurPlayThreadId: 25948
+[2026-10-14 15:49:51:660] [玩家名字]Lua执行耗时过高:484ms msgid:100 101 2 0 
+[2026-10-14 15:49:55:352] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：78; NpcThreadId: 25948, CurPlayThreadId: 25948
+[2026-10-14 15:49:55:352] [玩家名字]Lua执行耗时过高:78ms msgid:100 101 2 0 
+
+[2026-10-14 18:30:49:606] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：31; NpcThreadId: 25948, CurPlayThreadId: 25948
+
+[2026-10-14 22:00:00:162] LuaNPC:系统控制 ID:999999999 执行 jqr_wudaohui_end player:系统控制 耗时：31; NpcThreadId: 25948, CurPlayThreadId: 25948
+
+[2026-10-15 17:02:07:980] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：125; NpcThreadId: 25948, CurPlayThreadId: 25948
+
+[2026-10-15 17:29:14:162] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 25948, CurPlayThreadId: 25948
+
+[2026-10-16 00:00:04:466] LuaNPC:玩家名字 ID:999999999 执行 resetday player:玩家名字 耗时：63; NpcThreadId: 25948, CurPlayThreadId: 25948
+

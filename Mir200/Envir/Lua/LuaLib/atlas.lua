@@ -226,9 +226,10 @@ function Atlas.onKillMon(play, mob)
         return
     end
     local name = tostring(getbaseinfo(mob, 1) or "")
-    if name == "" or not is_boss(name) then
+    if name == "" then
         return
     end
+    -- 图鉴配置本身就是收录白名单，不能再用 guaiwutype==2 过滤配置中的精英怪。
     local found = find_by_name("monster", name)
     if found and is_continent_unlocked(play, found.continent) then
         activate(play, "monster", found.entry)

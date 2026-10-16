@@ -548,7 +548,7 @@ shaguai = {
 		end
 		local mob_name = getbaseinfo(mob,1)
 		local guaitype = (guaiwutype[mob_name] or 0)
-		if guaitype >= config.mob_type then
+		if guaitype < config.mob_type then
 			return
 		end
 		local sg_data = Player.getJsonTableByVar(play, VarCfg["T_¸÷¾çÇéÉ±¹Ö"])
