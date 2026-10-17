@@ -460,9 +460,9 @@ teshudata = {
                     [5] = {kind = "level", level = 120, desc = "玩家等级Lv120"},
                     [6] = {kind = "level", level = 140, desc = "玩家等级Lv140"},
                     [7] = {kind = "level", level = 150, desc = "玩家等级Lv150"},
-                    [8] = {kind = "tianshu", level = 25, desc = "天书等级25级"},
-                    [9] = {kind = "tianshu", level = 40, desc = "天书等级40级"},
-                    [10] = {kind = "tianshu", level = 50, desc = "天书等级50级"},
+                    [8] = {kind = "level", level = 151, desc = "玩家等级Lv151"},
+                    [9] = {kind = "level", level = 155, desc = "玩家等级Lv155"},
+                    [10] = {kind = "level", level = 165, desc = "玩家等级Lv165"},
                 },
                 weight = "1#120|2#48|3#20|4#10|5#1",
                 cost = {
@@ -569,7 +569,7 @@ teshudata = {
                         {name = "要钱不要命",icon = "res/buff_icon/478.PNG",attr = {{242,10000},{208,-2000}},wz = "打怪爆率+100%，最大生命-20%"},
                         {name = "圣遗物我来了",icon = "res/buff_icon/479.PNG",attr = {},wz = "神兽圣遗物爆率+100%"},
                         -- 特殊逻辑：基础+每只3星神兽叠加（npc_24.lua/xianfa_refresh）
-                        {name = "神兽大帝",icon = "res/buff_icon/480.PNG",attr = {},wz = "最终攻击+3%，最终生命+3%，每拥有一个3星神兽：最终攻击+5%，最终生命+5%"},
+                        {name = "神兽大帝",icon = "res/buff_icon/480.PNG",attr = {},wz = "最终攻击+3%，最终生命+3%，每拥有一个3星神兽：最终攻击+3%，最终生命+3%"},
                         {name = "最后的轻语",icon = "res/buff_icon/481.PNG",attr = {{28,15}},wz = "破防几率+15%"},
                         {name = "力中暴力",icon = "res/buff_icon/482.PNG",attr = {{21,15}},wz = "暴击几率+15%"},
                         -- 特殊逻辑：每刀吸对方最大MP 3%（npc_24.lua/xianfa_attack_trigger）
@@ -1747,7 +1747,7 @@ teshudata = {
     ["npc_607"] = {id = 607,name = "深入野火",level = 2,map = "野火帮大营",desc = "提交：野火帮罪证*10",cost = {{"野火帮罪证",10}},rwjl = {{"玫瑰花",50},{"斗笠碎片",5}},ch = "除魔卫道"},
     ["npc_608"] = {id = 608,name = "守护森林",level = 2,map = "神秘森林",desc = "击杀怪物30只",shaguai_id = 608,num = 30,rwjl = {{"绑定金币",200000},{"玫瑰花",50}},},
     ["npc_609"] = {id = 609,name = "古刹之谜",level = 2,map = "洞穴秘境",desc = "提交：杀意碎片*5、煞气*5",cost = {{"杀意碎片",5},{"煞气",5}},rwjl = {{"古刹魔瓶",1}},},
-    ["npc_610"] = {id = 610,name = "掘墓人",level = 2,map = "乱葬岗",desc = "提交：唐三彩*5",cost = {{"唐三彩",5}},rwjl = {{"绑定金币",150000}},ch = "摸金校尉"},
+    ["npc_610"] = {id = 610,name = "掘墓人",level = 2,map = "乱葬岗",desc = "提交：唐三彩*10",cost = {{"唐三彩",10}},rwjl = {{"绑定金币",150000}},ch = "摸金校尉"},
     ["npc_620"] = {id = 620,name = "阴阳玉佩",cost = {{"极阴石",1},{"极阳石",1},{"天道魂魄",1},{"元宝",280000},},give = {{"阴阳玉佩",1}},},
     ["npc_621"]  = {id = 621, name = "踏入·山脉入口",map = "灰界南部",shaguai_id = 621,num = 30,tp_map = {"虚妄山脉",92,50},rwjl = {{"玫瑰花",88},{"绑定金币",500000},{"千年玄铁",20}}},
     ["npc_622"]  = {id = 622, name = "踏入·恐怖裂隙",map = "灰界北部",shaguai_id = 622,num = 20,tp_map = {"叹息旷野",34,41},rwjl = {{"玫瑰花",66},{"绑定金币",300000},{"千年玄铁",15}}},
@@ -2774,7 +2774,7 @@ teshudata = {
             {idx = 5, name = "足迹：蝙蝠"},
         },
         pool = {
-            {kind = "item", give = {{"绑定金币",380000}}, rate = 800000, show_rate = "80%", label = "金币*38w"},
+            {kind = "item", give = {{"绑定金币",300000}}, rate = 800000, show_rate = "80%", label = "金币*30w"},
             {kind = "item", give = {{"千年玄铁",5}}, rate = 100000, show_rate = "10%", label = "千年玄铁*5"},
             {kind = "item", give = {{"辉耀水晶",1}}, rate = 50000, show_rate = "5%", label = "辉耀水晶*1"},
             {kind = "item", give = {{"仙法卷轴残页",5}}, rate = 45000, show_rate = "4.5%", label = "仙法卷轴残页*5"},
@@ -2816,7 +2816,7 @@ teshudata = {
             [4] = {draw = 100, normal = {main = {kind = "item", give = {{"神石宝箱钥匙",3}}, label = "神石宝箱钥匙*3"}}, crown = {main = {kind = "item", give = {{"千年玄铁",666}}, label = "千年玄铁*666"}}},
             [5] = {draw = 150, normal = {main = {kind = "item", give = {{"辉耀水晶",88}}, label = "辉耀水晶*88"}}, crown = {main = {kind = "item", give = {{"辉耀水晶",188}}, label = "辉耀水晶*188"}}},
             [6] = {draw = 200, normal = {main = {kind = "item", give = {{"仙法卷轴",18}}, label = "仙法卷轴*18"}}, crown = {main = {kind = "item", give = {{"极品仙法卷轴",1}}, label = "极品仙法卷轴*1"}}},
-            [7] = {draw = 250, normal = {main = {kind = "item", give = {{"天道·渡劫丹",1}}, label = "天道·渡劫丹*1"}}, crown = {main = {kind = "item", give = {{"元宝",1280000}}, label = "元宝*128W"}}},
+            [7] = {draw = 250, normal = {main = {kind = "item", give = {{"天道·渡劫丹",3}}, label = "天道·渡劫丹*3"}}, crown = {main = {kind = "item", give = {{"元宝",1280000}}, label = "元宝*128W"}}},
             [8] = {draw = 300, normal = {main = {kind = "item", give = {{"灵兽蛋",5}}, label = "灵兽蛋*5"}}, crown = {main = {kind = "item", give = {{"神·五行石",1}}, label = "神·五行石*1"}}},
             [9] = {draw = 400, normal = {main = {kind = "item", give = {{"仙法卷轴",88}}, label = "仙法卷轴*88"}}, crown = {main = {kind = "item", give = {{"极品仙法卷轴",2}}, label = "极品仙法卷轴*2"}}},
             [10] = {draw = 600, normal = {main = {kind = "item", give = {{"时光鉴定石",30}}, label = "时光鉴定石*30"}}, crown = {main = {kind = "item", give = {{"四级宝石[万能]",1}}, label = "四级宝石[万能]*1"}}},
@@ -3183,7 +3183,7 @@ teshudata = {
             {level = 90, title = "下士", limit = 30, desc = "称号：下士、修为丹（小）*10、千年玄铁*88", items = {{"修为丹（小）", 10}, {"千年玄铁", 88}}},
             {level = 100, title = "军士长", limit = 10, desc = "称号：军士长、仙法卷轴残页*5、千年玄铁*138", items = {{"仙法卷轴残页", 5}, {"千年玄铁", 138}}},
             {level = 120, title = "大校", limit = 3, desc = "称号：大校、仙法卷轴*1、千年玄铁*188", items = {{"仙法卷轴", 1}, {"千年玄铁", 188}}},
-            {level = 150, title = "统帅", limit = 1, desc = "称号：统帅、仙法卷轴*5、五行石*10", items = {{"仙法卷轴", 5}, {"五行石", 10}}},
+            {level = 150, title = "统帅", limit = 1, desc = "称号：统帅、仙法卷轴*3、五行石*10", items = {{"仙法卷轴", 3}, {"五行石", 10}}},
         },
     },
     ["npc_520"] = {

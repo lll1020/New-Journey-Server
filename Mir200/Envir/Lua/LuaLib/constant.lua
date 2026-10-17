@@ -177,8 +177,8 @@ constant.rw_syb = {
     [27] = {20, "杀伐之路", task = {kind = "story", tk = "npc_605", yd = {1, "杀伐道场", 605, 103, 53}, auto = true, need_receive = true}, jx = true},
     --打开顶部灵兽入口，领取灵兽幼崽完成灵兽孵化任务
     [28] = {20, "灵兽孵化", task = {kind = "lingshou_hatched", yd = {4, 105, 64, 1064}}, jx = true},
-    --进入乱葬岗，收集并提交唐三彩*5
-    [29] = {20, "掘墓人", task = {kind = "story", tk = "npc_610", yd = {1, "乱葬岗", 610, 170, 212}, auto = true}, sjwp = {["唐三彩"] = 5}, jx = true},
+    --进入乱葬岗，收集并提交唐三彩*10
+    [29] = {20, "掘墓人", task = {kind = "story", tk = "npc_610", yd = {1, "乱葬岗", 610, 170, 212}, auto = true}, sjwp = {["唐三彩"] = 10}, jx = true},
     --前往二大陆主城轩辕剑 NPC，提交材料修复轩辕剑
     [30] = {20, "修复轩辕剑", task = {kind = "xuanyuan_fixed", yd = {1, "二大陆主城", 601, 91, 116}}, sjwp = {["首山之铜"] = 1, ["天女纯阳之力"] = 1, ["五色神石"] = 1}, jx = true},
     --进入夜魔洞并接取任务，击杀10只红名怪完成讨伐夜魔

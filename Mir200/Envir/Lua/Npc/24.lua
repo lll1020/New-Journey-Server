@@ -995,8 +995,8 @@ function xianfa_refresh(actor, new_group, new_idx)
             end
         elseif name == "ÉñÊŞ´óµÛ" then
             ls_count3 = ls_count3 or get_ls_count(3)
-            _add_attr(attrs, 73, 300 + (ls_count3 * 500))
-            _add_attr(attrs, 89, 300 + (ls_count3 * 500))
+            _add_attr(attrs, 73, 300 + (ls_count3 * 300))
+            _add_attr(attrs, 89, 300 + (ls_count3 * 300))
         elseif name == "¶ÀÀÇ" then
             if not in_group then
                 _add_attr(attrs, 245, 1000)

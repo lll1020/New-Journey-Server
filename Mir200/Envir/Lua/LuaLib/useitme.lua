@@ -1,11 +1,15 @@
 release_print("useitme.lua")
-local RANDOM_TRANSFER_WINDOW_SEC = 3
-local RANDOM_TRANSFER_WINDOW_LIMIT = 3
-local RANDOM_TRANSFER_CD = 3
-local RETURN_STONE_WINDOW_SEC = 5
-local RETURN_STONE_WINDOW_LIMIT = 3
-local RETURN_STONE_CD = 3
 local _equip_slots = {0,1,3,4,5,6,7,8,9,10,11,13,14,16,30,31,32,33,34,35,36,37,38,39,40,41}
+local function _item_use_locked(play, key)
+    return tonumber(getplaydef(play, key) or 0) == 1
+end
+function random_transfer_item_use_unlock(play) setplaydef(play, "N$随机石使用锁", 0) end
+function return_stone_item_use_unlock(play) setplaydef(play, "N$回城石使用锁", 0) end
+local function _lock_item_use(play, key, callback)
+    setplaydef(play, key, 1)
+    delaygoto(play, 300, callback)
+end
+
 local function _has_equip_name(play, itemname)
     if not play or not itemname or itemname == "" then
         return false
@@ -17,91 +21,23 @@ local function _has_equip_name(play, itemname)
     end
     return false
 end
-local function _random_transfer_cd_left(play, now)
-    local nextTime = tonumber(getplaydef(play, "N$随机传送CD") or 0) or 0
-    local left = nextTime - (now or os.time())
-    return left > 0 and left or 0
-end
-local function _return_stone_cd_left(play, now)
-    local nextTime = tonumber(getplaydef(play, "N$回城石CD") or 0) or 0
-    local left = nextTime - (now or os.time())
-    return left > 0 and left or 0
-end
-local function _record_return_stone_use(play, now)
-    now = now or os.time()
-    local windowStart = tonumber(getplaydef(play, "N$回城石窗口开始时间") or 0) or 0
-    local useCount = tonumber(getplaydef(play, "N$回城石窗口次数") or 0) or 0
-    if windowStart <= 0 or now - windowStart >= RETURN_STONE_WINDOW_SEC then
-        windowStart = now
-        useCount = 0
-    end
-    useCount = useCount + 1
-    setplaydef(play, "N$回城石窗口开始时间", windowStart)
-    setplaydef(play, "N$回城石窗口次数", useCount)
-    if useCount >= RETURN_STONE_WINDOW_LIMIT then
-        setplaydef(play, "N$回城石CD", now + RETURN_STONE_CD)
-        setplaydef(play, "N$回城石窗口开始时间", 0)
-        setplaydef(play, "N$回城石窗口次数", 0)
-    end
-end
 local function _pk_combat_left(play, now)
     now = now or os.time()
     local left = (tonumber(getplaydef(play, "N$PK脱战") or 0) or 0) - now
     return left > 0 and math.ceil(left) or 0
 end
-local function _is_random_transfer_free_map(play)
-    local mapName = tostring(getbaseinfo(play, 3) or "")
-    if mapName == "" then
-        return false
-    end
-    local activityRoot = teshudata and teshudata["anniu_507"] or {}
-    local activityKeys = {"qmdt", "qmdk", "hdjd", "bwcz", "mskh", "sjdb"}
-    for _, key in ipairs(activityKeys) do
-        local cfg = activityRoot[key]
-        if type(cfg) == "table" and tostring(cfg.map or "") == mapName then
-            return true
-        end
-    end
-    if QmdtApi and QmdtApi.is_timer_map and QmdtApi.is_timer_map(mapName) then
-        return true
-    end
-    return mapName == "比武大会" or mapName == "xtc"
-end
-local function _record_random_transfer_use(play, now)
-    now = now or os.time()
-    local windowStart = tonumber(getplaydef(play, "N$随机传送窗口开始时间") or 0) or 0
-    local useCount = tonumber(getplaydef(play, "N$随机传送窗口次数") or 0) or 0
-    if windowStart <= 0 or now - windowStart >= RANDOM_TRANSFER_WINDOW_SEC then
-        windowStart = now
-        useCount = 0
-    end
-    useCount = useCount + 1
-    setplaydef(play, "N$随机传送窗口开始时间", windowStart)
-    setplaydef(play, "N$随机传送窗口次数", useCount)
-    if useCount >= RANDOM_TRANSFER_WINDOW_LIMIT then
-        setplaydef(play, "N$随机传送CD", now + RANDOM_TRANSFER_CD)
-        setplaydef(play, "N$随机传送窗口开始时间", 0)
-        setplaydef(play, "N$随机传送窗口次数", 0)
-    end
-end
 --------------------双击物品触发-------------------随机石
 function stdmodefunc9(play, item)
     setplaydef(play,"S$dtm",getbaseinfo(play, 3))
     release_print("随机石")
+
     local now = os.time()
-    local freeActivityMap = _is_random_transfer_free_map(play)
-    if not freeActivityMap then
-        local cdLeft = _random_transfer_cd_left(play, now)
-        if cdLeft > 0 then
-            sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>随机传送冷却中,剩余' .. math.max(1, math.ceil(cdLeft)) .. '秒</font>","Type":9}')
-            return false
-        end
+    if _item_use_locked(play, "N$随机石使用锁") then
+        return false
     end
     if getplaydef(play,"N$PK脱战") < now or _has_equip_name(play, "遮云日") then
         map(play,getbaseinfo(play,3))
-        if not freeActivityMap then
-            _record_random_transfer_use(play, now)
-        end
+        _lock_item_use(play, "N$随机石使用锁", "@random_transfer_item_use_unlock")
         -- if getflagstatus(play, 300) == 1 then
         --     startautoattack(play)
         -- end
@@ -118,10 +54,9 @@ end
 function stdmodefunc10(play, item)
     setplaydef(play,"S$dtm",getbaseinfo(play, 3))
     local du = getbaseinfo(play, 3)
+
     local now = os.time()
-    local cdLeft = _return_stone_cd_left(play, now)
-    if cdLeft > 0 then
-        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>不要过于频繁回城！还剩下' .. math.max(1, math.ceil(cdLeft)) .. '秒才可以回城！</font>","Type":9}')
+    if _item_use_locked(play, "N$回城石使用锁") then
         return false
     end
     if getplaydef(play,"N$PK脱战") < now or _has_equip_name(play, "遮云日") then
@@ -167,7 +102,7 @@ function stdmodefunc10(play, item)
             addhpper(play, '=', 100)
             addmpper(play, '=', 100)
         end
-        _record_return_stone_use(play, now)
+        _lock_item_use(play, "N$回城石使用锁", "@return_stone_item_use_unlock")
     else
         sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>战斗中不能传送,剩余' .. math.max(1, _pk_combat_left(play, now)) .. '秒</font>","Type":9}')
     end

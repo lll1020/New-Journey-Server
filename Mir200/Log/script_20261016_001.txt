@@ -73,3 +73,27 @@
 
 [2026-10-17 05:54:20:798] LuaNPC:玩家名字 ID:999999999 执行 stdmodefunc10 player:玩家名字 耗时：32; NpcThreadId: 5996, CurPlayThreadId: 5996
 
+[2026-10-17 19:00:29:233] LuaNPC: ID:999999999 执行 ontimerex1 player: 耗时：31; NpcThreadId: 5996, CurPlayThreadId: 5996
+
+[2026-10-17 22:44:11:093] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：31; NpcThreadId: 5996, CurPlayThreadId: 5996
+
+[2026-10-18 00:00:00:667] LuaNPC:玩家名字 ID:999999999 执行 resetday player:玩家名字 耗时：94; NpcThreadId: 5996, CurPlayThreadId: 5996
+
+[2026-10-18 00:00:26:993] LuaNPC:玩家名字 ID:999999999 执行 ontimer6 player:玩家名字 耗时：47; NpcThreadId: 5996, CurPlayThreadId: 5996
+
+[2026-10-18 00:35:32:053] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：110; NpcThreadId: 5996, CurPlayThreadId: 5996
+[2026-10-18 00:35:35:847] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：62; NpcThreadId: 5996, CurPlayThreadId: 5996
+
+[2026-10-18 00:59:28:060] LuaNPC:玩家名字 ID:999999999 执行 ontimer6 player:玩家名字 耗时：1062; NpcThreadId: 5996, CurPlayThreadId: 5996
+
+[2026-10-18 01:02:09:196] LuaNPC:玩家名字 ID:999999999 执行 entermap player:玩家名字 耗时：547; NpcThreadId: 5996, CurPlayThreadId: 5996
+
+[2026-10-18 01:02:34:915] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：1406; NpcThreadId: 5996, CurPlayThreadId: 5996
+
+[2026-10-18 01:11:37:994] LuaNPC:玩家名字 ID:999999999 执行 entermap player:玩家名字 耗时：2437; NpcThreadId: 5996, CurPlayThreadId: 5996
+
+[2026-10-18 01:11:54:965] LuaNPC:玩家名字 ID:999999999 执行 clicknpc player:玩家名字 耗时：31; NpcThreadId: 5996, CurPlayThreadId: 5996
+
+[2026-10-18 01:54:55:324] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：47; NpcThreadId: 5996, CurPlayThreadId: 5996
+[2026-10-18 01:54:55:878] LuaNPC:玩家名字 ID:999999999 执行 ontimer5 player:玩家名字 耗时：63; NpcThreadId: 5996, CurPlayThreadId: 5996
+
