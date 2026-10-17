@@ -3201,6 +3201,7 @@ local function _buildLookTianshuPayload(actor)
     T_data.caowei = T_data.caowei or {}
     return {
         T_data = T_data,
+        actor_level = tonumber(getbaseinfo(actor, ConstCfg.gbase.level) or 0) or 0,
         xianfa_all_unlock = checktitle(actor, "°Ë»ÄÁùºÏÎÒÎª×ğ") and 1 or 0,
     }
 end
