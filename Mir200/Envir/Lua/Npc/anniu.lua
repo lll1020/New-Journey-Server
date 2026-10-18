@@ -66,6 +66,7 @@ end
 local _fashionConfig1002 = Guard.getConfig("npc_1002")
 local _linggenConfig22 = Guard.getConfig("npc_22")
 local FairyFate = include("lua/LuaLib/fairy_fate.lua")
+local TalentTree = rawget(_G, "TalentTree") or include("lua/LuaLib/talent_tree.lua")
 local _fashionAttrListName = "时装属性"
 local function _refreshFashionAttr(play, T_data)
     T_data = T_data or Player.getJsonTableByVar(play, VarCfg.T_szjl)
@@ -3211,7 +3212,8 @@ npc[1004] = function(play, p2, p3, msg) --排行榜查询
         local dx = getplayerbyid(msg)
         if dx then
             Player.sendmsgEx(dx, 1, '{"BColor":249,"FColor":255,"Msg":"<outline size=\'1\'><font color=\'#FFFF00\'></font>玩家<font color=\'#00ff00\'>[' .. getbaseinfo(play, 1) .. ']</font>正在偷偷观察你</outline>","Type":1}')
-            local linggen = Player.getJsonTableByVar(dx, VarCfg["T_灵根"]) or {}
+            local linggen = TalentTree and TalentTree.getState and TalentTree.getState(dx) or {}
+            linggen.lookPlayer = 1
             local jingjie = _buildLookJingjiePayload(dx)
             local tianshu = _buildLookTianshuPayload(dx)
             jingjie.lookPlayer = 1
