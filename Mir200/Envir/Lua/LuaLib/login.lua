@@ -66,6 +66,10 @@ function Login.main(play)
         setplaydef(play,VarCfg.T_tshs,"{}")--特殊回收
         setplaydef(play,VarCfg.T_rwsg,"{}")--特殊任务杀怪
         setplaydef(play,VarCfg.T_dlsgjl,"{}")--大陆杀怪数量
+        local origin_account = tostring(getconst(play, "<$USERACCOUNT>") or "")
+        if origin_account ~= "" then
+            setplaydef(play, VarCfg.T_transfer_origin_account or "T75", origin_account)
+        end
         setplaydef(play, VarCfg["U_登录天数"], 1)
         local T_txzr = {}
         for i = 1 ,4 do

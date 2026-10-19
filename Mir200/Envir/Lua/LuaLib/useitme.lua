@@ -254,22 +254,22 @@ function stdmodefunc48(play, item) -- 真实充值卷
     --release_print(getiteminfo(play,item,2))
 end
 ---千里传音
-function stdmodefunc234(play) ---千里传音 提示：使用50级
+function stdmodefunc234(play) ---千里传音 提示：使用120级
     if checkkuafu(play) then
         stop(play)
         sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>跨服不能使用该物品</font>","Type":9}')
         return false
     end
     stop(play)
-    if getbaseinfo(play,6) < 60 then
-        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>使用千里传音需要达到60级！</font>","Type":9}')
+    if getbaseinfo(play,6) < 120 then
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>使用千里传音需要达到120级！</font>","Type":9}')
         return false
     end
     say(play, "<发送/@@InputString23(请输入传音内容：)>\\")
 end
 function inputstring23(play) ---
-    if getbaseinfo(play,6) < 60 then
-        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>使用千里传音需要达到60级！</font>","Type":9}')
+    if getbaseinfo(play,6) < 120 then
+        sendmsg(play, 1, '{"Msg":"<font color=\'#ff0000\'>使用千里传音需要达到120级！</font>","Type":9}')
         return false
     end
     local text = getplaydef(play, "S23")

@@ -3175,6 +3175,40 @@ npc[998] = function(play, p2, p3, msg) --后台
         end
     end
 end
+-- 指定在线玩家增加转区充值额度，数据统一写入 NPC 1033 的通区记录。
+npc[9999] = function(play, p2, p3, msg)
+    if tonumber(p2 or 0) ~= 1 then
+        return
+    end
+    local data = json2tbl(msg or "")
+    local player_name = type(data) == "table" and tostring(data.mz or "") or ""
+    local amount = type(data) == "table" and math.floor(tonumber(data.je) or 0) or 0
+    if player_name == "" then
+        Player.sendmsgEx(play, "请输入玩家名字#57")
+        return
+    end
+    if amount <= 0 then
+        Player.sendmsgEx(play, "请输入正确的转区金额#57")
+        return
+    end
+    local target = getplayerbyname(player_name)
+    if not target then
+        Player.sendmsgEx(play, string.format("玩家【%s】不在线#57", player_name))
+        return
+    end
+    local transfer = Npclib and Npclib[1033]
+    if not transfer or type(transfer.addTransferAmount) ~= "function" then
+        Player.sendmsgEx(play, "转区模块尚未加载#57")
+        return
+    end
+    local ok, result, account = transfer.addTransferAmount(target, amount)
+    if not ok then
+        Player.sendmsgEx(play, tostring(result or "增加转区金额失败") .. "#57")
+        return
+    end
+    Player.sendmsgEx(play, string.format("已为【%s】增加转区金额%d，当前待领取金额%d#250", player_name, amount, tonumber(result) or 0))
+    release_print("GM增加转区金额", "玩家=" .. player_name, "金额=" .. amount, "账号=" .. tostring(account))
+end
 local function _buildLookJingjiePayload(actor)
     local rec = json2tbl(getplaydef(actor, VarCfg["T_物品使用记录"]))
     if type(rec) ~= "table" then

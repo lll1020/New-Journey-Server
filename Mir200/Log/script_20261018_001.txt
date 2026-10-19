@@ -23,3 +23,26 @@
 
 [2026-10-18 07:18:30:739] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：31; NpcThreadId: 41652, CurPlayThreadId: 41652
 
+[2026-10-18 12:30:30:987] LuaNPC:玩家名字 ID:999999999 执行 ontimer6 player:玩家名字 耗时：78; NpcThreadId: 41652, CurPlayThreadId: 41652
+
+[2026-10-18 12:31:31:264] LuaNPC:玩家名字 ID:999999999 执行 ontimer6 player:玩家名字 耗时：203; NpcThreadId: 41652, CurPlayThreadId: 41652
+
+[2026-10-18 14:18:30:806] LuaNPC:玩家名字r ID:999999999 执行 sendability player:玩家名字r 耗时：31; NpcThreadId: 41652, CurPlayThreadId: 41652
+
+[2026-10-19 05:52:53:175] LuaNPC:玩家名字r ID:999999999 执行 ontimer5 player:玩家名字r 耗时：32; NpcThreadId: 41652, CurPlayThreadId: 41652
+
+[2026-10-19 15:54:18:284] LuaNPC:玩家名字r ID:999999999 执行 login player:玩家名字r 耗时：203; NpcThreadId: 41652, CurPlayThreadId: 41652
+
+[2026-10-19 17:04:17:502] .\Envir\QuestDiary/cfg_gm_box.lua time：937
+
+[2026-10-19 17:04:21:499] .\Envir\lua/Data/talent_tree_cfg.lua time：921
+[2026-10-19 17:04:22:515] .\Envir\lua/Data/talent_tree_box.lua time：297
+[2026-10-19 17:04:22:515] .\Envir\lua/LuaLib/talent_tree_box.lua time：969
+
+[2026-10-19 17:04:27:459] .\Envir\lua/LuaLib/fairy_fate.lua time：282
+
+[2026-10-19 17:04:43:592] LuaNPC:玩家名字r ID:999999999 执行 clicknpc player:玩家名字r 耗时：281; NpcThreadId: 41652, CurPlayThreadId: 41652
+
+[2026-10-19 17:05:02:119] LuaNPC:玩家名字r ID:999999999 执行 handlerequest player:玩家名字r 耗时：31; NpcThreadId: 41652, CurPlayThreadId: 41652
+[2026-10-19 17:05:02:119] [玩家名字r]Lua执行耗时过高:31ms msgid:101 9999 1 0 {"mz":"玩家名字r","je":1000}
+

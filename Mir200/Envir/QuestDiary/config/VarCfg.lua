@@ -197,6 +197,7 @@ VarCfg["T_新区冲级"]           = "T71"                                          
 VarCfg["T_登神之路"]           = "T72"                                                                         --登神之路  
 VarCfg["T_称号等级奖励"]           = "T73"                                                                         --T_称号等级奖励
 VarCfg.T_talent_tree                         = "T74"                  -- New talent tree state
+VarCfg.T_transfer_origin_account             = "T75"                  -- 角色创建时的原始账号，用于转区归属校验
 VarCfg.S_cur_mapid                           = "S99"                 --当前所在地图id，切换地图时候获取上一次的地图id
 --引擎变量 M
 VarCfg["M_标识"]                  = "M1"                 --M_标识
