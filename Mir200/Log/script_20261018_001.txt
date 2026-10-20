@@ -46,3 +46,19 @@
 [2026-10-19 17:05:02:119] LuaNPC:玩家名字r ID:999999999 执行 handlerequest player:玩家名字r 耗时：31; NpcThreadId: 41652, CurPlayThreadId: 41652
 [2026-10-19 17:05:02:119] [玩家名字r]Lua执行耗时过高:31ms msgid:101 9999 1 0 {"mz":"玩家名字r","je":1000}
 
+[2026-10-19 18:23:16:275] LuaNPC:玩家名字r ID:999999999 执行 clicknpc player:玩家名字r 耗时：610; NpcThreadId: 41652, CurPlayThreadId: 41652
+
+[2026-10-19 18:24:48:692] LuaNPC:玩家名字r ID:999999999 执行 clicknpc player:玩家名字r 耗时：47; NpcThreadId: 41652, CurPlayThreadId: 41652
+
+[2026-10-19 18:34:19:130] LuaNPC:玩家名字r ID:999999999 执行 ontimer6 player:玩家名字r 耗时：406; NpcThreadId: 41652, CurPlayThreadId: 41652
+
+[2026-10-19 18:39:22:265] LuaNPC:玩家名字r ID:999999999 执行 ontimer5 player:玩家名字r 耗时：47; NpcThreadId: 41652, CurPlayThreadId: 41652
+
+[2026-10-19 18:44:57:359] LuaNPC:玩家名字r ID:999999999 执行 entermap player:玩家名字r 耗时：766; NpcThreadId: 41652, CurPlayThreadId: 41652
+
+[2026-10-19 20:37:44:792] LuaNPC:玩家名字r ID:999999999 执行 clicknpc player:玩家名字r 耗时：422; NpcThreadId: 41652, CurPlayThreadId: 41652
+
+[2026-10-19 22:00:00:118] LuaNPC:系统控制 ID:999999999 执行 jqr_wudaohui_end player:系统控制 耗时：31; NpcThreadId: 41652, CurPlayThreadId: 41652
+
+[2026-10-20 00:00:00:598] LuaNPC:玩家名字r ID:999999999 执行 resetday player:玩家名字r 耗时：31; NpcThreadId: 41652, CurPlayThreadId: 41652
+
