@@ -395,6 +395,9 @@ function npc.link(play,npcid,ew,aid,data)
             end
             T_data["caowei"] = T_data["caowei"] or {}
             local slot_key = ""..slot
+            local currentMainline = tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0
+            local refreshCount = tonumber(T_data.xianfa_refresh_count or 0) or 0
+            local isMainlineGuideRefresh = currentMainline == 18 and refreshCount < 3
 
             local force_xianpin = tonumber(aid) == 2
             local weight = cfg.weight
@@ -422,11 +425,21 @@ function npc.link(play,npcid,ew,aid,data)
 
             local max_group = (redBonus > 0) and 5 or 3
             local first_slot_blue_purple = (slot == 1 and not force_xianpin)
-            if first_slot_blue_purple then
+            if isMainlineGuideRefresh and refreshCount < 2 then
+                weight = "1#1"
+                max_group = 1
+            elseif isMainlineGuideRefresh then
+                weight = "2#1|3#1"
+                max_group = 3
+            elseif first_slot_blue_purple then
                 -- 第一个仙法槽位普通刷新只从蓝色、紫色仙法中等权随机，仍使用原有非重复与保底记录。
                 weight = "2#1|3#1"
             end
-            local randomNum, idx = _xianfa_roll_non_repeat(T_data, slot, weight, max_group, force_xianpin and 5 or nil)
+            local force_group = nil
+            if not isMainlineGuideRefresh and force_xianpin then
+                force_group = 5
+            end
+            local randomNum, idx = _xianfa_roll_non_repeat(T_data, slot, weight, max_group, force_group)
             if not randomNum or not idx then
                 Player.sendmsgEx(play, "当前已没有可抽取的新仙法，请先更换槽位或调整已有仙法#57")
                 return
@@ -472,13 +485,18 @@ function npc.link(play,npcid,ew,aid,data)
             xianfa_refresh(play)
 
             xianfa_add(play,randomNum,idx)
-            local currentMainline = tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0
-            if currentMainline == 20 then
+            if currentMainline == 18 or currentMainline == 20 then
                 T_data.xianfa_refresh_count = (tonumber(T_data.xianfa_refresh_count or 0) or 0) + 1
                 Player.setJsonVarByTable(play, VarCfg["T_天书"], T_data)
-                newchangetask(play, 20, T_data.xianfa_refresh_count)
+                newchangetask(play, currentMainline, T_data.xianfa_refresh_count)
+                _try_finish_mainline_task(play, currentMainline)
             end
-            _try_finish_mainline_task(play, 18)
+            if isMainlineGuideRefresh and (tonumber(T_data.xianfa_refresh_count or 0) or 0) >= 3
+                and tonumber(T_data.xianfa_guide_refresh_notice or 0) ~= 1 then
+                T_data.xianfa_guide_refresh_notice = 1
+                Player.setJsonVarByTable(play, VarCfg["T_天书"], T_data)
+                messagebox(play, "前3次引导刷新已经完成！6元首充即刻获得3个仙法卷轴！还有超多奖励、炫酷时装，等你来拿！")
+            end
             sendluamsg(play,100,npcid,2,0,tbl2json(_build_npc24_payload(play, T_data)))
             sendluamsg(play,100,npcid,10,0,tbl2json({ ["group"] = randomNum,["idx"] = idx} ))
         else

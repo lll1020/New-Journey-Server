@@ -1,14 +1,9 @@
 --------------------领取任务触发-------------------
-local ZXRW_MAINLINE_END_ID = 41
+local ZXRW_MAINLINE_END_ID = 43
 local ZXRW_MAINLINE_NEXT = {
-    [17] = 19,
     [29] = 31,
-    [31] = 33,
-    [33] = 32,
-    [32] = 34,
 }
 local ZXRW_DEPRECATED_MAINLINE_NEXT = {
-    [18] = 19,
     [30] = 31,
 }
 
@@ -267,8 +262,12 @@ local function _zxrw_has_xuanyuan_fixed(play)
     local title = cfg and cfg.details and cfg.details.ch
     return title and checktitle(play, title) or false
 end
-local function _zxrw_has_foundation_realm(play)
-    return (tonumber(getplaydef(play, "U28") or 0) or 0) >= 10
+local function _zxrw_has_foundation_realm(play, need)
+    return (tonumber(getplaydef(play, "U28") or 0) or 0) >= (tonumber(need) or 10)
+end
+local function _zxrw_has_foundation_pill_crafted(play)
+    local record = Player.getJsonTableByVar(play, VarCfg["T_物品使用记录"]) or {}
+    return tonumber(record.jz_dan_crafted or 0) == 1
 end
 local function _zxrw_has_rebirth(play, level)
     return (tonumber(getplaydef(play, VarCfg["U_转生等级"]) or 0) or 0) >= (tonumber(level or 1) or 1)
@@ -331,7 +330,9 @@ local function _zxrw_main_task_done(play, taskCfg)
     elseif kind == "xuanyuan_fixed" then
         return _zxrw_has_xuanyuan_fixed(play)
     elseif kind == "foundation_realm" then
-        return _zxrw_has_foundation_realm(play)
+        return _zxrw_has_foundation_realm(play, taskCfg.need)
+    elseif kind == "foundation_pill_crafted" then
+        return _zxrw_has_foundation_pill_crafted(play)
     elseif kind == "rebirth" then
         return _zxrw_has_rebirth(play, taskCfg.level)
     elseif kind == "items" then
@@ -355,6 +356,7 @@ local _zxrw_close_window_by_kind = {
     lingshou_hatched = 64,
     xuanyuan_fixed = 601,
     foundation_realm = 21,
+    foundation_pill_crafted = 604,
     rebirth = 32,
 }
 local function _zxrw_close_mainline_window(play, taskCfg)
@@ -502,7 +504,8 @@ local function _zxrw_guide_main_task(play, rwid, xylCfg)
         end
         return true
     elseif yd[1] == 3 then
-        sendluamsg(play, 101, 0, 1, 1, '{"lx":3,"rwid":' .. tostring(rwid) .. '}')
+        local guideRwid = tonumber(rwid) == 18 and 20 or rwid
+        sendluamsg(play, 101, 0, 1, 1, '{"lx":3,"rwid":' .. tostring(guideRwid) .. '}')
         return true
     elseif yd[1] == 4 then
         local btn = tonumber(yd[3]) or tonumber(yd[2]) or 0
@@ -517,7 +520,7 @@ local function _zxrw_auto_mainline_map_task(play)
     local taskCfg = _zxrw_get_main_task_cfg(rwid)
     local xylCfg = taskCfg
     local yd = xylCfg and xylCfg.yd
-    if not (xylCfg and xylCfg.auto and type(yd) == "table" and yd[1] == 1) then
+    if not (xylCfg and type(yd) == "table" and yd[1] == 1) then
         return
     end
     if _zxrw_main_task_done(play, taskCfg) then
@@ -526,7 +529,7 @@ local function _zxrw_auto_mainline_map_task(play)
     if tostring(getbaseinfo(play, 3)) ~= tostring(yd[2]) then
         return
     end
-    if _zxrw_story_need_fight(play, xylCfg) then
+    if xylCfg.auto and _zxrw_story_need_fight(play, xylCfg) then
         _zxrw_ensure_story_started(play, xylCfg)
         startautoattack(play)
     else
@@ -587,7 +590,7 @@ local function _zxrw_register_sjwp_progress(play, rwid)
 end
 
 local function _zxrw_has_ancient_temple_materials(play)
-    local cfg = constant.rw_syb[33]
+    local cfg = constant.rw_syb[35]
     if not (cfg and type(cfg.sjwp) == "table") then
         return false
     end
@@ -601,7 +604,7 @@ local function _zxrw_has_ancient_temple_materials(play)
 end
 
 local function _zxrw_on_add_bag(play, item)
-    if not play or tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) ~= 33 then
+    if not play or tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) ~= 35 then
         return
     end
 
@@ -621,8 +624,60 @@ end
 
 GameEvent.add(EventCfg.onAddBag, _zxrw_on_add_bag, "zxrw_npc_609_material_complete")
 
+local function _zxrw_migrate_foundation_task_ids(play)
+    local history = json2tbl(getplaydef(play, VarCfg.T_rwjl))
+    history = type(history) == "table" and history or {}
+    local marker = "mainline_shift_32_34_v1"
+    if history[marker] then
+        return
+    end
+
+    local currentRwid = tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) or 0
+    local hasPassedFoundation = currentRwid >= 33
+        or history["33"] == true or history["34"] == true
+
+    local shiftHistory = currentRwid >= 33
+    for oldId = 33, 41 do
+        if history[tostring(oldId)] ~= nil then
+            shiftHistory = true
+            break
+        end
+    end
+    if shiftHistory then
+        for oldId = 41, 33, -1 do
+            local oldKey = tostring(oldId)
+            if history[oldKey] ~= nil then
+                history[tostring(oldId + 2)] = history[oldKey]
+                history[oldKey] = nil
+            end
+        end
+        if currentRwid >= 33 then
+            currentRwid = currentRwid + 2
+            setplaydef(play, VarCfg.U_zxrw[1], currentRwid)
+            setplaydef(play, VarCfg.U_zxrw[2], 0)
+        end
+    end
+
+    if hasPassedFoundation then
+        history["33"] = true
+        history["34"] = true
+        local useRecord = Player.getJsonTableByVar(play, VarCfg["T_物品使用记录"]) or {}
+        if tonumber(useRecord.jz_dan_crafted or 0) ~= 1 then
+            useRecord.jz_dan_crafted = 1
+            Player.setJsonVarByTable(play, VarCfg["T_物品使用记录"], useRecord)
+        end
+    end
+
+    history[marker] = true
+    setplaydef(play, VarCfg.T_rwjl, tbl2json(history))
+    if currentRwid >= 33 then
+        sendluamsg(play, 103, 1, 0, 0, '{"rwid":' .. tostring(currentRwid) .. '}')
+    end
+end
+
 function task_login(play)
     ---------------------------------------------------任务初始化
+    _zxrw_migrate_foundation_task_ids(play)
     _zxrw_skip_deprecated_mainline(play)
     _zxrw_migrate_mainline_17_history(play)
     local rwid = getplaydef(play,VarCfg.U_zxrw[1])
@@ -1124,7 +1179,7 @@ function deletetask(play,rwid)
     end
 end
 rwcf = {
-    [503] = {35},
+    [503] = {37},
     [32] = {15},
     [516] = {4},
     [502] = {16},

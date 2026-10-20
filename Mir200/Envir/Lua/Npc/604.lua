@@ -1,84 +1,50 @@
 npc = {}
---剿灭恶徒（剧）
---
--- local _config = Guard.getConfig("npc_604")
--- function npc.main(play,npcid)
-    -- if not _config then
-        -- return
-    -- end
-    -- local data = {}
-    -- data["sg_data"] = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
-    -- data["jq_data"] = Player.getJsonTableByVar(play, VarCfg.T_dljq)
-    -- sendluamsg(play,100,npcid,0,0,tbl2json(data))
--- end
---
--- function npc.link(play,npcid,ew,aid)
-    -- if not _config then
-        -- return
-    -- end
-    -- npc_guard: 入参校验
-    -- if not Guard.ensurePlayer(play, npcid) then
-        -- return
-    -- end
-    -- local __guardAction = Guard.normalizeAction(play, npcid, ew)
-    -- if __guardAction == nil then
-        -- return
-    -- end
-    -- ew = __guardAction
-    -- npc_guard: 操作白名单（优化：限定合法操作编号）
-    -- local __guardAllowedActions = Guard.newActionSet({1, 2})
-    -- if not Guard.ensureActionAllowed(play, npcid, ew, __guardAllowedActions) then
-        -- return
-    -- end
---
-    -- local sg_data = Player.getJsonTableByVar(play, VarCfg["T_各剧情杀怪"])
-    -- local jq_data = Player.getJsonTableByVar(play, VarCfg.T_dljq)
-    -- local key = "npc_604"
-    -- local key_a = key.."_a"
-    -- local key_b = key.."_b"
-    -- if jq_data[key] and jq_data[key] >= 2 then
-        -- Player.sendmsgEx(play, "你还没有完成#57|【"..(_config.name or "任务").."】#218|")
-        -- return
-    -- end
-    -- if ew == 1 then
-        -- if jq_data[key] and jq_data[key] == 1 then
-            -- Player.sendmsgEx(play, "你已经完成#57|【"..(_config.name or "任务").."】#218|")
-            -- return
-        -- end
-        -- jq_data[key] = 1
-        -- Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-        -- Player.sendmsgEx(play, "领取|【"..(_config.name or "任务").."】#218|")
-        -- shaguai.jia(play, _config.shaguai_id or 604)
-        -- sendluamsg(play,101,1005,0,0,"rwjs")
-        -- sendluamsg(play,100,npcid,1,1,"")
-        -- Guard.closeNpcAndAuto(play, npcid)
-    -- elseif ew == 2 then
-        -- if jq_data[key] and jq_data[key] == 1 then
-            -- if (sg_data[key_a] or 0) >= (_config.num_a or 0) and (sg_data[key_b] or 0) >= (_config.num_b or 0) then
-                -- jq_data[key] = 2
-                -- if (jq_data[key] or 0) >= 2 then
-                    -- Guard.clearTaskTemp(jq_data, key)
-                    -- jq_data[key] = 2
-                -- end
-                -- Player.setJsonVarByTable(play, VarCfg.T_dljq, jq_data)
-                -- Player.sendmsgEx(play, "|【"..(_config.name or "任务").."】#218|完成")
-                -- sendluamsg(play,101,1005,0,0,"rwwc")
-                -- Player.rwjl(play, _config.rwjl or {{"绑定元宝",1},{"绑定金币",1}}, (_config.name or "剧情任务").."奖励", 1)
-                -- if _config.ch then
-                    -- Player.title_give(play, _config.ch)
-                    -- Player.sendmsgEx(play, "恭喜获得称号|【".._config.ch.."】#218|")
-                -- end
-                -- sendluamsg(play,100,npcid,1,2,"")
-                -- Guard.closeNpc(play, npcid)
-            -- else
-                -- Player.sendmsgEx(play, "你还没有完成#57|【"..(_config.name or "任务").."】#218|")
-                -- Guard.closeNpcAndAuto(play, npcid)
-                -- return
-            -- end
-        -- else
-            -- Player.sendmsgEx(play, "你还没有领取#57|【"..(_config.name or "任务").."】#218|")
-            -- return
-        -- end
-    -- end
--- end
+
+local COST = {{"筑基丹碎片", 10}, {"灵气符文", 5}, {"金币", 500000}}
+
+local function _get_count(play, name)
+    return tonumber(getbagitemcount(play, name) or 0) or 0
+end
+
+local function _build_data(play)
+    return {
+        fragment = _get_count(play, "筑基丹碎片"),
+        rune = _get_count(play, "灵气符文"),
+        gold = _get_count(play, "金币"),
+        need = {fragment = 10, rune = 5, gold = 500000},
+    }
+end
+
+local function _send_data(play, npcid, p2)
+    sendluamsg(play, 100, npcid, p2 or 0, 0, tbl2json(_build_data(play)))
+end
+
+function npc.main(play, npcid)
+    _send_data(play, npcid, 0)
+end
+
+function npc.link(play, npcid, ew)
+    if tonumber(ew or 0) ~= 1 then
+        return
+    end
+    local name, num = Player.checkItemNumByTable(play, COST)
+    if name then
+        Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", name, num))
+        _send_data(play, npcid, 1)
+        return
+    end
+    Player.takeItemByTable(play, COST, ",合成筑基丹", nil)
+    giveitem(play, "筑基丹", 1)
+    local record = Player.getJsonTableByVar(play, VarCfg["T_物品使用记录"]) or {}
+    if tonumber(record.jz_dan_crafted or 0) ~= 1 then
+        record.jz_dan_crafted = 1
+        Player.setJsonVarByTable(play, VarCfg["T_物品使用记录"], record)
+    end
+    Player.sendmsgEx(play, "合成成功，获得#250|【筑基丹*1】#218|")
+    if zxrw_try_finish_current_mainline then
+        zxrw_try_finish_current_mainline(play, "任务")
+    end
+    _send_data(play, npcid, 1)
+end
+
 return npc

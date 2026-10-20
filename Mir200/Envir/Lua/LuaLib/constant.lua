@@ -154,13 +154,13 @@ constant.rw_syb = {
     [16] = {2,"xtc",502,125,146,jx = true},
     --二大陆主线任务：走 task.lua 主线逻辑，不再依赖 xyl 当前任务
     --天书强化1次，完成后奖励仙法卷轴
-    [17] = {20, "天书强化", task = {kind = "tianshu_level", yd = {3, 14}}, jx = true},
+    [17] = {20, "天书强化", task = {kind = "tianshu_level", yd = {3, 14}},["jl"] = {wp = {{"仙法卷轴",3}}}, jx = true},
     --天书仙法抽取1次
-    [18] = {20, "天书仙法", task = {kind = "tianshu_xianfa", yd = {3, 14}}, jx = true},
+    [18] = {20, "刷新3次仙法", task = {kind = "tianshu_xianfa_refresh", need = 3, yd = {3, 14}}, jx = true},
     --进入野火帮并接取任务，击杀20只怪完成扫荡野火帮
-    [19] = {20, "扫荡野火帮", task = {kind = "story", tk = "npc_603", yd = {1, "野火帮", 603, 100, 223}, auto = true, need_receive = true},["jl"] = {wp = {{"仙法卷轴",1}}}, jx = true},
+    [19] = {20, "扫荡野火帮", task = {kind = "story", tk = "npc_603", yd = {1, "野火帮", 603, 100, 223}, auto = true, need_receive = true}, jx = true},
     --刷新2次仙法
-    [20] = {20, "刷新2次仙法", task = {kind = "tianshu_xianfa_refresh", need = 2, yd = {3, 14}}, jx = true},
+    [20] = {20, "再次洗练一次仙法", task = {kind = "tianshu_xianfa_refresh", need = 4, yd = {3, 14}}, jx = true},
     --进入野火帮大营，收集并提交野火帮罪证*10
     [21] = {20, "深入野火", task = {kind = "story", tk = "npc_607", yd = {1, "野火帮大营", 607, 60, 279}, auto = true}, sjwp = {["野火帮罪证"] = 10}, jl = {["hb"] = {{3,100000,"绑定金币"}},wp = {{"千年玄铁",10}}}},
     --升级一次灵根核心
@@ -183,19 +183,21 @@ constant.rw_syb = {
     [30] = {20, "修复轩辕剑", task = {kind = "xuanyuan_fixed", yd = {1, "二大陆主城", 601, 91, 116}}, sjwp = {["首山之铜"] = 1, ["天女纯阳之力"] = 1, ["五色神石"] = 1}, jx = true},
     --进入夜魔洞并接取任务，击杀10只红名怪完成讨伐夜魔
     [31] = {20, "讨伐夜魔", task = {kind = "story", tk = "npc_606", yd = {1, "夜魔洞", 606, 98, 95}, auto = true, need_receive = true}, jx = true},
-    --打开人物界面境界页，提升修为至筑基境
-    [32] = {20, "提升修为至筑基境", task = {kind = "foundation_realm", yd = {3, 14}}, jx = true},
-    --进入洞穴秘境，收集并提交杀意碎片*5、煞气*5
-    [33] = {20, "古刹之谜", task = {kind = "story", tk = "npc_609", yd = {1, "洞穴秘境", 609, 143, 153}, auto = true}, sjwp = {["杀意碎片"] = 5, ["煞气"] = 5},jl = {["hb"] = {{3,1000000,"金币"}}}, jx = true},
-    --前往二大陆主城转生 NPC，完成2大陆转生
-    [34] = {20, "完成2大陆转生", task = {kind = "rebirth", level = 20, yd = {1, "二大陆主城", 33, 90, 127}}, jx = true},
-    [35] = {2,"二大陆主城",503,94,131,jx = true},
-    [36] = {20, "接受灾厄入侵", task = {kind = "gray_invasion_accept", yd = {1, "灰界", 46, 205, 196}}, jx = true},
-    [37] = {20, "潮灾线", task = {kind = "gray_first_route", yd = {1, "灰界", 46, 205, 196}},},
-    [38] = {20, "查看合成夜明珠", task = {kind = "gray_pearl_visit", yd = {1, "灰界", 1030, 198, 196}}, jx = true},
-    [39] = {20, "完成剩下3个灰界任务", task = {kind = "gray_remaining_routes", yd = {1, "灰界", 46, 205, 196}},},
-    [40] = {6, 11, task = {kind = "gray_continent_enter", yd = {1, "灰界", 1031, 205, 196}},},
-    [41] = {6,11},
+    --境界提升至炼气期九层
+    [32] = {20, "提升修为到炼气期[九层]", task = {kind = "foundation_realm", need = 9, yd = {3, 14}}, jx = true},
+    --使用筑基丹碎片打开604并合成一次筑基丹
+    [33] = {20, "合成筑基丹", task = {kind = "foundation_pill_crafted", yd = {1, "极光城郊", 604, 83, 166}},sjwp = {["筑基丹碎片"] = 10, ["灵气符文"] = 5}, jx = true},
+    --继续提升修为至筑基境
+    [34] = {20, "提升修为到筑基境界", task = {kind = "foundation_realm", need = 10, yd = {3, 14}}, jx = true},
+    [35] = {20, "古刹之谜", task = {kind = "story", tk = "npc_609", yd = {1, "洞穴秘境", 609, 143, 153}, auto = true}, sjwp = {["杀意碎片"] = 5, ["煞气"] = 5},jl = {["hb"] = {{3,1000000,"金币"}}}, jx = true},
+    [36] = {20, "完成2大陆转生", task = {kind = "rebirth", level = 20, yd = {1, "二大陆主城", 33, 90, 127}}, jx = true},
+    [37] = {2,"二大陆主城",503,94,131,jx = true},
+    [38] = {20, "接受灾厄入侵", task = {kind = "gray_invasion_accept", yd = {1, "灰界", 46, 205, 196}}, jx = true},
+    [39] = {20, "潮灾线", task = {kind = "gray_first_route", yd = {1, "灰界", 46, 205, 196}},},
+    [40] = {20, "查看合成夜明珠", task = {kind = "gray_pearl_visit", yd = {1, "灰界", 1030, 198, 196}}, jx = true},
+    [41] = {20, "完成剩下3个灰界任务", task = {kind = "gray_remaining_routes", yd = {1, "灰界", 46, 205, 196}},},
+    [42] = {6, 11, task = {kind = "gray_continent_enter", yd = {1, "灰界", 1031, 205, 196}},},
+    [43] = {6,11},
 
 }
 return constant

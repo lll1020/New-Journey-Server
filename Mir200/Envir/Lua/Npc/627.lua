@@ -11,7 +11,7 @@ local function _get_task_data(play)
 end
 
 local function _can_enter_main(play, jq_data)
-    if tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) ~= 39 then
+    if tonumber(getplaydef(play, VarCfg.U_zxrw[1]) or 0) ~= 41 then
         Player.sendmsgEx(play, "当前主线还不能进入息灾讨伐线#57")
         return false
     end

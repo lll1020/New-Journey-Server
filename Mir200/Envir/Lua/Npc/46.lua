@@ -41,7 +41,7 @@ end
 
 local function _can_jump_to_route(play, jq_data, route_idx)
     if route_idx == 5 then
-        if _mainline_id(play) ~= 39 then
+        if _mainline_id(play) ~= 41 then
             return false
         end
         return _expected_route(jq_data) == 5
@@ -54,10 +54,10 @@ local function _can_jump_to_route(play, jq_data, route_idx)
         return false
     end
     if route_idx == 1 then
-        if _mainline_id(play) ~= 37 then
+        if _mainline_id(play) ~= 39 then
             return false
         end
-    elseif _mainline_id(play) ~= 39 then
+    elseif _mainline_id(play) ~= 41 then
         return false
     end
     if route_idx ~= _expected_route(jq_data) then
@@ -74,11 +74,11 @@ end
 local function _jump_to_route(play, route_idx)
     local route = _route_map[route_idx]
     if not route then
-        Player.sendmsgEx(play, "分线参数错误")
+        Player.sendmsgEx(play, "路线参数错误#57")
         return
     end
 
-    -- 入口面板补一个“回到灾厄入口”引导，直接跳回 46 号 NPC 自己。
+    -- 四条路线完成后，引导玩家返回灰界的 46 号 NPC。
     if route.guide_self then
         _guide_to_npc(play, route.step_map, route.step_id, route.step_x, route.step_y)
         return
@@ -122,20 +122,20 @@ function npc.link(play,npcid,ew,aid,data)
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_dljq"])
         T_data["npc_46"] = type(T_data["npc_46"]) == "table" and T_data["npc_46"] or {}
 
-        if _mainline_id(play) ~= 39 or tonumber(T_data["npc_46"].wc or 0) >= 1 then
+        if _mainline_id(play) ~= 41 or tonumber(T_data["npc_46"].wc or 0) >= 1 then
             return
         end
 
         local missing_name = _get_missing_task_name(T_data)
         if missing_name then
-            Player.sendmsgEx(play, "请先完成#57|【"..missing_name.."】#218|后再来提交灾厄入侵#57")
+            Player.sendmsgEx(play, "请先完成#57|【"..missing_name.."】#218|并提交对应任务#57")
             return
         end
 
         if not Guard.ensureCost(play, _config.cost) then
             return
         end
-        Guard.consumeCost(play, _config.cost, ","..(_config.name or "剧情任务"))
+        Guard.consumeCost(play, _config.cost, ","..(_config.name or "灾厄入侵"))
 
         T_data["npc_46"]["wc"] = 1
         local ok = pcall(Player.setJsonVarByTable, play, VarCfg["T_dljq"], T_data)
@@ -146,7 +146,7 @@ function npc.link(play,npcid,ew,aid,data)
             zxrw_try_finish_current_mainline(play, "gray_remaining_routes")
         end
         Player.title_give(play, _config.ch)
-        Player.sendmsgEx(play,  "恭喜你，获得称号：|【".._config.ch.."】#218|")
+        Player.sendmsgEx(play, "恭喜你，获得称号：#250|【".._config.ch.."】#218|")
         sendluamsg(play,100,npcid,1,0,"")
     elseif ew == 2 then
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_dljq"])
@@ -156,7 +156,7 @@ function npc.link(play,npcid,ew,aid,data)
         end
         _jump_to_route(play, route_idx)
     elseif ew == 3 then
-        if _mainline_id(play) ~= 36 then
+        if _mainline_id(play) ~= 38 then
             return
         end
         local T_data = Player.getJsonTableByVar(play, VarCfg["T_dljq"])

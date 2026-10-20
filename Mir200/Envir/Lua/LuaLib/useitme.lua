@@ -1276,17 +1276,18 @@ function stdmodefunc59(play, item, forceReward) --至尊黑卡
     return false
 end
 function stdmodefunc60(play, item) --筑基丹碎片
-    local sl, itemName = _get_use_all_info(play, item)
-    itemName = itemName or "筑基丹碎片"
-    local needNum = 10
-    if sl < needNum then
-        Player.sendmsgEx(play, string.format("你的#57|【%s】#218|不足，需求数量：#57|【%d】#218|", itemName, needNum))
-        return false
+    local function _get_count(play, name)
+        return tonumber(getbagitemcount(play, name) or 0) or 0
     end
-    local makeCount = math.floor(sl / needNum)
-    _take_use_all_item(play, item, makeCount * needNum, itemName)
-    giveitem(play, "筑基丹", makeCount)
-    Player.sendmsgEx(play, "成功合成#250|【筑基丹*" .. makeCount .. "】#218|#250")
+    local function _build_data(play)
+        return {
+            fragment = _get_count(play, "筑基丹碎片"),
+            rune = _get_count(play, "灵气符文"),
+            gold = _get_count(play, "金币"),
+            need = {fragment = 10, rune = 5, gold = 500000},
+        }
+    end
+    sendluamsg(play, 100, 604, 0, 0, tbl2json(_build_data(play)))
     return false
 end
 function stdmodefunc61(play, item) --筑基丹

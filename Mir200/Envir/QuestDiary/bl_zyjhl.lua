@@ -126,27 +126,32 @@ function bl_zyjhl8(play,mingzi)
     if mingzi ~= "仙法卷轴残页" then
         return false
     end
-    local cur_map = getbaseinfo(play, 3)
-    local dl = 0
-    if cur_map and daluditu then
-        dl = tonumber(daluditu[cur_map] or 0) or 0
-    end
-    -- 只允许二大陆及以上地图掉落；累计击杀300只怪必定获得1个，不吃人物爆率加成
-    if dl < 2 then
-        return false
-    end
     local data = Player.getJsonTableByVar(play, VarCfg["T_物品掉落记录"])
     if type(data) ~= "table" then
         data = {}
     end
-    local key = "仙法卷轴残页_累计击杀"
-    local count = (tonumber(data[key] or 0) or 0) + 1
-    if count >= 300 then
-        data[key] = count - 300
+    local now = os.time()
+    local count_key = "仙法卷轴残页_产出数量"
+    local time_key = "仙法卷轴残页_计时"
+    local count = tonumber(data[count_key] or 0) or 0
+    local last_drop_time = tonumber(data[time_key] or 0) or 0
+    if last_drop_time <= 0 then
+        data[count_key] = count + 1
+        data[time_key] = now
+        data["仙法卷轴残页_累计击杀"] = nil
         Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
         return true
     end
-    data[key] = count
+
+    local pity_interval = count < 10 and 10 * 60 or 20 * 60
+    local should_drop = now - last_drop_time >= pity_interval
+    if should_drop then
+        data[count_key] = count + 1
+        data[time_key] = now
+        data["仙法卷轴残页_累计击杀"] = nil
+        Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
+        return true
+    end
     Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
     return false
 end
@@ -305,6 +310,25 @@ function bl_zyjhl16(play,mingzi)
         ["看破红尘[可使用]"] = "看破红尘",
         ["归入灵虚[可使用]"] = "归入灵虚",
     }
+    local secretMap = {
+        ["极光石"] = "极光秘境",
+        ["极光使者[可使用]"] = "极光秘境",
+        ["苍云镜"] = "苍云秘境",
+        ["白云苍狗[可使用]"] = "苍云秘境",
+        ["若水灵珠"] = "若水秘境",
+        ["上善若水[可使用]"] = "若水秘境",
+        ["斩红尘"] = "红尘秘境",
+        ["看破红尘[可使用]"] = "红尘秘境",
+        ["灵虚剑"] = "灵虚秘境",
+        ["归入灵虚[可使用]"] = "灵虚秘境",
+    }
+    local secretItems = {
+        ["极光秘境"] = {"极光石", "极光使者[可使用]"},
+        ["苍云秘境"] = {"苍云镜", "白云苍狗[可使用]"},
+        ["若水秘境"] = {"若水灵珠", "上善若水[可使用]"},
+        ["红尘秘境"] = {"斩红尘", "看破红尘[可使用]"},
+        ["灵虚秘境"] = {"灵虚剑", "归入灵虚[可使用]"},
+    }
     local allowMap = {
         ["极光石"] = true,
         ["苍云镜"] = true,
@@ -321,16 +345,26 @@ function bl_zyjhl16(play,mingzi)
         return false
     end
     local titleName = titleMap[mingzi]
-    if titleName and checktitle(play, titleName) then
-        return false
-    end
     local data = Player.getJsonTableByVar(play, VarCfg["T_物品掉落记录"])
     if not data then
         data = {}
     end
-    local key = "mijing_extra_once_" .. mingzi
+    local secretName = secretMap[mingzi] or mingzi
+    local key = "mijing_extra_once_" .. tostring(secretName)
+    if titleName and checktitle(play, titleName) then
+        data[key] = 1
+        Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
+        return false
+    end
     if tonumber(data[key] or 0) >= 1 then
         return false
+    end
+    for _, itemName in ipairs(secretItems[secretName] or {}) do
+        if tonumber(data["mijing_extra_once_" .. itemName] or 0) >= 1 then
+            data[key] = 1
+            Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
+            return false
+        end
     end
     data[key] = 1
     Player.setJsonVarByTable(play, VarCfg["T_物品掉落记录"], data)
