@@ -332,6 +332,10 @@ function stdmodefunc31(play, item)
     if sl < 1 then
         return false
     end
+    -- 净业符在物品表中的 StdMode 是 31，按名称转到专用扣减逻辑。
+    if itemName == "净业符" then
+        return stdmodefunc58(play, item)
+    end
     local addOne = tonumber(getstditeminfo(getiteminfo(play, item, 2), 8) or 0) or 0
     if addOne <= 0 then
         return false

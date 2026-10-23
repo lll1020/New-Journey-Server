@@ -162,6 +162,9 @@ function Login.main(play)
     ---------------------------------------------------顶戴
     if checktitle(play,"狂暴之力") then
         seticon(play,0,1,10294,0,0,0,0,0)
+        if Npclib and Npclib[15] and type(Npclib[15].syncSkill) == "function" then
+            Npclib[15].syncSkill(play)
+        end
     end
     ---------------------------------------------------复活次数
     if querymoney(play,15) < querymoney(play,14) and not hasbuff(play,20078) then

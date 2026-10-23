@@ -14,6 +14,7 @@ local _cfg_44 = nil -- 44号配置缓存：读取灵根/境界等扩展配置
 local _realm_name_level = { ["筑基境"] = 10, ["金丹境"] = 14, ["元婴境"] = 18, ["大乘境"] = 22, ["渡劫境"] = 26, ["仙人境"] = 30 } -- 境界名称映射到内部等级
 local _linggen_name_index = { ["金"] = 1, ["木"] = 2, ["水"] = 3, ["火"] = 4, ["土"] = 5, ["雷"] = 6, ["风"] = 7, ["冰"] = 8, ["焚"] = 9, ["岩"] = 10 } -- 灵根名称映射到存档索引
 local _secret_name_dl = { ["极光秘境"] = 2, ["苍云秘境"] = 3, ["若水秘境"] = 4, ["红尘秘境"] = 5, ["灵虚秘境"] = 6 } -- 秘境名称映射大陆编号
+local _secret_map_names = { ["极光秘境"] = true, ["苍云秘境"] = true, ["若水秘境"] = true, ["红尘秘境"] = true, ["灵虚秘境"] = true }
 local _reward_percent_attr = { -- 百分比类奖励映射到属性编号
     ["人物攻击"] = 282,["攻击伤害"] = 25,["造成伤害"] = 25,["暴击伤害"] = 22,["暴击几率"] = 21,["神力倍功"] = 67,["神圣一击概率"] = 79,
     ["对怪增伤"] = 245,["打怪增伤"] = 245,["打怪爆率"] = 242,["金币回收"] = 204,["伤害吸收"] = 206,["PK增伤"] = 76,["PK减伤"] = 77,
@@ -367,8 +368,10 @@ end
 local function _is_secret_map(play)
     local mapId = tostring(getbaseinfo(play, ConstCfg.gbase.mapid) or "")
     local title = tostring(getbaseinfo(play, ConstCfg.gbase.map_title) or "")
+    local mapName = tostring(getbaseinfo(play, 3) or "")
     if mapId == "特殊秘境副本二" or mapId == "特殊秘境副本三" then return true end
-    return string.find(mapId, "秘境") ~= nil or string.find(title, "秘境") ~= nil
+    if _secret_map_names[mapId] or _secret_map_names[title] or _secret_map_names[mapName] then return true end
+    return string.find(mapId, "秘境") ~= nil or string.find(title, "秘境") ~= nil or string.find(mapName, "秘境") ~= nil
 end
 -- 统计背包神器数量。
 -- 当前实现按 77~88 这组穿戴位扫描，只有格子里真的有物品名时才记为已拥有。
@@ -743,8 +746,19 @@ function FairyFate.touch(play, reason, a, b)
     -- 3. 所以这里单独展开，不走简单的 +1 模板。
     elseif reason == "kill_mon" then
         _touch(play, function(state)
-            local mapId = tostring(a or getbaseinfo(play, 3) or "")
-            local dl = _toint(daluditu and daluditu[mapId])
+            local mapNames = {
+                tostring(a or ""),
+                tostring(getbaseinfo(play, 3) or ""),
+                tostring(getbaseinfo(play, ConstCfg.gbase.map_title) or ""),
+                tostring(getbaseinfo(play, ConstCfg.gbase.mapid) or ""),
+            }
+            local dl = 0
+            for _, mapName in ipairs(mapNames) do
+                if mapName ~= "" then
+                    dl = _toint((daluditu and daluditu[mapName]) or _secret_name_dl[mapName])
+                    if dl > 0 then break end
+                end
+            end
             local changed = false
             if dl >= 1 and dl <= 6 then
                 local key = tostring(dl)

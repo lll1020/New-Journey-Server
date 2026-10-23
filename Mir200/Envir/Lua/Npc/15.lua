@@ -5,6 +5,20 @@ npc = {}
 
 local _config = Guard.getConfig("npc_15")
 
+local function _sync_kuangbao_skill(play)
+    if not play or not checktitle(play, _config.give.ch) then
+        return
+    end
+    local skillId = getskillindex(_config.give.skill)
+    if tonumber(skillId or 0) > 0 then
+        addskill(play, skillId, 1)
+    end
+end
+
+function npc.syncSkill(play)
+    _sync_kuangbao_skill(play)
+end
+
 function npc.main(play,npcid)
     local opened = checktitle(play, _config.give.ch) and 1 or 0
     sendluamsg(play,100,npcid,0,0,'{"opened":'..opened..'}')
@@ -35,8 +49,7 @@ function npc.link(play,npcid,ew,aid)
                 Player.title_give(play,_config.give.ch)
                 seticon(play,0,1,10294,0,0,0,0,0)
                 messagebox(play,"恭喜您获得称号：【".._config.give.ch.."】")
-                local skillId = getskillindex(_config.give.skill)
-                addskill(play, skillId, 1)
+                _sync_kuangbao_skill(play)
                 sendmsg(play,1,'{"Msg":"<font color=\'#ff7700\'>[狂暴之力]</font><font color=\'#00ff00\'>恭喜您成功开启狂暴之力</font>","Type":9}')
                 Login_msg(play,3)
                 -- 开启狂暴后触发事件（用于刷新天书仙法等模块）

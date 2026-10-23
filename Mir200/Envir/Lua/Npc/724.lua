@@ -282,12 +282,17 @@ end
 local function _handle(play, npcid, action, aid) _generic_submit(play) end
 
 function npc.main(play, npcid)
-    _ensure_shaguai_active(play)
     if not _config then
         return
     end
     if not Guard.ensureStoryPrerequisite(play, _config, NPC_ID) then
         return
+    end
+    -- auto_claim 任务在首次打开 NPC 时直接接取，避免界面按钮资源异常时任务无法继续。
+    if _task_cfg.task_type == "auto_claim" then
+        _ensure_started(play)
+    else
+        _ensure_shaguai_active(play)
     end
     _send_state(play, npcid or NPC_ID)
 end

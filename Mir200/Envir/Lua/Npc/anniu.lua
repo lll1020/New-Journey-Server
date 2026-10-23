@@ -1109,7 +1109,7 @@ npc[30] = function(play, p2, p3, data) --砍树系统
     elseif p2 == 1 then --升级
         local T_data = Player.getJsonTableByVar(play, WOODCUT_VAR)
         local config = teshudata["anniu_30"]
-        if p3 == 0 then -- p3=0 领取存储奖励；兼容旧客户端的 p3=1 继续走砍树分支  --升级斧子
+        if p3 == 0 or p3 == 1 then -- 兼容旧客户端 p3=0 与当前客户端 p3=1：升级斧子
             T_data.axe = T_data.axe or 1
             if T_data.axe >= config.updata[1].max_level then
                 Player.sendmsgEx(play, "斧子已满级，无需升级...#57")

@@ -1,0 +1,31 @@
+[2026-10-23 00:34:41:432] LuaNPC: ID:999999999 执行 startup player: 耗时：32; NpcThreadId: 77756, CurPlayThreadId: 77756
+
+[2026-10-23 00:35:47:168] LuaNPC:玩家名字 ID:999999999 执行 sendability player:玩家名字 耗时：31; NpcThreadId: 77756, CurPlayThreadId: 77756
+[2026-10-23 00:35:47:224] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：219; NpcThreadId: 77756, CurPlayThreadId: 77756
+
+[2026-10-23 00:37:07:976] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：32; NpcThreadId: 77468, CurPlayThreadId: 77468
+
+[2026-10-23 00:39:40:126] LuaNPC:玩家名字 ID:999999999 执行 login player:玩家名字 耗时：78; NpcThreadId: 78500, CurPlayThreadId: 78500
+
+[2026-10-23 00:39:59:422] LuaNPC:玩家名字 ID:999999999 执行 killmon player:玩家名字 耗时：31; NpcThreadId: 78500, CurPlayThreadId: 78500
+
+[2026-10-23 00:40:16:266] LuaNPC:玩家名字 ID:999999999 执行 ontimer1 player:玩家名字 耗时：31; NpcThreadId: 78500, CurPlayThreadId: 78500
+
+[2026-10-23 03:51:44:949] LuaNPC:玩家名字 ID:999999999 执行 attackdamage player:玩家名字 耗时：47; NpcThreadId: 78500, CurPlayThreadId: 78500
+
+[2026-10-23 22:00:00:470] LuaNPC:系统控制 ID:999999999 执行 jqr_wudaohui_end player:系统控制 耗时：31; NpcThreadId: 78500, CurPlayThreadId: 78500
+
+[2026-10-24 00:00:04:065] LuaNPC:玩家名字 ID:999999999 执行 resetday player:玩家名字 耗时：31; NpcThreadId: 78500, CurPlayThreadId: 78500
+
+[2026-10-24 00:54:59:986] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：32; NpcThreadId: 78500, CurPlayThreadId: 78500
+[2026-10-24 00:54:59:986] [玩家名字]Lua执行耗时过高:32ms msgid:105 9999 9999 0 
+
+[2026-10-24 01:14:46:463] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：31; NpcThreadId: 78500, CurPlayThreadId: 78500
+[2026-10-24 01:14:46:463] [玩家名字]Lua执行耗时过高:31ms msgid:100 22 8 0 
+
+[2026-10-24 01:18:36:517] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：63; NpcThreadId: 78500, CurPlayThreadId: 78500
+[2026-10-24 01:18:36:517] [玩家名字]Lua执行耗时过高:63ms msgid:101 514 0 0 
+
+[2026-10-24 01:32:58:480] LuaNPC:玩家名字 ID:999999999 执行 handlerequest player:玩家名字 耗时：47; NpcThreadId: 78500, CurPlayThreadId: 78500
+[2026-10-24 01:32:58:480] [玩家名字]Lua执行耗时过高:47ms msgid:101 11 0 0 
+

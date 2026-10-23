@@ -136,6 +136,9 @@ local function _generic_submit(play)
         Player.sendmsgEx(play, "你已经完成#57|【" .. (_config.name or "该任务") .. "】#218|")
         return
     end
+    if not _ensure_started(play) then
+        return
+    end
     if not _need_map_ok(play, _task_cfg) then
         return
     end
@@ -258,6 +261,7 @@ function npc.main(play, npcid)
     if not _config then
         return
     end
+    _ensure_started(play)
     _send_state(play, npcid or NPC_ID)
 end
 

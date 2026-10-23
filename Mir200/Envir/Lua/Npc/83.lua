@@ -206,8 +206,10 @@ function npc.add_fire(play, num)
 end
 
 -- 对外接口：减少火毒值。
+local _add_fire = npc.add_fire
+
 function npc.reduce_fire(play, num)
-    return npc.add_fire(play, -_toint(num))
+    return _add_fire(play, -_toint(num))
 end
 
 -- 对外接口：获取当前残魂商店存档数据。
