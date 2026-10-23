@@ -5,7 +5,8 @@ npc = {}
 local _config = Guard.getConfig("npc_24")
 
 local function _try_finish_mainline_task(play, rwid)
-    if zxrw_try_finish_current_mainline and zxrw_try_finish_current_mainline(play, "任务") then
+    if type(zxrw_try_finish_current_mainline) == "function" then
+        zxrw_try_finish_current_mainline(play, "任务")
         return
     end
     rwid = tonumber(rwid or 0) or 0
@@ -485,9 +486,9 @@ function npc.link(play,npcid,ew,aid,data)
             xianfa_refresh(play)
 
             xianfa_add(play,randomNum,idx)
+            T_data.xianfa_refresh_count = (tonumber(T_data.xianfa_refresh_count or 0) or 0) + 1
+            Player.setJsonVarByTable(play, VarCfg["T_天书"], T_data)
             if currentMainline == 18 or currentMainline == 20 then
-                T_data.xianfa_refresh_count = (tonumber(T_data.xianfa_refresh_count or 0) or 0) + 1
-                Player.setJsonVarByTable(play, VarCfg["T_天书"], T_data)
                 newchangetask(play, currentMainline, T_data.xianfa_refresh_count)
                 _try_finish_mainline_task(play, currentMainline)
             end
